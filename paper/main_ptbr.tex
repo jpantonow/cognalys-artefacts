@@ -1261,7 +1261,7 @@ cuja premissa o mantenedor havia rejeitado ao fechar o \#1373.
 tiveram uma decisão de propor correção e 11 chegaram a uma correção gerada, sete
 delas com commit na ponta do branch e build bem-sucedido (\researchq{2}); 16
 terminaram como propostas locais de issue (Tabela~\ref{tab:adjudication}). Execuções
-posteriores e respostas de mantenedores mudaram várias delas.
+posteriores e respostas de mantenedores mudaram vários desses desfechos.
 
 \subsection{\researchq{2}: Aplicação e Build}
 \label{subsec:rq2}
@@ -1685,7 +1685,7 @@ e key stores, onde o uso do valor é decisivo (\researchq{4}).
 
 Terceiro, um patch que compila não necessariamente remove a violação: nos APKs
 com patch, o RVSec ainda a reportou no método alterado em quatro dos 38 casos
-verificáveis (13 pela regra registrada; Seção~\ref{subsec:rq7}).
+verificáveis (25 corrigidos pela regra registrada; Seção~\ref{subsec:rq7}).
 
 Quarto, agentes que receberam apenas o achado e o repositório propuseram menos pull
 requests que o \system{}, com menos julgados aceitáveis, embora um escore que recompensa
@@ -1802,8 +1802,8 @@ fica sem resolução em vez de ser adivinhada.
 \textbf{Uma violação não é um defeito até que se conheça o seu uso.} MD5 como chave
 de cache, uma chave lida com \texttt{getEntry} em vez de \texttt{getKey} ou um contexto
 SSL com um trust manager próprio para um servidor autoassinado violam uma regra sem
-expor o usuário; os mantenedores rejeitaram alterações, ou responderam a issues,
-pela forma como o valor era consumido, não pela chamada de API.
+expor o usuário; os mantenedores decidiram sobre alterações e issues pela forma como o valor
+era consumido, não pela chamada de API.
 
 \textbf{Verificações determinísticas são um seguro barato, se enxergarem o mesmo contexto.}
 No retrato de outubro, verificações semânticas recusaram seis das 17 propostas: cinco

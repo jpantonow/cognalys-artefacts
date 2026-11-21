@@ -1130,6 +1130,15 @@ existed, and four that an external digest contract prevented a client-only
 fix. Table~\ref{tab:adjudication} shows where each finding ended, as local
 records: an issue there is a proposal, not a published issue.
 
+The three not-applicable fixes met a base branch that had already changed, in
+two cases through this work's own merged pull requests. Nextcloud Cookbook's
+base held \#204. Giggity's maintainer had made an equivalent change
+independently and closed \#543. In DSub2000 the reported method had been
+changed by \#160, which addressed another message of the same rule, but the
+base still initialized TLS with an accept-all trust manager; a check rejected
+the adaptation because it removed what the user's insecure-connection option
+turned on, and the port step abstained.
+
 \begin{table}[H]
 \centering
 \caption{Outcome of the 34 findings in the October 2026 snapshot (local
@@ -1155,15 +1164,6 @@ Total & 34 \\
 \\[2pt]\raggedright\scriptsize\textsuperscript{a}Six to an APK; for Feeder only
 the application module was compiled.
 \end{table}
-
-The three not-applicable fixes met a base branch that had already changed, in
-two cases through this work's own merged pull requests. Nextcloud Cookbook's
-base held \#204. Giggity's maintainer had made an equivalent change
-independently and closed \#543. In DSub2000 the reported method had been
-changed by \#160, which addressed another message of the same rule, but the
-base still initialized TLS with an accept-all trust manager; a check rejected
-the adaptation because it removed what the user's insecure-connection option
-turned on, and the port step abstained.
 
 Six proposal decisions ended as issue proposals because generation was
 blocked: the drafts needed production credentials the repository lacks (MTG
@@ -1203,7 +1203,7 @@ whose premise the maintainer had rejected when closing \#1373.
 findings had a decision to propose a fix and 11 reached a generated fix, seven
 of them committed at the branch tip and built (\researchq{2}); 16 ended as
 local issue proposals (Table~\ref{tab:adjudication}). Later runs and
-maintainer responses changed several of them.
+maintainer responses changed several of these outcomes.
 
 \subsection{\researchq{2}: Application and Build}
 \label{subsec:rq2}
@@ -1623,7 +1623,8 @@ digests and key stores, where the value's use decides (\researchq{4}).
 
 Third, a patch that builds does not necessarily remove the violation: on the
 patched APKs, RVSec still reported it at the patched method in four of the 38
-checkable cases (13 under the registered rule; Section~\ref{subsec:rq7}).
+checkable cases, and only 25 of the 38 count as corrected under the registered
+rule alone (Section~\ref{subsec:rq7}).
 
 Fourth, agents given only the finding and the repository proposed fewer pull
 requests than \system{}, with fewer judged acceptable, although a score that
@@ -1739,8 +1740,8 @@ is left unresolved rather than guessed.
 \textbf{A violation is not a defect until its use is known.} MD5 as a cache
 key, a key read with \texttt{getEntry} rather than \texttt{getKey}, or an SSL
 context with a custom trust manager for a self-signed server violate a rule
-without exposing the user; maintainers rejected changes, or answered issues,
-by how the value was consumed, not by the API call.
+without exposing the user; maintainers decided on changes and issues by how the value was
+consumed, not by the API call.
 
 \textbf{Deterministic gates are cheap insurance, if they see the same context.}
 In the October snapshot, semantic gates refused six of the 17 proposals: five
