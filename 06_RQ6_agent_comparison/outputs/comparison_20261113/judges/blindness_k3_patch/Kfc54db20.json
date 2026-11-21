@@ -1,0 +1,32 @@
+{
+ "card_id": "Kfc54db20",
+ "card_sha256": "6d274062654d3e96",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 4653,
+  "cache_read_input_tokens": 2756,
+  "output_tokens": 437
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0465232,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "90bdebfbda0d1a2f",
+ "finished_at": "2026-11-16T11:50:04-0300",
+ "output": {
+  "guess": "O",
+  "confidence": 0.35,
+  "reason": "The card says the author did not build this diff. The pipeline sources (C and D) include a build step, so a coding agent is more likely. The test certificate is dated 2026-11-13, which suggests it was freshly generated in a shell. The tests are compact and loop over the alias values, in a terse style typical of GPT/Codex. The fix is thorough and fully removes the trust-all option. Together these point to Codex, and I lean toward Sol over Terra."
+ }
+}

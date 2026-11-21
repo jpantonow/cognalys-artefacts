@@ -1,0 +1,32 @@
+{
+ "card_id": "Kf74d2d3c",
+ "card_sha256": "cf602c67e4cab772",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 11,
+ "tokens": {
+  "input_tokens": 6,
+  "cache_creation_input_tokens": 6684,
+  "cache_read_input_tokens": 8549,
+  "output_tokens": 667
+ },
+ "turns": 3,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0685458,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "e37cfd82ab5c384e",
+ "finished_at": "2026-11-16T11:49:26-0300",
+ "output": {
+  "guess": "O",
+  "confidence": 0.3,
+  "reason": "The card says the author did not build this diff. The C and D pipelines include a build step, so a coding agent (S, O or T) is more likely. The patch is minimal: it removes the trust-all option and switches to the platform trust manager. The tests are compact and have no comments. They use a real PEM certificate generated on the day of the run, which suggests openssl was run by hand. That terse, efficient style looks more like Codex than Claude, and the careful hostname-verification tests point a little toward the stronger Sol model. This is a weak guess."
+ }
+}

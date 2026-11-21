@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/Wilm0r/giggity/pull/543",
+    "state": "closed",
+    "finding_id": "0638946f7e4a",
+    "spec": "MessageDigestSpec",
+    "csv_class": "net.gaast.giggity.Schedule$Item",
+    "method_name": "hashCode",
+    "title": "Fix hashCode",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:05.503323+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "Wilm0r",
+        "kind": "comment",
+        "body": "Oh, just made this change myself independently.\r\n\r\nThe hash used really doesn't matter but it's a nice cleanup anyway. Wish I remember why I even implemented that original contraption."
+      }
+    ]
+  }
+]

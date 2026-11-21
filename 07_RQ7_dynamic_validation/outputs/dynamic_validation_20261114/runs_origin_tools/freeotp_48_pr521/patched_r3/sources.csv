@@ -1,0 +1,2 @@
+apk,repo_url,commit,package
+org.fedorahosted.freeotp.debug_48.apk,https://github.com/freeotp/freeotp-android,1275d7808969f18f05e917bee19424f37ca89eb5,org.fedorahosted.freeotp.debug

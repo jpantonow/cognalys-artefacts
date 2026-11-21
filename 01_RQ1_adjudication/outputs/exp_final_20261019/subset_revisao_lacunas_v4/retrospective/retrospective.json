@@ -1,0 +1,252 @@
+{
+  "run_id": "subset_revisao_lacunas_v4",
+  "pipeline": {
+    "commit": "d80ae2c",
+    "uncommitted_changes": true
+  },
+  "funnel": {
+    "analysed": 1,
+    "cause_confirmed": 1,
+    "generation_supported": 1,
+    "plan_valid": 1,
+    "generated": 0,
+    "build_passed": 0,
+    "published": 0
+  },
+  "coverage": {
+    "findings_attributed": 1,
+    "actions": {
+      "repair_unattended": 0,
+      "repair_for_review": 1,
+      "await_policy": 0,
+      "classify_no_change": 0,
+      "abstain": 0,
+      "invalid": 0
+    },
+    "proposal_coverage": 1.0,
+    "proposals": 1,
+    "abstentions": 0,
+    "abstention_rate": 0.0,
+    "undecided_or_invalid": 0,
+    "published": 0,
+    "publication_rate": 0.0,
+    "avoidable_abstention": {
+      "status": "no_labels",
+      "detail": "evals/ground_truth.csv carries no reviewer labels, so whether an abstention was avoidable is unmeasured. This is not a count of zero."
+    },
+    "known_positive_abstention": {
+      "status": "none_in_run"
+    }
+  },
+  "findings": [
+    {
+      "finding_key": "4b81532bb668",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.fedorahosted.freeotp_48.apk/0_encrypt_evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.fedorahosted.freeotp_48.apk/0_encrypt/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/manifest.json"
+      },
+      "unique_error_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+      "apk": "org.fedorahosted.freeotp_48.apk",
+      "method": "encrypt",
+      "spec": "CipherSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "evidence_fingerprint": "c1baddbb0a70155e79a7fde8c3a4e3ee640b532fa64cfcf0ed390e613b9c7761",
+      "terminal_stage": "generation",
+      "reached": {
+        "analysed": true,
+        "cause_confirmed": true,
+        "generation_supported": true,
+        "plan_valid": true,
+        "generated": false,
+        "build_passed": false,
+        "published": false
+      },
+      "signals": [
+        {
+          "signature": "generation:semantic:unintended_behavior_change",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/semantic_validation.json"
+        }
+      ],
+      "signatures": [
+        "generation:semantic:unintended_behavior_change"
+      ],
+      "pull_request": "",
+      "known_positive": {}
+    }
+  ],
+  "llm_performance": {
+    "per_stage": {
+      "external_research.research": {
+        "calls": 4,
+        "cache_hits": 4,
+        "latency_ms": 0,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "external_research.synthesis": {
+        "calls": 4,
+        "cache_hits": 4,
+        "latency_ms": 0,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "evidence_extraction": {
+        "calls": 2,
+        "cache_hits": 1,
+        "latency_ms": 53614,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "adjudication": {
+        "calls": 2,
+        "cache_hits": 1,
+        "latency_ms": 63699,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "adjudication.correction": {
+        "calls": 4,
+        "cache_hits": 2,
+        "latency_ms": 44309,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "patch_planning": {
+        "calls": 2,
+        "cache_hits": 0,
+        "latency_ms": 84672,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "patch_planning.correction": {
+        "calls": 2,
+        "cache_hits": 0,
+        "latency_ms": 125598,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "code_generation.coordinated_file": {
+        "calls": 14,
+        "cache_hits": 0,
+        "latency_ms": 673120,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "code_generation.coordinated_file.shape_retry": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 31959,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "code_generation.behavior_review": {
+        "calls": 5,
+        "cache_hits": 0,
+        "latency_ms": 241407,
+        "hung_connections": 0,
+        "failed": 0
+      }
+    },
+    "signals": []
+  },
+  "comparison": {
+    "new": [],
+    "recurring": [
+      "generation:semantic:unintended_behavior_change"
+    ],
+    "reappeared": [
+      "generation:semantic:unintended_behavior_change"
+    ],
+    "resolved_for_rerun_findings": [
+      {
+        "finding": "org.fedorahosted.freeotp_48.apk/encrypt",
+        "signature": "generation:semantic:checked_exception_not_propagated",
+        "previous_run": "subset_revisao_lacunas_v3",
+        "now_ends_at": "generation"
+      },
+      {
+        "finding": "org.fedorahosted.freeotp_48.apk/encrypt",
+        "signature": "generation:semantic:test_placed_in_unrelated_file",
+        "previous_run": "subset_revisao_lacunas_v3",
+        "now_ends_at": "generation"
+      }
+    ],
+    "finding_progress": [
+      {
+        "finding": "org.fedorahosted.freeotp_48.apk/encrypt",
+        "stages": [
+          "adjudication",
+          "adjudication",
+          "validated",
+          "generation",
+          "generation",
+          "generation"
+        ]
+      }
+    ],
+    "verdict_changes": []
+  },
+  "ledger_signatures": {
+    "generation:semantic:unintended_behavior_change": {
+      "stage": "generation",
+      "occurrences": 7,
+      "runs": [
+        "run_research_medium",
+        "run_v4",
+        "subset_revisao_lacunas_v4"
+      ],
+      "first_seen": "run_research_medium",
+      "last_seen": "subset_revisao_lacunas_v4",
+      "examples": [
+        {
+          "run": "run_research_medium",
+          "finding_key": "efa4a0003ff0",
+          "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+          "method": "load",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/xyz.zedler.patrick.grocy.debug_64.apk/3_load/semantic_validation.json"
+        },
+        {
+          "run": "run_research_medium",
+          "finding_key": "efa4a0003ff0",
+          "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+          "method": "load",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/xyz.zedler.patrick.grocy.debug_64.apk/3_load/semantic_validation.json"
+        },
+        {
+          "run": "run_research_medium",
+          "finding_key": "efa4a0003ff0",
+          "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+          "method": "load",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/xyz.zedler.patrick.grocy.debug_64.apk/3_load/semantic_validation.json"
+        },
+        {
+          "run": "run_v4",
+          "finding_key": "2526b837d70c",
+          "apk": "dev.skye.intertune.debug_96.apk",
+          "method": "hash",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/dev.skye.intertune.debug_96.apk/0_hash/semantic_validation.json"
+        },
+        {
+          "run": "subset_revisao_lacunas_v4",
+          "finding_key": "4b81532bb668",
+          "apk": "org.fedorahosted.freeotp_48.apk",
+          "method": "encrypt",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/semantic_validation.json"
+        }
+      ]
+    }
+  },
+  "knowledge_added": [],
+  "learning_store_written": true
+}

@@ -1,0 +1,145 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "No detector-rule catalog entry or implementation was provided for the label DeprecatedApiSpec, so its complete matching algorithm is unknown.",
+      "A type-level warning does not identify the exact member, overload, arguments, preference XML resource, or storage mode involved.",
+      "The finding does not prove that the reference is reachable or executed at runtime.",
+      "The finding alone cannot establish migration correctness, preference-data compatibility, or a concrete attacker-controlled security impact."
+    ],
+    "predicates": [
+      "A program element resolves to, or invokes a member through, android.preference.PreferenceManager.",
+      "The resolved Android platform class is documented as deprecated in API level 29.",
+      "The reference is distinguishable from androidx.preference.PreferenceManager by qualified name, import resolution, or equivalent symbol metadata."
+    ],
+    "claim": "A finding claims use of the documented deprecated Android platform API android.preference.PreferenceManager; Android documentation directs developers to the AndroidX Preference Library."
+  },
+  "unknowns": [
+    "No independently verified detector-rule implementation or rule catalog entry defines the exact matching algorithm associated with the DeprecatedApiSpec label.",
+    "It is unresolved whether findings are emitted for every legacy type import/reference, only for calls, or only for a subset of PreferenceManager members.",
+    "It is unresolved whether target SDK, minimum SDK, dependency version, source set, suppression, or generated-code exclusions affect reporting.",
+    "The particular legacy PreferenceManager member used by an individual finding is not established by the representative type-level message.",
+    "Whether existing preference files, keys, XML resources, storage choices, and lifecycle integrations remain behaviorally compatible after migration is not established.",
+    "It is unresolved whether the observed deprecated use has security relevance beyond the indirect maintenance and compatibility concern described by CWE-477."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "android.preference.PreferenceManager is the legacy Android platform class used to help create Preference hierarchies from activities or XML.",
+      "Android documents android.preference.PreferenceManager as deprecated in API level 29 and directs developers to the AndroidX Preference Library for consistent behavior across devices.",
+      "androidx.preference.PreferenceManager is the AndroidX library class used to help create Preference hierarchies; its getDefaultSharedPreferences(Context) method returns the default preference-framework SharedPreferences instance for the supplied context."
+    ],
+    "preconditions": [
+      "A source-level deprecated-API finding requires evidence that the legacy fully qualified type resolves to android.preference.PreferenceManager rather than an identically named type.",
+      "If getDefaultSharedPreferences(Context) is invoked, its documented AndroidX signature requires a non-null Android Context.",
+      "Use of AndroidX APIs requires the corresponding AndroidX Preference library to be available to the build and packaged application."
+    ],
+    "unknowns": [
+      "The representative finding does not establish which legacy PreferenceManager member is used.",
+      "The consulted documentation does not establish that every legacy-platform use can be mechanically substituted with an AndroidX call.",
+      "Preference-data, XML, storage, and lifecycle compatibility require application-specific evidence and testing."
+    ]
+  },
+  "authoritative_sources": [
+    "https://developer.android.com/reference/android/preference/PreferenceManager",
+    "https://developer.android.com/reference/androidx/preference/PreferenceManager",
+    "https://developer.android.com/guide/topics/ui/settings",
+    "https://cwe.mitre.org/data/definitions/477.html",
+    "https://mas.owasp.org/MASWE/MASVS-CODE/MASWE-0046/"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observed when an import, type reference, constructor reference, or member-call receiver/declaration resolves to android.preference.PreferenceManager. A textual match alone is insufficient when symbol resolution is available.",
+      "name": "legacy_preference_manager_reference_observed",
+      "api_patterns": [
+        "import android.preference.PreferenceManager;",
+        "android.preference.PreferenceManager",
+        "PreferenceManager.getDefaultSharedPreferences(",
+        "PreferenceManager.setDefaultValues("
+      ]
+    },
+    {
+      "condition": "Satisfied only when the resolved referenced API is android.preference.PreferenceManager, which Android documents as deprecated in API level 29. A call-shaped expression without a resolved owner does not satisfy this predicate.",
+      "name": "deprecated_api_predicate_satisfied",
+      "api_patterns": [
+        "android.preference.PreferenceManager",
+        "import android.preference.PreferenceManager;"
+      ]
+    },
+    {
+      "condition": "Observed when a reference resolves to androidx.preference.PreferenceManager. This is replacement-family evidence only; it neither satisfies the legacy-platform deprecation predicate nor proves complete migration or compatibility.",
+      "name": "androidx_preference_manager_reference_observed",
+      "api_patterns": [
+        "import androidx.preference.PreferenceManager;",
+        "androidx.preference.PreferenceManager",
+        "PreferenceManager.getDefaultSharedPreferences("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "DeprecatedApiSpec is a concern label, not a governed API type and not a CrySL rule. This context establishes static evidence of use of a documented deprecated Android platform API only; it does not establish exploitability, runtime reachability, runtime failure, or a behavior-preserving migration.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that DeprecatedApiSpec is a Java, Android, AndroidX, CrySL, or third-party API type.",
+    "Do not infer a specific invoked member, overload, argument value, preference XML resource, or storage mode from a type-level deprecation message.",
+    "Do not infer that a use of android.preference.PreferenceManager is unreachable, harmless, exploitable, or runtime-failing merely because it is deprecated.",
+    "Do not infer that replacing an import with androidx.preference.PreferenceManager preserves preference keys, XML interpretation, storage behavior, lifecycle behavior, or UI behavior.",
+    "Do not infer that an unqualified PreferenceManager identifier denotes the platform class without import, qualification, or symbol-resolution evidence.",
+    "Do not infer that AndroidX use is a complete remediation without dependency, source, build, and supported-device compatibility evidence."
+  ],
+  "security_semantics": {
+    "runtime_claim": "The evidence does not establish runtime execution, API removal, data loss, privilege compromise, information disclosure, or another concrete security impact.",
+    "equivalent": false,
+    "detector_claim": "The detector identifies use of a documented deprecated API; it does not establish an equivalent runtime security claim."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Build-dependency and import-resolution evidence for the AndroidX Preference artifact.",
+      "Preference XML, preference-key, storage-location, and data-migration tests before claiming behavioral equivalence.",
+      "Testing across the application's supported Android API levels before claiming cross-device compatibility."
+    ],
+    "runtime": [
+      "A packaged-artifact reference and execution evidence before claiming that the deprecated path is reachable at runtime.",
+      "Device/API-level testing before claiming runtime behavior, failures, or behavioral differences.",
+      "A concrete affected operation plus supporting exploit or impact evidence before claiming a runtime security impact."
+    ],
+    "source_level": [
+      "A resolved import, fully qualified reference, compiler symbol, or bytecode owner identifying android.preference.PreferenceManager.",
+      "Applicable Android SDK documentation or API metadata showing deprecation of that platform class.",
+      "If asserting a replacement, resolved evidence for androidx.preference.PreferenceManager rather than a same-named class from another library."
+    ]
+  },
+  "name": "DeprecatedApiSpec",
+  "source_url": "https://developer.android.com/reference/android/preference/PreferenceManager",
+  "applies_to_types": [
+    "android.preference.PreferenceManager",
+    "androidx.preference.PreferenceManager"
+  ],
+  "source_title": "PreferenceManager | API reference | Android Developers",
+  "semantic_scope": "For every finding, the detector concern is source or bytecode use resolving to the deprecated Android platform type android.preference.PreferenceManager, including use of that type as the owner of a member invocation. It excludes similarly named APIs, an API type named DeprecatedApiSpec, and proof of a security exploit.",
+  "spec_id": "DeprecatedApiSpec",
+  "known_false_positive_shapes": [
+    "An unqualified PreferenceManager token that resolves to androidx.preference.PreferenceManager or another non-platform type rather than android.preference.PreferenceManager.",
+    "A comment, documentation block, string literal, reflection string, or generated text containing android.preference.PreferenceManager when detection is lexical rather than symbol-resolved.",
+    "A source-only or excluded test/generated artifact reference that is not included in the delivered runtime artifact, where policy is restricted to shipped code.",
+    "A call expression with the same method spelling, including getDefaultSharedPreferences, whose resolved owner is not android.preference.PreferenceManager."
+  ],
+  "protocol": "resolve legacy android.preference.PreferenceManager reference or call -> confirm documented deprecation -> emit deprecated-API observation; resolve androidx.preference.PreferenceManager -> replacement-family observation only",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.schabi.newpipe.settings.NewPipeSettings",
+        "method": "init",
+        "message": "android.preference.PreferenceManager is deprecated. Use androidx.preference.PreferenceManager."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:android.preference.PreferenceManager",
+    "checked_url": "https://developer.android.com/reference/android/preference/PreferenceManager"
+  }
+}

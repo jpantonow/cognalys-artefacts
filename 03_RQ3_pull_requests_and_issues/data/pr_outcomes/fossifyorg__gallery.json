@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/FossifyOrg/Gallery/pull/1145",
+    "state": "closed",
+    "finding_id": "966c9e64ed27",
+    "spec": "DeprecatedApiSpec",
+    "csv_class": "org.fossify.gallery.asynctasks.GetMediaAsynctask",
+    "method_name": "doInBackground",
+    "title": "Replace deprecated AsyncTask in GetMediaAsynctask",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:38:21.067946+00:00",
+    "maintainer_feedback": []
+  }
+]

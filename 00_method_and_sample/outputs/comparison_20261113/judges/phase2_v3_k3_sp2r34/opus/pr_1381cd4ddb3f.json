@@ -1,0 +1,87 @@
+{
+ "unit": "pr_1381cd4ddb3f",
+ "phase": "phase2",
+ "order": [
+  "K300818b3",
+  "K4f7190bf"
+ ],
+ "card_sha256": {
+  "K300818b3": "4ef1978611875d96",
+  "K4f7190bf": "060b1eee3905cb02"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive caused by the order of calls on one shared object. It is not a misuse.\n\n**How the code works.** `SecretService` is a Kotlin `object`, so there is only one instance. It creates a single `androidKeyStore = KeyStore.getInstance(\"AndroidKeyStore\")` once, when the object is first used (SecretService.kt:54). Every method that touches the keystore then calls `androidKeyStore.load(null)` before using it:\n- `generateRsaKeyPair`\n- `getServerPrivateKey`\n- `getServerPublicKey`\n- `getAndroidSecretKey`\n- `removeAndroidSecretKey`\n\n**What the checker sees.** `getAndroidSecretKey` does `load(null)`, then `getEntry(alias, null)`, and creates an AES/GCM key in the AndroidKeyStore if the entry is missing. A runtime monitor that tracks the single `KeyStore` object therefore sees a pattern like getInstance, load, getEntry, load, getEntry/containsAlias/deleteEntry, load, and so on. KeyStoreSpec expects getInstance, then load once, then entry operations. A `load` that comes again after an entry operation, or `getInstance` happening in a different place from the first `load`, falls outside the spec. That is what produces the message.\n\n**Why it is not a security problem.**\n- For the AndroidKeyStore provider, `load(null)` is the documented and only valid way to initialise it. There is no keystore file and no password, and calling `load` again is idempotent and harmless.\n- `getEntry(alias, null)` with a null ProtectionParameter is likewise the correct call for AndroidKeyStore entries. They are protected by keystore/TEE/StrongBox policy, not by a password.\n- No key material, password or weak parameter is involved. The generated key is AES-GCM with no padding, `setUnlockedDeviceRequired`, optional StrongBox, and optional user authentication.\n\n**What a change must keep.** A change to the keystore lifecycle (for example loading once lazily, creating a new `KeyStore` per call, or reading the key through another lookup) must keep the existing retry and fallback logic around KeyStore problems (the workarounds for issues #52 and #61, and the StrongBox fallback).\n\nSecond judge: The reported sequence is valid for AndroidKeyStore. SecretService creates the keystore with KeyStore.getInstance(\"AndroidKeyStore\"), calls load(null) before getEntry(alias, null), reuses an existing SecretKeyEntry, and otherwise generates an AES key under that alias through the AndroidKeyStore KeyGenerator. The one-argument load(null) overload is valid; this provider needs neither a keystore-file password nor a per-entry PasswordProtection. Authentication restrictions are enforced when keys are used, independently of the null entry-protection argument. Generated keys are persisted by AndroidKeyStore without an explicit store() call. The report provides no security defect; its exact checker-model mismatch cannot be established without the rule and trace. A delivery must not allege insecure keystore use.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [],
+  "must_not_break": [
+   "Existing AndroidKeyStore aliases and the AES/GCM secret keys stored under them must still resolve to the same keys (through `getEntry` or an equivalent lookup such as `getKey`). These keys protect the master key and other encrypted preferences, and losing them or regenerating them silently would make stored vault data impossible to decrypt.",
+   "Lazy key creation in `getAndroidSecretKey` must keep working: when the alias is missing, `initAndroidSecretKey` is called, and it falls back from StrongBox and retries.",
+   "Key generation parameters must stay the same: `setUnlockedDeviceRequired`, optional user authentication / `setInvalidatedByBiometricEnrollment`, and StrongBox only when requested and available.",
+   "The handling of AndroidKeyStore quirks must not change: the `KeyStoreNotReadyException` retry for UserNotAuthenticatedException (issues #52 and #61) and the StrongBoxUnavailableException fallback.",
+   "Behaviour must stay the same on API levels below P (no StrongBox or unlocked-device options) and on P and above.",
+   "Other users of the shared `androidKeyStore` must keep working: RSA server key-pair generation and lookup (`generateRsaKeyPair`, `getServerPrivateKey`, `getServerPublicKey`) and `removeAndroidSecretKey`.",
+   "Keep AndroidKeyStore-backed keys and their existing aliases and identities. Replacing or regenerating persistent SALT, MK, MP, MP_WA, or MPT keys would make stored salt, wrapped master keys, stored master passwords, or token keys unreadable and could prevent vault access.",
+   "Preserve retrieval of existing keys and generation when an alias is absent. Preserve the transport key's reuse within an app run and its deliberate deletion at application startup.",
+   "Preserve AES/GCM/NoPadding compatibility, stored IVs and ciphertext, and the existing Encrypted representation. Vault and master-key exports remove the device-specific Android wrapping; imports reapply local wrapping, allowing transfer between devices.",
+   "Preserve the supported Android API 24 minimum, API-gated keystore settings, operation without StrongBox, and fallback when StrongBox is unavailable.",
+   "Preserve alias-specific authentication and protection settings, including biometric protection and enrollment invalidation for MP_WA where configured. Adding passwords or requiring authentication for every alias would disrupt existing login and secret-transfer flows."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 30,
+ "tokens": {
+  "input_tokens": 8,
+  "cache_creation_input_tokens": 21327,
+  "cache_read_input_tokens": 48725,
+  "output_tokens": 2848
+ },
+ "turns": 6,
+ "tool_calls": 5,
+ "claude_reported_cost_usd": 0.23735299999999998,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "cbac86fda2e11fae",
+ "finished_at": "2026-11-17T19:12:26-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K300818b3",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "unclear",
+    "r4": 1,
+    "r5": null,
+    "notes": "For AndroidKeyStore secret keys, getKey(alias, null) as? SecretKey behaves the same as getEntry/SecretKeyEntry, and the initAndroidSecretKey fallback, aliases and retry/StrongBox paths are untouched, so it is a correct spec-only change. The text says RVSec 'expects the key to be read with getKey', which is an unverified guess about the spec, though it honestly notes that the repeated load(null) may still be reported and that the old code had no security problem."
+   },
+   {
+    "card_id": "K4f7190bf",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "unclear",
+    "r4": 2,
+    "r5": null,
+    "notes": "This is the same change as the other card: getKey(alias, null) as? SecretKey with the unchanged fallback to initAndroidSecretKey, so existing keys still resolve to the same keys and every must_not_break constraint is kept. The description is accurate and quotes getKey's null-return contract correctly; it does not claim to fix a vulnerability or claim testing beyond the build."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

@@ -1,0 +1,317 @@
+{
+ "unit": "co_737920a862cd",
+ "phase": "phase2",
+ "order": [
+  "Kcc2d839a",
+  "Kba9e211b",
+  "K07191eee",
+  "Kc31b4fb3",
+  "K9c9e356f",
+  "K025f29b6",
+  "Kecc63961",
+  "K66cd81ed",
+  "K90345208",
+  "Kc875c014",
+  "K21692d5c",
+  "Kaed18264",
+  "Kc20b03bc",
+  "Kde38476a",
+  "K81477b89",
+  "K2813eeab",
+  "K73122e10",
+  "Kc7275116",
+  "Ka58bb476",
+  "K57fec149",
+  "Kf9efa56b",
+  "Kc9f055a8",
+  "K65bddecc"
+ ],
+ "card_sha256": {
+  "K025f29b6": "22e98a72f973916d",
+  "K07191eee": "b11034357fd9ce49",
+  "K21692d5c": "2993860fe3cd108d",
+  "K2813eeab": "d7cd84320a384763",
+  "K57fec149": "41e0aed7ee81af22",
+  "K65bddecc": "e152aa624ee2f6ec",
+  "K66cd81ed": "c64ba9091d84c44c",
+  "K73122e10": "dc9f3fc16b1fd45b",
+  "K81477b89": "41118e6d0d89b5dc",
+  "K90345208": "47bce91d16938393",
+  "K9c9e356f": "d1d888e7ab2ea308",
+  "Ka58bb476": "74928c81c5fdc374",
+  "Kaed18264": "7c906172422c32bd",
+  "Kba9e211b": "88be295b83e54e9f",
+  "Kc20b03bc": "f400cd44c7fb0299",
+  "Kc31b4fb3": "b163c45185a907fb",
+  "Kc7275116": "942c07541ec26255",
+  "Kc875c014": "0641d5764d2e7cac",
+  "Kc9f055a8": "892b6c47ce48b299",
+  "Kcc2d839a": "9271135be33c4414",
+  "Kde38476a": "c6e34554fe2ae1ce",
+  "Kecc63961": "269f1aa02fdac044",
+  "Kf9efa56b": "4cf1c64e367af9a9"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive. In ClientCerts.android.kt, tlsContext() passes SSLContext.init a custom MtlsKeyManager, an X509ExtendedKeyManager. It is built that way on purpose: on Android, a client certificate the user picked through android.security.KeyChain can only be reached through KeyChain.getPrivateKey and KeyChain.getCertificateChain. The private key is usually hardware-backed and can't be exported. It lives in the system KeyChain store, not in a KeyStore the app could hand to KeyManagerFactory.init. So a KeyManagerFactory-made KeyManager cannot present that key, and the platform docs show a custom X509KeyManager for exactly this KeyChain mTLS case.\n\nThe key manager also does work no factory can do. It picks a different alias for each gateway host, using the SNI host the socket factory saves in a ThreadLocal. It reads the key and chain at handshake time, so a renewed certificate or a revoked grant counts from the next handshake. When no alias matches the host it returns null, so gateways that don't use mTLS handshake exactly as before. It never chooses server aliases.\n\nTrust is unaffected. The TrustManager comes from TrustManagerFactory.getDefaultAlgorithm() initialised with the system store, the protocol is \"TLS\", and SecureRandom is left at its default. No certificate or hostname check is weakened. The rule only flags where the KeyManager came from, which here is the right design and not a weakness. A PR that swapped in KeyManagerFactory would break client-certificate auth.\n\nSecond judge: This is an intentional custom-key-manager use, not a demonstrated TLS misuse. ClientCerts.android.kt passes MtlsKeyManager, an X509ExtendedKeyManager, to SSLContext.init; that API does not require managers to originate from KeyManagerFactory. The manager selects a gateway host's user-approved alias and obtains its private-key handle and certificate chain through Android KeyChain. ClientCertPicker.android.kt supplies the system picker, and SavedGateway persists only the alias. This implements the documented mTLS support for gateways behind ssl_verify_client, covering REST and /api/ws. Server trust still uses the default TrustManagerFactory, and OkHttp's hostname verification is unchanged. Replacing this with null managers or an ordinary factory's defaults would lose the selected client identity.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [],
+  "must_not_break": [
+   "Client-certificate (mTLS) auth with KeyChain-held, non-exportable keys: KeyChain.getPrivateKey/getCertificateChain can't feed a KeyManagerFactory/KeyStore, so swapping MtlsKeyManager for a factory KeyManager would stop the app presenting the user's certificate",
+   "Choosing a certificate per host: MtlsKeyManager.chooseClientAlias looks up the alias for the captured SNI host (handshakeSniHost via SniCapturingSocketFactory), then the socket host, using clientCertAliasFor (pending Connect-screen picks first, then SavedGateway.clientCertAlias)",
+   "Gateways without a certificate must keep handshaking with no client certificate (a null alias means nothing is sent)",
+   "Key and chain are read at each handshake, not cached, so a renewed certificate or a revoked KeyChain grant counts from the next handshake; a null MtlsAppContext at startup or in host tests must mean no certificate rather than a crash",
+   "When ClientCertAliases.onChanged fires, a fresh SSLContext is swapped in (empty session cache) and the pool is evicted, so no session made with the old certificate is resumed",
+   "System-default trust from TrustManagerFactory plus OkHttp hostname checks; the same OkHttp engine serves the REST calls and the /api/ws upgrade",
+   "Existing tests in MtlsKeyManagerTest (androidHostTest) and ClientCertsTest",
+   "Preserve Android KeyChain selection and access to system-held private keys, including potentially non-exportable keys; do not require exporting keys or importing them into an app-managed keystore.",
+   "Preserve SavedGateway.clientCertAlias in gateways.v1, legacy gateway migration, older records with no alias, and certificate retention across sign-in. Keep storing aliases rather than private-key material.",
+   "Preserve live host-specific alias selection from pending Connect-screen picks and saved gateways, including host normalization, hostname capture despite OkHttp connecting by IP, and no arbitrary fallback to another host's certificate. Hostless socket creation must clear stale captured host information.",
+   "Preserve client authentication for connection probes, sign-in, gateway REST requests, and the /api/ws upgrade against servers requiring client certificates. Gateways without a selected certificate must continue to work without one.",
+   "Preserve certificate-change handling: immediately replace the TLS context to discard resumable sessions and evict idle pooled connections off the main thread. Existing active calls and WebSockets retain their current identity until closed.",
+   "Preserve lazy KeyChain access on handshake threads, safe engine construction before the application context exists, and fresh lookups that observe certificate renewal or revoked access on subsequent handshakes.",
+   "Preserve default server certificate validation and hostname verification, Android API 26 support, and the desktop implementation's operation without a system client-certificate picker."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 97,
+ "tokens": {
+  "input_tokens": 110262,
+  "cached_input_tokens": 74624,
+  "output_tokens": 3956,
+  "reasoning_output_tokens": 1307
+ },
+ "turns": 1,
+ "tool_calls": 10,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "f6f82fd14ecb358f",
+ "finished_at": "2026-11-16T17:13:49-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Kcc2d839a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains the intentional KeyChain-backed custom manager and unchanged default server trust."
+   },
+   {
+    "card_id": "Kba9e211b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Accurately restates the provenance observation, but does not explain why this custom manager is supported and necessary for KeyChain authentication."
+   },
+   {
+    "card_id": "K07191eee",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies supported custom-manager use and the per-gateway KeyChain selection that a default replacement would lose."
+   },
+   {
+    "card_id": "Kc31b4fb3",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Gives a correct, code-specific explanation separating client identity selection from default server validation."
+   },
+   {
+    "card_id": "K9c9e356f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains KeyChain callbacks, supported custom managers, default trust, and unchanged hostname verification."
+   },
+   {
+    "card_id": "K025f29b6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The no-change rationale correctly identifies host-specific KeyChain access and intact server trust. Its blanket statements about every possible factory adaptation are broader than necessary."
+   },
+   {
+    "card_id": "Kecc63961",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Specifically identifies the host-dependent KeyChain behavior that an ordinary factory replacement would not preserve."
+   },
+   {
+    "card_id": "K66cd81ed",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains why the custom manager is appropriate for system-held keys and why its provenance does not weaken server trust."
+   },
+   {
+    "card_id": "K90345208",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Connects the reported provenance to the intentional host-dependent KeyChain manager and identifies no established security impact."
+   },
+   {
+    "card_id": "Kc875c014",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is specific to preserving host-specific Android KeyChain credential selection."
+   },
+   {
+    "card_id": "K21692d5c",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the intentional custom manager, fresh KeyChain access, default trust, and certificate-change session invalidation."
+   },
+   {
+    "card_id": "Kaed18264",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains the documented callback approach and why substituting or adding a default manager would not preserve selection."
+   },
+   {
+    "card_id": "Kc20b03bc",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately describes host-specific KeyChain credentials, null-alias behavior, and independent default server validation."
+   },
+   {
+    "card_id": "Kde38476a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Provides a correct, specific reason to retain the documented KeyChain-backed per-gateway manager."
+   },
+   {
+    "card_id": "K81477b89",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly grounds no action in system-held keys, live host-specific selection, and unchanged trust and hostname checks."
+   },
+   {
+    "card_id": "K2813eeab",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains the KeyChain callback design and why multiple X509 managers would not combine their selection behavior."
+   },
+   {
+    "card_id": "K73122e10",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly recognizes supported custom-manager construction over KeyChain and intact platform trust."
+   },
+   {
+    "card_id": "Kc7275116",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately explains the intentional per-gateway KeyChain manager and why factory provenance alone establishes no defect."
+   },
+   {
+    "card_id": "Ka58bb476",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The KeyChain and host-selection rationale is correct and specific. The claim that MtlsKeyManagerTest covers renewal and revoked grants is unsupported by that test file."
+   },
+   {
+    "card_id": "K57fec149",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "The diff changes alias fallback but leaves SSLContext.init receiving the directly constructed MtlsKeyManager, so the reported condition is unchanged. The description accurately explains the separate behavior change."
+   },
+   {
+    "card_id": "Kf9efa56b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly connects system-picker aliases to KeyChain callbacks and confirms unchanged default trust and hostname verification."
+   },
+   {
+    "card_id": "Kc9f055a8",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The central reason correctly distinguishes KeyChain client identity selection from server validation. Its speculation about the rule preventing managers from skipping validation is unsupported."
+   },
+   {
+    "card_id": "K65bddecc",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Concise and code-specific: host-dependent KeyChain client credentials are separate from default server trust."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

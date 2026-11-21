@@ -1,0 +1,79 @@
+{
+ "unit": "co_bdc0d1804c88",
+ "phase": "phase2",
+ "order": [
+  "Ke462e222"
+ ],
+ "card_sha256": {
+  "Ke462e222": "b2793458c857f085"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive for cryptographic misuse. In AccessPointsAdapterData.calculateChildType (and the identical GraphWrapper.calculateGraphType), MD5 runs over the app's own public package name (mainActivity.packageName). The 16-byte digest is then reduced to a 32-bit Int with ByteArray.contentHashCode(). That Int is compared with the hard-coded constants TYPE1/TYPE2/TYPE3 in GraphConstants.kt (1147798476, 535509942, 1256180258). These are precomputed fingerprints of the official application IDs: com.vrem.wifianalyzer, plus the .BETA/debug suffix variants from app/build.gradle. The result sets Configuration.size to SIZE_MAX or SIZE_MIN. Configuration.sizeAvailable then quietly degrades Cache signal averaging (Cache.kt:64/88) and adds an \"S\" flag in AboutFragment. So this is an obfuscated anti-repackaging or clone-detection check. It is not a security control. No secret, password, signature, integrity check of untrusted data, stored data or protocol is involved. The input is a public string, the comparison has only 32 bits, and anyone who repackages the app can patch the comparison out. Collision resistance therefore protects nothing, and SHA-256 adds no security. Changing the algorithm would require recomputing all three magic constants. If any one is wrong, the official build silently drops to SIZE_MIN and shows degraded signal readings. That is a regression for real users that unit tests (which mock sizeAvailable or test size() only with the constants themselves) would not catch. A PR that changes the digest must recompute all three constants correctly; that is its regression risk.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For a cleanup PR, replace the reported MD5 use with an equivalent package-classification mechanism, or change the digest together with its expected comparison values. Merely replacing the algorithm name is insufficient.",
+   "Keep GraphWrapper's equivalent check consistent. If shared TYPE constants change, update every affected producer and consumer together, including the TYPE1 exception fallback.",
+   "Add unit tests asserting actual configuration outcomes for the release and .BETA package names, other recognized cases, an unrecognized package, and any retained exception fallback. Existing adapter tests only verify that size is assigned."
+  ],
+  "must_not_break": [
+   "The official builds (applicationId com.vrem.wifianalyzer and its .BETA/debug suffix variants) must still compute a value equal to TYPE1/TYPE2/TYPE3, so Configuration.size stays SIZE_MAX and sizeAvailable stays true. Changing the digest without correctly recomputing all three constants would silently degrade Cache signal averaging and the About screen for every real user.",
+   "AccessPointsAdapterData.calculateChildType and GraphWrapper.calculateGraphType must stay consistent with each other and with the shared constants in GraphConstants.kt.",
+   "The fallback getOrDefault(TYPE1) on exception (official behaviour when the digest is unavailable) must be kept.",
+   "minSdk 24 support: any digest used must exist on all supported Android versions (MD5 and SHA-256 both do).",
+   "Existing unit tests (GraphWrapperTest size(TYPE1..TYPE4), ConfigurationTest, CacheTest, AboutFragmentTest) and the jacoco coverage gate.",
+   "Preserve recognized-package selection of SIZE_MAX (4096), unrecognized-package selection of SIZE_MIN (1024), and the existing SIZE_MAX outcome on calculation failure.",
+   "Preserve scan cache settings, averaging, signal-level adjustment and clamping behavior through Configuration.sizeAvailable; changing screens must not cause inconsistent package classification.",
+   "Preserve access-point filtering, sorting, grouping, and expansion behavior.",
+   "Preserve displayed and exported signal strength and derived distance for the same scan inputs. No digest storage migration or protocol change is needed; the hash itself is not stored, exported, or exchanged with a peer.",
+   "Retain Android API 24 support and both release and debug/.BETA builds without introducing a provider requirement or raising minSdk."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 27,
+ "tokens": {
+  "input_tokens": 54202,
+  "cached_input_tokens": 35072,
+  "output_tokens": 912,
+  "reasoning_output_tokens": 344
+ },
+ "turns": 1,
+ "tool_calls": 2,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "235eaa898a954870",
+ "finished_at": "2026-11-17T19:07:59-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Ke462e222",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "It correctly identifies a non-security package discriminator, but bases its no-action decision on inability to run hashes and an unsupported claim that only maintainers can make a safe correction. The valid reason is that MD5 collision resistance protects nothing here, making this a false positive."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

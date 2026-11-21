@@ -1,0 +1,155 @@
+{
+  "schema_version": 2,
+  "spec_id": "MemoryLeakSpec",
+  "name": "MemoryLeakSpec",
+  "applies_to_types": [
+    "unresolved.MemoryLeak"
+  ],
+  "source_title": "Requested canonical CrySL raw source for MemoryLeak (not found: HTTP 404)",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/MemoryLeak.crysl",
+  "source_verified": false,
+  "protocol": "(outOfMemoryErrorTextObserved | outOfMemoryErrorRuntimeThrown)*",
+  "important_note": "No published CrySL rule or documented API type named MemoryLeak was found. \"unresolved.MemoryLeak\" is a schema-preserving unresolved identifier, not a verified Java or Android API class. The representative messages evidence allocation failures only; they do not establish a retaining-reference memory leak, an API protocol violation, or responsibility of the reported methods.",
+  "events": [
+    {
+      "name": "outOfMemoryErrorTextObserved",
+      "api_patterns": [
+        "OutOfMemoryError",
+        "java.lang.OutOfMemoryError",
+        "Java heap space",
+        "Failed to allocate byte buffer"
+      ],
+      "condition": "Observed when source, logs, or a finding contains one of these literal substrings. Its predicate is satisfied only when independently supported runtime evidence shows a java.lang.OutOfMemoryError attributable to the analyzed execution; a comment, catch block, fixture, or manually constructed message does not satisfy it."
+    },
+    {
+      "name": "outOfMemoryErrorRuntimeThrown",
+      "api_patterns": [
+        "throw new OutOfMemoryError(",
+        "throw OutOfMemoryError(",
+        "catch (OutOfMemoryError",
+        "catch (java.lang.OutOfMemoryError"
+      ],
+      "condition": "Observed when a matching source construct is present. The predicate is not satisfied by source matching alone: a runtime allocation failure must be independently evidenced. An explicit throw or catch does not prove VM allocation failure or a memory leak."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That net.osmand.plus.render.MapRenderer.drawVectorTiles retains objects after they are no longer needed.",
+    "That com.simplemobiletools.gallery.pro.helpers.ThumbnailLoader.generateThumbnail retains objects after they are no longer needed.",
+    "That either representative finding is caused by a Java-heap leak rather than a single oversized or concurrent allocation.",
+    "That a direct/native byte-buffer allocation failure is equivalent to Java-heap exhaustion.",
+    "That an OutOfMemoryError establishes a CrySL protocol violation.",
+    "That a class named MemoryLeak belongs to java.lang, Android, OsmAnd, Simple Mobile Tools Gallery, or the CROSSINGTUD corpus.",
+    "That the two messages identify the same allocation domain, root cause, runtime configuration, or responsible library."
+  ],
+  "semantic_scope": "At most, this provisional detector shape observes textual or runtime evidence of OutOfMemoryError-like allocation failure, including the supplied method-associated messages. No verified MemoryLeak CrySL API rule, target class, method signature, typestate order, constraint, or predicate was available. The reported application/library classes and methods are report locations, not evidence that either is the governed API type.",
+  "detector_semantics": {
+    "claim": "An analyzed execution or finding contains evidence of an out-of-memory allocation failure near a reported code location.",
+    "predicates": [
+      "A finding or message contains an OutOfMemoryError-related literal.",
+      "Optionally, runtime evidence confirms that java.lang.OutOfMemoryError was thrown.",
+      "The report associates that evidence with a class and method location."
+    ],
+    "limitations": [
+      "A text match is not proof that the error was thrown.",
+      "A thrown OutOfMemoryError is not proof of a memory leak.",
+      "The supplied findings provide neither heap-dump dominator evidence nor allocation/retention history.",
+      "No verified target API named MemoryLeak or CrySL event model was found.",
+      "The reported class and method names are application/library locations, not evidence that either is the governed API type."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "The documented Java platform API java.lang.OutOfMemoryError is thrown when the JVM cannot allocate an object because it is out of memory and garbage collection cannot make more memory available.",
+      "No authoritative documentation was found for an API type named MemoryLeak or for MemoryLeakSpec."
+    ],
+    "preconditions": [
+      "For java.lang.OutOfMemoryError, an allocation attempt must fail because memory cannot be made available; the exact memory domain and detail message depend on JVM or runtime context.",
+      "A memory-leak conclusion requires additional retention evidence, such as a heap dump showing unexpected dominators or objects remaining reachable across expected lifecycle boundaries."
+    ],
+    "unknowns": [
+      "The actual fully qualified type intended by MemoryLeakSpec.",
+      "Whether MemoryLeakSpec is a local or project-specific rule rather than a published CrySL rule.",
+      "Whether the detector consumes source text, bytecode, crash logs, heap dumps, profiler traces, or static-analysis facts.",
+      "Whether either reported failure occurred in Java heap, direct/native memory, graphics memory, or another memory domain.",
+      "The Android/runtime versions, heap limits, allocation sizes, concurrency, and device memory state for the representative findings."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "Possible out-of-memory failure evidence was observed at a reported location.",
+    "runtime_claim": "The runtime failed to satisfy at least one allocation request; this may result from retained memory, workload size, allocation pressure, heap configuration, native-memory pressure, or other causes.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A primary source defining MemoryLeakSpec or MemoryLeak.crysl, including its SPEC target, EVENTS, ORDER, CONSTRAINTS, REQUIRES, and ENSURES sections.",
+      "A verified fully qualified API type whose simple name is exactly MemoryLeak.",
+      "If the rule is local, the repository path, revision, and rule-loader mapping from MemoryLeakSpec to its source file."
+    ],
+    "runtime": [
+      "A stack trace or crash record proving a runtime java.lang.OutOfMemoryError and preserving its exact detail message.",
+      "Heap-dump and dominator/reference-path analysis to establish unexpected object retention for a Java-heap leak claim.",
+      "Native/direct-memory diagnostics for buffer or renderer allocation failures, plus allocation size, memory limits, and concurrent-workload data.",
+      "Reproduction under controlled heap and device/runtime settings."
+    ],
+    "compatibility": [
+      "Java and Android runtime versions.",
+      "Device ABI, graphics backend, and renderer/library versions for vector-tile allocation failures.",
+      "Media codec and thumbnail-extraction implementation versions for 4K-video thumbnail allocation failures.",
+      "Configured heap, direct-memory, process-memory, and graphics-memory limits."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A one-time or short-lived allocation exceeds the configured Java heap while no objects are improperly retained.",
+    "Parallel vector-tile rendering creates transient peak memory pressure without a persistent leak.",
+    "Generating a 4K video thumbnail requires a transient decoded frame or bitmap larger than available memory.",
+    "The failure originates in direct/native, graphics, codec, or JNI allocation rather than the Java heap.",
+    "The matching text occurs in a log fixture, test, comment, catch block, or synthetic exception message.",
+    "The method is merely the allocation site; the actual retained-object owner is elsewhere.",
+    "The heap limit is insufficient for the intended workload or device class."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/MemoryLeak.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/MemoryLeak.crysl",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/OutOfMemoryError.html",
+    "https://docs.oracle.com/en/java/javase/21/troubleshoot/troubleshooting-memory-leaks.html"
+  ],
+  "unknowns": [
+    "What repository or artifact originally defines MemoryLeakSpec.",
+    "Whether a canonical MemoryLeak.crysl exists outside the attempted CROSSINGTUD Crypto-API-Rules path.",
+    "The real fully qualified governed type; no verified type with simple name MemoryLeak was discovered.",
+    "The intended event set and event-order protocol.",
+    "The intended leak predicate and whether it requires retention, allocation, exception, log, or profiler evidence.",
+    "Whether the detector is meant to diagnose Java-heap leaks, direct/native-memory leaks, graphics-memory pressure, or generic allocation failures.",
+    "Whether the representative OsmAnd and Gallery locations are inputs to the rule, merely report locations, or unrelated examples."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/MemoryLeak.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "net.osmand.plus.render.MapRenderer",
+        "method": "drawVectorTiles",
+        "message": "OutOfMemoryError: Failed to allocate byte buffer for vector tiles map rendering."
+      },
+      {
+        "class": "com.simplemobiletools.gallery.pro.helpers.ThumbnailLoader",
+        "method": "generateThumbnail",
+        "message": "OutOfMemoryError: Java heap space while generating 4K video thumbnail."
+      }
+    ],
+    "expected_api_simple_name": "MemoryLeak",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/MemoryLeak.crysl"
+  }
+}

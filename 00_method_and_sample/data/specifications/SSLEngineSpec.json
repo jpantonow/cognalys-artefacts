@@ -1,0 +1,133 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule declares no events for `getEnabledProtocols`, `getEnabledCipherSuites`, `beginHandshake`, `wrap`, `unwrap`, session inspection, or certificate/hostname validation.",
+      "The rule text does not specify a provider, JDK release, TLS endpoint role, transport, trust-manager configuration, or peer configuration.",
+      "The rule text alone does not document analyzer behavior for alias resolution, infeasible paths, repeated setter events, reflection, generated code, or calls hidden behind library boundaries."
+    ],
+    "predicates": [
+      "`elements(protocols) in {\"TLSv1.2\", \"TLSv1.3\"}`.",
+      "`elements(protocols) in {\"TLSv1.2\"} => elements(cipherSuites) in {\"TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\", \"TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384\", \"TLS_DHE_DSS_WITH_AES_128_GCM_SHA256\", \"TLS_DHE_DSS_WITH_AES_256_GCM_SHA384\", \"TLS_DHE_RSA_WITH_AES_128_GCM_SHA256\", \"TLS_DHE_RSA_WITH_AES_256_GCM_SHA384\", \"TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384\", \"TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384\"}`.",
+      "`elements(protocols) in {\"TLSv1.3\"} => elements(cipherSuites) in {\"TLS_AES_128_GCM_SHA256\", \"TLS_AES_256_GCM_SHA384\"}`."
+    ],
+    "claim": "The accepted event language is exactly one cipher-suite-enable event followed by one protocol-enable event, or the reverse. On a satisfying trace, the rule ensures `generatedSSLEngine[this]`."
+  },
+  "unknowns": [
+    "The supplied rule does not define the detector implementation's exact semantics for `elements(...)` beyond the written constraints, including handling of mixed protocol arrays, unknown array contents, aliases, and path joins.",
+    "The supplied rule does not state whether repeated enablement calls are rejected, superseded, or analyzed as separate traces by the detector implementation.",
+    "The source URL targets a moving repository branch rather than an immutable commit; the fetched rule was verified, but a future fetch could differ.",
+    "The target runtime's JSSE/provider version, supported protocol and cipher-suite inventory, security-policy restrictions, and peer capabilities are not identified by the finding or by the rule.",
+    "The rule supplies no evidence about actual handshake completion, negotiated session values, certificate validation, hostname verification, or application-level use of the connection."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "`setEnabledCipherSuites(String[])` replaces the engine's enabled cipher-suite set with the supplied names after a successful call. Each supplied name must be supported by that engine.",
+      "`setEnabledProtocols(String[])` replaces the engine's enabled protocol-version set with the supplied names after a successful call. Each supplied protocol must be supported by that engine.",
+      "Configuration should be performed before the first `wrap()`, `unwrap()`, or `beginHandshake()` that triggers the initial handshake. Configuration changes after handshake start are for a next handshake rather than the current one.",
+      "`setSSLParameters(SSLParameters)` applies non-null protocol and cipher-suite parameters by calling the corresponding enablement setters."
+    ],
+    "preconditions": [
+      "For each direct setter, the array must be non-null and every requested value must appear in that engine's supported protocols or supported cipher suites, respectively; otherwise the documented API throws `IllegalArgumentException`.",
+      "For the configuration to affect the intended initial connection, the relevant successful configuration must precede handshake initiation.",
+      "A successful connection additionally needs a mutually usable protocol/cipher-suite combination with the peer; no common suite prevents connection establishment."
+    ],
+    "unknowns": [
+      "The documentation does not guarantee that every suite hard-coded by the detector rule is supported by every provider or runtime.",
+      "The documentation does not make an enabled value a guarantee of selection; selection depends on negotiation and other runtime restrictions.",
+      "The supplied detector rule does not state whether or how it models the JDK's indirect setter calls made by `setSSLParameters(...)`."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLEngine.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/SSLEngine.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observation clause: `ec1: setEnabledCipherSuites(cipherSuites);`, binding the runtime `String[]` argument as `cipherSuites`. This event has no unconditional cipher-suite allowlist. Predicate clauses are: `elements(protocols) in {\"TLSv1.2\"} => elements(cipherSuites) in {\"TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\", \"TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384\", \"TLS_DHE_DSS_WITH_AES_128_GCM_SHA256\", \"TLS_DHE_DSS_WITH_AES_256_GCM_SHA384\", \"TLS_DHE_RSA_WITH_AES_128_GCM_SHA256\", \"TLS_DHE_RSA_WITH_AES_256_GCM_SHA384\", \"TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384\", \"TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384\"}`; and `elements(protocols) in {\"TLSv1.3\"} => elements(cipherSuites) in {\"TLS_AES_128_GCM_SHA256\", \"TLS_AES_256_GCM_SHA384\"}`. Predicate satisfaction concerns array contents at execution, not whether an argument is spelled as an inline source literal.",
+      "name": "EnableCipher (ec1)",
+      "api_patterns": [
+        "setEnabledCipherSuites("
+      ]
+    },
+    {
+      "condition": "Observation clause: `ep1: setEnabledProtocols(protocols);`, binding the runtime `String[]` argument as `protocols`. Its predicate is `elements(protocols) in {\"TLSv1.2\", \"TLSv1.3\"}`. The bound runtime protocol value is also the premise of the conditional cipher-suite predicates associated with `EnableCipher`; satisfaction depends on array contents at execution, not source spelling.",
+      "name": "EnableProtocol (ep1)",
+      "api_patterns": [
+        "setEnabledProtocols("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "This specification establishes only the rule-defined configuration-event trace, the stated argument-value predicates, and the rule's `generatedSSLEngine[this]` postcondition. It does not prove that either setter succeeds, that a handshake occurs, that a particular protocol or cipher suite is negotiated, or that peer authentication and hostname validation are sound.",
+  "forbidden_inferences_without_evidence": [
+    "Do not substitute a similarly named `*Spec` API from another framework: the rule explicitly names only `javax.net.ssl.SSLEngine`.",
+    "Do not infer that a direct setter invocation succeeded. The documented setters reject null arrays and unsupported protocol or cipher-suite names with `IllegalArgumentException`.",
+    "Do not infer that an enabled protocol or cipher suite was negotiated. Enabled candidates might never be used because of peer support, restrictions, key/certificate availability, or lack of an enabled compatible suite.",
+    "Do not infer certificate validation, hostname verification, peer identity, application-protocol negotiation, transport delivery, or handshake completion from this rule; none is an event or constraint in the supplied rule.",
+    "Do not infer that calls to `setSSLParameters(...)` are themselves rule events. The JDK method may internally apply protocol and cipher-suite parameters through the setters, but `setSSLParameters` is not named in this rule's EVENTS section.",
+    "Do not infer that one engine object's event can satisfy another engine object's rule instance without receiver-alias evidence."
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, successful setters configure candidate protocol and cipher-suite sets. A secure connection requires a successful handshake and peer-compatible negotiated parameters; enabled candidates can remain unused.",
+    "equivalent": false,
+    "detector_claim": "The rule recognizes a constrained pair of protocol/cipher-suite configuration events and labels a satisfying receiver with `generatedSSLEngine[this]`; the protocol array is limited to the two literal protocol names in the rule, with additional conditional suite allowlists."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "The active provider must support every configured protocol and cipher-suite name, or the direct setter fails.",
+      "The peer and local endpoint must have a mutually usable configuration; a compatible suite must exist for a connection to be established.",
+      "Certificate, private-key, policy, endpoint-role, and peer-support conditions must permit use of the intended enabled values; enabled values may otherwise never be selected."
+    ],
+    "runtime": [
+      "The actual non-null array values at each call must satisfy the rule's `elements(...)` predicates; variable names and literal syntax alone are not the runtime condition.",
+      "Both setter calls must return successfully, and no later configuration must replace the relevant enabled values before the handshake of interest. The API permits reconfiguration for a subsequent handshake.",
+      "The applicable handshake must actually begin and complete using the intended engine configuration."
+    ],
+    "source_level": [
+      "Evidence of both source-level invocation patterns, `setEnabledCipherSuites(` and `setEnabledProtocols(`, attributed to the same governed engine instance or supported by receiver-alias analysis.",
+      "Evidence that the receiver resolves to `javax.net.ssl.SSLEngine` or to a subtype under the detector's type-matching semantics; the rule itself names `javax.net.ssl.SSLEngine`.",
+      "Evidence that the execution trace can realize one of the two rule orders rather than merely containing unrelated calls on incompatible paths."
+    ]
+  },
+  "name": "SSLEngineSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLEngine.crysl",
+  "applies_to_types": [
+    "javax.net.ssl.SSLEngine"
+  ],
+  "source_title": "Crypto-API-Rules: SSLEngine.crysl (`SPEC javax.net.ssl.SSLEngine`)",
+  "semantic_scope": "For every finding of this rule, the detector observes the two configuration calls named by the `javax.net.ssl.SSLEngine` rule—enabling cipher suites and enabling protocol versions—their order, and the bound array values against the stated `elements(...)` constraints. It does not itself observe a handshake, negotiated session parameters, successful method return, later reconfiguration, or peer-side behavior. A detector implementation using subtype-aware target matching can apply the named base-type rule to subtype receivers; the rule itself names only the base API type.",
+  "spec_id": "SSLEngineSpec",
+  "known_false_positive_shapes": [
+    "A reported noncompliant configuration call that always throws before a handshake—for example because the provider does not support the requested value—does not establish an actual insecure negotiated channel. The setters are documented to reject unsupported names and null arrays.",
+    "Analyzer-dependent: array contents are computed through aliases, configuration files, reflection, factories, or interprocedural flows that satisfy the runtime predicate but are not resolved precisely by the detector.",
+    "Analyzer-dependent: the two calls occur only on mutually exclusive, infeasible, or exception-terminated paths, so no single runtime execution realizes the purported trace.",
+    "A configuration finding alone can be misread as a negotiated-connection finding even though enabled values may never be used because of peer capability, restrictions, unavailable certificates/keys, or missing compatible suites."
+  ],
+  "protocol": "(EnableCipher, EnableProtocol) | (EnableProtocol, EnableCipher)",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLEngine.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:javax.net.ssl.SSLEngine"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.conscrypt.ConscryptEngineSocket",
+        "method": "setEnabledProtocols",
+        "message": "expecting one of TLSv1.2,TLSv1.3 but found TLSv1"
+      }
+    ],
+    "expected_api_simple_name": "SSLEngine",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.net.ssl.SSLEngine",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLEngine.crysl"
+  }
+}

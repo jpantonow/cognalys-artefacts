@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/vitorpamplona/amethyst/pull/4642",
+    "state": "closed",
+    "finding_id": "39bba5f1270f",
+    "spec": "GCMParameterSpecSpec",
+    "csv_class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+    "method_name": "decrypt",
+    "title": "Generate random IVs for AES-GCM encryption",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:34.470213+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "vitorpamplona",
+        "kind": "comment",
+        "body": "Thanks for looking into this, and for saying up front how you found it. I'm going to close it, because the current code already uses a fresh random IV for every encryption. Here's why:\r\n\r\n**The provider already generates the IV.** `cipher.init(Cipher.ENCRYPT_MODE, key)` is called with no `AlgorithmParameterSpec`. The JCE contract says the provider must then generate the parameters itself, and SunJCE builds a 12-byte GCM IV from `SecureRandom`. We checked on JDK 21:\r\n\r\n```java\r\nCipher c = Cipher.getInstance(\"AES/GCM/NoPadding\");\r\nfor (int i = 0; i < 100_000; i++) { c.init(Cipher.ENCRYPT_MODE, key); ivs.add(hex(c.getIV())); c.doFinal(new byte[1]); }\r\n// distinct IVs: 100000/100000, all 12 bytes\r\n\r\nc.init(Cipher.ENCRYPT_MODE, key, new GCMParameterSpec(128, c.getIV()));\r\n// InvalidAlgorithmParameterException: Cannot reuse iv for GCM encryption\r\n```\r\n\r\nSo every call gets a new random IV, and the provider refuses to reuse one even when asked to. RVSec probably flagged this because the IV is created inside the provider, where an API-level runtime checker can't trace it back to a random source. It's a false positive, not a weakness.\r\n\r\n**The analysis and the change cover different code.** The patch changes `SecretEncryption.jvm.kt`, which is the **desktop** (`jvmMain`) actual. An Android run doesn't execute that file, and `:amethyst:assembleFdroidDebug` doesn't compile it, so neither the finding nor the build check reached the changed code. Android has its own actual, `SecretEncryption.android.kt`, backed by AndroidKeyStore. That actual has to let the provider choose the IV: keystore keys refuse an IV supplied by the caller unless `setRandomizedEncryptionRequired(false)` is set, which we don't want.\r\n\r\n**The patch also removes the per-thread `Cipher` cache** that mirrors the Android actual. A new `Cipher` and `SecureRandom` on every call is safe, but it adds cost and makes the two actuals diverge without improving security.\r\n\r\nPlease don't let this put you off. Crypto misus"
+      }
+    ]
+  }
+]

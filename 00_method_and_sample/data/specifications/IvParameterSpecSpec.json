@@ -1,0 +1,155 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule text does not define which sources, library calls, interprocedural summaries, or data transformations establish `randomized[iv]`.",
+      "The rule text does not specify whether `randomized[iv]` concerns every byte of the array, a selected subrange, a provenance label, or a runtime entropy measurement.",
+      "The rule declares constraints over `offset` and `len` even for `c1`, whose event declaration binds only `iv`.",
+      "The human-readable wording that no randomized source was observed is an analyzer result derived from the required predicate; the rule itself declares predicates but no error-message text.",
+      "The rule does not observe cipher initialization, cipher mode, encryption versus decryption, IV reuse, nonce uniqueness, key scope, or a later use of the constructed object."
+    ],
+    "predicates": [
+      "`randomized[iv]` is a REQUIRES predicate for the input byte array.",
+      "`preparedIV[this]` is an ENSURES predicate for the constructed `IvParameterSpec` object."
+    ],
+    "claim": "For either matched constructor event, the CrySL rule requires `randomized[iv]` and ensures `preparedIV[this]`."
+  },
+  "unknowns": [
+    "Which detector implementation, CrySL compiler, predicate-source configuration, and interprocedural modeling produced a finding is unspecified; these determine what is recognized as `randomized[iv]`.",
+    "The supplied source URL tracks a moving `master` branch; an immutable content hash or revision-pinned URL would be needed to identify an exact rule revision.",
+    "The intended binding and enforcement behavior of `offset` and `len` for the one-argument `c1` event cannot be determined from the supplied rule text.",
+    "The rule does not define the meaning or granularity of `randomized[iv]`, including whether it applies to all bytes or only a selected range.",
+    "No finding-specific source code, dataflow graph, cipher transformation, operation direction, provider, key lifetime, or runtime IV value was supplied.",
+    "The rule does not state whether `randomized[iv]` is intended only for freshly generated encryption IVs or also for IV parameter objects used during decryption."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "`javax.crypto.spec.IvParameterSpec` represents an initialization vector.",
+      "`IvParameterSpec(byte[] iv)` uses all bytes of the supplied array; `IvParameterSpec(byte[] iv, int offset, int len)` uses the selected range.",
+      "The API copies the selected bytes, and `getIV()` returns a new array; subsequent modification of the caller's input array does not modify the object."
+    ],
+    "preconditions": [
+      "For `IvParameterSpec(byte[] iv)`, the documented API throws `NullPointerException` if `iv` is null.",
+      "For `IvParameterSpec(byte[] iv, int offset, int len)`, the documented API throws `IllegalArgumentException` if `iv` is null or the requested range is too short, and `ArrayIndexOutOfBoundsException` if `offset` or `len` is negative.",
+      "The OpenJDK implementation delegates the one-argument constructor to `(iv, 0, iv.length)` and permits `len == 0`; thus the rule's `len > 0` constraint is stricter than the documented negative-length rejection where that rule constraint is applied."
+    ],
+    "unknowns": [
+      "The class documentation does not prescribe which cipher transformations require an IV, the required IV length for a transformation, or whether an IV must be random rather than unique.",
+      "The constructors do not generate randomness or validate cryptographic entropy; they copy caller-supplied bytes."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IvParameterSpec.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/spec/IvParameterSpec.html",
+    "https://raw.githubusercontent.com/openjdk/jdk/master/src/java.base/share/classes/javax/crypto/spec/IvParameterSpec.java",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/Cipher.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observation condition: constructor event `IvParameterSpec(iv)`. Rule-wide declarative requirements are `randomized[iv]`, `length[iv] >= offset + len`, `offset >= 0`, and `len > 0`; these are not runtime `if` conditions. `offset` and `len` are not bound by this event declaration.",
+      "name": "c1",
+      "api_patterns": [
+        "IvParameterSpec(iv)"
+      ]
+    },
+    {
+      "condition": "Observation condition: constructor event `IvParameterSpec(iv, offset, len)`. Rule-wide declarative requirements are `randomized[iv]`, `length[iv] >= offset + len`, `offset >= 0`, and `len > 0`; these are not runtime `if` conditions.",
+      "name": "c2",
+      "api_patterns": [
+        "IvParameterSpec(iv, offset, len)"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "This is a construction and static-provenance rule, not proof that IV bytes are random, unique, secret, fresh, mode-compatible, or insecure. It neither observes a later cipher operation nor establishes whether the parameter object is used for encryption, decryption, wrapping, or unwrapping.",
+  "forbidden_inferences_without_evidence": [
+    "Failure to observe `randomized[iv]` does not prove that the IV is constant, predictable, attacker-controlled, reused, or insecure at runtime.",
+    "Satisfying `randomized[iv]` does not, from this rule alone, prove uniqueness per key, freshness per encryption, or compliance with a mode-specific nonce requirement.",
+    "A matching constructor call does not prove that the resulting object is passed to `Cipher.init`, or that a cipher is used for encryption, decryption, wrapping, or unwrapping.",
+    "A matching constructor call does not identify the cipher transformation, provider, key, eventual IV length requirements, or compatibility with the eventual algorithm.",
+    "The rule does not govern similarly named `*Spec` types from other Java, Android, Kotlin, or third-party frameworks."
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, the constructors defensively copy caller-supplied IV bytes or the requested range; they do not obtain random bytes themselves. Requirements for randomness, unpredictability, or uniqueness depend on the actual cipher operation and mode. For example, JCA `Cipher` documentation requires different GCM IV values for encryption with a given key.",
+    "equivalent": false,
+    "detector_claim": "The detector rule requires a static `randomized[iv]` predicate on the array argument to either constructor and ensures `preparedIV[this]` after the constructor event."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "The concrete cipher transformation and provider.",
+      "The provider's accepted IV length and parameter requirements for that transformation.",
+      "Mode-specific requirements, including whether the operation requires unpredictability, uniqueness, or permits externally supplied IVs."
+    ],
+    "runtime": [
+      "How the selected IV bytes are generated or obtained during execution, including whether relevant bytes originate from a cryptographically suitable random source when the operation requires randomness.",
+      "The actual cipher operation and mode, whether it is encryption or decryption, the relevant key scope, and whether IV or nonce values are reused.",
+      "For the range constructor, whether the selected slice—not merely another portion of the backing array—is the value used by the cryptographic operation."
+    ],
+    "source_level": [
+      "Evidence that the invoked constructor resolves to `javax.crypto.spec.IvParameterSpec(byte[])` or `javax.crypto.spec.IvParameterSpec(byte[], int, int)`, rather than a namesake API.",
+      "For a REQUIRES finding, dataflow or provenance evidence showing whether the detector can establish `randomized[iv]` for the actual byte-array argument.",
+      "For the range constructor, analyzable values or relations for `iv`, `offset`, and `len` to assess the declared constraints."
+    ]
+  },
+  "name": "IvParameterSpecSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IvParameterSpec.crysl",
+  "applies_to_types": [
+    "javax.crypto.spec.IvParameterSpec"
+  ],
+  "source_title": "CrySL rule for javax.crypto.spec.IvParameterSpec",
+  "semantic_scope": "For every finding of this rule, the observed API surface is construction of `javax.crypto.spec.IvParameterSpec` through `IvParameterSpec(byte[])` or `IvParameterSpec(byte[], int, int)`. The rule requires static randomized provenance for the input array and ensures a prepared-IV predicate for the new object; it does not directly observe later cryptographic use of that object.",
+  "spec_id": "IvParameterSpecSpec",
+  "known_false_positive_shapes": [
+    "A valid IV read from a ciphertext, message, database, configuration, or protocol record for decryption may lack a statically modeled `randomized[iv]` provenance, although generating a new random IV during decryption would be inappropriate.",
+    "An IV produced by a suitable helper, native implementation, dependency, separate module, or unmodeled interprocedural path may not receive the required predicate.",
+    "An IV whose bytes are copied, encoded, decoded, serialized, or sliced through transformations lacking analyzer summaries may lose recognizable randomized provenance.",
+    "A call can be API-valid while conflicting with the rule's stronger `len > 0` condition: the OpenJDK implementation permits a zero-length selected range, while application of that rule condition to `c1` is unresolved.",
+    "A finding can be over-interpreted as proof of an encryption vulnerability even though the rule establishes no later encryption use."
+  ],
+  "protocol": "Con := c1 | c2; ORDER Con",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IvParameterSpec.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:javax.crypto.spec.IvParameterSpec"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1",
+        "method": "fetch",
+        "message": "no randomized source of the iv given to IvParameterSpec(byte[]) was observed"
+      },
+      {
+        "class": "com.google.android.gms.internal.ads.zzbbe",
+        "method": "zzb",
+        "message": "no randomized source of the iv given to IvParameterSpec(byte[]) was observed"
+      },
+      {
+        "class": "org.quantumbadger.redreader.common.General",
+        "method": "parseConfig",
+        "message": "no randomized source of the iv given to IvParameterSpec(byte[]) was observed"
+      },
+      {
+        "class": "com.google.android.vending.licensing.AESObfuscator",
+        "method": "<init>",
+        "message": "no randomized source of the iv given to IvParameterSpec(byte[]) was observed"
+      },
+      {
+        "class": "io.treehouses.remote.ssh.Encryptor",
+        "method": "encrypt",
+        "message": "unknown"
+      }
+    ],
+    "expected_api_simple_name": "IvParameterSpec",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.crypto.spec.IvParameterSpec",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IvParameterSpec.crysl"
+  }
+}

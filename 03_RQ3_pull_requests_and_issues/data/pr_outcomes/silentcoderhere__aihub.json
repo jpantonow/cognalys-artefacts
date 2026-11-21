@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/SilentCoderHere/aihub/pull/279",
+    "state": "merged",
+    "finding_id": "5f907c4459c9",
+    "spec": "WebViewMixedContentSpec",
+    "csv_class": "com.foss.aihub.ui.webview.CustomWebChromeClient",
+    "method_name": "onCreateWindow",
+    "title": "Disallow mixed content in the service and popup WebViews",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:40:26.998152+00:00",
+    "maintainer_feedback": []
+  }
+]

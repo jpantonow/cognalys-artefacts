@@ -1,0 +1,72 @@
+diff --git a/app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt b/app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt
+index fdc3802..4200902 100644
+--- a/app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt
++++ b/app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt
+@@ -1,10 +1,10 @@
+ package com.ivanovsky.passnotes.data.repository.file.webdav
+ 
+-import android.annotation.SuppressLint
+ import com.ivanovsky.passnotes.BuildConfig
++import java.security.KeyStore
+ import java.security.SecureRandom
+-import java.security.cert.X509Certificate
+ import javax.net.ssl.SSLContext
++import javax.net.ssl.TrustManagerFactory
+ import javax.net.ssl.X509TrustManager
+ import okhttp3.OkHttp
+ import okhttp3.OkHttpClient
+@@ -28,42 +28,27 @@ object HttpClientFactory {
+             Timber.w("--------------------------------------------")
+             Timber.w("--                                        --")
+             Timber.w("--                                        --")
+-            Timber.w("-- SSL Certificate validation is disabled --")
++            Timber.w("-- SSL hostname verification is disabled   --")
+             Timber.w("--                                        --")
+             Timber.w("--                                        --")
+             Timber.w("--------------------------------------------")
+ 
+-            val unsecuredTrustManager = createUnsecuredTrustManager()
++            val trustManagerFactory = TrustManagerFactory.getInstance(
++                TrustManagerFactory.getDefaultAlgorithm()
++            )
++            trustManagerFactory.init(null as KeyStore?)
++            val trustManager = trustManagerFactory.trustManagers
++                .filterIsInstance<X509TrustManager>()
++                .firstOrNull()
++                ?: throw IllegalStateException("No X509TrustManager available")
+             val sslContext = SSLContext.getInstance("TLS")
+-            sslContext.init(null, arrayOf(unsecuredTrustManager), SecureRandom())
++            sslContext.init(null, arrayOf(trustManager), SecureRandom())
+ 
+-            builder.sslSocketFactory(sslContext.socketFactory, unsecuredTrustManager)
++            builder.sslSocketFactory(sslContext.socketFactory, trustManager)
+             builder.hostnameVerifier { _, _ -> true }
+         }
+ 
+         return builder.build()
+     }
+ 
+-    @SuppressLint("CustomX509TrustManager")
+-    private fun createUnsecuredTrustManager(): X509TrustManager {
+-        return object : X509TrustManager {
+-            @SuppressLint("TrustAllX509TrustManager")
+-            override fun checkClientTrusted(
+-                chain: Array<out X509Certificate>?,
+-                authType: String?
+-            ) {
+-            }
+-
+-            @SuppressLint("TrustAllX509TrustManager")
+-            override fun checkServerTrusted(
+-                chain: Array<out X509Certificate>?,
+-                authType: String?
+-            ) {
+-            }
+-
+-            override fun getAcceptedIssuers(): Array<X509Certificate> {
+-                return arrayOf()
+-            }
+-        }
+-    }
+ }
+\ No newline at end of file

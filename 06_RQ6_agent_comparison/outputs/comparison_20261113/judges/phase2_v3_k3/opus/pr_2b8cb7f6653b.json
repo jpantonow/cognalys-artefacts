@@ -1,0 +1,312 @@
+{
+ "unit": "pr_2b8cb7f6653b",
+ "phase": "phase2",
+ "order": [
+  "Kbdff4b30",
+  "K075af7b9",
+  "K96d8ca42",
+  "Ka8019b58",
+  "Kc008c406",
+  "K46ceac76",
+  "K7cfde027",
+  "Kacd3a182",
+  "K67e6e4c0",
+  "K6442afa3",
+  "K03ef71c0",
+  "K09d6070d",
+  "K4ff2a917",
+  "K8dcb8f89",
+  "Kcf2c7bc4",
+  "K101af675",
+  "Kf8ed3ce2",
+  "Kdbb0c3c6",
+  "K76b5b215",
+  "Kf8c93c09",
+  "K2462e17b",
+  "Kbbd30599"
+ ],
+ "card_sha256": {
+  "K03ef71c0": "e4e0f228b4e2cebe",
+  "K075af7b9": "14ad907f9b5c292f",
+  "K09d6070d": "b6a11f6c54887a50",
+  "K101af675": "73935e3176d6d23a",
+  "K2462e17b": "49b9974c54ea22b4",
+  "K46ceac76": "b60a8436f5a22e4a",
+  "K4ff2a917": "6720805b538bb9ea",
+  "K6442afa3": "26a53fa443ebacb8",
+  "K67e6e4c0": "67a28b1bf899c852",
+  "K76b5b215": "b789687d5e6beff0",
+  "K7cfde027": "fbcad4bcd117d4ba",
+  "K8dcb8f89": "cd006a4c8bbdf1ea",
+  "K96d8ca42": "3f9c71a87e9c90ef",
+  "Ka8019b58": "8a090289c96da67d",
+  "Kacd3a182": "55cd1d62b5a1a563",
+  "Kbbd30599": "419ea9903755a414",
+  "Kbdff4b30": "672a1d6aa2c01622",
+  "Kc008c406": "7f6d310b245059b2",
+  "Kcf2c7bc4": "a5eef7617027b87b",
+  "Kdbb0c3c6": "485a3dcb9fac1d2f",
+  "Kf8c93c09": "d8686338e7d010a5",
+  "Kf8ed3ce2": "38a3b8a5687dfab4"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The first finding is a real weakness. In HashUtils.deriveKey the user's shared \"Salt\" string is really the password: it is passed as the PBEKeySpec password, and the PBKDF2 salt is BuildConfig.APP_SALT + that same password. APP_SALT is built into the APK and defaults to the public value \"Salty@AES-256\" in app/build.gradle. So the salt is fixed and can be computed from the password; it is not random. An attacker can therefore build one dictionary of PBKDF2-SHA256 outputs (600k iterations) that works against every message made by every install of the official build. The salt does nothing to make each message different, and user-chosen shared keys are likely to be weak. The second finding (CipherSpec in encode) only follows from the first: the key passed to Cipher.init was derived from that PBEKeySpec. AES-GCM with a fresh 12-byte IV from SecureRandom and a 128-bit tag is fine and is not a separate problem. A fix is not a one-line change. The encoded string Base64(iv || ciphertext) is a format that users exchange between installs (the README describes swapping encrypted messages using a shared Salt). It is also stored in the Room history (MessageEntry.encodedMessage). The format has no salt field, which is why the salt is deterministic today. A fix has to generate a random salt (16+ bytes from SecureRandom) for each message, put it in the output with a version marker, and keep decoding the old format. Older app versions still could not read new messages. A careful contributor could send that PR, or could open an ISSUE that explains the precomputation risk and the compatibility cost and leaves the format decision to the maintainers. The salt really is fixed and public in the default build, and the report correctly points to it.\n\nSecond judge: The finding identifies a real KDF weakness. deriveKey uses the user-entered shared secret as the PBKDF2 password and APP_SALT concatenated with that same secret as its salt. APP_SALT defaults to \"Salty@AES-256\" and can be overridden at build time; neither source supplies an independent random KDF salt. Reusing a password therefore reuses its derived key across messages and compatible installations, allowing password-guessing work to be amortized. The CipherSpec finding propagates that upstream finding; it does not identify a separate cipher configuration defect. encode already generates a fresh 12-byte SecureRandom GCM IV and uses a 128-bit authentication tag. Simply inserting randomness into deriveKey would break decryption: ciphertext currently contains only Base64(IV || ciphertext || tag), is copied to recipients, and is saved in Room history.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "deriveKey must use a salt of at least 16 bytes, freshly generated with SecureRandom for each encode, instead of APP_SALT + the user's password; the password itself stays the user's shared key",
+   "encode must put the random salt in its output (e.g. version/marker byte || salt || 12-byte IV || ciphertext+tag, Base64 NO_WRAP) so the receiver can read it and derive the same key",
+   "decode must read the salt from the new format and derive the key with it, telling the new format apart from the old one by an explicit version/marker rather than by guessing",
+   "isValidEncodedMessage and the length checks in decode must account for the longer new format (salt + IV + tag)",
+   "For new encryptions, derive the key using an independent cryptographically random KDF salt, while retaining the user-entered shared secret as the password. Randomizing APP_SALT at build time is insufficient.",
+   "Carry the KDF salt in the copied/stored message envelope and have decode extract and reuse it. Introduce an identifiable format/version, validate its structure, and update both encoding and decoding; do not regenerate the salt during decryption or keep it only on the sender's device.",
+   "Provide a legacy decoding path and verify legacy compatibility, new-format round trips across independent instances, randomized salt generation, and rejection of wrong passwords or tampered messages."
+  ],
+  "must_not_break": [
+   "Decoding of existing messages in the old Base64(iv || ciphertext) format, created with the deterministic APP_SALT+password salt, both those pasted from other users on older app versions and those stored in the Room history (MessageEntry.encodedMessage); the old derivation path must stay available for decode",
+   "The APP_SALT build-time configuration (env var with default \"Salty@AES-256\"): builds that set a custom APP_SALT must still decode their own old messages",
+   "Two installs of the new version must still exchange messages using only the shared Salt string, with no extra secret or key exchange",
+   "AES-256-GCM with a 12-byte random IV per message, a 128-bit tag, PBKDF2WithHmacSHA256 with 600,000 iterations, and a 256-bit key, as the README advertises; must not be weakened",
+   "Room database schema version 2 and the stored MessageEntry fields, with no destructive migration of history",
+   "minSdk 24 support (no APIs that need a higher SDK level than the current code uses)",
+   "Error handling in SaltyViewModel: a wrong key or corrupted message must still surface as DecodingException / 'Wrong key or corrupted message', not crash",
+   "Existing saved and previously copied ciphertext must remain decryptable with the original shared secret and matching APP_SALT. Legacy decoding must preserve PBKDF2WithHmacSHA256, 600000 iterations, 256-bit output, the exact UTF-8 APP_SALT-plus-password salt construction, and the existing 12-byte-IV AES-GCM layout.",
+   "Preserve cross-device exchange using only the encoded text and shared secret. A new format requires an explicit peer compatibility transition; unchanged releases cannot decode it automatically. Do not silently replace the shared-secret scheme with device-bound keys or local-only salt storage.",
+   "Preserve Room history and its copy workflows without destructive migration. History contains the original message, encoded message, and shared secret; fixing this report must not discard those records.",
+   "Preserve authenticated encryption, fresh GCM IVs, strong derivation parameters, UTF-8 message handling, and failure on authentication errors. Do not remove authentication or weaken cryptography to silence the checker.",
+   "Account for both default and custom APP_SALT builds, and retain the declared Android minSdk 24 support when choosing implementation APIs or dependencies."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 151,
+ "tokens": {
+  "input_tokens": 16,
+  "cache_creation_input_tokens": 87706,
+  "cache_read_input_tokens": 557583,
+  "output_tokens": 15157
+ },
+ "turns": 10,
+ "tool_calls": 9,
+ "claude_reported_cost_usd": 1.1163686000000002,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "312a29f6b2c41ac5",
+ "finished_at": "2026-11-16T17:44:30-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Kbdff4b30",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Uses a random 16-byte salt in a 'salty:v2:' versioned envelope and keeps the exact legacy derivation for decode, with updated length and validation checks. The repo gets no committed tests, and APP_SALT silently stops contributing to new keys."
+   },
+   {
+    "card_id": "K075af7b9",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Uses a 'v2:' prefix, a random 16-byte salt and shared key + APP_SALT as the password, and keeps the legacy path. The fallback to legacy after a v2 failure is unnecessary (':' cannot appear in legacy Base64) and doubles PBKDF2 work on a wrong key. There are no tests."
+   },
+   {
+    "card_id": "K96d8ca42",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately explains the deterministic salt, the cost of precomputation, the compatibility problem for exchanged and stored messages, and that the CipherSpec finding follows from the first one. It leaves the format decision to the maintainers."
+   },
+   {
+    "card_id": "Ka8019b58",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The code is sound: a 'v2:' envelope with APP_SALT + random salt, an exact legacy derivation, structural validation and good Robolectric tests. But the text says the build and all six tests passed while the diff was not built, and it leaks a local tool path."
+   },
+   {
+    "card_id": "Kc008c406",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Correct, code-specific analysis that names the public default APP_SALT, the format change, the Room history and the echoed Cipher finding. It suggests a trial-decrypt fallback rather than a marker, which is acceptable for an issue."
+   },
+   {
+    "card_id": "K46ceac76",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Uses an in-payload 'SALTY\\x01' marker and a random salt, with a length-delimited key+APP_SALT password and a legacy fallback when authentication fails. Legacy decoding is preserved, but isValidEncodedMessage is not updated and there are no tests. The text does not say that older app versions cannot read new messages."
+   },
+   {
+    "card_id": "K7cfde027",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Uses a '=v2:' marker (old apps fail cleanly on the leading '='), a random 16-byte salt, an exact legacy derivation and updated validation. The custom marker scanner is unusual and there are no tests. The text is mostly about RVSec and never says that older versions cannot read new messages."
+   },
+   {
+    "card_id": "Kacd3a182",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Clean 'SALTY2:' prefixed format with a random 16-byte salt, the exact legacy salt for old messages, and updated length checks. There are no tests, and APP_SALT is dropped from new derivations."
+   },
+   {
+    "card_id": "K67e6e4c0",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Correct 'salty:v1:' envelope that rejects unknown versions and keeps the exact legacy derivation, with fixture-based tests that handle custom APP_SALT. The description says the build and eight tests passed, but the diff was not built."
+   },
+   {
+    "card_id": "K6442afa3",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurate explanation of the salt being a function of the password and of the compatibility cost for history and exchanged messages. It offers versioned-marker options and asks the maintainers to choose."
+   },
+   {
+    "card_id": "K03ef71c0",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Uses an '=Salty2:' prefix, a random salt, APP_SALT bound as GCM AAD and an exact legacy path. isValidEncodedMessage does not account for the salt length and there are no tests. The text honestly says tests were not run."
+   },
+   {
+    "card_id": "K09d6070d",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The HashUtils change is correct (a 'salty:v1:' prefix, random salt and legacy path). But it adds deprecated android.test instrumentation infrastructure that a reviewer would ask to replace. The text says the debug build passed while the diff was not built."
+   },
+   {
+    "card_id": "K4ff2a917",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Uses a 'SALTY2:' prefix and a salt of random 16 bytes + APP_SALT + key, and keeps the legacy path. The fallback after a prefixed decode fails is unnecessary, and the comment saying the prefix can occur in old messages is wrong because ':' is not Base64. There are no tests."
+   },
+   {
+    "card_id": "K8dcb8f89",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Uses an in-payload 'SALTY:v1:' marker, a random 16-byte salt, a password that combines key and APP_SALT, and a legacy fallback. Legacy decoding is preserved, but validation is not updated and there are no tests. The text frames the fix only around the Cipher report."
+   },
+   {
+    "card_id": "Kcf2c7bc4",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Correct 'salty:v2:' envelope with version rejection, an exact legacy derivation and thorough tests. The description says the build and all five tests passed, but the diff was not built."
+   },
+   {
+    "card_id": "K101af675",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "A random salt is prepended but there is no version marker. decode guesses by trial-decrypting the new layout and falling back on AEADBadTagException only, which may miss other exceptions providers throw for short legacy messages. Validation is not updated."
+   },
+   {
+    "card_id": "Kf8ed3ce2",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Uses an in-payload 'SALTY\\x02' marker and a salt of APP_SALT + key + random 16 bytes stored in the message, with a legacy fallback that keeps the exact old derivation. Validation is not updated and there are no tests."
+   },
+   {
+    "card_id": "Kdbb0c3c6",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Random salt with APP_SALT as AAD, but there is no explicit version marker: decode guesses by trying the new layout and falling back to legacy on GeneralSecurityException. The description is honest and thorough about the trade-offs."
+   },
+   {
+    "card_id": "K76b5b215",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Correct 'v2:' envelope with strict parsing, an exact legacy derivation including custom APP_SALT, and good tests. The text says the build and seven tests passed, but the diff was not built."
+   },
+   {
+    "card_id": "Kf8c93c09",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Uses an in-payload 'SaltyV2!' marker, a random 16-byte salt, a legacy fallback when authentication fails, and clearPassword. isValidEncodedMessage is not updated and there are no tests."
+   },
+   {
+    "card_id": "K2462e17b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurate description of the deterministic salt, the public default APP_SALT, the precomputation risk and the format and compatibility costs. It asks the right questions about compatibility."
+   },
+   {
+    "card_id": "Kbbd30599",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "It wrongly says there is no security impact. The fixed, public, password-derived salt lets precomputed PBKDF2 work be reused against every install of the official build."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

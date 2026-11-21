@@ -1,0 +1,91 @@
+{
+ "unit": "co_2aaa72c51c14",
+ "phase": "phase2",
+ "order": [
+  "Ke07218fc",
+  "Kb3c89f82"
+ ],
+ "card_sha256": {
+  "Kb3c89f82": "051d55d8b1cc0fdf",
+  "Ke07218fc": "8992d02291ba02f5"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "Helper.getFingerprint(Context) (Helper.java:3297-3317) uses SHA1 to hash the app's own APK signing certificate (PackageManager GET_SIGNATURES, signatures[0]) and returns it as uppercase hex. This is not a security check. It only tells the app which channel built the copy that is running. hasValidFingerprint() and isSignedByFDroid() compare the result for an exact match against three hard-coded SHA-1 hex constants in res/values/strings.xml:3047-3049 (fingerprint, fingerprint_fdroid, fingerprint_amazon). The result decides which channel the app reports to (GitHub/Play, F-Droid or Amazon), which crash reporting, update checks and donate/pro links apply, and some UI paths in Log, FragmentSetup, FragmentMessages, ActivityView and AdapterMessage. FragmentOptionsMisc:2722 also shows it to the user as the 'signature fingerprint'. Collision attacks on SHA-1 do not matter here. Passing the check would need a second preimage against a fixed certificate, and anyone who can repackage the APK can simply patch the check out, so a stronger hash adds no protection. The value is also a well-known identifier in SHA-1 form (it is the format F-Droid, Play and keytool list). Changing it to SHA-256 would make every stored constant fail to match unless all three were replaced with correct SHA-256 values of the real signing certificates. Those values cannot be worked out from this repository, and a wrong value would quietly misclassify official builds. So the RVSec MessageDigestSpec finding is a false positive in context. The two-argument getFingerprint(context, hash) already lets callers ask for a stronger hash if they ever need one.\n\nSecond judge: Helper.getFingerprint hashes the installed app's signing certificate (info.signatures[0]), returning uppercase hexadecimal. This is not message signing, password hashing, or TLS certificate validation. hasValidFingerprint compares it against fixed SHA-1 resources for the official and Amazon signers; isSignedByFDroid compares a separate F-Droid pin. These results control update checks, Gmail/OAuth setup access, support UI, third-party warnings, and release classification. The fingerprint is also displayed in miscellaneous settings. SHA-256 hardening is reasonable, but changing only the algorithm would make every existing pin comparison fail. Matching an already fixed certificate fingerprint requires a second-preimage attack, which known SHA-1 collision attacks do not provide, and Android verifies APK signatures separately. The report alone does not establish an exploitable vulnerability. No stored account data or network protocol was found to depend on this helper's digest.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For a hardening PR, migrate signing-certificate identification to SHA-256 or an equally sound certificate comparison, updating both hasValidFingerprint and isSignedByFDroid consistently.",
+   "Replace all three SHA-1 fingerprint resources with verified values for the same signing certificates. Compute new fingerprints from the original certificate bytes, not from the old SHA-1 strings. README.md supplies the official signer's SHA-256 value; equivalent verified values are needed for Amazon and F-Droid.",
+   "Keep digest encoding and comparisons consistent, and keep the displayed fingerprint understandable if its algorithm changes. Verify official, Amazon, F-Droid, and unrelated signer outcomes."
+  ],
+  "must_not_break": [
+   "Correct detection of the official GitHub/Play build via hasValidFingerprint() against the stored SHA-1 constant R.string.fingerprint (17BA15C1...)",
+   "Detection of the Amazon build via R.string.fingerprint_amazon and the F-Droid build via isSignedByFDroid()/R.string.fingerprint_fdroid",
+   "Behaviour that depends on hasValidFingerprint (crash reporting in Log.java, update checks in ActivityView, pro/donate/support links in FragmentSetup/FragmentMessages/AdapterMessage/FragmentOptionsMisc, installer reporting in Helper/DebugHelper)",
+   "Format of the signature fingerprint shown in FragmentOptionsMisc (uppercase hex SHA-1, matching what keytool/F-Droid show)",
+   "Existing callers of the two-argument getFingerprint(context, hash) overload",
+   "Preserve the existing signer distinctions: official and Amazon certificates pass hasValidFingerprint; the separately pinned F-Droid certificate is recognized by isSignedByFDroid without automatically becoming an official signer.",
+   "Preserve update availability, Gmail/OAuth setup gating, support behavior, third-party warnings, and release classification for existing supported distributions, including existing debug exceptions.",
+   "Preserve compatibility with minSdkVersion 23. A digest migration must not unconditionally introduce signing-certificate APIs requiring a newer Android version.",
+   "Keep the installed signing certificates and Android package-signature verification unchanged; an internal fingerprint migration does not require re-signing releases or changing external OAuth registrations.",
+   "Do not change unrelated TLS certificate pins, S/MIME fingerprints, account or identity fingerprint fields, or backup formats merely because they also use the word fingerprint. They are separate from this helper.",
+   "Do not bypass signer checks, substitute guessed pins, or retain SHA-1 as an alternative acceptance path while claiming to eliminate reliance on it."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 17,
+ "tokens": {
+  "input_tokens": 6,
+  "cache_creation_input_tokens": 22923,
+  "cache_read_input_tokens": 34603,
+  "output_tokens": 1542
+ },
+ "turns": 5,
+ "tool_calls": 4,
+ "claude_reported_cost_usd": 0.2211686,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "47503067adf8de9b",
+ "finished_at": "2026-11-17T19:03:10-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Ke07218fc",
+    "r2": 0,
+    "regression_scenario": "An Amazon-flavour build signed with the Amazon certificate runs hasValidFingerprint(). With fingerprint_amazon removed and the default switched to SHA-256, it returns false, so the Amazon build loses the update check, crash reporting/release classification and the pro/support UI that depend on a valid fingerprint. The F-Droid SHA-256 pin is also taken from an outside source that cannot be checked against this repo.",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The PR moves to SHA-256 and uses the correct README value for the official signer, but it drops Amazon signer detection, which is a must-not-break regression, and the F-Droid pin cannot be verified. The description is honest and openly discloses the Amazon removal and the lack of testing."
+   },
+   {
+    "card_id": "Kb3c89f82",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific: the digest only identifies the app's own signer for the distribution channel, and a SHA-256 migration needs verified Amazon/F-Droid SHA-256 pins that are not in the repo. It cites the actual call sites and the README value."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

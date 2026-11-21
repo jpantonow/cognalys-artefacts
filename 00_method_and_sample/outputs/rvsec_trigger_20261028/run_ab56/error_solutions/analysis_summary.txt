@@ -1,0 +1,33 @@
+Error Fix Generation Report
+======================================================================
+
+STATISTICS
+----------------------------------------------------------------------
+Total errors: 1
+Analyzed: 1/1
+Fixes generated: 0
+Confirmed external-contract findings: 0
+Issue candidates: 0
+Failed: 0
+Crashed (pipeline defect): 0
+Refused by provider: 0
+Not analysable (no source, no artifact): 0
+Not applicable (already fixed or not present): 0
+Abstained (no safe fix): 1
+Multi-file candidates: 1
+Coordinated solutions: 0
+Incomplete multi-file scope: 0
+Processing time: 00h 06m 16s
+Average per error: 00h 06m 16s
+
+QUALITY DISTRIBUTION
+----------------------------------------------------------------------
+High confidence (>75%): 0
+Medium confidence (50-75%): 0
+Low confidence (<50%): 0
+
+MODEL CONFIGURATION
+----------------------------------------------------------------------
+Model: gpt-5.6-terra
+Provider: openai
+Endpoint: https://api.openai.com/v1

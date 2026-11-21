@@ -1,0 +1,45 @@
+{
+  "trace_version": 2,
+  "call_id": "20261027T223053_565470_971_0011_code_generation.coordinated_file",
+  "parent_call_id": "",
+  "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+  "stage": "code_generation.coordinated_file",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.0",
+  "schema_version": "2.0",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 21563,
+  "input_tokens": 4663,
+  "cached_input_tokens": 1596,
+  "output_tokens": 5747,
+  "latency_ms": 73188,
+  "retry_count": 0,
+  "request_id": "req_d751a999e2ee4309a3cce49676eb78db",
+  "section_telemetry": {
+    "patch_plan": {
+      "characters": 4976,
+      "approx_tokens": 1244,
+      "sha256": "fd360745ed626c8c547e603885782e0a159a5dda5b965bd216732ed4209d8971"
+    },
+    "target_file": {
+      "characters": 73,
+      "approx_tokens": 18,
+      "sha256": "6fd5a38999a40630a9b92118445efbb3292e3de89ee7b65db2738f65d367e774"
+    },
+    "previous_file_contracts": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "server_created_after_ms": 393,
+  "openai_response_id": "resp_023dec3727d5cf4f006ae1504e2b9487d285b5cd2c26abfc33",
+  "response_status": "completed",
+  "background_polls": 9,
+  "completed_at": "2026-10-27T22:32:07"
+}

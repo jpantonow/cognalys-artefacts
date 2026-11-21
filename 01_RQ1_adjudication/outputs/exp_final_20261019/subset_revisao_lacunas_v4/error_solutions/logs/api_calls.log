@@ -1,0 +1,604 @@
+2026-10-27 22:30:53,373 - INFO - Evidence analysis for encrypt:
+{
+  "architecture_version": "v2",
+  "versions": {
+    "prompt_version": "llm-pipeline-v2.0",
+    "schema_version": "2.0",
+    "policy_version": "2.0",
+    "spec_version": "2",
+    "context_builder_version": "2.14",
+    "semantic_resolver_version": "tree-sitter-semantic-v2"
+  },
+  "input_hashes": {
+    "finding_sha256": "64c974fc9774351710855ddaaf1670a249b36f0fac3c0aa16c8ddc4260c057b3",
+    "diagnostic_evidence_sha256": "fc5f2b16b7e8b2e1aee9c8795b0b641e4aea24f58fcd691d0d40fe1dc0dcc960",
+    "policy_sha256": "09b111a59cf77f065479cd7d822a98fc4ceb2676924ca258f810c1f30ad92417",
+    "evidence_sha256": "ea02077810f88aca70043d2d8aaf4d74331afed4b02f7c344e345702a5278772",
+    "packet_sha256": "55428e47ff788e2629b35c7188cacb25d024c3c1928099d3ab87abf762b1183f",
+    "external_research_sha256": "0b07f3572a3f611b793a1ada739ec512bb8004adeac7e6e6045d2c8c77453fa1"
+  },
+  "diagnostic_evidence": {
+    "evidence_id": "DET-001",
+    "kind": "detector_diagnostic",
+    "trust_level": "reported_detector_output",
+    "informational_only": true,
+    "decision_authority": "none",
+    "sha256": "c25d86ba834c60b66cad545b2f0a73dccafec6b65ca81fe1728f656bf0505dd0",
+    "data": {
+      "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+      "tool": "ares",
+      "specification": "CipherSpec",
+      "message": "the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+      "reported_class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+      "reported_method": "encrypt",
+      "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java",
+      "detector_context": {
+        "code": "CIPHER-CONSTR-00",
+        "site_kind": "CONSTR: a value constraint was broken, or a required origin was positively contradicted",
+        "label": "violation",
+        "label_meaning": "A value check of the rule fired: an algorithm, key size, protocol, keystore type or other constraint outside what the rule admits, a required origin positively contradicted, or a forbidden call. The value seen and the admitted values are in value/expected.",
+        "expected": "a key produced by one of the generators the rule names",
+        "source_location": "EncryptedKey.java:42",
+        "runtime_observation": "Reported in 12 run(s) of the app; each run starts from a clean, read-only emulator."
+      }
+    }
+  },
+  "cause_status": "confirmed",
+  "detector_violation": "confirmed",
+  "runtime_security_impact": "not_established",
+  "generation_status": "supported_for_review",
+  "publication_status": "blocked",
+  "evidence_status": {
+    "cause_status": "confirmed",
+    "detector_violation": "confirmed",
+    "runtime_security_impact": "not_established",
+    "scope_status": "complete",
+    "generation_status": "supported_for_review",
+    "publication_status": "blocked"
+  },
+  "external_sources": [
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/javax/crypto/Cipher.html",
+      "supported_claim": "`Cipher` is the JCE cryptographic engine API and documents initialization and data/key-processing contracts."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/26/security/java-cryptography-architecture-jca-reference-guide.html",
+      "supported_claim": "Use fully specified transformations; retain/use applicable parameters and AAD; change a GCM IV when reusing a key for encryption."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/spec/GCMParameterSpec.html",
+      "supported_claim": "`GCMParameterSpec` has existed since Java 7."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/javase/8/docs/technotes/guides/security/enhancements-8.html",
+      "supported_claim": "Oracle documented SunJCE support for AES/GCM/NoPadding and GCM algorithm parameters as a JDK 8 enhancement."
+    },
+    {
+      "title": "primary",
+      "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Cipher.crysl",
+      "supported_claim": "The rule is declared for `javax.crypto.Cipher`, models listed event parameter shapes, and requires one of three key-origin predicates for its `key` variable."
+    },
+    {
+      "title": "official",
+      "url": "https://developer.android.com/reference/javax/crypto/Cipher",
+      "supported_claim": "`Cipher.getInstance` accepts a `String` transformation argument, so `mCipher` must be compatible with `String` when passed directly to this overload."
+    }
+  ],
+  "observed_events": [
+    "EncryptedKey.encrypt calls javax.crypto.Cipher.getInstance(\"AES/GCM/NoPadding\").",
+    "EncryptedKey.encrypt calls cipher.init(Cipher.ENCRYPT_MODE, key).",
+    "The EncryptedKey constructor calls cipher.updateAAD with UTF-8 bytes of the plaintext SecretKey algorithm.",
+    "The EncryptedKey constructor calls cipher.doFinal with the plaintext SecretKey encoded bytes.",
+    "The constructor captures cipher.getParameters().getEncoded() after encryption finalization.",
+    "EncryptedKey.decrypt reconstructs AlgorithmParameters from mParameters and calls cipher.init(Cipher.DECRYPT_MODE, key, ap).",
+    "EncryptedKey.decrypt supplies the stored algorithm identifier as AAD before cipher.doFinal(mCipherText)."
+  ],
+  "predicate_assessment": [
+    {
+      "event": "The encryption Cipher transformation is fully specified as AES/GCM/NoPadding.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001. The reviewed encrypt method obtains a javax.crypto.Cipher using the literal transformation \"AES/GCM/NoPadding\".",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "The encryption Cipher is initialized before it processes AAD or plaintext.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, CTOR-001. encrypt obtains the Cipher and calls init in encryption mode before constructing EncryptedKey; that constructor calls updateAAD and doFinal on the passed Cipher.",
+      "rule_section": "order"
+    },
+    {
+      "event": "Encryption AAD is supplied before ciphertext processing.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001. The EncryptedKey constructor calls cipher.updateAAD(mToken bytes) before cipher.doFinal(token.getEncoded()).",
+      "rule_section": "order"
+    },
+    {
+      "event": "The key supplied to the governed encryption Cipher.init call has a key origin accepted by the CipherSpec rule.",
+      "status": "violated",
+      "evidence": "Evidence IDs: RUN-001. The runtime measurement at EncryptedKey.java:42 records a CIPHER-CONSTR-00 violation for the expectation that the key be produced by one of the rule-named generators. This establishes a failing governed-call execution, although it does not identify the particular source expression that produced the measured key.",
+      "rule_section": "required_predicate"
+    },
+    {
+      "event": "The encryption-generated encoded AlgorithmParameters are retained and supplied to decryption initialization.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001. Encryption saves cipher.getParameters().getEncoded() in mParameters. Decryption reconstructs AlgorithmParameters from mParameters and supplies that object to the decrypt-mode Cipher.init call.",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "Each AES-GCM encryption uses a fresh nonce/IV for a reused encryption key.",
+      "status": "unknown",
+      "evidence": "Evidence IDs: SRC-001. encrypt supplies only the key to Cipher.init and does not explicitly supply GCM parameters or an IV/nonce. The source stores provider-returned parameters, but it does not establish the provider-generated nonce values or their uniqueness across encryption operations and key reuse.",
+      "rule_section": "required_predicate"
+    },
+    {
+      "event": "Decryption supplies AAD before finalizing the stored ciphertext under the reconstructed Cipher parameters.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001. decrypt reconstructs AlgorithmParameters from mParameters, initializes the Cipher in decrypt mode with them, then supplies mToken-derived AAD before doFinal(mCipherText).",
+      "rule_section": "order"
+    }
+  ],
+  "collateral_violations": [
+    {
+      "predicate": "The key supplied to the governed encryption Cipher.init call has a key origin accepted by the CipherSpec rule.",
+      "evidence_ids": [
+        "RUN-001"
+      ],
+      "explanation": "The runtime measurement at EncryptedKey.java:42 records a CIPHER-CONSTR-00 violation for the expectation that the key be produced by one of the rule-named generators. This establishes a failing governed-call execution, although it does not identify the particular source expression that produced the measured key."
+    }
+  ],
+  "confirmed_facts": [
+    "EncryptedKey.encrypt creates a javax.crypto.Cipher with transformation AES/GCM/NoPadding and initializes it in encryption mode using its key parameter.",
+    "The encrypted representation stores the transformation string, plaintext-key algorithm identifier, ciphertext, and encoded Cipher parameters.",
+    "The code supplies the plaintext SecretKey algorithm as AAD before encryption finalization and supplies the same stored algorithm string as AAD before decryption finalization.",
+    "The resolved repository callers of EncryptedKey.encrypt include two tests, Encryptor.encryptToken, and the MasterKey constructor.",
+    "One production caller passes a KeyStore key retrieved from AndroidKeyStore as the encryption-key argument, while the MasterKey constructor passes a PBKDF2-derived SecretKey as that argument.",
+    "A runtime measurement recorded CipherSpec key-origin-check failures at the encryption Cipher.init location in 12 reported application runs.",
+    "AES/GCM/NoPadding configures an AEAD transformation, but the supplied evidence does not establish successful encryption or decryption for all production executions."
+  ],
+  "unsupported_hypotheses": [],
+  "missing_evidence": [
+    "Which concrete key-producing source expression reached EncryptedKey.java:42 in each measured failing run?",
+    "Which operations, if any, establish the CipherSpec generatedKey, generatedPubkey, or generatedPrivkey predicates for the relevant key values?",
+    "What nonce/IV does the active provider generate for the two-argument AES-GCM encryption initialization, and is it unique per encryption for each key?",
+    "Whether all persisted EncryptedKey records can be decrypted successfully under the deployed provider and key lifecycle is not established."
+  ],
+  "confirmed_cause": "The reported required-predicate violation is confirmed: the governed AES/GCM Cipher.init receives a caller-supplied key that failed CipherSpec's accepted key-origin predicate in observed executions (CLM-001, CLM-006). The bounded production callers supply either an AndroidKeyStore key or a PBKDF2-derived SecretKey (CLM-004, CLM-005), but the measured runs do not map a failing value to one specific source. Separately, the same AES-GCM initialization supplies only mode and key, while the verified rule requires preparedGCM parameters for GCM; this is an additional required-predicate specification violation. The provider-generated nonce uniqueness question remains unresolved and is not used to dismiss either predicate violation.",
+  "forward_compatibility_assessment": {
+    "status": "regression_risk",
+    "dimensions_checked": [
+      "Multi-caller encryption-key provenance/lifecycle remediation",
+      "Explicit AES-GCM parameter and fresh-nonce preparation where compatible with the selected provider contract",
+      "Legacy encrypted-record and wrapping-key compatibility preservation"
+    ],
+    "evidence": "Claim IDs: CLM-001, CLM-002, CLM-004, CLM-005, CLM-006",
+    "strategy": "Any review patch must preserve decryption of existing EncryptedKey records and the existing key-lifecycle semantics for both AndroidKeyStore-backed and PBKDF2-derived wrapping keys. It must retain persisted Cipher parameters for new AES-GCM records and, if it makes GCM parameters explicit, generate a fresh nonce per encryption without discarding legacy parameter decoding."
+  },
+  "migration_assessment": {
+    "usage_kind": "unknown",
+    "evidence": [
+      "EncryptedKey.encrypt creates a javax.crypto.Cipher with transformation AES/GCM/NoPadding and initializes it in encryption mode using its key parameter.",
+      "The encrypted representation stores the transformation string, plaintext-key algorithm identifier, ciphertext, and encoded Cipher parameters.",
+      "The resolved repository callers of EncryptedKey.encrypt include two tests, Encryptor.encryptToken, and the MasterKey constructor.",
+      "One production caller passes a KeyStore key retrieved from AndroidKeyStore as the encryption-key argument, while the MasterKey constructor passes a PBKDF2-derived SecretKey as that argument.",
+      "A runtime measurement recorded CipherSpec key-origin-check failures at the encryption Cipher.init location in 12 reported application runs."
+    ],
+    "legacy_compatibility_required": true,
+    "safe_strategy": "Any review patch must preserve decryption of existing EncryptedKey records and the existing key-lifecycle semantics for both AndroidKeyStore-backed and PBKDF2-derived wrapping keys. It must retain persisted Cipher parameters for new AES-GCM records and, if it makes GCM parameters explicit, generate a fresh nonce per encryption without discarding legacy parameter decoding.",
+    "policy_authorized": false
+  },
+  "digest_contract_assessment": {
+    "security_relevance": "false",
+    "contract_kind": "unknown",
+    "expected_digest_source": "",
+    "backend_repository_available": false,
+    "backend_change_required": false,
+    "client_only_change_safe": false,
+    "rollout_strategy": "",
+    "pull_request_note": ""
+  },
+  "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+  "dependency_fix_assessment": {
+    "external_class_confirmed": false,
+    "declared_artifact": "",
+    "current_version": "",
+    "target_version": "",
+    "target_artifact": "",
+    "official_migration_source": "",
+    "upgrade_kind": "unknown",
+    "build_files": [],
+    "call_site_migration_required": false,
+    "compatibility_constraints_satisfied": false,
+    "replacement_preserves_required_capabilities": false,
+    "fork_or_vcs_dependency": false
+  },
+  "coordinated_fix_plan": {
+    "affected_symbols": [
+      "EncryptedKey current-and-legacy compatibility test cases",
+      "EncryptedKey.encrypt and the corresponding encrypted-record decryption/serialization paths",
+      "Encryptor.encryptToken and its wrapping-key lookup/creation path",
+      "MasterKey constructor and its EncryptedKey encryption/decryption call paths"
+    ],
+    "required_edits": [
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java",
+        "symbol": "EncryptedKey.encrypt and the corresponding encrypted-record decryption/serialization paths",
+        "reason": "Retain decoding of the existing transformation, algorithm AAD, ciphertext, and encoded Cipher parameters while adding a current record discriminator and wrapping-key identity needed to select the generated current key or the legacy key path. For current AES-GCM encryption, create fresh GCM parameters from a fresh nonce, initialize Cipher with those prepared parameters and the selected current generated key, retain the resulting parameters in the record, and continue supplying the algorithm identifier as AAD. Decryption must select the legacy supplied key for records without the current discriminator and must continue to initialize from their stored parameters and AAD.",
+        "create_new_file": false,
+        "edit_category": "Versioned encrypted-record compatibility and explicit AES-GCM initialization",
+        "supporting_claim_ids": [
+          "CLM-001",
+          "CLM-002",
+          "CLM-003",
+          "CLM-006"
+        ]
+      },
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java",
+        "symbol": "Encryptor.encryptToken and its wrapping-key lookup/creation path",
+        "reason": "Keep the existing AndroidKeyStore key lookup available for legacy-record decryption, but introduce a distinct, persistent current wrapping-key identity whose first-use creation is performed through KeyGenerator and whose later use reloads the same AndroidKeyStore entry. Route newly encrypted records through that generated current key and pass its identity to EncryptedKey, so the value reaching the reported Cipher.init has the admitted generated-key origin while existing records retain their legacy resolution path.",
+        "create_new_file": false,
+        "edit_category": "AndroidKeyStore-backed current wrapping-key lifecycle",
+        "supporting_claim_ids": [
+          "CLM-004",
+          "CLM-005",
+          "CLM-006"
+        ]
+      },
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java",
+        "symbol": "MasterKey constructor and its EncryptedKey encryption/decryption call paths",
+        "reason": "Preserve the PBKDF2-derived SecretKey as the resolver for records created under the existing MasterKey lifecycle. Add the same persistent generated current-key resolution used for newly written records, pass the current key identity to EncryptedKey for current writes, and select the PBKDF2-derived legacy key only for legacy-record reads. This removes the PBKDF2-derived value from the current path reaching the reported Cipher.init without changing the constructor or caller entry-point names.",
+        "create_new_file": false,
+        "edit_category": "PBKDF2-flow legacy compatibility and current generated-key resolution",
+        "supporting_claim_ids": [
+          "CLM-004",
+          "CLM-005",
+          "CLM-006"
+        ]
+      },
+      {
+        "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java",
+        "symbol": "EncryptedKey current-and-legacy compatibility test cases",
+        "reason": "Add target-focused tests without editing the existing generated or contract-pinning tests. Exercise first use and reuse of the AndroidKeyStore-backed current key, the MasterKey/PBKDF2 legacy-read path, encryption/decryption round trips, distinct retained AES-GCM parameters across repeated encryption under one current key, and decryption of records encoded through the retained legacy representation.",
+        "create_new_file": true,
+        "edit_category": "Dedicated Android instrumentation compatibility coverage",
+        "supporting_claim_ids": [
+          "CLM-001",
+          "CLM-002",
+          "CLM-003",
+          "CLM-004",
+          "CLM-005"
+        ]
+      }
+    ],
+    "required_tests": [
+      "In mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java, verify encrypt/decrypt round trips for the current AndroidKeyStore-backed generated-key path and for records read through the retained PBKDF2-derived legacy path.",
+      "In mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java, encrypt repeatedly with one current wrapping-key identity and verify each record retains distinct AES-GCM parameters/nonces while every record decrypts successfully.",
+      "In mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java, verify representative legacy-format records remain decryptable with their stored Cipher parameters and algorithm AAD.",
+      "Run the module Gradle build, unit-test task, Android-test source compilation, and a deterministic source-level recheck confirming that all current production paths reaching EncryptedKey.encrypt use the generated current wrapping-key lifecycle."
+    ],
+    "compatibility_policy_required": true,
+    "scope_evidence": [
+      "Claim IDs: CLM-001, CLM-002, CLM-004, CLM-005, CLM-006"
+    ]
+  },
+  "scope_assessment": {
+    "status": "complete",
+    "local_code_scope": "complete",
+    "external_contract_scope": "unresolved",
+    "multi_file_change_required": true,
+    "reviewed_files": [
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java",
+        "action": "edit",
+        "symbols": [
+          "EncryptedKey.encrypt and the corresponding encrypted-record decryption/serialization paths"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-001, CLM-002, CLM-003, CLM-006"
+      },
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java",
+        "action": "edit",
+        "symbols": [
+          "Encryptor.encryptToken and its wrapping-key lookup/creation path"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-004, CLM-005, CLM-006"
+      },
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java",
+        "action": "edit",
+        "symbols": [
+          "MasterKey constructor and its EncryptedKey encryption/decryption call paths"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-004, CLM-005, CLM-006"
+      },
+      {
+        "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java",
+        "action": "required_test",
+        "symbols": [
+          "EncryptedKey current-and-legacy compatibility test cases"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-001, CLM-002, CLM-003, CLM-004, CLM-005"
+      },
+      {
+        "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java",
+        "action": "semantic_resolved_caller",
+        "symbols": [
+          "org.fedorahosted.freeotp.encryptor.EncryptedKey#encrypt(SecretKey,SecretKey)"
+        ],
+        "evidence": "CALL-001 records a resolved_caller relation; it is accounted for but is not automatically an edit target."
+      }
+    ],
+    "unresolved_relations": [
+      {
+        "kind": "other",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "The patch must preserve decryption of records encrypted with the existing AndroidKeyStore or PBKDF2-derived wrapping-key lifecycle, including records persisted before a change. The representation retains Cipher parameters, but the supplied evidence does not establish a self-describing wrapping-key identity or a legacy-key fallback contract."
+      },
+      {
+        "kind": "other",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "A reviewer must approve the chosen key generation, storage, recovery, rotation, and migration behavior for both production caller paths. This decision is not settled by bounded source evidence or automated validation."
+      },
+      {
+        "kind": "other",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "If the review patch makes GCM nonce generation or GCMParameterSpec use explicit, it must be validated on supported Android providers and devices for encryption/decryption interoperability and fresh-nonce behavior. The pipeline does not run instrumentation tests or device/provider checks."
+      }
+    ]
+  },
+  "issue_candidate": {
+    "eligible": false,
+    "title": "",
+    "finding_summary": "",
+    "why_no_pr": "",
+    "maintainer_question": "",
+    "proposed_next_step": ""
+  },
+  "v2": {
+    "evidence_packet_sha256": "55428e47ff788e2629b35c7188cacb25d024c3c1928099d3ab87abf762b1183f",
+    "claims": [
+      {
+        "claim_id": "CLM-001",
+        "statement": "EncryptedKey.encrypt creates a javax.crypto.Cipher with transformation AES/GCM/NoPadding and initializes it in encryption mode using its key parameter.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-002",
+        "statement": "The encrypted representation stores the transformation string, plaintext-key algorithm identifier, ciphertext, and encoded Cipher parameters.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-003",
+        "statement": "The code supplies the plaintext SecretKey algorithm as AAD before encryption finalization and supplies the same stored algorithm string as AAD before decryption finalization.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-004",
+        "statement": "The resolved repository callers of EncryptedKey.encrypt include two tests, Encryptor.encryptToken, and the MasterKey constructor.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "CALL-001",
+          "CALL-002",
+          "CALL-003",
+          "CALL-004"
+        ]
+      },
+      {
+        "claim_id": "CLM-005",
+        "statement": "One production caller passes a KeyStore key retrieved from AndroidKeyStore as the encryption-key argument, while the MasterKey constructor passes a PBKDF2-derived SecretKey as that argument.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-002",
+          "SRC-003",
+          "CALL-003",
+          "CALL-004"
+        ]
+      },
+      {
+        "claim_id": "CLM-006",
+        "statement": "A runtime measurement recorded CipherSpec key-origin-check failures at the encryption Cipher.init location in 12 reported application runs.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "RUN-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-007",
+        "statement": "AES/GCM/NoPadding configures an AEAD transformation, but the supplied evidence does not establish successful encryption or decryption for all production executions.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001",
+          "WEB-001"
+        ]
+      }
+    ],
+    "adjudication": {
+      "generation_status": "supported_for_review",
+      "forward_compatibility_strategy": "Any review patch must preserve decryption of existing EncryptedKey records and the existing key-lifecycle semantics for both AndroidKeyStore-backed and PBKDF2-derived wrapping keys. It must retain persisted Cipher parameters for new AES-GCM records and, if it makes GCM parameters explicit, generate a fresh nonce per encryption without discarding legacy parameter decoding.",
+      "review_assumptions": [
+        "CLM-006 (RUN-001) corroborates the rendered detector message: governed Cipher.init executions failed the CipherSpec key-origin predicate in 12 observed runs. This confirms the reported predicate but does not identify which caller supplied the measured key in each run.",
+        "CLM-001 (SRC-001) establishes that the governed operation is a javax.crypto.Cipher AES/GCM/NoPadding encryption initialization using only mode and the caller-provided key. The verified CipherSpec additionally requires generatedKey/generatedPubkey/generatedPrivkey for that key and preparedGCM parameters for GCM; the latter is a separate violated specification predicate because this init form supplies no parameter object.",
+        "CLM-004 and CLM-005 establish the bounded repository call paths: production uses include an AndroidKeyStore key and a PBKDF2-derived SecretKey. They do not establish that replacing either key with a rule-recognized generated key preserves the application's wrapping-key, recovery, or persisted-record behavior.",
+        "The provider-generated nonce lifecycle is not established. A two-argument encryption init may cause a provider to create parameters, but the supplied source and runtime report do not establish nonce uniqueness under key reuse. This limits runtime-impact conclusions rather than negating the confirmed rule violations.",
+        "The exact CrySL producer operations for generatedKey/generatedPubkey/generatedPrivkey are not supplied. Therefore the detector predicate is confirmed as failed at runtime, while a rule-compliant replacement provenance cannot be selected automatically.",
+        "No case_policy authorization is supplied. Choosing whether to preserve the current AndroidKeyStore/PBKDF2 key designs, migrate them, or introduce a separately managed wrapping key requires reviewer approval."
+      ],
+      "cause_status": "confirmed",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "blocking_for_generation": [],
+      "blocking_for_publication": [
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "Persisted encrypted-record/key continuity",
+          "supporting_claim_ids": [
+            "CLM-002",
+            "CLM-004",
+            "CLM-005"
+          ],
+          "category": "compatibility_contract",
+          "description": "The patch must preserve decryption of records encrypted with the existing AndroidKeyStore or PBKDF2-derived wrapping-key lifecycle, including records persisted before a change. The representation retains Cipher parameters, but the supplied evidence does not establish a self-describing wrapping-key identity or a legacy-key fallback contract."
+        },
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "Maintainer approval of key-lifecycle semantics",
+          "supporting_claim_ids": [
+            "CLM-004",
+            "CLM-005",
+            "CLM-006"
+          ],
+          "category": "maintainer_decision",
+          "description": "A reviewer must approve the chosen key generation, storage, recovery, rotation, and migration behavior for both production caller paths. This decision is not settled by bounded source evidence or automated validation."
+        },
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "Provider/device GCM behavior",
+          "supporting_claim_ids": [
+            "CLM-001"
+          ],
+          "category": "runtime_behavior",
+          "description": "If the review patch makes GCM nonce generation or GCMParameterSpec use explicit, it must be validated on supported Android providers and devices for encryption/decryption interoperability and fresh-nonce behavior. The pipeline does not run instrumentation tests or device/provider checks."
+        }
+      ],
+      "compatibility_status": "regression_risk",
+      "required_tests": [
+        "Run the patched module Gradle build, unit-test task, Android-test source compilation, and deterministic source-level recheck that the reported key-origin predicate is absent from every patched production path.",
+        "Add or retain unit coverage for encrypt/decrypt round trips through both bounded production key paths: AndroidKeyStore-backed key use and PBKDF2-derived key use.",
+        "Test repeated AES-GCM encryption using the same wrapping key and verify distinct retained encryption parameters/nonces while each resulting record decrypts successfully.",
+        "Test decryption of representative records produced before the change using the retained legacy key lifecycle and stored Cipher parameters.",
+        "Run supported-device/instrumentation coverage for the selected provider behavior if explicit GCM parameters or key-lifecycle handling changes."
+      ],
+      "scope_status": "complete",
+      "confirmed_cause": "The reported required-predicate violation is confirmed: the governed AES/GCM Cipher.init receives a caller-supplied key that failed CipherSpec's accepted key-origin predicate in observed executions (CLM-001, CLM-006). The bounded production callers supply either an AndroidKeyStore key or a PBKDF2-derived SecretKey (CLM-004, CLM-005), but the measured runs do not map a failing value to one specific source. Separately, the same AES-GCM initialization supplies only mode and key, while the verified rule requires preparedGCM parameters for GCM; this is an additional required-predicate specification violation. The provider-generated nonce uniqueness question remains unresolved and is not used to dismiss either predicate violation.",
+      "cause_rule_section": "required_predicate",
+      "decision_claim_ids": [
+        "CLM-001",
+        "CLM-002",
+        "CLM-004",
+        "CLM-005",
+        "CLM-006"
+      ],
+      "detector_violation": "confirmed",
+      "publication_status": "blocked",
+      "required_edit_categories": [
+        "Multi-caller encryption-key provenance/lifecycle remediation",
+        "Explicit AES-GCM parameter and fresh-nonce preparation where compatible with the selected provider contract",
+        "Legacy encrypted-record and wrapping-key compatibility preservation"
+      ],
+      "runtime_security_impact": "not_established",
+      "authorized_behavior_change": {
+        "authorized": false,
+        "description": "No maintainer policy authorizes changing the AndroidKeyStore/PBKDF2 wrapping-key lifecycle or compatibility behavior.",
+        "policy_reference": ""
+      }
+    },
+    "patch_plan": {
+      "publication_blockers": [
+        "Maintainers must approve the selected persistent, rule-recognized wrapping-key lifecycle for newly written records, including generation, AndroidKeyStore identity, recovery, rotation, and retirement behavior for the existing AndroidKeyStore-backed and PBKDF2-derived flows (CLM-004, CLM-005, CLM-006).",
+        "Validate on supported Android providers and devices that the explicit AES-GCM parameter representation interoperates for encryption and decryption and that repeated encryptions retain distinct fresh nonce/parameter values (CLM-001, CLM-002).",
+        "Validate the migration with representative pre-change records from both established production key lifecycles before publication, confirming that legacy decryption remains available after current-format records are introduced (CLM-002, CLM-004, CLM-005)."
+      ],
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "forbidden_changes": [
+        "Do not replace an existing wrapping key with an unpersisted transient generated key; records must remain recoverable across process restarts.",
+        "Do not remove or reinterpret legacy stored transformation strings, plaintext-key algorithm AAD, ciphertext, or encoded Cipher parameters (CLM-002, CLM-003).",
+        "Do not remove the existing EncryptedKey public entry points or require existing callers to change their entry-point names.",
+        "Do not change existing test assertions or encoded-key equality expectations to accommodate the migration.",
+        "Do not use a fixed, reused, or discarded AES-GCM nonce or parameter value.",
+        "Do not add build-file dependencies solely to support the migration or its tests."
+      ],
+      "required_edits": [
+        {
+          "create_new_file": false,
+          "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java",
+          "supporting_claim_ids": [
+            "CLM-001",
+            "CLM-002",
+            "CLM-003",
+            "CLM-006"
+          ],
+          "edit_category": "Versioned encrypted-record compatibility and explicit AES-GCM initialization",
+          "symbol": "EncryptedKey.encrypt and the corresponding encrypted-record decryption/serialization paths",
+          "reason": "Retain decoding of the existing transformation, algorithm AAD, ciphertext, and encoded Cipher parameters while adding a current record discriminator and wrapping-key identity needed to select the generated current key or the legacy key path. For current AES-GCM encryption, create fresh GCM parameters from a fresh nonce, initialize Cipher with those prepared parameters and the selected current generated key, retain the resulting parameters in the record, and continue supplying the algorithm identifier as AAD. Decryption must select the legacy supplied key for records without the current discriminator and must continue to initialize from their stored parameters and AAD."
+        },
+        {
+          "create_new_file": false,
+          "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java",
+          "supporting_claim_ids": [
+            "CLM-004",
+            "CLM-005",
+            "CLM-006"
+          ],
+          "edit_category": "AndroidKeyStore-backed current wrapping-key lifecycle",
+          "symbol": "Encryptor.encryptToken and its wrapping-key lookup/creation path",
+          "reason": "Keep the existing AndroidKeyStore key lookup available for legacy-record decryption, but introduce a distinct, persistent current wrapping-key identity whose first-use creation is performed through KeyGenerator and whose later use reloads the same AndroidKeyStore entry. Route newly encrypted records through that generated current key and pass its identity to EncryptedKey, so the value reaching the reported Cipher.init has the admitted generated-key origin while existing records retain their legacy resolution path."
+        },
+        {
+          "create_new_file": false,
+          "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java",
+          "supporting_claim_ids": [
+            "CLM-004",
+            "CLM-005",
+            "CLM-006"
+          ],
+          "edit_category": "PBKDF2-flow legacy compatibility and current generated-key resolution",
+          "symbol": "MasterKey constructor and its EncryptedKey encryption/decryption call paths",
+          "reason": "Preserve the PBKDF2-derived SecretKey as the resolver for records created under the existing MasterKey lifecycle. Add the same persistent generated current-key resolution used for newly written records, pass the current key identity to EncryptedKey for current writes, and select the PBKDF2-derived legacy key only for legacy-record reads. This removes the PBKDF2-derived value from the current path reaching the reported Cipher.init without changing the constructor or caller entry-point names."
+        },
+        {
+          "create_new_file": true,
+          "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java",
+          "supporting_claim_ids": [
+            "CLM-001",
+            "CLM-002",
+            "CLM-003",
+            "CLM-004",
+            "CLM-005"
+          ],
+          "edit_category": "Dedicated Android instrumentation compatibility coverage",
+          "symbol": "EncryptedKey current-and-legacy compatibility test cases",
+          "reason": "Add target-focused tests without editing the existing generated or contract-pinning tests. Exercise first use and reuse of the AndroidKeyStore-backed current key, the MasterKey/PBKDF2 legacy-read path, encryption/decryption round trips, distinct retained AES-GCM parameters across repeated encryption under one current key, and decryption of records encoded through the retained legacy representation."
+        }
+      ],
+      "behavioral_invariants": [
+        "Existing EncryptedKey records remain decryptable using their persisted transformation, plaintext-key algorithm AAD, ciphertext, and encoded Cipher parameters (CLM-002, CLM-003).",
+        "The AndroidKeyStore-backed key in Encryptor remains resolvable for records created by the established lifecycle (CLM-004, CLM-005).",
+        "The PBKDF2-derived SecretKey in MasterKey remains resolvable for records created by the established lifecycle (CLM-004, CLM-005).",
+        "Newly written records use a persistent generated current wrapping key whose identity is retained sufficiently to reload that key for decryption (CLM-004, CLM-005, CLM-006).",
+        "Every current AES-GCM encryption uses fresh prepared GCM parameters/nonces, retains those parameters with the record, authenticates the same plaintext-key algorithm identifier as AAD, and decrypts with the retained parameters and AAD (CLM-001, CLM-002, CLM-003).",
+        "Existing EncryptedKey entry-point names remain available to current callers; record-version and key-selection details remain internal to the encryptor lifecycle (CLM-004)."
+      ],
+      "generation_blockers": [],
+      "allowed_apis": [
+        "javax.crypto.KeyGenerator",
+        "java.security.KeyStore",
+        "java.security.SecureRandom",
+        "javax.crypto.spec.GCMParameterSpec",
+        "android.security.keystore.KeyGenParameterSpec",
+        "android.security.keystore.KeyProperties"
+      ],
+      "required_tests": [
+        "In mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java, verify encrypt/decrypt round trips for the current AndroidKeyStore-backed generated-key path and for records read through the retained PBKDF2-derived legacy path.",
+        "In mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java, encrypt repeatedly with one current wrapping-key identity and verify each record retains distinct AES-GCM parameters/nonces while every record decrypts successfully.",
+        "In mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java, verify representative legacy-format records remain decryptable with their stored Cipher parameters and algorithm AAD.",
+        "Run the module Gradle build, unit-test task, Android-test source compilation, and a deterministic source-level recheck confirming that all current production paths reaching EncryptedKey.encrypt use the generated current wrapping-key lifecycle."
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+ "card_id": "Ka7722e17",
+ "card_sha256": "2189ec4493466791",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 11,
+ "tokens": {
+  "input_tokens": 6,
+  "cache_creation_input_tokens": 3375,
+  "cache_read_input_tokens": 5239,
+  "output_tokens": 648
+ },
+ "turns": 3,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0410318,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "e853d1c9bc0d1077",
+ "finished_at": "2026-11-16T11:46:28-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.33,
+  "reason": "The card follows a fixed template: a canned 'Nothing sent' reason, then Details, Assessment and Cause sections, with set phrases like 'detector message and runtime measurement agree', 'call order conforms' and 'case policy's authorization does not hold'. That looks like the multi-step pipeline rather than a free-form coding agent. The prose is short and clipped, which reads more like GPT Terra than Sonnet, so C over D, but with low confidence."
+ }
+}

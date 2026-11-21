@@ -1,0 +1,153 @@
+{
+  "schema_version": 2,
+  "spec_id": "TrustManagerFactorySpec",
+  "name": "TrustManagerFactorySpec",
+  "applies_to_types": [
+    "javax.net.ssl.TrustManagerFactory"
+  ],
+  "source_title": "CROSSINGTUD Crypto-API-Rules: JavaCryptographicArchitecture/src/TrustManagerFactory.crysl",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TrustManagerFactory.crysl",
+  "source_verified": true,
+  "protocol": "(getInstance(algorithm) | getInstance(algorithm, providerOrProviderName)) -> (init(keyStore) | init(managerFactoryParameters)) -> getTrustManagers()?",
+  "important_note": "This specification governs javax.net.ssl.TrustManagerFactory, not the enclosing application class eu.opencloud.android.lib.common.network.AdvancedX509TrustManager. The reported issue is an algorithm allowlist mismatch: the rule admits only PKIX and SunX509. This does not prove provider availability, successful initialization, installation into an SSLContext, correct TLS use, or successful certificate validation. The cited CrySL artifact was supplied as research context but was not independently consulted here; the exact detector-bundled rule revision remains unverified.",
+  "events": [
+    {
+      "name": "Get",
+      "api_patterns": [
+        "TrustManagerFactory.getInstance(",
+        "javax.net.ssl.TrustManagerFactory.getInstance("
+      ],
+      "condition": "Observed when a call resolves to a javax.net.ssl.TrustManagerFactory.getInstance overload taking an algorithm, optionally with a provider or provider-name argument. Its algorithm predicate is satisfied only if the tracked value is exactly \"PKIX\" or \"SunX509\"; observing the call alone does not satisfy that predicate."
+    },
+    {
+      "name": "Init",
+      "api_patterns": [
+        ".init(",
+        "trustManagerFactory.init(",
+        "tmf.init("
+      ],
+      "condition": "Observed only when init(KeyStore) or init(ManagerFactoryParameters) resolves on the same TrustManagerFactory instance acquired by Get. The corresponding rule requirement is satisfied only when the KeyStore has generatedKeyStore[keyStore] evidence or the parameters have generatedManagerFactoryParameters[params] evidence; an observed init call alone is insufficient."
+    },
+    {
+      "name": "GetTrustMng",
+      "api_patterns": [
+        ".getTrustManagers()",
+        "getTrustManagers()"
+      ],
+      "condition": "Observed when getTrustManagers() resolves on a TrustManagerFactory receiver. It is protocol-conformant only after Init on that same instance. This event is optional in the reported protocol and, when present, is described as ensuring generatedTrustManagers[trustManager] for the returned array."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That the reported found value \".\" denotes a particular Java string, such as an empty string; the supplied rule description does not define the diagnostic renderer's value convention.",
+    "That eu.opencloud.android.lib.common.network.AdvancedX509TrustManager is the API type governed by this specification; the governed type is javax.net.ssl.TrustManagerFactory.",
+    "That PKIX or SunX509 is implemented by the selected provider or that getInstance succeeds on the deployment runtime.",
+    "That SunX509 is supported on Android merely because it is admitted by the reported CrySL allowlist; the supplied Android reference context identifies PKIX as the provided TrustManagerFactory algorithm.",
+    "That an allowed algorithm proves secure certificate validation, hostname verification, revocation behavior, trust-anchor selection, or TLS configuration.",
+    "That returned managers are passed to SSLContext.init, used by another TLS stack, or involved in a network connection.",
+    "That the static finding proves the relevant path executes in production."
+  ],
+  "semantic_scope": "The rule observes a javax.net.ssl.TrustManagerFactory usage protocol: factory acquisition, an algorithm membership constraint, initialization through one of two argument categories, and optional extraction of TrustManager objects. The representative message, \"expecting one of PKIX,SunX509 but found .\", corresponds to the algorithm-membership constraint, not to a certificate-chain-validation result.",
+  "detector_semantics": {
+    "claim": "For the representative finding, the detector claims that the algorithm value associated with a TrustManagerFactory.getInstance call did not satisfy the reported CrySL allowlist requiring PKIX or SunX509.",
+    "predicates": [
+      "algorithm in {\"PKIX\", \"SunX509\"}",
+      "Get precedes Init on the tracked TrustManagerFactory object.",
+      "Init(KeyStore) requires generatedKeyStore[keyStore] evidence.",
+      "Init(ManagerFactoryParameters) requires generatedManagerFactoryParameters[params] evidence.",
+      "Init is described as ensuring generatedTrustManager[this].",
+      "Optional GetTrustMng is described as ensuring generatedTrustManagers[trustManager]."
+    ],
+    "limitations": [
+      "The supplied rule description does not define the detector's interprocedural, alias, reflection, Kotlin-desugaring, or unknown-value treatment.",
+      "The supplied rule description does not explain why the report renders the found value as \".\".",
+      "The two-value allowlist does not establish portability across all JSSE or Android providers.",
+      "The optional getTrustManagers event does not express later SSLContext configuration or an actual TLS handshake.",
+      "The exact CrySL rule revision and compiled artifact used by the detector are not verified."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "javax.net.ssl.TrustManagerFactory is a provider-based factory for TrustManager objects.",
+      "Its getInstance overloads request a trust-management algorithm.",
+      "init(KeyStore) initializes the factory from certificate authorities and related trust material; init(ManagerFactoryParameters) accepts provider-specific trust material.",
+      "getTrustManagers returns the resulting managers; supplied Android reference context states it throws IllegalStateException if the factory was not initialized.",
+      "Supplied Java standard-name reference context describes PKIX as a factory for X509ExtendedTrustManager objects performing PKIX certificate-chain validation and requiring support for CertPathTrustManagerParameters initialization."
+    ],
+    "preconditions": [
+      "The requested algorithm must be implemented by the selected or a registered provider, or getInstance can fail.",
+      "The factory must be initialized before getTrustManagers is called.",
+      "The appropriate init overload and acceptable parameter type are provider-dependent.",
+      "For PKIX, the supplied standard-name context states that CertPathTrustManagerParameters initialization must be supported."
+    ],
+    "unknowns": [
+      "The installed provider, provider ordering, and algorithm aliases for the analyzed artifact are not identified by the representative finding.",
+      "Whether a runtime SunX509 implementation exists for the target Android environment is not established by the reported CrySL rule.",
+      "Trust material, later SSLContext use, hostname-verification behavior, and the actual certificate-validation outcome are outside this rule.",
+      "The exact source expression, import/type resolution, and provider argument at the reported AdvancedX509TrustManager.<init> call site are not provided."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The reported constraint violation is an allowlist mismatch for the algorithm argument supplied to TrustManagerFactory.getInstance.",
+    "runtime_claim": "At runtime, TrustManagerFactory lookup and behavior are provider-dependent. The supplied source context describes PKIX as providing PKIX-oriented X.509 certificate-path validation, but the runtime security effect also depends on provider selection, initialization parameters and trust material, and how returned managers are used.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Obtain the exact Crypto-API-Rules revision and compiled CrySL artifact bundled with the detector, including the actual TrustManagerFactory.crysl contents.",
+      "Resolve the receiver type at the reported call site to establish javax.net.ssl.TrustManagerFactory rather than a same-named API type.",
+      "Identify the getInstance overload and trace the algorithm argument expression/value flow that produced the reported value.",
+      "If initialization compliance is evaluated, link the init invocation to the same factory instance and establish the required generatedKeyStore or generatedManagerFactoryParameters predicate evidence."
+    ],
+    "runtime": [
+      "Identify the target Android API level or JVM environment, installed security providers, provider ordering, and actual algorithm string at runtime.",
+      "Establish that getInstance and init complete successfully for the selected provider and supplied trust material.",
+      "Establish whether returned TrustManager objects are installed into an SSLContext or another TLS stack and exercised during a connection."
+    ],
+    "compatibility": [
+      "Use provider documentation or runtime tests to establish support for the selected algorithm on the target platform.",
+      "Do not treat SunX509 as Android-supported without platform-specific compatibility evidence; the supplied Android reference context identifies PKIX as the provided TrustManagerFactory algorithm.",
+      "Match the detector's rule-set release or commit to the analyzed build because a repository-head rule may differ from the bundled rules."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "Value-flow imprecision: the runtime algorithm is PKIX or SunX509 but static analysis cannot resolve it.",
+    "A runtime-selected default or configuration-derived algorithm resolves to an accepted value but is opaque to the detector.",
+    "A provider-specific algorithm is valid for the deployed provider but intentionally excluded by the two-value CrySL allowlist.",
+    "A source substring appears to match getInstance or init but the resolved receiver is not javax.net.ssl.TrustManagerFactory; type resolution is required to exclude namesakes.",
+    "A platform mismatch: the rule admits SunX509 but the target Android provider does not implement that name."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TrustManagerFactory.crysl",
+    "https://developer.android.com/reference/javax/net/ssl/TrustManagerFactory",
+    "https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html",
+    "https://download.java.net/java/GA/jdk14/docs/specs/security/standard-names.html"
+  ],
+  "unknowns": [
+    "Which exact Crypto-API-Rules revision and compiled CrySL rule artifact the detector used.",
+    "Whether the diagnostic found value \".\" means an empty literal, an unknown or absent abstract value, or a detector-specific rendering.",
+    "The exact source expression, import/type resolution, and provider argument at the reported AdvancedX509TrustManager.<init> call site.",
+    "Whether the target runtime is Android-only, JVM-only, or both, and which provider supplies TrustManagerFactory.",
+    "Whether SunX509 is a legacy JVM compatibility allowance in the rule rather than a supported Android algorithm.",
+    "How the detector establishes generatedKeyStore and generatedManagerFactoryParameters predicates, because their producers are not defined by the reported rule description.",
+    "Whether the supplied primary-source URLs and claimed rule contents exactly match the detector's bundled artifact."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "eu.opencloud.android.lib.common.network.AdvancedX509TrustManager",
+        "method": "<init>",
+        "message": "expecting one of PKIX,SunX509 but found ."
+      }
+    ],
+    "expected_api_simple_name": "TrustManagerFactory",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.net.ssl.TrustManagerFactory",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TrustManagerFactory.crysl"
+  },
+  "analysis_family": "tls"
+}

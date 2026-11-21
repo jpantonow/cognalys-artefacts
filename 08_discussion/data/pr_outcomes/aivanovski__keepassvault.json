@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/aivanovski/keepassvault/pull/347",
+    "state": "open",
+    "finding_id": "ecccf29c6686",
+    "spec": "SSLContextSpec",
+    "csv_class": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+    "method_name": "createHttpClient",
+    "title": "Fix createHttpClient",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:28.403488+00:00",
+    "maintainer_feedback": []
+  }
+]

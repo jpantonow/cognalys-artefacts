@@ -1,0 +1,189 @@
+=== 2026-11-16T02:24:33-03:00 cognalys run --max-cost 3.0
+Frozen experiment: manifest written to /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/manifests/pr_1381cd4ddb3f_r1.json. Specification generation and learning-store writes are disabled for this run; web research not archived is fetched live.
+Preflight passed: declared dependencies, static analysis
+Pipeline steps: spec_generation -> cloning -> repository_setup -> extraction -> spec_context -> detector_rules -> llm -> solutions -> validation -> validation_fix -> revalidation -> prs -> preview -> fix_prs -> revalidation_fix_prs
+
+=== SPEC_GENERATION ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.generate_specifications --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/pr_1381cd4ddb3f.jsonl --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model claude-sonnet-5-5 --endpoint https://api.anthropic.com --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/openai_prompt_logs
+frozen experiment: 1 specification(s) already present; none generated
+
+=== CLONING ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/pr_1381cd4ddb3f.jsonl --output-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_methods --clone-timeout 1800 --clone-retries 3 --clone-only
+2026-11-16 02:25:02 - INFO - Starting single CSV workflow
+2026-11-16 02:25:02 - INFO - Output dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones
+2026-11-16 02:25:02 - INFO - Clone dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones
+2026-11-16 02:25:02 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_methods
+2026-11-16 02:25:02 - INFO - 1 linhas válidas carregadas
+2026-11-16 02:25:02 - INFO - 1 repositórios únicos mapeados
+2026-11-16 02:25:02 - INFO - [1/1] Cloning de.jepfa.yapm.debug_202006.apk from https://github.com/jenspfahl/anotherpass
+2026-11-16 02:25:10 - INFO - de.jepfa.yapm.debug_202006.apk checked out at the pinned revision 89b0b68ce403b1fd199255990bf026f02d317eb9
+2026-11-16 02:25:10 - INFO - Successfully cloned de.jepfa.yapm.debug_202006.apk
+2026-11-16 02:25:10 - INFO - Cloning results: 1 success, 0 failed, 0 timeout
+
+=== REPOSITORY_SETUP ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.prepare_repository_branches --projects-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones --report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/repository_setup.json --project de.jepfa.yapm.debug_202006.apk
+de.jepfa.yapm.debug_202006.apk:  ->  (unchanged)
+
+=== EXTRACTION ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/pr_1381cd4ddb3f.jsonl --output-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_methods --clone-timeout 1800 --clone-retries 3 --skip-cloning
+2026-11-16 02:25:12 - INFO - Starting single CSV workflow
+2026-11-16 02:25:12 - INFO - Output dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones
+2026-11-16 02:25:12 - INFO - Clone dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones
+2026-11-16 02:25:12 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_methods
+2026-11-16 02:25:12 - INFO - 1 linhas válidas carregadas
+2026-11-16 02:25:12 - INFO - 1 repositórios únicos mapeados
+2026-11-16 02:25:12 - INFO - Reutilizando clones existentes em: /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones
+2026-11-16 02:25:12 - INFO - de.jepfa.yapm.debug_202006.apk is already at the pinned revision 89b0b68ce403b1fd199255990bf026f02d317eb9
+2026-11-16 02:25:12 - INFO - Found clone for de.jepfa.yapm.debug_202006.apk: /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones/de.jepfa.yapm.debug_202006.apk
+2026-11-16 02:25:12 - INFO - Building index for repository: /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones/de.jepfa.yapm.debug_202006.apk
+2026-11-16 02:25:12 - INFO - Indexed 557 classes from 546 unique class definitions
+2026-11-16 02:25:14 - INFO - Extraction complete: 1 success, 0 failed, 0 skipped
+2026-11-16 02:25:14 - INFO - Tracking JSON written to /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones/extraction_tracking.json
+2026-11-16 02:25:14 - INFO - Summary written to /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones/logs/summary_tracked.txt
+
+=== SPEC_CONTEXT ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.enrich_spec_context --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_methods --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/pr_1381cd4ddb3f.jsonl
+Specification registry coverage: 1/1 sample specs available
+Specification context: 1 enriched, 0 missing, 1 total
+
+=== DETECTOR_RULES ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.propose_detector_rules --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/pr_1381cd4ddb3f.jsonl --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model claude-sonnet-5-5 --endpoint https://api.anthropic.com --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/openai_prompt_logs
+KeyStoreSpec: skipped, judged not local for this version of the specification
+Detector rules: nothing to propose
+
+=== LLM ===
+$ /home/antonow/venv/bin/python -m cognalys.llm.generate_error_fixes --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_methods --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_solutions --model claude-sonnet-5-5 --provider anthropic --endpoint https://api.anthropic.com --timeout 600 --ollama-context-length 16384 --repository-context-budget 140000 --pr-issue-style v3 --max-output-tokens 32768 --reasoning-effort high --validation-mode balanced --validation-feedback-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/build_validation --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/openai_prompt_logs --web-search-cache-ttl-hours 168.0 --web-search-retries 1 --retries 2 --workers 1 --no-cache --research-corpus-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus --research-corpus-max-age-days 90.0 --web-search --migration-policies-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/migration_policies.json
+INFO: Testing Anthropic connection...
+INFO: Anthropic connection successful
+INFO: ✓ Model 'claude-sonnet-5-5' available
+INFO: Discovered 1 errors to process
+INFO: Processing 1 new errors (0 already complete)
+INFO: Processing: de.jepfa.yapm.debug_202006.apk/getAndroidSecretKey
+WARNING: de.jepfa.yapm.debug_202006.apk/getAndroidSecretKey will not produce a pull request: the reviewed code is no longer in app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt on the contribution base branch master, so the project has most likely already changed it. The analysis still runs; the patch will have nowhere to land; the reported statement is still there, so an issue may still be raised.
+INFO: Research corpus hit: 487768eea197
+WARNING: Usage of getAndroidSecretKey's value corrected from unknown to persistence by its call site app/src/main/java/de/jepfa/yapm/ui/createvault/CreateVaultEnterPinFragment.kt:73: args.putString(ARG_ENC_PIN, encPin.toBase64String())
+INFO: getAndroidSecretKey: FIX_SUPPORTED with incomplete scope generated for review instead of abandoned (scope assessment did not review required files: app/src/androidTest/java/de/jepfa/yapm/service/secret/SecretServiceTest.kt, app/src/main/java/de/jepfa/yapm/model/encrypted/EncCredential.kt, app/src/main/java/de/jepfa/yapm/model/export/DecryptedExportableCredential.kt, app/src/main/java/de/jepfa/yapm/model/export/PlainShareableCredential.kt, app/src/main/java/de/jepfa/yapm/model/secret/Password.kt, app/src/main/java/de/jepfa/yapm/service/autofill/ResponseFiller.kt, app/src/main/java/de/jepfa/yapm/ui/createvault/CreateVaultEnterPassphraseFragment.kt, app/src/main/java/de/jepfa/yapm/ui/createvault/CreateVaultEnterPinFragment.kt, app/src/main/java/de/jepfa/yapm/ui/credential/ConfigOtpActivity.kt, app/src/main/java/de/jepfa/yapm/ui/login/LoginActivity.kt, app/src/main/java/de/jepfa/yapm/ui/login/LoginEnterMasterPasswordFragment.kt, app/src/main/java/de/jepfa/yapm/ui/login/LoginEnterPinFragment.kt)
+INFO: [1/1] getAndroidSecretKey
+INFO: ✓ Solution saved (confidence: 70%)
+INFO: Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_solutions/solutions_tracking.json
+INFO: Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_solutions/analysis_summary.txt
+INFO: ======================================================================
+INFO: ANALYSIS COMPLETE
+INFO: Analyzed: 1/1
+INFO: Fixes generated: 1
+INFO: Confirmed external-contract findings: 0
+INFO: Issue candidates: 0
+INFO: Time: 00h 02m 42s
+INFO: LLM cache: 0 hit(s), 0 miss(es), 0 replayed within a finding
+INFO: Research corpus: 1 served, 0 researched and stored, 0 kept, 0 expired
+
+======================================================================
+LLM Error Fix Generator
+======================================================================
+Model: claude-sonnet-5-5
+Provider: anthropic
+Endpoint: https://api.anthropic.com
+Timeout: 600s
+Reasoning effort: high
+Validation mode: balanced
+Repository context budget: 140000 characters
+Allow cache invalidation: False
+Web search: True
+Max output tokens: 32768
+Input: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_methods
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_solutions
+LLM cache: disabled
+Resume: True
+======================================================================
+
+Research corpus: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus (126 entries, max age 90 days)
+
+=== SOLUTIONS ===
+$ /home/antonow/venv/bin/python -m cognalys.solutions.run_apply --error-solutions-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_solutions --cloned-projects-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results --worktrees-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/worktrees --backup-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/method_backups --approve-review-only-for-validation --port-model claude-sonnet-5-5 --port-endpoint https://api.anthropic.com --port-timeout 600 --port-max-output-tokens 16384 --port-reasoning-effort high --port-prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/openai_prompt_logs
+2026-11-16 02:28:26,973 - INFO - Starting solution application workflow
+2026-11-16 02:28:27,001 - INFO - ============================================================
+2026-11-16 02:28:27,002 - INFO - STAGE 1: DISCOVERY & MAPPING
+2026-11-16 02:28:27,002 - INFO - ============================================================
+2026-11-16 02:28:27,003 - INFO - Building solution to repository mapping...
+2026-11-16 02:28:27,003 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_solutions
+2026-11-16 02:28:27,331 - INFO - Discovered 1 solutions
+2026-11-16 02:28:27,332 - INFO - Mapping complete
+2026-11-16 02:28:27,332 - INFO - Mapping report: {'total_apks': 1, 'total_solutions': 1, 'mappings': {'de.jepfa.yapm.debug_202006.apk': {'apk_name': 'de.jepfa.yapm.debug_202006.apk', 'solutions': [{'method_name': 'getAndroidSecretKey', 'csv_class': 'de.jepfa.yapm.service.secret.SecretService', 'spec': 'KeyStoreSpec', 'error_message': 'the observed call sequence is not one KeyStoreSpec accepts', 'tool': 'ape:sata', 'detector_context': {'code': 'KEYSTORE-ORDER-00', 'source_location': 'SecretService.kt:512', 'codes': 'KEYSTORE-ORDER-00 (4)', 'tools': 'ape:sata, monkey:fast', 'runtime_observation': 'Reported in 2 run(s) of the app; each run starts from a clean, read-only emulator.'}, 'relative_method_file': 'de.jepfa.yapm.debug_202006.apk/app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt', 'source_file': 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt', 'quality_score': 90, 'decision': 'MULTI_FILE_FIX_PROPOSED_FOR_REVIEW', 'manual_review_required': True, 'auto_apply': False, 'publication_allowed': False, 'publication_status': 'blocked'}]}}}
+2026-11-16 02:28:27,341 - INFO - Mapping report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/mapping_report.json
+2026-11-16 02:28:27,342 - INFO - ============================================================
+2026-11-16 02:28:27,342 - INFO - STAGE 2: APPLYING SOLUTIONS
+2026-11-16 02:28:27,342 - INFO - ============================================================
+2026-11-16 02:28:27,343 - INFO - Processing 1/1: getAndroidSecretKey
+2026-11-16 02:28:27,343 - WARNING - Applying review-only solution for getAndroidSecretKey to an isolated worktree for validation; publication remains disabled
+2026-11-16 02:28:27,522 - INFO - Created finding worktree /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/worktrees/de.jepfa.yapm.debug_202006.apk/1381cd4ddb3f/64bafae97c on fix/getandroidsecretkey-keystorespec-1381cd4ddb3f-64bafae97c
+2026-11-16 02:28:27,605 - INFO - Backup saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/method_backups/de.jepfa.yapm.debug_202006.apk/SecretService_getAndroidSecretKey_20261116T052827Z.kt.bak
+2026-11-16 02:28:34,758 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages?beta=true "HTTP/1.1 200 OK"
+2026-11-16 02:28:37,597 - WARNING - getAndroidSecretKey: the port answered ALREADY_FIXED_UPSTREAM and no deterministic check confirms it; treated as ABSTAIN
+2026-11-16 02:28:37,601 - WARNING - de.jepfa.yapm.debug_202006.apk/getAndroidSecretKey cannot be contributed: the reviewed code is present at the analysed revision but no longer on the base branch master, so there is nothing there to patch. For an advisory finding this usually means the project already shipped the fix.
+2026-11-16 02:28:37,601 - INFO - ============================================================
+2026-11-16 02:28:37,602 - INFO - STAGE 3: GENERATING REPORT
+2026-11-16 02:28:37,602 - INFO - ============================================================
+2026-11-16 02:28:37,653 - INFO - Execution report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/execution_report.json
+2026-11-16 02:28:37,653 - INFO - ============================================================
+2026-11-16 02:28:37,653 - INFO - EXECUTION SUMMARY
+2026-11-16 02:28:37,654 - INFO - ============================================================
+2026-11-16 02:28:37,654 - INFO - Successfully Applied: 0
+2026-11-16 02:28:37,654 - INFO - Failed: 0
+2026-11-16 02:28:37,655 - INFO - Total Time: 10.63s
+
+DONE
+{'execution_timestamp': '2026-11-16T05:28:37.607916+00:00', 'workflow_status': 'SUCCESS_WITH_NO_ACTION', 'execution_time_seconds': 10.634867, 'config': {'error_solutions_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_solutions', 'cloned_projects_dir': '/home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones', 'output_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results', 'worktrees_dir': '/home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/worktrees', 'save_backups': True, 'backup_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/method_backups', 'dry_run': False, 'max_solutions': 0, 'git_user_name': 'jpantonow', 'git_user_email': 'jpantonow@gmail.com'}, 'total_solutions': 1, 'results': {'successfully_applied': 0, 'failed': 0, 'dry_run': 0, 'review_only_not_applied': 0, 'not_applicable_to_base_branch': 1}, 'per_solution_details': [{'apk_name': 'de.jepfa.yapm.debug_202006.apk', 'method_name': 'getAndroidSecretKey', 'csv_class': 'de.jepfa.yapm.service.secret.SecretService', 'source_file': 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt', 'spec': 'KeyStoreSpec', 'error_message': 'the observed call sequence is not one KeyStoreSpec accepts', 'tool': 'ape:sata', 'detector_context': {'code': 'KEYSTORE-ORDER-00', 'source_location': 'SecretService.kt:512', 'codes': 'KEYSTORE-ORDER-00 (4)', 'tools': 'ape:sata, monkey:fast', 'runtime_observation': 'Reported in 2 run(s) of the app; each run starts from a clean, read-only emulator.'}, 'repository_guidance': [], 'branch_policy': {}, 'compatibility_policy': {}, 'migration_assessment': {'usage_kind': 'persistence', 'evidence': ['getAndroidSecretKey calls androidKeyStore.load(null) and then androidKeyStore.getEntry(androidKey.alias, null). It never calls getKey, setEntry or store on the keystore in its body, so the observed sequence is Load, GetEntry.', "KeyStoreSpec's protocol allows GetEntry only immediately before GetKey. A getEntry with no following getKey on the same object is outside the modelled automaton, which matches the reported InvalidSequenceOfMethodCalls.", 'The specification lists a known non-security violation shape: reading a secret key with getEntry(alias, null) and SecretKeyEntry.getSecretKey instead of getKey. It says both calls are read-only and no security property depends on their order. This reported finding matches that shape.', "The method's callers (for example MasterKeyService, SaltService, FileIOService, OverlayShowingService) pass fixed AndroidKey aliases and a Context. They use the returned SecretKeyHolder for local encryption and decryption."], 'legacy_compatibility_required': True, 'safe_strategy': 'getKey returns the same AndroidKeyStore secret key that getEntry plus secretKey returned. The SecretKeyHolder, its callers and the stored and exported ciphertext are unchanged. Keep the null-result fallback to initAndroidSecretKey.', 'policy_authorized': False, 'usage_grounded_by': {'path': 'app/src/main/java/de/jepfa/yapm/ui/createvault/CreateVaultEnterPinFragment.kt', 'line': 73, 'statement': 'args.putString(ARG_ENC_PIN, encPin.toBase64String())', 'kind': 'persistence', 'basis': 'the value becomes part of a stored file, database or preferences name, or is written to storage', 'reached_through': 'assigned to encPin'}}, 'publication_considerations': [], 'publication_blocker_record': {'decision': 'MULTI_FILE_FIX_PROPOSED_FOR_REVIEW', 'blockers': [], 'discharged_blockers': [], 'evidence_gap_promoted': [], 'plan_publication_blockers': [], 'behavior_review': {'status': 'reviewed', 'review_contract_version': 23, 'regression_count': 0, 'patch_has_no_effect': False}}, 'digest_contract_assessment': {'security_relevance': 'false', 'contract_kind': 'unknown', 'expected_digest_source': '', 'backend_repository_available': False, 'backend_change_required': False, 'client_only_change_safe': False, 'rollout_strategy': '', 'pull_request_note': ''}, 'review_assumptions': ['For an AndroidKeyStore AES key, getKey and getEntry(...).secretKey return the same key, so behavior is unchanged.', 'The safe cast (as? SecretKey) is used so a non-secret-key alias entry falls back to initAndroidSecretKey as the previous as? KeyStore.SecretKeyEntry cast did.', 'No tests are added because the code needs the Android keystore and the plan lists no required tests.'], 'review_blockers': [], 'required_tests': [], 'decision': 'MULTI_FILE_FIX_PROPOSED_FOR_REVIEW', 'manual_review_required': True, 'auto_apply': False, 'publication_allowed': False, 'publication_status': 'blocked', 'semantic_validation': {'status': 'valid', 'errors': [], 'warnings': []}, 'stored_value_contract': {'version': 1, 'status': 'partial', 'entries': [], 'required_paths': [], 'limitations': ['persistence sink identity could not be resolved', 'no preference entry resolved from the observed persistence sinks'], 'unresolved_sinks': [{'path': 'app/src/main/java/de/jepfa/yapm/ui/createvault/CreateVaultEnterPinFragment.kt', 'line': 73, 'operation': 'putString', 'storage_expression': 'args', 'key_expression': 'ARG_ENC_PIN', 'storage': '', 'key': '', 'value_expression': 'encPin.toBase64String()', 'statement': 'args.putString(ARG_ENC_PIN, encPin.toBase64String())', 'derivation': ''}], 'unresolved_readers': [], 'unmodelled_sinks': [], 'source_hashes': {}, 'bound': 'Lexical preference accessors with unique declarations; unresolved identities and index limits are explicit. Other persistence sinks are listed with the statements naming the same constant or literal, unmodelled.'}, 'fix_scope': 'review_only', 'applied_for_validation': True, 'review_contract_version': 23, 'pr_attribution': {}, 'status': 'NOT_APPLICABLE_TO_BASE', 'error': 'ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH', 'original_method_body': '        androidKeyStore.load(null)\n        val entry: KeyStore.Entry? = androidKeyStore.getEntry(androidKey.alias, null)\n\n        val sk = (entry as? KeyStore.SecretKeyEntry)?.secretKey ?: initAndroidSecretKey(androidKey, context)\n', 'corrected_method_body': '        androidKeyStore.load(null)\n        val existingKey = androidKeyStore.getKey(androidKey.alias, null) as? SecretKey\n\n        val sk = existingKey ?: initAndroidSecretKey(androidKey, context)\n', 'finding_id': '1381cd4ddb3f', 'branch': 'fix/getandroidsecretkey-keystorespec-1381cd4ddb3f-64bafae97c', 'base_branch': 'master', 'base_commit': '670ff023cd3cee4c8f0efc6b0ce10223fc0d784a', 'solution_revision': '64bafae97c', 'worktree_attempt': 1, 'orphaned_worktree_paths': [], 'worktree_path': '/home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/worktrees/de.jepfa.yapm.debug_202006.apk/1381cd4ddb3f/64bafae97c', 'base_repository_path': '/home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones/de.jepfa.yapm.debug_202006.apk', 'base_port': {'decision': 'ABSTAIN', 'explanation': "The base's SecretService.getAndroidSecretKey no longer has the reported violation. Upstream already replaced the getEntry lookup with `androidKeyStore.getKey(androidKey.alias, null) as? SecretKey ?: initAndroidSecretKey(androidKey, context)`. The call sequence is now load, then getKey, which is what the reviewed patch produces, and the initAndroidSecretKey fallback is kept. No edit is needed.", 'error': 'PORT_ALREADY_FIXED_UNCONFIRMED', 'attempts': [], 'model_decision': 'ALREADY_FIXED_UPSTREAM'}, 'coordinated_edits': [], 'changed_files': [], 'contribution_base': {'base_branch': 'master', 'base_commit': '670ff023cd3cee4c8f0efc6b0ce10223fc0d784a', 'source_file_path': 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt', 'target_present': True, 'analyzed_code_present': False}}], 'errors': []}
+
+=== VALIDATION ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.applied_solutions --projects-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/build_validation --execution-report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/execution_report.json --variant debug --timeout 3600
+Running isolated compilation validation for 0 finding(s)
+Compilation validation: 0 passed, 0 failed, 0 not executed; 0 solution records enriched
+
+=== VALIDATION_FIX ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.repair --execution-report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/execution_report.json --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/validation_fixes --model claude-sonnet-5-5 --endpoint https://api.anthropic.com --timeout 600 --max-output-tokens 16384 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/openai_prompt_logs
+Validation fix: no repairable compiler diagnostics or failing tests
+validation_fix applied no repair; skipping revalidation, which would rebuild unchanged worktrees (use --force-revalidation to always run it).
+
+=== PRS ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.run_prs --execution-report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/execution_report.json --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/pull_requests --pr-issue-style v3 --model claude-sonnet-5-5 --endpoint https://api.anthropic.com --timeout 600 --max-output-tokens 16384 --reasoning-effort high --cache-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/.llm_cache --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/openai_prompt_logs
+2026-11-16 02:28:45,204 - INFO - Loaded 1 solutions
+2026-11-16 02:28:45,205 - INFO - PR generation summary: 0 generated, 0 failed
+
+=== PREVIEW ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.generate_github_previews --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/pull_requests --issue-candidates-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_solutions/issue_candidates --evidence-reviews-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/error_solutions/evidence_reviews --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/previews --issue-title "Potential security issue found — would you be open to a pull request?" --issue-title-without-security-impact "Question about the {api} use in {location} — would you be open to a pull request?" --issue-body "Hi! I'm a Computer Engineering student at the University of Brasília (UnB), working on a research project about how Android apps use security-sensitive APIs." --pr-issue-style v3
+ANALYSIS PREVIEW: de.jepfa.yapm.debug_202006.apk_getAndroidSecretKey_KeyStoreSpec_analysis.md
+Preview summary: 0 PR previews, 0 issue previews, 1 analysis previews, 0 failed
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/previews
+
+=== FIX_PRS ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.pr_feedback --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/pull_requests --projects-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones --worktrees-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/worktrees --output /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/fix_prs_report.json --model claude-sonnet-5-5 --endpoint https://api.anthropic.com --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/openai_prompt_logs
+WARNING: No published pull requests found in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/pull_requests: this step scans '*_pr_created.json' there and found none, so nothing was revised. If the pull request you meant to revise was opened by an earlier run, point --pull-requests-dir at that run's pull_requests directory.
+
+=== REVALIDATION_FIX_PRS ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.pr_feedback --revalidate --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/pull_requests --projects-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/clones --worktrees-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/pr_1381cd4ddb3f_r1/worktrees --output /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/application_results/fix_prs_report.json --timeout 600 --build-variant debug --build-timeout 3600
+
+Model calls of this run:
+  evidence_extraction              1 calls      119,479 in (0 cached, 4,180 written)       4,009 out  US$ 0.28
+  code_generation                  2 calls       54,724 in (11,444 cached, 4,320 written)       1,865 out  US$ 0.11
+  external_research                2 calls       53,420 in (41,362 cached, 7,640 written)       4,434 out  US$ 0.15
+  adjudication                     1 calls       28,823 in (0 cached, 13,726 written)       1,824 out  US$ 0.08
+  patch_planning                   1 calls       20,079 in (5,816 cached, 0 written)         974 out  US$ 0.04
+  solutions                        1 calls       15,337 in (0 cached, 600 written)         190 out  US$ 0.03
+  pr_generation                    1 calls        2,197 in (554 cached, 0 written)         377 out  US$ 0.01
+  total                            9 calls      294,059 in (59,176 cached, 30,466 written)      13,673 out  US$ 0.70; 0 answered from the cache, 1 served by the research corpus; 7 web search calls billed
+
+Pipeline finished successfully.
+Run status: complete
+
+=== RETROSPECTIVE ===
+1 finding(s): 1 at apply; 1 new and 0 recurring failure signature(s)
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/retrospective/retrospective.md
+
+=== STATISTICS ===
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_1381cd4ddb3f/r1/statistics/statistics.md
+Pipeline elapsed time: 00h 04m 21s
+correção não aplicável: código mudou upstream de.jepfa.yapm.debug_202006.apk getAndroidSecretKey [KeyStoreSpec]  (8 calls, 292k tokens, US$ 0.66)
+
+1 findings. correção não aplicável: código mudou upstream: 1
+Most model use without a pull request:
+  8 calls, 292k tokens, US$ 0.66           de.jepfa.yapm.debug_202006.apk getAndroidSecretKey [KeyStoreSpec] -> correção não aplicável: código mudou upstream

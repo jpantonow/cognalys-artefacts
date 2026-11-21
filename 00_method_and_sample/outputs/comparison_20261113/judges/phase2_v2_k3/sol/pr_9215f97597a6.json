@@ -1,0 +1,318 @@
+{
+ "unit": "pr_9215f97597a6",
+ "phase": "phase2",
+ "order": [
+  "K9b3c5b03",
+  "K909a21b4",
+  "K7ec21e35",
+  "Kea3a4b57",
+  "K7853b19a",
+  "Kdd238b3e",
+  "K0af26df4",
+  "Kc0a05a55",
+  "Kb0013529",
+  "K7e144187",
+  "K822180d6",
+  "K74823d9e",
+  "Ke2b5812b",
+  "Kc9f71fe6",
+  "K2b75606f",
+  "K25d6d8e2",
+  "Kc6b78692",
+  "K33c46ebc",
+  "Ke5ee3109",
+  "Kbc10a712",
+  "K64afe6f8",
+  "K8a76289a"
+ ],
+ "card_sha256": {
+  "K0af26df4": "d73737b5dbf3de22",
+  "K25d6d8e2": "e2a826579db2fe1a",
+  "K2b75606f": "037bcee00219c4f4",
+  "K33c46ebc": "71141e3dfde2366e",
+  "K64afe6f8": "5ca9caa9fb396043",
+  "K74823d9e": "2552193fb57413ae",
+  "K7853b19a": "809be8295d1cbf28",
+  "K7e144187": "bd8b17f1022e4ced",
+  "K7ec21e35": "d5bacca2044e38c4",
+  "K822180d6": "f575520c0c284245",
+  "K8a76289a": "f4a2a1623680def5",
+  "K909a21b4": "74733b31a9104fae",
+  "K9b3c5b03": "e3764ca1d6b60059",
+  "Kb0013529": "1b33d3ee34964543",
+  "Kbc10a712": "a3bc60d4f07c9930",
+  "Kc0a05a55": "216531c40bbb2c8b",
+  "Kc6b78692": "643f71d0a7c48d9d",
+  "Kc9f71fe6": "c5fda03b0cb11fbb",
+  "Kdd238b3e": "b551d382088d1eee",
+  "Ke2b5812b": "0b48bfbdbe618d05",
+  "Ke5ee3109": "914f770133b72e6a",
+  "Kea3a4b57": "8dc65ed15a81a23a"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The finding is real. In ScepClient.CertReq (ScepClient.java:124-125), the key size passed to KeyPairGenerator.getInstance(\"RSA\").initialize(isKeyLen) is never checked. It comes from one of two places. (1) The manual UI spinner (ScepFragment.request, which reads spinnerKeyLen). Its entries come from @array/rsa_lens in values/strings.xml, which offers 1024, 2048, 4096 and 8192. The choice is saved in the \"rsa-key-length\" shared preference. (2) The MDM managed restriction \"rsa-key-length\", an unrestricted integer read in CertInstaller.doWork and in ScepFragment. So the app lets users pick 1024-bit RSA, and lets an MDM push any integer at all (1024, 512, an odd value). The resulting private key protects a client certificate that the CA issues and that gets installed into the Android KeyChain or a PKCS12 file for authentication (Wi-Fi/VPN/802.1X). 1024-bit RSA is below current minimums (NIST, CA/B). The default is safe (default_rsa_len = 4096), and ExtrasFragment hardcodes 4096. So the weak size only happens when a user or admin chooses it. That is exactly the situation the rule reports: a selectable insecure option with no enforced minimum. A small PR is appropriate: drop 1024 from the list and enforce a 2048-bit minimum in CertReq or where the restriction is read. An ISSUE is also acceptable. Whether to keep 1024 for legacy SCEP/NDES servers or CA templates is a policy call for the maintainer, and the managed-config path is controlled by the admin. NO_ACTION is not appropriate, because the app actively offers a weak option and passes MDM values through with no check. 8192 and 4096 are strong. If the rule also flags 8192, that part is a false positive and is not a reason to remove 8192.\n\nSecond judge: CertReq passes its isKeyLen argument directly to the Java RSA KeyPairGenerator. The manual UI offers 1024, 2048, 4096 and 8192 bits, while managed automatic enrollment passes the unrestricted rsa-key-length integer directly. Thus weak 1024-bit generation is reachable, although the default is already 4096 and the report does not identify the observed size. This is a configurable enrollment-key issue, not an Android KeyPairGeneratorSpec configuration problem. A scoped hardening PR is reasonable; an issue explaining the weak option and asking maintainers to settle legacy compatibility policy is also reasonable. The repository does not establish that any peer requires 1024-bit keys, so dismissing the finding outright is unwarranted.",
+  "must_change": [
+   "Stop CertReq from generating RSA keys smaller than 2048 bits: remove the 1024 entry from the rsa_lens string-array used by the key-size spinner in fragment_scep.xml",
+   "Enforce a minimum of 2048 bits on the value that reaches keyGen.initialize() in ScepClient.CertReq (or in every caller: ScepFragment.request and CertInstaller.doWork/requestScep). That covers values from the MDM 'rsa-key-length' restriction and any previously stored preference of 1024. Either clamp to 2048 or the 4096 default, or fail with a clear error or log. Never silently generate a weak key.",
+   "Handle a stale stored 'rsa-key-length' preference of 1024 (and an MDM value that is no longer in the list) cleanly, so the spinner falls back to a valid strong value instead of breaking",
+   "Address weak new RSA key generation consistently across manual enrollment and managed automatic enrollment, preferably with shared validation in CertReq. Use a minimum of 2048 bits, or explicitly gate and warn about any retained 1024-bit legacy mode.",
+   "Align the UI choices, saved-setting handling and rsa-key-length managed configuration with that policy. Removing the UI's 1024 entry alone leaves automatic enrollment unprotected.",
+   "Handle rejected or obsolete settings clearly rather than silently substituting an administrator's requested size. Preserve a secure default; the existing 4096-bit default needs no increase."
+  ],
+  "must_not_break": [
+   "Keep the 4096-bit default (default_rsa_len) and the 2048, 4096 and 8192 options",
+   "The MDM managed-configuration key 'rsa-key-length' (app_restrictions.xml) must keep its name and integer type, and valid values (>=2048) must still be honoured and still lock the spinner",
+   "The ScepClient.CertReq signature and its callers ScepFragment and CertInstaller (auto-enroll/renew worker) must keep working",
+   "SCEP enrollment interop with NDES/Cisco/other SCEP servers: self-signed signer cert with SHA256withRSA, CSR attributes (challengePassword, UPN SAN extensionRequest), MD5 CA fingerprint verifier input format",
+   "Pending enrollments: the PEM cert/key stored by RequestPendingException and later loaded by CertPoll/pem2key must still parse and poll, including keys generated earlier at any size. Do not add a size check to CertPoll or pem2key.",
+   "PKCS12 export via certResponse2pkcs12 and certificate installation into KeyChain",
+   "The existing shared preference 'rsa-key-length' must still load without crashing (no NumberFormatException or wrong index)",
+   "minSdk and existing BouncyCastle/jscep dependency setup",
+   "Preserve configurable stronger RSA lengths, including the existing 2048, 4096 and 8192 choices where supported by the provider and server. Do not replace configuration with one hard-coded size or silently downgrade it.",
+   "Preserve RSA SCEP interoperability: matching keys in the CSR, self-signed enrollment certificate and request signing, SHA256withRSA signatures, enrollment profile, challenge password and UPN extension.",
+   "Continue polling existing pending enrollments using their stored certificate, PKCS#8 private key and transaction ID, including previously generated 1024-bit keys. Do not regenerate or discard these identities when tightening new-key policy.",
+   "Preserve exportable private keys, PKCS#12 file export, Android KeyChain installation and delegated installation/renewal. A non-exportable AndroidKeyStore replacement would disrupt these flows.",
+   "Retain the rsa-key-length managed configuration interface and Android API 19 support, with managed enrollment retaining its existing API 21 guard. Clearly disclose any deliberate withdrawal of legacy 1024-bit enrollment support."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 215,
+ "tokens": {
+  "input_tokens": 122604,
+  "cached_input_tokens": 83584,
+  "output_tokens": 6719,
+  "reasoning_output_tokens": 3829
+ },
+ "turns": 1,
+ "tool_calls": 7,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [
+   "/home/antonow/.codex",
+   "/home/antonow/comparison_20261113/judges"
+  ],
+  "suspicious_paths": [
+   "/home/antonow/.codex",
+   "/home/antonow/comparison_20261113/judges"
+  ],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "05025f4baa26a382",
+ "finished_at": "2026-11-16T10:58:54-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K9b3c5b03",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The shared guard prevents weak new keys and preserves pending enrollments. Add explicit handling of obsolete MDM values: applyPolicies currently silently retains and locks another spinner selection."
+   },
+   {
+    "card_id": "K909a21b4",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The minimum is enforced consistently at key generation, and stale preferences safely leave a strong selection. Obsolete MDM values still need an explicit warning or rejection in the manual screen."
+   },
+   {
+    "card_id": "K7ec21e35",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 2,
+    "notes": "The weak option, unrestricted managed input and compatibility question justify an issue. However, requestScep already catches Exception and logs invalid-size errors, contradicting the claimed uncaught worker failure."
+   },
+   {
+    "card_id": "Kea3a4b57",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "It correctly identifies weak 1024-bit enrollment keys and reasonably seeks policy guidance while preserving 8192. The proposed direction omits the independent need to enforce a minimum on managed inputs."
+   },
+   {
+    "card_id": "K7853b19a",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The shared validation fixes weak key generation without changing polling or export. Add clear handling of removed MDM selections instead of silently retaining and locking another size."
+   },
+   {
+    "card_id": "Kdd238b3e",
+    "r2": 0,
+    "regression_scenario": "With automatic enrollment enabled and rsa-key-length=3072, a new request now generates 4096-bit keys instead of honoring the previously supported 3072-bit configuration.",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "1024-bit generation remains available through both enrollment paths, while valid managed sizes outside the UI list are overridden. The categorical claim that 1000 bits causes a provider exception is also incorrect."
+   },
+   {
+    "card_id": "K0af26df4",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The shared minimum removes weak new-key generation and preserves stronger choices. The manual policy path needs explicit notice when an obsolete MDM value leaves a different spinner selection locked."
+   },
+   {
+    "card_id": "Kc0a05a55",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The security fix covers manual and automatic key generation and leaves pending identities usable. Obsolete MDM values still require clear handling in applyPolicies rather than an unannounced retained selection."
+   },
+   {
+    "card_id": "Kb0013529",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The shared guard and managed-configuration description accurately establish the minimum. Add explicit handling of obsolete MDM spinner values; the existing helper silently retains another selection."
+   },
+   {
+    "card_id": "K7e144187",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 0,
+    "notes": "The supplied report does not establish an observed 8192-bit value. Failed attempts to restrict strong supported sizes do not explain leaving the reachable weak-key path unaddressed."
+   },
+   {
+    "card_id": "K822180d6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 0,
+    "notes": "The claimed observed 8192-bit input is unsupported by the supplied report. Avoiding a patch that rejects valid 2048/8192 settings does not address the actual 1024-bit and unrestricted-MDM issue."
+   },
+   {
+    "card_id": "K74823d9e",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "It accurately traces both inputs and reasonably seeks compatibility policy without removing strong choices. It should explicitly distinguish the insecure 1024-bit option from merely violating the checker's narrower constraint."
+   },
+   {
+    "card_id": "Ke2b5812b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "This correctly identifies weak signature-key generation and asks about removing 1024 while enforcing a managed-enrollment minimum. Seeking compatibility policy while preserving strong supported sizes is reasonable."
+   },
+   {
+    "card_id": "Kc9f71fe6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 0,
+    "notes": "The report does not supply the claimed measured 8192-bit value. The issue centers on unsuccessful restrictive patches without explaining the real weak-key risk or a legacy-policy decision."
+   },
+   {
+    "card_id": "K2b75606f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 0,
+    "notes": "The measured size and reported operation trace are not established by the supplied report. An abandoned patch removing valid choices is not a substantive reason to leave weak enrollment-key generation unresolved."
+   },
+   {
+    "card_id": "K25d6d8e2",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The shared guard fixes weak key generation and preserves polling, export and stronger sizes. Add explicit warning or rejection for obsolete MDM selections in the manual screen."
+   },
+   {
+    "card_id": "Kc6b78692",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "The weak-key diagnosis and request for compatibility guidance are reasonable. The issue omits the unrestricted managed input and the need for validation beyond removing the UI option."
+   },
+   {
+    "card_id": "K33c46ebc",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "It accurately explains the weak signing key and reasonably avoids removing strong sizes solely for checker compliance. The proposed UI change should also mention enforcing a minimum on unrestricted MDM values."
+   },
+   {
+    "card_id": "Ke5ee3109",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "Removing the weak UI choice is only a partial fix because automatic enrollment still accepts weak MDM sizes. The claimed universal fallback to 2048 is false: an unmatched MDM value can retain a previously selected 4096 or 8192."
+   },
+   {
+    "card_id": "Kbc10a712",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The guard prevents weak new keys while preserving existing pending identities and supported strong sizes. The manual screen still needs explicit handling of obsolete MDM values instead of silently locking a different selection."
+   },
+   {
+    "card_id": "K64afe6f8",
+    "r2": 0,
+    "regression_scenario": "An automatic-enrollment deployment configured for 3072-bit RSA now receives 4096-bit keys because its valid managed value is absent from rsa_lens.",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "The patch retains weak 1024-bit generation and overrides valid managed configurations. The description wrongly treats 512 and 3000 bits as inherently rejected by RSA providers."
+   },
+   {
+    "card_id": "K8a76289a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Provider acceptance does not make 1024-bit RSA secure, and the app explicitly offers it while accepting unrestricted managed sizes. The report does not establish a provider rejection or synthetic input."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

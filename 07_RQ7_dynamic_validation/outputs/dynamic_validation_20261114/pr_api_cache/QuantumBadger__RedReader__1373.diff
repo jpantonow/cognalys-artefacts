@@ -1,0 +1,24 @@
+diff --git a/src/main/java/org/quantumbadger/redreader/common/General.kt b/src/main/java/org/quantumbadger/redreader/common/General.kt
+index ee7448c97..147d1472e 100644
+--- a/src/main/java/org/quantumbadger/redreader/common/General.kt
++++ b/src/main/java/org/quantumbadger/redreader/common/General.kt
+@@ -530,15 +530,16 @@ object General {
+ 		return toHex(digest.digest(plaintext.encodeToByteArray()))
+ 	}
+ 
+-    @JvmStatic
++    
++	@JvmStatic
+ 	fun sha1(plaintext: ByteArray): String {
+ 		val digest: MessageDigest = try {
+-			MessageDigest.getInstance("SHA-1")
++			MessageDigest.getInstance("SHA-256")
+ 		} catch (e: Exception) {
+ 			throw RuntimeException(e)
+ 		}
+ 		return toHex(digest.digest(plaintext))
+-    }
++	}
+ 
+ 	private fun appIds(context: Context) = AndroidCommon.getPackageInfo(context).run {
+ 		ids.map {

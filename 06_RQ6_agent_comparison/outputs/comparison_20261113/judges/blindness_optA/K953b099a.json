@@ -1,0 +1,31 @@
+{
+ "card_id": "K953b099a",
+ "card_sha256": "7e38f89b26f6a705",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 10,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3572,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 504
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0388938,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "12771d6a29318345",
+ "finished_at": "2026-11-17T18:54:41-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.45,
+  "reason": "The description is short and reads like a template. It hits fixed slots in order: what the code does, what RVSec flagged, the change made, a line saying 'this change addresses the report; no security use found', the effect on users (the cache gets fetched again), 'the build passed', and a closing request to check external consumers and verify with RVSec on a device. That fixed structure suggests the Cognalys pipeline more than a free-form agent session. Sonnet in Claude Code usually writes longer, more varied text. The diff is a minimal rename, which any of the three sources could have produced, so I'm not very confident."
+ }
+}

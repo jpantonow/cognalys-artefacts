@@ -1,0 +1,95 @@
+{
+ "unit": "pr_6d0a3cf73013",
+ "phase": "phase2",
+ "order": [
+  "K0a585fce",
+  "Kf1db2f02"
+ ],
+ "card_sha256": {
+  "K0a585fce": "9da8711f57f53b4f",
+  "Kf1db2f02": "7547f2e07a7a1d8a"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The finding is real and serious. In OkHttpClientModule.kt, cachingHttpClient() sets trustAllCerts = true by default (line 73). Neither caller changes that: OkHttpClientModule.provideOkHttpClient (the app-wide singleton) and ProviderAPI (the Fever, Google Reader and FreshRSS sync clients) both use the default. So setupSsl() always runs the trustAllCerts branch. That branch builds an anonymous X509TrustManager whose checkServerTrusted is empty and installs `hostnameVerifier { _, _ -> true }`. The resulting TrustManager[] goes to SSLContext.init and to OkHttp's sslSocketFactory(). The platform trust manager at line 150 is never reached in the shipped app. The app has no setting or per-account option for self-signed servers; trust-all is simply on everywhere. As a result, every HTTPS connection the app makes can be intercepted by anyone on the network path. That includes feed fetches, images and favicons, and logins to self-hosted servers, where the account username and password, HTTP basic credentials and API tokens are sent. The @SuppressLint(\"CustomX509TrustManager\") annotation hides the lint warning, but nothing in the code justifies the behaviour. Git history shows the trust-all call was first added commented out (f76abd98) and only enabled later. RVSec's message is therefore correct, not a false positive. A PR should drop the custom trust manager and the accept-all hostname verifier, and use the platform or TrustManagerFactory default, while keeping the mTLS client-certificate key manager. The secure fix will break users whose self-hosted FreshRSS, Fever or Google Reader server uses a self-signed or private-CA certificate. On minSdk 26 the app does not trust user-installed CAs unless it has a network security config, and it has none. Whether to add such a config or a per-account 'allow untrusted certificate' option is a product decision maintainers may reasonably want to make first.\n\nSecond judge: This is a real TLS authentication flaw, not merely an unrecognized custom trust manager. In OkHttpClientModule.kt, trustAllCerts selects an X509TrustManager whose checks do nothing and a hostname verifier that always returns true. cachingHttpClient defaults trustAllCerts to true, and both the injected shared client and ProviderAPI accept that default. This affects feed/article/image requests and Fever/Google Reader/FreshRSS account traffic, including credentials and tokens, allowing server impersonation. No user-facing server-trust opt-in or protocol requirement justifies this global bypass. The optional KeyChain certificate authenticates the client; it does not authenticate the server.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "Stop installing the accept-all X509TrustManager by default. The OkHttpClient used for feeds and images and the ProviderAPI clients for Fever, Google Reader and FreshRSS must check server certificates with the platform default trust manager (Platform.get().platformTrustManager() or one from TrustManagerFactory initialised with the default KeyStore), e.g. by making trustAllCerts default to false or removing the trust-all branch.",
+   "Remove the `hostnameVerifier { _, _ -> true }` override in that default path so OkHttp's normal hostname verification applies.",
+   "The TrustManager passed to SSLContext.init must be the same one passed to OkHttpClient.Builder.sslSocketFactory(factory, trustManager), so the two stay consistent.",
+   "If any trust-all or self-signed option is kept, it must be explicit and opt-in (e.g. a per-account setting the user turns on), never the silent default; ideally it also keeps hostname verification or pins the certificate the user accepted.",
+   "Make ordinary shared and provider clients validate server certificate chains using Android/OkHttp default trust or a properly initialized TrustManagerFactory-backed manager; eliminate the default trust-all path.",
+   "Restore normal hostname verification as well as chain validation. Changing only the trust manager leaves server identity checking incomplete.",
+   "When constructing an SSLContext for client-certificate authentication, retain the client key manager and supply a validating server trust manager, passing that same trust manager to OkHttp's sslSocketFactory overload. Do not fall back to permissive verification on failure.",
+   "If exceptional certificate support is retained, require explicit, narrowly scoped configuration rather than silently accepting arbitrary certificates and hostnames application-wide."
+  ],
+  "must_not_break": [
+   "mTLS client-certificate login: the X509KeyManager that reads the KeyChain alias (clientCertificateAlias stored in the Fever, FreshRSS and Google Reader security keys) must still be passed to SSLContext.init, so setupSsl (or an equivalent) must still run when an alias is set even if trust-all is gone.",
+   "Existing stored accounts and their serialized security keys (serverUrl, username, password, clientCertificateAlias): the change must not need a data migration or change their format.",
+   "Normal HTTPS feed fetching, image and favicon loading and sync against servers with publicly trusted certificates must keep working, through the same OkHttpClient with its HTTP cache, timeouts, redirect-following and User-Agent interceptor.",
+   "Plain-HTTP feeds and servers: the manifest's usesCleartextTraffic=true behaviour must not be removed as a side effect.",
+   "Self-hosted users with private CAs should still have a supported route, such as a network_security_config that trusts user-installed CAs or an opt-in setting, or the change should at least be documented; minSdk 26 and both the main and googlePlay flavours must keep building.",
+   "SSL setup failures must not crash client construction: keep the NoSuchAlgorithmException and KeyManagementException handling, or fall back to the default OkHttp configuration.",
+   "Optional Android KeyChain client-certificate authentication, including existing stored clientCertificateAlias values and operation without an alias. Preserve existing account credentials and their serialized representation.",
+   "Fever and Google Reader API authentication and synchronization, including FreshRSS usage, with correctly authenticated HTTPS servers.",
+   "Feed, article, favicon and image loading with valid HTTPS, existing HTTP support, and unrelated caching, redirects, timeouts and User-Agent behavior.",
+   "Android API 26 and later support. Rejecting previously accepted untrusted, expired or wrong-host certificates is the intended security correction; the repository provides no requirement to preserve their unconditional acceptance."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 37,
+ "tokens": {
+  "input_tokens": 71437,
+  "cached_input_tokens": 49152,
+  "output_tokens": 1077,
+  "reasoning_output_tokens": 503
+ },
+ "turns": 1,
+ "tool_calls": 4,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "ead67c0f5aa08cfc",
+ "finished_at": "2026-11-17T19:16:05-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K0a585fce",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "Correctly identifies the global certificate and hostname bypass and the specific compatibility decision justifying an issue. SuppressLint does not establish a security justification, and suggesting closure merely because the behavior is intentional understates the flaw."
+   },
+   {
+    "card_id": "Kf1db2f02",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "Accurately traces the insecure defaults through shared and provider clients and gives a concrete compatibility reason for deferring implementation. Suggesting closure if trust-all is intentional omits that self-hosted support does not justify disabling server authentication application-wide."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

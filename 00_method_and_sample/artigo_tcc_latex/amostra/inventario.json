@@ -1,0 +1,3536 @@
+{
+  "snapshot_date": "2026-10-22",
+  "pr_status_source_dates": [
+    "2026-11-17_2245"
+  ],
+  "selection": "34 consolidated findings plus the RVSec pull requests of outputs/prs_reports/20261117_2245/summary_rvsec.json (open, incorporated or closed by a maintainer); no historical error spreadsheet",
+  "identity": [
+    "apk",
+    "class",
+    "method",
+    "spec"
+  ],
+  "counts": {
+    "run_findings": 34,
+    "run_apks": 23,
+    "pr_records": 49,
+    "pr_identity_status": {
+      "resolved": 48,
+      "missing": 1
+    },
+    "pr_recorded_status": {
+      "accepted": 19,
+      "open": 20,
+      "closed_by_maintainer": 10
+    },
+    "overlapping_pr_findings": 16,
+    "union_findings_resolved": 66,
+    "union_apks_resolved": 53,
+    "apk_status": {
+      "identifier_only": 29,
+      "local_container_verified": 24
+    }
+  },
+  "excluded_prs": [],
+  "findings": [
+    {
+      "apk": "app.michaelwuensch.bitbanana_79.apk",
+      "class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+      "method": "encodePbkdf2",
+      "spec": "PBEKeySpecSpec",
+      "finding_id": "53c35a191a23",
+      "run34": {
+        "apk": "app.michaelwuensch.bitbanana_79.apk",
+        "class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+        "method": "encodePbkdf2",
+        "spec": "PBEKeySpecSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "subset_bitbanana_scope6",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "confirmed",
+        "solution": true,
+        "apply_status": "SUCCESS",
+        "apply_error": "",
+        "base_port": "PORT",
+        "submodule": "",
+        "build_status": "success",
+        "build_attribution": "",
+        "finding_id": "53c35a191a23",
+        "pr": true,
+        "pr_title": "Upgrade app-lock verifiers to PBKDF2-HMAC-SHA256",
+        "pr_committed": true,
+        "pr_files": 7,
+        "pr_added": 306,
+        "pr_removed": 49,
+        "pr_repository": "michaelWuensch/BitBanana",
+        "pr_ready": true,
+        "outcome": "PR pronto",
+        "outcome_detail": ""
+      },
+      "prs": [
+        "https://github.com/michaelWuensch/BitBanana/pull/184"
+      ]
+    },
+    {
+      "apk": "app.michaelwuensch.bitbanana_79.apk",
+      "class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+      "method": "encodePbkdf2",
+      "spec": "SecretKeyFactorySpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "app.michaelwuensch.bitbanana_79.apk",
+        "class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+        "method": "encodePbkdf2",
+        "spec": "SecretKeyFactorySpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "subset_bitbanana",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "confirmed",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "generation_blocked",
+        "issue_repository": "michaelWuensch/BitBanana",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "michaelWuensch/BitBanana"
+      },
+      "prs": []
+    },
+    {
+      "apk": "com.beemdevelopment.aegis_81.apk",
+      "class": "com.beemdevelopment.aegis.crypto.CryptoUtils",
+      "method": "createCipher",
+      "spec": "GCMParameterSpecSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "com.beemdevelopment.aegis_81.apk",
+        "class": "com.beemdevelopment.aegis.crypto.CryptoUtils",
+        "method": "createCipher",
+        "spec": "GCMParameterSpecSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "not_confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "non_security",
+        "outcome": "falso positivo reconhecido",
+        "outcome_detail": ""
+      },
+      "prs": []
+    },
+    {
+      "apk": "com.craxiom.networksurvey_114.apk",
+      "class": "com.craxiom.networksurvey.util.CryptoManager",
+      "method": "getOrCreateKey",
+      "spec": "KeyStoreSpec",
+      "finding_id": "ac1a8dd4d680",
+      "run34": {
+        "apk": "com.craxiom.networksurvey_114.apk",
+        "class": "com.craxiom.networksurvey.util.CryptoManager",
+        "method": "getOrCreateKey",
+        "spec": "KeyStoreSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "non_security",
+        "solution": true,
+        "apply_status": "SUCCESS",
+        "apply_error": "",
+        "base_port": "",
+        "submodule": "",
+        "build_status": "success",
+        "build_attribution": "",
+        "finding_id": "ac1a8dd4d680",
+        "pr": true,
+        "pr_title": "Use KeyStore.getKey when reading the encryption key",
+        "pr_committed": true,
+        "pr_files": 1,
+        "pr_added": 2,
+        "pr_removed": 2,
+        "pr_repository": "christianrowlands/android-network-survey",
+        "pr_ready": true,
+        "outcome": "PR pronto",
+        "outcome_detail": ""
+      },
+      "prs": [
+        "https://github.com/christianrowlands/android-network-survey/pull/154"
+      ]
+    },
+    {
+      "apk": "com.gelakinetic.mtgfam_99.apk",
+      "class": "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1",
+      "method": "fetch",
+      "spec": "IvParameterSpecSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "com.gelakinetic.mtgfam_99.apk",
+        "class": "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1",
+        "method": "fetch",
+        "spec": "IvParameterSpecSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "AEFeinstein/mtg-familiar",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "AEFeinstein/mtg-familiar"
+      },
+      "prs": []
+    },
+    {
+      "apk": "com.gelakinetic.mtgfam_99.apk",
+      "class": "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1",
+      "method": "fetch",
+      "spec": "SecretKeySpecSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "com.gelakinetic.mtgfam_99.apk",
+        "class": "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1",
+        "method": "fetch",
+        "spec": "SecretKeySpecSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "subset_policy",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "generation_blocked",
+        "issue_repository": "AEFeinstein/mtg-familiar",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "AEFeinstein/mtg-familiar"
+      },
+      "prs": []
+    },
+    {
+      "apk": "com.ivanovsky.passnotes_11700.apk",
+      "class": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+      "method": "createHttpClient",
+      "spec": "SSLContextSpec",
+      "finding_id": "6d29118e4263",
+      "run34": {
+        "apk": "com.ivanovsky.passnotes_11700.apk",
+        "class": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+        "method": "createHttpClient",
+        "spec": "SSLContextSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "confirmed",
+        "solution": true,
+        "apply_status": "SUCCESS",
+        "apply_error": "",
+        "base_port": "",
+        "submodule": "",
+        "build_status": "success",
+        "build_attribution": "",
+        "finding_id": "6d29118e4263",
+        "pr": true,
+        "pr_title": "Use a factory-provided trust manager for WebDAV clients",
+        "pr_committed": true,
+        "pr_files": 1,
+        "pr_added": 13,
+        "pr_removed": 28,
+        "pr_repository": "aivanovski/kpassnotes",
+        "pr_ready": true,
+        "outcome": "PR pronto",
+        "outcome_detail": ""
+      },
+      "prs": [
+        "https://github.com/aivanovski/keepassvault/pull/347"
+      ]
+    },
+    {
+      "apk": "com.leekleak.trafficlight_38.apk",
+      "class": "com.leekleak.trafficlight.database.CryptoManager",
+      "method": "getSecretKey",
+      "spec": "KeyStoreSpec",
+      "finding_id": "32249b3e5e5d",
+      "run34": {
+        "apk": "com.leekleak.trafficlight_38.apk",
+        "class": "com.leekleak.trafficlight.database.CryptoManager",
+        "method": "getSecretKey",
+        "spec": "KeyStoreSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "non_security",
+        "solution": true,
+        "apply_status": "SUCCESS",
+        "apply_error": "",
+        "base_port": "PORT",
+        "submodule": "",
+        "build_status": "success",
+        "build_attribution": "",
+        "finding_id": "32249b3e5e5d",
+        "pr": true,
+        "pr_title": "Use KeyStore.getKey to read secret keys",
+        "pr_committed": true,
+        "pr_files": 1,
+        "pr_added": 1,
+        "pr_removed": 1,
+        "pr_repository": "leekleak/traffic-light",
+        "pr_ready": true,
+        "outcome": "PR pronto",
+        "outcome_detail": ""
+      },
+      "prs": [
+        "https://github.com/leekleak/traffic-light/pull/238"
+      ]
+    },
+    {
+      "apk": "com.nononsenseapps.feeder.play_4025.apk",
+      "class": "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+      "method": "trustAllCerts",
+      "spec": "SSLContextSpec",
+      "finding_id": "3b969f2358c1",
+      "run34": {
+        "apk": "com.nononsenseapps.feeder.play_4025.apk",
+        "class": "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+        "method": "trustAllCerts",
+        "spec": "SSLContextSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "confirmed",
+        "solution": true,
+        "apply_status": "SUCCESS",
+        "apply_error": "",
+        "base_port": "",
+        "submodule": "",
+        "build_status": "success_app_module_only",
+        "build_attribution": "",
+        "finding_id": "3b969f2358c1",
+        "pr": true,
+        "pr_title": "Use platform trust managers for TLS setup",
+        "pr_committed": true,
+        "pr_files": 1,
+        "pr_added": 10,
+        "pr_removed": 18,
+        "pr_repository": "spacecowboy/Feeder",
+        "pr_ready": true,
+        "outcome": "PR pronto",
+        "outcome_detail": ""
+      },
+      "prs": [
+        "https://github.com/spacecowboy/Feeder/pull/1210"
+      ]
+    },
+    {
+      "apk": "com.password.monitor_102.apk",
+      "class": "com.password.monitor.koin_di.AppModuleKt",
+      "method": "appModule$lambda$0$3",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "com.password.monitor_102.apk",
+        "class": "com.password.monitor.koin_di.AppModuleKt",
+        "method": "appModule$lambda$0$3",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "EXTERNAL_DIGEST_CONTRACT_NO_CLIENT_ONLY_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "StellarSand/Password-Monitor",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "StellarSand/Password-Monitor"
+      },
+      "prs": []
+    },
+    {
+      "apk": "com.password.monitor_102.apk",
+      "class": "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2",
+      "method": "invokeSuspend",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "com.password.monitor_102.apk",
+        "class": "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2",
+        "method": "invokeSuspend",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "EXTERNAL_DIGEST_CONTRACT_NO_CLIENT_ONLY_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "StellarSand/Password-Monitor",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "StellarSand/Password-Monitor"
+      },
+      "prs": []
+    },
+    {
+      "apk": "com.sapuseven.untis_29198884.apk",
+      "class": "com.sapuseven.untis.data.cache.DiskCache",
+      "method": "getCacheFile",
+      "spec": "MessageDigestSpec",
+      "finding_id": "21b3aced6bcf",
+      "run34": {
+        "apk": "com.sapuseven.untis_29198884.apk",
+        "class": "com.sapuseven.untis.data.cache.DiskCache",
+        "method": "getCacheFile",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "solution": true,
+        "apply_status": "SUCCESS",
+        "apply_error": "",
+        "base_port": "",
+        "submodule": "",
+        "build_status": "success",
+        "build_attribution": "",
+        "finding_id": "21b3aced6bcf",
+        "pr": true,
+        "pr_title": "Use SHA-256 for disk-cache file names",
+        "pr_committed": true,
+        "pr_files": 1,
+        "pr_added": 1,
+        "pr_removed": 1,
+        "pr_repository": "SapuSeven/BetterUntis",
+        "pr_ready": true,
+        "outcome": "PR pronto",
+        "outcome_detail": ""
+      },
+      "prs": [
+        "https://github.com/SapuSeven/BetterUntis/pull/515"
+      ]
+    },
+    {
+      "apk": "com.schwegelbin.openbible_46.apk",
+      "class": "com.schwegelbin.openbible.logic.GettersKt",
+      "method": "getChecksum",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "com.schwegelbin.openbible_46.apk",
+        "class": "com.schwegelbin.openbible.logic.GettersKt",
+        "method": "getChecksum",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "EXTERNAL_DIGEST_CONTRACT_NO_CLIENT_ONLY_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "confirmed",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "SchweGELBin/OpenBible2",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "SchweGELBin/OpenBible2"
+      },
+      "prs": []
+    },
+    {
+      "apk": "com.vrem.wifianalyzer_71.apk",
+      "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+      "method": "calculateChildType",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "com.vrem.wifianalyzer_71.apk",
+        "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+        "method": "calculateChildType",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "non_security",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "VREMSoftwareDevelopment/WifiAnalyzer",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "VREMSoftwareDevelopment/WifiAnalyzer"
+      },
+      "prs": [
+        "https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer/pull/618"
+      ]
+    },
+    {
+      "apk": "com.vrem.wifianalyzer_71.apk",
+      "class": "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper",
+      "method": "calculateGraphType",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "com.vrem.wifianalyzer_71.apk",
+        "class": "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper",
+        "method": "calculateGraphType",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "non_security",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "VREMSoftwareDevelopment/WifiAnalyzer",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "VREMSoftwareDevelopment/WifiAnalyzer"
+      },
+      "prs": []
+    },
+    {
+      "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+      "class": "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider",
+      "method": "configureTrustAllCertificates",
+      "spec": "SSLContextSpec",
+      "finding_id": "4c1c74bcbc8f",
+      "run34": {
+        "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+        "class": "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider",
+        "method": "configureTrustAllCertificates",
+        "spec": "SSLContextSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "non_security",
+        "solution": true,
+        "apply_status": "NOT_APPLICABLE_TO_BASE",
+        "apply_error": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH",
+        "base_port": "ALREADY_FIXED_UPSTREAM",
+        "submodule": "",
+        "build_status": "",
+        "build_attribution": "",
+        "finding_id": "4c1c74bcbc8f",
+        "outcome": "correção não aplicável: código mudou upstream",
+        "outcome_detail": "o branch de destino já não tem a violação"
+      },
+      "prs": [
+        "https://github.com/lneugebauer/nextcloud-cookbook/pull/204"
+      ]
+    },
+    {
+      "apk": "de.stephanlindauer.criticalmaps_104.apk",
+      "class": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1",
+      "method": "SHA1",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "de.stephanlindauer.criticalmaps_104.apk",
+        "class": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1",
+        "method": "SHA1",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "EXTERNAL_DIGEST_CONTRACT_NO_CLIENT_ONLY_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "CriticalMaps/criticalmaps-android",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "CriticalMaps/criticalmaps-android"
+      },
+      "prs": []
+    },
+    {
+      "apk": "eu.faircode.email_2322.apk",
+      "class": "eu.faircode.email.Helper",
+      "method": "getFingerprint",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "eu.faircode.email_2322.apk",
+        "class": "eu.faircode.email.Helper",
+        "method": "getFingerprint",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "M66B/FairEmail",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "M66B/FairEmail"
+      },
+      "prs": []
+    },
+    {
+      "apk": "github.paroj.dsub2000_217.apk",
+      "class": "github.paroj.dsub2000.service.RESTMusicService",
+      "method": "<init>",
+      "spec": "SSLContextSpec",
+      "finding_id": "f167efd80107",
+      "run34": {
+        "apk": "github.paroj.dsub2000_217.apk",
+        "class": "github.paroj.dsub2000.service.RESTMusicService",
+        "method": "<init>",
+        "spec": "SSLContextSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "subset_gates",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "confirmed",
+        "solution": true,
+        "apply_status": "NOT_APPLICABLE_TO_BASE",
+        "apply_error": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH",
+        "base_port": "ABSTAIN",
+        "submodule": "",
+        "build_status": "",
+        "build_attribution": "",
+        "finding_id": "f167efd80107",
+        "outcome": "correção não aplicável: código mudou upstream",
+        "outcome_detail": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH"
+      },
+      "prs": [
+        "https://github.com/paroj/DSub2000/pull/160"
+      ]
+    },
+    {
+      "apk": "github.paroj.dsub2000_217.apk",
+      "class": "github.paroj.dsub2000.util.Util",
+      "method": "md5Hex",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "github.paroj.dsub2000_217.apk",
+        "class": "github.paroj.dsub2000.util.Util",
+        "method": "md5Hex",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "paroj/DSub2000",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "paroj/DSub2000"
+      },
+      "prs": []
+    },
+    {
+      "apk": "io.treehouses.remote_6098.apk",
+      "class": "io.treehouses.remote.ssh.Encryptor",
+      "method": "encrypt",
+      "spec": "IvParameterSpecSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "io.treehouses.remote_6098.apk",
+        "class": "io.treehouses.remote.ssh.Encryptor",
+        "method": "encrypt",
+        "spec": "IvParameterSpecSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "unknown",
+        "cause_status": "unknown",
+        "security_impact": "not_established",
+        "outcome": "evidência insuficiente",
+        "outcome_detail": ""
+      },
+      "prs": []
+    },
+    {
+      "apk": "io.treehouses.remote_6098.apk",
+      "class": "io.treehouses.remote.ssh.Encryptor",
+      "method": "encrypt",
+      "spec": "SecretKeySpecSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "io.treehouses.remote_6098.apk",
+        "class": "io.treehouses.remote.ssh.Encryptor",
+        "method": "encrypt",
+        "spec": "SecretKeySpecSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "unknown",
+        "cause_status": "unknown",
+        "security_impact": "not_established",
+        "outcome": "evidência insuficiente",
+        "outcome_detail": ""
+      },
+      "prs": []
+    },
+    {
+      "apk": "me.diamondforge.tokn_19.apk",
+      "class": "me.diamondforge.tokn.security.KeystoreManager",
+      "method": "getOrCreateKey",
+      "spec": "KeyStoreSpec",
+      "finding_id": "0aeb52bd220d",
+      "run34": {
+        "apk": "me.diamondforge.tokn_19.apk",
+        "class": "me.diamondforge.tokn.security.KeystoreManager",
+        "method": "getOrCreateKey",
+        "spec": "KeyStoreSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "non_security",
+        "solution": true,
+        "apply_status": "SUCCESS",
+        "apply_error": "",
+        "base_port": "",
+        "submodule": "",
+        "build_status": "success",
+        "build_attribution": "",
+        "finding_id": "0aeb52bd220d",
+        "pr": true,
+        "pr_title": "Read Android keystore keys with getKey",
+        "pr_committed": true,
+        "pr_files": 1,
+        "pr_added": 1,
+        "pr_removed": 1,
+        "pr_repository": "fthomys/tokn",
+        "pr_ready": true,
+        "outcome": "PR pronto",
+        "outcome_detail": ""
+      },
+      "prs": [
+        "https://github.com/tokn-authenticator/tokn/pull/138"
+      ]
+    },
+    {
+      "apk": "net.gaast.giggity_769.apk",
+      "class": "net.gaast.giggity.Schedule$Item",
+      "method": "hashCode",
+      "spec": "MessageDigestSpec",
+      "finding_id": "6eb0c69fa93c",
+      "run34": {
+        "apk": "net.gaast.giggity_769.apk",
+        "class": "net.gaast.giggity.Schedule$Item",
+        "method": "hashCode",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "non_security",
+        "solution": true,
+        "apply_status": "NOT_APPLICABLE_TO_BASE",
+        "apply_error": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH",
+        "base_port": "ALREADY_FIXED_UPSTREAM",
+        "submodule": "",
+        "build_status": "",
+        "build_attribution": "",
+        "finding_id": "6eb0c69fa93c",
+        "outcome": "correção não aplicável: código mudou upstream",
+        "outcome_detail": "o branch de destino já não tem a violação"
+      },
+      "prs": [
+        "https://github.com/Wilm0r/giggity/pull/543"
+      ]
+    },
+    {
+      "apk": "org.cry.otp_31.apk",
+      "class": "org.cry.otp.MD5",
+      "method": "<init>",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "org.cry.otp_31.apk",
+        "class": "org.cry.otp.MD5",
+        "method": "<init>",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "subset_policy2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "generation_blocked",
+        "issue_repository": "chrismiceli/motp",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "chrismiceli/motp"
+      },
+      "prs": []
+    },
+    {
+      "apk": "org.cry.otp_31.apk",
+      "class": "org.cry.otp.TOTP",
+      "method": "hmac_sha",
+      "spec": "MacSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "org.cry.otp_31.apk",
+        "class": "org.cry.otp.TOTP",
+        "method": "hmac_sha",
+        "spec": "MacSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "generation_blocked",
+        "issue_repository": "chrismiceli/motp",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "chrismiceli/motp"
+      },
+      "prs": []
+    },
+    {
+      "apk": "org.cry.otp_31.apk",
+      "class": "org.cry.otp.TOTP",
+      "method": "hmac_sha",
+      "spec": "SecretKeySpecSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "org.cry.otp_31.apk",
+        "class": "org.cry.otp.TOTP",
+        "method": "hmac_sha",
+        "spec": "SecretKeySpecSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "not_confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "outcome": "falso positivo reconhecido",
+        "outcome_detail": ""
+      },
+      "prs": []
+    },
+    {
+      "apk": "org.fedorahosted.freeotp_48.apk",
+      "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+      "method": "decrypt",
+      "spec": "AlgorithmParametersSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "org.fedorahosted.freeotp_48.apk",
+        "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+        "method": "decrypt",
+        "spec": "AlgorithmParametersSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "not_confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "outcome": "falso positivo reconhecido",
+        "outcome_detail": ""
+      },
+      "prs": []
+    },
+    {
+      "apk": "org.fedorahosted.freeotp_48.apk",
+      "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+      "method": "encrypt",
+      "spec": "CipherSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "org.fedorahosted.freeotp_48.apk",
+        "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+        "method": "encrypt",
+        "spec": "CipherSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "unknown",
+        "security_impact": "not_established",
+        "outcome": "violação confirmada sem correção segura",
+        "outcome_detail": ""
+      },
+      "prs": [
+        "https://github.com/freeotp/freeotp-android/pull/524",
+        "https://github.com/freeotp/freeotp-android/pull/521"
+      ]
+    },
+    {
+      "apk": "org.quantumbadger.redreader_117.apk",
+      "class": "org.quantumbadger.redreader.common.General",
+      "method": "parseConfig",
+      "spec": "IvParameterSpecSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "org.quantumbadger.redreader_117.apk",
+        "class": "org.quantumbadger.redreader.common.General",
+        "method": "parseConfig",
+        "spec": "IvParameterSpecSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "no_safe_fix",
+        "issue_repository": "QuantumBadger/RedReader",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "QuantumBadger/RedReader"
+      },
+      "prs": []
+    },
+    {
+      "apk": "org.quantumbadger.redreader_117.apk",
+      "class": "org.quantumbadger.redreader.common.General",
+      "method": "parseConfig",
+      "spec": "SecretKeySpecSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "org.quantumbadger.redreader_117.apk",
+        "class": "org.quantumbadger.redreader.common.General",
+        "method": "parseConfig",
+        "spec": "SecretKeySpecSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "NO_SAFE_FIX",
+        "detector_violation": "unknown",
+        "cause_status": "unknown",
+        "security_impact": "unknown",
+        "outcome": "evidência insuficiente",
+        "outcome_detail": ""
+      },
+      "prs": []
+    },
+    {
+      "apk": "org.quantumbadger.redreader_117.apk",
+      "class": "org.quantumbadger.redreader.common.General",
+      "method": "sha1",
+      "spec": "MessageDigestSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "org.quantumbadger.redreader_117.apk",
+        "class": "org.quantumbadger.redreader.common.General",
+        "method": "sha1",
+        "spec": "MessageDigestSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "generation_blocked",
+        "issue_repository": "QuantumBadger/RedReader",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "QuantumBadger/RedReader"
+      },
+      "prs": [
+        "https://github.com/QuantumBadger/RedReader/pull/1373"
+      ]
+    },
+    {
+      "apk": "rocks.poopjournal.metadataremover_20020.apk",
+      "class": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+      "method": "<clinit>",
+      "spec": "SecureRandomSpec",
+      "finding_id": "40d39da41dec",
+      "run34": {
+        "apk": "rocks.poopjournal.metadataremover_20020.apk",
+        "class": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+        "method": "<clinit>",
+        "spec": "SecureRandomSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "run2",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "not_established",
+        "solution": true,
+        "apply_status": "SUCCESS",
+        "apply_error": "",
+        "base_port": "",
+        "submodule": "",
+        "build_status": "failed",
+        "build_attribution": "verified_preexisting_build_failure",
+        "finding_id": "40d39da41dec",
+        "pr": true,
+        "pr_title": "Use an unseeded SecureRandom for filename selection",
+        "pr_committed": false,
+        "pr_files": 1,
+        "pr_added": 1,
+        "pr_removed": 1,
+        "pr_repository": "Crazy-Marvin/MetadataRemover",
+        "outcome": "correção gerada, sem PR",
+        "outcome_detail": "build: failed (verified_preexisting_build_failure)"
+      },
+      "prs": [
+        "https://github.com/Crazy-Marvin/MetadataRemover/pull/264"
+      ]
+    },
+    {
+      "apk": "systems.sieber.droid_scep_7.apk",
+      "class": "systems.sieber.droid_scep.ScepClient",
+      "method": "CertReq",
+      "spec": "KeyPairGeneratorSpec",
+      "finding_id": null,
+      "run34": {
+        "apk": "systems.sieber.droid_scep_7.apk",
+        "class": "systems.sieber.droid_scep.ScepClient",
+        "method": "CertReq",
+        "spec": "KeyPairGeneratorSpec",
+        "extraction_status": "success",
+        "evidence": "código-fonte",
+        "run": "subset_gates",
+        "analysed": true,
+        "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "detector_violation": "confirmed",
+        "cause_status": "confirmed",
+        "security_impact": "non_security",
+        "issue": true,
+        "issue_target": "application_repository",
+        "issue_kind": "generation_blocked",
+        "issue_repository": "schorschii/Droid_SCEP",
+        "outcome": "issue para o mantenedor do app",
+        "outcome_detail": "schorschii/Droid_SCEP"
+      },
+      "prs": [
+        "https://github.com/schorschii/Droid_SCEP/pull/2"
+      ]
+    },
+    {
+      "apk": "com.gigabytedevelopersinc.app.CometOTP.debug_1.apk",
+      "class": "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper",
+      "method": "unwrap",
+      "spec": "CipherSpec",
+      "prs": [
+        "https://github.com/gigabytedevelopers/CometOTP/pull/114"
+      ]
+    },
+    {
+      "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+      "class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+      "method": "seal",
+      "spec": "CipherSpec",
+      "prs": [
+        "https://github.com/thatSFguy/meshcore-mobile-app/pull/10"
+      ]
+    },
+    {
+      "apk": "eu.fliegendewurst.triliumdroid.debug_24.apk",
+      "class": "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2",
+      "method": "invokeSuspend",
+      "spec": "KeyManagerFactorySpec",
+      "prs": [
+        "https://github.com/FliegendeWurst/TriliumDroid/pull/177"
+      ]
+    },
+    {
+      "apk": "org.primftpd.debug_71.apk",
+      "class": "org.apache.sshd.common.cipher.BaseRC4Cipher",
+      "method": "init",
+      "spec": "SecretKeySpecSpec",
+      "prs": [
+        "https://github.com/wolpi/prim-ftpd/pull/453"
+      ]
+    },
+    {
+      "apk": "org.thosp.yourlocalweather.debug_213.apk",
+      "class": "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment",
+      "method": "encryptKey",
+      "spec": "SecretKeyFactorySpec",
+      "prs": [
+        "https://github.com/thuryn/your-local-weather/pull/209"
+      ]
+    },
+    {
+      "apk": "io.github.mouse233.localsendkotlin.debug_23.apk",
+      "class": "io.github.mouse233.localsendkotlin.security.TlsIdentity",
+      "method": "loadOrCreateKeyStore",
+      "spec": "KeyStoreSpec",
+      "prs": [
+        "https://github.com/mouse233/localsend-kotlin/pull/58"
+      ]
+    },
+    {
+      "apk": "nl.privacydragon.bookwyrm.debug_16.apk",
+      "class": "nl.privacydragon.bookwyrm.MainActivity",
+      "method": "LogIn",
+      "spec": "GCMParameterSpecSpec",
+      "prs": [
+        "https://github.com/PrivacyDragon/Bookwyrm_Android/pull/29"
+      ]
+    },
+    {
+      "apk": "com.philkes.notallyx.debug_71134.apk",
+      "class": "com.philkes.notallyx.utils.IOExtensionsKt",
+      "method": "md5Hash",
+      "spec": "MessageDigestSpec",
+      "prs": [
+        "https://github.com/Crustack/NotallyX/pull/1167"
+      ]
+    },
+    {
+      "apk": "org.jimvixx.smsecure.debug_10400.apk",
+      "class": "org.jimvixx.smsecure.ConversationListAdapter",
+      "method": "<init>",
+      "spec": "MessageDigestSpec",
+      "prs": [
+        "https://github.com/jimvixx/ShortMessageSecure/pull/89"
+      ]
+    },
+    {
+      "apk": "com.vauth.salty.debug_2.apk",
+      "class": "com.vauth.salty.utils.HashUtils",
+      "method": "encode",
+      "spec": "CipherSpec",
+      "prs": [
+        "https://github.com/Vauth/salty-app/pull/6"
+      ]
+    },
+    {
+      "apk": "com.zhangke.fread.debug_109000.apk",
+      "class": "com.zhangke.framework.architect.http.GlobalOkHttpClient",
+      "method": "buildSSLFactory",
+      "spec": "SSLContextSpec",
+      "prs": [
+        "https://github.com/0xZhangKe/Fread/pull/168"
+      ]
+    },
+    {
+      "apk": "com.orgzlyrevived.debug_292.apk",
+      "class": "com.orgzly.android.util.MiscUtils",
+      "method": "sha1",
+      "spec": "MessageDigestSpec",
+      "prs": [
+        "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121"
+      ]
+    },
+    {
+      "apk": "dev.skye.intertune.debug_96.apk",
+      "class": "com.dd3boh.outertune.widget.WidgetStore",
+      "method": "hash",
+      "spec": "MessageDigestSpec",
+      "prs": [
+        "https://github.com/ItzSkyeYT/InterTune/pull/52"
+      ]
+    },
+    {
+      "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+      "class": "com.yogeshpaliyal.common.utils.CryptoManager",
+      "method": "encrypt",
+      "spec": "CipherSpec",
+      "prs": [
+        "https://github.com/yogeshpaliyal/KeyPass/pull/1252"
+      ]
+    },
+    {
+      "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+      "class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+      "method": "decrypt",
+      "spec": "GCMParameterSpecSpec",
+      "prs": [
+        "https://github.com/vitorpamplona/amethyst/pull/4642"
+      ]
+    },
+    {
+      "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+      "class": "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile",
+      "method": "load",
+      "spec": "KeyStoreSpec",
+      "prs": [
+        "https://github.com/patzly/grocy-android/pull/1013"
+      ]
+    },
+    {
+      "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+      "class": "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory",
+      "method": "<init>",
+      "spec": "SSLContextSpec",
+      "prs": [
+        "https://github.com/patzly/grocy-android/pull/1012"
+      ]
+    },
+    {
+      "apk": "de.jepfa.yapm.debug_202006.apk",
+      "class": "de.jepfa.yapm.service.secret.SecretService",
+      "method": "getAndroidSecretKey",
+      "spec": "KeyStoreSpec",
+      "prs": [
+        "https://github.com/jenspfahl/ANOTHERpass/pull/103"
+      ]
+    },
+    {
+      "apk": "org.woheller69.whobird.debug_54.apk",
+      "class": "org.tensorflow.lite.examples.soundclassifier.Downloader",
+      "method": "lambda$downloadModels$4",
+      "spec": "MessageDigestSpec",
+      "prs": [
+        "https://github.com/woheller69/whoBIRD/pull/144"
+      ]
+    },
+    {
+      "apk": "me.ash.reader.debug_47.apk",
+      "class": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+      "method": "setupSsl",
+      "spec": "SSLContextSpec",
+      "prs": [
+        "https://github.com/ReadYouApp/ReadYou/pull/1334"
+      ]
+    },
+    {
+      "apk": "com.zfdang.zsmth_android.debug_1031.apk",
+      "class": "com.zfdang.zsmth_android.newsmth.SMTHHelper",
+      "method": "getUnsafeOkHttpClient",
+      "spec": "SSLContextSpec",
+      "prs": [
+        "https://github.com/zfdang/zSMTH-Android/pull/66"
+      ]
+    },
+    {
+      "apk": "com.idunnololz.summit.fdroid.debug_355.apk",
+      "class": "com.idunnololz.summit.cache.SimpleDiskCache",
+      "method": "md5",
+      "spec": "MessageDigestSpec",
+      "prs": [
+        "https://github.com/idunnololz/summit/pull/54"
+      ]
+    },
+    {
+      "apk": "com.ounben.amaradio.debug_159.apk",
+      "class": "com.ounben.amaradio.Utils",
+      "method": "md5",
+      "spec": "MessageDigestSpec",
+      "prs": [
+        "https://github.com/ounben/AMARadio/pull/122"
+      ]
+    },
+    {
+      "apk": "org.jimvixx.smsecure.debug_10400.apk",
+      "class": "org.jimvixx.smsecure.crypto.MasterSecretUtil",
+      "method": "generateMacSecret",
+      "spec": "KeyGeneratorSpec",
+      "prs": [
+        "https://github.com/jimvixx/ShortMessageSecure/pull/83"
+      ]
+    },
+    {
+      "apk": "livio.rssreader.debug_120.apk",
+      "class": "tools.FileManager",
+      "method": "writeFile",
+      "spec": "MessageDigestSpec",
+      "prs": [
+        "https://github.com/javalc6/rssreader/pull/4"
+      ]
+    },
+    {
+      "apk": "network.loki.messenger.fdroid.debug_4545.apk",
+      "class": "org.thoughtcrime.securesms.api.http.HttpClientsKt",
+      "method": "createRegularNodeOkHttpClient",
+      "spec": "SSLContextSpec",
+      "prs": [
+        "https://github.com/session-foundation/session-android/pull/2241"
+      ]
+    },
+    {
+      "apk": "org.bombusmod_1422.apk",
+      "class": "util.Strconv",
+      "method": "baosFromBase64",
+      "spec": "Closeable_MeaninglessClose",
+      "prs": [
+        "https://github.com/BombusMod/BombusMod/pull/316"
+      ]
+    },
+    {
+      "apk": "org.nick.wwwjdic_2370.apk",
+      "class": "org.nick.wwwjdic.ocr.OcrFormEntity",
+      "method": "<init>",
+      "spec": "Closeable_MeaninglessClose",
+      "prs": [
+        "https://github.com/nelenkov/wwwjdic/pull/115"
+      ]
+    },
+    {
+      "apk": "de.luhmer.owncloudnewsreader_196.apk",
+      "class": "de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager",
+      "method": "loadAppKeyStore",
+      "spec": "KeyStoreSpec",
+      "prs": [
+        "https://github.com/nextcloud/news-android/pull/1716"
+      ]
+    },
+    {
+      "apk": "se.bitcraze.crazyfliecontrol2_22.apk",
+      "class": "se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory",
+      "method": "<init>",
+      "spec": "SSLContextSpec",
+      "prs": [
+        "https://github.com/bitcraze/crazyflie-android-client/pull/103"
+      ]
+    },
+    {
+      "apk": "com.etesync.syncadapter_20700.apk",
+      "class": "com.etesync.syncadapter.HttpClient$Builder",
+      "method": "build",
+      "spec": "SSLContextSpec",
+      "prs": [
+        "https://github.com/etesync/android/pull/301"
+      ]
+    },
+    {
+      "apk": "io.heckel.ntfy_32.apk",
+      "class": "io.heckel.ntfy.util.Log",
+      "method": "scrub",
+      "spec": "Collections_SynchronizedMap",
+      "prs": [
+        "https://github.com/binwiederhier/ntfy-android/pull/184"
+      ]
+    }
+  ],
+  "prs": [
+    {
+      "url": "https://github.com/gigabytedevelopers/CometOTP/pull/114",
+      "outcome_record": {
+        "pull_request": "https://github.com/gigabytedevelopers/CometOTP/pull/114",
+        "state": "merged",
+        "finding_id": "689272974dc1",
+        "spec": "CipherSpec",
+        "csv_class": "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper",
+        "method_name": "unwrap",
+        "title": "Create a fresh Cipher for each key operation",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:31.042989+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "enwokoma",
+            "kind": "comment",
+            "body": "Thank you for finding this and for the clear write-up, @jpantonow. The fix is merged.\n\nOur master branch only accepts signed commits, so I rebased your commit onto master and signed it on our side. You're still the author of the commit that landed (e5e8981). Good luck with the RVSec research!"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/gigabytedevelopers__cometotp.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "com.gigabytedevelopersinc.app.CometOTP.debug_1.apk",
+          "class": "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper",
+          "method": "unwrap",
+          "spec": "CipherSpec",
+          "metadata": [
+            "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/run/pull_requests/com.gigabytedevelopersinc.app.CometOTP.debug_1.apk_unwrap_CipherSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/thatSFguy/meshcore-mobile-app/pull/10",
+      "outcome_record": {
+        "pull_request": "https://github.com/thatSFguy/meshcore-mobile-app/pull/10",
+        "state": "open",
+        "finding_id": "7d98a07e751d",
+        "spec": "CipherSpec",
+        "csv_class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+        "method_name": "seal",
+        "title": "Use a separate key generator for each Keystore tier",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:40.223839+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/thatsfguy__meshcore-mobile-app.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+          "class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+          "method": "seal",
+          "spec": "CipherSpec",
+          "metadata": [
+            "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run/pull_requests/io.github.thatsfguy.meshcore.native.debug_1.apk_seal_CipherSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/FliegendeWurst/TriliumDroid/pull/177",
+      "outcome_record": {
+        "pull_request": "https://github.com/FliegendeWurst/TriliumDroid/pull/177",
+        "state": "merged",
+        "finding_id": "75875e2caca6",
+        "spec": "KeyManagerFactorySpec",
+        "csv_class": "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2",
+        "method_name": "invokeSuspend",
+        "title": "Remove the unused key manager factory initialization",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:32.772905+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "FliegendeWurst",
+            "kind": "comment",
+            "body": "Thanks for the clean-up. I think it was used in a previous iteration of the logic here ..."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/fliegendewurst__triliumdroid.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "eu.fliegendewurst.triliumdroid.debug_24.apk",
+          "class": "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2",
+          "method": "invokeSuspend",
+          "spec": "KeyManagerFactorySpec",
+          "metadata": [
+            "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/run/pull_requests/eu.fliegendewurst.triliumdroid.debug_24.apk_invokeSuspend_KeyManagerFactorySpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/wolpi/prim-ftpd/pull/453",
+      "outcome_record": {
+        "pull_request": "https://github.com/wolpi/prim-ftpd/pull/453",
+        "state": "open",
+        "finding_id": "2c46d89daf31",
+        "spec": "SecretKeySpecSpec",
+        "csv_class": "org.apache.sshd.common.cipher.BaseRC4Cipher",
+        "method_name": "init",
+        "title": "Retire RC4 cipher support in SSH",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:54:03.898910+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "wolpi",
+            "kind": "comment",
+            "body": "oh yes, removing RC4 absolutely makes sense.\r\nI'll merge it after doing some tests, probably next week.\r\nThanks for contributing :+1: "
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/wolpi__prim-ftpd.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "org.primftpd.debug_71.apk",
+          "class": "org.apache.sshd.common.cipher.BaseRC4Cipher",
+          "method": "init",
+          "spec": "SecretKeySpecSpec",
+          "metadata": [
+            "outputs/rvsec_primftpd_20261031/run_v3/pull_requests/org.primftpd.debug_71.apk_init_SecretKeySpecSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/thuryn/your-local-weather/pull/209",
+      "outcome_record": {
+        "pull_request": "https://github.com/thuryn/your-local-weather/pull/209",
+        "state": "open",
+        "finding_id": "e2654a54d12a",
+        "spec": "SecretKeyFactorySpec",
+        "csv_class": "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment",
+        "method_name": "encryptKey",
+        "title": "Select key derivation by Android API level",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:59.111292+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/thuryn__your-local-weather.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "org.thosp.yourlocalweather.debug_213.apk",
+          "class": "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment",
+          "method": "encryptKey",
+          "spec": "SecretKeyFactorySpec",
+          "metadata": [
+            "outputs/rvsec_org_thosp_yourlocalweather_20261101/run_v5/pull_requests/org.thosp.yourlocalweather.debug_213.apk_encryptKey_SecretKeyFactorySpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/mouse233/localsend-kotlin/pull/58",
+      "outcome_record": {
+        "pull_request": "https://github.com/mouse233/localsend-kotlin/pull/58",
+        "state": "merged",
+        "finding_id": "97b5f3b80d25",
+        "spec": "KeyStoreSpec",
+        "csv_class": "io.github.mouse233.localsendkotlin.security.TlsIdentity",
+        "method_name": "loadOrCreateKeyStore",
+        "title": "Store TLS keys with a KeyStore entry",
+        "impact_class": "not_recorded",
+        "recorded_at": "2026-11-18T01:53:46.969459+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "mouse233",
+            "kind": "comment",
+            "body": "LGTM, thanks! Regression tests added and CI passed. Squashing and merging."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/mouse233__localsend-kotlin.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "io.github.mouse233.localsendkotlin.debug_23.apk",
+          "class": "io.github.mouse233.localsendkotlin.security.TlsIdentity",
+          "method": "loadOrCreateKeyStore",
+          "spec": "KeyStoreSpec",
+          "metadata": [
+            "outputs/rvsec_localsendkotlin_20261029/run_v5/pull_requests/io.github.mouse233.localsendkotlin.debug_23.apk_loadOrCreateKeyStore_KeyPairSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/PrivacyDragon/Bookwyrm_Android/pull/29",
+      "outcome_record": {
+        "pull_request": "https://github.com/PrivacyDragon/Bookwyrm_Android/pull/29",
+        "state": "open",
+        "finding_id": "84d27d2c74e7",
+        "spec": "GCMParameterSpecSpec",
+        "csv_class": "nl.privacydragon.bookwyrm.MainActivity",
+        "method_name": "LogIn",
+        "title": "Use SecureRandom for stored AES-GCM IVs",
+        "impact_class": "not_recorded",
+        "recorded_at": "2026-11-18T01:53:29.071191+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/privacydragon__bookwyrm_android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "nl.privacydragon.bookwyrm.debug_16.apk",
+          "class": "nl.privacydragon.bookwyrm.MainActivity",
+          "method": "LogIn",
+          "spec": "GCMParameterSpecSpec",
+          "metadata": [
+            "outputs/rvsec_bookwyrm_20261031/run/pull_requests/nl.privacydragon.bookwyrm.debug_16.apk_LogIn_GCMParameterSpecSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/Crustack/NotallyX/pull/1167",
+      "outcome_record": {
+        "pull_request": "https://github.com/Crustack/NotallyX/pull/1167",
+        "state": "merged",
+        "finding_id": "fff072cb8953",
+        "spec": "MessageDigestSpec",
+        "csv_class": "com.philkes.notallyx.utils.IOExtensionsKt",
+        "method_name": "md5Hash",
+        "title": "Use SHA-256 for export hash verification",
+        "impact_class": "no_security_impact",
+        "recorded_at": "2026-11-18T01:53:57.358353+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "Crustack",
+            "kind": "comment",
+            "body": "Hi there, thanks for the improvement, LGTM 🙂"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/crustack__notallyx.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "com.philkes.notallyx.debug_71134.apk",
+          "class": "com.philkes.notallyx.utils.IOExtensionsKt",
+          "method": "md5Hash",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/rvsec_notallyx_20261028/run_v7/pull_requests/com.philkes.notallyx.debug_71134.apk_md5Hash_MessageDigestSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/jimvixx/ShortMessageSecure/pull/89",
+      "outcome_record": {
+        "pull_request": "https://github.com/jimvixx/ShortMessageSecure/pull/89",
+        "state": "merged",
+        "finding_id": "bb98bd300a0c",
+        "spec": "MessageDigestSpec",
+        "csv_class": "org.jimvixx.smsecure.ConversationListAdapter",
+        "method_name": "<init>",
+        "title": "Use SHA-256 for conversation stable IDs",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:55.525385+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "jimvixx",
+            "kind": "comment",
+            "body": "Thanks for the contribution and for checking SMSecure with RVSec!\r\n\r\nThe change looks good. Although SHA-1 is only used here to generate stable RecyclerView item IDs and does not affect cryptographic security, switching to SHA-256 is a reasonable improvement.\r\n\r\nOne small request before merging: could you also update the `AssertionError` message from `\"SHA-1 missing\"` to `\"SHA-256 missing\"` to match the new algorithm?\r\n\r\nThanks again for your work!"
+          },
+          {
+            "author": "jimvixx",
+            "kind": "comment",
+            "body": "Thanks for the quick update! Everything looks good now. I'll go ahead and merge the PR.\r\n\r\nThanks again for your contribution to SMSecure!"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/jimvixx__shortmessagesecure.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "org.jimvixx.smsecure.debug_10400.apk",
+          "class": "org.jimvixx.smsecure.ConversationListAdapter",
+          "method": "<init>",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/rvsec_misuse_20261016/run_v3/pull_requests/org.jimvixx.smsecure.debug_10400.apk_init_MessageDigestSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/Vauth/salty-app/pull/6",
+      "outcome_record": {
+        "pull_request": "https://github.com/Vauth/salty-app/pull/6",
+        "state": "open",
+        "finding_id": "2b8cb7f6653b",
+        "spec": "CipherSpec",
+        "csv_class": "com.vauth.salty.utils.HashUtils",
+        "method_name": "encode",
+        "title": "Generate PBKDF2 salts for new encrypted values",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:54:08.500597+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/vauth__salty-app.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "com.vauth.salty.debug_2.apk",
+          "class": "com.vauth.salty.utils.HashUtils",
+          "method": "encode",
+          "spec": "CipherSpec",
+          "metadata": [
+            "outputs/rvsec_salty_20261022/run_v3/pull_requests/com.vauth.salty.debug_2.apk_encode_CipherSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/0xZhangKe/Fread/pull/168",
+      "outcome_record": {
+        "pull_request": "https://github.com/0xZhangKe/Fread/pull/168",
+        "state": "open",
+        "finding_id": "bd1f7e158735",
+        "spec": "SSLContextSpec",
+        "csv_class": "com.zhangke.framework.architect.http.GlobalOkHttpClient",
+        "method_name": "buildSSLFactory",
+        "title": "Use TLS for the HTTP client's SSL context",
+        "impact_class": "no_security_impact",
+        "recorded_at": "2026-11-18T01:54:17.820649+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/0xzhangke__fread.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "com.zhangke.fread.debug_109000.apk",
+          "class": "com.zhangke.framework.architect.http.GlobalOkHttpClient",
+          "method": "buildSSLFactory",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/rvsec_tls_20261015/rerun_20261015/run_v3/pull_requests/com.zhangke.fread.debug_109000.apk_buildSSLFactory_SSLContextSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121",
+      "outcome_record": {
+        "pull_request": "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121",
+        "state": "open",
+        "finding_id": "83f22cfa5b18",
+        "spec": "MessageDigestSpec",
+        "csv_class": "com.orgzly.android.util.MiscUtils",
+        "method_name": "sha1",
+        "title": "Replace SHA-1 note hashes with SHA-256",
+        "impact_class": "no_security_impact",
+        "recorded_at": "2026-11-18T01:54:01.239584+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/orgzly-revived__orgzly-android-revived.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "com.orgzlyrevived.debug_292.apk",
+          "class": "com.orgzly.android.util.MiscUtils",
+          "method": "sha1",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/rvsec_orgzlyrevived_20261025/run_v2/pull_requests/com.orgzlyrevived.debug_292.apk_sha1_MessageDigestSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/freeotp/freeotp-android/pull/524",
+      "outcome_record": {
+        "pull_request": "https://github.com/freeotp/freeotp-android/pull/524",
+        "state": "merged",
+        "finding_id": "4b81532bb668",
+        "spec": "CipherSpec",
+        "csv_class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+        "method_name": "encrypt",
+        "title": "Require AES keys before initializing encryption",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:20.854222+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "justin-stephenson",
+            "kind": "comment",
+            "body": "Thank you for the PR, testing backup/restore is successful."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/freeotp__freeotp-android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "org.fedorahosted.freeotp_48.apk",
+          "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+          "method": "encrypt",
+          "spec": "CipherSpec",
+          "metadata": [
+            "outputs/exp_final_20261019/subset_revisao_lacunas_v7/pull_requests/org.fedorahosted.freeotp_48.apk_encrypt_CipherSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/ItzSkyeYT/InterTune/pull/52",
+      "outcome_record": {
+        "pull_request": "https://github.com/ItzSkyeYT/InterTune/pull/52",
+        "state": "closed",
+        "finding_id": "2526b837d70c",
+        "spec": "MessageDigestSpec",
+        "csv_class": "com.dd3boh.outertune.widget.WidgetStore",
+        "method_name": "hash",
+        "title": "Migrate widget artwork hashes to SHA-256",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:38.524976+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "ItzSkyeYT",
+            "kind": "comment",
+            "body": "Thanks for the PR! This hash only names the widget’s cached cover files, so it does no security work, and switching it means migrating files for no gain. I’ll leave it as it is and close this."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/itzskyeyt__intertune.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "dev.skye.intertune.debug_96.apk",
+          "class": "com.dd3boh.outertune.widget.WidgetStore",
+          "method": "hash",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/rvsec_intertune_20261027/run_v5/pull_requests/dev.skye.intertune.debug_96.apk_hash_MessageDigestSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/yogeshpaliyal/KeyPass/pull/1252",
+      "outcome_record": {
+        "pull_request": "https://github.com/yogeshpaliyal/KeyPass/pull/1252",
+        "state": "open",
+        "finding_id": "013d2748f3f8",
+        "spec": "CipherSpec",
+        "csv_class": "com.yogeshpaliyal.common.utils.CryptoManager",
+        "method_name": "encrypt",
+        "title": "Use AndroidKeyStore explicitly for AES key generation",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:42.299631+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/yogeshpaliyal__keypass.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+          "class": "com.yogeshpaliyal.common.utils.CryptoManager",
+          "method": "encrypt",
+          "spec": "CipherSpec",
+          "metadata": [
+            "outputs/rvsec_keypass_20261025/run/pull_requests/com.yogeshpaliyal.keypass.debug_1442.apk_encrypt_CipherSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/vitorpamplona/amethyst/pull/4642",
+      "outcome_record": {
+        "pull_request": "https://github.com/vitorpamplona/amethyst/pull/4642",
+        "state": "closed",
+        "finding_id": "39bba5f1270f",
+        "spec": "GCMParameterSpecSpec",
+        "csv_class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+        "method_name": "decrypt",
+        "title": "Generate random IVs for AES-GCM encryption",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:27.388375+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "vitorpamplona",
+            "kind": "comment",
+            "body": "Thanks for looking into this, and for saying up front how you found it. I'm going to close it, because the current code already uses a fresh random IV for every encryption. Here's why:\r\n\r\n**The provider already generates the IV.** `cipher.init(Cipher.ENCRYPT_MODE, key)` is called with no `AlgorithmParameterSpec`. The JCE contract says the provider must then generate the parameters itself, and SunJCE builds a 12-byte GCM IV from `SecureRandom`. We checked on JDK 21:\r\n\r\n```java\r\nCipher c = Cipher.getInstance(\"AES/GCM/NoPadding\");\r\nfor (int i = 0; i < 100_000; i++) { c.init(Cipher.ENCRYPT_MODE, key); ivs.add(hex(c.getIV())); c.doFinal(new byte[1]); }\r\n// distinct IVs: 100000/100000, all 12 bytes\r\n\r\nc.init(Cipher.ENCRYPT_MODE, key, new GCMParameterSpec(128, c.getIV()));\r\n// InvalidAlgorithmParameterException: Cannot reuse iv for GCM encryption\r\n```\r\n\r\nSo every call gets a new random IV, and the provider refuses to reuse one even when asked to. RVSec probably flagged this because the IV is created inside the provider, where an API-level runtime checker can't trace it back to a random source. It's a false positive, not a weakness.\r\n\r\n**The analysis and the change cover different code.** The patch changes `SecretEncryption.jvm.kt`, which is the **desktop** (`jvmMain`) actual. An Android run doesn't execute that file, and `:amethyst:assembleFdroidDebug` doesn't compile it, so neither the finding nor the build check reached the changed code. Android has its own actual, `SecretEncryption.android.kt`, backed by AndroidKeyStore. That actual has to let the provider choose the IV: keystore keys refuse an IV supplied by the caller unless `setRandomizedEncryptionRequired(false)` is set, which we don't want.\r\n\r\n**The patch also removes the per-thread `Cipher` cache** that mirrors the Android actual. A new `Cipher` and `SecureRandom` on every call is safe, but it adds cost and makes the two actuals diverge without improving security.\r\n\r\nPlease don't let this put you off. Crypto misus"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/vitorpamplona__amethyst.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+          "class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+          "method": "decrypt",
+          "spec": "GCMParameterSpecSpec",
+          "metadata": [
+            "outputs/rvsec_amethyst_20261024/run/pull_requests/com.vitorpamplona.amethyst.debug_464.apk_decrypt_GCMParameterSpecSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/patzly/grocy-android/pull/1013",
+      "outcome_record": {
+        "pull_request": "https://github.com/patzly/grocy-android/pull/1013",
+        "state": "open",
+        "finding_id": "efa4a0003ff0",
+        "spec": "KeyStoreSpec",
+        "csv_class": "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile",
+        "method_name": "load",
+        "title": "Initialize missing keystores before storing key entries",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:36.316430+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/patzly__grocy-android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+          "class": "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile",
+          "method": "load",
+          "spec": "KeyStoreSpec",
+          "metadata": [
+            "outputs/rvsec_grocy_20261022/run_v6/pull_requests/xyz.zedler.patrick.grocy.debug_64.apk_load_KeyStoreSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/patzly/grocy-android/pull/1012",
+      "outcome_record": {
+        "pull_request": "https://github.com/patzly/grocy-android/pull/1012",
+        "state": "open",
+        "finding_id": "71775001bd73",
+        "spec": "SSLContextSpec",
+        "csv_class": "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory",
+        "method_name": "<init>",
+        "title": "Initialize the TLS SSLContext only once",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:34.501061+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/patzly__grocy-android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+          "class": "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory",
+          "method": "<init>",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/rvsec_grocy_20261022/run_v2/pull_requests/xyz.zedler.patrick.grocy.debug_64.apk_init_SSLContextSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/freeotp/freeotp-android/pull/521",
+      "outcome_record": {
+        "pull_request": "https://github.com/freeotp/freeotp-android/pull/521",
+        "state": "merged",
+        "finding_id": "4b81532bb668",
+        "spec": "CipherSpec",
+        "csv_class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+        "method_name": "encrypt",
+        "title": "Add SecretKeyFactory key round-trip coverage",
+        "impact_class": "not_recorded",
+        "recorded_at": "2026-11-18T01:53:19.157014+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "justin-stephenson",
+            "kind": "comment",
+            "body": "Thank you for the PR, test looks valid.\r\n\r\nBy the way I consider renaming the EncryptedKey class to EncryptedToken to avoid confusion."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/freeotp__freeotp-android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "org.fedorahosted.freeotp_48.apk",
+          "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+          "method": "encrypt",
+          "spec": "CipherSpec",
+          "metadata": [
+            "outputs/exp_final_20261019/subset_revisao_lacunas/pull_requests/org.fedorahosted.freeotp_48.apk_encrypt_CipherSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/schorschii/Droid_SCEP/pull/2",
+      "outcome_record": {
+        "pull_request": "https://github.com/schorschii/Droid_SCEP/pull/2",
+        "state": "open",
+        "finding_id": "9215f97597a6",
+        "spec": "KeyPairGeneratorSpec",
+        "csv_class": "systems.sieber.droid_scep.ScepClient",
+        "method_name": "CertReq",
+        "title": "Validate RSA key sizes before enrollment",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:24.757920+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/schorschii__droid_scep.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "systems.sieber.droid_scep_7.apk",
+          "class": "systems.sieber.droid_scep.ScepClient",
+          "method": "CertReq",
+          "spec": "KeyPairGeneratorSpec",
+          "metadata": [
+            "outputs/rerun_correcoes_20261022/run/pull_requests/systems.sieber.droid_scep_7.apk_CertReq_KeyPairGeneratorSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/jenspfahl/ANOTHERpass/pull/103",
+      "outcome_record": {
+        "pull_request": "https://github.com/jenspfahl/ANOTHERpass/pull/103",
+        "state": "merged",
+        "finding_id": "1381cd4ddb3f",
+        "spec": "KeyStoreSpec",
+        "csv_class": "de.jepfa.yapm.service.secret.SecretService",
+        "method_name": "getAndroidSecretKey",
+        "title": "Use KeyStore.getKey to read Android secret keys",
+        "impact_class": "no_security_impact",
+        "recorded_at": "2026-11-18T01:53:22.752922+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "jenspfahl",
+            "kind": "comment",
+            "body": "Thanks for flagging this! I was not aware of this best practise, although the current code should not expose any vulnerability. "
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/jenspfahl__anotherpass.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "de.jepfa.yapm.debug_202006.apk",
+          "class": "de.jepfa.yapm.service.secret.SecretService",
+          "method": "getAndroidSecretKey",
+          "spec": "KeyStoreSpec",
+          "metadata": [
+            "outputs/rerun_correcoes_20261022/run/pull_requests/de.jepfa.yapm.debug_202006.apk_getAndroidSecretKey_KeyStoreSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/leekleak/traffic-light/pull/238",
+      "outcome_record": {
+        "pull_request": "https://github.com/leekleak/traffic-light/pull/238",
+        "state": "merged",
+        "finding_id": "32249b3e5e5d",
+        "spec": "KeyStoreSpec",
+        "csv_class": "com.leekleak.trafficlight.database.CryptoManager",
+        "method_name": "getSecretKey",
+        "title": "Use KeyStore.getKey to read secret keys",
+        "impact_class": "no_security_impact",
+        "recorded_at": "2026-11-18T01:53:11.376627+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "leekleak",
+            "kind": "comment",
+            "body": "Thanks"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/leekleak__traffic-light.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "com.leekleak.trafficlight_38.apk",
+          "class": "com.leekleak.trafficlight.database.CryptoManager",
+          "method": "getSecretKey",
+          "spec": "KeyStoreSpec",
+          "metadata": [
+            "outputs/exp_final_20261019/run2/pull_requests/com.leekleak.trafficlight_38.apk_getSecretKey_KeyStoreSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/tokn-authenticator/tokn/pull/138",
+      "outcome_record": {
+        "pull_request": "https://github.com/tokn-authenticator/tokn/pull/138",
+        "state": "merged",
+        "finding_id": "0aeb52bd220d",
+        "spec": "KeyStoreSpec",
+        "csv_class": "me.diamondforge.tokn.security.KeystoreManager",
+        "method_name": "getOrCreateKey",
+        "title": "Read Android keystore keys with getKey",
+        "impact_class": "no_security_impact",
+        "recorded_at": "2026-11-18T01:53:13.173573+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "fthomys",
+            "kind": "comment",
+            "body": "thanks\r\n"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/tokn-authenticator__tokn.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "me.diamondforge.tokn_19.apk",
+          "class": "me.diamondforge.tokn.security.KeystoreManager",
+          "method": "getOrCreateKey",
+          "spec": "KeyStoreSpec",
+          "metadata": [
+            "outputs/exp_final_20261019/run2/pull_requests/me.diamondforge.tokn_19.apk_getOrCreateKey_KeyStoreSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/christianrowlands/android-network-survey/pull/154",
+      "outcome_record": {
+        "pull_request": "https://github.com/christianrowlands/android-network-survey/pull/154",
+        "state": "closed",
+        "finding_id": "ac1a8dd4d680",
+        "spec": "KeyStoreSpec",
+        "csv_class": "com.craxiom.networksurvey.util.CryptoManager",
+        "method_name": "getOrCreateKey",
+        "title": "Use KeyStore.getKey when reading the encryption key",
+        "impact_class": "no_security_impact",
+        "recorded_at": "2026-11-18T01:53:06.599397+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "christianrowlands",
+            "kind": "comment",
+            "body": "Thanks for the PR. For an AndroidKeyStore AES key, getEntry and getKey return the same key, so this doesn't change how the app behaves. It only satisfies the CrySL rule. There's also a second copy of this code in NsAnalyticsCryptoManager that would be left different. I'm going to close this one rather than make a change that only satisfies the rule, but I appreciate you running the app through RVSec."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/christianrowlands__android-network-survey.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "com.craxiom.networksurvey_114.apk",
+          "class": "com.craxiom.networksurvey.util.CryptoManager",
+          "method": "getOrCreateKey",
+          "spec": "KeyStoreSpec",
+          "metadata": [
+            "outputs/exp_final_20261019/run2/pull_requests/com.craxiom.networksurvey_114.apk_getOrCreateKey_KeyStoreSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/michaelWuensch/BitBanana/pull/184",
+      "outcome_record": {
+        "pull_request": "https://github.com/michaelWuensch/BitBanana/pull/184",
+        "state": "open",
+        "finding_id": "53c35a191a23",
+        "spec": "PBEKeySpecSpec",
+        "csv_class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+        "method_name": "encodePbkdf2",
+        "title": "Upgrade app-lock verifiers to PBKDF2-HMAC-SHA256",
+        "impact_class": "security_impact",
+        "recorded_at": "2026-11-18T01:53:14.905511+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/michaelwuensch__bitbanana.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "app.michaelwuensch.bitbanana_79.apk",
+          "class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+          "method": "encodePbkdf2",
+          "spec": "PBEKeySpecSpec",
+          "metadata": [
+            "outputs/exp_final_20261019/subset_bitbanana_scope6/pull_requests/app.michaelwuensch.bitbanana_79.apk_encodePbkdf2_PBEKeySpecSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/woheller69/whoBIRD/pull/144",
+      "outcome_record": {
+        "pull_request": "https://github.com/woheller69/whoBIRD/pull/144",
+        "state": "closed",
+        "finding_id": "668194d05f07",
+        "spec": "MessageDigestSpec",
+        "csv_class": "org.tensorflow.lite.examples.soundclassifier.Downloader",
+        "method_name": "lambda$downloadModels$4",
+        "title": "Verify downloaded models with SHA-256",
+        "impact_class": "security_impact",
+        "recorded_at": "2026-11-18T01:54:12.439751+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "woheller69",
+            "kind": "comment",
+            "body": "MD5 is sufficient here"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/woheller69__whobird.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "org.woheller69.whobird.debug_54.apk",
+          "class": "org.tensorflow.lite.examples.soundclassifier.Downloader",
+          "method": "lambda$downloadModels$4",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/rvsec_whobird_20261018/run9/pull_requests/org.woheller69.whobird.debug_54.apk_lambda_downloadModels_4_MessageDigestSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/ReadYouApp/ReadYou/pull/1334",
+      "outcome_record": {
+        "pull_request": "https://github.com/ReadYouApp/ReadYou/pull/1334",
+        "state": "open",
+        "finding_id": "6d0a3cf73013",
+        "spec": "SSLContextSpec",
+        "csv_class": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+        "method_name": "setupSsl",
+        "title": "Restore certificate validation for cached HTTP clients",
+        "impact_class": "security_impact",
+        "recorded_at": "2026-11-18T01:54:06.712786+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/readyouapp__readyou.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "me.ash.reader.debug_47.apk",
+          "class": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+          "method": "setupSsl",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/rvsec_readyou_20261018/run3/pull_requests/me.ash.reader.debug_47.apk_setupSsl_SSLContextSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/zfdang/zSMTH-Android/pull/66",
+      "outcome_record": {
+        "pull_request": "https://github.com/zfdang/zSMTH-Android/pull/66",
+        "state": "open",
+        "finding_id": "b1a40c2fc69e",
+        "spec": "SSLContextSpec",
+        "csv_class": "com.zfdang.zsmth_android.newsmth.SMTHHelper",
+        "method_name": "getUnsafeOkHttpClient",
+        "title": "Use TLS and restore HTTPS certificate validation",
+        "impact_class": "security_impact",
+        "recorded_at": "2026-11-18T01:54:10.258338+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/zfdang__zsmth-android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "com.zfdang.zsmth_android.debug_1031.apk",
+          "class": "com.zfdang.zsmth_android.newsmth.SMTHHelper",
+          "method": "getUnsafeOkHttpClient",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/rvsec_sslctx_20261017/run8/pull_requests/com.zfdang.zsmth_android.debug_1031.apk_getUnsafeOkHttpClient_SSLContextSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/idunnololz/summit/pull/54",
+      "outcome_record": {
+        "pull_request": "https://github.com/idunnololz/summit/pull/54",
+        "state": "closed",
+        "finding_id": "554ed6e23b16",
+        "spec": "MessageDigestSpec",
+        "csv_class": "com.idunnololz.summit.cache.SimpleDiskCache",
+        "method_name": "md5",
+        "title": "Use SHA-256 for disk cache keys",
+        "impact_class": "no_security_impact",
+        "recorded_at": "2026-11-18T01:53:51.110160+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "idunnololz",
+            "kind": "comment",
+            "body": "Sorry I am not currently accepting PR requests."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/idunnololz__summit.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "com.idunnololz.summit.fdroid.debug_355.apk",
+          "class": "com.idunnololz.summit.cache.SimpleDiskCache",
+          "method": "md5",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/rvsec_misuse5_20261017/run/pull_requests/com.idunnololz.summit.fdroid.debug_355.apk_md5_MessageDigestSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/ounben/AMARadio/pull/122",
+      "outcome_record": {
+        "pull_request": "https://github.com/ounben/AMARadio/pull/122",
+        "state": "merged",
+        "finding_id": "06ff0c1fc96c",
+        "spec": "MessageDigestSpec",
+        "csv_class": "com.ounben.amaradio.Utils",
+        "method_name": "md5",
+        "title": "Use SHA-256 for cache file names",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:48.762320+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "ounben",
+            "kind": "comment",
+            "body": "Thank you for your help. Ignored MD5 from RadioDroid in July and now it's finally fixed. And have fun with your study. Ben"
+          },
+          {
+            "author": "ounben",
+            "kind": "review",
+            "body": "MD5 was from old RadioDroid and wasn't changed to SHA 256. "
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/ounben__amaradio.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "com.ounben.amaradio.debug_159.apk",
+          "class": "com.ounben.amaradio.Utils",
+          "method": "md5",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/rvsec_misuse3_20261016/run6/pull_requests/com.ounben.amaradio.debug_159.apk_md5_MessageDigestSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/jimvixx/ShortMessageSecure/pull/83",
+      "outcome_record": {
+        "pull_request": "https://github.com/jimvixx/ShortMessageSecure/pull/83",
+        "state": "merged",
+        "finding_id": "ab0763bb2ecc",
+        "spec": "KeyGeneratorSpec",
+        "csv_class": "org.jimvixx.smsecure.crypto.MasterSecretUtil",
+        "method_name": "generateMacSecret",
+        "title": "Use HmacSHA256 for generated MAC secrets",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:53.863120+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "jimvixx",
+            "kind": "comment",
+            "body": "Thank you for the contribution and for testing SMSecure with RVSec!\r\n\r\nI reviewed the proposed change. According to the Android documentation, `HmacSHA1` is a supported `KeyGenerator` algorithm, so the reported violation may be related to the CrySL rule rather than an actual Android API issue.\r\n\r\nAlso, the generated key material is subsequently used with `HmacSHA1` throughout the existing MasterSecret implementation. Switching only the key generator to `HmacSHA256` does not change the MAC algorithm or provide a direct security improvement.\r\n\r\nCould you share the exact CrySL rule violation and explain why `HmacSHA1` is considered invalid in this context?\r\n\r\nI'd prefer to preserve the existing cryptographic behavior unless there is a demonstrated issue. Adding an explicit 160-bit initialization to the current `HmacSHA1` generator might be a simpler alternative.\r\n\r\nThanks again for investigating this!"
+          },
+          {
+            "author": "jimvixx",
+            "kind": "comment",
+            "body": "Thank you for the clarification and for updating the PR!\r\n\r\nThe revised approach looks good to me. Explicitly initializing the key size to 160 bits preserves the existing behavior and compatibility without introducing unnecessary cryptographic changes.\r\n\r\nI appreciate your contribution and the effort you put into analyzing SMSecure with RVSec."
+          },
+          {
+            "author": "jimvixx",
+            "kind": "comment",
+            "body": "Thanks again for your contribution!"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/jimvixx__shortmessagesecure.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "org.jimvixx.smsecure.debug_10400.apk",
+          "class": "org.jimvixx.smsecure.crypto.MasterSecretUtil",
+          "method": "generateMacSecret",
+          "spec": "KeyGeneratorSpec",
+          "metadata": [
+            "outputs/rvsec_misuse_20261016/run/pull_requests/org.jimvixx.smsecure.debug_10400.apk_generateMacSecret_KeyGeneratorSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/javalc6/rssreader/pull/4",
+      "outcome_record": {
+        "pull_request": "https://github.com/javalc6/rssreader/pull/4",
+        "state": "closed",
+        "finding_id": "e6413a8ebbe9",
+        "spec": "MessageDigestSpec",
+        "csv_class": "tools.FileManager",
+        "method_name": "writeFile",
+        "title": "Write file checksums with SHA-256",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:54:16.153695+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "javalc6",
+            "kind": "comment",
+            "body": "Thanks for taking the time to run the app under RVSec, but it will not be merged. In _FileManager_, MD5 is used only as a checksum to detect accidental corruption of a backup file. It isn’t used for authentication, signatures, or password hashing, so MD5’s known weaknesses (collision attacks) don’t apply here. \r\n\r\nSince there’s no secret key, switching to SHA-256 wouldn’t stop anyone from modifying a file and recomputing a valid checksum, so it wouldn’t improve security. \r\n\r\nThe _MessageDigestSpec_ warning is a generic rule that flags MD5 regardless of how it’s used. Note that _MessageDigest.getInstance(\"MD5\")_ isn’t rejected by the Java/Android API [MessageDigest](https://developer.android.com/reference/java/security/MessageDigest)"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/javalc6__rssreader.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "livio.rssreader.debug_120.apk",
+          "class": "tools.FileManager",
+          "method": "writeFile",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/rvsec_misuse_20261016/rssreader/rerun2/pull_requests/livio.rssreader.debug_120.apk_writeFile_MessageDigestSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/session-foundation/session-android/pull/2241",
+      "outcome_record": {
+        "pull_request": "https://github.com/session-foundation/session-android/pull/2241",
+        "state": "merged",
+        "finding_id": "63bfe4a50889",
+        "spec": "SSLContextSpec",
+        "csv_class": "org.thoughtcrime.securesms.api.http.HttpClientsKt",
+        "method_name": "createRegularNodeOkHttpClient",
+        "title": "Use TLS for the regular node HTTP client",
+        "impact_class": "security_impact",
+        "recorded_at": "2026-11-18T01:54:22.395103+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "mpretty-cyro",
+            "kind": "comment",
+            "body": "Thanks for your PR @jpantonow, I took a look at the change and on Android, `SSLContext.getInstance(\"SSL\")` and `SSLContext.getInstance(\"TLS\")` resolve to the same implementation. Conscrypt registers \"SSL\" as an alias of \"TLS\" (https://github.com/google/conscrypt/blob/5bdcae0fe8aeb92009eba087969aed7f0ae0e167/common/src/main/java/org/conscrypt/OpenSSLProvider.java#L92-L94), and the negotiated protocol version is set by OkHttp's `ConnectionSpec` on each connection rather than by this string.\r\n\r\nSo this change doesn't alter runtime behaviour; it only satisfies the CrySL `SSLContextSpec` rule. We'll hold off merging for now since it doesn't change anything functionally."
+          },
+          {
+            "author": "mpretty-cyro",
+            "kind": "comment",
+            "body": "All good, happy to merge it - just wanted to flag that it doesn't impact security in case someone read the PR and misunderstood"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/session-foundation__session-android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "network.loki.messenger.fdroid.debug_4545.apk",
+          "class": "org.thoughtcrime.securesms.api.http.HttpClientsKt",
+          "method": "createRegularNodeOkHttpClient",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/rvsec_tls_20261015/session_20261015/run/pull_requests/network.loki.messenger.fdroid.debug_4545.apk_createRegularNodeOkHttpClient_SSLContextSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/Crazy-Marvin/MetadataRemover/pull/264",
+      "outcome_record": {
+        "pull_request": "https://github.com/Crazy-Marvin/MetadataRemover/pull/264",
+        "state": "open",
+        "finding_id": "40d39da41dec",
+        "spec": "SecureRandomSpec",
+        "csv_class": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+        "method_name": "<clinit>",
+        "title": "Let SecureRandom seed itself instead of a fixed seed",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:53:04.429924+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/crazy-marvin__metadataremover.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "rocks.poopjournal.metadataremover_20020.apk",
+          "class": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+          "method": "<clinit>",
+          "spec": "SecureRandomSpec",
+          "metadata": [
+            "outputs/run_20261010_200449/pull_requests/rocks.poopjournal.metadataremover_20020.apk_clinit_SecureRandomSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/BombusMod/BombusMod/pull/316",
+      "outcome_record": {
+        "pull_request": "https://github.com/BombusMod/BombusMod/pull/316",
+        "state": "merged",
+        "finding_id": "3451a9747f93",
+        "spec": "Closeable_MeaninglessClose",
+        "csv_class": "util.Strconv",
+        "method_name": "baosFromBase64",
+        "title": "Fix baosFromBase64",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:52:41.838562+00:00",
+        "incorporated_evidence": {
+          "diff_reverse_applies": true,
+          "references": [
+            "comment by vitalyster"
+          ]
+        },
+        "maintainer_feedback": [
+          {
+            "author": "vitalyster",
+            "kind": "comment",
+            "body": "Thanks for the contribution, @jpantonow — merged (with a reworded commit message/description, since `Fix baosFromBase64` alone didn't explain the change). For future PRs, please write a proper commit message describing what changed and why, rather than a generic one-liner."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/bombusmod__bombusmod.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "org.bombusmod_1422.apk",
+          "class": "util.Strconv",
+          "method": "baosFromBase64",
+          "spec": "Closeable_MeaninglessClose",
+          "metadata": [
+            "outputs/run_20260915_202333/pull_requests/org.bombusmod_1422.apk_baosFromBase64_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/nelenkov/wwwjdic/pull/115",
+      "outcome_record": {
+        "pull_request": "https://github.com/nelenkov/wwwjdic/pull/115",
+        "state": "open",
+        "finding_id": "4e3c203d8253",
+        "spec": "Closeable_MeaninglessClose",
+        "csv_class": "org.nick.wwwjdic.ocr.OcrFormEntity",
+        "method_name": "<init>",
+        "title": "Fix <init>",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:52:43.760133+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/nelenkov__wwwjdic.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "org.nick.wwwjdic_2370.apk",
+          "class": "org.nick.wwwjdic.ocr.OcrFormEntity",
+          "method": "<init>",
+          "spec": "Closeable_MeaninglessClose",
+          "metadata": [
+            "outputs/run_20260915_202333/pull_requests/org.nick.wwwjdic_2370.apk_init_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/aivanovski/keepassvault/pull/347",
+      "outcome_record": {
+        "pull_request": "https://github.com/aivanovski/keepassvault/pull/347",
+        "state": "open",
+        "finding_id": "ecccf29c6686",
+        "spec": "SSLContextSpec",
+        "csv_class": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+        "method_name": "createHttpClient",
+        "title": "Fix createHttpClient",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:52:38.902034+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/aivanovski__keepassvault.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "com.ivanovsky.passnotes_11700.apk",
+          "class": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+          "method": "createHttpClient",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/run_20260915_124127/pull_requests/com.ivanovsky.passnotes_11700.apk_createHttpClient_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/nextcloud/news-android/pull/1716",
+      "outcome_record": {
+        "pull_request": "https://github.com/nextcloud/news-android/pull/1716",
+        "state": "merged",
+        "finding_id": "3a742828d54a",
+        "spec": "KeyStoreSpec",
+        "csv_class": "de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager",
+        "method_name": "loadAppKeyStore",
+        "title": "Fix loadAppKeyStore",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:52:23.633665+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/nextcloud__news-android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "de.luhmer.owncloudnewsreader_196.apk",
+          "class": "de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager",
+          "method": "loadAppKeyStore",
+          "spec": "KeyStoreSpec",
+          "metadata": [
+            "outputs/run_20260911_142753/pull_requests/de.luhmer.owncloudnewsreader_196.apk_loadAppKeyStore_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/Wilm0r/giggity/pull/543",
+      "outcome_record": {
+        "pull_request": "https://github.com/Wilm0r/giggity/pull/543",
+        "state": "closed",
+        "finding_id": "0638946f7e4a",
+        "spec": "MessageDigestSpec",
+        "csv_class": "net.gaast.giggity.Schedule$Item",
+        "method_name": "hashCode",
+        "title": "Fix hashCode",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:52:19.825121+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "Wilm0r",
+            "kind": "comment",
+            "body": "Oh, just made this change myself independently.\r\n\r\nThe hash used really doesn't matter but it's a nice cleanup anyway. Wish I remember why I even implemented that original contraption."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/wilm0r__giggity.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "net.gaast.giggity_769.apk",
+          "class": "net.gaast.giggity.Schedule$Item",
+          "method": "hashCode",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/run_20260906_080507/pull_requests/net.gaast.giggity_769.apk_hashCode_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/bitcraze/crazyflie-android-client/pull/103",
+      "outcome_record": {
+        "pull_request": "https://github.com/bitcraze/crazyflie-android-client/pull/103",
+        "state": "merged",
+        "finding_id": "73c0f0471033",
+        "spec": "SSLContextSpec",
+        "csv_class": "se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory",
+        "method_name": "<init>",
+        "title": "Fix <init>",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:52:17.706587+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "ataffanel",
+            "kind": "comment",
+            "body": "Hi, thanks for the contribution!\r\n\r\nCould you please clean up the PR title and description to make it clearer what is being fixed and why? “Fix `<init>`” does not really explain the change, and it is difficult to understand the practical impact from the description. A short explanation of the problem and how it affects firmware downloads would help.\r\n\r\nLooking at the code, I would prefer removing `TLSSocketFactory` and its usage rather than patching it. This helper was added to support TLS 1.2 on Android versions older than 5.0, but we now require Android 8.0. Its original purpose is no longer relevant, so relying on the platform HTTPS defaults seems simpler.\r\n\r\nThis would not explicitly enforce TLS 1.2 as a minimum on every supported device. If there is a concrete reason we need that additional restriction, please explain it in the description. Otherwise, could you update the PR to remove the helper and verify that fetching the release list and downloading firmware still work?"
+          },
+          {
+            "author": "ataffanel",
+            "kind": "comment",
+            "body": "Thanks! Looks good, merged."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/bitcraze__crazyflie-android-client.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "se.bitcraze.crazyfliecontrol2_22.apk",
+          "class": "se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory",
+          "method": "<init>",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/run_20260902_134852/pull_requests/se.bitcraze.crazyfliecontrol2_22.apk_init_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/spacecowboy/Feeder/pull/1210",
+      "outcome_record": {
+        "pull_request": "https://github.com/spacecowboy/Feeder/pull/1210",
+        "state": "open",
+        "finding_id": "f35c9589f426",
+        "spec": "SSLContextSpec",
+        "csv_class": "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+        "method_name": "trustAllCerts",
+        "title": "Fix trustAllCerts",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:52:15.875298+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "spacecowboy",
+            "kind": "comment",
+            "body": "now please use your human brain and summarize what your ai-pal did please. I'm not reading through that wall of ai text"
+          },
+          {
+            "author": "spacecowboy",
+            "kind": "comment",
+            "body": "This PR would mean some sites would stop working. And that is not acceptable."
+          },
+          {
+            "author": "ibrahim-iqbal",
+            "kind": "review",
+            "body": "Read this carefully — the fix is right, and the delegate approach is the cleanest way to do it.\n\n**Context for anyone reading this later:** `trustAllCerts` is Feeder's user-opt-in helper for self-hosted servers with weird cert setups (self-signed, custom CA, mismatched hostname). The tightening here doesn't change what it accepts on the trust side — it changes what protocols the resulting `SSLSocketFactory` will speak. `SSLContext.getInstance(\"TLS\")` on Android/JVM initialises the context correctly but leaves legacy TLSv1/TLSv1.1 (and, historically, SSLv2/v3) in each socket's `enabledProtocols`. `droidbot:dfs_naive` caught that.\n\nWhat lands:\n\n- `ProtocolFilteringSslSocketFactory` wraps every socket the delegate creates, then strips anything matching `SSL*`, `TLSv1`, `TLSv1.0`, `TLSv1.1` from `enabledProtocols`. What survives is TLS 1.2/1.3, which is exactly the tool's expectation.\n- `filterLegacyTlsProtocols` throws `IOException` if the filter would empty the array — fail-secure rather than silently disable TLS entirely. Good.\n- Wrapping is preferred over calling `SSLContext.getInstance(\"TLSv1.3\")` because Android's min-API surface still varies on TLS 1.3 availability, and the delegate model keeps `NoSuchAlgorithmException` handling out of hot paths.\n- All seven `createSocket` overloads are covered, including the `(socket, host, port, autoClose)` layered variant that OkHttp actually uses. If any of those had been missed, the wrapper would silently return an un-filtered socket for that code path.\n- The `configure` closer-on-failure block preserves the filtering exception rather than swallowing it under a `close()` failure. Nice detail.\n\nSmall observations, non-blocking:\n\n- `isLegacyTlsProtocol` uses `ignoreCase = true` — matches historical `TLSv1` vs `TLSv1.0` naming quirks across JDK vendors, so this is defensive not paranoid.\n- The added androidTest exercises the filter directly; a wider integration test asserting a real TLSv1.2-only handshake would be nice-to-have"
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/spacecowboy__feeder.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "com.nononsenseapps.feeder.play_4025.apk",
+          "class": "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+          "method": "trustAllCerts",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/run_20260902_002440/pull_requests/com.nononsenseapps.feeder.play_4025.apk_trustAllCerts_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/paroj/DSub2000/pull/160",
+      "outcome_record": {
+        "pull_request": "https://github.com/paroj/DSub2000/pull/160",
+        "state": "merged",
+        "finding_id": "42e63cf76e71",
+        "spec": "SSLContextSpec",
+        "csv_class": "github.paroj.dsub2000.service.RESTMusicService",
+        "method_name": "<init>",
+        "title": "Fix <init>",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:52:10.747115+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "Copilot",
+            "kind": "review",
+            "body": "Wrapping the global HttpsURLConnection default SSLSocketFactory unconditionally in the constructor can lead to wrapper stacking if RESTMusicService is instantiated more than once, and it makes the global TLS behavior dependent on object construction order. Guard against double-wrapping so subsequent instances don’t keep nesting factories."
+          },
+          {
+            "author": "Copilot",
+            "kind": "review",
+            "body": "If legacy-protocol filtering removes all enabled protocols, filterLegacyTlsProtocols throws IllegalStateException, which currently bubbles out of SSLSocketFactory.createSocket(...) as an unchecked exception. That’s surprising for callers expecting an IOException/SSLException from socket creation and can make failures harder to handle consistently; convert this to an SSLException (and still close the socket) when it occurs during socket configuration."
+          },
+          {
+            "author": "Copilot",
+            "kind": "review",
+            "body": "This test file’s declared package (`github.paroj.dsub2000.service`) no longer matches its directory (`.../androidTest/java/github/paroj/dsub2000/ApplicationTest.java`). While it may still compile, it makes the test harder to locate/maintain and is inconsistent with the other androidTest files (which mirror package-to-directory). Consider moving this file under `app/src/androidTest/java/github/paroj/dsub2000/service/` to match its package declaration."
+          },
+          {
+            "author": "Copilot",
+            "kind": "review",
+            "body": "X509TrustManager.getAcceptedIssuers() should not return null; some TLS stacks assume a non-null array and may NPE. Even for a permissive trust manager, return an empty certificate array instead."
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/paroj__dsub2000.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "github.paroj.dsub2000_217.apk",
+          "class": "github.paroj.dsub2000.service.RESTMusicService",
+          "method": "<init>",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/run_20260830_145404/pull_requests/github.paroj.dsub2000_217.apk_init_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/etesync/android/pull/301",
+      "outcome_record": {
+        "pull_request": "https://github.com/etesync/android/pull/301",
+        "state": "open",
+        "finding_id": "d28032440293",
+        "spec": "SSLContextSpec",
+        "csv_class": "com.etesync.syncadapter.HttpClient$Builder",
+        "method_name": "build",
+        "title": "Filter legacy TLS protocols without pinning TLS versions",
+        "impact_class": "impact_not_established",
+        "recorded_at": "2026-11-18T01:52:08.736045+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/etesync__android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "com.etesync.syncadapter_20700.apk",
+          "class": "com.etesync.syncadapter.HttpClient$Builder",
+          "method": "build",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "outputs/run_20260829_224334/pull_requests/com.etesync.syncadapter_20700.apk_build_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer/pull/618",
+      "outcome_record": {
+        "pull_request": "https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer/pull/618",
+        "state": "closed",
+        "finding_id": "9564e018f0f4",
+        "spec": "MessageDigestSpec",
+        "csv_class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+        "method_name": "calculateChildType",
+        "title": "Fix calculateChildType",
+        "impact_class": "not_recorded",
+        "recorded_at": "2026-11-18T01:52:06.688304+00:00",
+        "maintainer_feedback": [
+          {
+            "author": "VREMSoftwareDevelopment",
+            "kind": "comment",
+            "body": "This is a false positive. MD5 is used here as a checksum, not as a security control — that's exactly what it's still appropriate for. There's no password, token, or integrity check involved.\r\n\r\nClosing this one, but thanks for the effort.   "
+          }
+        ]
+      },
+      "outcome_source": "data/pr_outcomes/vremsoftwaredevelopment__wifianalyzer.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "com.vrem.wifianalyzer_71.apk",
+          "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+          "method": "calculateChildType",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/run_20260824_112933/pull_requests/com.vrem.wifianalyzer_71.apk_calculateChildType_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/binwiederhier/ntfy-android/pull/184",
+      "outcome_record": {
+        "pull_request": "https://github.com/binwiederhier/ntfy-android/pull/184",
+        "state": "open",
+        "finding_id": "",
+        "spec": "Collections_SynchronizedMap",
+        "csv_class": "io.heckel.ntfy.util.Log",
+        "method_name": "scrub",
+        "title": "Fix scrub",
+        "impact_class": "not_recorded",
+        "recorded_at": "2026-11-18T01:52:02.570730+00:00",
+        "maintainer_feedback": []
+      },
+      "outcome_source": "data/pr_outcomes/binwiederhier__ntfy-android.json",
+      "match_basis": "published_url_or_feedback_identity",
+      "recorded_status": "open",
+      "identity_candidates": [
+        {
+          "apk": "io.heckel.ntfy_32.apk",
+          "class": "io.heckel.ntfy.util.Log",
+          "method": "scrub",
+          "spec": "Collections_SynchronizedMap",
+          "metadata": [
+            "outputs/run_20260811_172718/pull_requests/io.heckel.ntfy_32.apk_scrub_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": false
+    },
+    {
+      "url": "https://github.com/QuantumBadger/RedReader/pull/1373",
+      "outcome_record": {},
+      "outcome_source": null,
+      "match_basis": "manually_checked_report_method_and_specification",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "org.quantumbadger.redreader_117.apk",
+          "class": "org.quantumbadger.redreader.common.General",
+          "method": "sha1",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/exp_final_20261019/subset_newpr/pull_requests/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_pr.json",
+            "outputs/exp_final_20261019/subset_newpr3/pull_requests/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_pr.json",
+            "outputs/exp_final_20261019/subset_newpr4/pull_requests/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_pr.json",
+            "outputs/exp_final_20261019/subset_redreader_sha1_v2/pull_requests/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/SapuSeven/BetterUntis/pull/515",
+      "outcome_record": {},
+      "outcome_source": null,
+      "match_basis": "manually_checked_report_method_and_specification",
+      "recorded_status": "closed_by_maintainer",
+      "identity_candidates": [
+        {
+          "apk": "com.sapuseven.untis_29198884.apk",
+          "class": "com.sapuseven.untis.data.cache.DiskCache",
+          "method": "getCacheFile",
+          "spec": "MessageDigestSpec",
+          "metadata": [
+            "outputs/exp_final_20261019/run2/pull_requests/com.sapuseven.untis_29198884.apk_getCacheFile_MessageDigestSpec_pr.json",
+            "outputs/exp_final_20261019/consolidated/review/pull_requests/com.sapuseven.untis_29198884.apk_getCacheFile_MessageDigestSpec.json",
+            "outputs/rv_import_consolidado_20261011/reexecucoes/run_melhorias_20261011_203822/pull_requests/com.sapuseven.untis_29198884.apk_getCacheFile_pr.json",
+            "outputs/rv_import_consolidado_20261011/reexecucoes/run_realocados_20261011_192407/pull_requests/com.sapuseven.untis_29198884.apk_getCacheFile_pr.json",
+            "outputs/rv_import_consolidado_20261011/reexecucoes/run_verificacao_biblioteca_20261012_011346/pull_requests/com.sapuseven.untis_29198884.apk_getCacheFile_pr.json"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    },
+    {
+      "url": "https://github.com/Waboodoo/HTTP-Shortcuts/pull/576",
+      "outcome_record": {},
+      "outcome_source": null,
+      "match_basis": "manually_checked_report_method_and_specification",
+      "recorded_status": "accepted",
+      "identity_candidates": [],
+      "identity_status": "missing"
+    },
+    {
+      "url": "https://github.com/lneugebauer/nextcloud-cookbook/pull/204",
+      "outcome_record": {},
+      "outcome_source": null,
+      "match_basis": "small_input_and_manually_checked_report_identity",
+      "recorded_status": "accepted",
+      "identity_candidates": [
+        {
+          "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+          "class": "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider",
+          "method": "configureTrustAllCertificates",
+          "spec": "SSLContextSpec",
+          "metadata": [
+            "data/processed/exp_final/findings_exp_final.csv"
+          ]
+        }
+      ],
+      "identity_status": "resolved",
+      "overlaps_run34": true
+    }
+  ],
+  "apks": [
+    {
+      "apk": "app.michaelwuensch.bitbanana_79.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.beemdevelopment.aegis_81.apk",
+      "artifacts": [
+        {
+          "path": "outputs/apks/com.beemdevelopment.aegis_81.apk",
+          "bytes": 6604352,
+          "apk_container": true,
+          "package": "com.beemdevelopment.aegis",
+          "version_code": "81"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.craxiom.networksurvey_114.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.etesync.syncadapter_20700.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.gelakinetic.mtgfam_99.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.gigabytedevelopersinc.app.CometOTP.debug_1.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/apks/com.gigabytedevelopersinc.app.CometOTP.debug_1.apk",
+          "bytes": 16076330,
+          "apk_container": true,
+          "package": "com.gigabytedevelopersinc.app.CometOTP.dev",
+          "version_code": "10000000"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.idunnololz.summit.fdroid.debug_355.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_misuse5_20261017/apks/com.idunnololz.summit.fdroid.debug_355.apk",
+          "bytes": 33136732,
+          "apk_container": true,
+          "package": "com.idunnololz.summit.fdroid.debug",
+          "version_code": "355"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.ivanovsky.passnotes_11700.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.leekleak.trafficlight_38.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.nononsenseapps.feeder.play_4025.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.orgzlyrevived.debug_292.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_orgzlyrevived_20261025/apks/com.orgzlyrevived.debug_292.apk",
+          "bytes": 27051797,
+          "apk_container": true,
+          "package": "com.orgzlyrevived",
+          "version_code": "292"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.ounben.amaradio.debug_159.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_misuse3_20261016/apks/com.ounben.amaradio.debug_159.apk",
+          "bytes": 36068217,
+          "apk_container": true,
+          "package": "com.ounben.amaradio",
+          "version_code": "159"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.password.monitor_102.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.philkes.notallyx.debug_71134.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_notallyx_20261028/apks/com.philkes.notallyx.debug_71134.apk",
+          "bytes": 23147049,
+          "apk_container": true,
+          "package": "com.philkes.notallyx.debug",
+          "version_code": "71134"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.sapuseven.untis_29198884.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.schwegelbin.openbible_46.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.vauth.salty.debug_2.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_salty_20261022/apks/com.vauth.salty.debug_2.apk",
+          "bytes": 20078906,
+          "apk_container": true,
+          "package": "com.vauth.salty",
+          "version_code": "2"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_amethyst_20261024/apks/com.vitorpamplona.amethyst.debug_464.apk",
+          "bytes": 166136276,
+          "apk_container": true,
+          "package": "com.vitorpamplona.amethyst.debug",
+          "version_code": "464"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.vrem.wifianalyzer_71.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_keypass_20261025/apks/com.yogeshpaliyal.keypass.debug_1442.apk",
+          "bytes": 46910183,
+          "apk_container": true,
+          "package": "com.yogeshpaliyal.keypass.staging",
+          "version_code": "1442"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.zfdang.zsmth_android.debug_1031.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_sslctx_20261017/apks/com.zfdang.zsmth_android.debug_1031.apk",
+          "bytes": 33821356,
+          "apk_container": true,
+          "package": "com.zfdang.zsmth_android",
+          "version_code": "1031"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "com.zhangke.fread.debug_109000.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "de.jepfa.yapm.debug_202006.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_misuse2_20261016/apks/de.jepfa.yapm.debug_202006.apk",
+          "bytes": 18300790,
+          "apk_container": true,
+          "package": "de.jepfa.yapm",
+          "version_code": "202006"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "de.luhmer.owncloudnewsreader_196.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "de.stephanlindauer.criticalmaps_104.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "dev.skye.intertune.debug_96.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_intertune_20261027/apks/dev.skye.intertune.debug_96.apk",
+          "bytes": 47751482,
+          "apk_container": true,
+          "package": "dev.skye.intertune.debug",
+          "version_code": "96"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "eu.faircode.email_2322.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "eu.fliegendewurst.triliumdroid.debug_24.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/apks/eu.fliegendewurst.triliumdroid.debug_24.apk",
+          "bytes": 17767977,
+          "apk_container": true,
+          "package": "eu.fliegendewurst.triliumdroid.debug",
+          "version_code": "24"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "github.paroj.dsub2000_217.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "io.github.mouse233.localsendkotlin.debug_23.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_localsendkotlin_20261029/apks/io.github.mouse233.localsendkotlin.debug_23.apk",
+          "bytes": 6280726,
+          "apk_container": true,
+          "package": "io.github.mouse233.localsendkotlin",
+          "version_code": "23"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/apks/io.github.thatsfguy.meshcore.native.debug_1.apk",
+          "bytes": 25995158,
+          "apk_container": true,
+          "package": "io.github.thatsfguy.meshcore.native.debug",
+          "version_code": "1015"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "io.heckel.ntfy_32.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "io.treehouses.remote_6098.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "livio.rssreader.debug_120.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "me.ash.reader.debug_47.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_readyou_20261018/apks/me.ash.reader.debug_47.apk",
+          "bytes": 34097977,
+          "apk_container": true,
+          "package": "me.ash.reader",
+          "version_code": "47"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "me.diamondforge.tokn_19.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "net.gaast.giggity_769.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "network.loki.messenger.fdroid.debug_4545.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_tls_20261015/apks/network.loki.messenger.fdroid.debug_4545.apk",
+          "bytes": 156410534,
+          "apk_container": true,
+          "package": "network.loki.messenger.debug",
+          "version_code": "4545"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "nl.privacydragon.bookwyrm.debug_16.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_bookwyrm_20261031/apks/nl.privacydragon.bookwyrm.debug_16.apk",
+          "bytes": 16644133,
+          "apk_container": true,
+          "package": "nl.privacydragon.bookwyrm",
+          "version_code": "16"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "org.bombusmod_1422.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "org.cry.otp_31.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "org.fedorahosted.freeotp_48.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "org.jimvixx.smsecure.debug_10400.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_misuse_20261016/apks/org.jimvixx.smsecure.debug_10400.apk",
+          "bytes": 22094063,
+          "apk_container": true,
+          "package": "org.jimvixx.smsecure",
+          "version_code": "10400"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "org.nick.wwwjdic_2370.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "org.primftpd.debug_71.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_primftpd_20261031/apks/org.primftpd.debug_71.apk",
+          "bytes": 13520465,
+          "apk_container": true,
+          "package": "org.primftpd",
+          "version_code": "71"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "org.quantumbadger.redreader_117.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "org.thosp.yourlocalweather.debug_213.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_org_thosp_yourlocalweather_20261101/apks/org.thosp.yourlocalweather.debug_213.apk",
+          "bytes": 26965027,
+          "apk_container": true,
+          "package": "org.thosp.yourlocalweather",
+          "version_code": "213"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "org.woheller69.whobird.debug_54.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_whobird_20261018/apks/org.woheller69.whobird.debug_54.apk",
+          "bytes": 28427136,
+          "apk_container": true,
+          "package": "org.woheller69.whobird",
+          "version_code": "54"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "rocks.poopjournal.metadataremover_20020.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "se.bitcraze.crazyfliecontrol2_22.apk",
+      "artifacts": [],
+      "status": "identifier_only"
+    },
+    {
+      "apk": "systems.sieber.droid_scep_7.apk",
+      "artifacts": [
+        {
+          "path": "outputs/apks/systems.sieber.droid_scep_7.apk",
+          "bytes": 9261828,
+          "apk_container": true,
+          "package": "systems.sieber.droid_scep",
+          "version_code": "7"
+        }
+      ],
+      "status": "local_container_verified"
+    },
+    {
+      "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+      "artifacts": [
+        {
+          "path": "outputs/rvsec_grocy_20261022/apks/xyz.zedler.patrick.grocy.debug_64.apk",
+          "bytes": 25588620,
+          "apk_container": true,
+          "package": "xyz.zedler.patrick.grocy.debug",
+          "version_code": "64"
+        }
+      ],
+      "status": "local_container_verified"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "trace_version": 2,
+  "call_id": "20261027T224111_145094_971_0029_adjudication.correction",
+  "parent_call_id": "",
+  "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+  "stage": "adjudication.correction",
+  "status": "cache_hit",
+  "delivery": "cache_hit",
+  "prompt_version": "llm-pipeline-v2.0",
+  "schema_version": "2.0",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 52567,
+  "input_tokens": 0,
+  "cached_input_tokens": 0,
+  "output_tokens": 0,
+  "latency_ms": 0,
+  "retry_count": 0,
+  "request_id": "",
+  "section_telemetry": {
+    "finding": {
+      "characters": 579,
+      "approx_tokens": 145,
+      "sha256": "64c974fc9774351710855ddaaf1670a249b36f0fac3c0aa16c8ddc4260c057b3"
+    },
+    "scope_completeness": {
+      "characters": 200,
+      "approx_tokens": 50,
+      "sha256": "068a571b317f41616eff51d6491139721d551fe9f2bd06ccdd44e4213e785189"
+    },
+    "case_policy": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "validated_evidence_extraction": {
+      "characters": 9840,
+      "approx_tokens": 2460,
+      "sha256": "1e013093b4fc03ce585e474c49c06e2d6f43a56867032b1b482f223761d8f75f"
+    },
+    "external_evidence_catalog": {
+      "characters": 4515,
+      "approx_tokens": 1129,
+      "sha256": "c5ea63197cb8b648c46cdfbda57055d0b07da5ff78e78264b60fc9706dda9ff2"
+    },
+    "valid_evidence_ids": {
+      "characters": 360,
+      "approx_tokens": 90,
+      "sha256": "c42316e9b39de51c513b2e76b2386661fa613de44f62f732c56cca6b0bffdb30"
+    },
+    "reported_by_rule": {
+      "characters": 5297,
+      "approx_tokens": 1324,
+      "sha256": "dae3b92f3c0aaa1bb249ea29caca88a7c42e8788fc44c1b54884601b51584ac9"
+    },
+    "rejected_adjudication": {
+      "characters": 6880,
+      "approx_tokens": 1720,
+      "sha256": "d824219d928230544f1332cc8b9fe1ec7c5781f78b8bc18b08aef17b53e12bdf"
+    },
+    "deterministic_validation_errors": {
+      "characters": 51,
+      "approx_tokens": 13,
+      "sha256": "60767c3719e1e9efabc611a2a58f6077961550e8daa5e8da372bd9c8535f4aa8"
+    }
+  },
+  "completed_at": "2026-10-27T22:41:11"
+}

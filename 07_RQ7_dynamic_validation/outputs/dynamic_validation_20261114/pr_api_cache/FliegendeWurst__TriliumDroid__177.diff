@@ -1,0 +1,23 @@
+diff --git a/app/src/main/kotlin/eu/fliegendewurst/triliumdroid/sync/ConnectionUtil.kt b/app/src/main/kotlin/eu/fliegendewurst/triliumdroid/sync/ConnectionUtil.kt
+index b0765f75..28b02456 100644
+--- a/app/src/main/kotlin/eu/fliegendewurst/triliumdroid/sync/ConnectionUtil.kt
++++ b/app/src/main/kotlin/eu/fliegendewurst/triliumdroid/sync/ConnectionUtil.kt
+@@ -38,7 +38,6 @@ import java.util.concurrent.TimeUnit
+ import javax.crypto.Mac
+ import javax.crypto.spec.SecretKeySpec
+ import javax.net.ssl.HttpsURLConnection
+-import javax.net.ssl.KeyManagerFactory
+ import javax.net.ssl.SSLContext
+ import javax.net.ssl.X509KeyManager
+ import kotlin.io.encoding.Base64
+@@ -181,10 +180,6 @@ object ConnectionUtil {
+ 			SyncTrustManager(SyncTrustManager.systemDefault(), serverCert as? X509Certificate)
+ 
+ 
+-		val keyManagerFactory =
+-			KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm())
+-		keyManagerFactory.init(null, null)
+-
+ 		val km = object : X509KeyManager {
+ 			override fun getClientAliases(
+ 				keyType: String?,

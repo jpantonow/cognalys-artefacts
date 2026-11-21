@@ -1,0 +1,6 @@
+{
+ "seed": 20261113,
+ "salt": "686b1a0b8bcb5c5e36956fd8d4bf6026",
+ "created_at": "2026-11-13T08:36:53-0300",
+ "rule": "card_id = 'K' + sha256(salt|unit|arm|replica)[:8]; order of a unit's cards for a judge = random.Random(salt|order|judge|unit).shuffle(sorted ids); samples use random.Random(salt|<name>)"
+}

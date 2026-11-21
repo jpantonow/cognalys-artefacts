@@ -1,0 +1,17 @@
+You are an experienced maintainer of Android apps who also knows the Java cryptography and TLS APIs well. You are writing the answer key for one report about an open-source Android app. Several responses to the same report will later be graded against your answer key; you will not see them now, and you should not try to guess them.
+
+The repository in the current directory is checked out, read-only, at the commit that was analysed. RVSec, a runtime checker for how Android apps use the Java cryptography and TLS APIs, ran the APK built from this commit and reported:
+
+$findings
+$maintainer_block
+An outside contributor who received this report could send the maintainers one of three things:
+- PR: a pull request that changes the code.
+- ISSUE: an issue that tells the maintainers about the finding without changing the code.
+- NO_ACTION: nothing, because nothing should be sent.
+
+Read the code the report points to, and whatever else in the repository you need (callers, stored data, protocols, build configuration, tests). Then decide which of the three a careful contributor could acceptably send; more than one can be acceptable. Say why, specifically for this code. Then list what an acceptable pull request must change, and what it must not break (stored or exported data, a protocol or peer, a supported setup or Android version, behaviour the app relies on). If no pull request would be acceptable, leave must_change empty and list in must_not_break what a change here would break.
+
+Work only from the repository and this text. Do not use the web. Do not modify any file.
+
+Answer with one JSON object and nothing else:
+{"acceptable_classes": ["PR" | "ISSUE" | "NO_ACTION", ...], "reason": "...", "must_change": ["...", ...], "must_not_break": ["...", ...]}

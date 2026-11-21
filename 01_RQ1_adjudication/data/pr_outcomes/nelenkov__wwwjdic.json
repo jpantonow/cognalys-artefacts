@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/nelenkov/wwwjdic/pull/115",
+    "state": "open",
+    "finding_id": "4e3c203d8253",
+    "spec": "Closeable_MeaninglessClose",
+    "csv_class": "org.nick.wwwjdic.ocr.OcrFormEntity",
+    "method_name": "<init>",
+    "title": "Fix <init>",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:36.268926+00:00",
+    "maintainer_feedback": []
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/woheller69/whoBIRD/pull/144",
+    "state": "closed",
+    "finding_id": "668194d05f07",
+    "spec": "MessageDigestSpec",
+    "csv_class": "org.tensorflow.lite.examples.soundclassifier.Downloader",
+    "method_name": "lambda$downloadModels$4",
+    "title": "Verify downloaded models with SHA-256",
+    "impact_class": "security_impact",
+    "recorded_at": "2026-11-19T20:40:24.734411+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "woheller69",
+        "kind": "comment",
+        "body": "MD5 is sufficient here"
+      }
+    ]
+  }
+]

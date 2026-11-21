@@ -1,0 +1,123 @@
+diff --git a/app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt b/app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt
+index 9ef5697e0..1c6ff29a7 100644
+--- a/app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt
++++ b/app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt
+@@ -561,16 +561,16 @@ private fun ZipFile.verifyEncryptedArchive() {
+     }
+ }
+ 
+-fun Context.md5Hash(uri: Uri): ByteArray? {
+-    return contentResolver.openInputStream(uri)?.md5Hash()
++fun Context.sha256Hash(uri: Uri): ByteArray? {
++    return contentResolver.openInputStream(uri)?.sha256Hash()
+ }
+ 
+-fun File.md5Hash(): ByteArray {
+-    return inputStream().md5Hash()
++fun File.sha256Hash(): ByteArray {
++    return inputStream().sha256Hash()
+ }
+ 
+-fun InputStream.md5Hash(): ByteArray {
+-    val digest = MessageDigest.getInstance("MD5")
++fun InputStream.sha256Hash(): ByteArray {
++    val digest = MessageDigest.getInstance("SHA-256")
+     use { fis ->
+         val buffer = ByteArray(BUFFER_SIZE / 2)
+         var bytes = fis.read(buffer)
+diff --git a/app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt b/app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt
+index de2bf9279..7f4312f26 100644
+--- a/app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt
++++ b/app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt
+@@ -68,7 +68,7 @@ import com.philkes.notallyx.utils.getLogFileUri
+ import com.philkes.notallyx.utils.keepOnlyNewest
+ import com.philkes.notallyx.utils.listZipFiles
+ import com.philkes.notallyx.utils.log
+-import com.philkes.notallyx.utils.md5Hash
++import com.philkes.notallyx.utils.sha256Hash
+ import com.philkes.notallyx.utils.resolveAttachmentFile
+ import com.philkes.notallyx.utils.security.decryptDatabase
+ import com.philkes.notallyx.utils.security.getInitializedCipherForDecryption
+@@ -465,8 +465,8 @@ private fun ContextWrapper.writeFileVerified(source: File, target: Uri) {
+         FileInputStream(source).use { input -> input.copyToLarge(out) }
+         out.flush()
+     }
+-    val targetMd5 = runCatching { md5Hash(target) }.getOrNull()
+-    if (targetMd5 == null || !targetMd5.contentEquals(source.md5Hash())) {
++    val targetSha256 = runCatching { sha256Hash(target) }.getOrNull()
++    if (targetSha256 == null || !targetSha256.contentEquals(source.sha256Hash())) {
+         throw IOException("Writing '$target' failed, its content does not match '${source.name}'")
+     }
+ }
+@@ -703,10 +703,14 @@ suspend fun ContextWrapper.exportAsZip(
+             }
+         }
+         // Guard against null/IO issues when immediately reopening fileUri via SAF
+-        val sourceMd5 = runCatching { zipFile.file.md5Hash() }.getOrNull()
+-        val targetMd5 = runCatching { md5Hash(fileUri) }.getOrNull()
+-        if (sourceMd5 == null || targetMd5 == null || !targetMd5.contentEquals(sourceMd5)) {
+-            log(TAG, stackTrace = "Exported zipFile '$fileUri' has wrong MD5 hash!")
++        val sourceSha256 = runCatching { zipFile.file.sha256Hash() }.getOrNull()
++        val targetSha256 = runCatching { sha256Hash(fileUri) }.getOrNull()
++        if (
++            sourceSha256 == null ||
++                targetSha256 == null ||
++                !targetSha256.contentEquals(sourceSha256)
++        ) {
++            log(TAG, stackTrace = "Exported zipFile '$fileUri' has wrong SHA-256 hash!")
+             if (retryOnFail) {
+                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                     try {
+@@ -720,7 +724,7 @@ suspend fun ContextWrapper.exportAsZip(
+                 return exportAsZip(fileUri, compress, password, backupProgress, false)
+             } else {
+                 throw IOException(
+-                    "exportAsZip failed because created '$fileUri' has wrong or unverifiable MD5 hash!"
++                    "exportAsZip failed because created '$fileUri' has wrong or unverifiable SHA-256 hash!"
+                 )
+             }
+         }
+diff --git a/app/src/test/kotlin/com/philkes/notallyx/utils/IOExtensionsTest.kt b/app/src/test/kotlin/com/philkes/notallyx/utils/IOExtensionsTest.kt
+new file mode 100644
+index 000000000..05e073cc7
+--- /dev/null
++++ b/app/src/test/kotlin/com/philkes/notallyx/utils/IOExtensionsTest.kt
+@@ -0,0 +1,38 @@
++package com.philkes.notallyx.utils
++
++import java.io.ByteArrayInputStream
++import org.junit.Assert.assertArrayEquals
++import org.junit.Assert.assertEquals
++import org.junit.Assert.assertFalse
++import org.junit.Test
++
++class IOExtensionsTest {
++    @Test
++    fun `sha256Hash returns equal digest bytes for identical content`() {
++        val content = "unchanged export content".toByteArray()
++
++        val originalDigest = ByteArrayInputStream(content).sha256Hash()
++        val copiedDigest = ByteArrayInputStream(content.copyOf()).sha256Hash()
++
++        assertArrayEquals(originalDigest, copiedDigest)
++    }
++
++    @Test
++    fun `sha256Hash returns different digest bytes for modified content`() {
++        val originalDigest = ByteArrayInputStream("original export content".toByteArray()).sha256Hash()
++        val modifiedDigest = ByteArrayInputStream("modified export content".toByteArray()).sha256Hash()
++
++        assertFalse(originalDigest.contentEquals(modifiedDigest))
++    }
++
++    @Test
++    fun `sha256Hash returns published digest for abc`() {
++        val digest = ByteArrayInputStream("abc".toByteArray()).sha256Hash()
++        val digestHex = digest.joinToString("") { "%02x".format(it.toInt() and 0xff) }
++
++        assertEquals(
++            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
++            digestHex,
++        )
++    }
++}

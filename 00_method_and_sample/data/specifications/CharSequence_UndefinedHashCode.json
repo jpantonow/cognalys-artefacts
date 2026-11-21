@@ -1,0 +1,145 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule does not test the equals argument, compare character contents, inspect a returned hash code, or observe whether the call returns normally.",
+      "Because AspectJ `call` matching uses the static type used to access a method, a call selected through a supertype such as Object can be outside this `CharSequence+` call-signature pattern even when the runtime receiver implements CharSequence.",
+      "The rule has no collection/map event, so it cannot establish that a warned value was actually used as a key or set element.",
+      "The rule does not evaluate whether a nonexcluded concrete implementation has separately documented compatible equality and hash-code behavior.",
+      "The rule gives no agent/weaver coverage guarantee for code that was not instrumented."
+    ],
+    "predicates": [
+      "`call(* CharSequence+.equals(..)) && !target(String) && !target(CharBuffer)`",
+      "`call(* CharSequence+.hashCode(..)) && !target(String) && !target(CharBuffer)`",
+      "`before()` advice logs the warning before the selected call proceeds.",
+      "`CharSequence+` is an AspectJ subtype pattern, including CharSequence itself and its subtypes.",
+      "`target(T)` is runtime target-object matching; it is not a test of the identifier, cast, or source spelling used by the caller."
+    ],
+    "claim": "A matching call invokes an equals- or hashCode-named member through the CharSequence type family without one of the rule's two runtime target exclusions; therefore the detector reports that equality and hash-code support might not be suitable for arbitrary CharSequence use."
+  },
+  "unknowns": [
+    "The rule source does not identify the agent version, weaving mode, scope of instrumented classes, or whether all intended call sites are observable in a particular deployment.",
+    "The rule does not specify a particular Java release beyond linking to Java SE 6 documentation; concrete implementation behavior and compatibility must be checked for the runtime actually used.",
+    "The rule does not state why String and CharBuffer alone are excluded, nor does it enumerate other concrete CharSequence implementations that may provide safe, documented equality/hash-code semantics.",
+    "The rule does not establish whether a finding concerns Object.equals(Object)/Object.hashCode() or a same-named overload permitted by its wildcard signature patterns.",
+    "No per-finding evidence in this specification identifies the concrete runtime target class, compared operand, hash value, call outcome, or downstream data-structure use."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "The Java SE 6 documentation for `java.lang.CharSequence` states that the interface does not refine the general contracts of `equals` and `hashCode`; comparison between two CharSequence implementations is generally undefined, and arbitrary CharSequence instances are inappropriate as set elements or map keys.",
+      "`java.lang.Object` specifies the general `equals(Object)` equivalence-relation contract and the requirement that equal objects produce the same hash code.",
+      "`java.lang.String` defines equality against another String and specifies its hash-code computation.",
+      "`java.nio.CharBuffer` defines equality among char buffers and a content-dependent hash code."
+    ],
+    "preconditions": [
+      "The documented CharSequence caution applies to arbitrary CharSequence implementations and does not by itself describe the behavior of a particular concrete implementation.",
+      "A concrete instance-method call requires a usable non-null receiver to reach the invoked implementation; a null receiver cannot demonstrate an implementation's equality/hash-code semantics.",
+      "CharBuffer documentation cautions that its content-dependent hash code makes it inadvisable to use a buffer as a hash-map key unless its contents will not change."
+    ],
+    "unknowns": [
+      "Whether a particular nonexcluded concrete CharSequence class documents an equality domain and hash-code behavior suitable for its intended comparison or keying use.",
+      "Whether both operands, if any, have the same concrete implementation and whether that implementation deliberately supports the comparison.",
+      "Whether the selected method is the standard Object-signature method or an application-defined overload admitted by the broad `(..)` rule pattern."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/CharSequence_UndefinedHashCode.mop",
+    "https://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html",
+    "https://docs.oracle.com/javase/6/docs/api/java/lang/Object.html",
+    "https://docs.oracle.com/javase/6/docs/api/java/lang/String.html",
+    "https://docs.oracle.com/javase/6/docs/api/java/nio/CharBuffer.html",
+    "https://eclipse.dev/aspectj/doc/released/progguide/semantics-pointcuts.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Before a method-call join point matching `call(* CharSequence+.equals(..))`, provided the runtime receiver does not match `target(String)` and does not match `target(CharBuffer)`. `CharSequence+` includes java.lang.CharSequence and its subtypes; `target(T)` evaluates the runtime target type, including matching subtypes, rather than the source identifier or cast. The `*` return-type and `(..)` argument-list patterns are unrestricted.",
+      "name": "equals",
+      "api_patterns": [
+        ".equals("
+      ]
+    },
+    {
+      "condition": "Before a method-call join point matching `call(* CharSequence+.hashCode(..))`, provided the runtime receiver does not match `target(String)` and does not match `target(CharBuffer)`. `CharSequence+` includes java.lang.CharSequence and its subtypes; `target(T)` evaluates the runtime target type, including matching subtypes, rather than the source identifier or cast. The `*` return-type and `(..)` argument-list patterns are unrestricted.",
+      "name": "hashCode",
+      "api_patterns": [
+        ".hashCode("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "This is a warning rule, not proof that an invoked method is absent, throws, violates Object's equals/hashCode contract, or causes a collection failure. Its concern is that java.lang.CharSequence itself does not refine cross-implementation equality or hash-code semantics. The rule warns before matching calls unless the runtime target is a String or CharBuffer, including a subtype matched by AspectJ `target(Type)`.",
+  "forbidden_inferences_without_evidence": [
+    "That a warned target has no equals or hashCode method. Every object inherits those Object methods unless it overrides them.",
+    "That a warned concrete CharSequence implementation violates the Object.equals(Object) or Object.hashCode() contract.",
+    "That two particular CharSequence implementations compare incorrectly, asymmetrically, or with inconsistent hash codes.",
+    "That the call was used as a Set element, Map key, cache key, authorization decision, or other security-sensitive operation.",
+    "That the warning concerns only the exact source spelling `CharSequence`; the `CharSequence+` signature pattern includes matching subtypes, while exclusions are evaluated against the runtime target.",
+    "That the called equals or hashCode has the conventional Object signature only; the rule's `*` return-type and `(..)` parameter patterns also admit matching overloads declared on a matching subtype.",
+    "That String or CharBuffer targets trigger this rule; the rule expressly excludes runtime targets matching those types."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A finding establishes only that an instrumented matching call event occurred before the call, with a runtime target that did not match the String or CharBuffer exclusions.",
+    "equivalent": false,
+    "detector_claim": "The detector reports a potential API-contract ambiguity involving equality or hash-code calls on nonexcluded CharSequence-family targets."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm the Java runtime/library version and the concrete CharSequence implementation version whose contract is being relied upon.",
+      "Confirm the deployed AspectJ/RV-Monitor agent or weaving configuration preserves the rule's call-join-point and runtime-target semantics.",
+      "Do not infer a universal cross-type equality policy from the CharSequence interface; compatibility must be established for the concrete implementation pair."
+    ],
+    "runtime": [
+      "Show that the matching call executes in code covered by the monitor/weaver.",
+      "Show the runtime receiver class at the call; the event predicate is satisfied only when it is not a String or CharBuffer target under AspectJ target-type matching.",
+      "For a behavioral defect claim, record the equality results and hash values for the relevant concrete instances and execution state."
+    ],
+    "source_level": [
+      "Establish that the selected call signature is accessed through java.lang.CharSequence or a subtype, as required by `call(* CharSequence+.<method>(..))`.",
+      "Identify the actual concrete target class and inspect its authoritative API documentation or source for equals(Object), hashCode(), and any relevant overloads.",
+      "If the concern is collection behavior, show the separate source-level flow placing the value in a Set, Map, cache, or equivalent hash-based structure."
+    ]
+  },
+  "name": "CharSequence_UndefinedHashCode",
+  "source_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/CharSequence_UndefinedHashCode.mop",
+  "applies_to_types": [
+    "java.lang.CharSequence",
+    "java.lang.String",
+    "java.nio.CharBuffer"
+  ],
+  "source_title": "CharSequence_UndefinedHashCode.mop — javamop-agent-bundle detector rule",
+  "semantic_scope": "For every finding of this rule, the detector observes a method-call join point before a call whose method signature has a static access/declaring type matching java.lang.CharSequence or a subtype and whose name is equals or hashCode, with any return type and any argument list. It emits the warning only when the runtime receiver is neither a java.lang.String nor a java.nio.CharBuffer, including their AspectJ-matched subtypes. It observes the call before completion, not the return value, exception, equality result, hash value, concrete implementation's documentation, or downstream use of the result.",
+  "spec_id": "CharSequence_UndefinedHashCode",
+  "known_false_positive_shapes": [
+    "A nonexcluded concrete CharSequence implementation has its own documented, contract-compliant equals(Object) and hashCode() behavior, but the rule warns because it does not inspect that implementation's contract.",
+    "The call compares an object only with itself or with the same known concrete implementation; the rule does not inspect the argument or establish cross-implementation comparison.",
+    "The call result is unused or otherwise has no hash-based collection consequence; the rule warns on the call itself.",
+    "A call receiver evaluates to null: it does not match the String or CharBuffer target exclusions, and the before-call advice can warn even though the subsequent invocation cannot assess a concrete CharSequence implementation.",
+    "A matching subtype declares an overload named equals or hashCode with a nonstandard parameter list or return type; the pointcut's `(..)` and `*` patterns are broader than the conventional Object methods."
+  ],
+  "protocol": "(before equals) | (before hashCode); each event is independent and has no required predecessor or successor",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/CharSequence_UndefinedHashCode.mop",
+    "format": "mop",
+    "catalog_entry": "javamop_property",
+    "detail": "mop_property_declaration:CharSequence_UndefinedHashCode"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.minidns.record.Record",
+        "method": "isAnswer",
+        "message": "CharSequence_UndefinedHashCode equals and hashCode methods might not be supported in CharSequence"
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "mop"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "mop_property_declaration:CharSequence_UndefinedHashCode",
+    "checked_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/CharSequence_UndefinedHashCode.mop"
+  }
+}

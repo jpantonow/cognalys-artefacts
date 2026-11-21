@@ -1,0 +1,137 @@
+{
+  "schema_version": 2,
+  "spec_id": "IllegalArgumentSpec",
+  "name": "IllegalArgumentSpec",
+  "applies_to_types": [
+    "unresolved.IllegalArgument"
+  ],
+  "source_title": "Unverified candidate CrySL rule: IllegalArgument.crysl",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IllegalArgument.crysl",
+  "source_verified": false,
+  "protocol": "unknown; no verified EVENTS/ORDER expression was recovered",
+  "important_note": "No primary IllegalArgument.crysl content was recovered from the supplied canonical raw URL; the supplied research also reports that an alternate master-path raw URL returned 404. Consequently, no SPEC declaration, governed real API type, events, constraints, or order expression can be asserted. unresolved.IllegalArgument is an explicit unresolved-type sentinel used solely to preserve the required simple name IllegalArgument; it is not a claim that this is a real API type or that it is governed by a rule.",
+  "events": [
+    {
+      "name": "resolvePath_call_observed",
+      "api_patterns": [
+        "FileUtils.resolvePath(",
+        "resolvePath("
+      ],
+      "condition": "Observation requires a source-level invocation match at com.amaze.filemanager.utils.FileUtils.resolvePath. Observing a call does not establish that a path violates an invalid-character predicate or that an exception is thrown."
+    },
+    {
+      "name": "illegal_argument_exception_path_observed",
+      "api_patterns": [
+        "throw new IllegalArgumentException(",
+        "\"File path cannot contain invalid characters.\""
+      ],
+      "condition": "Observation requires a matching throw construction or message literal in the relevant implementation. The rejection predicate is satisfied only if execution reaches that throw path for the supplied input; a syntactic match does not establish reachability, the invalid-character set, or runtime behavior."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not treat java.lang.IllegalArgumentException as the governed type: its simple name is IllegalArgumentException, not IllegalArgument.",
+    "Do not select an IllegalArgument type from Thrift, OpenMS, Rascal, or another unrelated framework merely to satisfy the Spec suffix/name convention.",
+    "Do not infer that every call to FileUtils.resolvePath throws IllegalArgumentException.",
+    "Do not infer which characters are invalid, whether validation is platform-specific, or whether the path is normalized before validation.",
+    "Do not infer a security property, path-traversal prevention, filesystem confinement, or sanitization guarantee from this finding.",
+    "Do not infer that the reported message is emitted uncaught, user-visible, stable across releases, or unique to this code path."
+  ],
+  "semantic_scope": "The available evidence is limited to a representative detector record associating com.amaze.filemanager.utils.FileUtils.resolvePath with the text \"IllegalArgumentException: File path cannot contain invalid characters.\" It is not a recovered API contract or a verified CrySL rule.",
+  "detector_semantics": {
+    "claim": "The detector reports a potential IllegalArgumentException-associated condition at com.amaze.filemanager.utils.FileUtils.resolvePath with the supplied message.",
+    "predicates": [
+      "reported_class == \"com.amaze.filemanager.utils.FileUtils\"",
+      "reported_method == \"resolvePath\"",
+      "reported_message == \"IllegalArgumentException: File path cannot contain invalid characters.\"",
+      "A local source match for resolvePath or IllegalArgumentException is observation evidence only, not proof of the detector predicate."
+    ],
+    "limitations": [
+      "No primary IllegalArgument.crysl source was recovered at the supplied direct raw corpus URLs.",
+      "No verified SPEC target with simple name exactly IllegalArgument was recovered.",
+      "The report does not establish argument values, control-flow reachability, exception propagation, runtime execution, or a complete method contract.",
+      "No canonical CrySL EVENTS, ORDER, CONSTRAINTS, REQUIRES, or ENSURES section was recovered."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Unverified. The supplied finding suggests that an implementation path associated with FileUtils.resolvePath may reject a file path described as containing invalid characters by throwing IllegalArgumentException."
+    ],
+    "preconditions": [
+      "Unknown accepted path grammar.",
+      "Unknown invalid-character set.",
+      "Unknown null, empty-path, absolute-path, relative-path, separator, normalization, and URI handling semantics.",
+      "Unknown whether rejection occurs before filesystem access."
+    ],
+    "unknowns": [
+      "No authoritative source for the reported FileUtils.resolvePath implementation was recovered.",
+      "No authoritative source identifies a governed real API type named exactly IllegalArgument.",
+      "No canonical CrySL event, ORDER, CONSTRAINTS, REQUIRES, or ENSURES section was recovered."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "At most, the detector record identifies a possible illegal-argument rejection condition associated with a file-path resolution method.",
+    "runtime_claim": "Unproven. Runtime rejection requires that the relevant implementation, input, and control-flow path reach the exception construction.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A recoverable primary CrySL file containing a SPEC declaration for a fully qualified type whose simple name is exactly IllegalArgument.",
+      "The rule's EVENTS and ORDER sections before claiming a protocol.",
+      "The actual versioned source of com.amaze.filemanager.utils.FileUtils.resolvePath before claiming its validation algorithm or throw conditions."
+    ],
+    "runtime": [
+      "A test invoking the identified resolvePath implementation with a concrete path value.",
+      "Evidence that the tested input reaches the relevant rejection branch.",
+      "Captured exception type and message, including whether the exception is propagated, caught, or wrapped."
+    ],
+    "compatibility": [
+      "The Amaze File Manager revision/build analyzed by the detector.",
+      "The Android/JVM and filesystem context, if invalid characters depend on platform behavior.",
+      "Evidence that any recovered CrySL corpus revision is the ruleset consumed by the detector."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A resolvePath call is reported even though its argument is valid and the rejecting branch is unreachable.",
+    "The matching message or throw exists in dead, test-only, debug-only, obsolete, or version-incompatible code.",
+    "A similarly named FileUtils or resolvePath method is matched outside com.amaze.filemanager.utils.FileUtils.",
+    "The exception is caught, converted, or suppressed before observable runtime behavior.",
+    "A source literal match is mistaken for proof that the relevant method call, argument predicate, and exception path are connected."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IllegalArgument.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/IllegalArgument.crysl"
+  ],
+  "unknowns": [
+    "What fully qualified real API type, if any, has simple name exactly IllegalArgument and is governed by IllegalArgumentSpec?",
+    "Was IllegalArgumentSpec generated from a non-CrySL source, a private ruleset, or a historical corpus revision?",
+    "What exact source revision produced the representative FileUtils.resolvePath finding?",
+    "What concrete input predicate makes the file path invalid?",
+    "Is the reported IllegalArgumentException a direct throw from resolvePath, a propagated exception, or detector-normalized metadata?",
+    "Does this rule express an API-usage protocol, an exception-signaling convention, or only a message-based detector observation?"
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IllegalArgument.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.amaze.filemanager.utils.FileUtils",
+        "method": "resolvePath",
+        "message": "IllegalArgumentException: File path cannot contain invalid characters."
+      }
+    ],
+    "expected_api_simple_name": "IllegalArgument",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IllegalArgument.crysl"
+  }
+}

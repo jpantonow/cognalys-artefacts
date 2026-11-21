@@ -1,0 +1,190 @@
+{
+  "repository": "outputs/finding_worktrees/com.ivanovsky.passnotes_11700.apk/6d29118e4263/4be51154ed",
+  "remote_name": "origin",
+  "remote_url": "https://github.com/aivanovski/kpassnotes",
+  "repo_host": "github.com",
+  "repo_owner": "aivanovski",
+  "repo_name": "kpassnotes",
+  "branch": "fix/createhttpclient-sslcontextspec-6d29118e4263-4be51154ed",
+  "base_branch": "master",
+  "base_commit": "77b70f8a30586252b278cf0c0d0ff142e8096008",
+  "finding_id": "6d29118e4263",
+  "solution_revision": "4be51154ed",
+  "commit_hash": "189d56a620074e38f98ada68004e42940d441c8a",
+  "source_file": "app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt",
+  "spec": "SSLContextSpec",
+  "method_name": "createHttpClient",
+  "csv_class": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+  "error_message": "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+  "tool": "ape",
+  "build_validation": {
+    "status": "success",
+    "task": ":app:assembleAutomationDebug",
+    "return_code": 0,
+    "reason": "",
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/6d29118e4263/production/logs/projects/4be51154ed.log",
+    "finding_id": "6d29118e4263",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.ivanovsky.passnotes_11700.apk/6d29118e4263/4be51154ed",
+    "failure_attribution": "",
+    "unselected_flavor": "",
+    "compiler_diagnostics": [],
+    "baseline_compiler_diagnostics": [],
+    "new_compiler_diagnostics": [],
+    "failing_tests": [],
+    "baseline_failing_tests": [],
+    "new_failing_tests": [],
+    "phases": {
+      "production": {
+        "project_name": "4be51154ed",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.ivanovsky.passnotes_11700.apk/6d29118e4263/4be51154ed",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.ivanovsky.passnotes_11700.apk/6d29118e4263/4be51154ed",
+        "task": ":app:assembleAutomationDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 1476.05,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/6d29118e4263/production/apks/4be51154ed/app-automation-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/6d29118e4263/production/logs/projects/4be51154ed.log",
+        "reason": ""
+      }
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "detector_replay": {
+      "outcome": "unchanged",
+      "baseline": {
+        "seconds": 3.5,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "37",
+            "endline": "37",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "createHttpClient",
+        "match_scope": "method",
+        "method_lines": [
+          16,
+          45
+        ],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "37",
+            "endline": "37",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the SSLContextSpec rule fires in createHttpClient"
+      },
+      "patched": {
+        "seconds": 2.89,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "44",
+            "endline": "44",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "createHttpClient",
+        "match_scope": "method",
+        "method_lines": [
+          16,
+          52
+        ],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "44",
+            "endline": "44",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the SSLContextSpec rule fires in createHttpClient"
+      },
+      "detail": "the reported rule still fires after the patch",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/SSLContextSpec.yml",
+        "rules_sha256": "5f5e521a3ad18daf67b78d431e1bafe813ce0f85210471f6202adc1f7c1e520b"
+      }
+    },
+    "patch_correctness": {
+      "verdict": "incorrect",
+      "satisfied": [
+        "builds"
+      ],
+      "missing": [
+        "regression_suite_not_run"
+      ],
+      "contradicted": [
+        "detector_replay_unchanged"
+      ]
+    }
+  },
+  "manual_review_required": true,
+  "auto_apply": false,
+  "publication_allowed": false,
+  "publishable": false,
+  "preview_status": "REVIEW_ONLY_NOT_PUBLISHABLE",
+  "original_method_body": "    fun createHttpClient(type: HttpClientType): OkHttpClient {\n        val builder = OkHttpClient.Builder()\n\n        val interceptor = HttpLoggingInterceptor {\n            Timber.tag(OkHttp::class.java.simpleName).d(it)\n        }.apply {\n            setLevel(HttpLoggingInterceptor.Level.BASIC)\n        }\n\n        builder.addInterceptor(interceptor)\n\n        if (BuildConfig.DEBUG && type == HttpClientType.UNSECURE) {\n            Timber.w(\"--------------------------------------------\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"-- SSL Certificate validation is disabled --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--------------------------------------------\")\n\n            val unsecuredTrustManager = createUnsecuredTrustManager()\n            val sslContext = SSLContext.getInstance(\"TLS\")\n            sslContext.init(null, arrayOf(unsecuredTrustManager), SecureRandom())\n\n            builder.sslSocketFactory(sslContext.socketFactory, unsecuredTrustManager)\n            builder.hostnameVerifier { _, _ -> true }\n        }\n\n        return builder.build()\n    }",
+  "corrected_method_body": "    fun createHttpClient(type: HttpClientType): OkHttpClient {\n        val builder = OkHttpClient.Builder()\n\n        val interceptor = HttpLoggingInterceptor {\n            Timber.tag(OkHttp::class.java.simpleName).d(it)\n        }.apply {\n            setLevel(HttpLoggingInterceptor.Level.BASIC)\n        }\n\n        builder.addInterceptor(interceptor)\n\n        if (BuildConfig.DEBUG && type == HttpClientType.UNSECURE) {\n            Timber.w(\"--------------------------------------------\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"-- SSL hostname verification is disabled   --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--------------------------------------------\")\n\n            val trustManagerFactory = TrustManagerFactory.getInstance(\n                TrustManagerFactory.getDefaultAlgorithm()\n            )\n            trustManagerFactory.init(null as KeyStore?)\n            val trustManager = trustManagerFactory.trustManagers\n                .filterIsInstance<X509TrustManager>()\n                .firstOrNull()\n                ?: throw IllegalStateException(\"No X509TrustManager available\")\n            val sslContext = SSLContext.getInstance(\"TLS\")\n            sslContext.init(null, arrayOf(trustManager), SecureRandom())\n\n            builder.sslSocketFactory(sslContext.socketFactory, trustManager)\n            builder.hostnameVerifier { _, _ -> true }\n        }\n\n        return builder.build()\n    }",
+  "coordinated_edits": [
+    {
+      "source_file": "app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt",
+      "symbol": "HttpClientFactory imports",
+      "edit_kind": "declaration",
+      "original_code": "import android.annotation.SuppressLint\nimport com.ivanovsky.passnotes.BuildConfig\nimport java.security.SecureRandom\nimport java.security.cert.X509Certificate\nimport javax.net.ssl.SSLContext\nimport javax.net.ssl.X509TrustManager\nimport okhttp3.OkHttp\nimport okhttp3.OkHttpClient\nimport okhttp3.logging.HttpLoggingInterceptor\nimport timber.log.Timber",
+      "corrected_code": "import com.ivanovsky.passnotes.BuildConfig\nimport java.security.KeyStore\nimport java.security.SecureRandom\nimport javax.net.ssl.SSLContext\nimport javax.net.ssl.TrustManagerFactory\nimport javax.net.ssl.X509TrustManager\nimport okhttp3.OkHttp\nimport okhttp3.OkHttpClient\nimport okhttp3.logging.HttpLoggingInterceptor\nimport timber.log.Timber",
+      "reason": "Removes imports used solely by the deleted no-op trust manager and adds the default-store TrustManagerFactory and explicit KeyStore type needed to initialize it unambiguously."
+    },
+    {
+      "source_file": "app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt",
+      "symbol": "HttpClientFactory.createHttpClient",
+      "edit_kind": "method",
+      "original_code": "    fun createHttpClient(type: HttpClientType): OkHttpClient {\n        val builder = OkHttpClient.Builder()\n\n        val interceptor = HttpLoggingInterceptor {\n            Timber.tag(OkHttp::class.java.simpleName).d(it)\n        }.apply {\n            setLevel(HttpLoggingInterceptor.Level.BASIC)\n        }\n\n        builder.addInterceptor(interceptor)\n\n        if (BuildConfig.DEBUG && type == HttpClientType.UNSECURE) {\n            Timber.w(\"--------------------------------------------\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"-- SSL Certificate validation is disabled --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--------------------------------------------\")\n\n            val unsecuredTrustManager = createUnsecuredTrustManager()\n            val sslContext = SSLContext.getInstance(\"TLS\")\n            sslContext.init(null, arrayOf(unsecuredTrustManager), SecureRandom())\n\n            builder.sslSocketFactory(sslContext.socketFactory, unsecuredTrustManager)\n            builder.hostnameVerifier { _, _ -> true }\n        }\n\n        return builder.build()\n    }",
+      "corrected_code": "    fun createHttpClient(type: HttpClientType): OkHttpClient {\n        val builder = OkHttpClient.Builder()\n\n        val interceptor = HttpLoggingInterceptor {\n            Timber.tag(OkHttp::class.java.simpleName).d(it)\n        }.apply {\n            setLevel(HttpLoggingInterceptor.Level.BASIC)\n        }\n\n        builder.addInterceptor(interceptor)\n\n        if (BuildConfig.DEBUG && type == HttpClientType.UNSECURE) {\n            Timber.w(\"--------------------------------------------\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"-- SSL hostname verification is disabled   --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--                                        --\")\n            Timber.w(\"--------------------------------------------\")\n\n            val trustManagerFactory = TrustManagerFactory.getInstance(\n                TrustManagerFactory.getDefaultAlgorithm()\n            )\n            trustManagerFactory.init(null as KeyStore?)\n            val trustManager = trustManagerFactory.trustManagers\n                .filterIsInstance<X509TrustManager>()\n                .firstOrNull()\n                ?: throw IllegalStateException(\"No X509TrustManager available\")\n            val sslContext = SSLContext.getInstance(\"TLS\")\n            sslContext.init(null, arrayOf(trustManager), SecureRandom())\n\n            builder.sslSocketFactory(sslContext.socketFactory, trustManager)\n            builder.hostnameVerifier { _, _ -> true }\n        }\n\n        return builder.build()\n    }",
+      "reason": "Initializes the existing TLS SSLContext and OkHttp SSL socket factory with an X509TrustManager from the default TrustManagerFactory instead of a no-op application-defined manager, while retaining the existing public method signature and branch condition."
+    },
+    {
+      "source_file": "app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt",
+      "symbol": "HttpClientFactory.createUnsecuredTrustManager",
+      "edit_kind": "delete",
+      "original_code": "    @SuppressLint(\"CustomX509TrustManager\")\n    private fun createUnsecuredTrustManager(): X509TrustManager {\n        return object : X509TrustManager {\n            @SuppressLint(\"TrustAllX509TrustManager\")\n            override fun checkClientTrusted(\n                chain: Array<out X509Certificate>?,\n                authType: String?\n            ) {\n            }\n\n            @SuppressLint(\"TrustAllX509TrustManager\")\n            override fun checkServerTrusted(\n                chain: Array<out X509Certificate>?,\n                authType: String?\n            ) {\n            }\n\n            override fun getAcceptedIssuers(): Array<X509Certificate> {\n                return arrayOf()\n            }\n        }\n    }\n",
+      "corrected_code": "",
+      "reason": "Deletes the locally implemented trust-all manager, whose certificate-validation behavior is replaced by the default TrustManagerFactory manager."
+    }
+  ],
+  "changed_files": [
+    "app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt"
+  ],
+  "diff": "diff --git a/app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt b/app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt\nindex fdc3802..4200902 100644\n--- a/app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt\n+++ b/app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt\n@@ -1,10 +1,10 @@\n package com.ivanovsky.passnotes.data.repository.file.webdav\n \n-import android.annotation.SuppressLint\n import com.ivanovsky.passnotes.BuildConfig\n+import java.security.KeyStore\n import java.security.SecureRandom\n-import java.security.cert.X509Certificate\n import javax.net.ssl.SSLContext\n+import javax.net.ssl.TrustManagerFactory\n import javax.net.ssl.X509TrustManager\n import okhttp3.OkHttp\n import okhttp3.OkHttpClient\n@@ -28,42 +28,27 @@ object HttpClientFactory {\n             Timber.w(\"--------------------------------------------\")\n             Timber.w(\"--                                        --\")\n             Timber.w(\"--                                        --\")\n-            Timber.w(\"-- SSL Certificate validation is disabled --\")\n+            Timber.w(\"-- SSL hostname verification is disabled   --\")\n             Timber.w(\"--                                        --\")\n             Timber.w(\"--                                        --\")\n             Timber.w(\"--------------------------------------------\")\n \n-            val unsecuredTrustManager = createUnsecuredTrustManager()\n+            val trustManagerFactory = TrustManagerFactory.getInstance(\n+                TrustManagerFactory.getDefaultAlgorithm()\n+            )\n+            trustManagerFactory.init(null as KeyStore?)\n+            val trustManager = trustManagerFactory.trustManagers\n+                .filterIsInstance<X509TrustManager>()\n+                .firstOrNull()\n+                ?: throw IllegalStateException(\"No X509TrustManager available\")\n             val sslContext = SSLContext.getInstance(\"TLS\")\n-            sslContext.init(null, arrayOf(unsecuredTrustManager), SecureRandom())\n+            sslContext.init(null, arrayOf(trustManager), SecureRandom())\n \n-            builder.sslSocketFactory(sslContext.socketFactory, unsecuredTrustManager)\n+            builder.sslSocketFactory(sslContext.socketFactory, trustManager)\n             builder.hostnameVerifier { _, _ -> true }\n         }\n \n         return builder.build()\n     }\n \n-    @SuppressLint(\"CustomX509TrustManager\")\n-    private fun createUnsecuredTrustManager(): X509TrustManager {\n-        return object : X509TrustManager {\n-            @SuppressLint(\"TrustAllX509TrustManager\")\n-            override fun checkClientTrusted(\n-                chain: Array<out X509Certificate>?,\n-                authType: String?\n-            ) {\n-            }\n-\n-            @SuppressLint(\"TrustAllX509TrustManager\")\n-            override fun checkServerTrusted(\n-                chain: Array<out X509Certificate>?,\n-                authType: String?\n-            ) {\n-            }\n-\n-            override fun getAcceptedIssuers(): Array<X509Certificate> {\n-                return arrayOf()\n-            }\n-        }\n-    }\n }\n\\ No newline at end of file\n",
+  "title": "Use a factory-provided trust manager for WebDAV clients",
+  "body": "## Summary\n\nAffects `HttpClientFactory.createHttpClient` in `app/src/main/kotlin/com/ivanovsky/passnotes/data/repository/file/webdav/HttpClientFactory.kt`.\n\nThe debug `UNSECURE` WebDAV client now initializes its TLS context with an `X509TrustManager` from the default `TrustManagerFactory`, while continuing to disable hostname verification in that branch.\n\nI replaced the application-defined no-op trust manager that was passed directly to `SSLContext.init`, which did not follow the `SSLContextSpec` usage rule. I also removed the unused trust-all implementation and imports. This is safe because the existing method signature, debug branch condition, and `TLS` context selector remain unchanged.\n\nI found this while running the app under RVSec, a runtime-verification tool that watches the app's calls to the Java cryptography and TLS APIs and checks each sequence of calls against usage rules written in CrySL. `SSLContextSpec` is the rule this code did not satisfy.\n\n## How was this tested?\n\n- No automated test was added in this change\n- [x] Project compiles successfully (`:app:assembleAutomationDebug`)\n\n---\n\n*I'm an undergraduate Computer Engineering student at the University of Bras\u00edlia (UnB); this contribution is part of a research project on the analysis of Android apps, and I'm happy to adjust it to match the project's conventions.*",
+  "text_problems": [],
+  "dry_run": false,
+  "existing_open_pull_request": ""
+}

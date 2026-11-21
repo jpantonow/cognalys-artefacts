@@ -1,0 +1,17 @@
+diff --git a/app/src/main/java/org/jimvixx/smsecure/ConversationListAdapter.java b/app/src/main/java/org/jimvixx/smsecure/ConversationListAdapter.java
+index 7b56f33..e7be648 100644
+--- a/app/src/main/java/org/jimvixx/smsecure/ConversationListAdapter.java
++++ b/app/src/main/java/org/jimvixx/smsecure/ConversationListAdapter.java
+@@ -77,10 +77,10 @@ public ConversationListAdapter(@NonNull Context context,
+       this.threadDatabase = DatabaseFactory.getThreadDatabase(context);
+       this.inflater = LayoutInflater.from(context);
+       this.clickListener = clickListener;
+-      this.digest = MessageDigest.getInstance("SHA1");
++      this.digest = MessageDigest.getInstance("SHA-256");
+       setHasStableIds(true);
+     } catch (NoSuchAlgorithmException nsae) {
+-      throw new AssertionError("SHA-1 missing");
++      throw new AssertionError("SHA-256 missing");
+     }
+   }
+ 

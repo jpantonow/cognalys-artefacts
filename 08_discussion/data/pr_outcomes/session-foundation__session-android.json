@@ -1,0 +1,25 @@
+[
+  {
+    "pull_request": "https://github.com/session-foundation/session-android/pull/2241",
+    "state": "merged",
+    "finding_id": "63bfe4a50889",
+    "spec": "SSLContextSpec",
+    "csv_class": "org.thoughtcrime.securesms.api.http.HttpClientsKt",
+    "method_name": "createRegularNodeOkHttpClient",
+    "title": "Use TLS for the regular node HTTP client",
+    "impact_class": "security_impact",
+    "recorded_at": "2026-11-19T20:40:34.551394+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "mpretty-cyro",
+        "kind": "comment",
+        "body": "Thanks for your PR @jpantonow, I took a look at the change and on Android, `SSLContext.getInstance(\"SSL\")` and `SSLContext.getInstance(\"TLS\")` resolve to the same implementation. Conscrypt registers \"SSL\" as an alias of \"TLS\" (https://github.com/google/conscrypt/blob/5bdcae0fe8aeb92009eba087969aed7f0ae0e167/common/src/main/java/org/conscrypt/OpenSSLProvider.java#L92-L94), and the negotiated protocol version is set by OkHttp's `ConnectionSpec` on each connection rather than by this string.\r\n\r\nSo this change doesn't alter runtime behaviour; it only satisfies the CrySL `SSLContextSpec` rule. We'll hold off merging for now since it doesn't change anything functionally."
+      },
+      {
+        "author": "mpretty-cyro",
+        "kind": "comment",
+        "body": "All good, happy to merge it - just wanted to flag that it doesn't impact security in case someone read the PR and misunderstood"
+      }
+    ]
+  }
+]

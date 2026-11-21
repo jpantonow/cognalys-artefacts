@@ -1,0 +1,140 @@
+{
+  "schema_version": 2,
+  "spec_id": "TreeSet_Comparable",
+  "name": "TreeSet_Comparable",
+  "applies_to_types": [
+    "java.util.TreeSet",
+    "mop.TreeSet_Comparable"
+  ],
+  "source_title": "TreeSet_Comparable.mop — Runtime Verification property-db",
+  "source_url": "https://raw.githubusercontent.com/runtimeverification/property-db/refs/heads/master/annotated-java-api/java/util/TreeSet_Comparable.mop",
+  "source_verified": true,
+  "protocol": "((add | addall))*; each pre-call event is checked independently, with no stateful ordering requirement.",
+  "important_note": "This is a JavaMOP/RV-Monitor property rather than a CrySL rule at the supplied Crypto-API-Rules path. It checks only whether a matched value is instanceof Comparable before TreeSet calls. It does not prove successful insertion, mutual comparability, constructor/comparator choice, or runtime failure. Its broad add* pointcut is known to overmatch addAll.",
+  "events": [
+    {
+      "name": "add",
+      "api_patterns": [
+        ".add(",
+        ".addAll(",
+        "TreeSet"
+      ],
+      "condition": "Observed: a pre-call matching call(* Collection+.add*(..)) whose runtime receiver is java.util.TreeSet and whose argument is bound as e. Predicate satisfied for a finding: e is not instanceof java.lang.Comparable. Because add* also matches addAll, observing .addAll(...) alone does not establish that a non-Comparable element was supplied."
+    },
+    {
+      "name": "addall",
+      "api_patterns": [
+        ".addAll(",
+        "TreeSet"
+      ],
+      "condition": "Observed: a pre-call matching call(* Collection+.addAll(Collection)) whose runtime receiver is java.util.TreeSet and whose Collection argument is bound as c. Predicate satisfied for a finding: at least one iterated element elem of c is not instanceof java.lang.Comparable. Observing .addAll(...) alone is insufficient."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer a cryptographic weakness, confidentiality issue, or authentication defect from this finding.",
+    "Do not infer that java.util.TreeSet.add or addAll necessarily throws at runtime solely because the detector warns.",
+    "Do not infer that the TreeSet uses natural ordering rather than an explicit Comparator; this property does not observe construction or comparator state.",
+    "Do not infer that all existing and incoming elements are mutually comparable, that compareTo cannot throw ClassCastException, or that ordering is consistent with equals.",
+    "Do not infer that a reported addAll call necessarily contains a non-Comparable element: the broad add* pointcut can test the Collection argument itself.",
+    "Do not infer that mop.TreeSet_Comparable is a JDK runtime collection class; it is the package-qualified JavaMOP specification declaration."
+  ],
+  "semantic_scope": "The verified rule observes pre-call join points for Collection add* and addAll methods only when the dynamic receiver is java.util.TreeSet. It performs runtime instanceof Comparable tests on a single bound argument or on elements iterated from an addAll Collection. The representative finding concerns org.yaxim.androidclient.widget.AutoCompleteJidEdit.setServerList; available representative source evidence indicates a TreeSet<String> receiver and a servers.addAll(dyn_elements) call.",
+  "detector_semantics": {
+    "claim": "The monitor produces the message \"A non-comparable object is being inserted into a TreeSet object.\" when its local instanceof Comparable predicate fails at a matched pre-call event.",
+    "predicates": [
+      "add event: target(TreeSet) AND call(* Collection+.add*(..)) AND args(e) AND !(e instanceof Comparable).",
+      "addall event: target(TreeSet) AND call(* Collection+.addAll(Collection)) AND args(c) AND there exists an iterated elem in c such that !(elem instanceof Comparable).",
+      "The representative servers.addAll(dyn_elements) shape is matched by both the broad add* pattern and the explicit addAll(Collection) pattern."
+    ],
+    "limitations": [
+      "The rule has no monitor state and does not track TreeSet constructor selection, comparator presence, prior elements, insertion result, or thrown exceptions.",
+      "The source states that it does not verify mutual comparability because of performance degradation.",
+      "The source uses add*(..) rather than add(..); the archived property-db issue documents false alarms for addAll when the Collection argument itself is not Comparable.",
+      "A static detector may approximate runtime join points and instanceof tests; the representative finding does not identify the detector's exact approximation strategy."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "java.util.TreeSet orders elements by natural ordering or by a Comparator supplied at construction.",
+      "TreeSet.add and TreeSet.addAll may throw ClassCastException when supplied elements cannot be compared with elements already in the set."
+    ],
+    "preconditions": [
+      "For natural ordering, inserted elements must implement java.lang.Comparable and be mutually comparable: relevant comparisons must not throw ClassCastException.",
+      "For a TreeSet with a non-null Comparator, inserted elements need not implement Comparable; they must instead be comparable according to that Comparator.",
+      "Null acceptance depends on the comparison mode: natural ordering rejects null, while a Comparator may or may not permit null."
+    ],
+    "unknowns": [
+      "The exact Android/JDK library version used by the analyzed build is not identified.",
+      "The finding does not establish that the detector's modeled TreeSet behavior exactly follows the target platform implementation.",
+      "Representative source evidence constructs servers with new TreeSet<String>(Arrays.asList(static_list)) and does not show an explicit Comparator for that field."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The detector claims a possible violation of a collection-ordering precondition: a matched argument failed an instanceof Comparable test.",
+    "runtime_claim": "This is an API-correctness concern. A natural-order TreeSet requires Comparable and mutual comparability, whereas a comparator-backed TreeSet can validly contain non-Comparable objects.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Confirm that the receiver is java.util.TreeSet rather than merely a Set, SortedSet, or another framework type.",
+      "For a direct add finding, establish the static and/or runtime type of the actual element argument.",
+      "For an addAll finding, distinguish the Collection argument object from the types of its elements.",
+      "Establish whether the TreeSet uses natural ordering, a null Comparator, or a non-null Comparator.",
+      "For the representative code, verify whether dyn_elements remains Collection<String> through its call chain and whether raw or unchecked uses can violate that declaration."
+    ],
+    "runtime": [
+      "Observe the relevant add or addAll call and the dynamic receiver type.",
+      "For natural ordering, test comparisons against existing elements, not merely instanceof Comparable.",
+      "For comparator-backed sets, test the supplied Comparator on incoming and existing elements.",
+      "Record whether the operation returns normally, rejects the value, or throws ClassCastException or NullPointerException."
+    ],
+    "compatibility": [
+      "Use TreeSet documentation and implementation behavior applicable to the deployed Java or Android runtime.",
+      "Confirm whether the reporting detector uses the archived TreeSet_Comparable.mop rule unchanged or corrects its call(* Collection+.add*(..)) pointcut.",
+      "Confirm instrumentation or analysis behavior for calls inside library code and overloaded Collection methods."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A call such as servers.addAll(dyn_elements), where dyn_elements is a Collection<String> that does not itself implement Comparable, even if every inserted String is Comparable. The broad add* event can bind and test the Collection argument.",
+    "The representative AutoCompleteJidEdit.setServerList finding has this shape: servers is a TreeSet<String> and invokes servers.addAll(dyn_elements).",
+    "A TreeSet created with a non-null Comparator that validly orders instances of a class that does not implement Comparable.",
+    "A comparator-backed TreeSet that validly permits null while the rule rejects null because null is not instanceof Comparable.",
+    "Elements that implement Comparable but are not mutually comparable with existing elements are a false negative for this rule's test, not evidence that the runtime operation is safe."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/runtimeverification/property-db/refs/heads/master/annotated-java-api/java/util/TreeSet_Comparable.mop",
+    "https://raw.githubusercontent.com/openjdk/jdk/refs/heads/master/src/java.base/share/classes/java/util/TreeSet.java"
+  ],
+  "unknowns": [
+    "The requested Crypto-API-Rules raw URL, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TreeSet_Comparable.crysl, was attempted and returned HTTP 404; no TreeSet_Comparable.crysl source was found there.",
+    "The verified source is instead the archived Runtime Verification property-db JavaMOP specification TreeSet_Comparable.mop.",
+    "It is not established whether the reporting detector imported the verified MOP rule verbatim, translated it, or corrected the documented addAll overmatch.",
+    "The supplied finding does not identify the exact source line or call expression in the analyzed revision, though representative upstream implementation evidence contains servers.addAll(dyn_elements).",
+    "Available evidence does not establish the dynamic contents of dyn_elements, the presence of unchecked conversion, or the deployed Android runtime's precise TreeSet behavior."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.yaxim.androidclient.widget.AutoCompleteJidEdit",
+        "method": "setServerList",
+        "message": "TreeSet_Comparable A non-comparable object is being inserted into a TreeSet object."
+      }
+    ],
+    "expected_api_simple_name": "TreeSet_Comparable",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "mop_property_declaration:TreeSet_Comparable",
+    "checked_url": "https://raw.githubusercontent.com/runtimeverification/property-db/refs/heads/master/annotated-java-api/java/util/TreeSet_Comparable.mop"
+  },
+  "false_positive_triggers": [
+    {
+      "shape_contains": "A call such as servers.addAll(dyn_elements)",
+      "detector_message": "TreeSet_Comparable A non-comparable object is being inserted into a TreeSet object.",
+      "requires_source_pattern": "\\bTree(?:Set|Map)\\s*<\\s*(?:String|Integer|Long|Short|Byte|Double|Float|Character|Boolean|BigDecimal|BigInteger|Date|UUID|File|Duration|Instant|LocalDate|LocalDateTime)\\b"
+    }
+  ]
+}

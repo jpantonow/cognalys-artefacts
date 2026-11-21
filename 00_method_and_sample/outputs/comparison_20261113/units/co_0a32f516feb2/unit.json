@@ -1,0 +1,52 @@
+{
+ "unit": "co_0a32f516feb2",
+ "source": "spec_cohort",
+ "group": "no_pr",
+ "finding_ids": [
+  "4187ba41bc5c",
+  "f021173c7b4a"
+ ],
+ "apk": "org.cry.otp_31.apk",
+ "repo_url": "https://github.com/chrismiceli/motp",
+ "pinned_commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+ "spec": [
+  "MacSpec",
+  "SecretKeySpecSpec"
+ ],
+ "class": "org.cry.otp.TOTP",
+ "method": "hmac_sha",
+ "latest_outcome": [
+  "issue para o mantenedor do app",
+  "falso positivo reconhecido"
+ ],
+ "bench_id": [],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "4187ba41bc5c",
+   "unique_error_id": "org.cry.otp.TOTP:::hmac_sha:::MacSpec:::UnsafeAlgorithm:::expecting one of HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1",
+   "spec": "MacSpec",
+   "class": "org.cry.otp.TOTP",
+   "method": "hmac_sha",
+   "message": "expecting one of HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1",
+   "apk": "org.cry.otp_31.apk",
+   "repo_url": "https://github.com/chrismiceli/motp",
+   "commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+   "detector_source_location": "TOTP.java:47"
+  },
+  {
+   "finding_id": "f021173c7b4a",
+   "unique_error_id": "org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec:::UnsafeAlgorithm:::expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found RAW",
+   "spec": "SecretKeySpecSpec",
+   "class": "org.cry.otp.TOTP",
+   "method": "hmac_sha",
+   "message": "expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found RAW",
+   "apk": "org.cry.otp_31.apk",
+   "repo_url": "https://github.com/chrismiceli/motp",
+   "commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+   "detector_source_location": "TOTP.java:46"
+  }
+ ]
+}

@@ -1,0 +1,371 @@
+{
+ "url": "https://api.github.com/repos/mouse233/localsend-kotlin/compare/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16...3d321e3d5b173d6a3ec5e29715314094284f2a74",
+ "fetched_at": "2026-11-15T16:16:19.720989+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/mouse233/localsend-kotlin/compare/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16...3d321e3d5b173d6a3ec5e29715314094284f2a74",
+  "html_url": "https://github.com/mouse233/localsend-kotlin/compare/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16...3d321e3d5b173d6a3ec5e29715314094284f2a74",
+  "permalink_url": "https://github.com/mouse233/localsend-kotlin/compare/mouse233:53fbdad...mouse233:3d321e3",
+  "diff_url": "https://github.com/mouse233/localsend-kotlin/compare/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16...3d321e3d5b173d6a3ec5e29715314094284f2a74.diff",
+  "patch_url": "https://github.com/mouse233/localsend-kotlin/compare/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16...3d321e3d5b173d6a3ec5e29715314094284f2a74.patch",
+  "base_commit": {
+   "sha": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "node_id": "C_kwDOT_37JdoAKDUzZmJkYWQ3ZTNlMTIzZGVkOWViMWUwZWY1ZmMyYjZiMzRkNTllMTY",
+   "commit": {
+    "author": {
+     "name": "mouse233",
+     "email": "32637692+mouse233@users.noreply.github.com",
+     "date": "2026-10-15T15:59:10Z"
+    },
+    "committer": {
+     "name": "GitHub",
+     "email": "noreply@github.com",
+     "date": "2026-10-15T15:59:10Z"
+    },
+    "message": "release: prepare v0.8.0-alpha with LocalSend info endpoint (#57)\n\nImplement GET /api/localsend/v2/info with the device identity and fingerprint while preserving the existing TLS and registration behavior. Add HTTP/HTTPS and response regression coverage.\n\nBump the app to 0.8.0-alpha (versionCode 23), update bilingual release documentation and Fastlane metadata, and clarify the advertised protocol version and conformance scope.\n\nValidated with 54 unit tests, lint/debug builds, and 12 targeted Xiaomi device tests, including English/Chinese narrow dialogs. The PR CI passed.\n\nFixes #54",
+    "tree": {
+     "sha": "c5114b563577a0f66094b7be27f18d99607029c9",
+     "url": "https://api.github.com/repos/mouse233/localsend-kotlin/git/trees/c5114b563577a0f66094b7be27f18d99607029c9"
+    },
+    "url": "https://api.github.com/repos/mouse233/localsend-kotlin/git/commits/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq0PhOCRC1aQ7uu5UhlAAASBgQAGUiDKr8WlFivAvTASMLmyM3\nrmKB5lsFUHFkNg/vx7DMnKOS3FlMbzKzXSjBLirVr2x0vLXE7ok9uVm+YHb/mP6J\nZJcHM5zEYQmx+JkQY1Td1uEZgU0kjhoY7nh6Lq/UP5KcS/yqPL1d0TqsKBsI05lX\nMVFWj9bUXHp8dGBT7g8tjX367tUBUPZBd8Fl47Wp3ZbbRILnf7PHal7Dg+5okrGT\nLM7VQ1qrsIzHrZmd9ERBLB1n7OgZ0s0LrsD8BEMhBFyX2IN6Od6ZzmQZNuhCOTFX\nra1hvVJUwCPw3KPL0d7EK0Xb9ncW0ogSiG2P77aRpug5VXINcVBQU1trNL9sZrZM\nF2J1IfalqaPOLGc/1ckYCdqYbke83LIJWpCJyLH7k2GY19QXG/bDEicGmbyOnGSV\ngT4/tP5vgn//pH1ZQoOVYyb33tnuBoiBaCaOkl1HI9ktYwCtqrKbfdpQA6UOu9d9\n6UVgSu/80iYEL193fmS5s7PzvTzGb3LHikUoZKSkBnYw1Bm85Rr+zljj5RkpGM+B\nXauLHN0hCgrc/QGN0eE0lxxuWxiGpl1wWaiHp/dICVvzj4VxE7sZ0ZDV/G7v3cPR\naKWoA7oe26kduF/Wa4GOBSy5TRMniZLvDF9fwier3irj/8aQysq+ekRSSrnfrNiE\n4WS+GjtMEwx1+qJ/zwKk\n=ZtGR\n-----END PGP SIGNATURE-----\n",
+     "payload": "tree c5114b563577a0f66094b7be27f18d99607029c9\nparent 61db7a11a63c29073db9365a91bb3e6815fdf6bc\nauthor mouse233 <32637692+mouse233@users.noreply.github.com> 1792079950 +0800\ncommitter GitHub <noreply@github.com> 1792079950 +0800\n\nrelease: prepare v0.8.0-alpha with LocalSend info endpoint (#57)\n\nImplement GET /api/localsend/v2/info with the device identity and fingerprint while preserving the existing TLS and registration behavior. Add HTTP/HTTPS and response regression coverage.\n\nBump the app to 0.8.0-alpha (versionCode 23), update bilingual release documentation and Fastlane metadata, and clarify the advertised protocol version and conformance scope.\n\nValidated with 54 unit tests, lint/debug builds, and 12 targeted Xiaomi device tests, including English/Chinese narrow dialogs. The PR CI passed.\n\nFixes #54",
+     "verified_at": "2026-10-15T15:59:11Z"
+    }
+   },
+   "url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "html_url": "https://github.com/mouse233/localsend-kotlin/commit/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "comments_url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16/comments",
+   "author": {
+    "login": "mouse233",
+    "id": 32637692,
+    "node_id": "MDQ6VXNlcjMyNjM3Njky",
+    "avatar_url": "https://avatars.githubusercontent.com/u/32637692?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/mouse233",
+    "html_url": "https://github.com/mouse233",
+    "followers_url": "https://api.github.com/users/mouse233/followers",
+    "following_url": "https://api.github.com/users/mouse233/following{/other_user}",
+    "gists_url": "https://api.github.com/users/mouse233/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/mouse233/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/mouse233/subscriptions",
+    "organizations_url": "https://api.github.com/users/mouse233/orgs",
+    "repos_url": "https://api.github.com/users/mouse233/repos",
+    "events_url": "https://api.github.com/users/mouse233/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/mouse233/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "61db7a11a63c29073db9365a91bb3e6815fdf6bc",
+     "url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/61db7a11a63c29073db9365a91bb3e6815fdf6bc",
+     "html_url": "https://github.com/mouse233/localsend-kotlin/commit/61db7a11a63c29073db9365a91bb3e6815fdf6bc"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "node_id": "C_kwDOT_37JdoAKDUzZmJkYWQ3ZTNlMTIzZGVkOWViMWUwZWY1ZmMyYjZiMzRkNTllMTY",
+   "commit": {
+    "author": {
+     "name": "mouse233",
+     "email": "32637692+mouse233@users.noreply.github.com",
+     "date": "2026-10-15T15:59:10Z"
+    },
+    "committer": {
+     "name": "GitHub",
+     "email": "noreply@github.com",
+     "date": "2026-10-15T15:59:10Z"
+    },
+    "message": "release: prepare v0.8.0-alpha with LocalSend info endpoint (#57)\n\nImplement GET /api/localsend/v2/info with the device identity and fingerprint while preserving the existing TLS and registration behavior. Add HTTP/HTTPS and response regression coverage.\n\nBump the app to 0.8.0-alpha (versionCode 23), update bilingual release documentation and Fastlane metadata, and clarify the advertised protocol version and conformance scope.\n\nValidated with 54 unit tests, lint/debug builds, and 12 targeted Xiaomi device tests, including English/Chinese narrow dialogs. The PR CI passed.\n\nFixes #54",
+    "tree": {
+     "sha": "c5114b563577a0f66094b7be27f18d99607029c9",
+     "url": "https://api.github.com/repos/mouse233/localsend-kotlin/git/trees/c5114b563577a0f66094b7be27f18d99607029c9"
+    },
+    "url": "https://api.github.com/repos/mouse233/localsend-kotlin/git/commits/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq0PhOCRC1aQ7uu5UhlAAASBgQAGUiDKr8WlFivAvTASMLmyM3\nrmKB5lsFUHFkNg/vx7DMnKOS3FlMbzKzXSjBLirVr2x0vLXE7ok9uVm+YHb/mP6J\nZJcHM5zEYQmx+JkQY1Td1uEZgU0kjhoY7nh6Lq/UP5KcS/yqPL1d0TqsKBsI05lX\nMVFWj9bUXHp8dGBT7g8tjX367tUBUPZBd8Fl47Wp3ZbbRILnf7PHal7Dg+5okrGT\nLM7VQ1qrsIzHrZmd9ERBLB1n7OgZ0s0LrsD8BEMhBFyX2IN6Od6ZzmQZNuhCOTFX\nra1hvVJUwCPw3KPL0d7EK0Xb9ncW0ogSiG2P77aRpug5VXINcVBQU1trNL9sZrZM\nF2J1IfalqaPOLGc/1ckYCdqYbke83LIJWpCJyLH7k2GY19QXG/bDEicGmbyOnGSV\ngT4/tP5vgn//pH1ZQoOVYyb33tnuBoiBaCaOkl1HI9ktYwCtqrKbfdpQA6UOu9d9\n6UVgSu/80iYEL193fmS5s7PzvTzGb3LHikUoZKSkBnYw1Bm85Rr+zljj5RkpGM+B\nXauLHN0hCgrc/QGN0eE0lxxuWxiGpl1wWaiHp/dICVvzj4VxE7sZ0ZDV/G7v3cPR\naKWoA7oe26kduF/Wa4GOBSy5TRMniZLvDF9fwier3irj/8aQysq+ekRSSrnfrNiE\n4WS+GjtMEwx1+qJ/zwKk\n=ZtGR\n-----END PGP SIGNATURE-----\n",
+     "payload": "tree c5114b563577a0f66094b7be27f18d99607029c9\nparent 61db7a11a63c29073db9365a91bb3e6815fdf6bc\nauthor mouse233 <32637692+mouse233@users.noreply.github.com> 1792079950 +0800\ncommitter GitHub <noreply@github.com> 1792079950 +0800\n\nrelease: prepare v0.8.0-alpha with LocalSend info endpoint (#57)\n\nImplement GET /api/localsend/v2/info with the device identity and fingerprint while preserving the existing TLS and registration behavior. Add HTTP/HTTPS and response regression coverage.\n\nBump the app to 0.8.0-alpha (versionCode 23), update bilingual release documentation and Fastlane metadata, and clarify the advertised protocol version and conformance scope.\n\nValidated with 54 unit tests, lint/debug builds, and 12 targeted Xiaomi device tests, including English/Chinese narrow dialogs. The PR CI passed.\n\nFixes #54",
+     "verified_at": "2026-10-15T15:59:11Z"
+    }
+   },
+   "url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "html_url": "https://github.com/mouse233/localsend-kotlin/commit/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "comments_url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16/comments",
+   "author": {
+    "login": "mouse233",
+    "id": 32637692,
+    "node_id": "MDQ6VXNlcjMyNjM3Njky",
+    "avatar_url": "https://avatars.githubusercontent.com/u/32637692?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/mouse233",
+    "html_url": "https://github.com/mouse233",
+    "followers_url": "https://api.github.com/users/mouse233/followers",
+    "following_url": "https://api.github.com/users/mouse233/following{/other_user}",
+    "gists_url": "https://api.github.com/users/mouse233/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/mouse233/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/mouse233/subscriptions",
+    "organizations_url": "https://api.github.com/users/mouse233/orgs",
+    "repos_url": "https://api.github.com/users/mouse233/repos",
+    "events_url": "https://api.github.com/users/mouse233/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/mouse233/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "61db7a11a63c29073db9365a91bb3e6815fdf6bc",
+     "url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/61db7a11a63c29073db9365a91bb3e6815fdf6bc",
+     "html_url": "https://github.com/mouse233/localsend-kotlin/commit/61db7a11a63c29073db9365a91bb3e6815fdf6bc"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 2,
+  "behind_by": 0,
+  "total_commits": 2,
+  "commits": [
+   {
+    "sha": "6c72e89f4eb9a3886ca15f37fc4b4622926d6ce9",
+    "node_id": "C_kwDOT_37JdoAKDZjNzJlODlmNGViOWEzODg2Y2ExNWYzN2ZjNGI0NjIyOTI2ZDZjZTk",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-31T21:27:54Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-11-01T01:34:39Z"
+     },
+     "message": "Store TLS keys with a KeyStore entry\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+     "tree": {
+      "sha": "ba09ebaa12a47acf3d4878e958ffdcfc382068ad",
+      "url": "https://api.github.com/repos/mouse233/localsend-kotlin/git/trees/ba09ebaa12a47acf3d4878e958ffdcfc382068ad"
+     },
+     "url": "https://api.github.com/repos/mouse233/localsend-kotlin/git/commits/6c72e89f4eb9a3886ca15f37fc4b4622926d6ce9",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/6c72e89f4eb9a3886ca15f37fc4b4622926d6ce9",
+    "html_url": "https://github.com/mouse233/localsend-kotlin/commit/6c72e89f4eb9a3886ca15f37fc4b4622926d6ce9",
+    "comments_url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/6c72e89f4eb9a3886ca15f37fc4b4622926d6ce9/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+      "url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+      "html_url": "https://github.com/mouse233/localsend-kotlin/commit/53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16"
+     }
+    ]
+   },
+   {
+    "sha": "3d321e3d5b173d6a3ec5e29715314094284f2a74",
+    "node_id": "C_kwDOT_37JdoAKDNkMzIxZTNkNWIxNzNkNmEzZWM1ZTI5NzE1MzE0MDk0Mjg0ZjJhNzQ",
+    "commit": {
+     "author": {
+      "name": "mouse233",
+      "email": "moused233@gmail.com",
+      "date": "2026-11-13T03:20:14Z"
+     },
+     "committer": {
+      "name": "mouse233",
+      "email": "moused233@gmail.com",
+      "date": "2026-11-13T03:20:14Z"
+     },
+     "message": "test: cover TLS identity persistence and legacy PKCS12 loading\n\nExercise the production TlsIdentity flow on Android: verify private key, certificate, password, and fingerprint survive reload; preserve identities written with setKeyEntry; complete mutual TLS handshakes and reject mismatched fingerprints.\n\nValidated on an Android 5.0 (API 21) emulator: 3 new persistence tests and 4 existing server tests passed. Related security unit tests, lintDebug, assembleDebug, and assembleDebugAndroidTest also passed. Complements PR #58.",
+     "tree": {
+      "sha": "cbe2cbdc89c873c64c9ecb2f3371981936be7271",
+      "url": "https://api.github.com/repos/mouse233/localsend-kotlin/git/trees/cbe2cbdc89c873c64c9ecb2f3371981936be7271"
+     },
+     "url": "https://api.github.com/repos/mouse233/localsend-kotlin/git/commits/3d321e3d5b173d6a3ec5e29715314094284f2a74",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/3d321e3d5b173d6a3ec5e29715314094284f2a74",
+    "html_url": "https://github.com/mouse233/localsend-kotlin/commit/3d321e3d5b173d6a3ec5e29715314094284f2a74",
+    "comments_url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/3d321e3d5b173d6a3ec5e29715314094284f2a74/comments",
+    "author": {
+     "login": "mouse233",
+     "id": 32637692,
+     "node_id": "MDQ6VXNlcjMyNjM3Njky",
+     "avatar_url": "https://avatars.githubusercontent.com/u/32637692?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/mouse233",
+     "html_url": "https://github.com/mouse233",
+     "followers_url": "https://api.github.com/users/mouse233/followers",
+     "following_url": "https://api.github.com/users/mouse233/following{/other_user}",
+     "gists_url": "https://api.github.com/users/mouse233/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/mouse233/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/mouse233/subscriptions",
+     "organizations_url": "https://api.github.com/users/mouse233/orgs",
+     "repos_url": "https://api.github.com/users/mouse233/repos",
+     "events_url": "https://api.github.com/users/mouse233/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/mouse233/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "mouse233",
+     "id": 32637692,
+     "node_id": "MDQ6VXNlcjMyNjM3Njky",
+     "avatar_url": "https://avatars.githubusercontent.com/u/32637692?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/mouse233",
+     "html_url": "https://github.com/mouse233",
+     "followers_url": "https://api.github.com/users/mouse233/followers",
+     "following_url": "https://api.github.com/users/mouse233/following{/other_user}",
+     "gists_url": "https://api.github.com/users/mouse233/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/mouse233/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/mouse233/subscriptions",
+     "organizations_url": "https://api.github.com/users/mouse233/orgs",
+     "repos_url": "https://api.github.com/users/mouse233/repos",
+     "events_url": "https://api.github.com/users/mouse233/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/mouse233/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "6c72e89f4eb9a3886ca15f37fc4b4622926d6ce9",
+      "url": "https://api.github.com/repos/mouse233/localsend-kotlin/commits/6c72e89f4eb9a3886ca15f37fc4b4622926d6ce9",
+      "html_url": "https://github.com/mouse233/localsend-kotlin/commit/6c72e89f4eb9a3886ca15f37fc4b4622926d6ce9"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "0a3a98bb1d7a28b8f6d48a810357f741cd26dd78",
+    "filename": "app/src/androidTest/java/io/github/mouse233/localsendkotlin/security/TlsIdentityInstrumentedTest.kt",
+    "status": "added",
+    "additions": 202,
+    "deletions": 0,
+    "changes": 202,
+    "blob_url": "https://github.com/mouse233/localsend-kotlin/blob/3d321e3d5b173d6a3ec5e29715314094284f2a74/app%2Fsrc%2FandroidTest%2Fjava%2Fio%2Fgithub%2Fmouse233%2Flocalsendkotlin%2Fsecurity%2FTlsIdentityInstrumentedTest.kt",
+    "raw_url": "https://github.com/mouse233/localsend-kotlin/raw/3d321e3d5b173d6a3ec5e29715314094284f2a74/app%2Fsrc%2FandroidTest%2Fjava%2Fio%2Fgithub%2Fmouse233%2Flocalsendkotlin%2Fsecurity%2FTlsIdentityInstrumentedTest.kt",
+    "contents_url": "https://api.github.com/repos/mouse233/localsend-kotlin/contents/app%2Fsrc%2FandroidTest%2Fjava%2Fio%2Fgithub%2Fmouse233%2Flocalsendkotlin%2Fsecurity%2FTlsIdentityInstrumentedTest.kt?ref=3d321e3d5b173d6a3ec5e29715314094284f2a74",
+    "patch": "@@ -0,0 +1,202 @@\n+package io.github.mouse233.localsendkotlin.security\n+\n+import android.content.Context\n+import android.content.ContextWrapper\n+import android.content.SharedPreferences\n+import androidx.test.ext.junit.runners.AndroidJUnit4\n+import androidx.test.platform.app.InstrumentationRegistry\n+import org.bouncycastle.asn1.x500.X500Name\n+import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter\n+import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder\n+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder\n+import org.junit.After\n+import org.junit.Assert.assertArrayEquals\n+import org.junit.Assert.assertEquals\n+import org.junit.Assert.assertFalse\n+import org.junit.Assert.assertThrows\n+import org.junit.Assert.assertTrue\n+import org.junit.Before\n+import org.junit.Test\n+import org.junit.runner.RunWith\n+import java.io.File\n+import java.math.BigInteger\n+import java.net.InetAddress\n+import java.security.KeyPairGenerator\n+import java.security.KeyStore\n+import java.security.PrivateKey\n+import java.security.SecureRandom\n+import java.security.cert.CertificateException\n+import java.security.cert.X509Certificate\n+import java.util.Date\n+import java.util.UUID\n+import java.util.concurrent.Executors\n+import java.util.concurrent.TimeUnit\n+import javax.net.ssl.SSLServerSocket\n+import javax.net.ssl.SSLSocket\n+\n+/** Exercises the production persistence path with Android's own PKCS12 provider, including API 21. */\n+@RunWith(AndroidJUnit4::class)\n+class TlsIdentityInstrumentedTest {\n+    private val targetContext = InstrumentationRegistry.getInstrumentation().targetContext\n+    private lateinit var context: IdentityTestContext\n+    private val keyStoreFile: File get() = File(context.filesDir, \"localsend-identity.p12\")\n+    private val preferences: SharedPreferences\n+        get() = context.getSharedPreferences(\"localsend_identity\", Context.MODE_PRIVATE)\n+\n+    @Before\n+    fun setUp() {\n+        val namespace = \"tls-identity-test-${UUID.randomUUID()}\"\n+        val directory = File(targetContext.cacheDir, namespace)\n+        assertTrue(directory.mkdirs())\n+        context = IdentityTestContext(targetContext, directory, namespace)\n+    }\n+\n+    @After\n+    fun tearDown() {\n+        if (::context.isInitialized) {\n+            preferences.edit().clear().commit()\n+            context.filesDir.deleteRecursively()\n+        }\n+    }\n+\n+    @Test\n+    fun newlyCreatedIdentityRetainsKeyCertificatePasswordAndFingerprintAfterReload() {\n+        assertFalse(keyStoreFile.exists())\n+        val created = TlsIdentity(context)\n+        val password = requireNotNull(preferences.getString(\"key_store_password\", null))\n+        assertTrue(password.isNotEmpty())\n+        val persisted = readIdentity(password)\n+        assertEquals(created.fingerprint, TlsIdentity.certificateFingerprint(persisted.second))\n+        val originalBytes = keyStoreFile.readBytes()\n+\n+        // A new wrapper also catches accidental reliance on the original Context instance.\n+        val reloaded = TlsIdentity(context.reopen())\n+        val afterReload = readIdentity(password)\n+        assertEquals(password, preferences.getString(\"key_store_password\", null))\n+        assertArrayEquals(originalBytes, keyStoreFile.readBytes())\n+        assertArrayEquals(persisted.first.encoded, afterReload.first.encoded)\n+        assertArrayEquals(persisted.second.encoded, afterReload.second.encoded)\n+        assertEquals(created.fingerprint, reloaded.fingerprint)\n+        assertMutualTlsWorks(created, reloaded)\n+    }\n+\n+    @Test\n+    fun identityWrittenWithLegacySetKeyEntryIsLoadedWithoutReplacement() {\n+        val password = UUID.randomUUID().toString()\n+        assertTrue(preferences.edit().putString(\"key_store_password\", password).commit())\n+        val expected = writeLegacyIdentity(password)\n+        val originalBytes = keyStoreFile.readBytes()\n+\n+        val loaded = TlsIdentity(context)\n+        val reloaded = TlsIdentity(context.reopen())\n+        val persisted = readIdentity(password)\n+        assertEquals(password, preferences.getString(\"key_store_password\", null))\n+        assertArrayEquals(originalBytes, keyStoreFile.readBytes())\n+        assertArrayEquals(expected.first.encoded, persisted.first.encoded)\n+        assertArrayEquals(expected.second.encoded, persisted.second.encoded)\n+        assertEquals(TlsIdentity.certificateFingerprint(expected.second), loaded.fingerprint)\n+        assertEquals(loaded.fingerprint, reloaded.fingerprint)\n+        assertMutualTlsWorks(loaded, reloaded)\n+    }\n+\n+    @Test\n+    fun reloadedIdentityAcceptsMatchingFingerprintAndRejectsMismatch() {\n+        val created = TlsIdentity(context)\n+        val reloaded = TlsIdentity(context.reopen())\n+        val password = requireNotNull(preferences.getString(\"key_store_password\", null))\n+        val certificate = readIdentity(password).second\n+\n+        reloaded.trustManagerFor(created.fingerprint).checkServerTrusted(arrayOf(certificate), \"RSA\")\n+        val mismatch = if (created.fingerprint.startsWith(\"0\")) \"1\" else \"0\"\n+        val wrongFingerprint = mismatch + created.fingerprint.substring(1)\n+        assertThrows(CertificateException::class.java) {\n+            reloaded.trustManagerFor(wrongFingerprint).checkServerTrusted(arrayOf(certificate), \"RSA\")\n+        }\n+    }\n+\n+    private fun readIdentity(password: String): Pair<PrivateKey, X509Certificate> {\n+        val store = KeyStore.getInstance(\"PKCS12\")\n+        keyStoreFile.inputStream().use { store.load(it, password.toCharArray()) }\n+        assertTrue(store.isKeyEntry(\"localsend\"))\n+        val chain = requireNotNull(store.getCertificateChain(\"localsend\"))\n+        assertEquals(1, chain.size)\n+        val certificate = chain.single() as X509Certificate\n+        certificate.checkValidity()\n+        certificate.verify(certificate.publicKey)\n+        val key = store.getKey(\"localsend\", password.toCharArray()) as PrivateKey\n+        assertEquals(certificate.publicKey.algorithm, key.algorithm)\n+        return key to certificate\n+    }\n+\n+    /** Deliberately uses the pre-PR writer to model an existing installation's identity. */\n+    private fun writeLegacyIdentity(password: String): Pair<PrivateKey, X509Certificate> {\n+        val keyPair = KeyPairGenerator.getInstance(\"RSA\").apply { initialize(2048) }.generateKeyPair()\n+        val subject = X500Name(\"CN=Legacy LocalSend identity\")\n+        val now = System.currentTimeMillis()\n+        val builder = JcaX509v3CertificateBuilder(\n+            subject, BigInteger(160, SecureRandom()), Date(now - 60_000),\n+            Date(now + TimeUnit.DAYS.toMillis(365)), subject, keyPair.public\n+        )\n+        val signer = JcaContentSignerBuilder(\"SHA256withRSA\").build(keyPair.private)\n+        val certificate = JcaX509CertificateConverter().getCertificate(builder.build(signer))\n+        val store = KeyStore.getInstance(\"PKCS12\")\n+        store.load(null, password.toCharArray())\n+        store.setKeyEntry(\"localsend\", keyPair.private, password.toCharArray(), arrayOf(certificate))\n+        keyStoreFile.outputStream().use { store.store(it, password.toCharArray()) }\n+        return keyPair.private to certificate\n+    }\n+\n+    /** A real mutual handshake proves the production key managers can use both retained keys. */\n+    private fun assertMutualTlsWorks(serverIdentity: TlsIdentity, clientIdentity: TlsIdentity) {\n+        val executor = Executors.newSingleThreadExecutor()\n+        val server = serverIdentity.createSslContext().serverSocketFactory.createServerSocket(\n+            0, 1, InetAddress.getByName(\"127.0.0.1\")\n+        ) as SSLServerSocket\n+        server.soTimeout = 10_000\n+        server.needClientAuth = true\n+        try {\n+            val receivedFingerprint = executor.submit<String> {\n+                (server.accept() as SSLSocket).use { socket ->\n+                    socket.soTimeout = 10_000\n+                    socket.startHandshake()\n+                    val fingerprint = TlsIdentity.certificateFingerprint(socket.session.peerCertificates.single())\n+                    // Keep both peers alive until the handshake and application data finish.\n+                    assertEquals(42, socket.inputStream.read())\n+                    socket.outputStream.write(43)\n+                    socket.outputStream.flush()\n+                    fingerprint\n+                }\n+            }\n+            val clientContext = clientIdentity.createSslContext(serverIdentity.fingerprint)\n+            (clientContext.socketFactory.createSocket() as SSLSocket).use { socket ->\n+                socket.connect(java.net.InetSocketAddress(\"127.0.0.1\", server.localPort), 10_000)\n+                socket.soTimeout = 10_000\n+                socket.startHandshake()\n+                assertEquals(serverIdentity.fingerprint,\n+                    TlsIdentity.certificateFingerprint(socket.session.peerCertificates.single()))\n+                socket.outputStream.write(42)\n+                socket.outputStream.flush()\n+                assertEquals(43, socket.inputStream.read())\n+            }\n+            assertEquals(clientIdentity.fingerprint, receivedFingerprint.get(15, TimeUnit.SECONDS))\n+        } finally {\n+            server.close()\n+            executor.shutdownNow()\n+            assertTrue(executor.awaitTermination(15, TimeUnit.SECONDS))\n+        }\n+    }\n+\n+    /** Prevent tests from reading or replacing the app user's real identity and password. */\n+    private class IdentityTestContext(\n+        base: Context,\n+        private val directory: File,\n+        private val namespace: String\n+    ) : ContextWrapper(base) {\n+        override fun getApplicationContext(): Context = this\n+        override fun getFilesDir(): File = directory\n+        override fun getSharedPreferences(name: String, mode: Int): SharedPreferences =\n+            baseContext.getSharedPreferences(\"$namespace-$name\", mode)\n+\n+        fun reopen(): IdentityTestContext = IdentityTestContext(baseContext, directory, namespace)\n+    }\n+}"
+   },
+   {
+    "sha": "f5c94fcdbe13f7e7809fe98f84fdd4da0ba36f38",
+    "filename": "app/src/main/java/io/github/mouse233/localsendkotlin/security/TlsIdentity.kt",
+    "status": "modified",
+    "additions": 5,
+    "deletions": 1,
+    "changes": 6,
+    "blob_url": "https://github.com/mouse233/localsend-kotlin/blob/3d321e3d5b173d6a3ec5e29715314094284f2a74/app%2Fsrc%2Fmain%2Fjava%2Fio%2Fgithub%2Fmouse233%2Flocalsendkotlin%2Fsecurity%2FTlsIdentity.kt",
+    "raw_url": "https://github.com/mouse233/localsend-kotlin/raw/3d321e3d5b173d6a3ec5e29715314094284f2a74/app%2Fsrc%2Fmain%2Fjava%2Fio%2Fgithub%2Fmouse233%2Flocalsendkotlin%2Fsecurity%2FTlsIdentity.kt",
+    "contents_url": "https://api.github.com/repos/mouse233/localsend-kotlin/contents/app%2Fsrc%2Fmain%2Fjava%2Fio%2Fgithub%2Fmouse233%2Flocalsendkotlin%2Fsecurity%2FTlsIdentity.kt?ref=3d321e3d5b173d6a3ec5e29715314094284f2a74",
+    "patch": "@@ -75,7 +75,11 @@ class TlsIdentity(context: Context) {\n         generator.initialize(KEY_SIZE_BITS)\n         val keyPair = generator.generateKeyPair()\n         val certificate = createCertificate(keyPair.private, keyPair.public)\n-        store.setKeyEntry(ALIAS, keyPair.private, password, arrayOf(certificate))\n+        store.setEntry(\n+            ALIAS,\n+            KeyStore.PrivateKeyEntry(keyPair.private, arrayOf<java.security.cert.Certificate>(certificate)),\n+            KeyStore.PasswordProtection(password)\n+        )\n         FileOutputStream(file).use { store.store(it, password) }\n         return store\n     }"
+   }
+  ]
+ }
+}

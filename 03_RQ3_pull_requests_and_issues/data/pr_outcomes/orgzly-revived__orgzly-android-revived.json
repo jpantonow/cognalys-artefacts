@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121",
+    "state": "open",
+    "finding_id": "83f22cfa5b18",
+    "spec": "MessageDigestSpec",
+    "csv_class": "com.orgzly.android.util.MiscUtils",
+    "method_name": "sha1",
+    "title": "Replace SHA-1 note hashes with SHA-256",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:40:12.629773+00:00",
+    "maintainer_feedback": []
+  }
+]

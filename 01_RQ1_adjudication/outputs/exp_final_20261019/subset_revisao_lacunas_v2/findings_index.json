@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "run_id": "subset_revisao_lacunas_v2",
+  "findings": [
+    {
+      "finding_key": "4b81532bb668",
+      "apk": "org.fedorahosted.freeotp_48.apk",
+      "method": "encrypt",
+      "spec": "CipherSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "generation",
+      "signatures": [
+        "generation:semantic:checked_exception_not_propagated",
+        "generation:semantic:existing_test_expectations_rewritten",
+        "generation:semantic:public_api_contract_changed"
+      ],
+      "evidence_fingerprint": "c1baddbb0a70155e79a7fde8c3a4e3ee640b532fa64cfcf0ed390e613b9c7761",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.fedorahosted.freeotp_48.apk/0_encrypt_evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.fedorahosted.freeotp_48.apk/0_encrypt/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/manifest.json"
+      }
+    }
+  ]
+}

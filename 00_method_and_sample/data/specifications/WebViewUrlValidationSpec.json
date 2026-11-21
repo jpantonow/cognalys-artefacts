@@ -1,0 +1,228 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "No detector-rule catalog entry under the concern label is available, so the exact matcher implementation, taint sources, sanitizers, path sensitivity, and severity logic are unresolved.",
+      "The advisory is evidence for a disclosed historical pattern, not a universal semantic contract for all applications.",
+      "Absence of a locally visible validation call does not prove absence of validation in an interprocedural helper, configuration policy, receiving component, or server-mediated flow.",
+      "The finding message is a normalized advisory record, not runtime telemetry."
+    ],
+    "predicates": [
+      "A URL-bearing value originates from an external Intent, deep-link-like input, or another untrusted source.",
+      "The value, including a Uri-derived serialization or transformation, reaches WebView.loadUrl(...) on the relevant path.",
+      "There is no evidence of an effective origin-validation policy for the loaded destination.",
+      "Where a navigation handler is part of the finding, content-originated navigation can reach shouldOverrideUrlLoading(...) and influence an application navigation sink.",
+      "JavaScript enablement is an aggravating configuration predicate only when it applies to the WebView that loads the influenced content."
+    ],
+    "claim": "The disclosed historical pattern consists of an Intent data URI copied into a JavaScript-enabled WebView load, with a WebView navigation handler that can forward a custom-scheme URL tail into application navigation."
+  },
+  "unknowns": [
+    "No published detector-rule catalog entry named WebViewUrlValidationSpec is available; its precise matcher semantics, taint model, sanitizer list, and reporting thresholds remain unresolved.",
+    "No API type named WebViewUrlValidationSpec is evidenced; the relevant APIs are Android Intent, Uri, WebView, WebSettings, WebViewClient, and WebResourceRequest.",
+    "The intended origin policy is unknown, including accepted schemes, exact hosts, ports, paths, redirect policy, custom-scheme policy, and subframe policy.",
+    "It is unknown whether validation occurs in omitted code, a called helper, a receiving activity or presenter, an application-wide navigation policy, or a server-side redirect endpoint.",
+    "It is unknown whether the initiating component is externally reachable in the analyzed build, whether the candidate URI passes Android intent resolution, or whether caller identity is checked.",
+    "It is unknown whether the navigation callback processes only main-frame navigations, whether it can receive untrusted iframe navigation, and whether a custom-scheme URL is attacker-reachable in the deployed WebView.",
+    "The advisory concerns a tested historical version and a later patched version; the analyzed artifact version, commit, Android API level, target SDK, and WebView implementation are not provided."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "Intent.getData() retrieves the data URI operated on by an Intent and can return null.",
+      "Uri.buildUpon() constructs a builder by copying the original Uri attributes, and Uri.toString() returns its encoded string representation.",
+      "WebView.loadUrl(String) loads the supplied URL.",
+      "WebSettings.setJavaScriptEnabled(true) enables JavaScript execution; the documented default is false.",
+      "WebViewClient.shouldOverrideUrlLoading(WebView, WebResourceRequest) allows the host application to take control of a URL about to load. It can be triggered by page JavaScript, user navigation, or HTTP redirects; true cancels the current load and false continues it.",
+      "WebResourceRequest.getUrl() returns the request URI, and isForMainFrame() identifies whether the request fetches the main-frame document."
+    ],
+    "preconditions": [
+      "A WebView URL load must occur on the thread that created the WebView.",
+      "The URL argument to WebView.loadUrl(String) cannot be null.",
+      "Intent data must be non-null before code can transform or serialize it.",
+      "WebViewClient callback behavior depends on navigation type; app-initiated loadUrl navigation, POST requests, and some navigation classes have different callback behavior."
+    ],
+    "unknowns": [
+      "The platform APIs do not define a single universal operation that proves a URL has passed a sufficient application-specific origin policy.",
+      "The required trusted-origin policy is application-specific: allowed schemes, exact authorities, ports, paths, redirects, custom schemes, and relevance of subframes are not determined by these APIs.",
+      "The observed APIs do not disclose whether loaded remote content is controlled by a trusted party.",
+      "The relevant Android System WebView implementation, target SDK, device API level, and installed WebView version are not provided."
+    ]
+  },
+  "authoritative_sources": [
+    "https://securitylab.github.com/advisories/GHSL-2023-142_Home_Assistant_Companion_for_Android/",
+    "https://github.com/home-assistant/core/security/advisories/GHSA-jvpm-q3hq-86rg",
+    "https://cwe.mitre.org/data/definitions/346.html",
+    "https://developer.android.com/reference/android/content/Intent",
+    "https://developer.android.com/reference/android/net/Uri",
+    "https://developer.android.com/reference/android/net/Uri.Builder",
+    "https://developer.android.com/reference/android/webkit/WebView",
+    "https://developer.android.com/reference/android/webkit/WebSettings",
+    "https://developer.android.com/reference/android/webkit/WebViewClient",
+    "https://developer.android.com/reference/android/webkit/WebResourceRequest",
+    "https://developer.android.com/privacy-and-security/security-best-practices",
+    "https://developer.android.com/privacy-and-security/risks/insecure-webview-native-bridges",
+    "https://mas.owasp.org/MASTG/knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0018/"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observation: code reads an Intent action or data URI. Predicate satisfied only when the particular Intent data value is reachable from an external or otherwise untrusted sender; merely reading Intent data does not prove external control. Intent.getData() may return null.",
+      "name": "external_intent_uri_observed",
+      "api_patterns": [
+        "Intent.ACTION_VIEW",
+        "intent.data",
+        "getIntent().getData()",
+        "intent.getData()"
+      ]
+    },
+    {
+      "condition": "Observation: a Uri is copied, parsed, serialized, or modified. Predicate satisfied only when the resulting URL retains attacker-controlled scheme, authority, path, query, or redirect-relevant data and flows to a WebView or navigation sink. Uri.buildUpon() alone is not origin validation.",
+      "name": "uri_preservation_or_transformation_observed",
+      "api_patterns": [
+        ".buildUpon()",
+        ".appendQueryParameter(",
+        ".build()",
+        ".toString()",
+        "Uri.parse("
+      ]
+    },
+    {
+      "condition": "Observation: JavaScript is enabled in a WebSettings instance. Predicate satisfied only when those settings belong to the same WebView instance that loads the externally influenced URL at runtime.",
+      "name": "javascript_enabled_for_webview_observed",
+      "api_patterns": [
+        "settings.javaScriptEnabled = true",
+        "setJavaScriptEnabled(true)",
+        "getSettings().setJavaScriptEnabled(true)"
+      ]
+    },
+    {
+      "condition": "Observation: a WebView URL-load call is present. Predicate satisfied only when its argument is dataflow-derived from the external URI and no effective strict origin policy rejects disallowed scheme, host, port, path, and relevant redirect behavior before the call.",
+      "name": "webview_url_load_observed",
+      "api_patterns": [
+        ".loadUrl(",
+        "WebView.loadUrl(",
+        "loadUrl(url)",
+        "loadUrl(newUri.toString())"
+      ]
+    },
+    {
+      "condition": "Observation: a WebViewClient navigation callback is installed or overridden. Predicate satisfied only when navigation originating from content loaded in the relevant WebView can reach the callback and the callback makes a security-relevant routing decision without validating request origin or destination. The callback has documented limits: it is not invoked for app-initiated loadUrl navigation or POST requests, and it can receive subframe and non-HTTP(S) navigation.",
+      "name": "navigation_callback_observed",
+      "api_patterns": [
+        "WebViewClient()",
+        "WebViewClient {",
+        "shouldOverrideUrlLoading(",
+        "request?.url",
+        "request.getUrl()",
+        "webViewClient ="
+      ]
+    },
+    {
+      "condition": "Observation: code recognizes a URL or custom-scheme prefix and forwards all or part of that value to an Activity, Intent, application route, or another WebView-related sink. Predicate satisfied only when the forwarded portion remains attacker-controlled and the receiver treats it as a URL, route, command, or other privileged input without an independent restrictive validation step.",
+      "name": "custom_navigation_forwarding_observed",
+      "api_patterns": [
+        "startsWith(\"",
+        "removePrefix(",
+        "substring(",
+        "startActivity(",
+        "Intent("
+      ]
+    },
+    {
+      "condition": "Observation: code inspects a URL component or refers to an allowlist. Predicate satisfied only when validation parses the effective URL and enforces the intended policy on all relevant paths: expected scheme, exact host or authority, port where relevant, path constraints where relevant, and redirects or navigation-callback destinations. A scheme-only, substring, or prefix check is not sufficient evidence of origin validation.",
+      "name": "origin_validation_evidence_observed",
+      "api_patterns": [
+        "getScheme()",
+        "getHost()",
+        ".scheme",
+        ".host",
+        "Uri.parse(",
+        "equalsIgnoreCase(",
+        "allowedHosts",
+        "allowlist"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "WebViewUrlValidationSpec is a concern label, not a published CrySL rule, detector-catalog rule, or governed API type. It describes the source-to-WebView and navigation-handler pattern evidenced by the historical advisory. It does not establish that every occurrence is exploitable, that an attacker can invoke the entry point, or that downstream navigation reaches a sensitive capability.",
+  "forbidden_inferences_without_evidence": [
+    "Do not invent a class, library API, CrySL rule, or detector-catalog entry named WebViewUrlValidationSpec.",
+    "Do not infer that an arbitrary third-party application can invoke the relevant component solely from a source-level Intent read; exported status, intent filters, permissions, caller identity checks, and platform resolution require evidence.",
+    "Do not infer that every URL passed to WebView.loadUrl(...) is network-reachable, attacker-hosted, or untrusted.",
+    "Do not infer that JavaScript is enabled for the same WebView instance and program point merely because setJavaScriptEnabled(true) appears elsewhere.",
+    "Do not infer that a WebViewClient callback is reached for the initial app-initiated loadUrl call, for POST navigation, or only for main-frame navigation.",
+    "Do not infer that a custom-scheme prefix check validates a trusted web origin.",
+    "Do not infer addJavascriptInterface, file access, cookie access, credential exposure, native-code execution, or a JavaScript bridge unless separately evidenced.",
+    "Do not infer that a vulnerability remains present in a current release from a historical advisory or normalized advisory record.",
+    "Do not infer that a report proves exploitability, impact, or a required repository change."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A runtime exploit requires additional facts: an attacker must supply an accepted input URI; the affected path must execute; the WebView must load attacker-controlled or otherwise untrusted content; relevant navigation must reach the handler; and the forwarded destination or command must reach impactful application behavior. Android guidance recommends avoiding navigation to sites outside the application's control where possible and allowlisting loaded content.",
+    "equivalent": false,
+    "detector_claim": "Potential arbitrary or insufficiently validated URL loading is indicated when externally influenced URL data reaches a JavaScript-enabled WebView and a navigation callback can relay content-controlled navigation into application routing without established origin validation. The concern maps conceptually to CWE-346, which covers failure to verify a data or communication source and includes an Android WebView URL-scheme handling example."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "The WebResourceRequest overload is available from Android API level 21; WebViewClient documentation directs use of that overload on API level 24 and above.",
+      "Callback behavior must be tested against supported Android API levels and the Android System WebView implementation because shouldOverrideUrlLoading is not called for all navigation types.",
+      "Target SDK, device API level, installed WebView implementation, network-security configuration, and URI-resolution behavior must be recorded for compatibility conclusions.",
+      "If JavaScript interfaces, file URLs, or custom schemes are implicated, their platform-version-specific settings and defaults require separate evidence."
+    ],
+    "runtime": [
+      "Test a candidate external Intent or equivalent untrusted URL input and confirm that the application accepts it.",
+      "Observe that the candidate URL is loaded in the intended WebView and that JavaScript is executable if claimed.",
+      "Observe redirect, script-initiated navigation, or user navigation reaching the installed WebViewClient callback.",
+      "Observe that the downstream receiver accepts an attacker-influenced route, URL, or command and produces the claimed security-relevant behavior.",
+      "Where impact involves sensitive data or native capability, obtain direct evidence of the relevant bridge, permissions, storage access, authentication state, or sensitive operation."
+    ],
+    "source_level": [
+      "Establish complete interprocedural dataflow from the external URL-bearing source, through Uri/String conversions and helper calls, to the exact WebView.loadUrl(...) receiver.",
+      "Establish that the source is externally controllable or otherwise untrusted, including component export, intent-filter, permission, caller-validation, or deep-link dispatch facts as applicable.",
+      "Establish that JavaScript enablement, if an aggravating predicate, applies to the same WebView instance and path as the URL load.",
+      "For navigation-forwarding variants, establish that the callback URL derives from WebView navigation and that the forwarded URL tail or route parameter reaches the receiving sink.",
+      "Establish the presence or absence of an effective full-origin policy across relevant branches; isolated scheme, substring, or prefix checks are insufficient evidence of an allowlisted origin."
+    ]
+  },
+  "name": "WebViewUrlValidationSpec",
+  "source_url": "https://securitylab.github.com/advisories/GHSL-2023-142_Home_Assistant_Companion_for_Android/",
+  "applies_to_types": [
+    "android.content.Intent",
+    "android.net.Uri",
+    "android.net.Uri.Builder",
+    "android.webkit.WebView",
+    "android.webkit.WebSettings",
+    "android.webkit.WebViewClient",
+    "android.webkit.WebResourceRequest"
+  ],
+  "source_title": "GHSL-2023-142: Arbitrary URL loading in a WebView in Home Assistant Android Companion — CVE-2023-41898",
+  "semantic_scope": "For every finding of this concern, the detector observes a possible source-level flow in which externally supplied or insufficiently trusted URL-bearing input reaches an Android WebView load operation without evidence of a strict effective origin policy, optionally combined with JavaScript enablement and a WebViewClient navigation handler that can reinterpret or forward navigation URLs into application-controlled routing. This scope is control-flow and dataflow evidence, not proof of runtime reachability or exploitation.",
+  "spec_id": "WebViewUrlValidationSpec",
+  "known_false_positive_shapes": [
+    "Intent data is reachable only from a signature-protected, permission-protected, explicit, or caller-authenticated path.",
+    "The URL is derived from an Intent but is replaced by a fixed trusted destination before the relevant WebView.loadUrl(...) call.",
+    "A strict origin allowlist exists in a helper, central navigation policy, configuration object, or receiving component but is not visible to local matching.",
+    "The JavaScript-enabled settings belong to a different WebView instance, are disabled before the influenced load, or execute only on an unreachable branch.",
+    "The apparent source-to-sink path is infeasible because of action, null, state, account, feature-flag, lifecycle, or server-response guards.",
+    "The navigation handler recognizes only fixed commands and never forwards an attacker-controlled suffix, path, URL, or route parameter.",
+    "The callback receives a request but the path is limited to a harmless subframe, non-main-frame resource, or a destination that cannot activate sensitive application behavior.",
+    "The reported code is from a version outside the analyzed artifact or was materially changed since the advisory-tested version."
+  ],
+  "protocol": "externally supplied Intent data URI → Uri-derived URL string → JavaScript-enabled WebView.loadUrl(...) → WebView-initiated navigation → WebViewClient.shouldOverrideUrlLoading(...) → custom-scheme handling or application-navigation sink",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "io.homeassistant.companion.android.launch.my.MyActivity",
+        "method": "onCreate",
+        "message": "External finding (CVE-2023-41898): MyActivity.onCreate loads Intent data into a JavaScript-enabled WebView without validating the origin. Navigation handling can forward an attacker-controlled URL into the main app WebView. Source tag: 2023.6.0. This is a normalized advisory record, not a runtime log."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:Intent",
+    "checked_url": "https://securitylab.github.com/advisories/GHSL-2023-142_Home_Assistant_Companion_for_Android/"
+  }
+}

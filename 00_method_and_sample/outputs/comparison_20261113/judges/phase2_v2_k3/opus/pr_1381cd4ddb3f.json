@@ -1,0 +1,314 @@
+{
+ "unit": "pr_1381cd4ddb3f",
+ "phase": "phase2",
+ "order": [
+  "Kac99b9f3",
+  "K3720a8ef",
+  "K1b611b43",
+  "K8780c14d",
+  "K39c690c4",
+  "Kef4678be",
+  "K5c68ca98",
+  "K6b56d22d",
+  "K97633ab1",
+  "K6b20248e",
+  "Kd0ec60cc",
+  "Kee8da6ad",
+  "K5dfd1b9d",
+  "Kf6048ea4",
+  "K0cc48e01",
+  "K83765e97",
+  "Kf5fc8033",
+  "Kade8719c",
+  "K54975f64",
+  "Kef2ed438",
+  "Kbcf12554",
+  "K1fa206b0",
+  "K80580a76"
+ ],
+ "card_sha256": {
+  "K0cc48e01": "29b8db10c8bdbe49",
+  "K1b611b43": "43f04e205ab3f779",
+  "K1fa206b0": "ada1d79ebc703b08",
+  "K3720a8ef": "ff29dfac6bb816f3",
+  "K39c690c4": "0d014a9a4af173db",
+  "K54975f64": "9f88f9c4abf93ef3",
+  "K5c68ca98": "3f4d76af427387ee",
+  "K5dfd1b9d": "3d64fad064c7873c",
+  "K6b20248e": "a5f0fb9ee1877085",
+  "K6b56d22d": "03c768b77eeda97c",
+  "K80580a76": "d9f08ce5694b578e",
+  "K83765e97": "a9a1dd22eb26d748",
+  "K8780c14d": "4d5f44ff96e721e5",
+  "K97633ab1": "aaa072d8f5e61ae6",
+  "Kac99b9f3": "8d441f8b412ee786",
+  "Kade8719c": "87d697db05212347",
+  "Kbcf12554": "9d11afa395f3e3d0",
+  "Kd0ec60cc": "7a57b5555d347710",
+  "Kee8da6ad": "8eeee158845912d8",
+  "Kef2ed438": "b2757975c35d58fb",
+  "Kef4678be": "a5962f89f76cd85e",
+  "Kf5fc8033": "dd25d4ab711d90e8",
+  "Kf6048ea4": "cc3f019b967d0b64"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive caused by the order of calls on one shared object. It is not a misuse.\n\n**How the code works.** `SecretService` is a Kotlin `object`, so there is only one instance. It creates a single `androidKeyStore = KeyStore.getInstance(\"AndroidKeyStore\")` once, when the object is first used (SecretService.kt:54). Every method that touches the keystore then calls `androidKeyStore.load(null)` before using it:\n- `generateRsaKeyPair`\n- `getServerPrivateKey`\n- `getServerPublicKey`\n- `getAndroidSecretKey`\n- `removeAndroidSecretKey`\n\n**What the checker sees.** `getAndroidSecretKey` does `load(null)`, then `getEntry(alias, null)`, and creates an AES/GCM key in the AndroidKeyStore if the entry is missing. A runtime monitor that tracks the single `KeyStore` object therefore sees a pattern like getInstance, load, getEntry, load, getEntry/containsAlias/deleteEntry, load, and so on. KeyStoreSpec expects getInstance, then load once, then entry operations. A `load` that comes again after an entry operation, or `getInstance` happening in a different place from the first `load`, falls outside the spec. That is what produces the message.\n\n**Why it is not a security problem.**\n- For the AndroidKeyStore provider, `load(null)` is the documented and only valid way to initialise it. There is no keystore file and no password, and calling `load` again is idempotent and harmless.\n- `getEntry(alias, null)` with a null ProtectionParameter is likewise the correct call for AndroidKeyStore entries. They are protected by keystore/TEE/StrongBox policy, not by a password.\n- No key material, password or weak parameter is involved. The generated key is AES-GCM with no padding, `setUnlockedDeviceRequired`, optional StrongBox, and optional user authentication.\n\n**Why not a PR or an issue.** Changing the code only to satisfy the order model would mean, for example, loading once lazily or creating a new `KeyStore` per call. That brings no security benefit and puts at risk the existing retry and fallback logic around KeyStore problems (the workarounds for issues #52 and #61, and the StrongBox fallback). An issue would only pass on a tool limitation, so nothing should be sent.\n\nSecond judge: The reported sequence is valid for AndroidKeyStore. SecretService creates the keystore with KeyStore.getInstance(\"AndroidKeyStore\"), calls load(null) before getEntry(alias, null), reuses an existing SecretKeyEntry, and otherwise generates an AES key under that alias through the AndroidKeyStore KeyGenerator. The one-argument load(null) overload is valid; this provider needs neither a keystore-file password nor a per-entry PasswordProtection. Authentication restrictions are enforced when keys are used, independently of the null entry-protection argument. Generated keys are persisted by AndroidKeyStore without an explicit store() call. The report therefore provides no actionable app defect; its exact checker-model mismatch cannot be established without the rule and trace. A code fix or an app issue alleging insecure keystore use is unwarranted.\n\nPR added: a maintainer incorporated https://github.com/jenspfahl/ANOTHERpass/pull/103.",
+  "must_change": [],
+  "must_not_break": [
+   "Existing AndroidKeyStore aliases and the AES/GCM secret keys stored under them must still resolve through `getEntry`. These keys protect the master key and other encrypted preferences, and losing them or regenerating them silently would make stored vault data impossible to decrypt.",
+   "Lazy key creation in `getAndroidSecretKey` must keep working: when the alias is missing, `initAndroidSecretKey` is called, and it falls back from StrongBox and retries.",
+   "Key generation parameters must stay the same: `setUnlockedDeviceRequired`, optional user authentication / `setInvalidatedByBiometricEnrollment`, and StrongBox only when requested and available.",
+   "The handling of AndroidKeyStore quirks must not change: the `KeyStoreNotReadyException` retry for UserNotAuthenticatedException (issues #52 and #61) and the StrongBoxUnavailableException fallback.",
+   "Behaviour must stay the same on API levels below P (no StrongBox or unlocked-device options) and on P and above.",
+   "Other users of the shared `androidKeyStore` must keep working: RSA server key-pair generation and lookup (`generateRsaKeyPair`, `getServerPrivateKey`, `getServerPublicKey`) and `removeAndroidSecretKey`.",
+   "Keep AndroidKeyStore-backed keys and their existing aliases and identities. Replacing or regenerating persistent SALT, MK, MP, MP_WA, or MPT keys would make stored salt, wrapped master keys, stored master passwords, or token keys unreadable and could prevent vault access.",
+   "Preserve retrieval of existing keys and generation when an alias is absent. Preserve the transport key's reuse within an app run and its deliberate deletion at application startup.",
+   "Preserve AES/GCM/NoPadding compatibility, stored IVs and ciphertext, and the existing Encrypted representation. Vault and master-key exports remove the device-specific Android wrapping; imports reapply local wrapping, allowing transfer between devices.",
+   "Preserve the supported Android API 24 minimum, API-gated keystore settings, operation without StrongBox, and fallback when StrongBox is unavailable.",
+   "Preserve alias-specific authentication and protection settings, including biometric protection and enrollment invalidation for MP_WA where configured. Adding passwords or requiring authentication for every alias would disrupt existing login and secret-transfer flows."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 77,
+ "tokens": {
+  "input_tokens": 8,
+  "cache_creation_input_tokens": 38849,
+  "cache_read_input_tokens": 90271,
+  "output_tokens": 8100
+ },
+ "turns": 7,
+ "tool_calls": 6,
+ "claude_reported_cost_usd": 0.4908782,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "a046ae2db807b6d9",
+ "finished_at": "2026-11-16T10:32:20-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Kac99b9f3",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "getEntry→getKey behaves the same for AndroidKeyStore, but the shared instance is still loaded again on every call, so the reported order mismatch stays. The PR is unneeded churn. The text says as fact that the cause is a missing getKey."
+   },
+   {
+    "card_id": "K3720a8ef",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "Swapping getEntry for getKey does not change the repeated load on the shared KeyStore. The rule it describes ('getEntry must be immediately followed by getKey') is invented and offered as the reason for the report."
+   },
+   {
+    "card_id": "K1b611b43",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Same getKey swap: unnecessary, and it leaves the repeated-load sequence on the shared instance unchanged. The description is honest that there is no security impact, says what was built, and asks for checks."
+   },
+   {
+    "card_id": "K8780c14d",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "The getKey swap behaves the same but does not address the repeated load that triggers the report. The text is accurate and properly hedged."
+   },
+   {
+    "card_id": "K39c690c4",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Unneeded getKey swap that leaves the shared-instance load order as it was. The description is accurate, says there is no security impact, and asks for device checks."
+   },
+   {
+    "card_id": "Kef4678be",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: AndroidKeyStore load(null), getEntry with a null protection parameter, and key generation as the fallback. It does not discuss the repeated load on the shared instance."
+   },
+   {
+    "card_id": "K5c68ca98",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Precise reasoning: getInstance happens once in the object initializer (line 54), load is repeated on the shared instance, and calling load(null) again is harmless. It also explains why a code change would only be noise."
+   },
+   {
+    "card_id": "K6b56d22d",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "The getKey swap does not touch the repeated load that the checker flags. The text says the rule expects getKey after getEntry, which is not the cause."
+   },
+   {
+    "card_id": "K97633ab1",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct: load(null) before getEntry, reloading an instance is explicitly supported, and generated keys are stored by the provider with no store() call."
+   },
+   {
+    "card_id": "K6b20248e",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The conclusion is right but the reasoning is generic. It partly rests on the report not including the trace."
+   },
+   {
+    "card_id": "Kd0ec60cc",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and touches the real cause: the keystore is shared, it is loaded again on later calls, and that is supported. It also covers the null protection parameter and the key-generation fallback."
+   },
+   {
+    "card_id": "Kee8da6ad",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "A fresh getInstance+load per operation would satisfy the spec, but it refactors every keystore user for no security benefit and now silently swallows getInstance/load failures in removeAndroidSecretKey. The description calls repeated load and concurrent access a problem, though the API permits loading again."
+   },
+   {
+    "card_id": "K5dfd1b9d",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "Unneeded getKey swap; the load is still repeated on the shared instance. It says as fact that the rule requires getKey after getEntry."
+   },
+   {
+    "card_id": "Kf6048ea4",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific about load(null), null protection for entries, and the provider storing generated keys. It does not mention repeated loading."
+   },
+   {
+    "card_id": "K0cc48e01",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "It says the sequence becomes 'load, getKey', but the shared instance is still loaded again on every call, so the report remains. The diagnosis of the rule is wrong."
+   },
+   {
+    "card_id": "K83765e97",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The conclusion is right but the reason is brief and generic."
+   },
+   {
+    "card_id": "Kf5fc8033",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "The getKey swap behaves the same but is unnecessary and leaves the repeated load. The text is accurate and properly hedged."
+   },
+   {
+    "card_id": "Kade8719c",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "Unneeded getKey swap; repeated load on the shared KeyStore remains. It says as fact that RVSec expects reads to go through getKey, and it uses internal jargon ('build_check')."
+   },
+   {
+    "card_id": "K54975f64",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The conclusion is right but the reasoning is vague and does not cover the shared instance being loaded again."
+   },
+   {
+    "card_id": "Kef2ed438",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Opening a fresh keystore per operation removes the sequence mismatch and keeps behaviour the same, but the refactor of every keystore user is unnecessary and the answer key wants no change. The text presents repeated load and sharing across threads as a defect."
+   },
+   {
+    "card_id": "Kbcf12554",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "The getKey swap does not touch the repeated load on the shared instance. It says the rule expects getKey after load, which is a wrong diagnosis."
+   },
+   {
+    "card_id": "K1fa206b0",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Specific and correct: AndroidKeyStore has no store file or password, getEntry takes a null protection parameter, and repeated load(null) is harmless. It explains why a change would be noise."
+   },
+   {
+    "card_id": "K80580a76",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: it names the shared instance being loaded repeatedly and notes that reloading is explicitly permitted."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

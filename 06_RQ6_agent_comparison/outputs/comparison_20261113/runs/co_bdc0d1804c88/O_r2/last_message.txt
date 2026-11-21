@@ -1,0 +1,3 @@
+Created [NO_ACTION.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/O_r2/repo/NO_ACTION.md).
+
+The digest selects package-dependent scan behavior; it does not provide cryptographic protection. Replacing it alone would change that behavior without a security benefit. Source files are unchanged; no build or tests were run.

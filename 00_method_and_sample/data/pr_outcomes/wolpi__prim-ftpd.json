@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/wolpi/prim-ftpd/pull/453",
+    "state": "open",
+    "finding_id": "2c46d89daf31",
+    "spec": "SecretKeySpecSpec",
+    "csv_class": "org.apache.sshd.common.cipher.BaseRC4Cipher",
+    "method_name": "init",
+    "title": "Retire RC4 cipher support in SSH",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:40:14.861260+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "wolpi",
+        "kind": "comment",
+        "body": "oh yes, removing RC4 absolutely makes sense.\r\nI'll merge it after doing some tests, probably next week.\r\nThanks for contributing :+1: "
+      }
+    ]
+  }
+]

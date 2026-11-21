@@ -1,0 +1,3 @@
+Created [NO_ACTION.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/O_r3/repo/NO_ACTION.md).
+
+MD5 fingerprints the app’s package name for configuration selection; it provides no cryptographic protection here. No source changes were warranted. Build and tests were not run.

@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/etesync/android/pull/301",
+    "state": "open",
+    "finding_id": "d28032440293",
+    "spec": "SSLContextSpec",
+    "csv_class": "com.etesync.syncadapter.HttpClient$Builder",
+    "method_name": "build",
+    "title": "Filter legacy TLS protocols without pinning TLS versions",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:37:50.071830+00:00",
+    "maintainer_feedback": []
+  }
+]

@@ -1,0 +1,32 @@
+{
+ "card_id": "K8cd2e818",
+ "card_sha256": "7ba3a7f7b479d799",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 13,
+ "tokens": {
+  "input_tokens": 6,
+  "cache_creation_input_tokens": 6798,
+  "cache_read_input_tokens": 8580,
+  "output_tokens": 737
+ },
+ "turns": 3,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.070864,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "255b5f1232a55304",
+ "finished_at": "2026-11-16T11:47:10-0300",
+ "output": {
+  "guess": "O",
+  "confidence": 0.3,
+  "reason": "The diff fully removes the trust-all option and adds a short parameterized JUnit test that uses a freshly generated self-signed PEM certificate. That means someone generated the certificate by hand, which suggests an interactive coding agent. The author didn't build the diff. The multi-step pipelines include a build step, so this points to an agent that couldn't build the Android project. The terse, compact test style looks more like Codex than Claude, and the fairly polished approach leans toward Sol over Terra."
+ }
+}

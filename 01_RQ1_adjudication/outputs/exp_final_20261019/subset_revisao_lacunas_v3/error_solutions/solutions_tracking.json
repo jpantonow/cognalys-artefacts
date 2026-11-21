@@ -1,0 +1,36 @@
+{
+  "total_errors": 1,
+  "analyzed": 1,
+  "fixes_generated": 0,
+  "confirmed_external_contract_findings": 0,
+  "issue_candidates": 1,
+  "successfully_analyzed": 0,
+  "failed_analysis": 0,
+  "crashed": 0,
+  "provider_refused": 0,
+  "provider_auth_failed": 0,
+  "input_invalid": 0,
+  "llm_budget_exhausted": 0,
+  "llm_budget": {
+    "findings": 1,
+    "calls": 15,
+    "failed_calls": 0,
+    "transport_retries": 0,
+    "model_seconds": 570.3
+  },
+  "not_analyzable": 0,
+  "not_applicable": 0,
+  "failures": [],
+  "abstained_no_safe_fix": 1,
+  "multi_file_candidates": 1,
+  "coordinated_solutions": 0,
+  "incomplete_multi_file_scope": 0,
+  "processing_time_seconds": 591.4044880867004,
+  "model": "gpt-5.6-terra",
+  "provider": "openai",
+  "quality_distribution": {
+    "high_confidence_valid": 0,
+    "medium_confidence": 0,
+    "low_confidence_invalid": 0
+  }
+}

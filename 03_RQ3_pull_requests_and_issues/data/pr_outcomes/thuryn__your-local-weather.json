@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/thuryn/your-local-weather/pull/209",
+    "state": "merged",
+    "finding_id": "e2654a54d12a",
+    "spec": "SecretKeyFactorySpec",
+    "csv_class": "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment",
+    "method_name": "encryptKey",
+    "title": "Select key derivation by Android API level",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:40:09.521557+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "thuryn",
+        "kind": "comment",
+        "body": "Thank you for this contribution! Switching to `PBKDF2WithHmacSHA256` with 100,000 iterations on API 26+ while keeping compatibility for older Android versions looks clean and solid.\r\n\r\n"
+      }
+    ]
+  }
+]

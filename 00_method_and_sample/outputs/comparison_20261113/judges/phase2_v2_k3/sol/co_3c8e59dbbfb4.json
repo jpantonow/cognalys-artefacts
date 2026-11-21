@@ -1,0 +1,320 @@
+{
+ "unit": "co_3c8e59dbbfb4",
+ "phase": "phase2",
+ "order": [
+  "K046a8aff",
+  "Kb82d778c",
+  "Kecfd62a3",
+  "K5ca7557d",
+  "K84d585d8",
+  "K864959d7",
+  "K4acf22db",
+  "K6b4aa01c",
+  "Ka7722e17",
+  "K0b6995ea",
+  "K77c9d2cb",
+  "K2b2b5ad8",
+  "K4afa3b0d",
+  "Kd745a9b8",
+  "Kdf717ac2",
+  "K332fde4f",
+  "Kfac1af1d",
+  "K6b894c3e",
+  "Kf5096721",
+  "K6b08086f",
+  "Ke38c166c",
+  "Ka319c502",
+  "K1ab7443a"
+ ],
+ "card_sha256": {
+  "K046a8aff": "08927f3ca6c4b7bd",
+  "K0b6995ea": "03614ae76f4a84b6",
+  "K1ab7443a": "4f33785019b8b227",
+  "K2b2b5ad8": "3dc75672c7bd21e1",
+  "K332fde4f": "416e31a2d0992f28",
+  "K4acf22db": "b4e361648dbb9add",
+  "K4afa3b0d": "49709da57bb8407b",
+  "K5ca7557d": "6d6b269e1c0bb5e6",
+  "K6b08086f": "b5b2d0b831ada23a",
+  "K6b4aa01c": "4ef9742e5a1f9e58",
+  "K6b894c3e": "4e1de0c8ea556e93",
+  "K77c9d2cb": "a104301375b97f87",
+  "K84d585d8": "21cfaa1d0c16b70c",
+  "K864959d7": "1d38e3d3c07685b3",
+  "Ka319c502": "57263b18677c455f",
+  "Ka7722e17": "2189ec4493466791",
+  "Kb82d778c": "7a0aa87a118bb326",
+  "Kd745a9b8": "5b20c92aeb4e826f",
+  "Kdf717ac2": "d579cc23a46478ba",
+  "Ke38c166c": "5aeb37dd8edfdb17",
+  "Kecfd62a3": "b316759431a59d91",
+  "Kf5096721": "7bd81e9ae64f1d18",
+  "Kfac1af1d": "4ca3f15bbfa62f60"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "AeSimpleSHA1.SHA1 (app/src/main/java/de/stephanlindauer/criticalmaps/utils/AeSimpleSHA1.java:14) has two callers, and neither uses SHA-1 for anything security-relevant. (1) UserModel:33 builds the rotating pseudonymous \"device\" token as SHA1(ANDROID_ID + date). PutLocationHandler:88 and ChatModel:66 send this token to the shared Critical Maps backend (api-gw.criticalmaps.net/locations and /messages; iOS clients use the same backend). OtherUsersLocationModel:30 then compares it with the \"device\" values the server sends back, so the app can skip its own location. (2) ChatModel:65 builds a chat message \"identifier\" as SHA1(message + Math.random()), which is only a unique ID. Neither is a signature, MAC, password hash or integrity check, so SHA-1 collision attacks don't apply. Preimage resistance is the only property that matters for the token, and SHA-1 still has it. The token's real weakness is that ANDROID_ID has only 64 bits of entropy and the date is guessable. SHA-256 is just as fast to brute-force, so switching hashes fixes nothing. Switching does carry costs. The device ID is part of the wire format (40 lowercase hex chars, as in test/resources/server_response_*.json). The server or other clients may check or store that format, and a 64-char ID could be rejected or break assumptions. The token would also change for every user on update. The unit test AeSimpleSHA1Test pins the SHA-1 output too. A PR would bring risk to the protocol and no security gain. An issue saying SHA-1 must be replaced would mislead the maintainers, because this is a false positive for the rule's intent (non-cryptographic identifier hashing). The right response is to send nothing.\n\nSecond judge: AeSimpleSHA1.SHA1 hashes ISO-8859-1 input into 40 lowercase hexadecimal characters. Its only production callers generate identifiers: UserModel hashes ANDROID_ID plus a date calculated six hours ahead, and ChatModel hashes message text plus Math.random(). Neither use verifies integrity, authenticates users, or checks signatures or passwords. SHA-1 collision weaknesses therefore do not establish an exploitable vulnerability here, making NO_ACTION defensible. An ISSUE can reasonably document the finding and ask about protocol constraints. A compatibility-aware hardening PR is also acceptable, but a blind SHA-256 substitution is insufficient: the device token is exported in location and chat requests, compared against returned locations to exclude the user's own marker, and used as a map key. Chat identifiers are also exported. Response fixtures contain 40-character hashes, but the repository contains no server implementation or schema proving that longer values are accepted or forbidden. A stronger digest alone also does not make Math.random cryptographically secure or establish anonymity for the device token.",
+  "must_change": [
+   "For a digest-upgrade PR, replace SHA-1 with a supported stronger digest such as SHA-256, update the helper's naming and both callers consistently, and update AeSimpleSHA1Test to verify the new digest rather than the old SHA-1 vector.",
+   "Address the exported identifier transition explicitly. Establish compatibility with the location and chat APIs, including the longer hexadecimal output, or provide a coordinated migration; do not assume opaque strings on the Android side prove server compatibility.",
+   "Verify that outgoing location and chat requests use the same device token and that returned own locations are still excluded. Keep coverage for receiving existing server responses."
+  ],
+  "must_not_break": [
+   "Wire format of the \"device\" field sent to api-gw.criticalmaps.net /locations (PutLocationHandler) and /messages (ChatModel): a 40-char lowercase hex string that the shared backend and the iOS/other clients expect",
+   "Self-filtering in OtherUsersLocationModel.setFromJson, which compares the token the server echoes back with UserModel.getChangingDeviceToken()",
+   "The format of the chat \"identifier\" field the backend accepts on POST /messages",
+   "The deterministic daily rotation of the device token (ANDROID_ID + date offset by 6 hours)",
+   "Support for the app's minSdk (the code avoids StandardCharsets for old API levels) and the existing AeSimpleSHA1Test / ChatModelTest unit tests",
+   "Location PUT and chat POST interoperability with the deployed API and existing clients. The repository does not establish whether the server validates hash length, truncates values, or otherwise depends on SHA-1 formatting.",
+   "The device token's deterministic derivation and reuse within the existing lifecycle, including the date calculation six hours ahead, unless deliberately migrated. Replacing it with a fresh value per request would break identity continuity and own-location filtering.",
+   "Chat message identifier uniqueness and the existing request fields, message encoding, and response parsing. Existing 40-character identifiers and device values must remain readable.",
+   "Privacy behavior: do not transmit the raw ANDROID_ID or replace the changing token with a permanent identifier merely to remove hashing.",
+   "Supported Android versions: the current build has minSdk 26; the helper's API16 comment does not define current support. No SDK increase or special cryptographic provider is needed for SHA-256.",
+   "Existing digest input encoding and hexadecimal representation must not change accidentally alongside an algorithm migration. No locally persisted digest-dependent data is evident; the concrete compatibility concern is exported identifiers and server-held state."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 159,
+ "tokens": {
+  "input_tokens": 103694,
+  "cached_input_tokens": 73984,
+  "output_tokens": 5611,
+  "reasoning_output_tokens": 2656
+ },
+ "turns": 1,
+ "tool_calls": 6,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [
+   "/home/antonow/comparison_20261113/judges/checkout"
+  ],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "c3b1d2f944f85def",
+ "finished_at": "2026-11-16T10:04:52-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K046a8aff",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly distinguishes identifier generation from security verification and explains the compatibility cost of an unsupported digest change."
+   },
+   {
+    "card_id": "Kb82d778c",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "The singleton UserModel calculates its final token only during construction, so the rotation concern is supported. The issue appropriately separates that privacy concern from the digest choice and requests compatibility planning."
+   },
+   {
+    "card_id": "Kecfd62a3",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The decision rests on concrete exported-identifier and equality-comparison behavior, unknown backend compatibility, and the absence of an established security impact."
+   },
+   {
+    "card_id": "K5ca7557d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "The token is checked against the locally held token in OtherUsersLocationModel, contrary to the text. The claim that only the date can be guessed also overlooks the Android ID's limited input entropy."
+   },
+   {
+    "card_id": "K84d585d8",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately describes both identifier uses, own-location filtering, and the need to establish API compatibility before changing transmitted values."
+   },
+   {
+    "card_id": "K864959d7",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "The compatibility concern is valid, but saying that preimage resistance and hashing provide no security benefit is incorrect for the device pseudonym. The absence of a useful SHA-256 substitution does not establish those claims."
+   },
+   {
+    "card_id": "K4acf22db",
+    "r2": 1,
+    "regression_scenario": "A user submits a location, updates the app during the same token date, and receives the previous location from the server. Its SHA-1 device value differs from the new truncated-SHA-256 token, so OtherUsersLocationModel includes the user's own marker.",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Production callers use SHA-256 and preserve the 40-character shape, but identifier continuity and backend compatibility remain unresolved and untested. The claimed rename and test update are incomplete: the diff adds replacements while retaining AeSimpleSHA1 and its original test."
+   },
+   {
+    "card_id": "K6b4aa01c",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately acknowledges the lack of established security impact and identifies the exported-token transition and own-location filtering concerns."
+   },
+   {
+    "card_id": "Ka7722e17",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Backend uncertainty is real, but the reason relies on an unsupported policy prohibition and asserts that an external counterpart fixes the value. Unknown compatibility does not establish that migration is forbidden."
+   },
+   {
+    "card_id": "K0b6995ea",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Repeating the algorithm allow-list violation does not explain why no action is appropriate. The asserted externally fixed value is unsupported."
+   },
+   {
+    "card_id": "K77c9d2cb",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "The principal reason is an unsupported policy restriction rather than a security judgment about these identifier uses. The supplied evidence also does not establish the claimed 99 measured runs."
+   },
+   {
+    "card_id": "K2b2b5ad8",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains why collision weaknesses do not establish this finding's security impact and why changing the digest would not establish anonymity."
+   },
+   {
+    "card_id": "K4afa3b0d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 2,
+    "notes": "The compatibility-based reason for withholding a patch is sound. The encoding claim is false: a supplementary Unicode character occupies two Java characters but can encode as one replacement byte, so using the encoded array length can change the current behavior."
+   },
+   {
+    "card_id": "Kd745a9b8",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "The identifier and compatibility analysis supports restraint, but the claim that neither use depends on preimage resistance is wrong. The device pseudonym's resistance to recovering its underlying Android ID is relevant even though SHA-256 would not fix its limited entropy."
+   },
+   {
+    "card_id": "Kdf717ac2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly separates collision attacks from recovering an Android ID and ties the no-action decision to the actual API-visible identifier uses."
+   },
+   {
+    "card_id": "K332fde4f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately describes identifier generation, map grouping and self-filtering, with no unsupported security benefit attributed to changing the digest."
+   },
+   {
+    "card_id": "Kfac1af1d",
+    "r2": 1,
+    "regression_scenario": "After an update, the app receives a location previously submitted under its 40-character SHA-1 device token. The new 64-character token does not match, so OtherUsersLocationModel displays that own location as another participant.",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The production substitution and new digest vector are consistent, but server acceptance and identifier migration require substantial work. The claim of no other reader overlooks OtherUsersLocationModel, and the original helper and test remain despite the claimed rename."
+   },
+   {
+    "card_id": "K6b894c3e",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the non-authentication uses and explains why changing hashes would neither establish secrecy nor prevent linking when the Android ID is known."
+   },
+   {
+    "card_id": "Kf5096721",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "The reason relies on an unsupported authorization policy forbidding transmitted-digest changes. It does not assess why SHA-1's collision weakness is irrelevant to these particular identifier uses."
+   },
+   {
+    "card_id": "K6b08086f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Although it identifies real external-format concerns, its decisive reason is an unsupported policy restriction. The claimed 99 runs are also not established by the supplied evidence."
+   },
+   {
+    "card_id": "Ke38c166c",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "The issue accurately describes the exported identifiers and the own-location mismatch a digest transition could create. Asking about coordinated compatibility without asserting an exploitable vulnerability is reasonable."
+   },
+   {
+    "card_id": "Ka319c502",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately identifies both callers and the equality comparison affected by a token change. Deferring a patch pending service compatibility requirements is a specific, defensible reason."
+   },
+   {
+    "card_id": "K1ab7443a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains that the reported collision weakness does not establish a vulnerability and that a digest substitution would not prevent deriving tokens from a known Android ID."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

@@ -1,0 +1,322 @@
+{
+  "base_run": "run2",
+  "selection": "Latest analysed run per unique finding; no pooling of attempts.",
+  "runs_oldest_first": [
+    "run2",
+    "subset_gates",
+    "subset_policy",
+    "subset_policy2",
+    "subset_bitbanana",
+    "subset_bitbanana_readers",
+    "subset_bitbanana_readers2",
+    "subset_bitbanana_scope",
+    "subset_bitbanana_scope2",
+    "subset_bitbanana_scope3",
+    "subset_bitbanana_scope4",
+    "subset_bitbanana_scope5",
+    "subset_bitbanana_scope6"
+  ],
+  "excluded_older_subset": {
+    "run": "subset_openai",
+    "reason": "Its execution predates run2."
+  },
+  "findings": 34,
+  "review_artifacts": [
+    {
+      "key": [
+        "app.michaelwuensch.bitbanana_79.apk",
+        "app.michaelwuensch.bitbanana.util.UtilFunctions",
+        "encodePbkdf2",
+        "PBEKeySpecSpec"
+      ],
+      "selected_run": "subset_bitbanana_scope6",
+      "outcome": "PR pronto",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_bitbanana_scope6/previews/pull_requests/app.michaelwuensch.bitbanana_79.apk_encodePbkdf2_PBEKeySpecSpec.md",
+      "local_preview": "review/pull_requests/app.michaelwuensch.bitbanana_79.apk_encodePbkdf2_PBEKeySpecSpec.md",
+      "source_metadata": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_bitbanana_scope6/pull_requests/app.michaelwuensch.bitbanana_79.apk_encodePbkdf2_PBEKeySpecSpec_pr.json"
+    },
+    {
+      "key": [
+        "app.michaelwuensch.bitbanana_79.apk",
+        "app.michaelwuensch.bitbanana.util.UtilFunctions",
+        "encodePbkdf2",
+        "SecretKeyFactorySpec"
+      ],
+      "selected_run": "subset_bitbanana",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_bitbanana/previews/issues/app.michaelwuensch.bitbanana_79.apk_encodePbkdf2_SecretKeyFactorySpec_no_safe_fix.md",
+      "local_preview": "review/issues/app.michaelwuensch.bitbanana_79.apk_encodePbkdf2_SecretKeyFactorySpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "com.craxiom.networksurvey_114.apk",
+        "com.craxiom.networksurvey.util.CryptoManager",
+        "getOrCreateKey",
+        "KeyStoreSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "PR pronto",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/pull_requests/com.craxiom.networksurvey_114.apk_getOrCreateKey_KeyStoreSpec.md",
+      "local_preview": "review/pull_requests/com.craxiom.networksurvey_114.apk_getOrCreateKey_KeyStoreSpec.md",
+      "source_metadata": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/pull_requests/com.craxiom.networksurvey_114.apk_getOrCreateKey_KeyStoreSpec_pr.json"
+    },
+    {
+      "key": [
+        "com.gelakinetic.mtgfam_99.apk",
+        "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1",
+        "fetch",
+        "IvParameterSpecSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/com.gelakinetic.mtgfam_99.apk_fetch_IvParameterSpecSpec_no_safe_fix.md",
+      "local_preview": "review/issues/com.gelakinetic.mtgfam_99.apk_fetch_IvParameterSpecSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "com.gelakinetic.mtgfam_99.apk",
+        "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1",
+        "fetch",
+        "SecretKeySpecSpec"
+      ],
+      "selected_run": "subset_policy",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_policy/previews/issues/com.gelakinetic.mtgfam_99.apk_fetch_SecretKeySpecSpec_no_safe_fix.md",
+      "local_preview": "review/issues/com.gelakinetic.mtgfam_99.apk_fetch_SecretKeySpecSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "com.ivanovsky.passnotes_11700.apk",
+        "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+        "createHttpClient",
+        "SSLContextSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "PR pronto",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/pull_requests/com.ivanovsky.passnotes_11700.apk_createHttpClient_SSLContextSpec.md",
+      "local_preview": "review/pull_requests/com.ivanovsky.passnotes_11700.apk_createHttpClient_SSLContextSpec.md",
+      "source_metadata": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/pull_requests/com.ivanovsky.passnotes_11700.apk_createHttpClient_SSLContextSpec_pr.json"
+    },
+    {
+      "key": [
+        "com.leekleak.trafficlight_38.apk",
+        "com.leekleak.trafficlight.database.CryptoManager",
+        "getSecretKey",
+        "KeyStoreSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "PR pronto",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/pull_requests/com.leekleak.trafficlight_38.apk_getSecretKey_KeyStoreSpec.md",
+      "local_preview": "review/pull_requests/com.leekleak.trafficlight_38.apk_getSecretKey_KeyStoreSpec.md",
+      "source_metadata": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/pull_requests/com.leekleak.trafficlight_38.apk_getSecretKey_KeyStoreSpec_pr.json"
+    },
+    {
+      "key": [
+        "com.nononsenseapps.feeder.play_4025.apk",
+        "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+        "trustAllCerts",
+        "SSLContextSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "PR pronto",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/pull_requests/com.nononsenseapps.feeder.play_4025.apk_trustAllCerts_SSLContextSpec.md",
+      "local_preview": "review/pull_requests/com.nononsenseapps.feeder.play_4025.apk_trustAllCerts_SSLContextSpec.md",
+      "source_metadata": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/pull_requests/com.nononsenseapps.feeder.play_4025.apk_trustAllCerts_SSLContextSpec_pr.json"
+    },
+    {
+      "key": [
+        "com.password.monitor_102.apk",
+        "com.password.monitor.koin_di.AppModuleKt",
+        "appModule$lambda$0$3",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/com.password.monitor_102.apk_appModule_lambda_0_3_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/com.password.monitor_102.apk_appModule_lambda_0_3_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "com.password.monitor_102.apk",
+        "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2",
+        "invokeSuspend",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/com.password.monitor_102.apk_invokeSuspend_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/com.password.monitor_102.apk_invokeSuspend_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "com.sapuseven.untis_29198884.apk",
+        "com.sapuseven.untis.data.cache.DiskCache",
+        "getCacheFile",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "PR pronto",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/pull_requests/com.sapuseven.untis_29198884.apk_getCacheFile_MessageDigestSpec.md",
+      "local_preview": "review/pull_requests/com.sapuseven.untis_29198884.apk_getCacheFile_MessageDigestSpec.md",
+      "source_metadata": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/pull_requests/com.sapuseven.untis_29198884.apk_getCacheFile_MessageDigestSpec_pr.json"
+    },
+    {
+      "key": [
+        "com.schwegelbin.openbible_46.apk",
+        "com.schwegelbin.openbible.logic.GettersKt",
+        "getChecksum",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/com.schwegelbin.openbible_46.apk_getChecksum_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/com.schwegelbin.openbible_46.apk_getChecksum_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "com.vrem.wifianalyzer_71.apk",
+        "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+        "calculateChildType",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/com.vrem.wifianalyzer_71.apk_calculateChildType_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/com.vrem.wifianalyzer_71.apk_calculateChildType_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "com.vrem.wifianalyzer_71.apk",
+        "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper",
+        "calculateGraphType",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/com.vrem.wifianalyzer_71.apk_calculateGraphType_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/com.vrem.wifianalyzer_71.apk_calculateGraphType_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "de.stephanlindauer.criticalmaps_104.apk",
+        "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1",
+        "SHA1",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/de.stephanlindauer.criticalmaps_104.apk_SHA1_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/de.stephanlindauer.criticalmaps_104.apk_SHA1_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "eu.faircode.email_2322.apk",
+        "eu.faircode.email.Helper",
+        "getFingerprint",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/eu.faircode.email_2322.apk_getFingerprint_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/eu.faircode.email_2322.apk_getFingerprint_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "github.paroj.dsub2000_217.apk",
+        "github.paroj.dsub2000.util.Util",
+        "md5Hex",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/github.paroj.dsub2000_217.apk_md5Hex_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/github.paroj.dsub2000_217.apk_md5Hex_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "me.diamondforge.tokn_19.apk",
+        "me.diamondforge.tokn.security.KeystoreManager",
+        "getOrCreateKey",
+        "KeyStoreSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "PR pronto",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/pull_requests/me.diamondforge.tokn_19.apk_getOrCreateKey_KeyStoreSpec.md",
+      "local_preview": "review/pull_requests/me.diamondforge.tokn_19.apk_getOrCreateKey_KeyStoreSpec.md",
+      "source_metadata": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/pull_requests/me.diamondforge.tokn_19.apk_getOrCreateKey_KeyStoreSpec_pr.json"
+    },
+    {
+      "key": [
+        "org.cry.otp_31.apk",
+        "org.cry.otp.MD5",
+        "<init>",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "subset_policy2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_policy2/previews/issues/org.cry.otp_31.apk_init_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/org.cry.otp_31.apk_init_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "org.cry.otp_31.apk",
+        "org.cry.otp.TOTP",
+        "hmac_sha",
+        "MacSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/org.cry.otp_31.apk_hmac_sha_MacSpec_no_safe_fix.md",
+      "local_preview": "review/issues/org.cry.otp_31.apk_hmac_sha_MacSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "org.quantumbadger.redreader_117.apk",
+        "org.quantumbadger.redreader.common.General",
+        "parseConfig",
+        "IvParameterSpecSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/org.quantumbadger.redreader_117.apk_parseConfig_IvParameterSpecSpec_no_safe_fix.md",
+      "local_preview": "review/issues/org.quantumbadger.redreader_117.apk_parseConfig_IvParameterSpecSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "org.quantumbadger.redreader_117.apk",
+        "org.quantumbadger.redreader.common.General",
+        "sha1",
+        "MessageDigestSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/issues/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_no_safe_fix.md",
+      "local_preview": "review/issues/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_no_safe_fix.md"
+    },
+    {
+      "key": [
+        "rocks.poopjournal.metadataremover_20020.apk",
+        "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+        "<clinit>",
+        "SecureRandomSpec"
+      ],
+      "selected_run": "run2",
+      "outcome": "correção gerada, sem PR",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/previews/pull_requests/rocks.poopjournal.metadataremover_20020.apk_clinit_SecureRandomSpec.md",
+      "local_preview": "review/pull_requests/rocks.poopjournal.metadataremover_20020.apk_clinit_SecureRandomSpec.md",
+      "source_metadata": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/pull_requests/rocks.poopjournal.metadataremover_20020.apk_clinit_SecureRandomSpec_pr.json"
+    },
+    {
+      "key": [
+        "systems.sieber.droid_scep_7.apk",
+        "systems.sieber.droid_scep.ScepClient",
+        "CertReq",
+        "KeyPairGeneratorSpec"
+      ],
+      "selected_run": "subset_gates",
+      "outcome": "issue para o mantenedor do app",
+      "source_preview": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_gates/previews/issues/systems.sieber.droid_scep_7.apk_CertReq_KeyPairGeneratorSpec_no_safe_fix.md",
+      "local_preview": "review/issues/systems.sieber.droid_scep_7.apk_CertReq_KeyPairGeneratorSpec_no_safe_fix.md"
+    }
+  ]
+}

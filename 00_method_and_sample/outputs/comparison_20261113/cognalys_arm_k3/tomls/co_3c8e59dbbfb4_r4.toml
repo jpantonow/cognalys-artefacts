@@ -1,0 +1,32 @@
+# Cognalys arm (C) of the agent comparison of 2026-11-13, unit co_3c8e59dbbfb4, replica 4.
+# APK de.stephanlindauer.criticalmaps_104.apk at d78a78eb67172ae8ec9ffcde4c8124cb64db2acb; findings 3c8e59dbbfb4.
+# Built by outputs/comparison_20261113/cognalys_arm_k3/build_c_arm.py; run with run_c_arm.sh.
+findings = ["/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_3c8e59dbbfb4.csv"]
+run-dir = "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3/co_3c8e59dbbfb4/r4"
+
+llm-provider = "openai"
+llm-model = "gpt-6.1-terra"
+llm-endpoint = "https://api.openai.com/v1"
+llm-service-tier = "flex"
+llm-reasoning-effort = "high"
+spec-model = "gpt-6.1-terra"
+llm-max-output-tokens = 32768
+llm-timeout = 600
+max-cost = 2.00
+
+validate-build = true
+approve-review-only-for-validation = true
+generate-previews = true
+online-dependency-resolution = true
+build-timeout = 3600
+cloned-projects-dir = "/home/antonow/cognalys_work/c_arm_k3/co_3c8e59dbbfb4_r4/clones"
+worktrees-dir = "/home/antonow/cognalys_work/c_arm_k3/co_3c8e59dbbfb4_r4/worktrees"
+
+# Leak controls and freezing (as in the frozen PR run).
+holdout-repository = true
+learning-dir = "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/learning"
+no-llm-cache = true
+llm-research-corpus-dir = "outputs/research_corpus"
+experiment-manifest = "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/manifests/co_3c8e59dbbfb4_r4.json"
+experiment-live-research = true
+experiment-condition = "comparison_c_arm_k3"

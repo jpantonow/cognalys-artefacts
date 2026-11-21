@@ -1,0 +1,15 @@
+Below is one response to a report about an open-source Android app: RVSec, a runtime checker for how Android apps use the Java cryptography and TLS APIs, reported a finding, and someone decided what to send the app's maintainers (a pull request, an issue, or nothing) and wrote the text below.
+
+Five sources wrote responses like this one, about a fifth each:
+- S: an AI coding agent, Claude Sonnet 5.5 in Claude Code, working in a checkout of the repository.
+- O: an AI coding agent, Codex with GPT-6.1 Sol, working in a checkout of the repository.
+- T: an AI coding agent, Codex with GPT-6.1 Terra, working in a checkout of the repository.
+- C: Cognalys, a multi-step pipeline on GPT-6.1 Terra that gathers evidence about the finding, decides, plans and drafts a patch, reviews it, builds it and writes the text.
+- D: Cognalys, the same multi-step pipeline, on Claude Sonnet 5.5.
+
+Which source wrote this response? Answer from the card alone; there is nothing else to read.
+
+Answer with one JSON object and nothing else:
+{"guess": "S" | "O" | "T" | "C" | "D", "confidence": 0.0-1.0, "reason": "..."}
+
+$card

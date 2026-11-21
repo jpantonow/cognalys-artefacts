@@ -1,0 +1,139 @@
+{
+  "schema_version": 2,
+  "spec_id": "NullPointerSpec",
+  "name": "NullPointerSpec",
+  "applies_to_types": [
+    "java.lang.NullPointer"
+  ],
+  "source_title": "Unavailable canonical CrySL candidate: NullPointer.crysl; the requested raw CROSSINGTUD source URL was fetched and returned HTTP 404.",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/NullPointer.crysl",
+  "source_verified": false,
+  "protocol": "⊥ (unverified: no canonical CrySL ORDER clause was recovered)",
+  "important_note": "java.lang.NullPointer is an unverified schema-required target identifier, not a verified Java API type. It must not be substituted with java.lang.NullPointerException, whose simple name differs. The NewPipe and AnySoftKeyboard reports are application crash-site contexts, not evidence of a shared API protocol.",
+  "events": [
+    {
+      "name": "reported_initPlayer_site",
+      "api_patterns": [
+        "initPlayer(",
+        "currentMediaSource"
+      ],
+      "condition": "Observing event: local source contains these literal substrings at a candidate VideoPlayer initialization site. Satisfying a null-dereference predicate requires separate control-flow and value evidence that currentMediaSource is null at the dereference; textual occurrence alone does not establish the predicate."
+    },
+    {
+      "name": "reported_loadTheme_site",
+      "api_patterns": [
+        "loadTheme(",
+        "themeContext"
+      ],
+      "condition": "Observing event: local source contains these literal substrings at a candidate KeyboardThemeFactory theme-loading site. Satisfying a null-dereference predicate requires separate control-flow and value evidence that themeContext is null when dereferenced or passed to a null-intolerant operation; textual occurrence alone does not establish the predicate."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that NullPointerSpec is a CrySL rule merely from its XSpec-style name.",
+    "Do not treat java.lang.NullPointerException as the governed target: its simple name is NullPointerException, not NullPointer.",
+    "Do not infer an initialization order, constructor requirement, lifecycle protocol, or required null check from either representative message.",
+    "Do not infer that currentMediaSource or themeContext is actually null on every execution path.",
+    "Do not infer that a finding represents a cryptographic misuse or a security vulnerability.",
+    "Do not infer the exact dereferenced expression, Android/API version, or exception origin from message text alone."
+  ],
+  "semantic_scope": "At most, the supplied detector output observes two reported application-method contexts and message-level allegations of null dereference. No verified NullPointerSpec source establishes a type-state protocol, API contract, or cross-project semantic relationship.",
+  "detector_semantics": {
+    "claim": "Unverified report-level claim: the detector associates potential NullPointerException conditions with VideoPlayer.initPlayer/currentMediaSource and KeyboardThemeFactory.loadTheme/themeContext.",
+    "predicates": [
+      "A candidate source or analysis location matches org.schabi.newpipe.player.VideoPlayer.initPlayer and mentions currentMediaSource.",
+      "A candidate source or analysis location matches com.anysoftkeyboard.theme.KeyboardThemeFactory.loadTheme and mentions themeContext.",
+      "For a true null-dereference finding, the relevant receiver or value must be null at a dereference or otherwise be used where an object is required."
+    ],
+    "limitations": [
+      "No recovered rule defines the detector's data-flow, path-sensitivity, interprocedural, alias, lifecycle, or exception-model semantics.",
+      "The supplied messages do not identify the exact operation that dereferences the value.",
+      "A source-pattern match is not proof that the runtime predicate holds."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Oracle documents java.lang.NullPointerException as thrown when null is used where an object is required, including calling an instance method of null or accessing a null object's field.",
+      "This documented behavior concerns java.lang.NullPointerException, not an established type named java.lang.NullPointer."
+    ],
+    "preconditions": [
+      "For an actual JVM-level NullPointerException, execution must reach an operation requiring a non-null object, array, or Throwable value with a null operand.",
+      "The supplied field/value names require project-specific source and runtime evidence before they can be mapped to such an operation."
+    ],
+    "unknowns": [
+      "Whether a type named java.lang.NullPointer exists in the analyzed classpath or was intended by the finding name.",
+      "Whether the reported exception messages are literal runtime messages, static-analysis summaries, or normalized detector text.",
+      "Whether either project method has a documented non-null contract for the named value."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "No verified security claim exists for NullPointerSpec.",
+    "runtime_claim": "A NullPointerException is ordinarily a runtime correctness or availability failure; the Java API documentation does not classify it as a cryptographic or security property.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A primary NullPointer.crysl file containing a SPEC declaration for a fully qualified type whose simple name is exactly NullPointer.",
+      "The rule's EVENTS, ORDER, CONSTRAINTS, REQUIRES, and ENSURES clauses, if any.",
+      "The analyzer's rule-loading configuration and the exact rule corpus revision used for the finding."
+    ],
+    "runtime": [
+      "A reproducible execution with stack trace and exact exception message.",
+      "The exact dereference/use operation and a value trace showing currentMediaSource or themeContext is null at that point.",
+      "Relevant lifecycle, threading, callback, and initialization-order evidence."
+    ],
+    "compatibility": [
+      "The NewPipe and AnySoftKeyboard source revisions that produced the reported locations.",
+      "The Android/API level, JVM/ART implementation, Kotlin/Java compiler settings, and dependency versions.",
+      "Confirmation that any candidate java.lang.NullPointer type is present in the analyzed classpath rather than being confused with java.lang.NullPointerException."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A field is reported nullable at a use site but is initialized on all feasible production paths that the analysis cannot model.",
+    "Initialization occurs through an Android lifecycle callback, dependency-injection framework, reflection, generated code, or asynchronous callback not captured by the analysis.",
+    "The named value is checked or replaced with a non-null value on the executed path, but path correlation is lost.",
+    "A report message identifies a nearby variable rather than the exact runtime receiver/value that is dereferenced.",
+    "The rule name is mapped to java.lang.NullPointerException or another namesake despite the required governed simple name being exactly NullPointer."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/NullPointer.crysl",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/blob/master/JavaCryptographicArchitecture/src/Cipher.crysl",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html"
+  ],
+  "unknowns": [
+    "No primary source for NullPointerSpec or NullPointer.crysl was recovered; the attempted canonical raw URL returned HTTP 404.",
+    "The CROSSINGTUD corpus contains CrySL rules with explicit SPEC, EVENTS, and ORDER sections for concrete cryptographic APIs, but this does not establish a NullPointer rule.",
+    "No verified fully qualified API type named java.lang.NullPointer was found. Oracle documents java.lang.NullPointerException instead, which is not a valid substitution under the required simple-name convention.",
+    "The exact detector implementation, specification repository, rule revision, and mapping from NullPointerSpec to an API type remain unresolved.",
+    "The two representative findings do not establish a common framework, common API, shared typestate protocol, or security property."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/NullPointer.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.schabi.newpipe.player.VideoPlayer",
+        "method": "initPlayer",
+        "message": "NullPointerException: 'currentMediaSource' is null during initialization."
+      },
+      {
+        "class": "com.anysoftkeyboard.theme.KeyboardThemeFactory",
+        "method": "loadTheme",
+        "message": "NullPointerException: 'themeContext' is null when parsing theme XML."
+      }
+    ],
+    "expected_api_simple_name": "NullPointer",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/NullPointer.crysl"
+  }
+}

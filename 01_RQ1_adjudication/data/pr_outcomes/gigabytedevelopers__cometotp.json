@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/gigabytedevelopers/CometOTP/pull/114",
+    "state": "merged",
+    "finding_id": "689272974dc1",
+    "spec": "CipherSpec",
+    "csv_class": "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper",
+    "method_name": "unwrap",
+    "title": "Create a fresh Cipher for each key operation",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:39.021583+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "enwokoma",
+        "kind": "comment",
+        "body": "Thank you for finding this and for the clear write-up, @jpantonow. The fix is merged.\n\nOur master branch only accepts signed commits, so I rebased your commit onto master and signed it on our side. You're still the author of the commit that landed (e5e8981). Good luck with the RVSec research!"
+      }
+    ]
+  }
+]

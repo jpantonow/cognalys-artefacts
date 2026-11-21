@@ -1,0 +1,12 @@
+diff --git a/app/src/main/java/xyz/zedler/patrick/grocy/web/RequestQueueSingleton.java b/app/src/main/java/xyz/zedler/patrick/grocy/web/RequestQueueSingleton.java
+index 36aabbac6..203735898 100644
+--- a/app/src/main/java/xyz/zedler/patrick/grocy/web/RequestQueueSingleton.java
++++ b/app/src/main/java/xyz/zedler/patrick/grocy/web/RequestQueueSingleton.java
+@@ -100,7 +100,6 @@ private static class TLSSocketFactory extends SSLSocketFactory {
+ 
+     public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
+       SSLContext sslContext = SSLContext.getInstance("TLS");
+-      sslContext.init(null, null, null);
+ 
+       // Client certificates
+       KeyManager keyManager = new InteractiveKeyManager(context);

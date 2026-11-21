@@ -1,0 +1,149 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The exact detector implementation, rule catalog entry, call-resolution rules, constant-propagation behavior, and accepted guard forms were not provided and were not independently verified.",
+      "The detector output explicitly labels the candidate as not executed.",
+      "Absence of a detector-recognized guard is not proof that no effective production restriction exists."
+    ],
+    "predicates": [
+      "A call is identified as android.webkit.WebView.setWebContentsDebuggingEnabled(boolean).",
+      "The enabling value is true, directly or as resolved by the detector.",
+      "The detector does not establish a qualifying debug-build guard for the call.",
+      "The finding message characterizes the candidate as applicable on API 21+."
+    ],
+    "claim": "A static candidate may enable inspection of release WebViews because WebView.setWebContentsDebuggingEnabled(true) appears without an established debug-build guard; the finding associates that concern with CWE-489."
+  },
+  "unknowns": [
+    "No official detector-rule catalog or CrySL rule under the name WebViewDebuggingSpec was supplied or identified; the name should therefore not be treated as an API type or externally governed rule identifier.",
+    "The exact static-analysis definition of a qualifying debug-build guard is unknown.",
+    "The basis for the finding message's API 21+ threshold is unknown, while the Android API reference says the method was added in API level 19.",
+    "Whether the candidate call is reachable and retained in the relevant production artifact is unknown.",
+    "Whether the deployed application intentionally permits WebView debugging and what protections constrain adb access is unknown.",
+    "Whether any particular WebView handles sensitive data or is inspectable during a production execution is unknown."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "android.webkit.WebView.setWebContentsDebuggingEnabled(boolean) is a static method, added in Android API level 19, that enables debugging of HTML, CSS, and JavaScript loaded into any WebViews in the application.",
+      "When enabled, Android documents that a user can inspect and modify the state of any WebView in the app via adb, and labels this a security liability for production unless explicitly intended.",
+      "In Android WebView 113.0.5656.0 and later, the documented default is automatic enablement for apps declared android:debuggable=\"true\" and false otherwise."
+    ],
+    "preconditions": [
+      "The method must be available on the runtime platform; the official API reference lists API level 19 as its introduction level.",
+      "The enabling invocation must execute with true for this API to enable web-contents debugging.",
+      "Using Chrome DevTools requires a running app on a device or emulator and a host connection; Android documentation describes discovery through chrome://inspect after debugging is enabled."
+    ],
+    "unknowns": [
+      "The exact runtime WebView implementation/version and device-specific behavior.",
+      "Whether the analyzed build targets or runs below, at, or above API level 21.",
+      "Whether another executed call sets the flag to false before relevant WebViews are inspected.",
+      "Whether the application intentionally exposes WebView debugging under a separately authorized production workflow.",
+      "The actual adb/host-access conditions for a given deployment."
+    ]
+  },
+  "authoritative_sources": [
+    "https://developer.android.com/reference/android/webkit/WebView#setWebContentsDebuggingEnabled(boolean)",
+    "https://developer.android.com/develop/ui/views/layout/webapps/debug-chrome-devtools",
+    "https://cwe.mitre.org/data/definitions/489.html",
+    "https://mas.owasp.org/MASTG/tests/android/MASVS-RESILIENCE/MASTG-TEST-0227/"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observation condition: a source or resolved-bytecode invocation targets the static android.webkit.WebView.setWebContentsDebuggingEnabled(boolean) method with the argument true. This establishes only the presence of an enabling call, not that its enclosing path executes.",
+      "name": "webview_debugging_enable_call_observed",
+      "api_patterns": [
+        "WebView.setWebContentsDebuggingEnabled(true)",
+        "android.webkit.WebView.setWebContentsDebuggingEnabled(true)"
+      ]
+    },
+    {
+      "condition": "Predicate condition: evidence must show that execution of the enabling call is control-dependent on an effective development/debug-build predicate. Android's documented example tests ApplicationInfo.FLAG_DEBUGGABLE before making the call; merely referencing a debug flag elsewhere does not establish such dependence.",
+      "name": "debug_build_gate_observed",
+      "api_patterns": [
+        "BuildConfig.DEBUG",
+        "ApplicationInfo.FLAG_DEBUGGABLE",
+        "WebView.setWebContentsDebuggingEnabled(true)"
+      ]
+    },
+    {
+      "condition": "Candidate condition: an enabling-call observation exists and static analysis does not establish an effective debug-build gate for that call. This is not the same as proving that the predicate is satisfied in a production artifact or that the call executes there.",
+      "name": "unguarded_production_candidate",
+      "api_patterns": [
+        "WebView.setWebContentsDebuggingEnabled(true)",
+        "android.webkit.WebView.setWebContentsDebuggingEnabled(true)"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "WebViewDebuggingSpec names a security concern, not a governed API type, CrySL rule, or published detector-rule-catalog entry. The governed platform API is android.webkit.WebView.setWebContentsDebuggingEnabled(boolean). This specification records a static candidate for CWE-489-style active debugging; it does not prove execution, inclusion in a release artifact, or exploitable access.",
+  "forbidden_inferences_without_evidence": [
+    "That an observed enabling call is reachable in any runtime execution.",
+    "That the call is packaged into, or executes in, a production/release artifact.",
+    "That the application manifest is debuggable or non-debuggable.",
+    "That a custom build, feature flag, authorization check, or server-side policy is not an effective production gate merely because the detector did not recognize it.",
+    "That a WebView instance is created after the call, loads sensitive content, or remains debugging-enabled for the relevant runtime interval.",
+    "That an attacker can access adb, connect a host machine, or inspect the affected device.",
+    "That the finding alone proves a CWE-489 vulnerability or a concrete confidentiality/integrity impact."
+  ],
+  "security_semantics": {
+    "runtime_claim": "Only an enabling call that executes in the deployed runtime causes this API to enable debugging; Android documents that the resulting state permits inspection and modification of any application WebView through adb.",
+    "equivalent": false,
+    "detector_claim": "An unguarded static enabling call is a potential production-debugging exposure and is consistent with the concern represented by CWE-489."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm the device API level and WebView implementation/version.",
+      "Account for the official API introduction at Android API level 19.",
+      "Account for the documented Android WebView 113.0.5656.0-and-later behavior tied to android:debuggable=\"true\".",
+      "Explain any detector-specific API 21+ threshold with detector configuration or implementation evidence."
+    ],
+    "runtime": [
+      "Demonstrate that the enabling path executes in the relevant deployed build.",
+      "Demonstrate that WebView debugging remains enabled while an application WebView is present.",
+      "Demonstrate the relevant adb/DevTools connection conditions if assessing practical exposure.",
+      "Demonstrate the nature of inspectable content or impact before asserting confidentiality or integrity consequences."
+    ],
+    "source_level": [
+      "Resolve the receiver and method to android.webkit.WebView.setWebContentsDebuggingEnabled(boolean), rather than selecting a similarly named API.",
+      "Establish that the argument is true at the call site or through sound constant/data-flow evidence.",
+      "Identify the exact enclosing control/data-flow predicate and determine whether it actually gates the enabling call.",
+      "Inspect build-variant and source-set inclusion evidence for the artifact under review."
+    ]
+  },
+  "name": "WebViewDebuggingSpec",
+  "source_url": "https://developer.android.com/reference/android/webkit/WebView#setWebContentsDebuggingEnabled(boolean)",
+  "applies_to_types": [
+    "android.webkit.WebView"
+  ],
+  "source_title": "Android Developers — WebView.setWebContentsDebuggingEnabled(boolean)",
+  "semantic_scope": "For every finding, the rule reports a non-executed static candidate involving a call that enables android.webkit.WebView web-contents debugging, together with the detector's conclusion that no debug-build guard was established for that call in the analyzed context. The reported API-level qualifier is a detector-side condition from the finding message; it is not proof of runtime reachability, release packaging, WebView creation, adb accessibility, or exploitation. The Android API documentation records this method as added in API level 19, so the reason the detector message uses API 21+ is unresolved.",
+  "spec_id": "WebViewDebuggingSpec",
+  "known_false_positive_shapes": [
+    "The enabling call is unreachable dead code or resides in an excluded source set.",
+    "The call is compiled out, rewritten, or removed from the release artifact by the build process.",
+    "The call is effectively gated by a custom development-only or authorization predicate that the detector does not recognize.",
+    "The call is part of an explicitly intended and separately protected production diagnostic capability; Android documentation allows production enablement only when explicitly intended.",
+    "The static candidate is present, but no relevant WebView is created or debugging is no longer enabled during the relevant execution interval.",
+    "The detector's stated API 21+ applicability excludes the deployed runtime or reflects a configuration not applicable to the artifact being assessed."
+  ],
+  "protocol": "resolve android.webkit.WebView.setWebContentsDebuggingEnabled(true) call -> call executes on a supported Android runtime -> application-wide WebView-content debugging is enabled -> WebView state may be inspected or modified through adb; production concern additionally requires deployment without an effective production-only gate.",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.hiddenramblings.tagmo.wave9.DimensionActivity",
+        "method": "onCreate",
+        "message": "Static candidate (not executed): WebView.setWebContentsDebuggingEnabled(true) is called on API 21+ without a debug-build guard, potentially enabling inspection of release WebViews (CWE-489)."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:android.webkit.WebView",
+    "checked_url": "https://developer.android.com/reference/android/webkit/WebView#setWebContentsDebuggingEnabled(boolean)"
+  }
+}

@@ -1,0 +1,40 @@
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+index 11fb45d60..1baa63421 100644
+--- a/app/src/main/AndroidManifest.xml
++++ b/app/src/main/AndroidManifest.xml
+@@ -31,6 +31,7 @@
+     </queries>
+ 
+     <application
++        android:networkSecurityConfig="@xml/network_security_config"
+         android:name=".infrastructure.android.AndroidApp"
+         android:allowBackup="true"
+         android:enableOnBackInvokedCallback="false"
+diff --git a/app/src/main/java/me/ash/reader/infrastructure/di/OkHttpClientModule.kt b/app/src/main/java/me/ash/reader/infrastructure/di/OkHttpClientModule.kt
+index 45edfa5f0..24459a4ba 100644
+--- a/app/src/main/java/me/ash/reader/infrastructure/di/OkHttpClientModule.kt
++++ b/app/src/main/java/me/ash/reader/infrastructure/di/OkHttpClientModule.kt
+@@ -70,7 +70,7 @@ fun cachingHttpClient(
+     context: Context,
+     cacheDirectory: File? = null,
+     cacheSize: Long = 10L * 1024L * 1024L,
+-    trustAllCerts: Boolean = true,
++    trustAllCerts: Boolean = false,
+     connectTimeoutSecs: Long = 30L,
+     readTimeoutSecs: Long = 30L,
+     clientCertificateAlias: String? = null,
+diff --git a/app/src/main/res/xml/network_security_config.xml b/app/src/main/res/xml/network_security_config.xml
+new file mode 100644
+index 000000000..8a76775f8
+--- /dev/null
++++ b/app/src/main/res/xml/network_security_config.xml
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<network-security-config>
++    <base-config cleartextTrafficPermitted="true">
++        <trust-anchors>
++            <certificates src="system" />
++            <certificates src="user" />
++        </trust-anchors>
++    </base-config>
++</network-security-config>

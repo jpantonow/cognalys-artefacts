@@ -1,0 +1,32 @@
+{
+ "card_id": "Kc2ece92e",
+ "card_sha256": "425453be178810e1",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 5,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2981,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 298
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0300464,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "ce76696d2310eefb",
+ "finished_at": "2026-11-16T11:47:49-0300",
+ "output": {
+  "guess": "O",
+  "confidence": 0.25,
+  "reason": "The diff is a one-line change that swaps the constant dummy salt for the existing random() helper. It adds no comments, no tests and no other edits. That kind of minimal, idiomatic fix that reuses an existing helper looks most like a Codex agent working directly in the repository. Sol seems a bit more likely than Terra. This is a weak guess, because the card gives very little to tell the sources apart."
+ }
+}

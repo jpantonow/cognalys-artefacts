@@ -1,0 +1,80 @@
+Problem found: Deprecated 'org.jetbrains.kotlin.android' plugin usage (id: kotlin:kgp:deprecation:deprecated-kotlin-android-plugin)
+  Deprecated 'org.jetbrains.kotlin.android' plugin usage
+    The 'org.jetbrains.kotlin.android' plugin in project ':app' is no longer required for Kotlin support since AGP 9.0.
+    Solution: Remove both `android.builtInKotlin=true` and `android.newDsl=false` from `gradle.properties`, then migrate to built-in Kotlin.
+    Documentation: https://kotl.in/gradle/agp-built-in-kotlin
+
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:generateDebugGlobalSynthetics UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:writeDebugAppMetadata
+> Task :app:validateSigningDebug
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:compressDebugAssets
+> Task :app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :app:compileDebugNavigationResources
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:mergeLibDexDebug
+> Task :app:processDebugManifest
+> Task :app:processDebugManifestForPackage
+> Task :app:parseDebugLocalResources
+> Task :app:generateDebugRFile
+> Task :app:dataBindingGenBaseClassesDebug
+> Task :app:processDebugResources
+> Task :app:mergeExtDexDebug
+
+> Task :app:compileDebugKotlin
+Problem found: Kotlin compiler warning (id: kotlin:compiler:warning:compiler-warning)
+  Kotlin compiler warning
+    'field SSID: String!' is deprecated. Deprecated in Java.
+    Location: /home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r3/repo/app/src/main/kotlin/com/vrem/util/CompatUtils.kt line 60
+Problem found: Kotlin compiler warning (id: kotlin:compiler:warning:compiler-warning)
+  Kotlin compiler warning
+    'fun startScan(): Boolean' is deprecated. Deprecated in Java.
+    Location: /home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r3/repo/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/manager/WiFiManagerWrapper.kt line 40
+Problem found: Kotlin compiler warning (id: kotlin:compiler:warning:compiler-warning)
+  Kotlin compiler warning
+    'val connectionInfo: WifiInfo!' is deprecated. Deprecated in Java.
+    Location: /home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r3/repo/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/manager/WiFiManagerWrapper.kt line 45
+Problem found: Kotlin compiler warning (id: kotlin:compiler:warning:compiler-warning)
+  Kotlin compiler warning
+    'fun setWifiEnabled(p0: Boolean): Boolean' is deprecated. Deprecated in Java.
+    Location: /home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r3/repo/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/manager/WiFiSwitch.kt line 50
+Problem found: Kotlin compiler warning (id: kotlin:compiler:warning:compiler-warning)
+  Kotlin compiler warning
+    'val ipAddress: Int' is deprecated. Deprecated in Java.
+    Location: /home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r3/repo/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/scanner/Transformer.kt line 38
+
+> Task :app:processDebugJavaRes
+> Task :app:mergeDebugJavaResource
+> Task :app:compileDebugJavaWithJavac
+> Task :app:dexBuilderDebug
+> Task :app:mergeProjectDexDebug
+> Task :app:packageDebug
+> Task :app:assembleDebug
+> Task :app:createDebugApkListingFileRedirect
+
+[Incubating] Problems report is available at: file:///home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r3/repo/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 37s
+37 actionable tasks: 21 executed, 16 up-to-date
+Configuration cache entry stored.
+Restored 1 Gradle build file(s) after build.

@@ -1,0 +1,173 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "This is a static, non-executed candidate and is not runtime proof.",
+      "The representative finding, rather than inspected application source, is the only evidence supplied for the class, method, count of eight values, listener identity, and absence of handling.",
+      "The detector message does not establish exact XML attributes, input filters, defaults, control-flow reachability, callback thread, or application-level exception handling.",
+      "CWE-248 is a general weakness classification, not a detector rule named NumberFormatCrashSpec."
+    ],
+    "predicates": [
+      "A click-listener registration is associated with the relevant Save-button workflow.",
+      "One or more EditText text values flow to java.lang.Integer.parseInt.",
+      "At least one feasible input can be empty, non-numeric, or outside the signed int range.",
+      "No effective NumberFormatException handling path is established for the parse invocation."
+    ],
+    "claim": "The supplied representative finding claims that the Save-button listener registered in com.mine.autoshine.MainActivity.onCreate calls Integer.parseInt on eight EditText values and lacks exception handling visible to the detector, making an uncaught NumberFormatException statically plausible."
+  },
+  "unknowns": [
+    "The underlying repository source, layout XML, manifest, dependency versions, and detector implementation were not supplied or inspected.",
+    "It is unresolved whether the reported eight parse calls are all direct, whether they execute sequentially, and whether they all belong to the same Save callback.",
+    "It is unresolved whether each field can actually be cleared or supplied with an out-of-range value in the shipped UI.",
+    "It is unresolved whether NumberFormatException is caught outside the method body or converted into a handled UI error.",
+    "It is unresolved whether the callback runs on the Android main thread and whether an uncaught exception would produce the reported crash outcome on the target runtime.",
+    "No primary source establishes a governed API, class, corpus entry, CrySL rule, or detector catalog rule named NumberFormatCrashSpec."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "android.widget.EditText is an editable text UI element.",
+      "android.text.InputType configures input classification; TYPE_CLASS_NUMBER is the class for numeric text, with signed and decimal input represented by additional flags.",
+      "android.widget.TextView.getText(), inherited by EditText, returns the displayed editable text.",
+      "java.lang.Integer.parseInt(String) parses a signed decimal integer and throws java.lang.NumberFormatException when its String is not a parsable integer.",
+      "The documented integer-parser behavior identifies empty input and values not representable as int as NumberFormatException cases; 2147483648 is an out-of-range example."
+    ],
+    "preconditions": [
+      "For successful Integer.parseInt(String), the argument must represent a signed base-10 int.",
+      "An empty String is not a parsable int.",
+      "A decimal representation outside the Java int domain is not a parsable int.",
+      "UI input classification must not be treated as proof of the parser's non-empty and bounded-value preconditions."
+    ],
+    "unknowns": [
+      "Whether the reported calls use direct getText().toString() values, a helper, a trimmed value, a default value, or another transformation.",
+      "Whether the actual layouts declare inputType=\"number\" for each of the eight fields.",
+      "Whether any TextWatcher, InputFilter, validation layer, or state invariant prevents invalid values on every feasible path.",
+      "Whether an enclosing callback, activity, coroutine, or framework boundary handles NumberFormatException."
+    ]
+  },
+  "authoritative_sources": [
+    "https://cwe.mitre.org/data/definitions/248.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/lang/Integer.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/lang/NumberFormatException.html",
+    "https://developer.android.com/reference/android/widget/EditText",
+    "https://developer.android.com/reference/android/widget/TextView",
+    "https://developer.android.com/reference/android/text/InputType",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observation: a click listener is registered. Predicate satisfaction requires evidence that the registered listener is reachable from the relevant Save-button click and contains, or transitively invokes, the parsing operation.",
+      "name": "click_listener_registration",
+      "api_patterns": [
+        "setOnClickListener(",
+        "setOnClickListener {"
+      ]
+    },
+    {
+      "condition": "Observation: text is converted to a String. Predicate satisfaction requires that the receiver is an android.widget.EditText or subtype, and that this resulting String reaches java.lang.Integer.parseInt without a proven normalization or validation guarantee.",
+      "name": "editable_text_read",
+      "api_patterns": [
+        ".getText().toString()",
+        "getText().toString()"
+      ]
+    },
+    {
+      "condition": "Observation: code configures or references a numeric Android input type. Predicate satisfaction does not follow from this observation: numeric input classification alone does not establish that current text is non-empty or representable as a Java int.",
+      "name": "numeric_input_configuration",
+      "api_patterns": [
+        "InputType.TYPE_CLASS_NUMBER",
+        "setInputType("
+      ]
+    },
+    {
+      "condition": "Observation: java.lang.Integer.parseInt is invoked. Predicate satisfaction requires a feasible argument value that is not a parsable signed decimal int, such as an empty string or a decimal value outside the int range.",
+      "name": "integer_parse",
+      "api_patterns": [
+        "Integer.parseInt("
+      ]
+    },
+    {
+      "condition": "Observation: the listed catch substrings may indicate handling. Predicate satisfaction requires that no effective handler for NumberFormatException covers the feasible parse path; absence of these literal substrings alone is insufficient to prove absence of handling.",
+      "name": "uncaught_number_format_exception",
+      "api_patterns": [
+        "catch (NumberFormatException",
+        "catch (Exception",
+        "catch (RuntimeException"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "NumberFormatCrashSpec is a concern label, not a governed API type, detector-catalog rule, CrySL rule, or library class. This specification therefore concerns the real APIs in the reported flow: Android editable numeric text and Java integer parsing. CWE-248 describes the generic uncaught-exception weakness; it does not establish that this particular application crashes.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a type named NumberFormatCrashSpec exists in Java, Android, CrySL, or another framework.",
+    "Do not infer that inputType=\"number\" proves a field is required, non-empty, within Integer.MIN_VALUE through Integer.MAX_VALUE, or otherwise parsable by Integer.parseInt.",
+    "Do not infer that every registered click listener is reachable from the Save button.",
+    "Do not infer that all eight reported EditText values are parsed on one feasible click path without inspecting the implementation.",
+    "Do not infer that a local catch is absent merely because a literal catch substring was not matched; handling can occur in callers, wrappers, or framework-level boundaries.",
+    "Do not infer that NumberFormatException necessarily terminates the Android process; actual outcome depends on the executing thread, Android/framework handling, and any effective exception boundary.",
+    "Do not infer a confidentiality, integrity, privilege, or remote-exploitation impact from this availability-oriented candidate alone."
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, NumberFormatException occurs only if a reached Integer.parseInt invocation receives a String that is not a parsable signed decimal int. An application-level crash requires the exception to propagate uncaught through the relevant execution boundary.",
+    "equivalent": false,
+    "detector_claim": "An uncaught NumberFormatException is statically plausible when Save parses editable numeric text without proven validation or effective handling."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "The application build and runtime use java.lang.Integer.parseInt semantics compatible with the documented Java integer parser.",
+      "The relevant widgets are android.widget.EditText instances or compatible subclasses whose text reaches the reported parse calls.",
+      "The effective Android version, target SDK, input method, layout resources, and any installed input filters or validation code are known."
+    ],
+    "runtime": [
+      "A reproducible Save-button path that invokes the reported listener.",
+      "The actual String supplied to each Integer.parseInt invocation.",
+      "A test input such as an empty value or 2147483648 reaching the parse call.",
+      "Observed exception propagation and process/UI outcome on the relevant Android runtime."
+    ],
+    "source_level": [
+      "MITRE CWE-248 evidence for the generic uncaught-exception weakness and its availability consequence.",
+      "Official Java API evidence for java.lang.Integer.parseInt(String) and java.lang.NumberFormatException.",
+      "Official Android API evidence for android.widget.EditText, android.widget.TextView.getText(), and android.text.InputType.TYPE_CLASS_NUMBER.",
+      "OWASP input-validation guidance only as general guidance that syntactic input restrictions and semantic/range validation are distinct; it is not evidence of this application's behavior."
+    ]
+  },
+  "name": "NumberFormatCrashSpec",
+  "source_url": "https://cwe.mitre.org/data/definitions/248.html",
+  "applies_to_types": [
+    "java.lang.Integer",
+    "java.lang.NumberFormatException",
+    "android.widget.EditText",
+    "android.widget.TextView",
+    "android.text.InputType"
+  ],
+  "source_title": "CWE-248: Uncaught Exception",
+  "semantic_scope": "The detector finding is a static candidate concerning a Save-button callback registered from com.mine.autoshine.MainActivity.onCreate. It reports direct parsing of eight EditText-derived values with java.lang.Integer.parseInt and no exception handling evident to the detector. The semantic concern is a feasible uncaught java.lang.NumberFormatException from editable UI text, mapped at the weakness level to CWE-248.",
+  "spec_id": "NumberFormatCrashSpec",
+  "known_false_positive_shapes": [
+    "The parse is covered by a local, enclosing, delegated, or framework-level handler that the detector does not resolve.",
+    "A dominating validation or invariant proves every parsed string is non-empty and within the signed int range on every feasible Save path.",
+    "The apparently parsed listener is not the listener attached to the actual Save button, is replaced later, or is unreachable.",
+    "The reported EditText values are initialized and made non-editable before the listener can run.",
+    "The value reaching Integer.parseInt is transformed by a helper that supplies a safe fallback or rejects invalid input before parsing.",
+    "The reported numeric input configuration belongs to a different field, layout variant, flavor, or runtime configuration than the field reaching the parser."
+  ],
+  "protocol": "MainActivity.onCreate → setOnClickListener → user tap → EditText.getText().toString() → Integer.parseInt(...) → NumberFormatException when the value is not a parsable signed decimal int → uncaught propagation if no effective handler exists",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.mine.autoshine.MainActivity",
+        "method": "onCreate",
+        "message": "Static candidate (not executed): the Save button listener registered in onCreate calls Integer.parseInt on eight EditText values with no exception handling; the fields use inputType=number, which still allows an empty field and values beyond Integer.MAX_VALUE, so clearing one field and tapping Save throws NumberFormatException and crashes the app (CWE-248)."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:java.lang.Integer",
+    "checked_url": "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/lang/Integer.html"
+  }
+}

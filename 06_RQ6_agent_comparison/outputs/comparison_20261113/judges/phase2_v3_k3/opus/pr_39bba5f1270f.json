@@ -1,0 +1,313 @@
+{
+ "unit": "pr_39bba5f1270f",
+ "phase": "phase2",
+ "order": [
+  "K96299757",
+  "Ka051fc5f",
+  "K424e5317",
+  "K8df451b0",
+  "K591554d4",
+  "Ka98fc96a",
+  "K1ce6cde1",
+  "Kbd4420b6",
+  "K71837b38",
+  "K85edee32",
+  "K01268a56",
+  "K550b8dd9",
+  "K064cca80",
+  "K6b061a70",
+  "K5fefb088",
+  "K9824d14d",
+  "Kafd9c5a3",
+  "K1638ff0c",
+  "K62bdbb66",
+  "K8fac2536",
+  "K4b7940d0",
+  "K642082a2",
+  "Ke18af567"
+ ],
+ "card_sha256": {
+  "K01268a56": "6d0ffd68de104644",
+  "K064cca80": "db372844510f57e6",
+  "K1638ff0c": "9734ea0623f62972",
+  "K1ce6cde1": "a7b1c59e52982a6f",
+  "K424e5317": "6547f7dacdb3423b",
+  "K4b7940d0": "ca6567b414a7be74",
+  "K550b8dd9": "de6c7e08166dfab4",
+  "K591554d4": "8d77d1a0a6de76f7",
+  "K5fefb088": "279a25cbea0c9cc1",
+  "K62bdbb66": "87c7c83f074e5128",
+  "K642082a2": "a78269945f46d045",
+  "K6b061a70": "ab6185437da2c7fa",
+  "K71837b38": "f36c87f19b05f44a",
+  "K85edee32": "4d7d16eb6a14b618",
+  "K8df451b0": "2065799e0c9e33c5",
+  "K8fac2536": "1ed4fe1c711c7929",
+  "K96299757": "a2bbbe05caa0ea03",
+  "K9824d14d": "eaba4a6e66c88485",
+  "Ka051fc5f": "7bfb7072d1d4d2e9",
+  "Ka98fc96a": "672fa1e5a164c8b0",
+  "Kafd9c5a3": "15a0e6b842b5d4db",
+  "Kbd4420b6": "7782f79139f1d733",
+  "Ke18af567": "af2b054fa8481036"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive. The flagged GCMParameterSpec is built in SecretEncryption.decrypt (commons/src/androidMain/.../SecretEncryption.android.kt:174-177). On decrypt, the IV has to be the one the data was encrypted with. Here that is the first 12 bytes of the stored blob, so by design it does not come from a random source at that point. The IV is generated randomly where it matters, in encrypt(). That method calls cipher.init(ENCRYPT_MODE, key) without passing any parameters, so the AndroidKeyStore provider creates a fresh random 12-byte nonce. The method reads it from cipher.iv and writes iv + ciphertext. The key comes from KeyGenParameterSpec with no setRandomizedEncryptionRequired(false), so randomized encryption stays required by default. The keystore would actually reject an IV supplied by the caller on encrypt, which means the code cannot reuse a nonce under this key. The JVM/desktop version (SecretEncryption.jvm.kt) works the same way. RVSec flagged decrypt only because its rule expects a random-source IV for every GCMParameterSpec and does not track that this IV is the provider-generated one from encrypt. A PR that \"randomized\" the decrypt IV would make every value already stored unreadable.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [],
+  "must_not_break": [
+   "The stored format is a 12-byte GCM IV prefix followed by the AES-GCM ciphertext and 128-bit tag. decrypt must keep reading the IV from the stored bytes, or data already stored can no longer be decrypted.",
+   "Data encrypted at rest through SecretEncryption must stay decryptable. This covers EncryptedDataStore, AccountSecretsEncryptedStores, AccountRosterStore, StoreAccountSessionStore, the Marmot MLS group-state, KeyPackage, message and publish-obligation stores, and the Cordn blob cipher. Users would otherwise lose their keys or sessions.",
+   "The existing AndroidKeyStore key (alias AMETHYST_AES_KEY, StrongBox or TEE, randomized encryption required) must keep working. Passing a caller-chosen IV on encrypt, or recreating the key, would make the keystore reject the call or orphan existing data.",
+   "On encrypt, the provider must keep generating a random nonce per call, so a nonce is never reused under the key.",
+   "The desktop/JVM key file secret.key and its IV-prefixed format, which mirror the Android version, must stay as they are.",
+   "Thread-local Cipher use and cachedKey invalidation when a call fails must stay as they are.",
+   "Continue decrypting existing records formatted as a 12-byte IV followed by GCM ciphertext and its 128-bit authentication tag, including Base64-wrapped EncryptedDataStore values and encrypted Marmot files.",
+   "Preserve the original stored IV during decryption. Randomizing or replacing it would cause authentication failures and make account secrets, messages and MLS state unreadable.",
+   "Preserve the existing AMETHYST_AES_KEY alias and AndroidKeyStore protection, including StrongBox where available and the regular fallback on supported devices; replacing the key would strand stored data.",
+   "Keep provider-generated fresh IVs for encryption, GCM authentication and failure propagation for invalid ciphertext. Replacing GCMParameterSpec with IvParameterSpec would break the AndroidKeyStore GCM path."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 39,
+ "tokens": {
+  "input_tokens": 8,
+  "cache_creation_input_tokens": 40593,
+  "cache_read_input_tokens": 110209,
+  "output_tokens": 4156
+ },
+ "turns": 6,
+ "tool_calls": 5,
+ "claude_reported_cost_usd": 0.42993780000000004,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "2aa0c65df437bcb2",
+ "finished_at": "2026-11-16T17:48:31-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K96299757",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific. It covers the IV read from the stored prefix on decrypt, the provider-generated IV on encrypt, the default that requires randomized encryption, and the desktop version."
+   },
+   {
+    "card_id": "Ka051fc5f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The reasoning is correct but brief. It names no class or file and does not say why the encrypt-side IV is random (the keystore's randomized-encryption default)."
+   },
+   {
+    "card_id": "K424e5317",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Correct but generic. It does not establish that the generated IV is random or fresh on each call."
+   },
+   {
+    "card_id": "K8df451b0",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Correct but vague. It does not mention the keystore, randomness or the specific code."
+   },
+   {
+    "card_id": "K591554d4",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific. It mentions that both key-generation paths keep randomized encryption required, the 12-byte prefix and the 128-bit tag."
+   },
+   {
+    "card_id": "Ka98fc96a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: the provider-generated IV is stored and read back, and the keystore rejects caller IVs. The hedge about the provenance of older records is a little unnecessary."
+   },
+   {
+    "card_id": "K1ce6cde1",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific about the keystore-generated IV, the randomized-encryption default and the decrypt requirements."
+   },
+   {
+    "card_id": "Kbd4420b6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "It identifies the provider-generated IV, but the boilerplate ends by calling the finding 'undetermined', which hedges a clear false positive."
+   },
+   {
+    "card_id": "K71837b38",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct, with accurate line references to encrypt and decrypt and the keystore randomized default. The hedge about older data is minor."
+   },
+   {
+    "card_id": "K85edee32",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Thorough and accurate. The line numbers, the absence of setRandomizedEncryptionRequired, the callers and the reason no change can satisfy the checker all match the code."
+   },
+   {
+    "card_id": "K01268a56",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific. It states its testing limits."
+   },
+   {
+    "card_id": "K550b8dd9",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific to the write-and-read path and the keystore policy."
+   },
+   {
+    "card_id": "K064cca80",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "It identifies the provider-generated IV but concludes 'Unknown/undetermined', so the reasoning is right but muddled by tool boilerplate."
+   },
+   {
+    "card_id": "K6b061a70",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific for both the Android and JVM versions, and it explains the checker's cross-process limitation."
+   },
+   {
+    "card_id": "K5fefb088",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific. It adds some unnecessary hedging about the provenance of historical inputs."
+   },
+   {
+    "card_id": "K9824d14d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Despite the template text, the cause section correctly traces the IV to the provider in encrypt and concludes no edit is needed."
+   },
+   {
+    "card_id": "Kafd9c5a3",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate line-level analysis of decrypt, encrypt and key generation. It notes that the JVM version was not checked."
+   },
+   {
+    "card_id": "K1638ff0c",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "It recognises the provider-generated IV but leaves the finding 'undetermined', which is vaguer than the code supports."
+   },
+   {
+    "card_id": "K62bdbb66",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Correct but terse and generic. It does not address randomness or the keystore policy."
+   },
+   {
+    "card_id": "K8fac2536",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific. It covers the provider IV, the keystore rejecting caller IVs, the prefix format, the 128-bit tag and the desktop version."
+   },
+   {
+    "card_id": "K4b7940d0",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Template boilerplate with an 'undetermined' assessment and a stray citation artifact '[, C5]'. The underlying point is right but weakly stated."
+   },
+   {
+    "card_id": "K642082a2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate and specific for both platforms, and it explains why silencing the warning would add risk."
+   },
+   {
+    "card_id": "Ke18af567",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific. It gives honest limits on what its standalone JVM check covered."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

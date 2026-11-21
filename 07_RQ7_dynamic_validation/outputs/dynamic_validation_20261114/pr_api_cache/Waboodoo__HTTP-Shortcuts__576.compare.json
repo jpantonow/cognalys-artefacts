@@ -1,0 +1,339 @@
+{
+ "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/compare/bf6364778226099b34564506e83c2a829e6dc72e...583297c406e8b059bfd9147508b6f6fb412feb27",
+ "fetched_at": "2026-11-15T17:18:34.670093+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/compare/bf6364778226099b34564506e83c2a829e6dc72e...583297c406e8b059bfd9147508b6f6fb412feb27",
+  "html_url": "https://github.com/Waboodoo/HTTP-Shortcuts/compare/bf6364778226099b34564506e83c2a829e6dc72e...583297c406e8b059bfd9147508b6f6fb412feb27",
+  "permalink_url": "https://github.com/Waboodoo/HTTP-Shortcuts/compare/Waboodoo:bf63647...Waboodoo:583297c",
+  "diff_url": "https://github.com/Waboodoo/HTTP-Shortcuts/compare/bf6364778226099b34564506e83c2a829e6dc72e...583297c406e8b059bfd9147508b6f6fb412feb27.diff",
+  "patch_url": "https://github.com/Waboodoo/HTTP-Shortcuts/compare/bf6364778226099b34564506e83c2a829e6dc72e...583297c406e8b059bfd9147508b6f6fb412feb27.patch",
+  "base_commit": {
+   "sha": "bf6364778226099b34564506e83c2a829e6dc72e",
+   "node_id": "C_kwDOAg7PxNoAKGJmNjM2NDc3ODIyNjA5OWIzNDU2NDUwNmU4M2MyYTgyOWU2ZGM3MmU",
+   "commit": {
+    "author": {
+     "name": "Roland Meyer",
+     "email": "rmy@rmy.ch",
+     "date": "2026-08-09T11:12:41Z"
+    },
+    "committer": {
+     "name": "Roland Meyer",
+     "email": "rmy@rmy.ch",
+     "date": "2026-08-09T11:12:41Z"
+    },
+    "message": "Reduce list bottom spacing when app is locked",
+    "tree": {
+     "sha": "e7338ac6b0ac33bf43829e0c82f1486c1c33a19a",
+     "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/git/trees/e7338ac6b0ac33bf43829e0c82f1486c1c33a19a"
+    },
+    "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/git/commits/bf6364778226099b34564506e83c2a829e6dc72e",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/bf6364778226099b34564506e83c2a829e6dc72e",
+   "html_url": "https://github.com/Waboodoo/HTTP-Shortcuts/commit/bf6364778226099b34564506e83c2a829e6dc72e",
+   "comments_url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/bf6364778226099b34564506e83c2a829e6dc72e/comments",
+   "author": {
+    "login": "Waboodoo",
+    "id": 2445563,
+    "node_id": "MDQ6VXNlcjI0NDU1NjM=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/2445563?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Waboodoo",
+    "html_url": "https://github.com/Waboodoo",
+    "followers_url": "https://api.github.com/users/Waboodoo/followers",
+    "following_url": "https://api.github.com/users/Waboodoo/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Waboodoo/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Waboodoo/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Waboodoo/subscriptions",
+    "organizations_url": "https://api.github.com/users/Waboodoo/orgs",
+    "repos_url": "https://api.github.com/users/Waboodoo/repos",
+    "events_url": "https://api.github.com/users/Waboodoo/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Waboodoo/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "Waboodoo",
+    "id": 2445563,
+    "node_id": "MDQ6VXNlcjI0NDU1NjM=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/2445563?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Waboodoo",
+    "html_url": "https://github.com/Waboodoo",
+    "followers_url": "https://api.github.com/users/Waboodoo/followers",
+    "following_url": "https://api.github.com/users/Waboodoo/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Waboodoo/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Waboodoo/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Waboodoo/subscriptions",
+    "organizations_url": "https://api.github.com/users/Waboodoo/orgs",
+    "repos_url": "https://api.github.com/users/Waboodoo/repos",
+    "events_url": "https://api.github.com/users/Waboodoo/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Waboodoo/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "f33ce51f2d177e5bd5dfce3a574b2878dc90dfed",
+     "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/f33ce51f2d177e5bd5dfce3a574b2878dc90dfed",
+     "html_url": "https://github.com/Waboodoo/HTTP-Shortcuts/commit/f33ce51f2d177e5bd5dfce3a574b2878dc90dfed"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "bf6364778226099b34564506e83c2a829e6dc72e",
+   "node_id": "C_kwDOAg7PxNoAKGJmNjM2NDc3ODIyNjA5OWIzNDU2NDUwNmU4M2MyYTgyOWU2ZGM3MmU",
+   "commit": {
+    "author": {
+     "name": "Roland Meyer",
+     "email": "rmy@rmy.ch",
+     "date": "2026-08-09T11:12:41Z"
+    },
+    "committer": {
+     "name": "Roland Meyer",
+     "email": "rmy@rmy.ch",
+     "date": "2026-08-09T11:12:41Z"
+    },
+    "message": "Reduce list bottom spacing when app is locked",
+    "tree": {
+     "sha": "e7338ac6b0ac33bf43829e0c82f1486c1c33a19a",
+     "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/git/trees/e7338ac6b0ac33bf43829e0c82f1486c1c33a19a"
+    },
+    "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/git/commits/bf6364778226099b34564506e83c2a829e6dc72e",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/bf6364778226099b34564506e83c2a829e6dc72e",
+   "html_url": "https://github.com/Waboodoo/HTTP-Shortcuts/commit/bf6364778226099b34564506e83c2a829e6dc72e",
+   "comments_url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/bf6364778226099b34564506e83c2a829e6dc72e/comments",
+   "author": {
+    "login": "Waboodoo",
+    "id": 2445563,
+    "node_id": "MDQ6VXNlcjI0NDU1NjM=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/2445563?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Waboodoo",
+    "html_url": "https://github.com/Waboodoo",
+    "followers_url": "https://api.github.com/users/Waboodoo/followers",
+    "following_url": "https://api.github.com/users/Waboodoo/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Waboodoo/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Waboodoo/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Waboodoo/subscriptions",
+    "organizations_url": "https://api.github.com/users/Waboodoo/orgs",
+    "repos_url": "https://api.github.com/users/Waboodoo/repos",
+    "events_url": "https://api.github.com/users/Waboodoo/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Waboodoo/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "Waboodoo",
+    "id": 2445563,
+    "node_id": "MDQ6VXNlcjI0NDU1NjM=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/2445563?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Waboodoo",
+    "html_url": "https://github.com/Waboodoo",
+    "followers_url": "https://api.github.com/users/Waboodoo/followers",
+    "following_url": "https://api.github.com/users/Waboodoo/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Waboodoo/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Waboodoo/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Waboodoo/subscriptions",
+    "organizations_url": "https://api.github.com/users/Waboodoo/orgs",
+    "repos_url": "https://api.github.com/users/Waboodoo/repos",
+    "events_url": "https://api.github.com/users/Waboodoo/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Waboodoo/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "f33ce51f2d177e5bd5dfce3a574b2878dc90dfed",
+     "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/f33ce51f2d177e5bd5dfce3a574b2878dc90dfed",
+     "html_url": "https://github.com/Waboodoo/HTTP-Shortcuts/commit/f33ce51f2d177e5bd5dfce3a574b2878dc90dfed"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 2,
+  "behind_by": 0,
+  "total_commits": 2,
+  "commits": [
+   {
+    "sha": "56861d4f79e57710932f306e20cde9e4d0e50444",
+    "node_id": "C_kwDOAg7PxNoAKDU2ODYxZDRmNzllNTc3MTA5MzJmMzA2ZTIwY2RlOWU0ZDBlNTA0NDQ",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-09T14:37:00Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-09T14:37:00Z"
+     },
+     "message": "Fix configureTLS",
+     "tree": {
+      "sha": "e158678a958847f5046a3b0354a7064489954e6d",
+      "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/git/trees/e158678a958847f5046a3b0354a7064489954e6d"
+     },
+     "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/git/commits/56861d4f79e57710932f306e20cde9e4d0e50444",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/56861d4f79e57710932f306e20cde9e4d0e50444",
+    "html_url": "https://github.com/Waboodoo/HTTP-Shortcuts/commit/56861d4f79e57710932f306e20cde9e4d0e50444",
+    "comments_url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/56861d4f79e57710932f306e20cde9e4d0e50444/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "bf6364778226099b34564506e83c2a829e6dc72e",
+      "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/bf6364778226099b34564506e83c2a829e6dc72e",
+      "html_url": "https://github.com/Waboodoo/HTTP-Shortcuts/commit/bf6364778226099b34564506e83c2a829e6dc72e"
+     }
+    ]
+   },
+   {
+    "sha": "583297c406e8b059bfd9147508b6f6fb412feb27",
+    "node_id": "C_kwDOAg7PxNoAKDU4MzI5N2M0MDZlOGIwNTliZmQ5MTQ3NTA4YjZmNmZiNDEyZmViMjc",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-09T15:59:14Z"
+     },
+     "committer": {
+      "name": "$GIT_AUTHOR_NAME",
+      "email": "$GIT_AUTHOR_EMAIL",
+      "date": "2026-08-09T15:59:14Z"
+     },
+     "message": "Harden TLS protocol selection",
+     "tree": {
+      "sha": "9ce13c17af24d016047c833f92d2f593ebc1cc22",
+      "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/git/trees/9ce13c17af24d016047c833f92d2f593ebc1cc22"
+     },
+     "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/git/commits/583297c406e8b059bfd9147508b6f6fb412feb27",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/583297c406e8b059bfd9147508b6f6fb412feb27",
+    "html_url": "https://github.com/Waboodoo/HTTP-Shortcuts/commit/583297c406e8b059bfd9147508b6f6fb412feb27",
+    "comments_url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/583297c406e8b059bfd9147508b6f6fb412feb27/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+     {
+      "sha": "56861d4f79e57710932f306e20cde9e4d0e50444",
+      "url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/commits/56861d4f79e57710932f306e20cde9e4d0e50444",
+      "html_url": "https://github.com/Waboodoo/HTTP-Shortcuts/commit/56861d4f79e57710932f306e20cde9e4d0e50444"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "d92b5475fd3a755bcdf65852af1e54c876ca4839",
+    "filename": "HTTPShortcuts/app/src/main/kotlin/ch/rmy/android/http_shortcuts/http/TLSEnabledSSLSocketFactory.kt",
+    "status": "modified",
+    "additions": 12,
+    "deletions": 2,
+    "changes": 14,
+    "blob_url": "https://github.com/Waboodoo/HTTP-Shortcuts/blob/583297c406e8b059bfd9147508b6f6fb412feb27/HTTPShortcuts%2Fapp%2Fsrc%2Fmain%2Fkotlin%2Fch%2Frmy%2Fandroid%2Fhttp_shortcuts%2Fhttp%2FTLSEnabledSSLSocketFactory.kt",
+    "raw_url": "https://github.com/Waboodoo/HTTP-Shortcuts/raw/583297c406e8b059bfd9147508b6f6fb412feb27/HTTPShortcuts%2Fapp%2Fsrc%2Fmain%2Fkotlin%2Fch%2Frmy%2Fandroid%2Fhttp_shortcuts%2Fhttp%2FTLSEnabledSSLSocketFactory.kt",
+    "contents_url": "https://api.github.com/repos/Waboodoo/HTTP-Shortcuts/contents/HTTPShortcuts%2Fapp%2Fsrc%2Fmain%2Fkotlin%2Fch%2Frmy%2Fandroid%2Fhttp_shortcuts%2Fhttp%2FTLSEnabledSSLSocketFactory.kt?ref=583297c406e8b059bfd9147508b6f6fb412feb27",
+    "patch": "@@ -30,7 +30,17 @@ class TLSEnabledSSLSocketFactory(private val sslSocketFactory: SSLSocketFactory)\n     override fun createSocket(address: InetAddress, port: Int, localAddress: InetAddress, localPort: Int) =\n         withTLS(sslSocketFactory.createSocket(address, port, localAddress, localPort))\n \n-    private fun withTLS(socket: Socket) = socket.apply {\n-        (socket as? SSLSocket)?.enabledProtocols = arrayOf(\"TLSv1\", \"TLSv1.1\", \"TLSv1.2\", \"TLSv1.3\")\n+    private fun withTLS(socket: Socket): Socket {\n+        (socket as? SSLSocket)?.let { sslSocket ->\n+            sslSocket.enabledProtocols =\n+                sslSocket.enabledProtocols\n+                    .filterNot { it in DEPRECATED_PROTOCOLS }\n+                    .toTypedArray()\n+        }\n+        return socket\n+    }\n+\n+    companion object {\n+        private val DEPRECATED_PROTOCOLS = setOf(\"SSLv3\", \"TLSv1\", \"TLSv1.0\", \"TLSv1.1\")\n     }\n }"
+   }
+  ]
+ }
+}

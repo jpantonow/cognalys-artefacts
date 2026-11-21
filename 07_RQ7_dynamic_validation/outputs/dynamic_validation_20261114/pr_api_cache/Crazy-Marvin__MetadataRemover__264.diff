@@ -1,0 +1,13 @@
+diff --git a/app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt b/app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt
+index 8773368c..5f6f5ea0 100644
+--- a/app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt
++++ b/app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt
+@@ -43,7 +43,7 @@ class MainViewModel @Inject constructor(
+ ) : ViewModel() {
+ 
+     companion object {
+-        val random = SecureRandom("75rgu86gr59ht86".toByteArray(Charsets.UTF_8))
++        val random = SecureRandom()
+         const val FILE_NAME_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+         const val FILE_NAME_LENGTH = 10
+     }

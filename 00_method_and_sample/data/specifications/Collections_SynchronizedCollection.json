@@ -1,0 +1,151 @@
+{
+  "schema_version": 2,
+  "spec_id": "Collections_SynchronizedCollection",
+  "name": "Collections_SynchronizedCollection",
+  "applies_to_types": [
+    "java.util.Collections_SynchronizedCollection"
+  ],
+  "source_title": "Runtime Verification property-db primary JavaMOP specification: Collections_SynchronizedCollection.mop",
+  "source_url": "https://raw.githubusercontent.com/runtimeverification/property-db/master/annotated-java-api/java/util/Collections_SynchronizedCollection.mop",
+  "source_verified": true,
+  "protocol": "sync · (asyncCreateIter | (syncCreateIter · accessIter))",
+  "important_note": "java.util.Collections_SynchronizedCollection is the logical/catalog name of this multi-API monitor property, not a public JDK class declaration. The property concerns supported java.util.Collections synchronized-wrapper factories, iterator creation on the returned wrapper, and later Iterator operations. It proves only that its event pattern and exact-monitor-lock predicates matched; it does not itself prove a data race, concurrent modification, exploitation, or nondeterministic output.",
+  "events": [
+    {
+      "name": "sync",
+      "api_patterns": [
+        "Collections.synchronizedCollection(",
+        "Collections.synchronizedSet(",
+        "Collections.synchronizedSortedSet(",
+        "Collections.synchronizedList("
+      ],
+      "condition": "Observed after one of the four supported Collections factory calls returns a Collection-compatible wrapper bound as col. Seeing one of these source substrings alone does not establish that the returned object is the later iterator receiver or that the call completed normally."
+    },
+    {
+      "name": "syncCreateIter",
+      "api_patterns": [
+        ".iterator()"
+      ],
+      "condition": "Observed after Collection+.iterator() returns an Iterator whose receiver is the tracked col. The predicate is satisfied only when Thread.holdsLock(col) is true at iterator creation."
+    },
+    {
+      "name": "asyncCreateIter",
+      "api_patterns": [
+        ".iterator()"
+      ],
+      "condition": "Observed after Collection+.iterator() returns an Iterator whose receiver is the tracked col. The predicate is satisfied only when Thread.holdsLock(col) is false at iterator creation."
+    },
+    {
+      "name": "accessIter",
+      "api_patterns": [
+        ".hasNext()",
+        ".next()",
+        ".remove()",
+        ".forEachRemaining("
+      ],
+      "condition": "Observed before an invocation matching Iterator.*(..) whose receiver is the Iterator bound at creation. The predicate is satisfied only when Thread.holdsLock(tracked col) is false immediately before that Iterator call. The listed substrings are practical local examples; the source rule matches any Iterator method, not only these examples."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that the reported method itself executes concurrently with another thread.",
+    "Do not infer that another thread mutates the collection or its backing collection.",
+    "Do not infer that a Java data race, ConcurrentModificationException, lost update, disclosure, or availability failure occurred.",
+    "Do not infer that synchronization on a different application lock is absent; the monitor specifically tests Thread.holdsLock(col).",
+    "Do not infer that every JDK synchronized wrapper is covered: the primary monitor lists synchronizedCollection, synchronizedSet, synchronizedSortedSet, and synchronizedList only.",
+    "Do not infer coverage of Spliterator or Stream traversal from this monitor, even though current JDK documentation also requires manual synchronization for those traversal mechanisms.",
+    "Do not infer that the finding derives from the CROSSINGTUD CrySL corpus: the requested CrySL raw URL was attempted and returned HTTP 404; the matching primary source was found in Runtime Verification's property-db."
+  ],
+  "semantic_scope": "A relational runtime-monitoring property over a wrapper Collection col and an Iterator iter. It creates monitoring state when a listed synchronized-wrapper factory returns col; it distinguishes iterator creation while holding col's monitor from creation without that monitor, and observes Iterator method calls made without holding col's monitor.",
+  "detector_semantics": {
+    "claim": "A violation is matched when a tracked synchronized-wrapper result has an iterator created while its monitor is not held, or when an iterator created while that monitor was held is later used while the monitor is not held. The configured message is: \"A synchronized collection was accessed in a thread-unsafe manner.\"",
+    "predicates": [
+      "sync: after a supported Collections.synchronized* factory returns col.",
+      "asyncCreateIter: iterator() on col and !Thread.holdsLock(col).",
+      "syncCreateIter: iterator() on col and Thread.holdsLock(col).",
+      "accessIter: an Iterator method on iter and !Thread.holdsLock(col).",
+      "match: sync followed by asyncCreateIter, or sync followed by syncCreateIter then accessIter."
+    ],
+    "limitations": [
+      "The source establishes JavaMOP runtime event semantics, but does not establish how the reporting detector maps those events to the representative static location com.googlecode.gtalksms.cmd.HelpCmd.<init>.",
+      "The source does not model whether another thread exists, whether it accesses the same collection, or whether that access conflicts.",
+      "The source rule's supported factories exclude synchronizedMap, synchronizedSortedMap, synchronizedNavigableMap, synchronizedNavigableSet, and other wrappers.",
+      "The source rule observes Iterator calls, not all traversal APIs or all collection operations."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "java.util.Collections.synchronizedCollection returns a synchronized, thread-safe collection backed by the supplied collection.",
+      "JDK documentation states that all access to the backing collection must go through the returned collection and that callers must manually synchronize on the returned collection while traversing it through Iterator, Spliterator, or Stream; otherwise behavior may be nondeterministic."
+    ],
+    "preconditions": [
+      "For the JDK wrapper contract, retain and use the returned wrapper rather than independently accessing its backing collection.",
+      "For Iterator traversal, synchronize on the returned wrapper object for the relevant traversal interval.",
+      "The monitor's narrower predicate requires that the current thread hold the exact wrapper object's monitor at iterator creation and at every monitored Iterator operation."
+    ],
+    "unknowns": [
+      "The source does not identify the concrete collection expression, iterator expression, lock expression, or control-flow path in HelpCmd.<init>.",
+      "The source does not specify whether the consuming detector soundly resolves aliases, factory returns, inherited iterator implementations, Kotlin desugaring, or monitor ownership.",
+      "The source does not establish behavior for alternative Collection implementations or custom wrappers beyond the JDK contract and the monitor's call patterns."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The monitor detected a use pattern that violates its manual-locking protocol for synchronized-wrapper iteration.",
+    "runtime_claim": "The JDK contract warns that unsynchronized traversal of the returned synchronized collection may lead to nondeterministic behavior; it does not state that every such execution has a race or a security vulnerability.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Primary monitor evidence: the Runtime Verification .mop file defines the four events, their Thread.holdsLock predicates, the event-order expression, and the exact message.",
+      "Primary platform evidence: JDK Collections documentation defines the synchronizedCollection traversal requirement and its nondeterministic-behavior warning.",
+      "The requested CROSSINGTUD CrySL URL was directly attempted and was missing (HTTP 404); the current repository tree does not list Collections_SynchronizedCollection.crysl."
+    ],
+    "runtime": [
+      "Confirm that a supported Collections.synchronized* call completed and that its returned wrapper aliases the Collection on which iterator() was called.",
+      "Confirm the current thread's monitor ownership of that exact returned wrapper at iterator creation and at the reported Iterator operation.",
+      "Confirm that an Iterator produced by that tracked wrapper is the receiver of the subsequent Iterator call.",
+      "To substantiate an actual concurrency defect rather than a protocol violation, establish a relevant competing access or mutation and its timing."
+    ],
+    "compatibility": [
+      "Confirm the target runtime and collection implementation retain the documented synchronized-wrapper behavior.",
+      "Confirm whether traversal uses Iterator versus Spliterator, Stream, enhanced-for desugaring, or a library-specific traversal API.",
+      "Confirm whether the relevant wrapper factory is one of the four factories named by the monitor source."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "Single-threaded or otherwise non-concurrent execution: iterator() is obtained without synchronizing on the wrapper, so the monitor matches even though no competing access occurs.",
+    "An iterator is created without holding the wrapper monitor but is never consumed; the sync → asyncCreateIter branch matches at creation time.",
+    "All accesses are protected by a distinct external lock that makes the program race-free, but the code does not synchronize on the exact returned wrapper object required by Thread.holdsLock(col).",
+    "The iterator is used without the wrapper monitor after the application has independently established that no thread can mutate or access the collection during that interval.",
+    "An Iterator method is invoked for a non-traversal purpose or on an iterator over an effectively immutable or stable collection; the monitor still treats any Iterator.*(..) invocation as access."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/runtimeverification/property-db/master/annotated-java-api/java/util/Collections_SynchronizedCollection.mop",
+    "https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/Collections.html#synchronizedCollection(java.util.Collection)",
+    "https://raw.githubusercontent.com/openjdk/jdk/master/src/java.base/share/classes/java/util/Collections.java"
+  ],
+  "unknowns": [
+    "Why the representative finding is attributed to com.googlecode.gtalksms.cmd.HelpCmd.<init> rather than to a specific iterator call is not established by the primary MOP source.",
+    "Whether the detector is executing the JavaMOP property directly, translating it into another analysis, or reporting a static approximation is unresolved.",
+    "Whether the relevant code path uses synchronizedCollection, synchronizedSet, synchronizedSortedSet, synchronizedList, or a detector-added factory pattern is unresolved.",
+    "Whether the reported iterator is actually traversed, whether concurrent mutation occurs, and whether the runtime behavior is harmful are unresolved.",
+    "Whether the detector intentionally extends the historical monitor to Spliterator, Stream, maps, navigable wrappers, or Kotlin collection operations is unresolved."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.googlecode.gtalksms.cmd.HelpCmd",
+        "method": "<init>",
+        "message": "Collections_SynchronizedCollection A synchronized collection was accessed in a thread-unsafe manner."
+      }
+    ],
+    "expected_api_simple_name": "Collections_SynchronizedCollection",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "mop_property_declaration:Collections_SynchronizedCollection",
+    "checked_url": "https://raw.githubusercontent.com/runtimeverification/property-db/master/annotated-java-api/java/util/Collections_SynchronizedCollection.mop"
+  }
+}

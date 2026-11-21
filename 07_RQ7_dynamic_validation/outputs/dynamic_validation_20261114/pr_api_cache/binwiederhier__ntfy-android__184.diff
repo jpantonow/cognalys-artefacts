@@ -1,0 +1,17 @@
+diff --git a/app/src/main/java/io/heckel/ntfy/util/Log.kt b/app/src/main/java/io/heckel/ntfy/util/Log.kt
+index 7794a1d2e..55a136376 100644
+--- a/app/src/main/java/io/heckel/ntfy/util/Log.kt
++++ b/app/src/main/java/io/heckel/ntfy/util/Log.kt
+@@ -93,8 +93,10 @@ class Log(private val logsDao: LogDao) {
+ 
+     private fun scrub(line: String?): String? {
+         var newLine = line ?: return null
+-        scrubTerms.forEach { (scrubTerm, replaceTerm) ->
+-            newLine = newLine.replace(scrubTerm, replaceTerm.replaceTerm)
++        synchronized(scrubTerms) {
++            scrubTerms.forEach { (scrubTerm, replaceTerm) ->
++                newLine = newLine.replace(scrubTerm, replaceTerm.replaceTerm)
++            }
+         }
+         return newLine
+     }

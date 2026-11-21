@@ -1,0 +1,31 @@
+{
+ "card_id": "K33cec007",
+ "card_sha256": "bac57a4509a3d8a0",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 6588,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 520
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0633418,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "39e75bbc80c7d6c4",
+ "finished_at": "2026-11-17T18:56:05-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.55,
+  "reason": "The description reads like pieces filled into a template. It mentions the tests twice (\"I also added tests...\" and later \"I also added a test for it (`OkHttpClientModuleTest.kt`)\"), and it ends with stock lines: \"I found this while running the app under RVSec...\", a sentence naming the build task, and \"Happy to adjust this to the project's conventions.\" That points to a pipeline that assembles text from fixed parts, not an agent writing in one pass. The diff has other signs of machine generation. A blank line is left where an import was removed. The test is over-engineered and calls Kotlin's `$default` bitmask method through reflection, which is typical of GPT-style generated code. Together these suggest the Cognalys pipeline."
+ }
+}

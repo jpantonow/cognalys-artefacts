@@ -1,0 +1,135 @@
+{
+  "schema_version": 2,
+  "spec_id": "URLEncoder_EncodeUTF8",
+  "name": "URLEncoder_EncodeUTF8",
+  "applies_to_types": [
+    "java.net.URLEncoder_EncodeUTF8"
+  ],
+  "source_title": "Requested CROSSINGTUD CrySL rule path was not found; official Android and Java sources for the underlying java.net.URLEncoder API were consulted",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/URLEncoder_EncodeUTF8.crysl",
+  "source_verified": false,
+  "protocol": "URLEncoder.encode(input, charsetName) where charsetName resolves to UTF-8; no object-lifecycle ordering is involved.",
+  "important_note": "The convention-derived target type is java.net.URLEncoder_EncodeUTF8, whose simple name exactly matches the specification ID. Neither the requested canonical CrySL file nor the current JavaCryptographicArchitecture/src directory established that this type or rule is presently published. The representative finding nevertheless aligns with documented java.net.URLEncoder encoding-selection behavior. This is a compatibility rule, not proof of an exploitable security defect.",
+  "events": [
+    {
+      "name": "encode_with_named_charset",
+      "api_patterns": [
+        "URLEncoder.encode(",
+        "java.net.URLEncoder.encode(",
+        "\"UTF-8\""
+      ],
+      "condition": "Observing the event means a call resolving to URLEncoder.encode(String, String) is present. Its UTF-8 predicate is satisfied only when the effective second argument is evidenced to designate UTF-8; observing an encode call alone, or merely observing an unknown or nonconstant charset expression, does not establish that predicate."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that com.mde.potdroid.helpers.f.a necessarily contains a direct java.net.URLEncoder call; the representative finding supplies a detector message but not the method body or resolved call target.",
+    "Do not infer that java.net.URLEncoder_EncodeUTF8 is a physically shipped JDK or Android runtime class; its inclusion is convention-derived and its source linkage remains unverified.",
+    "Do not infer that ISO-8859-15 is unsupported on the executing platform or that the call must throw UnsupportedEncodingException.",
+    "Do not infer that non-UTF-8 form encoding is universally incorrect; an interoperating peer may explicitly require a legacy charset.",
+    "Do not infer encryption, authentication, integrity, URL validation, or generic RFC-3986 URI-component correctness from this rule.",
+    "Do not infer that the encoded value reaches a network request, HTML form, query string, or security-sensitive sink.",
+    "Do not infer that the detector accepts every UTF-8 alias or the Charset overload; the unavailable CrySL source is needed to establish its exact acceptance relation."
+  ],
+  "semantic_scope": "A static compatibility check over a selected charset argument at an apparent java.net.URLEncoder form-encoding call. The representative message specifically reports the selected encoding, ISO-8859-15, as potentially incompatible with the UTF-8 recommendation for application/x-www-form-urlencoded data.",
+  "detector_semantics": {
+    "claim": "Using an encoding other than UTF-8 with URLEncoder may introduce interoperability incompatibilities.",
+    "predicates": [
+      "A relevant URLEncoder encode call is resolved or syntactically recognized.",
+      "The encoding-selection argument is available to the analysis as a value such as ISO-8859-15.",
+      "That value is judged not to satisfy the detector's UTF-8 requirement."
+    ],
+    "limitations": [
+      "The exact CrySL event declaration, accepted aliases, interprocedural value resolution, and treatment of unknown values could not be verified because the named CrySL source was unavailable.",
+      "The finding supplies no evidence about the consumer's expected charset, payload characters, actual runtime value, or whether encoded output is used.",
+      "The exact target type required by the CrySL naming convention could not be confirmed from the available CROSSINGTUD repository contents."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "java.net.URLEncoder converts strings to application/x-www-form-urlencoded form.",
+      "Alphanumeric characters and . - * _ are retained, spaces become +, and other characters are converted to bytes in the selected charset and percent-encoded.",
+      "The encode(String, String) overload looks up the charset by name; official Java and Android sources state that UTF-8 should be used and that another encoding may introduce incompatibilities."
+    ],
+    "preconditions": [
+      "The input string and charset selection must be non-null for the documented overloads.",
+      "For encode(String, String), the charset name must identify a charset supported by the runtime or the call can throw UnsupportedEncodingException.",
+      "Interoperability requires the producer and consumer to agree on form encoding and character encoding."
+    ],
+    "unknowns": [
+      "The Android API level and library implementation used by the analyzed application are not supplied.",
+      "It is not known whether the finding corresponds to encode(String, String), a wrapper around it, or a detector-specific modeled call.",
+      "It is not known whether the receiving service expects UTF-8, ISO-8859-15, or another protocol-specific encoding."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "A non-UTF-8 encoding selection may produce incompatible application/x-www-form-urlencoded output.",
+    "runtime_claim": "A compatibility failure occurs only when the encoding selected by the producer differs from the encoding expected by the consumer for data whose encoded byte representation differs between those charsets.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "The exact URLEncoder_EncodeUTF8.crysl source, or an authoritative compiled-rule or metadata artifact that maps this specification ID to its governed qualified type.",
+      "The rule's explicit EVENTS and CONSTRAINTS clauses to establish accepted UTF-8 spellings, overload coverage, and unknown-value behavior.",
+      "Resolved source or bytecode for com.mde.potdroid.helpers.f.a to connect the representative finding to a concrete invocation."
+    ],
+    "runtime": [
+      "The evaluated second argument passed to URLEncoder.encode at runtime.",
+      "The Android or JDK runtime version and installed charset support.",
+      "Evidence that the returned encoded string is consumed by the relevant downstream operation."
+    ],
+    "compatibility": [
+      "The remote endpoint's or file format's declared expected encoding.",
+      "An end-to-end test containing non-ASCII characters that differ under UTF-8 and ISO-8859-15.",
+      "Evidence that application/x-www-form-urlencoded, rather than generic URI-component escaping, is the intended encoding format."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "The encoded input is restricted to ASCII characters, for which UTF-8 and ISO-8859-15 commonly yield the same bytes for relevant characters.",
+    "A legacy peer, server, or file format explicitly requires ISO-8859-15 and decodes the output using that same charset.",
+    "The encoded result is discarded, used only locally, or never reaches an interoperability boundary.",
+    "A UTF-8-compatible value is computed indirectly or supplied through a constant or alias that the detector cannot resolve.",
+    "The actual operation is not an HTML-form-compatible exchange, so the W3C form-encoding compatibility recommendation is not the applicable contract.",
+    "The detector reports a nonconstant or path-merged charset value even though every feasible runtime value used at the relevant sink is UTF-8; exact unknown-value handling is unverified."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/URLEncoder_EncodeUTF8.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/URLEncoder_EncodeUTF8.crysl",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/tree/master/JavaCryptographicArchitecture/src",
+    "https://android.googlesource.com/platform/libcore/+/51b1b6997fd3f980076b8081f7f1165ccc2a4008/ojluni/src/main/java/java/net/URLEncoder.java",
+    "https://android.googlesource.com/platform/libcore/+/master/ojluni/src/main/java/java/net/URLEncoder.java",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URLEncoder.html"
+  ],
+  "unknowns": [
+    "Whether URLEncoder_EncodeUTF8.crysl existed only in an older, forked, generated, or non-public ruleset.",
+    "The authoritative package of the required simple-name-exact governed type URLEncoder_EncodeUTF8; java.net.URLEncoder_EncodeUTF8 is a convention-derived attribution, not a verified runtime class.",
+    "Whether the detector governs only URLEncoder.encode(String, String), also governs encode(String, Charset), or models wrappers.",
+    "Whether UTF8, UTF_8, Charset.forName(\"UTF-8\"), and StandardCharsets.UTF_8 satisfy the detector's intended predicate.",
+    "Whether the detector's message is emitted only for concrete disallowed encodings or also for unresolved or path-dependent charset values.",
+    "Whether the reported ISO-8859-15 call operates on user-visible non-ASCII data and interoperates with a UTF-8-expecting peer."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/URLEncoder_EncodeUTF8.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.mde.potdroid.helpers.f",
+        "method": "a",
+        "message": "URLEncoder_EncodeUTF8 The used encoding 'ISO-8859-15' may introduce incompatibilites."
+      }
+    ],
+    "expected_api_simple_name": "URLEncoder_EncodeUTF8",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/URLEncoder_EncodeUTF8.crysl"
+  }
+}

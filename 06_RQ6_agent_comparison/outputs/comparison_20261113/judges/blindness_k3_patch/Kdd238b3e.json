@@ -1,0 +1,32 @@
+{
+ "card_id": "Kdd238b3e",
+ "card_sha256": "b551d382088d1eee",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3574,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 399
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0368104,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "06076b797356dc14",
+ "finished_at": "2026-11-16T11:50:39-0300",
+ "output": {
+  "guess": "O",
+  "confidence": 0.27,
+  "reason": "The diff is small and tightly scoped. It has no comments and copies the repo's `if(` style. It also reuses the existing R.array.rsa_lens resource to check the key length instead of hardcoding a minimum. Codex agents tend to write this kind of minimal, idiomatic fix, while Claude-based and pipeline outputs more often add explanatory comments or wider changes. Telling Sol from Terra is close to a guess."
+ }
+}

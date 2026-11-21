@@ -1,0 +1,39 @@
+{
+ "unit": "co_737920a862cd",
+ "source": "spec_cohort",
+ "group": "no_pr",
+ "finding_ids": [
+  "737920a862cd"
+ ],
+ "apk": "dev.herald.android.debug_1.apk",
+ "repo_url": "https://github.com/Giton22/kyllene",
+ "pinned_commit": "f7e7b418188ac057b3abd50502a4c50d82b0754c",
+ "spec": [
+  "SSLContextSpec"
+ ],
+ "class": "dev.hermeskotlin.core.gateway.ClientCerts_androidKt",
+ "method": "tlsContext",
+ "latest_outcome": [
+  "issue para o mantenedor do app"
+ ],
+ "bench_id": [
+  "herald_tls"
+ ],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "737920a862cd",
+   "unique_error_id": "dev.hermeskotlin.core.gateway.ClientCerts_androidKt:::tlsContext:::SSLContextSpec:::UnsatisfiedConstraint:::the KeyManager[] given to SSLContext.init was not observed coming from a KeyManagerFactory",
+   "spec": "SSLContextSpec",
+   "class": "dev.hermeskotlin.core.gateway.ClientCerts_androidKt",
+   "method": "tlsContext",
+   "message": "the KeyManager[] given to SSLContext.init was not observed coming from a KeyManagerFactory",
+   "apk": "dev.herald.android.debug_1.apk",
+   "repo_url": "https://github.com/Giton22/kyllene",
+   "commit": "f7e7b418188ac057b3abd50502a4c50d82b0754c",
+   "detector_source_location": "ClientCerts.android.kt:147"
+  }
+ ]
+}

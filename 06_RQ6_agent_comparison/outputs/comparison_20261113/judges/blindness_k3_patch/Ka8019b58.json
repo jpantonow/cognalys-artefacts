@@ -1,0 +1,32 @@
+{
+ "card_id": "Ka8019b58",
+ "card_sha256": "8a090289c96da67d",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 7443,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 450
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0687824,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "96db2789daf0f33d",
+ "finished_at": "2026-11-16T11:51:15-0300",
+ "output": {
+  "guess": "O",
+  "confidence": 0.4,
+  "reason": "The card says the author did not build this diff, and the Cognalys pipelines (C, D) include a build step, so a coding agent (S, O or T) is more likely. The code is short and careful: it adds a versioned format, keeps old unversioned messages decodable, guards against downgrade by stripping the version prefix, and has tight tests that check exact byte offsets. That fits a stronger Codex model better than Sonnet, which usually writes longer code with more comments. This is a style judgment, not a firm signal."
+ }
+}

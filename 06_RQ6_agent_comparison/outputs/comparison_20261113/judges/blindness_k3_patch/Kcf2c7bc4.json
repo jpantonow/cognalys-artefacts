@@ -1,0 +1,32 @@
+{
+ "card_id": "Kcf2c7bc4",
+ "card_sha256": "a5eef7617027b87b",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 7670,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 475
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.07109839999999999,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "e9bd2a9fbcabfcd8",
+ "finished_at": "2026-11-16T11:50:59-0300",
+ "output": {
+  "guess": "O",
+  "confidence": 0.4,
+  "reason": "The diff wasn't built, which points to an agent working in a checkout rather than the Cognalys pipeline, since that pipeline builds its patches. The change is compact but carefully engineered: a versioned format prefix, a fallback for decoding old messages, rejection of unknown versions, and a check that stripping the prefix can't make a new message decode as legacy data. The Robolectric tests are thorough and include tampering checks, and the comments are short. That level of rigor reads like a strong Codex model (Sol) more than Terra or Sonnet."
+ }
+}

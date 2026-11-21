@@ -1,0 +1,3 @@
+Prepared the change and [PR.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r1/repo/PR.md). The access-point selector now checks the project’s release and debug package names directly, and the focused unit tests pass. The required debug build also passed.
+
+One old selector value could not be mapped to a package name from the repository. The PR asks maintainers to check whether another distributed package relies on it. RVSec has not been rerun.

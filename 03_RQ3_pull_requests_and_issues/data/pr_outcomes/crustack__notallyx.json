@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/Crustack/NotallyX/pull/1167",
+    "state": "merged",
+    "finding_id": "fff072cb8953",
+    "spec": "MessageDigestSpec",
+    "csv_class": "com.philkes.notallyx.utils.IOExtensionsKt",
+    "method_name": "md5Hash",
+    "title": "Use SHA-256 for export hash verification",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:40:07.460047+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "Crustack",
+        "kind": "comment",
+        "body": "Hi there, thanks for the improvement, LGTM 🙂"
+      }
+    ]
+  }
+]

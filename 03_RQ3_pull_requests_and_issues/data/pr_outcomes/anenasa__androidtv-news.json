@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/anenasa/androidtv-news/pull/14",
+    "state": "closed",
+    "finding_id": "d8dd171681a3",
+    "spec": "WebViewDebuggingSpec",
+    "csv_class": "io.github.anenasa.news.WebViewHelper",
+    "method_name": "createWebView",
+    "title": "Fix createWebView",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:01.596367+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "anenasa",
+        "kind": "comment",
+        "body": "WebView.setWebContentsDebuggingEnabled is deliberately enabled."
+      }
+    ]
+  }
+]

@@ -1,0 +1,76 @@
+{
+  "steps": [
+    {
+      "step": "spec_generation",
+      "project": "",
+      "finished_at": "2026-10-27T22:25:49-0300",
+      "seconds": 2.4,
+      "exit_code": 0,
+      "timed_out": false
+    },
+    {
+      "step": "cloning",
+      "project": "",
+      "finished_at": "2026-10-27T22:25:52-0300",
+      "seconds": 3.6,
+      "exit_code": 0,
+      "timed_out": false
+    },
+    {
+      "step": "repository_setup",
+      "project": "",
+      "finished_at": "2026-10-27T22:25:53-0300",
+      "seconds": 0.3,
+      "exit_code": 0,
+      "timed_out": false
+    },
+    {
+      "step": "extraction",
+      "project": "",
+      "finished_at": "2026-10-27T22:25:53-0300",
+      "seconds": 0.5,
+      "exit_code": 0,
+      "timed_out": false
+    },
+    {
+      "step": "spec_context",
+      "project": "",
+      "finished_at": "2026-10-27T22:25:54-0300",
+      "seconds": 0.4,
+      "exit_code": 0,
+      "timed_out": false
+    },
+    {
+      "step": "detector_rules",
+      "project": "",
+      "finished_at": "2026-10-27T22:26:00-0300",
+      "seconds": 5.7,
+      "exit_code": 0,
+      "timed_out": false
+    },
+    {
+      "step": "llm",
+      "project": "",
+      "finished_at": "2026-10-27T22:48:46-0300",
+      "seconds": 1343.9,
+      "exit_code": 0,
+      "timed_out": false
+    },
+    {
+      "step": "solutions",
+      "project": "",
+      "finished_at": "2026-10-27T22:48:48-0300",
+      "seconds": 1.9,
+      "exit_code": 0,
+      "timed_out": false
+    },
+    {
+      "step": "preview",
+      "project": "",
+      "finished_at": "2026-10-27T22:48:50-0300",
+      "seconds": 2.1,
+      "exit_code": 0,
+      "timed_out": false
+    }
+  ]
+}

@@ -1,0 +1,893 @@
+{
+ "seed": 20261113,
+ "drawn_with": "random.Random(seed); PR strata incorporado, aberto, fechado, then cohort strata no_pr, our_pr_closed; each stratum's pool sorted by unit id, then rng.sample",
+ "rule": "Draws the 20 units of the reduced agent comparison (2026-11-13) with a recorded seed.\n\nRule (PLANO_FABLE, \"2026-11-12 (tarde)\"; the user's confirmation of 2026-11-13):\n- 10 PR units from outputs/frozen_pr_20261113/population.json, one unit per\n  finding_id (FreeOTP #521/#524 share one), stratified by group\n  (incorporado / aberto / fechado) in proportion to the group's units, by the\n  largest remainder, at least 2 per group. Eligible: the original run ended in\n  \"PR pronto\" and its PR record holds a non-empty diff (a reviewable diff, the\n  reference for the gabarito). When a group has fewer eligible units than its\n  quota, the rest comes from its other units.\n- 10 units from the specification's 28-unit cohort\n  (outputs/design_20261110/comparacao/c05_units.json), excluding every unit\n  whose APK and method also appear in the PR population (the same code under\n  another PR), stratified by stratum (no_pr / our_pr_closed) the same way, no\n  minimum.\n- Within each stratum the draw is random.Random(SEED).sample over the units\n  sorted by a stable key, strata in a fixed order.",
+ "pr_population": {
+  "units": 36,
+  "by_group": {
+   "incorporado": 11,
+   "aberto": 17,
+   "fechado": 8
+  },
+  "quota": {
+   "incorporado": 3,
+   "aberto": 5,
+   "fechado": 2
+  },
+  "eligible_by_group": {
+   "incorporado": 10,
+   "aberto": 15,
+   "fechado": 6
+  }
+ },
+ "spec_cohort": {
+  "units": 28,
+  "excluded_overlap": [
+   "app.michaelwuensch.bitbanana_79.apk encodePbkdf2",
+   "com.craxiom.networksurvey_114.apk getOrCreateKey",
+   "com.sapuseven.untis_29198884.apk getCacheFile",
+   "com.vitorpamplona.amethyst.debug_464.apk decrypt",
+   "dev.skye.intertune.debug_96.apk hash",
+   "org.quantumbadger.redreader_117.apk sha1"
+  ],
+  "eligible_by_stratum": {
+   "no_pr": 20,
+   "our_pr_closed": 2
+  },
+  "quota": {
+   "no_pr": 9,
+   "our_pr_closed": 1
+  }
+ },
+ "arms": {
+  "S": "Claude Code + claude-sonnet-5-5, effort high",
+  "O": "Codex CLI + gpt-6.1-sol, reasoning high",
+  "T": "Codex CLI + gpt-6.1-terra, reasoning high",
+  "C": "Cognalys (later, not in this queue)"
+ },
+ "replicas": 4,
+ "units": [
+  {
+   "unit": "pr_1381cd4ddb3f",
+   "source": "pr_population",
+   "group": "incorporado",
+   "finding_ids": [
+    "1381cd4ddb3f"
+   ],
+   "apk": "de.jepfa.yapm.debug_202006.apk",
+   "repo_url": "https://github.com/jenspfahl/anotherpass",
+   "pinned_commit": "89b0b68ce403b1fd199255990bf026f02d317eb9",
+   "spec": [
+    "KeyStoreSpec"
+   ],
+   "class": "de.jepfa.yapm.service.secret.SecretService",
+   "method": "getAndroidSecretKey",
+   "prs": [
+    "https://github.com/jenspfahl/ANOTHERpass/pull/103"
+   ],
+   "original_run": "outputs/rerun_correcoes_20261022/run",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "PR pronto",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rerun_correcoes_20261022/run_frozen_de_jepfa_yapm",
+   "reference_pr_records": [
+    "outputs/rerun_correcoes_20261022/run/pull_requests/de.jepfa.yapm.debug_202006.apk_getAndroidSecretKey_KeyStoreSpec_pr.json"
+   ],
+   "reference_diff_lines": 16,
+   "build_task": "assembleDebug",
+   "rows": [
+    {
+     "finding_id": "1381cd4ddb3f",
+     "unique_error_id": "de.jepfa.yapm.service.secret.SecretService:::getAndroidSecretKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts",
+     "spec": "KeyStoreSpec",
+     "class": "de.jepfa.yapm.service.secret.SecretService",
+     "method": "getAndroidSecretKey",
+     "message": "the observed call sequence is not one KeyStoreSpec accepts",
+     "apk": "de.jepfa.yapm.debug_202006.apk",
+     "repo_url": "https://github.com/jenspfahl/anotherpass",
+     "commit": "89b0b68ce403b1fd199255990bf026f02d317eb9",
+     "detector_source_location": "SecretService.kt:512"
+    }
+   ]
+  },
+  {
+   "unit": "pr_06ff0c1fc96c",
+   "source": "pr_population",
+   "group": "incorporado",
+   "finding_ids": [
+    "06ff0c1fc96c"
+   ],
+   "apk": "com.ounben.amaradio.debug_159.apk",
+   "repo_url": "https://github.com/ounben/AMARadio",
+   "pinned_commit": "e01537f78694fdee5ad9ac6c216a5e3bedb47b9a",
+   "spec": [
+    "MessageDigestSpec"
+   ],
+   "class": "com.ounben.amaradio.Utils",
+   "method": "md5",
+   "prs": [
+    "https://github.com/ounben/AMARadio/pull/122"
+   ],
+   "original_run": "outputs/rvsec_misuse3_20261016/run6",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "correção não aplicável: código mudou upstream",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_misuse3_20261016/run_frozen",
+   "reference_pr_records": [
+    "outputs/rvsec_misuse3_20261016/run6/pull_requests/com.ounben.amaradio.debug_159.apk_md5_MessageDigestSpec_pr.json"
+   ],
+   "reference_diff_lines": 34,
+   "build_task": ":app:assembleFossDebug",
+   "rows": [
+    {
+     "finding_id": "06ff0c1fc96c",
+     "unique_error_id": "com.ounben.amaradio.Utils:::md5:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "spec": "MessageDigestSpec",
+     "class": "com.ounben.amaradio.Utils",
+     "method": "md5",
+     "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "apk": "com.ounben.amaradio.debug_159.apk",
+     "repo_url": "https://github.com/ounben/AMARadio",
+     "commit": "e01537f78694fdee5ad9ac6c216a5e3bedb47b9a",
+     "detector_source_location": "Utils.kt:105"
+    }
+   ]
+  },
+  {
+   "unit": "pr_fff072cb8953",
+   "source": "pr_population",
+   "group": "incorporado",
+   "finding_ids": [
+    "fff072cb8953"
+   ],
+   "apk": "com.philkes.notallyx.debug_71134.apk",
+   "repo_url": "https://github.com/Crustack/NotallyX",
+   "pinned_commit": "f8c9cea0fdc35be7f495bb323ddab50632bdc373",
+   "spec": [
+    "MessageDigestSpec"
+   ],
+   "class": "com.philkes.notallyx.utils.IOExtensionsKt",
+   "method": "md5Hash",
+   "prs": [
+    "https://github.com/Crustack/NotallyX/pull/1167"
+   ],
+   "original_run": "outputs/rvsec_notallyx_20261028/run_v7",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "correção gerada, sem PR",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_notallyx_20261028/run_frozen",
+   "reference_pr_records": [
+    "outputs/rvsec_notallyx_20261028/run_v7/pull_requests/com.philkes.notallyx.debug_71134.apk_md5Hash_MessageDigestSpec_pr.json"
+   ],
+   "reference_diff_lines": 111,
+   "build_task": ":app:testDebugUnitTest",
+   "rows": [
+    {
+     "finding_id": "fff072cb8953",
+     "unique_error_id": "com.philkes.notallyx.utils.IOExtensionsKt:::md5Hash:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "spec": "MessageDigestSpec",
+     "class": "com.philkes.notallyx.utils.IOExtensionsKt",
+     "method": "md5Hash",
+     "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "apk": "com.philkes.notallyx.debug_71134.apk",
+     "repo_url": "https://github.com/Crustack/NotallyX",
+     "commit": "f8c9cea0fdc35be7f495bb323ddab50632bdc373",
+     "detector_source_location": "IOExtensions.kt:573"
+    }
+   ]
+  },
+  {
+   "unit": "pr_6d0a3cf73013",
+   "source": "pr_population",
+   "group": "aberto",
+   "finding_ids": [
+    "6d0a3cf73013"
+   ],
+   "apk": "me.ash.reader.debug_47.apk",
+   "repo_url": "https://github.com/Ashinch/ReadYou",
+   "pinned_commit": "091c9207527a10a135b307c9f7747306da36f686",
+   "spec": [
+    "SSLContextSpec"
+   ],
+   "class": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+   "method": "setupSsl",
+   "prs": [
+    "https://github.com/ReadYouApp/ReadYou/pull/1334"
+   ],
+   "original_run": "outputs/rvsec_readyou_20261018/run3",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "PR pronto",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_readyou_20261018/run_frozen",
+   "reference_pr_records": [
+    "outputs/rvsec_readyou_20261018/run3/pull_requests/me.ash.reader.debug_47.apk_setupSsl_SSLContextSpec_pr.json"
+   ],
+   "reference_diff_lines": 40,
+   "build_task": ":app:assembleFdroidDebug",
+   "rows": [
+    {
+     "finding_id": "6d0a3cf73013",
+     "unique_error_id": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt:::setupSsl:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+     "spec": "SSLContextSpec",
+     "class": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+     "method": "setupSsl",
+     "message": "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+     "apk": "me.ash.reader.debug_47.apk",
+     "repo_url": "https://github.com/Ashinch/ReadYou",
+     "commit": "091c9207527a10a135b307c9f7747306da36f686",
+     "detector_source_location": "OkHttpClientModule.kt:154"
+    }
+   ]
+  },
+  {
+   "unit": "pr_9215f97597a6",
+   "source": "pr_population",
+   "group": "aberto",
+   "finding_ids": [
+    "9215f97597a6"
+   ],
+   "apk": "systems.sieber.droid_scep_7.apk",
+   "repo_url": "https://github.com/schorschii/Droid_SCEP",
+   "pinned_commit": "d8e13b746f1028116f847f36afc249011ac93498",
+   "spec": [
+    "KeyPairGeneratorSpec"
+   ],
+   "class": "systems.sieber.droid_scep.ScepClient",
+   "method": "CertReq",
+   "prs": [
+    "https://github.com/schorschii/Droid_SCEP/pull/2"
+   ],
+   "original_run": "outputs/rerun_correcoes_20261022/run",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "issue para o mantenedor do app",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rerun_correcoes_20261022/run_frozen_systems_sieber_droid_scep",
+   "reference_pr_records": [
+    "outputs/rerun_correcoes_20261022/run/pull_requests/systems.sieber.droid_scep_7.apk_CertReq_KeyPairGeneratorSpec_pr.json"
+   ],
+   "reference_diff_lines": 244,
+   "build_task": ":app:assembleGoogleDebug",
+   "rows": [
+    {
+     "finding_id": "9215f97597a6",
+     "unique_error_id": "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec:::InvalidKeySize:::invalid key size for algorithm RSA",
+     "spec": "KeyPairGeneratorSpec",
+     "class": "systems.sieber.droid_scep.ScepClient",
+     "method": "CertReq",
+     "message": "invalid key size for algorithm RSA",
+     "apk": "systems.sieber.droid_scep_7.apk",
+     "repo_url": "https://github.com/schorschii/Droid_SCEP",
+     "commit": "d8e13b746f1028116f847f36afc249011ac93498",
+     "detector_source_location": "ScepClient.java:125"
+    }
+   ]
+  },
+  {
+   "unit": "pr_013d2748f3f8",
+   "source": "pr_population",
+   "group": "aberto",
+   "finding_ids": [
+    "013d2748f3f8"
+   ],
+   "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+   "repo_url": "https://github.com/yogeshpaliyal/KeyPass",
+   "pinned_commit": "f0ef4cd98349ddc7320c164e3d8173f334407bd2",
+   "spec": [
+    "CipherSpec"
+   ],
+   "class": "com.yogeshpaliyal.common.utils.CryptoManager",
+   "method": "encrypt",
+   "prs": [
+    "https://github.com/yogeshpaliyal/KeyPass/pull/1252"
+   ],
+   "original_run": "outputs/rvsec_keypass_20261025/run",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "issue para o mantenedor do app",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_keypass_20261025/run_frozen",
+   "reference_pr_records": [
+    "outputs/rvsec_keypass_20261025/run/pull_requests/com.yogeshpaliyal.keypass.debug_1442.apk_encrypt_CipherSpec_pr.json"
+   ],
+   "reference_diff_lines": 36,
+   "build_task": "assembleDebug",
+   "rows": [
+    {
+     "finding_id": "013d2748f3f8",
+     "unique_error_id": "com.yogeshpaliyal.common.utils.CryptoManager:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::no generator of the key given to Cipher.init was observed",
+     "spec": "CipherSpec",
+     "class": "com.yogeshpaliyal.common.utils.CryptoManager",
+     "method": "encrypt",
+     "message": "no generator of the key given to Cipher.init was observed",
+     "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+     "repo_url": "https://github.com/yogeshpaliyal/KeyPass",
+     "commit": "f0ef4cd98349ddc7320c164e3d8173f334407bd2",
+     "detector_source_location": "CryptoManager.kt:42"
+    }
+   ]
+  },
+  {
+   "unit": "pr_7d98a07e751d",
+   "source": "pr_population",
+   "group": "aberto",
+   "finding_ids": [
+    "7030778fa5d0",
+    "7d98a07e751d"
+   ],
+   "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+   "repo_url": "https://github.com/thatSFguy/meshcore-mobile-app",
+   "pinned_commit": "8f226db77a067f5de614514fe755695209868037",
+   "spec": [
+    "CipherSpec",
+    "KeyGeneratorSpec"
+   ],
+   "class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+   "method": "seal",
+   "prs": [
+    "https://github.com/thatSFguy/meshcore-mobile-app/pull/10"
+   ],
+   "original_run": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "violação confirmada sem correção segura",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_io_github_thatsfguy_meshcore_native_20261105/run_frozen",
+   "reference_pr_records": [
+    "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run/pull_requests/io.github.thatsfguy.meshcore.native.debug_1.apk_seal_CipherSpec_pr.json"
+   ],
+   "reference_diff_lines": 20,
+   "build_task": "assembleDebug",
+   "rows": [
+    {
+     "finding_id": "7030778fa5d0",
+     "unique_error_id": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault:::getOrCreateKey:::KeyGeneratorSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyGeneratorSpec accepts",
+     "spec": "KeyGeneratorSpec",
+     "class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+     "method": "getOrCreateKey",
+     "message": "the observed call sequence is not one KeyGeneratorSpec accepts",
+     "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+     "repo_url": "https://github.com/thatSFguy/meshcore-mobile-app",
+     "commit": "8f226db77a067f5de614514fe755695209868037",
+     "detector_source_location": "KeystoreSecretVault.kt:180"
+    },
+    {
+     "finding_id": "7d98a07e751d",
+     "unique_error_id": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault:::seal:::CipherSpec:::UnsatisfiedConstraint:::no generator of the key given to Cipher.init was observed",
+     "spec": "CipherSpec",
+     "class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+     "method": "seal",
+     "message": "no generator of the key given to Cipher.init was observed",
+     "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+     "repo_url": "https://github.com/thatSFguy/meshcore-mobile-app",
+     "commit": "8f226db77a067f5de614514fe755695209868037",
+     "detector_source_location": "KeystoreSecretVault.kt:69"
+    }
+   ]
+  },
+  {
+   "unit": "pr_2b8cb7f6653b",
+   "source": "pr_population",
+   "group": "aberto",
+   "finding_ids": [
+    "2b8cb7f6653b",
+    "f581e4272a46"
+   ],
+   "apk": "com.vauth.salty.debug_2.apk",
+   "repo_url": "https://github.com/vauth/salty-app",
+   "pinned_commit": "ef78cac61a4c28fa2df1b4a2bc23a7ae2c2a40b8",
+   "spec": [
+    "CipherSpec",
+    "PBEKeySpecSpec"
+   ],
+   "class": "com.vauth.salty.utils.HashUtils",
+   "method": "encode",
+   "prs": [
+    "https://github.com/Vauth/salty-app/pull/6"
+   ],
+   "original_run": "outputs/rvsec_salty_20261022/run_v3",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "violação sem impacto de segurança",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_salty_20261022/run_frozen",
+   "reference_pr_records": [
+    "outputs/rvsec_salty_20261022/run_v3/pull_requests/com.vauth.salty.debug_2.apk_encode_CipherSpec_pr.json"
+   ],
+   "reference_diff_lines": 186,
+   "build_task": "assembleDebug",
+   "rows": [
+    {
+     "finding_id": "f581e4272a46",
+     "unique_error_id": "com.vauth.salty.utils.HashUtils:::deriveKey:::PBEKeySpecSpec:::UnsatisfiedConstraint:::the second argument was not observed to come from a randomized source",
+     "spec": "PBEKeySpecSpec",
+     "class": "com.vauth.salty.utils.HashUtils",
+     "method": "deriveKey",
+     "message": "the second argument was not observed to come from a randomized source",
+     "apk": "com.vauth.salty.debug_2.apk",
+     "repo_url": "https://github.com/vauth/salty-app",
+     "commit": "ef78cac61a4c28fa2df1b4a2bc23a7ae2c2a40b8",
+     "detector_source_location": "HashUtils.kt:74"
+    },
+    {
+     "finding_id": "2b8cb7f6653b",
+     "unique_error_id": "com.vauth.salty.utils.HashUtils:::encode:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init was already reported by the specification that produced it",
+     "spec": "CipherSpec",
+     "class": "com.vauth.salty.utils.HashUtils",
+     "method": "encode",
+     "message": "the key given to Cipher.init was already reported by the specification that produced it",
+     "apk": "com.vauth.salty.debug_2.apk",
+     "repo_url": "https://github.com/vauth/salty-app",
+     "commit": "ef78cac61a4c28fa2df1b4a2bc23a7ae2c2a40b8",
+     "detector_source_location": "HashUtils.kt:31"
+    }
+   ]
+  },
+  {
+   "unit": "pr_ac1a8dd4d680",
+   "source": "pr_population",
+   "group": "fechado",
+   "finding_ids": [
+    "ac1a8dd4d680"
+   ],
+   "apk": "com.craxiom.networksurvey_114.apk",
+   "repo_url": "https://github.com/christianrowlands/android-network-survey",
+   "pinned_commit": "6352b7030268784d623162d7c5f0047215c8c3f2",
+   "spec": [
+    "KeyStoreSpec"
+   ],
+   "class": "com.craxiom.networksurvey.util.CryptoManager",
+   "method": "getOrCreateKey",
+   "prs": [
+    "https://github.com/christianrowlands/android-network-survey/pull/154"
+   ],
+   "original_run": "outputs/exp_final_20261019/run2",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "PR pronto",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_com_craxiom_networksurvey",
+   "reference_pr_records": [
+    "outputs/exp_final_20261019/run2/pull_requests/com.craxiom.networksurvey_114.apk_getOrCreateKey_KeyStoreSpec_pr.json"
+   ],
+   "reference_diff_lines": 15,
+   "build_task": ":networksurvey:assembleCdrDebug",
+   "rows": [
+    {
+     "finding_id": "ac1a8dd4d680",
+     "unique_error_id": "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts",
+     "spec": "KeyStoreSpec",
+     "class": "com.craxiom.networksurvey.util.CryptoManager",
+     "method": "getOrCreateKey",
+     "message": "the observed call sequence is not one KeyStoreSpec accepts",
+     "apk": "com.craxiom.networksurvey_114.apk",
+     "repo_url": "https://github.com/christianrowlands/android-network-survey",
+     "commit": "6352b7030268784d623162d7c5f0047215c8c3f2",
+     "detector_source_location": "CryptoManager.kt:39"
+    }
+   ]
+  },
+  {
+   "unit": "pr_39bba5f1270f",
+   "source": "pr_population",
+   "group": "fechado",
+   "finding_ids": [
+    "39bba5f1270f"
+   ],
+   "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+   "repo_url": "https://github.com/vitorpamplona/amethyst",
+   "pinned_commit": "60b29df3f03775819f57992e5ccafddf32498ede",
+   "spec": [
+    "GCMParameterSpecSpec"
+   ],
+   "class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+   "method": "decrypt",
+   "prs": [
+    "https://github.com/vitorpamplona/amethyst/pull/4642"
+   ],
+   "original_run": "outputs/rvsec_amethyst_20261024/run",
+   "original_outcome": "PR pronto",
+   "frozen_outcome": "violação sem impacto de segurança",
+   "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_amethyst_20261024/run_frozen",
+   "reference_pr_records": [
+    "outputs/rvsec_amethyst_20261024/run/pull_requests/com.vitorpamplona.amethyst.debug_464.apk_decrypt_GCMParameterSpecSpec_pr.json"
+   ],
+   "reference_diff_lines": 39,
+   "build_task": ":amethyst:assembleFdroidDebug",
+   "rows": [
+    {
+     "finding_id": "39bba5f1270f",
+     "unique_error_id": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption:::decrypt:::GCMParameterSpecSpec:::UnsatisfiedConstraint:::the IV material was not observed to come from a randomized source",
+     "spec": "GCMParameterSpecSpec",
+     "class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+     "method": "decrypt",
+     "message": "the IV material was not observed to come from a randomized source",
+     "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+     "repo_url": "https://github.com/vitorpamplona/amethyst",
+     "commit": "60b29df3f03775819f57992e5ccafddf32498ede",
+     "detector_source_location": "SecretEncryption.android.kt:177"
+    }
+   ]
+  },
+  {
+   "unit": "co_2aaa72c51c14",
+   "source": "spec_cohort",
+   "group": "no_pr",
+   "finding_ids": [
+    "2aaa72c51c14"
+   ],
+   "apk": "eu.faircode.email_2322.apk",
+   "repo_url": "https://github.com/M66B/FairEmail",
+   "pinned_commit": "4b1c9fa27a21d71fde5768fb151d4c0a5b579f16",
+   "spec": [
+    "MessageDigestSpec"
+   ],
+   "class": "eu.faircode.email.Helper",
+   "method": "getFingerprint",
+   "latest_outcome": [
+    "correção gerada, sem PR"
+   ],
+   "bench_id": [],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "2aaa72c51c14",
+     "unique_error_id": "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA1",
+     "spec": "MessageDigestSpec",
+     "class": "eu.faircode.email.Helper",
+     "method": "getFingerprint",
+     "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA1",
+     "apk": "eu.faircode.email_2322.apk",
+     "repo_url": "https://github.com/M66B/FairEmail",
+     "commit": "4b1c9fa27a21d71fde5768fb151d4c0a5b579f16",
+     "detector_source_location": "Helper.java:3307"
+    }
+   ]
+  },
+  {
+   "unit": "co_0b7656970a91",
+   "source": "spec_cohort",
+   "group": "no_pr",
+   "finding_ids": [
+    "0b7656970a91"
+   ],
+   "apk": "com.password.monitor_102.apk",
+   "repo_url": "https://github.com/StellarSand/Password-Monitor",
+   "pinned_commit": "3ef9c433cba6a0d91006eedc7acd07152ca5cde5",
+   "spec": [
+    "MessageDigestSpec"
+   ],
+   "class": "com.password.monitor.koin_di.AppModuleKt",
+   "method": "appModule$lambda$0$3",
+   "latest_outcome": [
+    "issue para o mantenedor do app"
+   ],
+   "bench_id": [],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "0b7656970a91",
+     "unique_error_id": "com.password.monitor.koin_di.AppModuleKt:::appModule$lambda$0$3:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+     "spec": "MessageDigestSpec",
+     "class": "com.password.monitor.koin_di.AppModuleKt",
+     "method": "appModule$lambda$0$3",
+     "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+     "apk": "com.password.monitor_102.apk",
+     "repo_url": "https://github.com/StellarSand/Password-Monitor",
+     "commit": "3ef9c433cba6a0d91006eedc7acd07152ca5cde5",
+     "detector_source_location": "AppModule.kt:32"
+    }
+   ]
+  },
+  {
+   "unit": "co_911173ce3742",
+   "source": "spec_cohort",
+   "group": "no_pr",
+   "finding_ids": [
+    "911173ce3742"
+   ],
+   "apk": "github.paroj.dsub2000_217.apk",
+   "repo_url": "https://github.com/paroj/DSub2000",
+   "pinned_commit": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "spec": [
+    "MessageDigestSpec"
+   ],
+   "class": "github.paroj.dsub2000.util.Util",
+   "method": "md5Hex",
+   "latest_outcome": [
+    "issue para o mantenedor do app"
+   ],
+   "bench_id": [],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "911173ce3742",
+     "unique_error_id": "github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "spec": "MessageDigestSpec",
+     "class": "github.paroj.dsub2000.util.Util",
+     "method": "md5Hex",
+     "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "apk": "github.paroj.dsub2000_217.apk",
+     "repo_url": "https://github.com/paroj/DSub2000",
+     "commit": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+     "detector_source_location": "Util.java:1006"
+    }
+   ]
+  },
+  {
+   "unit": "co_ed824f6818ef",
+   "source": "spec_cohort",
+   "group": "no_pr",
+   "finding_ids": [
+    "74f6bbf34074",
+    "e798daba25a1"
+   ],
+   "apk": "io.treehouses.remote_6098.apk",
+   "repo_url": "https://github.com/treehouses/remote",
+   "pinned_commit": "68e8e3e2be41a7a2026b3edee0bb98fb27f38afb",
+   "spec": [
+    "IvParameterSpecSpec",
+    "SecretKeySpecSpec"
+   ],
+   "class": "io.treehouses.remote.ssh.Encryptor",
+   "method": "encrypt",
+   "latest_outcome": [
+    "evidência insuficiente",
+    "evidência insuficiente"
+   ],
+   "bench_id": [],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "74f6bbf34074",
+     "unique_error_id": "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec:::UnsatisfiedConstraint:::unknown",
+     "spec": "IvParameterSpecSpec",
+     "class": "io.treehouses.remote.ssh.Encryptor",
+     "method": "encrypt",
+     "message": "unknown",
+     "apk": "io.treehouses.remote_6098.apk",
+     "repo_url": "https://github.com/treehouses/remote",
+     "commit": "68e8e3e2be41a7a2026b3edee0bb98fb27f38afb",
+     "detector_source_location": ""
+    },
+    {
+     "finding_id": "e798daba25a1",
+     "unique_error_id": "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec:::UnsatisfiedConstraint:::unknown",
+     "spec": "SecretKeySpecSpec",
+     "class": "io.treehouses.remote.ssh.Encryptor",
+     "method": "encrypt",
+     "message": "unknown",
+     "apk": "io.treehouses.remote_6098.apk",
+     "repo_url": "https://github.com/treehouses/remote",
+     "commit": "68e8e3e2be41a7a2026b3edee0bb98fb27f38afb",
+     "detector_source_location": ""
+    }
+   ]
+  },
+  {
+   "unit": "co_f637c4b8467e",
+   "source": "spec_cohort",
+   "group": "no_pr",
+   "finding_ids": [
+    "f637c4b8467e"
+   ],
+   "apk": "br.eng.thsouza.winterhold.debug_8.apk",
+   "repo_url": "https://github.com/ThHSzR/winterhold",
+   "pinned_commit": "88974cb4f8f8dde97df3017a4defb89cc5d6d0c8",
+   "spec": [
+    "PBEKeySpecSpec"
+   ],
+   "class": "br.eng.thsouza.winterhold.WebAccessUsers$Companion",
+   "method": "derive",
+   "latest_outcome": [
+    "issue para o mantenedor do app"
+   ],
+   "bench_id": [
+    "winterhold_salt"
+   ],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "f637c4b8467e",
+     "unique_error_id": "br.eng.thsouza.winterhold.WebAccessUsers$Companion:::derive:::PBEKeySpecSpec:::UnsatisfiedConstraint:::the second argument was not observed to come from a randomized source",
+     "spec": "PBEKeySpecSpec",
+     "class": "br.eng.thsouza.winterhold.WebAccessUsers$Companion",
+     "method": "derive",
+     "message": "the second argument was not observed to come from a randomized source",
+     "apk": "br.eng.thsouza.winterhold.debug_8.apk",
+     "repo_url": "https://github.com/ThHSzR/winterhold",
+     "commit": "88974cb4f8f8dde97df3017a4defb89cc5d6d0c8",
+     "detector_source_location": "WebAccessUsers.kt:121"
+    }
+   ]
+  },
+  {
+   "unit": "co_737920a862cd",
+   "source": "spec_cohort",
+   "group": "no_pr",
+   "finding_ids": [
+    "737920a862cd"
+   ],
+   "apk": "dev.herald.android.debug_1.apk",
+   "repo_url": "https://github.com/Giton22/kyllene",
+   "pinned_commit": "f7e7b418188ac057b3abd50502a4c50d82b0754c",
+   "spec": [
+    "SSLContextSpec"
+   ],
+   "class": "dev.hermeskotlin.core.gateway.ClientCerts_androidKt",
+   "method": "tlsContext",
+   "latest_outcome": [
+    "issue para o mantenedor do app"
+   ],
+   "bench_id": [
+    "herald_tls"
+   ],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "737920a862cd",
+     "unique_error_id": "dev.hermeskotlin.core.gateway.ClientCerts_androidKt:::tlsContext:::SSLContextSpec:::UnsatisfiedConstraint:::the KeyManager[] given to SSLContext.init was not observed coming from a KeyManagerFactory",
+     "spec": "SSLContextSpec",
+     "class": "dev.hermeskotlin.core.gateway.ClientCerts_androidKt",
+     "method": "tlsContext",
+     "message": "the KeyManager[] given to SSLContext.init was not observed coming from a KeyManagerFactory",
+     "apk": "dev.herald.android.debug_1.apk",
+     "repo_url": "https://github.com/Giton22/kyllene",
+     "commit": "f7e7b418188ac057b3abd50502a4c50d82b0754c",
+     "detector_source_location": "ClientCerts.android.kt:147"
+    }
+   ]
+  },
+  {
+   "unit": "co_3c8e59dbbfb4",
+   "source": "spec_cohort",
+   "group": "no_pr",
+   "finding_ids": [
+    "3c8e59dbbfb4"
+   ],
+   "apk": "de.stephanlindauer.criticalmaps_104.apk",
+   "repo_url": "https://github.com/CriticalMaps/criticalmaps-android",
+   "pinned_commit": "d78a78eb67172ae8ec9ffcde4c8124cb64db2acb",
+   "spec": [
+    "MessageDigestSpec"
+   ],
+   "class": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1",
+   "method": "SHA1",
+   "latest_outcome": [
+    "issue para o mantenedor do app"
+   ],
+   "bench_id": [],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "3c8e59dbbfb4",
+     "unique_error_id": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+     "spec": "MessageDigestSpec",
+     "class": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1",
+     "method": "SHA1",
+     "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+     "apk": "de.stephanlindauer.criticalmaps_104.apk",
+     "repo_url": "https://github.com/CriticalMaps/criticalmaps-android",
+     "commit": "d78a78eb67172ae8ec9ffcde4c8124cb64db2acb",
+     "detector_source_location": "AeSimpleSHA1.java:14"
+    }
+   ]
+  },
+  {
+   "unit": "co_0a32f516feb2",
+   "source": "spec_cohort",
+   "group": "no_pr",
+   "finding_ids": [
+    "4187ba41bc5c",
+    "f021173c7b4a"
+   ],
+   "apk": "org.cry.otp_31.apk",
+   "repo_url": "https://github.com/chrismiceli/motp",
+   "pinned_commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+   "spec": [
+    "MacSpec",
+    "SecretKeySpecSpec"
+   ],
+   "class": "org.cry.otp.TOTP",
+   "method": "hmac_sha",
+   "latest_outcome": [
+    "issue para o mantenedor do app",
+    "falso positivo reconhecido"
+   ],
+   "bench_id": [],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "4187ba41bc5c",
+     "unique_error_id": "org.cry.otp.TOTP:::hmac_sha:::MacSpec:::UnsafeAlgorithm:::expecting one of HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1",
+     "spec": "MacSpec",
+     "class": "org.cry.otp.TOTP",
+     "method": "hmac_sha",
+     "message": "expecting one of HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1",
+     "apk": "org.cry.otp_31.apk",
+     "repo_url": "https://github.com/chrismiceli/motp",
+     "commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+     "detector_source_location": "TOTP.java:47"
+    },
+    {
+     "finding_id": "f021173c7b4a",
+     "unique_error_id": "org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec:::UnsafeAlgorithm:::expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found RAW",
+     "spec": "SecretKeySpecSpec",
+     "class": "org.cry.otp.TOTP",
+     "method": "hmac_sha",
+     "message": "expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found RAW",
+     "apk": "org.cry.otp_31.apk",
+     "repo_url": "https://github.com/chrismiceli/motp",
+     "commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+     "detector_source_location": "TOTP.java:46"
+    }
+   ]
+  },
+  {
+   "unit": "co_9da181fd6978",
+   "source": "spec_cohort",
+   "group": "no_pr",
+   "finding_ids": [
+    "9da181fd6978"
+   ],
+   "apk": "org.cry.otp_31.apk",
+   "repo_url": "https://github.com/chrismiceli/motp",
+   "pinned_commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+   "spec": [
+    "MessageDigestSpec"
+   ],
+   "class": "org.cry.otp.MD5",
+   "method": "<init>",
+   "latest_outcome": [
+    "issue para o mantenedor do app"
+   ],
+   "bench_id": [],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "9da181fd6978",
+     "unique_error_id": "org.cry.otp.MD5:::<init>:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "spec": "MessageDigestSpec",
+     "class": "org.cry.otp.MD5",
+     "method": "<init>",
+     "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "apk": "org.cry.otp_31.apk",
+     "repo_url": "https://github.com/chrismiceli/motp",
+     "commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+     "detector_source_location": "MD5.java:19"
+    }
+   ]
+  },
+  {
+   "unit": "co_bdc0d1804c88",
+   "source": "spec_cohort",
+   "group": "our_pr_closed",
+   "finding_ids": [
+    "bdc0d1804c88"
+   ],
+   "apk": "com.vrem.wifianalyzer_71.apk",
+   "repo_url": "https://github.com/VREMSoftwareDevelopment/WifiAnalyzer",
+   "pinned_commit": "131c2fae4f86e54aa71d87e522a3b4874bb4e68a",
+   "spec": [
+    "MessageDigestSpec"
+   ],
+   "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+   "method": "calculateChildType",
+   "latest_outcome": [
+    "issue para o mantenedor do app"
+   ],
+   "bench_id": [],
+   "build_task": "assembleDebug",
+   "overlaps_pr_population": false,
+   "rows": [
+    {
+     "finding_id": "bdc0d1804c88",
+     "unique_error_id": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "spec": "MessageDigestSpec",
+     "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+     "method": "calculateChildType",
+     "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+     "apk": "com.vrem.wifianalyzer_71.apk",
+     "repo_url": "https://github.com/VREMSoftwareDevelopment/WifiAnalyzer",
+     "commit": "131c2fae4f86e54aa71d87e522a3b4874bb4e68a",
+     "detector_source_location": "AccessPointsAdapterData.kt:67"
+    }
+   ]
+  }
+ ]
+}

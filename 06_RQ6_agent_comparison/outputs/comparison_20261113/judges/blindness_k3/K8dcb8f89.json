@@ -1,0 +1,31 @@
+{
+ "card_id": "K8dcb8f89",
+ "card_sha256": "cd006a4c8bbdf1ea",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 10,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 5322,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 559
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.053994400000000005,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "073242d3415da327",
+ "finished_at": "2026-11-16T11:44:43-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.4,
+  "reason": "The description follows a fixed template: one line of finding summary, the line \"I found this while running the app under RVSec\", a build line naming `assembleDebug`, and \"Happy to adjust\". That pattern points to the Cognalys pipeline more than to a free-form agent. The diff looks like it went through several review rounds: it adds a versioned envelope, a fallback to the old format, and password clearing inside nested finally blocks. The code style also leans GPT: a terse catch-all with one short comment, and a password that is prefixed with its own length. So C (Cognalys on GPT-6.1 Terra) is more likely than D."
+ }
+}

@@ -1,0 +1,32 @@
+The published rule behind each report
+
+Report on SecretEncryption.decrypt (GCMParameterSpec), rule GCMParameterSpecSpec
+RVSec's record classifies this report as UnsatisfiedConstraint.
+Rule source: CrySL detector rule for javax.crypto.spec.GCMParameterSpec, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/GCMParameterSpec.crysl
+Types it governs: javax.crypto.spec.GCMParameterSpec
+Call order it requires: Con := c1 | c2; ORDER Con. One invocation of either listed GCMParameterSpec constructor is the complete modeled event sequence.
+Events it matches:
+- c1: Observed event clause: GCMParameterSpec(tagLen, src). The rule requires tagLen in {96, 104, 112, 120, 128} and randomized[src]. The global rule constraints also state length[src] >= offset + len, offset >= 0, and len > 0, but c1 does not bind offset or len; the rule text does not define how those variables are evaluated for c1. randomized[src] is a semantic provenance predicate, not a lexical requirement that a random-generator call appear in the source expression. Call shapes: `new javax.crypto.spec.GCMParameterSpec(tagLen, src)`, `new GCMParameterSpec(tagLen, src)`.
+- c2: Observed event clause: GCMParameterSpec(tagLen, src, offset, len). To satisfy the rule predicates, tagLen must be in {96, 104, 112, 120, 128}; length[src] >= offset + len; offset >= 0; len > 0; and randomized[src] must hold. These predicates concern argument values and source provenance, not merely how arguments are spelled in source. Call shapes: `new javax.crypto.spec.GCMParameterSpec(tagLen, src, offset, len)`, `new GCMParameterSpec(tagLen, src, offset, len)`.
+What RVSec checks under this rule: The CrySL rule recognizes either listed javax.crypto.spec.GCMParameterSpec constructor event, requires its declared CONSTRAINTS and REQUIRES predicates, and ENSURES preparedGCM[this].
+Requirements the rule states:
+- tagLen in {96, 104, 112, 120, 128}
+- length[src] >= offset + len
+- offset >= 0
+- len > 0
+- randomized[src]
+- preparedGCM[this] after the recognized constructor event
+Limits of the check, recorded with the rule:
+- The rule contains no Cipher.init, Cipher.doFinal, Cipher.updateAAD, key-generation, IV-reuse, or authentication-failure event.
+- The rule does not define the operational meaning or accepted evidence sources for randomized[src].
+- The rule does not define the consumption semantics of preparedGCM[this].
+- The rule text leaves c1's relationship to offset and len unresolved because those variables occur in global constraints but are not bound by c1.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- A valid use intentionally configured with a 64-bit or 32-bit GCM tag for an application for which that tag size is permitted, because the rule accepts only 96, 104, 112, 120, or 128.
+- A valid deterministic IV construction that meets the per-key uniqueness requirement but cannot satisfy a detector policy requiring randomized[src]; NIST permits deterministic as well as random-bit-generator-based IV constructions.
+- A runtime-random IV buffer whose provenance cannot be established by the detector's implementation, despite being random when passed to the constructor.
+- A legal four-argument JCA constructor call with len equal to zero, because the API's documented invalid-input conditions do not prohibit zero while the rule requires len > 0.
+- A two-argument constructor call whose analysis result depends on unspecified handling of the rule's offset and len constraints, since those variables are not present in c1.
+
+
+Earlier proposals, in other repositories, for the rule of the report on SecretEncryption.decrypt (GCMParameterSpec): none with a maintainer response.

@@ -1,0 +1,1 @@
+Created [NO_ACTION.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/O_r1/repo/NO_ACTION.md). The digest selects package-dependent scanning behavior without protecting secrets or verifying external data. No source changes were needed; no build or tests were run.

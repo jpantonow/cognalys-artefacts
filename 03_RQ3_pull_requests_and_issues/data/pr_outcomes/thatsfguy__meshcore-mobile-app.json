@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/thatSFguy/meshcore-mobile-app/pull/10",
+    "state": "merged",
+    "finding_id": "7d98a07e751d",
+    "spec": "CipherSpec",
+    "csv_class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+    "method_name": "seal",
+    "title": "Use a separate key generator for each Keystore tier",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:50.494763+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "thatSFguy",
+        "kind": "comment",
+        "body": "Thanks for this, and for the clear write-up. We read it closely: it's a small, careful change — a fresh KeyGenerator per tier means the fallback no longer depends on each vendor's Keystore resetting cleanly after a failed tier, and the existing-key path and the provider check behave exactly as before. CI passed and it's merged. Good luck with the RVSec research."
+      }
+    ]
+  }
+]

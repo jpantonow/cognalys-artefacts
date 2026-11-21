@@ -1,0 +1,902 @@
+{
+ "generated_at": "2026-11-19T01:41:52.716657+00:00",
+ "preregistration": "docs/preregistro_validacao_prs_20261115.md (desvio 5, 2026-11-17)",
+ "source": "outputs/dynamic_validation_20261114/pr_cases.json (unchanged)",
+ "build_order_rule": "after the 28 cases of pr_cases_resolved.json; accepted, open, closed_by_maintainer",
+ "counts": {
+  "cases": 7,
+  "by_status": {
+   "accepted": 3,
+   "open": 2,
+   "closed_by_maintainer": 2
+  }
+ },
+ "cases": [
+  {
+   "pr_url": "https://github.com/nextcloud/news-android/pull/1716",
+   "status": "accepted",
+   "case": "owncloudnewsreader_196",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Fix loadAppKeyStore",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-09-20T17:50:15Z",
+    "base_repo": "nextcloud/news-android",
+    "base_ref": "master",
+    "base_sha": "eff7abd1c599a3143363137ed0eab8d7ee98359d",
+    "head_repo": "jpantonow/news-android",
+    "head_ref": "fix/loadappkeystore-keystorespec-3a742828d54a-b653987a05",
+    "head_sha": "c179bb7fc6fb19305f20fb7a98ad78e1667856e6",
+    "commits": 1,
+    "changed_files": 2,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/nextcloud__news-android__1716.diff",
+   "metadata": "outputs/run_20260911_142753/pull_requests/de.luhmer.owncloudnewsreader_196.apk_loadAppKeyStore_pr.json",
+   "run_dir": "outputs/run_20260911_142753",
+   "apk": "de.luhmer.owncloudnewsreader_196.apk",
+   "spec": "KeyStoreSpec",
+   "class": "de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager",
+   "method": "loadAppKeyStore",
+   "finding_id_sources": {
+    "outcome_record": "3a742828d54a",
+    "pr_metadata": "3a742828d54a",
+    "inventory_findings": null
+   },
+   "finding_id": "3a742828d54a",
+   "spec_active": true,
+   "repo_url": "https://github.com/nextcloud/news-android",
+   "sources_csv": null,
+   "analysed_commit": null,
+   "app_packages": [
+    "de.luhmer.owncloudnewsreader"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "400ef1d93c1e46557788914949dc08ed9d9b7a39",
+   "pipeline_patch_commit": "fdedd67f191543561b0a7be9ffe3318bcf82a1ed",
+   "head_sha_is_pipeline_commit": false,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "unknown",
+   "detector_code": "__deviation5_spec_level__",
+   "message": "\u0000deviation 5: spec-level criterion, no message is compared\u0000",
+   "detector_source": null,
+   "detector_candidates": [],
+   "build": {
+    "pipeline_validation_task": ":news-android-app:assembleDevDebugAndroidTest",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "News-Android-App-dev-debug.apk",
+     "News-Android-App-oss-debug.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "News-Android-App-oss-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)",
+    "apk_glob_in_pr_cases": null
+   },
+   "base_sites": [
+    [
+     "de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager",
+     "loadAppKeyStore"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager",
+     "loadAppKeyStore"
+    ]
+   ],
+   "site_check": "declaration of 'loadAppKeyStore' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "400ef1d93c1e46557788914949dc08ed9d9b7a39",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/nextcloud__news-android__1716.diff",
+   "problems": [
+    "no detector row for de.luhmer.owncloudnewsreader_196.apk de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager.loadAppKeyStore KeyStoreSpec (global findings CSVs (the run names no findings file))",
+    "task assembleDebug builds several APKs ['News-Android-App-dev-debug.apk', 'News-Android-App-oss-debug.apk'] and the records do not say which variant RVSec analysed (no queue build.log flavour)",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: de.luhmer.owncloudnewsreader"
+   ],
+   "notes": [],
+   "complete": false,
+   "build_order": 29,
+   "inclusion": "2026-11-17 desvio 5: excluded for an old-format message; validated at spec level",
+   "deviation": "2026-11-17 desvio 5",
+   "problems_in_pr_cases": [
+    "no detector row for de.luhmer.owncloudnewsreader_196.apk de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager.loadAppKeyStore KeyStoreSpec (global findings CSVs (the run names no findings file))",
+    "task assembleDebug builds several APKs ['News-Android-App-dev-debug.apk', 'News-Android-App-oss-debug.apk'] and the records do not say which variant RVSec analysed (no queue build.log flavour)",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: de.luhmer.owncloudnewsreader"
+   ],
+   "filled": {
+    "detector_code/message": {
+     "value": "sentinels matching no report",
+     "how": "deviation 5: spec-level criterion (any violation of the spec at the site); same_message stays False"
+    },
+    "apk_glob": {
+     "value": "News-Android-App-oss-debug.apk",
+     "how": "data/raw/exp_novo/dataset.csv row de.luhmer.owncloudnewsreader_196.apk: head_build_variant 'News-Android-App-oss-debug.apk' (head_build_task 'assembleDebug', head_pinned_commit '3c4c4d5e013827f914d029227e68689f79971aa3'); pr_cases.json gave None with pipeline APKs ['News-Android-App-dev-debug.apk', 'News-Android-App-oss-debug.apk']"
+    },
+    "app_packages": {
+     "value": [
+      "de.luhmer.owncloudnewsreader"
+     ],
+     "how": "manifest package of the built base APK (build/owncloudnewsreader_196/base.badging: package: name='de.luhmer.owncloudnewsreader' versionCode='197' versionName='0.9.9.96' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVers)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/bitcraze/crazyflie-android-client/pull/103",
+   "status": "accepted",
+   "case": "crazyfliecontrol2_22",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Remove obsolete TLS socket factory from firmware downloads",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-09-25T08:57:10Z",
+    "base_repo": "bitcraze/crazyflie-android-client",
+    "base_ref": "master",
+    "base_sha": "d629c7931e699cac8b7a500fafad71c57dd97d1e",
+    "head_repo": "jpantonow/crazyflie-android-client",
+    "head_ref": "fix/init-sslcontextspec-73c0f0471033-1a143b57d4",
+    "head_sha": "9c539eac131b8c47ebddf38617084e16f7093cf8",
+    "commits": 2,
+    "changed_files": 3,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/bitcraze__crazyflie-android-client__103.diff",
+   "metadata": "outputs/run_20260902_134852/pull_requests/se.bitcraze.crazyfliecontrol2_22.apk_init_pr.json",
+   "run_dir": "outputs/run_20260902_134852",
+   "apk": "se.bitcraze.crazyfliecontrol2_22.apk",
+   "spec": "SSLContextSpec",
+   "class": "se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory",
+   "method": "<init>",
+   "finding_id_sources": {
+    "outcome_record": "73c0f0471033",
+    "pr_metadata": "73c0f0471033",
+    "inventory_findings": null
+   },
+   "finding_id": "73c0f0471033",
+   "spec_active": true,
+   "repo_url": "https://github.com/bitcraze/crazyflie-android-client",
+   "sources_csv": null,
+   "analysed_commit": null,
+   "app_packages": [
+    "se.bitcraze.crazyfliecontrol2"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "d629c7931e699cac8b7a500fafad71c57dd97d1e",
+   "pipeline_patch_commit": "941c2e2ee3c412ce4a93e38f50701af22261369b",
+   "head_sha_is_pipeline_commit": false,
+   "pr_diff_matches_pipeline_diff": false,
+   "pr_message": "expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+   "detector_code": "__deviation5_spec_level__",
+   "message": "\u0000deviation 5: spec-level criterion, no message is compared\u0000",
+   "detector_source": null,
+   "detector_candidates": [],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "1a143b57d4-debug.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "*-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory",
+     "<init>"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory",
+     "<init>"
+    ]
+   ],
+   "site_check": "synthetic or special method name '<init>': not checked against the diff",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "d629c7931e699cac8b7a500fafad71c57dd97d1e",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/bitcraze__crazyflie-android-client__103.diff",
+   "pr_merge_base": "d629c7931e699cac8b7a500fafad71c57dd97d1e",
+   "problems": [
+    "no detector row for se.bitcraze.crazyfliecontrol2_22.apk se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory.<init> SSLContextSpec (global findings CSVs (the run names no findings file))",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: se.bitcraze.crazyfliecontrol2"
+   ],
+   "notes": [
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": false,
+   "build_order": 30,
+   "inclusion": "2026-11-17 desvio 5: excluded for an old-format message; validated at spec level",
+   "deviation": "2026-11-17 desvio 5",
+   "problems_in_pr_cases": [
+    "no detector row for se.bitcraze.crazyfliecontrol2_22.apk se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory.<init> SSLContextSpec (global findings CSVs (the run names no findings file))",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: se.bitcraze.crazyfliecontrol2"
+   ],
+   "filled": {
+    "detector_code/message": {
+     "value": "sentinels matching no report",
+     "how": "deviation 5: spec-level criterion (any violation of the spec at the site); same_message stays False"
+    },
+    "app_packages": {
+     "value": [
+      "se.bitcraze.crazyfliecontrol2"
+     ],
+     "how": "manifest package of the built base APK (build/crazyfliecontrol2_22/base.badging: package: name='se.bitcraze.crazyfliecontrol2' versionCode='22' versionName='0.7.6' platformBuildVersionName='13' platformBuildVersionCode='33' compileSdkVersion)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/paroj/DSub2000/pull/160",
+   "status": "accepted",
+   "case": "dsub2000_217",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Fix <init>",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-08-31T16:11:15Z",
+    "base_repo": "paroj/DSub2000",
+    "base_ref": "edge",
+    "base_sha": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+    "head_repo": "jpantonow/DSub2000",
+    "head_ref": "fix/init-sslcontextspec-42e63cf76e71-f480a9f320",
+    "head_sha": "d7d35647f9fb25769100997573032fab47e197b5",
+    "commits": 2,
+    "changed_files": 2,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/paroj__DSub2000__160.diff",
+   "metadata": "outputs/run_20260830_145404/pull_requests/github.paroj.dsub2000_217.apk_init_pr.json",
+   "run_dir": "outputs/run_20260830_145404",
+   "apk": "github.paroj.dsub2000_217.apk",
+   "spec": "SSLContextSpec",
+   "class": "github.paroj.dsub2000.service.RESTMusicService",
+   "method": "<init>",
+   "finding_id_sources": {
+    "outcome_record": "42e63cf76e71",
+    "pr_metadata": "42e63cf76e71",
+    "inventory_findings": [
+     "f167efd80107"
+    ]
+   },
+   "finding_id": "42e63cf76e71",
+   "spec_active": true,
+   "repo_url": "https://github.com/paroj/DSub2000",
+   "sources_csv": null,
+   "analysed_commit": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "app_packages": [
+    "github.paroj.dsub2000"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "edge",
+   "pipeline_base_commit": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "pipeline_patch_commit": "db75a54703c23fa6086335635b2f06782da71c4b",
+   "head_sha_is_pipeline_commit": false,
+   "pr_diff_matches_pipeline_diff": false,
+   "pr_message": "expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+   "detector_code": "__deviation5_spec_level__",
+   "message": "\u0000deviation 5: spec-level criterion, no message is compared\u0000",
+   "detector_source": null,
+   "detector_candidates": [
+    [
+     "SSLCONTEXT-NOBS-05",
+     "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:assembleFlossDebugAndroidTest",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "debug-DSub2000_5.7.4-floss-debug.apk",
+     "debug-DSub2000_5.7.4-google-debug.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "DSub2000_5.7.4-floss-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)",
+    "apk_glob_in_pr_cases": null
+   },
+   "base_sites": [
+    [
+     "github.paroj.dsub2000.service.RESTMusicService",
+     "<init>"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "github.paroj.dsub2000.service.RESTMusicService",
+     "<init>"
+    ]
+   ],
+   "site_check": "synthetic or special method name '<init>': not checked against the diff",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/paroj__DSub2000__160.diff",
+   "pr_merge_base": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "problems": [
+    "no detector row at this site carries the PR's message 'expecting one of {TLSv1.2, TLSv1.3} but found TLS.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('SSLCONTEXT-NOBS-05', 'the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory')]",
+    "task assembleDebug builds several APKs ['debug-DSub2000_5.7.4-floss-debug.apk', 'debug-DSub2000_5.7.4-google-debug.apk'] and the records do not say which variant RVSec analysed (no queue build.log flavour)",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: github.paroj.dsub2000"
+   ],
+   "notes": [
+    "the inventory's run34 finding for this PR has another id ['f167efd80107'] (the PR came from an earlier run)",
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": false,
+   "build_order": 31,
+   "inclusion": "2026-11-17 desvio 5: excluded for an old-format message; validated at spec level",
+   "deviation": "2026-11-17 desvio 5",
+   "problems_in_pr_cases": [
+    "no detector row at this site carries the PR's message 'expecting one of {TLSv1.2, TLSv1.3} but found TLS.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('SSLCONTEXT-NOBS-05', 'the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory')]",
+    "task assembleDebug builds several APKs ['debug-DSub2000_5.7.4-floss-debug.apk', 'debug-DSub2000_5.7.4-google-debug.apk'] and the records do not say which variant RVSec analysed (no queue build.log flavour)",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: github.paroj.dsub2000"
+   ],
+   "filled": {
+    "detector_code/message": {
+     "value": "sentinels matching no report",
+     "how": "deviation 5: spec-level criterion (any violation of the spec at the site); same_message stays False"
+    },
+    "apk_glob": {
+     "value": "DSub2000_5.7.4-floss-debug.apk",
+     "how": "data/raw/exp_novo/dataset.csv row github.paroj.dsub2000_217.apk: head_build_variant 'DSub2000_5.7.4-floss-debug.apk' (head_build_task 'assembleDebug', head_pinned_commit '474f6ca847649220f7965fe95f1285d1d8b4ca64'); pr_cases.json gave None with pipeline APKs ['debug-DSub2000_5.7.4-floss-debug.apk', 'debug-DSub2000_5.7.4-google-debug.apk']"
+    },
+    "app_packages": {
+     "value": [
+      "github.paroj.dsub2000"
+     ],
+     "how": "manifest package of the built base APK (build/dsub2000_217/base.badging: package: name='github.paroj.dsub2000' versionCode='217' versionName='5.7.4' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' c)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/spacecowboy/Feeder/pull/1210",
+   "status": "open",
+   "case": "feeder_4025",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Fix trustAllCerts",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "spacecowboy/Feeder",
+    "base_ref": "master",
+    "base_sha": "328ffdee33903cbe39e00ca677f900f179f305e5",
+    "head_repo": "jpantonow/Feeder",
+    "head_ref": "fix/trustallcerts-sslcontextspec-f35c9589f426-ccb2841069",
+    "head_sha": "2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+    "commits": 3,
+    "changed_files": 2,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/spacecowboy__Feeder__1210.diff",
+   "metadata": "outputs/run_20260902_002440/pull_requests/com.nononsenseapps.feeder.play_4025.apk_trustAllCerts_pr.json",
+   "run_dir": "outputs/run_20260902_002440",
+   "apk": "com.nononsenseapps.feeder.play_4025.apk",
+   "spec": "SSLContextSpec",
+   "class": "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+   "method": "trustAllCerts",
+   "finding_id_sources": {
+    "outcome_record": "f35c9589f426",
+    "pr_metadata": "f35c9589f426",
+    "inventory_findings": [
+     "3b969f2358c1"
+    ]
+   },
+   "finding_id": "f35c9589f426",
+   "spec_active": true,
+   "repo_url": "https://github.com/spacecowboy/Feeder",
+   "sources_csv": null,
+   "analysed_commit": "617f6b5cef7d4faca72d371d34bd495f492b8940",
+   "app_packages": [
+    "com.nononsenseapps.feeder.debug"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "328ffdee33903cbe39e00ca677f900f179f305e5",
+   "pipeline_patch_commit": "67d83caaf16c2c674905cfbf356d9971a84d3c44",
+   "head_sha_is_pipeline_commit": false,
+   "pr_diff_matches_pipeline_diff": false,
+   "pr_message": "expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+   "detector_code": "__deviation5_spec_level__",
+   "message": "\u0000deviation 5: spec-level criterion, no message is compared\u0000",
+   "detector_source": null,
+   "detector_candidates": [
+    [
+     "SSLCONTEXT-NOBS-05",
+     "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:assembleFdroidDebugAndroidTest",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-fdroid-debug.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "app-fdroid-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+     "trustAllCerts"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+     "trustAllCerts"
+    ]
+   ],
+   "site_check": "declaration of 'trustAllCerts' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "328ffdee33903cbe39e00ca677f900f179f305e5",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/spacecowboy__Feeder__1210.diff",
+   "pr_merge_base": "328ffdee33903cbe39e00ca677f900f179f305e5",
+   "problems": [
+    "no detector row at this site carries the PR's message 'expecting one of {TLSv1.2, TLSv1.3} but found TLS.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('SSLCONTEXT-NOBS-05', 'the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory')]",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: com.nononsenseapps.feeder.play"
+   ],
+   "notes": [
+    "the inventory's run34 finding for this PR has another id ['3b969f2358c1'] (the PR came from an earlier run)",
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": false,
+   "build_order": 32,
+   "inclusion": "2026-11-17 desvio 5: excluded for an old-format message; validated at spec level",
+   "deviation": "2026-11-17 desvio 5",
+   "problems_in_pr_cases": [
+    "no detector row at this site carries the PR's message 'expecting one of {TLSv1.2, TLSv1.3} but found TLS.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('SSLCONTEXT-NOBS-05', 'the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory')]",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: com.nononsenseapps.feeder.play"
+   ],
+   "filled": {
+    "detector_code/message": {
+     "value": "sentinels matching no report",
+     "how": "deviation 5: spec-level criterion (any violation of the spec at the site); same_message stays False"
+    },
+    "app_packages": {
+     "value": [
+      "com.nononsenseapps.feeder.debug"
+     ],
+     "how": "manifest package of the built base APK (build/feeder_4025/base.badging: package: name='com.nononsenseapps.feeder.debug' versionCode='4092' versionName='2.23.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVe)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/etesync/android/pull/301",
+   "status": "open",
+   "case": "syncadapter_20700",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Filter legacy TLS protocols without pinning TLS versions",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "etesync/android",
+    "base_ref": "master",
+    "base_sha": "e1de5c281729e656ec755ee41f140ffe6411ade0",
+    "head_repo": "jpantonow/android",
+    "head_ref": "fix/build-sslcontextspec-d28032440293-7704eb55e9",
+    "head_sha": "d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+    "commits": 2,
+    "changed_files": 3,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/etesync__android__301.diff",
+   "metadata": "outputs/run_20260829_224334/pull_requests/com.etesync.syncadapter_20700.apk_build_pr.json",
+   "run_dir": "outputs/run_20260829_224334",
+   "apk": "com.etesync.syncadapter_20700.apk",
+   "spec": "SSLContextSpec",
+   "class": "com.etesync.syncadapter.HttpClient$Builder",
+   "method": "build",
+   "finding_id_sources": {
+    "outcome_record": "d28032440293",
+    "pr_metadata": "d28032440293",
+    "inventory_findings": null
+   },
+   "finding_id": "d28032440293",
+   "spec_active": true,
+   "repo_url": "https://github.com/etesync/android",
+   "sources_csv": null,
+   "analysed_commit": null,
+   "app_packages": [
+    "com.etesync.syncadapter"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "e1de5c281729e656ec755ee41f140ffe6411ade0",
+   "pipeline_patch_commit": "d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": false,
+   "pr_message": "expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+   "detector_code": "__deviation5_spec_level__",
+   "message": "\u0000deviation 5: spec-level criterion, no message is compared\u0000",
+   "detector_source": null,
+   "detector_candidates": [],
+   "build": {
+    "pipeline_validation_task": ":app:assembleDebugAndroidTest",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "debug-app-debug.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)",
+    "apk_glob_in_pr_cases": "debug-app-debug.apk"
+   },
+   "base_sites": [
+    [
+     "com.etesync.syncadapter.HttpClient$Builder",
+     "build"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.etesync.syncadapter.HttpClient$Builder",
+     "build"
+    ]
+   ],
+   "site_check": "declaration of 'build' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "e1de5c281729e656ec755ee41f140ffe6411ade0",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/etesync__android__301.diff",
+   "pr_merge_base": "e1de5c281729e656ec755ee41f140ffe6411ade0",
+   "problems": [
+    "no detector row for com.etesync.syncadapter_20700.apk com.etesync.syncadapter.HttpClient$Builder.build SSLContextSpec (global findings CSVs (the run names no findings file))",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: com.etesync.syncadapter"
+   ],
+   "notes": [
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": false,
+   "build_order": 33,
+   "inclusion": "2026-11-17 desvio 5: excluded for an old-format message; validated at spec level",
+   "deviation": "2026-11-17 desvio 5",
+   "problems_in_pr_cases": [
+    "no detector row for com.etesync.syncadapter_20700.apk com.etesync.syncadapter.HttpClient$Builder.build SSLContextSpec (global findings CSVs (the run names no findings file))",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: com.etesync.syncadapter"
+   ],
+   "filled": {
+    "detector_code/message": {
+     "value": "sentinels matching no report",
+     "how": "deviation 5: spec-level criterion (any violation of the spec at the site); same_message stays False"
+    },
+    "apk_glob": {
+     "value": "app-debug.apk",
+     "how": "data/raw/exp_novo/dataset.csv row com.etesync.syncadapter_20700.apk: head_build_variant 'app-debug.apk' (head_build_task 'assembleDebug', head_pinned_commit 'e1de5c281729e656ec755ee41f140ffe6411ade0'); pr_cases.json gave 'debug-app-debug.apk' with pipeline APKs ['debug-app-debug.apk']"
+    },
+    "app_packages": {
+     "value": [
+      "com.etesync.syncadapter"
+     ],
+     "how": "manifest package of the built base APK (build/syncadapter_20700/base.badging: package: name='com.etesync.syncadapter' versionCode='20700' versionName='2.7.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='3)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/Wilm0r/giggity/pull/543",
+   "status": "closed_by_maintainer",
+   "case": "giggity_769",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Fix hashCode",
+    "state": "closed",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "Wilm0r/giggity",
+    "base_ref": "master",
+    "base_sha": "d310621c6f622364348c3208dcb081f41caa20cf",
+    "head_repo": "jpantonow/giggity",
+    "head_ref": "fix/hashcode-messagedigestspec-0638946f7e4a-f31cc7ae53-5",
+    "head_sha": "d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+    "commits": 3,
+    "changed_files": 2,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/Wilm0r__giggity__543.diff",
+   "metadata": "outputs/run_20260906_080507/pull_requests/net.gaast.giggity_769.apk_hashCode_pr.json",
+   "run_dir": "outputs/run_20260906_080507",
+   "apk": "net.gaast.giggity_769.apk",
+   "spec": "MessageDigestSpec",
+   "class": "net.gaast.giggity.Schedule$Item",
+   "method": "hashCode",
+   "finding_id_sources": {
+    "outcome_record": "0638946f7e4a",
+    "pr_metadata": "0638946f7e4a",
+    "inventory_findings": [
+     "6eb0c69fa93c"
+    ]
+   },
+   "finding_id": "0638946f7e4a",
+   "spec_active": true,
+   "repo_url": "https://github.com/Wilm0r/giggity",
+   "sources_csv": null,
+   "analysed_commit": "122b04236191cff9fba621fee9a176410ab8062f",
+   "app_packages": [
+    "net.gaast.giggity"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "d310621c6f622364348c3208dcb081f41caa20cf",
+   "pipeline_patch_commit": "d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": false,
+   "pr_message": "expecting one of {SHA-256, SHA-384, SHA-512} but found MD5.",
+   "detector_code": "__deviation5_spec_level__",
+   "message": "\u0000deviation 5: spec-level criterion, no message is compared\u0000",
+   "detector_source": null,
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ALG-02",
+     "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:testDebugUnitTest",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "debug-app-debug.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)",
+    "apk_glob_in_pr_cases": "debug-app-debug.apk"
+   },
+   "base_sites": [
+    [
+     "net.gaast.giggity.Schedule$Item",
+     "hashCode"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "net.gaast.giggity.Schedule$Item",
+     "hashCode"
+    ]
+   ],
+   "site_check": "declaration of 'hashCode' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "d310621c6f622364348c3208dcb081f41caa20cf",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/Wilm0r__giggity__543.diff",
+   "pr_merge_base": "d310621c6f622364348c3208dcb081f41caa20cf",
+   "problems": [
+    "no detector row at this site carries the PR's message 'expecting one of {SHA-256, SHA-384, SHA-512} but found MD5.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('MESSAGEDIGEST-ALG-02', 'expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5')]",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: net.gaast.giggity"
+   ],
+   "notes": [
+    "the inventory's run34 finding for this PR has another id ['6eb0c69fa93c'] (the PR came from an earlier run)",
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": false,
+   "build_order": 34,
+   "inclusion": "2026-11-17 desvio 5: excluded for an old-format message; validated at spec level",
+   "deviation": "2026-11-17 desvio 5",
+   "problems_in_pr_cases": [
+    "no detector row at this site carries the PR's message 'expecting one of {SHA-256, SHA-384, SHA-512} but found MD5.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('MESSAGEDIGEST-ALG-02', 'expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5')]",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: net.gaast.giggity"
+   ],
+   "filled": {
+    "detector_code/message": {
+     "value": "sentinels matching no report",
+     "how": "deviation 5: spec-level criterion (any violation of the spec at the site); same_message stays False"
+    },
+    "apk_glob": {
+     "value": "app-debug.apk",
+     "how": "data/raw/exp_novo/dataset.csv row net.gaast.giggity_769.apk: head_build_variant 'app-debug.apk' (head_build_task 'assembleDebug', head_pinned_commit '122b04236191cff9fba621fee9a176410ab8062f'); pr_cases.json gave 'debug-app-debug.apk' with pipeline APKs ['debug-app-debug.apk']"
+    },
+    "app_packages": {
+     "value": [
+      "net.gaast.giggity"
+     ],
+     "how": "manifest package of the built base APK (build/giggity_769/base.badging: package: name='net.gaast.giggity' versionCode='769' versionName='3.0.1' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compi)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer/pull/618",
+   "status": "closed_by_maintainer",
+   "case": "wifianalyzer_71",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Fix calculateChildType",
+    "state": "closed",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "VREMSoftwareDevelopment/WiFiAnalyzer",
+    "base_ref": "main",
+    "base_sha": "725d527cb4d47f90f5b1f5e7a4d3ecad33453c2c",
+    "head_repo": "jpantonow/WiFiAnalyzer",
+    "head_ref": "fix/calculatechildtype-messagedigestspec-9564e018f0f4-c230e7cb79-4",
+    "head_sha": "0b96b39f1be3a4478687c366aa1f7afd589d612f",
+    "commits": 1,
+    "changed_files": 4,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/VREMSoftwareDevelopment__WiFiAnalyzer__618.diff",
+   "metadata": "outputs/run_20260824_112933/pull_requests/com.vrem.wifianalyzer_71.apk_calculateChildType_pr.json",
+   "run_dir": "outputs/run_20260824_112933",
+   "apk": "com.vrem.wifianalyzer_71.apk",
+   "spec": "MessageDigestSpec",
+   "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+   "method": "calculateChildType",
+   "finding_id_sources": {
+    "outcome_record": "9564e018f0f4",
+    "pr_metadata": "9564e018f0f4",
+    "inventory_findings": null
+   },
+   "finding_id": "9564e018f0f4",
+   "spec_active": true,
+   "repo_url": "https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer",
+   "sources_csv": null,
+   "analysed_commit": "131c2fae4f86e54aa71d87e522a3b4874bb4e68a",
+   "app_packages": [
+    "com.vrem.wifianalyzer.BETA"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "725d527cb4d47f90f5b1f5e7a4d3ecad33453c2c",
+   "pipeline_patch_commit": "0b96b39f1be3a4478687c366aa1f7afd589d612f",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of {SHA-256, SHA-384, SHA-512} but found MD5.",
+   "detector_code": "__deviation5_spec_level__",
+   "message": "\u0000deviation 5: spec-level criterion, no message is compared\u0000",
+   "detector_source": null,
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ALG-02",
+     "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": null,
+    "pipeline_production_status": null,
+    "pipeline_apks": [],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": null,
+    "apk_glob_in_pr_cases": null
+   },
+   "base_sites": [
+    [
+     "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+     "calculateChildType"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+     "calculateChildType"
+    ]
+   ],
+   "site_check": "declaration of 'calculateChildType' in 1 removed / 1 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": null,
+   "non_gradle": null,
+   "build_commit": "725d527cb4d47f90f5b1f5e7a4d3ecad33453c2c",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/VREMSoftwareDevelopment__WiFiAnalyzer__618.diff",
+   "problems": [
+    "no detector row at this site carries the PR's message 'expecting one of {SHA-256, SHA-384, SHA-512} but found MD5.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('MESSAGEDIGEST-ALG-02', 'expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5')]",
+    "no APK-producing build task: pipeline production build not recorded (assembleDebug), and no queue build.log line for this APK",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: com.vrem.wifianalyzer",
+    "build system not established (no Gradle build record)"
+   ],
+   "notes": [],
+   "complete": false,
+   "build_order": 35,
+   "inclusion": "2026-11-17 desvio 5: excluded for an old-format message; validated at spec level",
+   "deviation": "2026-11-17 desvio 5",
+   "problems_in_pr_cases": [
+    "no detector row at this site carries the PR's message 'expecting one of {SHA-256, SHA-384, SHA-512} but found MD5.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('MESSAGEDIGEST-ALG-02', 'expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5')]",
+    "no APK-producing build task: pipeline production build not recorded (assembleDebug), and no queue build.log line for this APK",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: com.vrem.wifianalyzer",
+    "build system not established (no Gradle build record)"
+   ],
+   "filled": {
+    "detector_code/message": {
+     "value": "sentinels matching no report",
+     "how": "deviation 5: spec-level criterion (any violation of the spec at the site); same_message stays False"
+    },
+    "apk_glob": {
+     "value": "app-debug.apk",
+     "how": "data/raw/exp_novo/dataset.csv row com.vrem.wifianalyzer_71.apk: head_build_variant 'app-debug.apk' (head_build_task 'assembleDebug', head_pinned_commit '131c2fae4f86e54aa71d87e522a3b4874bb4e68a'); pr_cases.json gave None with pipeline APKs []"
+    },
+    "build_task": {
+     "value": "assembleDebug",
+     "how": "dataset.csv head_build_task 'assembleDebug'; the pipeline's validation task was 'assembleDebug' (success)"
+    },
+    "app_packages": {
+     "value": [
+      "com.vrem.wifianalyzer.BETA"
+     ],
+     "how": "manifest package of the built base APK (build/wifianalyzer_71/base.badging: package: name='com.vrem.wifianalyzer.BETA' versionCode='72' versionName='3.3.1.5-BETA' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVer)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK"
+    }
+   },
+   "unresolved": []
+  }
+ ]
+}

@@ -1,0 +1,150 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The primary rule does not define the operational meaning of `preparedAlg`, `preparedIV`, `preparedDH`, `preparedPBE`, or `preparedOAEP`; their meaning depends on other detector rules and on analysis-engine handling of predicates, aliases, calls, and paths.",
+      "The rule contains no `if(...)`, lock-state, or other explicit runtime predicate. Its algorithm-membership and `prepared*` requirements are detector constraints over bound values and facts, not source-spelling tests.",
+      "The rule does not represent `getParameterSpec`, `getAlgorithm`, `getProvider`, constructors, provider registration, or any `Cipher` calls."
+    ],
+    "predicates": [
+      "The rule requires `preparedAlg[params, algorithm]` and ensures `preparedAlg[this, algorithm]` after `Init` and `preparedAlg[encParams, algorithm]` after `GetEncoded`.",
+      "For `init(paramSpec)`, the rule additionally requires `preparedIV[paramSpec]` for `AES`, `preparedDH[paramSpec]` for `DiffieHellman` or `DH`, `preparedPBE[paramSpec]` for the eight listed PBE algorithms, and `preparedOAEP[paramSpec]` for `OAEP`.",
+      "Related CrySL rules are the apparent producers of the parameter-spec predicates: the `IvParameterSpec`, `DHParameterSpec`, `PBEParameterSpec`, and `OAEPParameterSpec` rules."
+    ],
+    "claim": "The detector accepts only the rule's `Get → Init → GetEncoded?` trace, its fixed algorithm allow-list, and its required abstract preparation facts. It ensures the stated `preparedAlg` facts after represented successful events."
+  },
+  "unknowns": [
+    "Whether CrySL `in { ... }` comparison is case-sensitive, normalized, alias-aware, or based only on statically resolved literal values is not stated by the consulted rule.",
+    "The analysis-engine meaning of the global `preparedAlg[params, algorithm]` requirement when `init(paramSpec)` is selected, and `params` is not bound by that event alternative, is not stated in the rule text.",
+    "The detector's exact interprocedural, alias, reflection, exception-path, subtype, and dynamic-dispatch behavior is not established by this CrySL source. No `target(T)` or `args(T)` clause appears from which subtype behavior could be derived.",
+    "The rule does not explain why its allow-list excludes standard `AlgorithmParameters` names such as `GCM`, or whether the list targets a particular JDK or provider generation.",
+    "The rule URL names the mutable `master` branch; its contents can change in a future fetch.",
+    "JCA documentation does not define the detector's `prepared*` predicates.",
+    "Support for a particular algorithm, parameter-spec implementation, encoding, alias, or format depends on the selected provider and deployment.",
+    "The API documentation does not identify the detector allow-list as a security policy, compatibility subset, or historical support set."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "`java.security.AlgorithmParameters` is JCA's opaque representation of cryptographic parameters. `getInstance` obtains a parameter object for a requested algorithm from an applicable provider; the object is subsequently initialized with a parameter specification or encoded parameters.",
+      "`init(AlgorithmParameterSpec)` initializes from a specification. `init(byte[])` initializes by decoding the primary encoding, and `init(byte[], String)` initializes by decoding the named encoding.",
+      "`getEncoded()` returns the primary encoding, and `getEncoded(String)` returns the named encoding."
+    ],
+    "preconditions": [
+      "`getInstance` rejects a null algorithm and fails when no appropriate provider implementation is available. Provider-selecting overloads have provider availability and null requirements.",
+      "The documented `init` overloads can fail when a specification is inappropriate, decoding fails, or the object was already initialized.",
+      "`getEncoded` can fail on encoding error or if the object has not been initialized. For the documented format-taking overloads, a null format denotes the primary encoding format."
+    ],
+    "unknowns": [
+      "JCA does not expose runtime checks named `preparedAlg`, `preparedIV`, `preparedDH`, `preparedPBE`, or `preparedOAEP`.",
+      "Provider-specific algorithm support, aliases, accepted parameter-spec implementations, and encoding formats require deployment-specific evidence."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/AlgorithmParameters.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IvParameterSpec.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/DHParameterSpec.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PBEParameterSpec.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/OAEPParameterSpec.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/AlgorithmParameters.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/spec/AlgorithmParameterSpec.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Rule clauses are `g1: getInstance(algorithm)` and `g2: getInstance(algorithm, _)`. The `algorithm` binding must satisfy `algorithm in {\"AES\", \"DiffieHellman\", \"DH\", \"OAEP\", \"PBEWithHmacSHA224AndAES_128\", \"PBEWithHmacSHA256AndAES_128\", \"PBEWithHmacSHA384AndAES_128\", \"PBEWithHmacSHA512AndAES_128\", \"PBEWithHmacSHA224AndAES_256\", \"PBEWithHmacSHA256AndAES_256\", \"PBEWithHmacSHA384AndAES_256\", \"PBEWithHmacSHA512AndAES_256\"}`. `_` is an unconstrained second CrySL argument; the rule adds no provider condition. This is a detector constraint over the bound argument, not an explicit runtime `if` condition or a requirement that source use the name `algorithm`.",
+      "name": "Get",
+      "api_patterns": [
+        "AlgorithmParameters.getInstance("
+      ]
+    },
+    {
+      "condition": "Rule clauses are `i1: init(paramSpec)`, `i2: init(params)`, and `i3: init(params, _)`. The REQUIRES block states `preparedAlg[params, algorithm]`. For `paramSpec`, it additionally requires `preparedIV[paramSpec]` for `AES`; `preparedDH[paramSpec]` for `DiffieHellman` or `DH`; `preparedPBE[paramSpec]` for the listed PBE algorithms; and `preparedOAEP[paramSpec]` for `OAEP`. These are abstract detector facts, not JCA-documented runtime checks. The treatment of `params` for the `i1` alternative is unresolved by the rule text.",
+      "name": "Init",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Rule clauses are `e1: encParams = getEncoded()` and `e2: encParams = getEncoded(format)`. This event is optional in the ORDER expression and has no separate REQUIRES clause. The rule ensures `preparedAlg[encParams, algorithm]` afterward. `encParams` and `format` are CrySL bindings, not required source variable names.",
+      "name": "GetEncoded",
+      "api_patterns": [
+        ".getEncoded()",
+        ".getEncoded("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "This is a custom CrySL typestate-and-predicate rule for `java.security.AlgorithmParameters`, not the JCA specification itself. It checks a fixed algorithm allow-list, event order, and abstract preparation facts. It does not itself prove provider acceptance, successful parameter decoding, an encryption or decryption operation, interoperability, nonce quality, password strength, or security of a complete cryptographic construction.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that an algorithm outside this fixed allow-list is invalid under JCA or unsupported by the installed provider.",
+    "Do not infer that a standard JCA algorithm name is rejected merely because its capitalization differs from a rule literal. Java Security Standard Algorithm Names are not case-sensitive, while this rule's comparison normalization is unresolved.",
+    "Do not infer that any use of `AlgorithmParameterSpec` is governed by this rule. The governed receiver type is `java.security.AlgorithmParameters`; `AlgorithmParameterSpec` is only one possible `init` argument type.",
+    "Do not infer that a `prepared*` predicate denotes a JCA runtime property, successful decoding, nonce uniqueness, password strength, or general cryptographic safety.",
+    "Do not infer cipher mode, padding, key size, authenticated-encryption properties, or an actual encryption/decryption operation from this rule.",
+    "Do not infer from a finding or its absence the runtime provider, actual dynamic algorithm value, dispatch target, or outcome of `init`."
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, JCA resolves `getInstance` through providers, and the selected provider processes the supplied specification or encoded bytes during `init`; documented methods may throw exceptions. JCA does not document runtime checks named by this rule's `prepared*` predicates.",
+    "equivalent": false,
+    "detector_claim": "The detector claims only conformance with this CrySL rule's represented order, fixed algorithm strings, and abstract preparation-predicate requirements. This is not equivalent to successful runtime initialization, provider interoperability, or cryptographic security; a JCA-valid and provider-supported algorithm can be outside the rule allow-list."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Identify the Java runtime version, installed providers, provider ordering, and explicit-provider selection, because `getInstance` resolution is provider-dependent.",
+      "Compare requested names with Java Security Standard Algorithm Names and relevant provider documentation. The standard-name specification lists `GCM` among `AlgorithmParameters` algorithms, while this CrySL rule does not.",
+      "Treat provider-specific algorithms and aliases as deployment-specific absent applicable provider documentation and runtime configuration."
+    ],
+    "runtime": [
+      "Observe the algorithm value and selected provider on the executed path, including values assembled through configuration, wrappers, aliases, or data flow.",
+      "Confirm that the selected provider supplies the requested `AlgorithmParameters` implementation and accepts the actual specification or encoded bytes.",
+      "Where a preparation predicate affects the assessment, obtain concrete evidence for the origin and contents of the relevant bytes or parameter specification; a predicate name is not runtime evidence."
+    ],
+    "source_level": [
+      "Establish that the relevant receiver is `java.security.AlgorithmParameters`, rather than a namesake type or merely an `AlgorithmParameterSpec` value.",
+      "Trace the same parameter object through represented `getInstance`, `init`, and optional `getEncoded` calls in the rule order.",
+      "Resolve the value bound to the `algorithm` argument and compare it with the rule's literal allow-list.",
+      "For byte-array initialization, establish detector-recognized provenance for `preparedAlg[params, algorithm]`; for specification initialization, establish the algorithm-conditional predicate on the actual parameter-spec object."
+    ]
+  },
+  "name": "AlgorithmParametersSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/AlgorithmParameters.crysl",
+  "applies_to_types": [
+    "java.security.AlgorithmParameters"
+  ],
+  "source_title": "Crypto-API-Rules AlgorithmParameters.crysl (`SPEC java.security.AlgorithmParameters`)",
+  "semantic_scope": "For every finding of this rule, the detector observes a trace rooted at `java.security.AlgorithmParameters`: one represented `getInstance` form, followed by one represented `init` form, followed optionally by one represented `getEncoded` form. It constrains the bound requested algorithm to a fixed list and requires abstract preparation predicates for encoded bytes or algorithm-specific parameter specifications. The rule contains no AspectJ `target(...)` or `args(...)` clause.",
+  "spec_id": "AlgorithmParametersSpec",
+  "known_false_positive_shapes": [
+    "A program requests a JCA-standard `AlgorithmParameters` name omitted from the CrySL allow-list. In particular, the Java Security Standard Algorithm Names specification lists `GCM` for `AlgorithmParameters`, but this rule does not list `GCM`; that is a rule-policy/API-name mismatch shape, not proof that any use is secure or supported in a particular deployment.",
+    "A provider-supported or newer standard `AlgorithmParameters` name is absent from the fixed rule list; Java implementations may support additional algorithms.",
+    "Valid encoded bytes or a valid parameter specification originate outside detector-recognized predicate-producing flows, so `preparedAlg` or a parameter-specific `prepared*` fact is unavailable despite successful runtime behavior.",
+    "A standard algorithm name differs in capitalization or is an alias. Standard names are case-insensitive, but the detector's normalization and alias behavior are unresolved.",
+    "Receiver identity, control flow, reflection, wrappers, or interprocedural data flow obscures an otherwise valid `Get → Init → optional GetEncoded` sequence."
+  ],
+  "protocol": "Get → Init → GetEncoded?, where Get := g1 | g2; Init := i1 | i2 | i3; GetEncoded := e1 | e2",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/AlgorithmParameters.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:java.security.AlgorithmParameters"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+        "method": "decrypt",
+        "message": "expecting one of AES,DiffieHellman,DH,OAEP,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256 but found GCM"
+      }
+    ],
+    "expected_api_simple_name": "AlgorithmParameters",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:java.security.AlgorithmParameters",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/AlgorithmParameters.crysl"
+  }
+}

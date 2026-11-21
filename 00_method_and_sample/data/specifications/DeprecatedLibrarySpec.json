@@ -1,0 +1,158 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The representative finding does not provide the exact imported Joda-Time classes, resolved call signature, dependency version, or build configuration.",
+      "Call-shaped source text is weaker evidence than semantic symbol resolution.",
+      "The detector message does not prove that a Joda-Time API member is annotated with Java's @Deprecated annotation.",
+      "The detector does not prove a vulnerability, exploit path, reachable execution, shipped artifact, or failed compatibility migration."
+    ],
+    "predicates": [
+      "A source reference or call resolves to a class from the joda-time artifact, ordinarily in the org.joda.time namespace.",
+      "The source location belongs to the analyzer's selected scope and build variant.",
+      "The rule's library-classification metadata maps the resolved library/API use to the Joda-Time migration concern."
+    ],
+    "claim": "A Joda-Time library/API use is detected in analyzed source and classified as a deprecated-library migration concern; the reported message identifies java.time, including Android desugared support where applicable, as the intended replacement family."
+  },
+  "unknowns": [
+    "Which exact Joda-Time class, constructor, factory, and method call caused the representative finding.",
+    "Which joda-time version and dependency path are resolved for the analyzed artifact.",
+    "Whether the referenced source is compiled and packaged for production.",
+    "Whether the finding concerns direct code use, a transitive dependency, or generated source.",
+    "Whether a concrete security advisory applies to the resolved version.",
+    "Whether the target Android deployment requires desugaring and, if so, whether every needed java.time API is supported.",
+    "Whether java.time substitution is behaviorally equivalent for the actual patterns, chronology, locale, and time-zone semantics."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "Joda-Time publishes org.joda.time as its Java module and documents DateTime plus a formatter/parser API.",
+      "org.joda.time.format.DateTimeFormatter formats and parses Joda-Time values; documented parsing behavior can involve chronology, formatter override settings, and default time-zone behavior.",
+      "java.time.format.DateTimeFormatter creates pattern-based formatters and formats TemporalAccessor instances. Its pattern language, resolver behavior, locale handling, and zone requirements must be evaluated independently from Joda-Time behavior.",
+      "Android documents that a subset of java.time is available through core-library desugaring and publishes a per-API support table."
+    ],
+    "preconditions": [
+      "For a Joda-Time formatter call, the formatter factory/result and target value must resolve to the documented Joda-Time types.",
+      "For java.time formatting, the supplied TemporalAccessor must provide fields required by the formatter; formatting can throw DateTimeException.",
+      "For Android use below native platform availability, the exact java.time APIs used must be supported by the configured core-library-desugaring version and selected build variant."
+    ],
+    "unknowns": [
+      "The exact Joda-Time formatter, pattern, locale, chronology, time zone, parse mode, and source/target temporal types used by the reported code are not provided.",
+      "Whether the analyzed Android build enables core-library desugaring is not provided.",
+      "Whether a candidate java.time formatter API is supported by the actual Android Gradle Plugin and desugared-library versions is not provided."
+    ]
+  },
+  "authoritative_sources": [
+    "https://www.joda.org/joda-time/",
+    "https://www.joda.org/joda-time/apidocs/org/joda/time/DateTime.html",
+    "https://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormatter.html",
+    "https://cwe.mitre.org/data/definitions/1104.html",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html",
+    "https://developer.android.com/studio/write/java8-support",
+    "https://developer.android.com/studio/write/java8-support-table",
+    "https://top10.owasp.org/A06_2021-Vulnerable_and_Outdated_Components/"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observation: source contains a Joda-Time import or type reference. Predicate: symbol resolution must confirm binding to the joda-time artifact rather than text in a comment or string, or a same-named local type.",
+      "name": "joda_time_type_reference_observed",
+      "api_patterns": [
+        "import org.joda.time.",
+        "org.joda.time.DateTime",
+        "org.joda.time.format.DateTimeFormatter"
+      ]
+    },
+    {
+      "condition": "Observation: a formatter-factory call is present. Predicate: the receiver must resolve to org.joda.time.format.DateTimeFormat and the resulting value or invocation must be part of compiled source for the analyzed variant.",
+      "name": "joda_time_formatter_factory_call_observed",
+      "api_patterns": [
+        "DateTimeFormat.forPattern(",
+        "DateTimeFormat.forStyle(",
+        "DateTimeFormat.shortDate(",
+        "DateTimeFormat.mediumDate("
+      ]
+    },
+    {
+      "condition": "Observation: formatting/parsing-like syntax is present near a Joda-Time formatter reference. Predicate: method resolution must establish that the invoked member belongs to org.joda.time.format.DateTimeFormatter; the textual substrings alone do not establish this.",
+      "name": "joda_time_format_or_parse_use_observed",
+      "api_patterns": [
+        "DateTimeFormatter",
+        ".print(",
+        ".parseDateTime("
+      ]
+    }
+  ],
+  "source_verified": false,
+  "important_note": "DeprecatedLibrarySpec is a detector concern label, not an API class, protocol, CrySL rule, or governed type named DeprecatedLibrarySpec. The consulted Joda-Time maintainer source describes the project as largely finished, with no major enhancements planned, and directs Java SE 8 users toward java.time. This does not establish that every Joda-Time API is annotated @Deprecated, that every installed version is vulnerable, or that a particular finding is exploitable. The representative finding provides a Joda-Time library message but not its resolved AST call target; the listed types are limited to documented Joda-Time date-formatting types consistent with the reported formatting context.",
+  "forbidden_inferences_without_evidence": [
+    "That a type, API, framework specification, or CrySL rule named DeprecatedLibrarySpec exists.",
+    "That the reported application method calls any particular Joda-Time member beyond what resolved source or bytecode proves.",
+    "That every org.joda.time type or method is itself annotated @Deprecated.",
+    "That the dependency is unmaintained, end-of-life, vulnerable, or absent from vendor support merely because the detector emits this migration message.",
+    "That a known CVE affects the resolved joda-time version.",
+    "That java.time replacement APIs are available on every Android device configuration without checking minSdkVersion, Android Gradle Plugin configuration, and the exact desugared API table.",
+    "That migration preserves parser behavior, chronology, locale, time-zone, default-zone, resolver, or formatting-pattern semantics.",
+    "That the finding reaches production code rather than test, debug-only, generated, dead, compile-only, or excluded source."
+  ],
+  "security_semantics": {
+    "runtime_claim": "Executing Joda-Time formatting or parsing does not by itself demonstrate a vulnerability or a CWE-1104 condition. A runtime security claim requires evidence about the shipped dependency version, maintenance/support status relevant to that version, exposure, and an applicable vulnerability or security consequence.",
+    "equivalent": false,
+    "detector_claim": "The detector identifies use of a library whose maintainers describe it as largely finished and direct Java SE 8 users toward java.time."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Exact Joda-Time parsing/formatting patterns, locale, chronology, default-zone, explicit-zone, and error-handling behavior.",
+      "Exact target java.time types and formatter APIs.",
+      "Android minSdkVersion, Android Gradle Plugin version, core-library-desugaring configuration, desugar_jdk_libs version, and confirmation in the official desugared API support table.",
+      "Behavioral comparison covering time zones, daylight-saving transitions, locale output, invalid input, partial temporal values, and parser resolution."
+    ],
+    "runtime": [
+      "Artifact/package evidence that the resolved joda-time dependency is shipped in the relevant runtime artifact.",
+      "Reachability evidence that the identified code path executes in the relevant deployment.",
+      "If asserting a security issue, an applicable advisory/CVE, affected version range, and exposure path."
+    ],
+    "source_level": [
+      "Resolved import, type, constructor, factory, or method-call evidence binding the finding to the joda-time artifact.",
+      "Resolved dependency coordinates and version for the analyzed build variant.",
+      "Exact source scope classification: production, test, debug, generated, compile-only, or excluded."
+    ]
+  },
+  "name": "DeprecatedLibrarySpec",
+  "source_url": "https://www.joda.org/joda-time/",
+  "applies_to_types": [
+    "org.joda.time.DateTime",
+    "org.joda.time.format.DateTimeFormat",
+    "org.joda.time.format.DateTimeFormatter"
+  ],
+  "source_title": "Joda-Time — Home",
+  "semantic_scope": "For every finding of this rule, the detector observes source-level use of the Joda-Time library or a resolved Joda-Time API reference and labels that library use as a deprecated-library migration concern. It does not, from that observation alone, establish a specific Joda-Time version, a vulnerable dependency graph, a runtime invocation, Android desugaring configuration, or a security impact.",
+  "spec_id": "DeprecatedLibrarySpec",
+  "known_false_positive_shapes": [
+    "A comment, string literal, documentation snippet, or generated text contains org.joda.time syntax but no resolved Joda-Time symbol is used.",
+    "The matching code exists only in tests, benchmarks, samples, debug sources, or a build variant not shipped to users.",
+    "A transitive, compile-only, excluded, or dependency-substituted joda-time artifact is not packaged into the analyzed runtime artifact.",
+    "A same-named local type or wrapper causes lexical matching without binding to org.joda.time.",
+    "A formatter-like method call is present, but method resolution shows that it is not org.joda.time.format.DateTimeFormatter.",
+    "The dependency remains intentionally supported through a separate maintenance or vendor arrangement not represented by the detector's generic library classification.",
+    "A migration has already occurred on the executed path while stale Joda-Time references remain in unreachable or non-production code."
+  ],
+  "protocol": "resolve joda-time dependency -> resolve Joda-Time symbol reference or formatter-factory call -> classify library use as a migration concern -> separately verify java.time/desugaring compatibility",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "de.danoeh.antennapod.core.util.DateUtils",
+        "method": "formatDate",
+        "message": "joda-time library is deprecated. Migrate to java.time (Desugared)."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "governs_unevidenced_library_type",
+    "detail": "none of the specification's findings mention org.joda.time.DateTime, org.joda.time.format.DateTimeFormat, org.joda.time.format.DateTimeFormatter",
+    "checked_url": "https://www.joda.org/joda-time/"
+  }
+}

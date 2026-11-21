@@ -1,0 +1,5 @@
+RVSec: dexlib2 instrumentation, tools droidbot:dfs_greedy,droidbot:bfs_greedy, 300s x 1; log /home/antonow/dynval_runs/origin_freeotp_48_pr521/patched_r3/rvsec_20261117_115156/rvsec.log
+task org.fedorahosted.freeotp.debug_48.apk rep 1 droidbot:dfs_greedy: COMPLETED in 396s, 8 report(s), 284 method(s) reached (0 in the app's packages)
+task org.fedorahosted.freeotp.debug_48.apk rep 1 droidbot:bfs_greedy: COMPLETED in 383s, 8 report(s), 272 method(s) reached (0 in the app's packages)
+18 RVSec report(s) -> 6 finding(s) in /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/dynamic_validation_20261114/runs_origin_tools/freeotp_48_pr521/patched_r3/findings_all.jsonl; 2 echo finding(s) folded into the finding they echo
+RVSec: 60 MB of instrumented APKs, woven dex and traces removed (regenerable; reports, tasks, logcats and coverage kept)

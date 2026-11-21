@@ -1,0 +1,141 @@
+{
+  "schema_version": 2,
+  "spec_id": "OutdatedDependencySpec",
+  "name": "OutdatedDependencySpec",
+  "applies_to_types": [
+    "unresolved.OutdatedDependency"
+  ],
+  "source_title": "Requested canonical CrySL source for OutdatedDependency; unavailable because the direct raw fetch and corresponding GitHub blob URL returned HTTP 404.",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/OutdatedDependency.crysl",
+  "source_verified": false,
+  "protocol": "observe(ApiRequest.execute) ∧ dependencyVersion(okhttp3)=3.12.0 ⇒ finding; no event-order protocol was verified.",
+  "important_note": "No primary specification defining OutdatedDependency was found. \"unresolved.OutdatedDependency\" is an explicit namespace placeholder included solely to preserve the required CrySL-style simple name OutdatedDependency; it is not a verified Java/Kotlin class. The supplied finding identifies com.duckduckgo.app.global.api.ApiRequest.execute as the reported use site, not as the governed OutdatedDependency API type.",
+  "events": [
+    {
+      "name": "api_request_execute_observation",
+      "api_patterns": [
+        "ApiRequest",
+        ".execute("
+      ],
+      "condition": "An invocation-shaped source occurrence matching ApiRequest.execute is observed. This observation alone does not establish that okhttp3 is present, which okhttp artifact/version was resolved, or that the dependency predicate is satisfied."
+    },
+    {
+      "name": "outdated_okhttp_dependency_predicate",
+      "api_patterns": [
+        "okhttp3",
+        "3.12.0",
+        "4.10.0"
+      ],
+      "condition": "The representative detector message asserts the predicate \"okhttp3 v3.12.0\" with a stated target of \"v4.10.0 or higher.\" Matching any of these strings in Java/Kotlin source alone does not prove the resolved dependency coordinate, effective version, transitive origin, or applicability of that version threshold."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That com.duckduckgo.app.global.api.ApiRequest is itself an OutdatedDependency type or is governed by a CrySL rule named OutdatedDependency.",
+    "That every call to ApiRequest.execute uses OkHttp or resolves okhttp3 v3.12.0.",
+    "That okhttp3 v3.12.0 is vulnerable, exploitable, unsupported, or insecure for the application's particular runtime configuration.",
+    "That version 4.10.0 is the presently recommended, latest, or compatible OkHttp release.",
+    "That upgrading the dependency preserves source compatibility, binary compatibility, Android compatibility, TLS behavior, or application behavior.",
+    "That the reported version is direct rather than transitive, shaded, relocated, substituted, dependency-constrained, or overridden at resolution time.",
+    "That this detector has CrySL typestate, object-flow, or call-sequencing semantics."
+  ],
+  "semantic_scope": "A dependency-version policy observation associated with the reported call site com.duckduckgo.app.global.api.ApiRequest.execute. The representative message compares an asserted okhttp3 version (3.12.0) against a detector-provided minimum target (4.10.0).",
+  "detector_semantics": {
+    "claim": "The representative result claims: \"Using okhttp3 v3.12.0. Update to v4.10.0 or higher.\"",
+    "predicates": [
+      "A use site is reported at com.duckduckgo.app.global.api.ApiRequest.execute.",
+      "The detector associates that use site with okhttp3.",
+      "The detector identifies the associated version as 3.12.0.",
+      "The detector evaluates 3.12.0 as below its stated 4.10.0 minimum."
+    ],
+    "limitations": [
+      "The requested canonical OutdatedDependency CrySL source was not available for consultation.",
+      "No primary source was found that defines the package-qualified OutdatedDependency API type, the exact dependency-resolution algorithm, version-comparison rules, scope handling, or the provenance of the 4.10.0 threshold.",
+      "The representative finding does not establish whether analysis used manifests, lockfiles, Gradle resolution output, bytecode metadata, source imports, or a heuristic association with ApiRequest.execute.",
+      "No verified ordering, typestate, or required/forbidden API-call sequence is available."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "No verified primary documentation or CrySL rule was found for an API type named OutdatedDependency.",
+      "The only API behavior identified by the supplied representative result is an observed use site named com.duckduckgo.app.global.api.ApiRequest.execute."
+    ],
+    "preconditions": [
+      "For the detector claim, evidence is needed that the effective dependency graph contains the relevant OkHttp artifact/version.",
+      "For attribution to the reported method, evidence is needed that ApiRequest.execute reaches, constructs, invokes, or is otherwise intentionally associated with the resolved OkHttp dependency."
+    ],
+    "unknowns": [
+      "The real fully qualified type, if any, whose simple name is OutdatedDependency.",
+      "Whether OutdatedDependencySpec is a generated detector-policy name rather than a CrySL API-usage rule.",
+      "The implementation and contract of com.duckduckgo.app.global.api.ApiRequest.execute in the analyzed revision.",
+      "Which OkHttp Maven coordinate or coordinates the detector means by \"okhttp3.\"",
+      "Whether 4.10.0 is an inclusive minimum, a compatibility floor, a security floor, or merely a policy-selected update target."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "An associated okhttp3 dependency at version 3.12.0 is outdated relative to the detector's stated minimum of 4.10.0.",
+    "runtime_claim": "No runtime security property, exploit condition, cryptographic guarantee, transport guarantee, or vulnerability condition was verified from a primary specification.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A retrievable primary OutdatedDependency CrySL rule or detector-rule definition declaring the governed fully qualified type and predicates.",
+      "A version-pinned source location for the detector implementation that defines the okhttp3 coordinate matching and the 4.10.0 threshold.",
+      "A primary implementation source for com.duckduckgo.app.global.api.ApiRequest.execute if call-site attribution is to be asserted."
+    ],
+    "runtime": [
+      "Resolved dependency output for the analyzed build variant, including direct and transitive dependencies.",
+      "Artifact coordinates, selected version, substitution or constraint information, and any shaded or relocated packaging evidence.",
+      "A call path or bytecode/source evidence connecting ApiRequest.execute to the relevant OkHttp usage, if such attribution is required."
+    ],
+    "compatibility": [
+      "The application's supported Android/API-level and JVM environment.",
+      "OkHttp migration guidance and release notes applicable to the actual source and resolved versions.",
+      "Build, unit, integration, network, TLS, proxy, and certificate-handling validation for the actual application configuration."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A stale source or lockfile string mentions okhttp3 3.12.0 while the effective build resolves another version.",
+    "The dependency is declared only for a test, debug, benchmark, tooling, or otherwise non-production configuration.",
+    "Dependency constraints, substitutions, platforms/BOMs, resolution rules, or dependency locking select a version other than the declared one.",
+    "The old OkHttp classes are shaded, relocated, bundled, or supplied by another artifact, so coordinate/version inference from source imports is incorrect.",
+    "ApiRequest.execute is merely co-located with an OkHttp dependency and has no actual call/data-flow relation to it.",
+    "The finding is based on a historical repository revision whose dependency graph differs from the analyzed build."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/OutdatedDependency.crysl",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/blob/master/JavaCryptographicArchitecture/src/OutdatedDependency.crysl"
+  ],
+  "unknowns": [
+    "Does a canonical OutdatedDependency.crysl exist in another branch, tag, repository, generated-rules distribution, or non-CrySL detector source?",
+    "What real package-qualified API type has the required simple name OutdatedDependency?",
+    "Is OutdatedDependencySpec a dependency-policy detector rather than a CrySL rule governing object API usage?",
+    "What exact artifact coordinate and version-normalization/comparison algorithm underlies the word \"okhttp3\" in the message?",
+    "What evidence associates the dependency predicate with com.duckduckgo.app.global.api.ApiRequest.execute?",
+    "Why was 4.10.0 selected, and what policy, security, or compatibility claim, if any, supports that floor?"
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/OutdatedDependency.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.duckduckgo.app.global.api.ApiRequest",
+        "method": "execute",
+        "message": "Using okhttp3 v3.12.0. Update to v4.10.0 or higher."
+      }
+    ],
+    "expected_api_simple_name": "OutdatedDependency",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/OutdatedDependency.crysl"
+  }
+}

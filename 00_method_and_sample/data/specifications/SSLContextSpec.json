@@ -1,0 +1,360 @@
+{
+  "schema_version": 2,
+  "spec_id": "SSLContextSpec",
+  "name": "SSLContextSpec",
+  "applies_to_types": [
+    "javax.net.ssl.SSLContext"
+  ],
+  "source_title": "Verified primary CrySL rule: SSLContext.crysl from CogniCrypt Crypto-API-Rules",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLContext.crysl",
+  "source_verified": true,
+  "protocol": "Get(getInstance with protocol ∈ {TLSv1.2, TLSv1.3}) → Init(km, tm, random) → Engine?; getDefault() is forbidden.",
+  "important_note": "This is a CrySL detector contract for javax.net.ssl.SSLContext, not the complete JSSE API contract. It rejects SSLContext.getDefault() and requires provenance predicates for all three init arguments, although the documented API says getDefault() returns an immediately usable context and init permits null key-manager, trust-manager, and SecureRandom arguments. Selecting an SSLContext protocol name does not itself prove the protocol ultimately enabled or negotiated on a connection.",
+  "events": [
+    {
+      "name": "Get",
+      "api_patterns": [
+        "SSLContext.getInstance(",
+        "javax.net.ssl.SSLContext.getInstance("
+      ],
+      "condition": "Observed when the invoked static method resolves to javax.net.ssl.SSLContext.getInstance with one or two arguments. It satisfies Get only when the first argument is evidenced as exactly \"TLSv1.2\" or \"TLSv1.3\"; a second provider argument, if present, is unconstrained by this rule."
+    },
+    {
+      "name": "Init",
+      "api_patterns": [
+        ".init("
+      ],
+      "condition": "Observed when the receiver resolves to javax.net.ssl.SSLContext and the invocation is init(KeyManager[], TrustManager[], SecureRandom). It satisfies Init only after Get on the same SSLContext trace and only when analysis establishes generatedKeyManagers[km], generatedTrustManagers[tm], and randomized[random]. Observing an API-valid init call, including init(null, null, null), does not satisfy those CrySL predicates."
+    },
+    {
+      "name": "Engine",
+      "api_patterns": [
+        ".createSSLEngine()",
+        ".createSSLEngine("
+      ],
+      "condition": "Observed when a javax.net.ssl.SSLContext receiver invokes createSSLEngine() or createSSLEngine(String, int). It is optional in the order expression and can establish generatedSSLEngine[eng] only after Init."
+    },
+    {
+      "name": "ForbiddenDefault",
+      "api_patterns": [
+        "SSLContext.getDefault()",
+        "javax.net.ssl.SSLContext.getDefault()"
+      ],
+      "condition": "Observed when the call resolves to javax.net.ssl.SSLContext.getDefault(). The CrySL source declares this event forbidden and maps it to Get using '=> Get'; that mapping does not make the full rule satisfied because the forbidden event independently violates the rule."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that an application wrapper named HttpClient, HttpClientFactory, ConnectionFactory, or Builder is the governed API type. Applicability requires resolution to javax.net.ssl.SSLContext.",
+    "Do not infer that a finding whose message is \"unknown\" proves a protocol weakness, missing init call, forbidden getDefault() call, or failed manager/randomness predicate. The representative message alone does not identify the violated CrySL clause.",
+    "Do not infer that getInstance(\"TLS\") necessarily negotiates TLS 1.0 or TLS 1.1. The rule rejects that requested string, but JSSE may implement other protocols and enabled protocols are configured on derived connection objects.",
+    "Do not infer that use of \"TLSv1.2\" or \"TLSv1.3\" proves that the peer connection negotiated only that version. This requires evidence of enabled-protocol configuration and the actual handshake.",
+    "Do not infer secure certificate validation, hostname verification, revocation checking, cipher-suite policy, client/server mode, or server identity verification solely from a passing SSLContextSpec trace.",
+    "Do not infer TLSv1.3 availability from this rule. Java platform documentation requires TLSv1.2 support, while additional protocol support depends on implementation, provider, platform, and version.",
+    "Do not infer that a source-level finding is reachable at runtime; CrySL-style static analysis depends on call-graph and data-flow approximation."
+  ],
+  "semantic_scope": "The rule observes calls on the exact Java type javax.net.ssl.SSLContext: getInstance, init, createSSLEngine, and getDefault. It constrains the getInstance protocol argument to two exact strings, tracks a per-context event sequence, and requires CrySL provenance predicates for init arguments. It does not directly observe HTTP-client configuration, socket-factory use, HttpsURLConnection/OkHttp hostname verification, an SSLSocket's enabled protocols, an SSLParameters object's protocols, or the TLS handshake result. The messages \"expecting one of {TLSv1.2, TLSv1.3} but found TLS.\" and \"expecting one of {TLSv1.2, TLSv1.3} but found .\" are consistent with the protocol constraint; the supplied \"unknown\" messages are not self-disambiguating.",
+  "detector_semantics": {
+    "claim": "A trace is compliant with SSLContextSpec only if it avoids the forbidden getDefault() event, follows Get → Init → optional Engine, uses a getInstance protocol evidenced as TLSv1.2 or TLSv1.3, and satisfies the three declared init-argument predicates.",
+    "predicates": [
+      "protocol in {\"TLSv1.2\", \"TLSv1.3\"}",
+      "generatedKeyManagers[km]",
+      "generatedTrustManagers[tm]",
+      "randomized[random]",
+      "generatedSSLContext[this] after Init",
+      "generatedSSLEngine[eng] after Engine"
+    ],
+    "limitations": [
+      "The protocol predicate is a whitelist over the requested getInstance string, not a check of enabled or negotiated TLS protocol versions.",
+      "The rule has no event for getSocketFactory(), getServerSocketFactory(), SSLSocket.setEnabledProtocols(), SSLParameters.setProtocols(), or the TLS handshake.",
+      "The rule source does not explain the detector presentation-level label \"unknown\". Raw diagnostics, the exact compiled rule artifact, and the detector version are needed to classify those findings.",
+      "The source rule's predicate names encode analysis facts/provenance; they are not runtime proof that a manager implementation correctly validates every certificate or host."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "javax.net.ssl.SSLContext is a factory for secure socket factories and SSLEngine instances.",
+      "getInstance(protocol[, provider]) returns an SSLContext implementing the requested secure-socket protocol through a selected provider.",
+      "init(KeyManager[], TrustManager[], SecureRandom) initializes the context with authentication-key sources, peer-trust decisions, and randomness.",
+      "createSSLEngine creates an engine using the context; the host/port overload supplies advisory peer information."
+    ],
+    "preconditions": [
+      "For providers that require initialization, getSocketFactory(), getServerSocketFactory(), and createSSLEngine may throw IllegalStateException until init has been called.",
+      "The documented init API allows km, tm, and random independently to be null, causing provider/default selection behavior.",
+      "The documented getDefault() result is immediately usable and does not require init."
+    ],
+    "unknowns": [
+      "Which JSSE provider, JDK/Android version, security properties, disabled-algorithm settings, and default stores apply to each reported application is not supplied.",
+      "The source rule does not establish whether the analyzed code uses the resulting SSLContext to create an engine, a socket factory, or an HTTP-client-specific TLS adapter.",
+      "The source rule does not establish whether a particular custom TrustManager implementation performs sound certificate validation."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The detector treats exact requested SSLContext protocol names TLSv1.2 and TLSv1.3, explicit initialization with proven manager/random inputs, and avoidance of getDefault() as the acceptable SSLContext usage pattern.",
+    "runtime_claim": "JSSE documents that an SSLContext factory result implements at least the requested protocol and may implement others. Protocols actually enabled for a connection are controlled on the SSLSocket, SSLServerSocket, or SSLEngine created from the context. Therefore, the requested SSLContext algorithm string is not by itself a handshake-version guarantee.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "The exact CrySL rule artifact or commit loaded by the detector, because the verified URL is the repository's moving master branch.",
+      "Type resolution showing that the reported call is javax.net.ssl.SSLContext rather than a namesake from another framework.",
+      "The raw detector diagnostic/category and analysis version for each \"unknown\" finding.",
+      "Data-flow evidence for the protocol value and, where applicable, predicate-producing traces for the KeyManager[], TrustManager[], and SecureRandom arguments."
+    ],
+    "runtime": [
+      "The selected JSSE provider and platform version, plus the provider's supported, default, and enabled TLS protocols.",
+      "The enabled protocol list on the actual derived SSLEngine, SSLSocket, or SSLParameters path.",
+      "Handshake evidence showing the negotiated protocol, cipher suite, peer identity, and certificate-validation outcome.",
+      "Evidence of the actual TrustManager and hostname-verification behavior used by the HTTP stack."
+    ],
+    "compatibility": [
+      "Target JDK or Android API-level/provider support for TLSv1.2 and TLSv1.3.",
+      "Security-property and system-property configuration, including disabled algorithms and default key/trust-store selection.",
+      "Server-side protocol and cipher-suite compatibility for the deployment endpoints."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "SSLContext.getInstance(\"TLS\") followed by downstream SSLEngine, SSLSocket, or SSLParameters configuration that restricts enabled protocols to TLSv1.2 and TLSv1.3. The rule still rejects the factory argument because it is not one of its two exact literals.",
+    "SSLContext.getDefault() in an environment whose runtime default context is securely configured. The API documents that this context is immediately usable, but the CrySL rule explicitly forbids the call.",
+    "ctx.init(null, null, null), or another documented null-argument initialization that deliberately relies on provider defaults. It is API-valid, but cannot directly satisfy the rule's three non-null provenance predicates.",
+    "A protocol value computed, injected, wrapped, or returned interprocedurally that is TLSv1.2 or TLSv1.3 at runtime but is not statically evidenced as one of those literals; this can surface as an unresolved or \"unknown\" diagnostic depending on detector implementation."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLContext.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyManagerFactory.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TrustManagerFactory.crysl",
+    "https://docs.oracle.com/en/java/javase/16/docs/api/java.base/javax/net/ssl/SSLContext.html",
+    "https://docs.oracle.com/en/java/javase/17/security/java-secure-socket-extension-jsse-reference-guide.html",
+    "https://www.eclipse.org/cognicrypt/resources/publications/ksa%2B18crysl.pdf"
+  ],
+  "unknowns": [
+    "Why the SSLContext CrySL rule deliberately excludes the generic \"TLS\" protocol name and forbids getDefault(); the rule text states those constraints but gives no rationale.",
+    "Which specific rule version and detector implementation emitted the representative findings.",
+    "Which CrySL violation category each representative \"unknown\" corresponds to.",
+    "Whether each reported caller reaches javax.net.ssl.SSLContext.getInstance, getDefault, init, or a different API through library code.",
+    "Whether companion SSLEngineSpec or SSLParametersSpec analysis was enabled and whether it reaches the connection objects produced from each SSLContext.",
+    "The actual enabled and negotiated protocol versions, trust configuration, hostname-verification behavior, provider, and deployment compatibility for the reported applications."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "ch.rmy.android.http_shortcuts.http.HttpClientFactory",
+        "method": "configureTLS",
+        "message": "expecting one of {TLSv1.2, TLSv1.3} but found TLS."
+      },
+      {
+        "class": "com.etesync.syncadapter.HttpClient$Builder",
+        "method": "build",
+        "message": "unknown"
+      },
+      {
+        "class": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+        "method": "createHttpClient",
+        "message": "unknown"
+      },
+      {
+        "class": "com.owncloud.android.lib.common.http.HttpClient",
+        "method": "getOkHttpClient",
+        "message": "expecting one of {TLSv1.2, TLSv1.3} but found ."
+      },
+      {
+        "class": "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider",
+        "method": "configureTrustAllCertificates",
+        "message": "unknown"
+      },
+      {
+        "class": "github.paroj.dsub2000.service.RESTMusicService",
+        "method": "<init>",
+        "message": "unknown"
+      },
+      {
+        "class": "org.openhab.habdroid.core.connection.ConnectionFactory",
+        "method": "updateHttpClientForClientCert",
+        "message": "unknown"
+      }
+    ],
+    "expected_api_simple_name": "SSLContext",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.net.ssl.SSLContext",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLContext.crysl"
+  },
+  "false_positive_triggers": [
+    {
+      "shape_contains": "SSLContext.getInstance(\"TLS\") followed by downstream",
+      "detector_message": "expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+      "external_class_only": true
+    }
+  ],
+  "analysis_family": "tls",
+  "remediation_policies": [
+    {
+      "when": {
+        "violation_id_contains": "UnsafeProtocol",
+        "message_pattern": "\\bfound\\s+TLS\\s*\\.?$"
+      },
+      "policy": {
+        "authorized": true,
+        "usage_classification": "protocol",
+        "scope": "TLS transport configuration owned by the application; do not weaken certificate or hostname verification.",
+        "strategy": "Preserve the provider-selected generic TLS context so later protocol versions remain negotiable. Enforce the security property at the connection/socket layer by removing only explicit legacy protocol names (SSL variants, TLSv1, and TLSv1.0/TLSv1.1) from the provider-enabled protocols. Start from the provider's enabled protocols rather than constructing a closed TLSv1.2/TLSv1.3 allowlist, retain unknown future TLS versions, and fail closed if filtering leaves no protocol.",
+        "finding_semantics": "A literal-only rule may continue to report SSLContext('TLS') even when effective connections reject deprecated versions. Do not claim the detector is silenced unless the generated patch is rerun through the analyzer.",
+        "consumer_scope": "signature_preserving_internal_transport_change",
+        "forbidden_changes": [
+          "Do not replace the generic context with TLSv1.2 or TLSv1.3.",
+          "Do not create a closed allowlist containing only today's TLS versions.",
+          "Do not enable protocols that the provider had disabled by default.",
+          "Do not change trust managers, certificate validation, or hostname verification."
+        ],
+        "required_tests": [
+          "Legacy SSLv3, TLSv1 and TLSv1.1 names are removed.",
+          "TLSv1.2 and TLSv1.3 remain when originally enabled.",
+          "An unknown future TLS protocol name remains enabled.",
+          "Filtering fails closed when no acceptable protocol remains."
+        ],
+        "review_fallback": "Generate MULTI_FILE_FIX_PROPOSED_FOR_REVIEW when the local transport edit and tests are complete but endpoint/runtime validation or analyzer acceptance remains unresolved.",
+        "filters_deprecated_protocols": true
+      },
+      "keeps_reported_literal": true,
+      "evidence": "tls_trust",
+      "variants": [
+        {
+          "when_evidence": "client_excludes_deprecated_protocols",
+          "set": {
+            "filters_deprecated_protocols": false,
+            "client_enforces_protocols": true,
+            "consumer_scope": "client_enforces_protocols",
+            "strategy": "Add no protocol filter: the context is handed to a client whose default connection specs already restrict every socket to TLS 1.2 and TLS 1.3 before the handshake, and nothing in the repository turns deprecated versions back on (established_tls_trust_evidence.http_client). If the reported selector is the only problem in the reviewed code, this is the shape the specification documents in known_false_positive_shapes[0] -- getInstance(\"TLS\") followed by downstream configuration that restricts the enabled protocols -- and no change is needed. Any other problem in the same code is handled as usual.",
+            "finding_semantics": "The rule checks only the literal given to SSLContext.getInstance. For this client the effective connections cannot use deprecated versions, so the violation the rule reports does not hold for the connections this context serves.",
+            "forbidden_changes": [
+              "Do not add a protocol filter or wrap the socket factory to filter protocols: the client already does.",
+              "Do not replace the generic context with TLSv1.2 or TLSv1.3."
+            ],
+            "required_tests": []
+          }
+        }
+      ]
+    },
+    {
+      "when": {
+        "message_pattern": "\\bfound\\b"
+      },
+      "evidence": "tls_trust",
+      "policy": {
+        "authorized": true,
+        "usage_classification": "protocol",
+        "consumer_scope": "tls_selector_only",
+        "scope": "The reported SSLContext protocol selector. Trust managers, certificate validation and hostname verification are separate behaviour the maintainer owns and are not changed by this finding alone.",
+        "strategy": "Replace only the reported legacy protocol selector with the negotiating \"TLS\" selector, keeping the existing trust and hostname configuration. On Android \"SSL\" and \"TLS\" select the same provider context, so the selector change by itself does not alter the negotiated protocols; say so plainly.",
+        "forbidden_changes": [
+          "Do not change trust managers, certificate validation, or hostname verification.",
+          "Do not pin a protocol version such as TLSv1.2 or TLSv1.3.",
+          "Do not rename the method that builds the client."
+        ],
+        "required_tests": [],
+        "review_fallback": "Generate MULTI_FILE_FIX_PROPOSED_FOR_REVIEW when the selector change is complete but analyzer acceptance remains unresolved by the reporting detector's message."
+      },
+      "variants": [
+        {
+          "when_evidence": "trust_all_hosts_resolved",
+          "set": {
+            "consumer_scope": "tls_trust_restoration",
+            "uses_provided_files": true,
+            "scope": "The client the reported SSLContext builds accepts every certificate (and, when established_tls_trust_evidence says so, every host name). Every hard-coded host it connects to was checked: its chain verifies against an anchor listed in provided_files. Restoring validation is therefore possible without breaking connections on devices whose system store lacks that anchor.",
+            "strategy": "Remove the TrustManager that accepts every certificate and the HostnameVerifier that accepts every host. Build an X509TrustManager that accepts a chain when either the platform's default TrustManager (TrustManagerFactory initialised with a null KeyStore) or a TrustManager over a KeyStore holding the provided_files anchors accepts it, so the system store keeps working and the bundled anchors cover devices that lack them. Initialise the SSLContext with \"TLS\" and that manager, give the HTTP client the same socket factory and manager, and leave the client's default hostname verification in place. Load each anchor from its resource_reference through the application context the class already has access to. The pipeline adds the provided_files itself: reference them, do not plan, create or edit them.",
+            "forbidden_changes": [
+              "Do not keep a TrustManager that accepts every certificate or a HostnameVerifier that accepts every host.",
+              "Do not validate only against the bundled anchors; the platform store must keep working.",
+              "Do not pin a protocol version such as TLSv1.2 or TLSv1.3.",
+              "Do not plan, create or edit the provided_files; reference them by resource_reference.",
+              "Do not rename the method that builds the client."
+            ],
+            "required_tests": [],
+            "review_fallback": "Generate MULTI_FILE_FIX_PROPOSED_FOR_REVIEW: restoring certificate validation changes which servers the app accepts, and a maintainer must confirm the hosts and the bundled anchor."
+          },
+          "append": {
+            "states_facts": [
+              "trust_hosts"
+            ]
+          }
+        },
+        {
+          "when_evidence": "deprecated_protocols_reachable",
+          "set": {
+            "filters_deprecated_protocols": true
+          },
+          "append": {
+            "strategy": "The client that uses this context can still negotiate deprecated protocols (established_tls_trust_evidence.http_client). Remove them where the connections are made: when the client is OkHttp configured with ConnectionSpec.COMPATIBLE_TLS or TlsVersion TLS_1_0/TLS_1_1/SSL_3_0, use ConnectionSpec.MODERN_TLS instead; otherwise wrap the SSLSocketFactory the client receives so every socket it creates calls setEnabledProtocols with the socket's getEnabledProtocols() minus SSLv3, TLSv1 and TLSv1.1, keeping every other entry (TLSv1.2, TLSv1.3 and any newer name), and throwing an SSLException when nothing is left.",
+            "forbidden_changes": [
+              "Do not build a closed allowlist of TLSv1.2/TLSv1.3; remove the deprecated names and keep the rest.",
+              "Do not enable protocols the provider had disabled."
+            ],
+            "states_facts": [
+              "client_protocols"
+            ]
+          }
+        },
+        {
+          "when_evidence": "client_excludes_deprecated_protocols",
+          "set": {
+            "filters_deprecated_protocols": false,
+            "client_enforces_protocols": true
+          },
+          "append": {
+            "strategy": "The client already excludes deprecated protocols by default (established_tls_trust_evidence.http_client); add no protocol filter.",
+            "forbidden_changes": [
+              "Do not add a protocol filter: the client's defaults already exclude SSLv3, TLSv1 and TLSv1.1."
+            ],
+            "states_facts": [
+              "client_protocols"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "when": {
+        "message_pattern": "manager of a class the application defines"
+      },
+      "evidence": "tls_trust",
+      "policy": {
+        "authorized": true,
+        "usage_classification": "trust_manager",
+        "scope": "The application-defined TrustManager given to SSLContext.init and the client configuration built around it.",
+        "strategy": "Keep any certificate checking the application-defined manager performs (pinning, an extra trusted root). Where it only accepts what the platform's default manager would, or accepts everything, use the TrustManager a TrustManagerFactory provides instead.",
+        "forbidden_changes": [
+          "Do not accept more certificates or host names than the current code does.",
+          "Do not pin a protocol version such as TLSv1.2 or TLSv1.3."
+        ],
+        "required_tests": []
+      },
+      "variants": [
+        {
+          "when_evidence": "trust_all_default_with_validating_branch",
+          "set": {
+            "consumer_scope": "tls_default_validation",
+            "uses_provided_files": true,
+            "scope": "The client defaults to a TrustManager that accepts every certificate (and, when established_tls_trust_evidence says so, every host name), while the same code already builds a validating manager on another branch. No server is hard-coded: the hosts are the ones users configure, so no root can be bundled for them.",
+            "strategy": "Make validation the default by changing the default value of whatever selects the accept-all manager (a parameter such as trustAllCerts = true becomes false), so every call that does not ask for it gets the platform's TrustManager and the HTTP client's default hostname verification. Where the code configures TLS only because of that selector, stop doing so for the default path; keep client-certificate support and every other behaviour unchanged. The accept-all branch stays reachable only for a caller that explicitly asks for it. The pipeline adds the provided_files itself (a network security config that also trusts user-installed CAs, and the manifest attribute enabling it): do not plan, create or edit them.",
+            "forbidden_changes": [
+              "Do not keep a TrustManager that accepts every certificate or a HostnameVerifier that accepts every host as the default.",
+              "Do not rewrite the accept-all branch into a validating one: code whose name or condition says it trusts every certificate must keep doing exactly that, so names keep matching behaviour.",
+              "Do not remove client-certificate support or change public signatures.",
+              "Do not plan, create or edit the provided_files.",
+              "Do not pin a protocol version such as TLSv1.2 or TLSv1.3."
+            ],
+            "review_fallback": "Generate MULTI_FILE_FIX_PROPOSED_FOR_REVIEW: restoring certificate validation changes which servers the app accepts, and a maintainer must confirm it."
+          },
+          "append": {
+            "states_facts": [
+              "user_configured_servers"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

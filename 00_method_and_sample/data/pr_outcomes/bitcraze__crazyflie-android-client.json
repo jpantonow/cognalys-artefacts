@@ -1,0 +1,25 @@
+[
+  {
+    "pull_request": "https://github.com/bitcraze/crazyflie-android-client/pull/103",
+    "state": "merged",
+    "finding_id": "73c0f0471033",
+    "spec": "SSLContextSpec",
+    "csv_class": "se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory",
+    "method_name": "<init>",
+    "title": "Fix <init>",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:02.291641+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "ataffanel",
+        "kind": "comment",
+        "body": "Hi, thanks for the contribution!\r\n\r\nCould you please clean up the PR title and description to make it clearer what is being fixed and why? “Fix `<init>`” does not really explain the change, and it is difficult to understand the practical impact from the description. A short explanation of the problem and how it affects firmware downloads would help.\r\n\r\nLooking at the code, I would prefer removing `TLSSocketFactory` and its usage rather than patching it. This helper was added to support TLS 1.2 on Android versions older than 5.0, but we now require Android 8.0. Its original purpose is no longer relevant, so relying on the platform HTTPS defaults seems simpler.\r\n\r\nThis would not explicitly enforce TLS 1.2 as a minimum on every supported device. If there is a concrete reason we need that additional restriction, please explain it in the description. Otherwise, could you update the PR to remove the helper and verify that fetching the release list and downloading firmware still work?"
+      },
+      {
+        "author": "ataffanel",
+        "kind": "comment",
+        "body": "Thanks! Looks good, merged."
+      }
+    ]
+  }
+]

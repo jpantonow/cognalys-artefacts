@@ -1,0 +1,158 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The representative result is explicitly marked \"Static candidate (not executed)\".",
+      "The report alone does not provide a thread schedule, a lockset proof, runtime object-identity evidence, or a reproducing failure.",
+      "Static call-path descriptions can overapproximate reachability and concurrency.",
+      "The report does not establish the source revision, build configuration, or Android runtime on which the candidate was analyzed."
+    ],
+    "predicates": [
+      "The reported field resolves to one static java.text.SimpleDateFormat object.",
+      "com.zoffcc.applications.trifa.HelperGeneric.long_date_time_format invokes format on that object.",
+      "At least two execution contexts can reach formatting calls on that exact object with temporal overlap.",
+      "Those accesses are not protected by a common effective external synchronization or equivalent serialization mechanism."
+    ],
+    "claim": "A single static SimpleDateFormat is a candidate for unsafely shared use because the reported formatting helper may be reached from a UI path and a native-callback path."
+  },
+  "unknowns": [
+    "Whether the detector analyzed the same source revision currently available in the upstream repository.",
+    "The exact source declaration, import, initialization site, and lifecycle of MainActivity.df_date_time_long.",
+    "Whether the UI/view-holder and Tox native-callback paths can actually overlap on one process instance.",
+    "Whether a common lock, monitor, dispatcher, or executor serializes all accesses to the formatter.",
+    "Whether any real execution has produced malformed timestamps, exceptions, crashes, or another externally observable effect.",
+    "Whether an attacker can influence callback timing or obtain a security-relevant benefit from any formatting race."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "Android's java.text.SimpleDateFormat documentation states that date formats are not synchronized, recommends separate formatter instances for each thread, and states that concurrent access must be synchronized externally.",
+      "Its inherited DateFormat API supplies format operations; SimpleDateFormat.format(Date, StringBuffer, FieldPosition) formats a Date into date/time text."
+    ],
+    "preconditions": [
+      "The receiver is a java.text.SimpleDateFormat instance.",
+      "More than one thread can access the same formatter instance concurrently.",
+      "The accesses are not externally serialized using one mechanism that covers the formatter operations."
+    ],
+    "unknowns": [
+      "The documentation establishes a synchronization requirement; it does not guarantee a particular observable failure for every overlap.",
+      "The supplied finding does not include the field declaration, import statement, formatter pattern, Android API level, or source revision.",
+      "It is not established whether the formatter is only used for format operations or is also reconfigured or used for parsing elsewhere."
+    ]
+  },
+  "authoritative_sources": [
+    "https://developer.android.com/reference/java/text/SimpleDateFormat",
+    "https://developer.android.com/reference/java/text/DateFormat",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/text/DateFormat.html",
+    "https://cwe.mitre.org/data/definitions/362.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observing one of these substrings only identifies a possible formatter declaration or reference. The predicate is satisfied only when symbol resolution establishes that MainActivity.df_date_time_long denotes one long-lived shared instance of java.text.SimpleDateFormat, rather than a per-invocation, per-thread, or otherwise isolated instance.",
+      "name": "shared_formatter_reference",
+      "api_patterns": [
+        "SimpleDateFormat",
+        "java.text.SimpleDateFormat",
+        "df_date_time_long",
+        "MainActivity.df_date_time_long"
+      ]
+    },
+    {
+      "condition": "Observing a call-shaped substring establishes only a candidate formatting operation. The predicate is satisfied only when the call receiver aliases the same shared java.text.SimpleDateFormat instance identified by shared_formatter_reference.",
+      "name": "formatter_format_call",
+      "api_patterns": [
+        "MainActivity.df_date_time_long.format(",
+        "df_date_time_long.format(",
+        "long_date_time_format("
+      ]
+    },
+    {
+      "condition": "Observing these method names or their call sites does not prove concurrent execution. The predicate is satisfied only when the relevant UI/view-holder path and native-callback path can overlap while each reaches a formatting call on the same formatter instance.",
+      "name": "potentially_distinct_execution_contexts",
+      "api_patterns": [
+        "receive_incoming_message(",
+        "long_date_time_format("
+      ]
+    },
+    {
+      "condition": "The presence or absence of these substrings alone is not dispositive: a lock may protect a different object, synchronization may occur in a caller, or serialization may be supplied by an executor. The predicate is satisfied only if all potentially overlapping accesses to the shared formatter lack one common effective serialization mechanism.",
+      "name": "missing_or_insufficient_external_serialization",
+      "api_patterns": [
+        "synchronized (",
+        "synchronized (MainActivity.df_date_time_long)",
+        "lock.lock()",
+        "ThreadLocal<SimpleDateFormat>"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "ThreadUnsafeDateFormatSpec is a concern label, not a governed API type, CrySL rule, or published detector-rule-catalog entry. This specification is bounded to the reported use of MainActivity.df_date_time_long by com.zoffcc.applications.trifa.HelperGeneric.long_date_time_format and does not establish that the candidate is reachable, concurrently executed, exploitable, or a confirmed CWE-362 instance.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a class, API type, CrySL rule, or detector catalog entry named ThreadUnsafeDateFormatSpec exists.",
+    "Do not substitute android.icu.text.SimpleDateFormat, java.time.format.DateTimeFormatter, or any similarly named type for the reported formatter without resolving the source import and receiver type.",
+    "Do not infer that the reported UI and native-callback paths execute at the same time merely because they are distinct paths.",
+    "Do not infer that no external synchronization exists merely because no synchronized block appears in the immediate method body.",
+    "Do not infer a crash, timestamp corruption, data disclosure, attacker control, or a security impact from a static candidate alone.",
+    "Do not infer that the currently available repository revision is the revision scanned by the detector.",
+    "Do not infer that format(Date) has been invoked unless receiver and overload resolution confirm it."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A runtime CWE-362 condition requires an actual interfering concurrent access to the same shared resource during a period in which exclusive access is required. MITRE identifies instability or crashes as possible race-condition consequences, but neither consequence is proven by this static candidate.",
+    "equivalent": false,
+    "detector_claim": "Concurrent use of the reported shared formatter could yield incorrect timestamp output or an exception and is classified by the finding as a CWE-362-style race-condition concern."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm that the resolved type is java.text.SimpleDateFormat rather than android.icu.text.SimpleDateFormat or an application-defined namesake.",
+      "Confirm the Android API/runtime and any desugaring or library substitution relevant to the scanned build.",
+      "Confirm that the analyzed application revision matches the detector input before treating repository source as corroboration."
+    ],
+    "runtime": [
+      "Capture thread identity and formatter object identity at each relevant format call.",
+      "Demonstrate temporal overlap between the UI/view-holder path and the receive_incoming_message callback path, or another pair of callers using the same instance.",
+      "Record synchronization or executor behavior covering the accesses.",
+      "If incorrect output or exceptions are claimed, reproduce them under a controlled concurrent stress schedule and preserve the corresponding traces."
+    ],
+    "source_level": [
+      "Resolve the declaration and import of MainActivity.df_date_time_long to java.text.SimpleDateFormat.",
+      "Resolve the receiver of the reported .format(...) call in HelperGeneric.long_date_time_format to that same field, including aliases and wrapper methods.",
+      "Identify all call paths that can reach the reported helper and all accesses to the same formatter instance.",
+      "Establish whether a shared monitor, lock, serialized executor, or other synchronization mechanism covers every such access."
+    ]
+  },
+  "name": "ThreadUnsafeDateFormatSpec",
+  "source_url": "https://developer.android.com/reference/java/text/SimpleDateFormat",
+  "applies_to_types": [
+    "java.text.SimpleDateFormat"
+  ],
+  "source_title": "SimpleDateFormat | API reference | Android Developers",
+  "semantic_scope": "The detector report statically associates com.zoffcc.applications.trifa.HelperGeneric.long_date_time_format with a call to MainActivity.df_date_time_long.format(...) and describes other potential callers from UI view holders and receive_incoming_message on a Tox native-callback thread. The governed API concern is concurrent access to one shared java.text.SimpleDateFormat instance; parsing, unrelated formatter instances, and formatter types not resolved to java.text.SimpleDateFormat are outside this bounded finding.",
+  "spec_id": "ThreadUnsafeDateFormatSpec",
+  "known_false_positive_shapes": [
+    "All formatter calls are confined to one serialized UI thread despite multiple statically visible call paths.",
+    "The native callback dispatches work onto the same serialized executor before formatting.",
+    "Every access is protected by the same external lock or monitor, but the lock is acquired in callers or helper methods outside the detector's local view.",
+    "The field is static but is initialized, replaced, or accessed only during non-overlapping lifecycle phases.",
+    "The reported helper or callback path is unreachable in the analyzed build variant.",
+    "The apparent formatter reference is an alias to a per-thread or per-call formatter rather than the shared field."
+  ],
+  "protocol": "shared static SimpleDateFormat F → context A invokes F.format(...) ∥ context B invokes F.format(...) → no common external serialization of F",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.zoffcc.applications.trifa.HelperGeneric",
+        "method": "long_date_time_format",
+        "message": "Static candidate (not executed): long_date_time_format formats with MainActivity.df_date_time_long, a single static SimpleDateFormat, which is called both from message list view holders on the UI thread and from receive_incoming_message on the Tox native callback thread; SimpleDateFormat is not thread-safe, so concurrent calls can produce corrupted timestamps or throw (CWE-362)."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:java.text.SimpleDateFormat",
+    "checked_url": "https://developer.android.com/reference/java/text/SimpleDateFormat"
+  }
+}

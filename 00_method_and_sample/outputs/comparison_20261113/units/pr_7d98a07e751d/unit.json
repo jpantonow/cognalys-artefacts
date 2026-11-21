@@ -1,0 +1,57 @@
+{
+ "unit": "pr_7d98a07e751d",
+ "source": "pr_population",
+ "group": "aberto",
+ "finding_ids": [
+  "7030778fa5d0",
+  "7d98a07e751d"
+ ],
+ "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+ "repo_url": "https://github.com/thatSFguy/meshcore-mobile-app",
+ "pinned_commit": "8f226db77a067f5de614514fe755695209868037",
+ "spec": [
+  "CipherSpec",
+  "KeyGeneratorSpec"
+ ],
+ "class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+ "method": "seal",
+ "prs": [
+  "https://github.com/thatSFguy/meshcore-mobile-app/pull/10"
+ ],
+ "original_run": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run",
+ "original_outcome": "PR pronto",
+ "frozen_outcome": "violação confirmada sem correção segura",
+ "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_io_github_thatsfguy_meshcore_native_20261105/run_frozen",
+ "reference_pr_records": [
+  "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run/pull_requests/io.github.thatsfguy.meshcore.native.debug_1.apk_seal_CipherSpec_pr.json"
+ ],
+ "reference_diff_lines": 20,
+ "build_task": "assembleDebug",
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "7030778fa5d0",
+   "unique_error_id": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault:::getOrCreateKey:::KeyGeneratorSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyGeneratorSpec accepts",
+   "spec": "KeyGeneratorSpec",
+   "class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+   "method": "getOrCreateKey",
+   "message": "the observed call sequence is not one KeyGeneratorSpec accepts",
+   "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+   "repo_url": "https://github.com/thatSFguy/meshcore-mobile-app",
+   "commit": "8f226db77a067f5de614514fe755695209868037",
+   "detector_source_location": "KeystoreSecretVault.kt:180"
+  },
+  {
+   "finding_id": "7d98a07e751d",
+   "unique_error_id": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault:::seal:::CipherSpec:::UnsatisfiedConstraint:::no generator of the key given to Cipher.init was observed",
+   "spec": "CipherSpec",
+   "class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+   "method": "seal",
+   "message": "no generator of the key given to Cipher.init was observed",
+   "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+   "repo_url": "https://github.com/thatSFguy/meshcore-mobile-app",
+   "commit": "8f226db77a067f5de614514fe755695209868037",
+   "detector_source_location": "KeystoreSecretVault.kt:69"
+  }
+ ]
+}

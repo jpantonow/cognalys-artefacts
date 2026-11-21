@@ -1,0 +1,43 @@
+{
+ "unit": "pr_fff072cb8953",
+ "source": "pr_population",
+ "group": "incorporado",
+ "finding_ids": [
+  "fff072cb8953"
+ ],
+ "apk": "com.philkes.notallyx.debug_71134.apk",
+ "repo_url": "https://github.com/Crustack/NotallyX",
+ "pinned_commit": "f8c9cea0fdc35be7f495bb323ddab50632bdc373",
+ "spec": [
+  "MessageDigestSpec"
+ ],
+ "class": "com.philkes.notallyx.utils.IOExtensionsKt",
+ "method": "md5Hash",
+ "prs": [
+  "https://github.com/Crustack/NotallyX/pull/1167"
+ ],
+ "original_run": "outputs/rvsec_notallyx_20261028/run_v7",
+ "original_outcome": "PR pronto",
+ "frozen_outcome": "correção gerada, sem PR",
+ "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_notallyx_20261028/run_frozen",
+ "reference_pr_records": [
+  "outputs/rvsec_notallyx_20261028/run_v7/pull_requests/com.philkes.notallyx.debug_71134.apk_md5Hash_MessageDigestSpec_pr.json"
+ ],
+ "reference_diff_lines": 111,
+ "build_task": ":app:testDebugUnitTest",
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "fff072cb8953",
+   "unique_error_id": "com.philkes.notallyx.utils.IOExtensionsKt:::md5Hash:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "spec": "MessageDigestSpec",
+   "class": "com.philkes.notallyx.utils.IOExtensionsKt",
+   "method": "md5Hash",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "apk": "com.philkes.notallyx.debug_71134.apk",
+   "repo_url": "https://github.com/Crustack/NotallyX",
+   "commit": "f8c9cea0fdc35be7f495bb323ddab50632bdc373",
+   "detector_source_location": "IOExtensions.kt:573"
+  }
+ ]
+}

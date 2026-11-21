@@ -1,0 +1,86 @@
+The published rule behind each report
+
+Report on KeystoreSecretVault.getOrCreateKey (KeyGenerator), rule KeyGeneratorSpec
+Rule source: KeyGenerator.crysl — SPEC javax.crypto.KeyGenerator, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyGenerator.crysl
+Types it governs: javax.crypto.KeyGenerator
+Call order it requires: Get · Init? · GenKey, where Get is getInstance(String[, provider]), Init is one of five KeyGenerator.init overloads, and GenKey is generateKey().
+Events it matches:
+- g1: Observation: resolves to javax.crypto.KeyGenerator.getInstance(String) with one argument. It binds algorithm to that argument's run-time String value. Predicate satisfaction: the run-time algorithm value must be one of "AES", "HmacSHA256", "HmacSHA384", or "HmacSHA512". Call shapes: `KeyGenerator.getInstance(`.
+- g2: Observation: resolves to a two-argument javax.crypto.KeyGenerator.getInstance overload; the first argument binds algorithm and the second argument is ignored by the rule via _. Predicate satisfaction: the run-time algorithm value must be one of "AES", "HmacSHA256", "HmacSHA384", or "HmacSHA512". Call shapes: `KeyGenerator.getInstance(`.
+- i1: Observation: resolves on the governed KeyGenerator receiver to init(int), binding keysize to the run-time integer argument. Predicate satisfaction: when the previously bound run-time algorithm is "AES", keysize must be 128, 192, or 256. Call shapes: `.init(`.
+- i2: Observation: resolves on the governed KeyGenerator receiver to init(int, SecureRandom), binding keysize and random to their run-time arguments. Predicate satisfaction: when algorithm is "AES", keysize must be 128, 192, or 256; the rule also requires the abstract predicate randomized[random]. Call shapes: `.init(`.
+- i3: Observation: resolves on the governed KeyGenerator receiver to init(AlgorithmParameterSpec), binding params to the run-time argument. The event itself binds neither keysize nor random; the supplied rule states no parameter-content predicate for params. Call shapes: `.init(`.
+- i4: Observation: resolves on the governed KeyGenerator receiver to init(AlgorithmParameterSpec, SecureRandom), binding params and random to their run-time arguments. Predicate satisfaction: the rule requires the abstract predicate randomized[random]; it states no parameter-content predicate for params. Call shapes: `.init(`.
+- i5: Observation: resolves on the governed KeyGenerator receiver to init(SecureRandom), binding random to the run-time argument. Predicate satisfaction: the rule requires the abstract predicate randomized[random]. Call shapes: `.init(`.
+- gk1: Observation: resolves on the governed KeyGenerator receiver to generateKey() and binds key to the returned javax.crypto.SecretKey. On the accepted trace, the rule ensures the abstract predicate generatedKey[key, algorithm]. Call shapes: `.generateKey()`.
+What RVSec checks under this rule: The source rule permits the event order Get, then optionally one Init, then GenKey. It constrains algorithm to exactly AES, HmacSHA256, HmacSHA384, or HmacSHA512. If algorithm is AES, it constrains the rule variable keysize to exactly 128, 192, or 256. It requires randomized[random] and ensures generatedKey[key, algorithm].
+Requirements the rule states:
+- algorithm in {"AES", "HmacSHA256", "HmacSHA384", "HmacSHA512"}
+- algorithm in {"AES"} => keysize in {128, 192, 256}
+- REQUIRES randomized[random]
+- ENSURES generatedKey[key, algorithm]
+Limits of the check, recorded with the rule:
+- The CrySL file does not define how randomized[random] is established, whether it is a direct run-time test, or how the analyzer approximates it.
+- The file does not say how the AES-to-keysize implication is evaluated when initialization uses AlgorithmParameterSpec or SecureRandom-only overloads and no keysize variable is bound.
+- The rule permits no explicit init call because Init is optional, even though the JCA API documentation recommends explicit initialization rather than relying on provider defaults.
+- The file does not specify exception-path handling, alias handling, interprocedural value resolution, reflection, provider behavior, or the exact static-analysis approximation used by a detector.
+Violations of this rule without a security stake, recorded with the rule (3.15):
+- A negative or compatibility test deliberately invokes KeyGenerator.getInstance("DES").generateKey() only to verify policy handling or legacy-provider behavior, with no resulting key used to protect data or authenticate messages. This violates the rule's algorithm allowlist but does not itself establish a security-relevant deployment impact.
+- A test deliberately calls KeyGenerator.getInstance("AES").init(64) to assert that the provider rejects an unsupported key size. It breaks the rule's AES keysize constraint, but the test's purpose need not involve protecting an asset.
+- Unreachable, disposable benchmark, or test-fixture code generates a key through an algorithm excluded by the rule and never persists, distributes, or uses the key in a security boundary. It remains a rule violation, not a detector false positive.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- A report solely because the source spells a standard algorithm name with different case, such as KeyGenerator.getInstance("aes"), while the deployed JCA implementation accepts standard algorithm names case-insensitively. This requires evidence that the detector compares CrySL's literal tokens case-sensitively.
+- A report solely because KeyGenerator.getInstance("ChaCha20") is outside this historical four-name allowlist. Current Java documentation lists ChaCha20 as a KeyGenerator algorithm and requires Java-platform implementations to support it; the rule's allowlist is therefore not a complete statement of current JCA capability.
+- A report caused only by unresolved configuration or interprocedural data flow even though every reachable run-time value of algorithm is one of the four rule-permitted names.
+- A report against valid parameter-based initialization only if the implementation incorrectly treats the absence of an init(int) keysize binding as failure of the AES keysize implication. The rule explicitly includes init(AlgorithmParameterSpec), and the JCA API explicitly supports parameter-based initialization; the supplied CrySL text does not resolve the unbound-keysize semantics.
+
+Report on KeystoreSecretVault.seal (Cipher), rule CipherSpec
+RVSec's record classifies this report as UnsatisfiedConstraint.
+Rule source: Cipher.crysl — CROSSINGTUD Crypto-API-Rules, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Cipher.crysl
+Types it governs: javax.crypto.Cipher
+Call order it requires: Get, Init+, AADUpdate*, WKB+ | (FINWOU | (Update+, DoFinal))+
+Events it matches:
+- Get: Observed: a local source match is a candidate factory call. Satisfies `Get` only when resolution identifies a `javax.crypto.Cipher.getInstance` overload with one or two arguments and the resulting Cipher object is the object followed by later rule events. Call shapes: `Cipher.getInstance(`, `javax.crypto.Cipher.getInstance(`.
+- Init: Observed: a call syntactically ending in `.init(`. Satisfies `Init` only when its resolved receiver is the tracked `javax.crypto.Cipher` and its signature is one of the modeled initialization overloads using a mode with a certificate or key, optionally parameters and/or `SecureRandom`. Call shapes: `.init(`.
+- AADUpdate: Observed: a call syntactically ending in `.updateAAD(`. Satisfies `AADUpdate` only when its resolved receiver is the tracked Cipher and it is a byte-array, byte-array slice, or `ByteBuffer` overload; the rule further forbids this event for CTR, CTS, CFB, ECB, and OFB transformations. Call shapes: `.updateAAD(`.
+- Update: Observed: a call syntactically ending in `.update(`. Satisfies `Update` only for a tracked Cipher and one of the modeled array or `ByteBuffer` overload forms; applicable offset and length predicates must also hold. Call shapes: `.update(`.
+- DoFinal: Observed: a call syntactically ending in `.doFinal(`. Satisfies `DoFinal` only for a modeled Cipher overload. `FINWOU` is the subset taking plaintext/input in the same call and is permitted as a one-shot final operation; zero-input/output finalization is modeled only after one or more `Update` events. Call shapes: `.doFinal(`.
+- WKB: Observed: a call syntactically ending in `.wrap(`. Satisfies `WKB` only when the resolved receiver is the tracked Cipher and bytes are produced by `Cipher.wrap(Key)` after required `Get` and `Init` events. Call shapes: `.wrap(`.
+What RVSec checks under this rule: For each tracked `javax.crypto.Cipher` object, the consulted CrySL rule requires a `Get` event followed by one or more `Init` events, optional AAD updates, and then either key wrapping or modeled finalization/streaming. It also applies stated transformation, mode, padding, type, range, and predicate constraints.
+Requirements the rule states:
+- `encmode` must be one of 1, 2, 3, or 4.
+- Public/private-key or certificate initialization implies RSA for wrap/unwrap modes 3 or 4; a `SecretKey` implies an allow-listed AES or PBE-with-AES algorithm.
+- AES is restricted to GCM, CTR, CTS, CFB, or OFB and requires `NoPadding`; RSA is restricted to no mode or ECB with the rule's listed padding values.
+- CTR, CTS, CFB, and OFB decryption/non-encryption modes may not use an init form without explicit IV/parameters; their encryption mode requires `preparedIV[paramSpec]`.
+- GCM requires `preparedGCM[paramSpec]`; listed OAEP padding cases require `preparedOAEP[paramSpec]`; `AlgorithmParameters` require `preparedAlg[params, alg(transformation)]`.
+- Key initialization requires one of `generatedKey[key, alg(transformation)]`, `generatedPubkey[key]`, or `generatedPrivkey[key]`; a supplied `SecureRandom` requires `randomized[random]`.
+- For modeled byte-array overloads, offsets and lengths must satisfy the rule's nonnegative and buffer-bound constraints; plaintext must satisfy `!macced[this, plainText]`.
+Limits of the check, recorded with the rule:
+- Predicate satisfaction is only as complete as the installed CrySL rules, dataflow/alias analysis, dependency bytecode, and available call graph.
+- The exact detector version, compiled rules artifact, active rule revision, analysis configuration, and error category hidden by `message: "unknown"` were not supplied.
+- The source rule contains security policy choices narrower than the general JCA API contract and is not a complete language-level specification of Cipher.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- A syntactic `.init(`, `.update(`, or `.doFinal(` match on a non-Cipher receiver when local matching is used without resolved type information.
+- A partial program/dependency view in which factory, initialization, finalization, or predicate-producing code is external, reflection-based, native, generated, or omitted from the call graph.
+- A runtime-valid provider-specific transformation rejected because the CrySL rule's algorithm/mode/padding allow-list is narrower than the complete JCA provider surface.
+- A valid one-shot zero-input `Cipher.doFinal()` immediately after initialization: the rule defines that overload, but its order expression admits it only after one or more modeled `Update` events.
+- A valid `Cipher.unwrap(...)` workflow: JCA supports it, but the consulted rule models `wrap` and has no `unwrap` event.
+- Code whose enclosing method is named `encrypt`, `decrypt`, or `create` but delegates to another component, uses a different crypto API, or only prepares values without operating a Cipher.
+
+
+Earlier proposals, in other repositories, for the rule of the report on KeystoreSecretVault.seal (Cipher), and what their maintainers answered:
+
+1. Repository: freeotp/freeotp-android
+   Outcome: merged
+   Proposal: Add SecretKeyFactory key round-trip coverage
+   Maintainer said: Thank you for the PR, test looks valid. By the way I consider renaming the EncryptedKey class to EncryptedToken to avoid confusion.
+
+2. Repository: freeotp/freeotp-android
+   Outcome: merged
+   Proposal: Require AES keys before initializing encryption
+   Maintainer said: Thank you for the PR, testing backup/restore is successful.
+
+3. Repository: gigabytedevelopers/CometOTP
+   Outcome: merged
+   Proposal: Create a fresh Cipher for each key operation
+   Maintainer said: Thank you for finding this and for the clear write-up, @<contributor>. The fix is merged. Our master branch only accepts signed commits, so I rebased your commit onto master and signed it on our side. You're still the author of the commit that landed (<commit>). Good luck with the RVSec research!

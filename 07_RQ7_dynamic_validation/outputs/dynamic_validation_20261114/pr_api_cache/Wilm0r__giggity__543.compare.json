@@ -1,0 +1,453 @@
+{
+ "url": "https://api.github.com/repos/Wilm0r/giggity/compare/d310621c6f622364348c3208dcb081f41caa20cf...d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+ "fetched_at": "2026-11-15T16:17:47.751176+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/Wilm0r/giggity/compare/d310621c6f622364348c3208dcb081f41caa20cf...d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+  "html_url": "https://github.com/Wilm0r/giggity/compare/d310621c6f622364348c3208dcb081f41caa20cf...d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+  "permalink_url": "https://github.com/Wilm0r/giggity/compare/Wilm0r:d310621...Wilm0r:d05c38b",
+  "diff_url": "https://github.com/Wilm0r/giggity/compare/d310621c6f622364348c3208dcb081f41caa20cf...d05c38b34be759d27d0293bbbf643d0ceb1073fc.diff",
+  "patch_url": "https://github.com/Wilm0r/giggity/compare/d310621c6f622364348c3208dcb081f41caa20cf...d05c38b34be759d27d0293bbbf643d0ceb1073fc.patch",
+  "base_commit": {
+   "sha": "d310621c6f622364348c3208dcb081f41caa20cf",
+   "node_id": "C_kwDOA5IuutoAKGQzMTA2MjFjNmY2MjIzNjQzNDhjMzIwOGRjYjA4MWY0MWNhYTIwY2Y",
+   "commit": {
+    "author": {
+     "name": "Luca Weiss",
+     "email": "luca@lucaweiss.eu",
+     "date": "2026-08-30T17:37:01Z"
+    },
+    "committer": {
+     "name": "GitHub",
+     "email": "noreply@github.com",
+     "date": "2026-08-30T17:37:01Z"
+    },
+    "message": "Add postmarketOS and Alpine Linux Conference 2026 (#540)",
+    "tree": {
+     "sha": "d6b4a438cdd52ece5710fcdab2323201523171b5",
+     "url": "https://api.github.com/repos/Wilm0r/giggity/git/trees/d6b4a438cdd52ece5710fcdab2323201523171b5"
+    },
+    "url": "https://api.github.com/repos/Wilm0r/giggity/git/commits/d310621c6f622364348c3208dcb081f41caa20cf",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqlGo+CRC1aQ7uu5UhlAAAuvUQAArs4Rhw5Vp5vzqgY+Cks7Mm\nI6DB4eYX030q17qSbYaXsKju28I9iMH8apmtC2NNHj/LjP+XIbjwNX81sNqYg9MJ\nJyZIE+dvcjGIUrngSMisUUo5HBELO71wvMeWG5gALv8V/RmzUJg0z35x2DsYkckf\nCrIAFgz2KzSE+0OyMq2J1P5bP9RtxfnC7uq/VhvzIexXx5kJWkKvAjL/wMC75QQe\ncrWhVkaNjKgj06B3PnhrPAfRu4o7Ov7aeen9LNrJ4kUyx5RMKjArsctYmNDHeQkx\nsFbJco5Rl/GyjOmRC9VSNH1dUH/w1uj6uT+mLYy+ImH24WbQYiGqI3OJWH3lWw0w\nnzFa6VPX3jnwmvQOrqP6iy1dJEk8C+iBACxssBeXDq6WkJtkgW36V3G1M9zasUE+\n21EjfiIh+rWIG3jgOuJFrQw901Gq62aEKIX9uMdKlhZgGqn/HKtduSqjChl7vNLU\nakQxM4cY8UCJBJ0NrwwORc9dpqjkdN5ElBJGH1GU0zT5M3lSTZOVik/GkdO2uI2g\nBYPUa7N4+fVrNeBWbEZQ20eUeuzyvndqnwSg2IgW3zmXqb3xnYfwiG5M0vW1Q9ay\n+ROkEG3DHiP2AfrLNGjE14fWB6kcGekcoBSA5jdX0L8WwGP83n8yu+v58zCBgDSG\nEZ9B7IJ5wY3pLx8EKBvZ\n=199B\n-----END PGP SIGNATURE-----\n",
+     "payload": "tree d6b4a438cdd52ece5710fcdab2323201523171b5\nparent 7540608770809bf4823ac87e2299cff863389b74\nauthor Luca Weiss <luca@lucaweiss.eu> 1788111421 +0200\ncommitter GitHub <noreply@github.com> 1788111421 +0200\n\nAdd postmarketOS and Alpine Linux Conference 2026 (#540)",
+     "verified_at": "2026-08-30T17:37:02Z"
+    }
+   },
+   "url": "https://api.github.com/repos/Wilm0r/giggity/commits/d310621c6f622364348c3208dcb081f41caa20cf",
+   "html_url": "https://github.com/Wilm0r/giggity/commit/d310621c6f622364348c3208dcb081f41caa20cf",
+   "comments_url": "https://api.github.com/repos/Wilm0r/giggity/commits/d310621c6f622364348c3208dcb081f41caa20cf/comments",
+   "author": {
+    "login": "z3ntu",
+    "id": 3768500,
+    "node_id": "MDQ6VXNlcjM3Njg1MDA=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/3768500?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/z3ntu",
+    "html_url": "https://github.com/z3ntu",
+    "followers_url": "https://api.github.com/users/z3ntu/followers",
+    "following_url": "https://api.github.com/users/z3ntu/following{/other_user}",
+    "gists_url": "https://api.github.com/users/z3ntu/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/z3ntu/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/z3ntu/subscriptions",
+    "organizations_url": "https://api.github.com/users/z3ntu/orgs",
+    "repos_url": "https://api.github.com/users/z3ntu/repos",
+    "events_url": "https://api.github.com/users/z3ntu/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/z3ntu/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "7540608770809bf4823ac87e2299cff863389b74",
+     "url": "https://api.github.com/repos/Wilm0r/giggity/commits/7540608770809bf4823ac87e2299cff863389b74",
+     "html_url": "https://github.com/Wilm0r/giggity/commit/7540608770809bf4823ac87e2299cff863389b74"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "d310621c6f622364348c3208dcb081f41caa20cf",
+   "node_id": "C_kwDOA5IuutoAKGQzMTA2MjFjNmY2MjIzNjQzNDhjMzIwOGRjYjA4MWY0MWNhYTIwY2Y",
+   "commit": {
+    "author": {
+     "name": "Luca Weiss",
+     "email": "luca@lucaweiss.eu",
+     "date": "2026-08-30T17:37:01Z"
+    },
+    "committer": {
+     "name": "GitHub",
+     "email": "noreply@github.com",
+     "date": "2026-08-30T17:37:01Z"
+    },
+    "message": "Add postmarketOS and Alpine Linux Conference 2026 (#540)",
+    "tree": {
+     "sha": "d6b4a438cdd52ece5710fcdab2323201523171b5",
+     "url": "https://api.github.com/repos/Wilm0r/giggity/git/trees/d6b4a438cdd52ece5710fcdab2323201523171b5"
+    },
+    "url": "https://api.github.com/repos/Wilm0r/giggity/git/commits/d310621c6f622364348c3208dcb081f41caa20cf",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqlGo+CRC1aQ7uu5UhlAAAuvUQAArs4Rhw5Vp5vzqgY+Cks7Mm\nI6DB4eYX030q17qSbYaXsKju28I9iMH8apmtC2NNHj/LjP+XIbjwNX81sNqYg9MJ\nJyZIE+dvcjGIUrngSMisUUo5HBELO71wvMeWG5gALv8V/RmzUJg0z35x2DsYkckf\nCrIAFgz2KzSE+0OyMq2J1P5bP9RtxfnC7uq/VhvzIexXx5kJWkKvAjL/wMC75QQe\ncrWhVkaNjKgj06B3PnhrPAfRu4o7Ov7aeen9LNrJ4kUyx5RMKjArsctYmNDHeQkx\nsFbJco5Rl/GyjOmRC9VSNH1dUH/w1uj6uT+mLYy+ImH24WbQYiGqI3OJWH3lWw0w\nnzFa6VPX3jnwmvQOrqP6iy1dJEk8C+iBACxssBeXDq6WkJtkgW36V3G1M9zasUE+\n21EjfiIh+rWIG3jgOuJFrQw901Gq62aEKIX9uMdKlhZgGqn/HKtduSqjChl7vNLU\nakQxM4cY8UCJBJ0NrwwORc9dpqjkdN5ElBJGH1GU0zT5M3lSTZOVik/GkdO2uI2g\nBYPUa7N4+fVrNeBWbEZQ20eUeuzyvndqnwSg2IgW3zmXqb3xnYfwiG5M0vW1Q9ay\n+ROkEG3DHiP2AfrLNGjE14fWB6kcGekcoBSA5jdX0L8WwGP83n8yu+v58zCBgDSG\nEZ9B7IJ5wY3pLx8EKBvZ\n=199B\n-----END PGP SIGNATURE-----\n",
+     "payload": "tree d6b4a438cdd52ece5710fcdab2323201523171b5\nparent 7540608770809bf4823ac87e2299cff863389b74\nauthor Luca Weiss <luca@lucaweiss.eu> 1788111421 +0200\ncommitter GitHub <noreply@github.com> 1788111421 +0200\n\nAdd postmarketOS and Alpine Linux Conference 2026 (#540)",
+     "verified_at": "2026-08-30T17:37:02Z"
+    }
+   },
+   "url": "https://api.github.com/repos/Wilm0r/giggity/commits/d310621c6f622364348c3208dcb081f41caa20cf",
+   "html_url": "https://github.com/Wilm0r/giggity/commit/d310621c6f622364348c3208dcb081f41caa20cf",
+   "comments_url": "https://api.github.com/repos/Wilm0r/giggity/commits/d310621c6f622364348c3208dcb081f41caa20cf/comments",
+   "author": {
+    "login": "z3ntu",
+    "id": 3768500,
+    "node_id": "MDQ6VXNlcjM3Njg1MDA=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/3768500?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/z3ntu",
+    "html_url": "https://github.com/z3ntu",
+    "followers_url": "https://api.github.com/users/z3ntu/followers",
+    "following_url": "https://api.github.com/users/z3ntu/following{/other_user}",
+    "gists_url": "https://api.github.com/users/z3ntu/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/z3ntu/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/z3ntu/subscriptions",
+    "organizations_url": "https://api.github.com/users/z3ntu/orgs",
+    "repos_url": "https://api.github.com/users/z3ntu/repos",
+    "events_url": "https://api.github.com/users/z3ntu/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/z3ntu/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "7540608770809bf4823ac87e2299cff863389b74",
+     "url": "https://api.github.com/repos/Wilm0r/giggity/commits/7540608770809bf4823ac87e2299cff863389b74",
+     "html_url": "https://github.com/Wilm0r/giggity/commit/7540608770809bf4823ac87e2299cff863389b74"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 3,
+  "behind_by": 0,
+  "total_commits": 3,
+  "commits": [
+   {
+    "sha": "dc5b63a84bfe4373fdddfa91e907a67286355aba",
+    "node_id": "C_kwDOA5IuutoAKGRjNWI2M2E4NGJmZTQzNzNmZGRkZmE5MWU5MDdhNjcyODYzNTVhYmE",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-07T00:00:57Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-07T00:00:57Z"
+     },
+     "message": "Repair validation compilation for 0638946f7e4a",
+     "tree": {
+      "sha": "dc88ec90ff38f488cb28a6060092bc9e2522b792",
+      "url": "https://api.github.com/repos/Wilm0r/giggity/git/trees/dc88ec90ff38f488cb28a6060092bc9e2522b792"
+     },
+     "url": "https://api.github.com/repos/Wilm0r/giggity/git/commits/dc5b63a84bfe4373fdddfa91e907a67286355aba",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/Wilm0r/giggity/commits/dc5b63a84bfe4373fdddfa91e907a67286355aba",
+    "html_url": "https://github.com/Wilm0r/giggity/commit/dc5b63a84bfe4373fdddfa91e907a67286355aba",
+    "comments_url": "https://api.github.com/repos/Wilm0r/giggity/commits/dc5b63a84bfe4373fdddfa91e907a67286355aba/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "d310621c6f622364348c3208dcb081f41caa20cf",
+      "url": "https://api.github.com/repos/Wilm0r/giggity/commits/d310621c6f622364348c3208dcb081f41caa20cf",
+      "html_url": "https://github.com/Wilm0r/giggity/commit/d310621c6f622364348c3208dcb081f41caa20cf"
+     }
+    ]
+   },
+   {
+    "sha": "de77f26238d74681ba328c8e6bf6f691b5c17e9b",
+    "node_id": "C_kwDOA5IuutoAKGRlNzdmMjYyMzhkNzQ2ODFiYTMyOGM4ZTZiZjZmNjkxYjVjMTdlOWI",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-07T18:53:01Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-07T18:53:01Z"
+     },
+     "message": "Repair validation compilation for 0638946f7e4a",
+     "tree": {
+      "sha": "6955cce183d21cc9206e5928faa75c768cfbc1bd",
+      "url": "https://api.github.com/repos/Wilm0r/giggity/git/trees/6955cce183d21cc9206e5928faa75c768cfbc1bd"
+     },
+     "url": "https://api.github.com/repos/Wilm0r/giggity/git/commits/de77f26238d74681ba328c8e6bf6f691b5c17e9b",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/Wilm0r/giggity/commits/de77f26238d74681ba328c8e6bf6f691b5c17e9b",
+    "html_url": "https://github.com/Wilm0r/giggity/commit/de77f26238d74681ba328c8e6bf6f691b5c17e9b",
+    "comments_url": "https://api.github.com/repos/Wilm0r/giggity/commits/de77f26238d74681ba328c8e6bf6f691b5c17e9b/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "dc5b63a84bfe4373fdddfa91e907a67286355aba",
+      "url": "https://api.github.com/repos/Wilm0r/giggity/commits/dc5b63a84bfe4373fdddfa91e907a67286355aba",
+      "html_url": "https://github.com/Wilm0r/giggity/commit/dc5b63a84bfe4373fdddfa91e907a67286355aba"
+     }
+    ]
+   },
+   {
+    "sha": "d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+    "node_id": "C_kwDOA5IuutoAKGQwNWMzOGIzNGJlNzU5ZDI3ZDAyOTNiYmJmNjQzZDBjZWIxMDczZmM",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-07T18:55:47Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-07T18:55:47Z"
+     },
+     "message": "Fix hashCode",
+     "tree": {
+      "sha": "fcda7f1722536979fa15995a05020524334c4528",
+      "url": "https://api.github.com/repos/Wilm0r/giggity/git/trees/fcda7f1722536979fa15995a05020524334c4528"
+     },
+     "url": "https://api.github.com/repos/Wilm0r/giggity/git/commits/d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/Wilm0r/giggity/commits/d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+    "html_url": "https://github.com/Wilm0r/giggity/commit/d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+    "comments_url": "https://api.github.com/repos/Wilm0r/giggity/commits/d05c38b34be759d27d0293bbbf643d0ceb1073fc/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "de77f26238d74681ba328c8e6bf6f691b5c17e9b",
+      "url": "https://api.github.com/repos/Wilm0r/giggity/commits/de77f26238d74681ba328c8e6bf6f691b5c17e9b",
+      "html_url": "https://github.com/Wilm0r/giggity/commit/de77f26238d74681ba328c8e6bf6f691b5c17e9b"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "4831b2e66d766c1e5d1067dd681687ea2d454597",
+    "filename": "app/src/main/java/net/gaast/giggity/Schedule.java",
+    "status": "modified",
+    "additions": 2,
+    "deletions": 18,
+    "changes": 20,
+    "blob_url": "https://github.com/Wilm0r/giggity/blob/d05c38b34be759d27d0293bbbf643d0ceb1073fc/app%2Fsrc%2Fmain%2Fjava%2Fnet%2Fgaast%2Fgiggity%2FSchedule.java",
+    "raw_url": "https://github.com/Wilm0r/giggity/raw/d05c38b34be759d27d0293bbbf643d0ceb1073fc/app%2Fsrc%2Fmain%2Fjava%2Fnet%2Fgaast%2Fgiggity%2FSchedule.java",
+    "contents_url": "https://api.github.com/repos/Wilm0r/giggity/contents/app%2Fsrc%2Fmain%2Fjava%2Fnet%2Fgaast%2Fgiggity%2FSchedule.java?ref=d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+    "patch": "@@ -40,9 +40,6 @@\n import java.io.Serializable;\n import java.io.UnsupportedEncodingException;\n import java.net.URLEncoder;\n-import java.nio.ByteBuffer;\n-import java.security.MessageDigest;\n-import java.security.NoSuchAlgorithmException;\n import java.text.Collator;\n import java.text.ParseException;\n import java.text.ParsePosition;\n@@ -1143,21 +1140,8 @@ public class Item implements Comparable<Item>, Serializable {\n \n \t\t@Override\n \t\tpublic int hashCode() {\n-\t\t\t// No clue what the default version does but the numbers seem too low to me.\n-\t\t\t// I'm using this for notification + alarm IDs now so use all 32 bits.\n-\t\t\t// Or at least I once was, not clear whether I still do, and whether to care about the\n-\t\t\t// antiquated hash algorithm?\n-\t\t\ttry {\n-\t\t\t\tMessageDigest md5 = MessageDigest.getInstance(\"MD5\");\n-\t\t\t\tmd5.update(getUrl().getBytes());\n-\t\t\t\tbyte[] raw = md5.digest();\n-\t\t\t\treturn ByteBuffer.wrap(raw, 0, 4).getInt();\n-\t\t\t} catch (NoSuchAlgorithmException e) {  // WTF no\n-\t\t\t\te.printStackTrace();\n-\t\t\t\treturn super.hashCode();\n-\t\t\t}\n-\t\t}\n-\t\t\n+\t\t\treturn getUrl().hashCode();\n+\t\t}\t\t\n \t\tpublic Schedule getSchedule() {\n \t\t\treturn Schedule.this;\n \t\t}"
+   },
+   {
+    "sha": "62caae2c0ae9dba842c1b443be3f290a6b06d414",
+    "filename": "app/src/test/java/net/gaast/giggity/ScheduleHashCodeTest.java",
+    "status": "added",
+    "additions": 28,
+    "deletions": 0,
+    "changes": 28,
+    "blob_url": "https://github.com/Wilm0r/giggity/blob/d05c38b34be759d27d0293bbbf643d0ceb1073fc/app%2Fsrc%2Ftest%2Fjava%2Fnet%2Fgaast%2Fgiggity%2FScheduleHashCodeTest.java",
+    "raw_url": "https://github.com/Wilm0r/giggity/raw/d05c38b34be759d27d0293bbbf643d0ceb1073fc/app%2Fsrc%2Ftest%2Fjava%2Fnet%2Fgaast%2Fgiggity%2FScheduleHashCodeTest.java",
+    "contents_url": "https://api.github.com/repos/Wilm0r/giggity/contents/app%2Fsrc%2Ftest%2Fjava%2Fnet%2Fgaast%2Fgiggity%2FScheduleHashCodeTest.java?ref=d05c38b34be759d27d0293bbbf643d0ceb1073fc",
+    "patch": "@@ -0,0 +1,28 @@\n+package net.gaast.giggity;\n+\n+import static org.junit.Assert.assertEquals;\n+\n+import org.junit.Test;\n+\n+public class ScheduleHashCodeTest {\n+\tprivate Schedule.Item item(String scheduleUrl, String guidOrId) {\n+\t\treturn new Schedule().new Item(guidOrId, null, guidOrId, null, null);\n+\t}\n+\n+\t@Test\n+\tpublic void itemsWithEqualScheduleUrlAndDiscriminatorHaveEqualHashCodes() {\n+\t\tSchedule.Item first = item(\"https://example.test/schedule\", \"item-guid\");\n+\t\tSchedule.Item second = item(\"https://example.test/schedule\", \"item-guid\");\n+\n+\t\tassertEquals(first.hashCode(), second.hashCode());\n+\t}\n+\n+\t@Test\n+\tpublic void equalItemsHaveEqualHashCodes() {\n+\t\tSchedule.Item first = item(\"https://example.test/schedule\", \"item-guid\");\n+\t\tSchedule.Item second = item(\"https://example.test/schedule\", \"item-guid\");\n+\n+\t\tassertEquals(first.getUrl(), second.getUrl());\n+\t\tassertEquals(first.hashCode(), second.hashCode());\n+\t}\n+}"
+   }
+  ]
+ }
+}

@@ -1,0 +1,150 @@
+{
+  "version": 3,
+  "timestamp": "2026-11-17T09:51:57.613994",
+  "tasks": [
+    {
+      "id": "76fd5144-a323-4cf0-a408-48f604fef332",
+      "config": {
+        "apk_name": "org.fedorahosted.freeotp.debug_48.apk",
+        "repetition": 1,
+        "timeout": 300,
+        "tool_config": {
+          "name": "droidbot",
+          "variant": "dfs_greedy",
+          "parameters": {}
+        },
+        "no_window": true,
+        "clean_logcat": true,
+        "skip_installation": false,
+        "device_id": "emulator-5554",
+        "export_to_csv": true
+      },
+      "result": {
+        "state": "COMPLETED",
+        "start_time": "2026-11-17T09:38:47.201048",
+        "end_time": "2026-11-17T09:45:28.866712",
+        "tool_execution_start": "2026-11-17T09:39:46.920238",
+        "execution_time_seconds": 401,
+        "error_message": null,
+        "logcat_file": "results/rvsec_20261117_093656/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:dfs_greedy.logcat",
+        "trace_file": "results/rvsec_20261117_093656/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:dfs_greedy.trace",
+        "coverage_metrics": {
+          "method_coverage": 0.0,
+          "activities_coverage": 0.0,
+          "methods_mop_reachable_coverage": 0.0,
+          "total_errors": 8,
+          "total_method_calls": 0
+        },
+        "detected_errors_count": 0,
+        "write_errors": {},
+        "state_transitions": [
+          {
+            "state": "CREATED",
+            "timestamp": "2026-11-17T09:38:47.199606",
+            "previous_state": "CREATED"
+          },
+          {
+            "state": "INITIALIZING",
+            "timestamp": "2026-11-17T09:38:47.199920",
+            "previous_state": "CREATED"
+          },
+          {
+            "state": "READY",
+            "timestamp": "2026-11-17T09:38:47.200131",
+            "previous_state": "INITIALIZING"
+          },
+          {
+            "state": "RUNNING",
+            "timestamp": "2026-11-17T09:38:47.201041",
+            "previous_state": "READY"
+          },
+          {
+            "state": "COMPLETED",
+            "timestamp": "2026-11-17T09:45:28.865658",
+            "previous_state": "RUNNING"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a7ae017c-af5d-482b-82c8-e3bf0b346d92",
+      "config": {
+        "apk_name": "org.fedorahosted.freeotp.debug_48.apk",
+        "repetition": 1,
+        "timeout": 300,
+        "tool_config": {
+          "name": "droidbot",
+          "variant": "bfs_greedy",
+          "parameters": {}
+        },
+        "no_window": true,
+        "clean_logcat": true,
+        "skip_installation": false,
+        "device_id": "emulator-5554",
+        "export_to_csv": true
+      },
+      "result": {
+        "state": "COMPLETED",
+        "start_time": "2026-11-17T09:45:28.876302",
+        "end_time": "2026-11-17T09:51:57.543465",
+        "tool_execution_start": "2026-11-17T09:46:16.405183",
+        "execution_time_seconds": 388,
+        "error_message": null,
+        "logcat_file": "results/rvsec_20261117_093656/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:bfs_greedy.logcat",
+        "trace_file": "results/rvsec_20261117_093656/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:bfs_greedy.trace",
+        "coverage_metrics": {
+          "method_coverage": 0.0,
+          "activities_coverage": 0.0,
+          "methods_mop_reachable_coverage": 0.0,
+          "total_errors": 8,
+          "total_method_calls": 0
+        },
+        "detected_errors_count": 0,
+        "write_errors": {},
+        "state_transitions": [
+          {
+            "state": "CREATED",
+            "timestamp": "2026-11-17T09:38:47.200193",
+            "previous_state": "CREATED"
+          },
+          {
+            "state": "INITIALIZING",
+            "timestamp": "2026-11-17T09:38:47.200328",
+            "previous_state": "CREATED"
+          },
+          {
+            "state": "READY",
+            "timestamp": "2026-11-17T09:38:47.200357",
+            "previous_state": "INITIALIZING"
+          },
+          {
+            "state": "RUNNING",
+            "timestamp": "2026-11-17T09:45:28.876283",
+            "previous_state": "READY"
+          },
+          {
+            "state": "COMPLETED",
+            "timestamp": "2026-11-17T09:51:57.541827",
+            "previous_state": "RUNNING"
+          }
+        ]
+      }
+    }
+  ],
+  "experiment": {
+    "experiment_id": "results/rvsec_20261117_093656",
+    "start_time": "2026-11-17T09:38:47.200488",
+    "config_checksum": "98e5e541887760d9fa3ada71e11ffa4c50172b4f569abbc3ec6c6938ab21301c",
+    "current_status": "running"
+  },
+  "statistics": {
+    "total_tasks": 2,
+    "completed_tasks": 2,
+    "failed_tasks": 0,
+    "pending_tasks": 0,
+    "completion_percentage": 100.0,
+    "average_execution_time": 394.5,
+    "total_execution_time": 789.0,
+    "last_updated": "2026-11-17T09:51:57.614031"
+  }
+}

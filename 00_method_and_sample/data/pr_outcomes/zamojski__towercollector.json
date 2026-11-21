@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/zamojski/TowerCollector/pull/284",
+    "state": "open",
+    "finding_id": "0ec8d2f1628e",
+    "spec": "DeprecatedApiSpec",
+    "csv_class": "info.zamojski.soft.towercollector.tasks.UpdateCheckAsyncTask",
+    "method_name": "doInBackground",
+    "title": "Fix doInBackground",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:38:13.869685+00:00",
+    "maintainer_feedback": []
+  }
+]

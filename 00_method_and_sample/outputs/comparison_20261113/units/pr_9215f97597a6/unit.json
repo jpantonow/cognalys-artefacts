@@ -1,0 +1,43 @@
+{
+ "unit": "pr_9215f97597a6",
+ "source": "pr_population",
+ "group": "aberto",
+ "finding_ids": [
+  "9215f97597a6"
+ ],
+ "apk": "systems.sieber.droid_scep_7.apk",
+ "repo_url": "https://github.com/schorschii/Droid_SCEP",
+ "pinned_commit": "d8e13b746f1028116f847f36afc249011ac93498",
+ "spec": [
+  "KeyPairGeneratorSpec"
+ ],
+ "class": "systems.sieber.droid_scep.ScepClient",
+ "method": "CertReq",
+ "prs": [
+  "https://github.com/schorschii/Droid_SCEP/pull/2"
+ ],
+ "original_run": "outputs/rerun_correcoes_20261022/run",
+ "original_outcome": "PR pronto",
+ "frozen_outcome": "issue para o mantenedor do app",
+ "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rerun_correcoes_20261022/run_frozen_systems_sieber_droid_scep",
+ "reference_pr_records": [
+  "outputs/rerun_correcoes_20261022/run/pull_requests/systems.sieber.droid_scep_7.apk_CertReq_KeyPairGeneratorSpec_pr.json"
+ ],
+ "reference_diff_lines": 244,
+ "build_task": ":app:assembleGoogleDebug",
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "9215f97597a6",
+   "unique_error_id": "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec:::InvalidKeySize:::invalid key size for algorithm RSA",
+   "spec": "KeyPairGeneratorSpec",
+   "class": "systems.sieber.droid_scep.ScepClient",
+   "method": "CertReq",
+   "message": "invalid key size for algorithm RSA",
+   "apk": "systems.sieber.droid_scep_7.apk",
+   "repo_url": "https://github.com/schorschii/Droid_SCEP",
+   "commit": "d8e13b746f1028116f847f36afc249011ac93498",
+   "detector_source_location": "ScepClient.java:125"
+  }
+ ]
+}

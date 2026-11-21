@@ -1,0 +1,14 @@
+diff --git a/core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt b/core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt
+index b550ed62..b55c756e 100644
+--- a/core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt
++++ b/core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt
+@@ -59,7 +59,7 @@ class DiskCache<KeyType : Any, ValueType : Any>(
+ 
+ 	@OptIn(ExperimentalStdlibApi::class)
+ 	private fun getCacheFile(key: CacheKey<KeyType>): File {
+-		val md = MessageDigest.getInstance("MD5")
+-		return File(cacheDir, md.digest(key.toString().toByteArray()).toHexString())
++		val md = MessageDigest.getInstance("SHA-256")
++		return File(cacheDir, "sha256-v1-" + md.digest(key.toString().toByteArray()).toHexString())
+ 	}
+ }

@@ -1,0 +1,32 @@
+{
+ "card_id": "Kc79b0332",
+ "card_sha256": "4c9238b250b2ac81",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 4361,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 405
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0432264,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "21b52a0614ee2ef3",
+ "finished_at": "2026-11-16T11:50:10-0300",
+ "output": {
+  "guess": "S",
+  "confidence": 0.25,
+  "reason": "This is a low-confidence guess. The diff goes beyond swapping MD5 for SHA-256: it renames every helper, its call sites and the variables, re-sorts the import correctly, and rewrites the log and exception messages to say \"checksum\". That kind of tidy, all-the-way-through rename looks more like a Claude agent working directly in the repository than a minimal pipeline patch or a Codex edit, which tend to change less. The card gives little else to go on."
+ }
+}

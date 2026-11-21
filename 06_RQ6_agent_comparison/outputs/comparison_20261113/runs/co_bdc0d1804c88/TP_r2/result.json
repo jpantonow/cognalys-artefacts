@@ -1,0 +1,53 @@
+{
+ "unit": "co_bdc0d1804c88",
+ "arm": "TP",
+ "replica": 2,
+ "cli": "codex",
+ "model": "gpt-6.1-terra",
+ "effort": "high",
+ "prompt_file": "prompt_plus.txt",
+ "prompt_sha256": "eeef8399f561f0bdf7ebb3b625f6a7579307e128edc1a9c4dd37ab7f01173fea",
+ "working_notes_bytes": 13013,
+ "pinned_commit": "131c2fae4f86e54aa71d87e522a3b4874bb4e68a",
+ "status": "exit 0",
+ "seconds": 288,
+ "decision": "pr",
+ "delivery_class": "PR",
+ "invalid_reason": "",
+ "deliverables": [
+  "PR.md"
+ ],
+ "diff_sha": "d3d7840e99a9c300",
+ "diff_lines": 109,
+ "files_changed": 2,
+ "untracked": [],
+ "build": {
+  "agent_calls": 2,
+  "agent_last_status": "success",
+  "final_status": "success",
+  "final_from": "agent call 2"
+ },
+ "turns": 1,
+ "tokens": {
+  "input_tokens": 2352350,
+  "cached_input_tokens": 2289920,
+  "output_tokens": 9245,
+  "reasoning_output_tokens": 1057
+ },
+ "web_searches": 1,
+ "web_fetches": null,
+ "claude_reported_cost_usd": null,
+ "model_usage": null,
+ "tool_calls": 25,
+ "urls_touched": [
+  "https://developer.android.com/privacy-and-security/cryptography",
+  "https://developer.android.com/reference/java/security/MessageDigest",
+  "https://images.openai.com/static-rsc-1/qgeU_l3d6xi2i9yHZDiopXuhHdNzlb0Y9N3098XEn4tMCZYzV-Ma_OzZpky62yvW5AkOIcladCwvsvZ3ir5LYWf8abi-KkvS1N5_73qACNaVyxXbau8gSThishdG8Z1H",
+  "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/MessageDigest.crysl"
+ ],
+ "consulted_upstream": false,
+ "upstream_urls": [],
+ "credential_refreshed": false,
+ "error_text": "",
+ "finished_at": "2026-11-15T13:50:15-0300"
+}

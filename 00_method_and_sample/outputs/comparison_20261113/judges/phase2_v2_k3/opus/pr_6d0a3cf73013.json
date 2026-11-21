@@ -1,0 +1,322 @@
+{
+ "unit": "pr_6d0a3cf73013",
+ "phase": "phase2",
+ "order": [
+  "Ked3a41f1",
+  "K9175f31b",
+  "Kf03b5b99",
+  "Kce176f69",
+  "K3556375d",
+  "K284e1dd7",
+  "Kfc54db20",
+  "K8cd2e818",
+  "K74ca2a44",
+  "Kf74d2d3c",
+  "K33cec007",
+  "K6d208e69",
+  "Kb02c7002",
+  "K1ea13604",
+  "Kf0278b49",
+  "K73abc977",
+  "K9a7ead0b",
+  "Kc1a34abf",
+  "K82cfc0ec",
+  "K2c308eea",
+  "Kd3f1b330",
+  "K9411e394",
+  "K2ef6ec5e"
+ ],
+ "card_sha256": {
+  "K1ea13604": "a3440c74ccc0f55d",
+  "K284e1dd7": "aaf115463fabf3e8",
+  "K2c308eea": "f4f0193eb48dec50",
+  "K2ef6ec5e": "d72e667b0919f41e",
+  "K33cec007": "bac57a4509a3d8a0",
+  "K3556375d": "559fd539eded5f71",
+  "K6d208e69": "009b212b9ce705e6",
+  "K73abc977": "b6f384228f06a357",
+  "K74ca2a44": "19139cda23984949",
+  "K82cfc0ec": "5f0be98e0e507445",
+  "K8cd2e818": "7ba3a7f7b479d799",
+  "K9175f31b": "02dff381d24740a1",
+  "K9411e394": "eecedf7d82e8b48c",
+  "K9a7ead0b": "15d3198b7c3589bf",
+  "Kb02c7002": "3ce62cd17f72614d",
+  "Kc1a34abf": "3eab9f105f9dbe94",
+  "Kce176f69": "4fd1aeecfc7430ef",
+  "Kd3f1b330": "912dcb964cd91981",
+  "Ked3a41f1": "d68f070471620da3",
+  "Kf0278b49": "d02fd8588a3a0aef",
+  "Kf03b5b99": "63228192d77b0c91",
+  "Kf74d2d3c": "cf602c67e4cab772",
+  "Kfc54db20": "6d274062654d3e96"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The finding is real and serious. In OkHttpClientModule.kt, cachingHttpClient() sets trustAllCerts = true by default (line 73). Neither caller changes that: OkHttpClientModule.provideOkHttpClient (the app-wide singleton) and ProviderAPI (the Fever, Google Reader and FreshRSS sync clients) both use the default. So setupSsl() always runs the trustAllCerts branch. That branch builds an anonymous X509TrustManager whose checkServerTrusted is empty and installs `hostnameVerifier { _, _ -> true }`. The resulting TrustManager[] goes to SSLContext.init and to OkHttp's sslSocketFactory(). The platform trust manager at line 150 is never reached in the shipped app. The app has no setting or per-account option for self-signed servers; trust-all is simply on everywhere. As a result, every HTTPS connection the app makes can be intercepted by anyone on the network path. That includes feed fetches, images and favicons, and logins to self-hosted servers, where the account username and password, HTTP basic credentials and API tokens are sent. The @SuppressLint(\"CustomX509TrustManager\") annotation hides the lint warning, but nothing in the code justifies the behaviour. Git history shows the trust-all call was first added commented out (f76abd98) and only enabled later. RVSec's message is therefore correct, not a false positive, so NO_ACTION is not acceptable. A PR is appropriate: drop the custom trust manager and the accept-all hostname verifier, and use the platform or TrustManagerFactory default, while keeping the mTLS client-certificate key manager. An ISSUE is also acceptable. The secure fix will break users whose self-hosted FreshRSS, Fever or Google Reader server uses a self-signed or private-CA certificate. On minSdk 26 the app does not trust user-installed CAs unless it has a network security config, and it has none. Whether to add such a config or a per-account 'allow untrusted certificate' option is a product decision maintainers may reasonably want to make first.\n\nSecond judge: This is a real TLS authentication flaw, not merely an unrecognized custom trust manager. In OkHttpClientModule.kt, trustAllCerts selects an X509TrustManager whose checks do nothing and a hostname verifier that always returns true. cachingHttpClient defaults trustAllCerts to true, and both the injected shared client and ProviderAPI accept that default. This affects feed/article/image requests and Fever/Google Reader/FreshRSS account traffic, including credentials and tokens, allowing server impersonation. No user-facing server-trust opt-in or protocol requirement justifies this global bypass. The optional KeyChain certificate authenticates the client; it does not authenticate the server. A corrective PR or an issue explaining the exposure and compatibility implications is appropriate.",
+  "must_change": [
+   "Stop installing the accept-all X509TrustManager by default. The OkHttpClient used for feeds and images and the ProviderAPI clients for Fever, Google Reader and FreshRSS must check server certificates with the platform default trust manager (Platform.get().platformTrustManager() or one from TrustManagerFactory initialised with the default KeyStore), e.g. by making trustAllCerts default to false or removing the trust-all branch.",
+   "Remove the `hostnameVerifier { _, _ -> true }` override in that default path so OkHttp's normal hostname verification applies.",
+   "The TrustManager passed to SSLContext.init must be the same one passed to OkHttpClient.Builder.sslSocketFactory(factory, trustManager), so the two stay consistent.",
+   "If any trust-all or self-signed option is kept, it must be explicit and opt-in (e.g. a per-account setting the user turns on), never the silent default; ideally it also keeps hostname verification or pins the certificate the user accepted.",
+   "Make ordinary shared and provider clients validate server certificate chains using Android/OkHttp default trust or a properly initialized TrustManagerFactory-backed manager; eliminate the default trust-all path.",
+   "Restore normal hostname verification as well as chain validation. Changing only the trust manager leaves server identity checking incomplete.",
+   "When constructing an SSLContext for client-certificate authentication, retain the client key manager and supply a validating server trust manager, passing that same trust manager to OkHttp's sslSocketFactory overload. Do not fall back to permissive verification on failure.",
+   "If exceptional certificate support is retained, require explicit, narrowly scoped configuration rather than silently accepting arbitrary certificates and hostnames application-wide."
+  ],
+  "must_not_break": [
+   "mTLS client-certificate login: the X509KeyManager that reads the KeyChain alias (clientCertificateAlias stored in the Fever, FreshRSS and Google Reader security keys) must still be passed to SSLContext.init, so setupSsl (or an equivalent) must still run when an alias is set even if trust-all is gone.",
+   "Existing stored accounts and their serialized security keys (serverUrl, username, password, clientCertificateAlias): the change must not need a data migration or change their format.",
+   "Normal HTTPS feed fetching, image and favicon loading and sync against servers with publicly trusted certificates must keep working, through the same OkHttpClient with its HTTP cache, timeouts, redirect-following and User-Agent interceptor.",
+   "Plain-HTTP feeds and servers: the manifest's usesCleartextTraffic=true behaviour must not be removed as a side effect.",
+   "Self-hosted users with private CAs should still have a supported route, such as a network_security_config that trusts user-installed CAs or an opt-in setting, or the change should at least be documented; minSdk 26 and both the main and googlePlay flavours must keep building.",
+   "SSL setup failures must not crash client construction: keep the NoSuchAlgorithmException and KeyManagementException handling, or fall back to the default OkHttp configuration.",
+   "Optional Android KeyChain client-certificate authentication, including existing stored clientCertificateAlias values and operation without an alias. Preserve existing account credentials and their serialized representation.",
+   "Fever and Google Reader API authentication and synchronization, including FreshRSS usage, with correctly authenticated HTTPS servers.",
+   "Feed, article, favicon and image loading with valid HTTPS, existing HTTP support, and unrelated caching, redirects, timeouts and User-Agent behavior.",
+   "Android API 26 and later support. Rejecting previously accepted untrusted, expired or wrong-host certificates is the intended security correction; the repository provides no requirement to preserve their unconditional acceptance."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 103,
+ "tokens": {
+  "input_tokens": 12,
+  "cache_creation_input_tokens": 65847,
+  "cache_read_input_tokens": 291799,
+  "output_tokens": 10212
+ },
+ "turns": 7,
+ "tool_calls": 6,
+ "claude_reported_cost_usd": 0.7894237999999999,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "daf797a20b6e4e83",
+ "finished_at": "2026-11-16T10:46:24-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Ked3a41f1",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "The issue correctly traces the trustAllCerts=true default through the shared client and ProviderAPI and names the exposure of the Google Reader password. Holding back because self-signed users would break is a specific, valid reason."
+   },
+   {
+    "card_id": "K9175f31b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Thorough and accurate: it covers both callers, the empty trust manager and the accept-all hostname verifier, the credential and basic-auth exposure, and the mTLS path, and it offers concrete options. The reason for not patching (self-signed users, product decision) is specific."
+   },
+   {
+    "card_id": "Kf03b5b99",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "A minimal default flip to false keeps mTLS (setupSsl still runs when an alias is set), the try/catch and the explicit opt-in. The network security config keeps cleartext allowed and gives private-CA users a route through user CAs."
+   },
+   {
+    "card_id": "Kce176f69",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurate, well-structured analysis of the default, both callers, the impact on credentials and mTLS, and the null key-manager detail. The product-decision reason is specific to this code."
+   },
+   {
+    "card_id": "K3556375d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Accurate but thin: it never states the security impact (MITM of credentials) or which clients are affected. The reason only says each attempt changed behaviour for untrusted-certificate feeds."
+   },
+   {
+    "card_id": "K284e1dd7",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Concise and accurate. It names the default, both callers, the HTTP Basic credentials and the unreachable platformTrustManager branch. The self-signed compatibility reason is specific."
+   },
+   {
+    "card_id": "Kfc54db20",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The code fix is correct: trust-all and the accept-all hostname verifier are removed, mTLS is kept with the platform trust manager, and the try/catch stays. It gives no private-CA route, though the description documents the break. The description claims a build and passing tests, but the diff was not built."
+   },
+   {
+    "card_id": "K8cd2e818",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Same correct core fix plus parameterized tests, with no private-CA route. The description claims the debug build and four tests passed, but the author did not build this diff."
+   },
+   {
+    "card_id": "K74ca2a44",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Accurate but vague: it doesn't name the trustAllCerts default, which clients are affected, or the concrete exposure. The reason (existing users may lose connectivity) is right but generic."
+   },
+   {
+    "card_id": "Kf74d2d3c",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The core fix is correct and the tests are reasonable, but there is no route for private-CA users. The description claims the build check and four tests passed, but the diff was not built."
+   },
+   {
+    "card_id": "K33cec007",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Defaults to validation, uses a TrustManagerFactory manager passed consistently to both SSLContext.init and sslSocketFactory, keeps mTLS, the explicit opt-in and the try/catch, and adds the user-CA config. The reflection-based test against the synthetic $default method is brittle, and a reviewer would ask for it to be rewritten."
+   },
+   {
+    "card_id": "K6d208e69",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Removes trust-all and uses a TrustManagerFactory default manager for mTLS, which is correct. It deliberately drops the NoSuchAlgorithm/KeyManagement handling (not realistically reachable on Android, but the rubric asks to keep it) and gives no private-CA route."
+   },
+   {
+    "card_id": "Kb02c7002",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The core fix is correct, and the MockWebServer tests (OkHttp 5 artifacts) are sensible, but there is no private-CA route. The description claims the build and six tests passed, but the author did not build this diff."
+   },
+   {
+    "card_id": "K1ea13604",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Flipping the default to false plus the network security config with user CAs and cleartext permitted keeps mTLS, error handling and an explicit opt-in. The description is accurate."
+   },
+   {
+    "card_id": "Kf0278b49",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Same sound default-flip plus network security config patch. The description repeats the self-signed paragraph and wrongly says the platformTrustManager branch is used by default; without an alias, setupSsl is skipped and OkHttp's defaults apply."
+   },
+   {
+    "card_id": "K73abc977",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Accurate but brief and generic: there is little detail on the default parameter, the affected clients or the credential exposure. The compatibility reason is right but vague."
+   },
+   {
+    "card_id": "K9a7ead0b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Accurate but brief. It mentions credentials and the suppressed lint warning but not the default parameter or which clients are affected. The reason is valid but vague."
+   },
+   {
+    "card_id": "Kc1a34abf",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "Detailed and mostly accurate on both callers, the impact and the options. It falsely says trustAllCerts dates from the mTLS commit, but git history shows it existed earlier (f76abd98, b33e0a7a)."
+   },
+   {
+    "card_id": "K82cfc0ec",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Accurate but light on specifics such as the trustAllCerts default and the ProviderAPI and shared clients. The reason (existing connections, no selective setting) is right but general."
+   },
+   {
+    "card_id": "K2c308eea",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correct removal of trust-all and the hostname bypass; it keeps mTLS with the platform trust manager and the try/catch. There is no private-CA route, but the description is short and honest about the break."
+   },
+   {
+    "card_id": "Kd3f1b330",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurate and complete: it covers both callers, the trust manager and hostname verifier, the credential and token exposure, and why mTLS doesn't help, with concrete options. The reason is specific."
+   },
+   {
+    "card_id": "K9411e394",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The trust-all removal is correct and mTLS uses the platform trust manager, but it also silently removes the NoSuchAlgorithm/KeyManagement handling and adds no private-CA route. The description doesn't mention dropping the error handling."
+   },
+   {
+    "card_id": "K2ef6ec5e",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The core removal is correct and keeps mTLS and the try/catch. There is no network security config or opt-in for private-CA users, but the description is accurate about the rejected servers."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

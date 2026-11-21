@@ -1,0 +1,453 @@
+{
+ "url": "https://api.github.com/repos/spacecowboy/Feeder/compare/328ffdee33903cbe39e00ca677f900f179f305e5...2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+ "fetched_at": "2026-11-15T16:17:57.325376+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/spacecowboy/Feeder/compare/328ffdee33903cbe39e00ca677f900f179f305e5...2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+  "html_url": "https://github.com/spacecowboy/Feeder/compare/328ffdee33903cbe39e00ca677f900f179f305e5...2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+  "permalink_url": "https://github.com/spacecowboy/Feeder/compare/spacecowboy:328ffde...spacecowboy:2770d3e",
+  "diff_url": "https://github.com/spacecowboy/Feeder/compare/328ffdee33903cbe39e00ca677f900f179f305e5...2770d3ed594d48e6dc4d0e9e692ebfdd0c734490.diff",
+  "patch_url": "https://github.com/spacecowboy/Feeder/compare/328ffdee33903cbe39e00ca677f900f179f305e5...2770d3ed594d48e6dc4d0e9e692ebfdd0c734490.patch",
+  "base_commit": {
+   "sha": "328ffdee33903cbe39e00ca677f900f179f305e5",
+   "node_id": "C_kwDOAWV6RtoAKDMyOGZmZGVlMzM5MDNjYmUzOWUwMGNhNjc3ZjkwMGYxNzlmMzA1ZTU",
+   "commit": {
+    "author": {
+     "name": "Jonas Kalderstam",
+     "email": "jonas@cowboyprogrammer.org",
+     "date": "2026-08-30T05:50:23Z"
+    },
+    "committer": {
+     "name": "Jonas Kalderstam",
+     "email": "jonas@cowboyprogrammer.org",
+     "date": "2026-08-30T05:50:23Z"
+    },
+    "message": "chore: releasing 2.23.0",
+    "tree": {
+     "sha": "2b7a596bd9ed2b8627ba43c33c1dc0c782fd9acd",
+     "url": "https://api.github.com/repos/spacecowboy/Feeder/git/trees/2b7a596bd9ed2b8627ba43c33c1dc0c782fd9acd"
+    },
+    "url": "https://api.github.com/repos/spacecowboy/Feeder/git/commits/328ffdee33903cbe39e00ca677f900f179f305e5",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/328ffdee33903cbe39e00ca677f900f179f305e5",
+   "html_url": "https://github.com/spacecowboy/Feeder/commit/328ffdee33903cbe39e00ca677f900f179f305e5",
+   "comments_url": "https://api.github.com/repos/spacecowboy/Feeder/commits/328ffdee33903cbe39e00ca677f900f179f305e5/comments",
+   "author": {
+    "login": "spacecowboy",
+    "id": 223655,
+    "node_id": "MDQ6VXNlcjIyMzY1NQ==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/223655?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/spacecowboy",
+    "html_url": "https://github.com/spacecowboy",
+    "followers_url": "https://api.github.com/users/spacecowboy/followers",
+    "following_url": "https://api.github.com/users/spacecowboy/following{/other_user}",
+    "gists_url": "https://api.github.com/users/spacecowboy/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/spacecowboy/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/spacecowboy/subscriptions",
+    "organizations_url": "https://api.github.com/users/spacecowboy/orgs",
+    "repos_url": "https://api.github.com/users/spacecowboy/repos",
+    "events_url": "https://api.github.com/users/spacecowboy/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/spacecowboy/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "spacecowboy",
+    "id": 223655,
+    "node_id": "MDQ6VXNlcjIyMzY1NQ==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/223655?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/spacecowboy",
+    "html_url": "https://github.com/spacecowboy",
+    "followers_url": "https://api.github.com/users/spacecowboy/followers",
+    "following_url": "https://api.github.com/users/spacecowboy/following{/other_user}",
+    "gists_url": "https://api.github.com/users/spacecowboy/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/spacecowboy/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/spacecowboy/subscriptions",
+    "organizations_url": "https://api.github.com/users/spacecowboy/orgs",
+    "repos_url": "https://api.github.com/users/spacecowboy/repos",
+    "events_url": "https://api.github.com/users/spacecowboy/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/spacecowboy/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "94e9ba40e6069e3b649f0f5d0be4197eafd4e40e",
+     "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/94e9ba40e6069e3b649f0f5d0be4197eafd4e40e",
+     "html_url": "https://github.com/spacecowboy/Feeder/commit/94e9ba40e6069e3b649f0f5d0be4197eafd4e40e"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "328ffdee33903cbe39e00ca677f900f179f305e5",
+   "node_id": "C_kwDOAWV6RtoAKDMyOGZmZGVlMzM5MDNjYmUzOWUwMGNhNjc3ZjkwMGYxNzlmMzA1ZTU",
+   "commit": {
+    "author": {
+     "name": "Jonas Kalderstam",
+     "email": "jonas@cowboyprogrammer.org",
+     "date": "2026-08-30T05:50:23Z"
+    },
+    "committer": {
+     "name": "Jonas Kalderstam",
+     "email": "jonas@cowboyprogrammer.org",
+     "date": "2026-08-30T05:50:23Z"
+    },
+    "message": "chore: releasing 2.23.0",
+    "tree": {
+     "sha": "2b7a596bd9ed2b8627ba43c33c1dc0c782fd9acd",
+     "url": "https://api.github.com/repos/spacecowboy/Feeder/git/trees/2b7a596bd9ed2b8627ba43c33c1dc0c782fd9acd"
+    },
+    "url": "https://api.github.com/repos/spacecowboy/Feeder/git/commits/328ffdee33903cbe39e00ca677f900f179f305e5",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/328ffdee33903cbe39e00ca677f900f179f305e5",
+   "html_url": "https://github.com/spacecowboy/Feeder/commit/328ffdee33903cbe39e00ca677f900f179f305e5",
+   "comments_url": "https://api.github.com/repos/spacecowboy/Feeder/commits/328ffdee33903cbe39e00ca677f900f179f305e5/comments",
+   "author": {
+    "login": "spacecowboy",
+    "id": 223655,
+    "node_id": "MDQ6VXNlcjIyMzY1NQ==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/223655?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/spacecowboy",
+    "html_url": "https://github.com/spacecowboy",
+    "followers_url": "https://api.github.com/users/spacecowboy/followers",
+    "following_url": "https://api.github.com/users/spacecowboy/following{/other_user}",
+    "gists_url": "https://api.github.com/users/spacecowboy/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/spacecowboy/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/spacecowboy/subscriptions",
+    "organizations_url": "https://api.github.com/users/spacecowboy/orgs",
+    "repos_url": "https://api.github.com/users/spacecowboy/repos",
+    "events_url": "https://api.github.com/users/spacecowboy/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/spacecowboy/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "spacecowboy",
+    "id": 223655,
+    "node_id": "MDQ6VXNlcjIyMzY1NQ==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/223655?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/spacecowboy",
+    "html_url": "https://github.com/spacecowboy",
+    "followers_url": "https://api.github.com/users/spacecowboy/followers",
+    "following_url": "https://api.github.com/users/spacecowboy/following{/other_user}",
+    "gists_url": "https://api.github.com/users/spacecowboy/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/spacecowboy/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/spacecowboy/subscriptions",
+    "organizations_url": "https://api.github.com/users/spacecowboy/orgs",
+    "repos_url": "https://api.github.com/users/spacecowboy/repos",
+    "events_url": "https://api.github.com/users/spacecowboy/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/spacecowboy/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "94e9ba40e6069e3b649f0f5d0be4197eafd4e40e",
+     "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/94e9ba40e6069e3b649f0f5d0be4197eafd4e40e",
+     "html_url": "https://github.com/spacecowboy/Feeder/commit/94e9ba40e6069e3b649f0f5d0be4197eafd4e40e"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 3,
+  "behind_by": 0,
+  "total_commits": 3,
+  "commits": [
+   {
+    "sha": "67d83caaf16c2c674905cfbf356d9971a84d3c44",
+    "node_id": "C_kwDOAWV6RtoAKDY3ZDgzY2FhZjE2YzJjNjc0OTA1Y2ZiZjM1NmQ5OTcxYTg0ZDNjNDQ",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-02T11:39:51Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-02T11:39:51Z"
+     },
+     "message": "Fix trustAllCerts",
+     "tree": {
+      "sha": "fbabd7967d5abfdfa1da397566c7c6f772cb634b",
+      "url": "https://api.github.com/repos/spacecowboy/Feeder/git/trees/fbabd7967d5abfdfa1da397566c7c6f772cb634b"
+     },
+     "url": "https://api.github.com/repos/spacecowboy/Feeder/git/commits/67d83caaf16c2c674905cfbf356d9971a84d3c44",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/67d83caaf16c2c674905cfbf356d9971a84d3c44",
+    "html_url": "https://github.com/spacecowboy/Feeder/commit/67d83caaf16c2c674905cfbf356d9971a84d3c44",
+    "comments_url": "https://api.github.com/repos/spacecowboy/Feeder/commits/67d83caaf16c2c674905cfbf356d9971a84d3c44/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "328ffdee33903cbe39e00ca677f900f179f305e5",
+      "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/328ffdee33903cbe39e00ca677f900f179f305e5",
+      "html_url": "https://github.com/spacecowboy/Feeder/commit/328ffdee33903cbe39e00ca677f900f179f305e5"
+     }
+    ]
+   },
+   {
+    "sha": "93eeaa8be7f3cea8e241f2d2afe9a254c684d0e9",
+    "node_id": "C_kwDOAWV6RtoAKDkzZWVhYThiZTdmM2NlYThlMjQxZjJkMmFmZTlhMjU0YzY4NGQwZTk",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-02T17:32:47Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-02T17:32:47Z"
+     },
+     "message": "Address pull request feedback for trustAllCerts",
+     "tree": {
+      "sha": "548297b7c8655e7e8382d3405c75ebed2a6aa2db",
+      "url": "https://api.github.com/repos/spacecowboy/Feeder/git/trees/548297b7c8655e7e8382d3405c75ebed2a6aa2db"
+     },
+     "url": "https://api.github.com/repos/spacecowboy/Feeder/git/commits/93eeaa8be7f3cea8e241f2d2afe9a254c684d0e9",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/93eeaa8be7f3cea8e241f2d2afe9a254c684d0e9",
+    "html_url": "https://github.com/spacecowboy/Feeder/commit/93eeaa8be7f3cea8e241f2d2afe9a254c684d0e9",
+    "comments_url": "https://api.github.com/repos/spacecowboy/Feeder/commits/93eeaa8be7f3cea8e241f2d2afe9a254c684d0e9/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "67d83caaf16c2c674905cfbf356d9971a84d3c44",
+      "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/67d83caaf16c2c674905cfbf356d9971a84d3c44",
+      "html_url": "https://github.com/spacecowboy/Feeder/commit/67d83caaf16c2c674905cfbf356d9971a84d3c44"
+     }
+    ]
+   },
+   {
+    "sha": "2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+    "node_id": "C_kwDOAWV6RtoAKDI3NzBkM2VkNTk0ZDQ4ZTZkYzRkMGU5ZTY5MmViZmRkMGM3MzQ0OTA",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-06T09:56:33Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-06T09:56:33Z"
+     },
+     "message": "Address pull request feedback for trustAllCerts",
+     "tree": {
+      "sha": "511aa99fa8ea59cba5c35f7e053b194e7c7d74c7",
+      "url": "https://api.github.com/repos/spacecowboy/Feeder/git/trees/511aa99fa8ea59cba5c35f7e053b194e7c7d74c7"
+     },
+     "url": "https://api.github.com/repos/spacecowboy/Feeder/git/commits/2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+    "html_url": "https://github.com/spacecowboy/Feeder/commit/2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+    "comments_url": "https://api.github.com/repos/spacecowboy/Feeder/commits/2770d3ed594d48e6dc4d0e9e692ebfdd0c734490/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "93eeaa8be7f3cea8e241f2d2afe9a254c684d0e9",
+      "url": "https://api.github.com/repos/spacecowboy/Feeder/commits/93eeaa8be7f3cea8e241f2d2afe9a254c684d0e9",
+      "html_url": "https://github.com/spacecowboy/Feeder/commit/93eeaa8be7f3cea8e241f2d2afe9a254c684d0e9"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "bc8389e3cc6b951f03e1a46c6d0fb0afcc733659",
+    "filename": "app/src/androidTest/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensionsTest.kt",
+    "status": "added",
+    "additions": 41,
+    "deletions": 0,
+    "changes": 41,
+    "blob_url": "https://github.com/spacecowboy/Feeder/blob/2770d3ed594d48e6dc4d0e9e692ebfdd0c734490/app%2Fsrc%2FandroidTest%2Fjava%2Fcom%2Fnononsenseapps%2Fjsonfeed%2FOkHttpBuilderExtensionsTest.kt",
+    "raw_url": "https://github.com/spacecowboy/Feeder/raw/2770d3ed594d48e6dc4d0e9e692ebfdd0c734490/app%2Fsrc%2FandroidTest%2Fjava%2Fcom%2Fnononsenseapps%2Fjsonfeed%2FOkHttpBuilderExtensionsTest.kt",
+    "contents_url": "https://api.github.com/repos/spacecowboy/Feeder/contents/app%2Fsrc%2FandroidTest%2Fjava%2Fcom%2Fnononsenseapps%2Fjsonfeed%2FOkHttpBuilderExtensionsTest.kt?ref=2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+    "patch": "@@ -0,0 +1,41 @@\n+package com.nononsenseapps.jsonfeed\n+\n+import androidx.test.ext.junit.runners.AndroidJUnit4\n+import org.junit.Test\n+import org.junit.runner.RunWith\n+import java.io.IOException\n+import kotlin.test.assertEquals\n+import kotlin.test.assertFailsWith\n+\n+@RunWith(AndroidJUnit4::class)\n+class OkHttpBuilderExtensionsTest {\n+    @Test\n+    fun legacyTlsProtocolsAreRemovedWhileSupportedAndFutureProtocolsRemainEnabled() {\n+        val filteredProtocols =\n+            filterLegacyTlsProtocols(\n+                arrayOf(\n+                    \"SSL\",\n+                    \"SSLv2Hello\",\n+                    \"SSLv3\",\n+                    \"sSlCustom\",\n+                    \"TLSv1\",\n+                    \"TLSv1.0\",\n+                    \"TLSv1.1\",\n+                    \"TLSv1.2\",\n+                    \"TLSv1.3\",\n+                    \"TLSv9.0\",\n+                ),\n+            )\n+\n+        assertEquals(listOf(\"TLSv1.2\", \"TLSv1.3\", \"TLSv9.0\"), filteredProtocols.toList())\n+    }\n+\n+    @Test\n+    fun legacyTlsProtocolFilteringFailsClosedWhenNothingAcceptableRemains() {\n+        assertFailsWith<IOException> {\n+            filterLegacyTlsProtocols(\n+                arrayOf(\"SSLv3\", \"TLSv1\", \"TLSv1.0\", \"TLSv1.1\"),\n+            )\n+        }\n+    }\n+}"
+   },
+   {
+    "sha": "0fbd249d69b0d78e54f22bd54221a7215094464e",
+    "filename": "app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt",
+    "status": "modified",
+    "additions": 83,
+    "deletions": 1,
+    "changes": 84,
+    "blob_url": "https://github.com/spacecowboy/Feeder/blob/2770d3ed594d48e6dc4d0e9e692ebfdd0c734490/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fnononsenseapps%2Fjsonfeed%2FOkHttpBuilderExtensions.kt",
+    "raw_url": "https://github.com/spacecowboy/Feeder/raw/2770d3ed594d48e6dc4d0e9e692ebfdd0c734490/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fnononsenseapps%2Fjsonfeed%2FOkHttpBuilderExtensions.kt",
+    "contents_url": "https://api.github.com/repos/spacecowboy/Feeder/contents/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fnononsenseapps%2Fjsonfeed%2FOkHttpBuilderExtensions.kt?ref=2770d3ed594d48e6dc4d0e9e692ebfdd0c734490",
+    "patch": "@@ -1,11 +1,16 @@\n package com.nononsenseapps.jsonfeed\n \n import okhttp3.OkHttpClient\n+import java.io.IOException\n+import java.net.InetAddress\n+import java.net.Socket\n import java.security.KeyManagementException\n import java.security.NoSuchAlgorithmException\n import java.security.cert.X509Certificate\n import javax.net.ssl.HostnameVerifier\n import javax.net.ssl.SSLContext\n+import javax.net.ssl.SSLSocket\n+import javax.net.ssl.SSLSocketFactory\n import javax.net.ssl.TrustManager\n import javax.net.ssl.X509TrustManager\n \n@@ -30,7 +35,7 @@ fun OkHttpClient.Builder.trustAllCerts() {\n \n         val sslContext = SSLContext.getInstance(\"TLS\")\n         sslContext.init(null, arrayOf<TrustManager>(trustManager), null)\n-        val sslSocketFactory = sslContext.socketFactory\n+        val sslSocketFactory = ProtocolFilteringSslSocketFactory(sslContext.socketFactory)\n \n         sslSocketFactory(sslSocketFactory, trustManager)\n             .hostnameVerifier(HostnameVerifier { _, _ -> true })\n@@ -40,3 +45,80 @@ fun OkHttpClient.Builder.trustAllCerts() {\n         // ignore\n     }\n }\n+\n+internal fun filterLegacyTlsProtocols(enabledProtocols: Array<String>): Array<String> {\n+    val filteredProtocols = enabledProtocols.filterNot(::isLegacyTlsProtocol).toTypedArray()\n+    if (filteredProtocols.isEmpty()) {\n+        throw IOException(\"No acceptable TLS protocols remain enabled\")\n+    }\n+    return filteredProtocols\n+}\n+\n+private fun isLegacyTlsProtocol(protocol: String): Boolean =\n+    protocol.startsWith(prefix = \"SSL\", ignoreCase = true) ||\n+        protocol.equals(\"TLSv1\", ignoreCase = true) ||\n+        protocol.equals(\"TLSv1.0\", ignoreCase = true) ||\n+        protocol.equals(\"TLSv1.1\", ignoreCase = true)\n+\n+private class ProtocolFilteringSslSocketFactory(\n+    private val delegate: SSLSocketFactory,\n+) : SSLSocketFactory() {\n+    override fun getDefaultCipherSuites(): Array<String> = delegate.defaultCipherSuites\n+\n+    override fun getSupportedCipherSuites(): Array<String> = delegate.supportedCipherSuites\n+\n+    @Throws(IOException::class)\n+    override fun createSocket(): Socket = configure(delegate.createSocket())\n+\n+    @Throws(IOException::class)\n+    override fun createSocket(\n+        host: String,\n+        port: Int,\n+    ): Socket = configure(delegate.createSocket(host, port))\n+\n+    @Throws(IOException::class)\n+    override fun createSocket(\n+        host: String,\n+        port: Int,\n+        localHost: InetAddress,\n+        localPort: Int,\n+    ): Socket = configure(delegate.createSocket(host, port, localHost, localPort))\n+\n+    @Throws(IOException::class)\n+    override fun createSocket(\n+        host: InetAddress,\n+        port: Int,\n+    ): Socket = configure(delegate.createSocket(host, port))\n+\n+    @Throws(IOException::class)\n+    override fun createSocket(\n+        address: InetAddress,\n+        port: Int,\n+        localAddress: InetAddress,\n+        localPort: Int,\n+    ): Socket = configure(delegate.createSocket(address, port, localAddress, localPort))\n+\n+    @Throws(IOException::class)\n+    override fun createSocket(\n+        socket: Socket,\n+        host: String,\n+        port: Int,\n+        autoClose: Boolean,\n+    ): Socket = configure(delegate.createSocket(socket, host, port, autoClose))\n+\n+    private fun configure(socket: Socket): Socket {\n+        if (socket is SSLSocket) {\n+            try {\n+                socket.enabledProtocols = filterLegacyTlsProtocols(socket.enabledProtocols)\n+            } catch (e: IOException) {\n+                try {\n+                    socket.close()\n+                } catch (_: IOException) {\n+                    // Preserve the protocol-filtering failure.\n+                }\n+                throw e\n+            }\n+        }\n+        return socket\n+    }\n+}"
+   }
+  ]
+ }
+}

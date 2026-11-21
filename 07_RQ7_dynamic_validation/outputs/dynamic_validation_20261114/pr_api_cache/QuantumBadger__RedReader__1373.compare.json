@@ -1,0 +1,359 @@
+{
+ "url": "https://api.github.com/repos/QuantumBadger/RedReader/compare/c250817d4eba13f5ed2b26d33fbc9044095ff8aa...e0e443b0194c2d138a7139309bfea71949a3eb6f",
+ "fetched_at": "2026-11-15T16:18:15.711890+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/QuantumBadger/RedReader/compare/c250817d4eba13f5ed2b26d33fbc9044095ff8aa...e0e443b0194c2d138a7139309bfea71949a3eb6f",
+  "html_url": "https://github.com/QuantumBadger/RedReader/compare/c250817d4eba13f5ed2b26d33fbc9044095ff8aa...e0e443b0194c2d138a7139309bfea71949a3eb6f",
+  "permalink_url": "https://github.com/QuantumBadger/RedReader/compare/QuantumBadger:c250817...QuantumBadger:e0e443b",
+  "diff_url": "https://github.com/QuantumBadger/RedReader/compare/c250817d4eba13f5ed2b26d33fbc9044095ff8aa...e0e443b0194c2d138a7139309bfea71949a3eb6f.diff",
+  "patch_url": "https://github.com/QuantumBadger/RedReader/compare/c250817d4eba13f5ed2b26d33fbc9044095ff8aa...e0e443b0194c2d138a7139309bfea71949a3eb6f.patch",
+  "base_commit": {
+   "sha": "c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+   "node_id": "C_kwDOAIytPNoAKGMyNTA4MTdkNGViYTEzZjVlZDJiMjZkMzNmYmM5MDQ0MDk1ZmY4YWE",
+   "commit": {
+    "author": {
+     "name": "QuantumBadger",
+     "email": "git@redreader.org",
+     "date": "2026-08-09T14:28:15Z"
+    },
+    "committer": {
+     "name": "QuantumBadger",
+     "email": "git@redreader.org",
+     "date": "2026-08-09T14:28:15Z"
+    },
+    "message": "Update version to 1.26",
+    "tree": {
+     "sha": "cd8fab37fea77659f0bedc192e9fe6776143c9d4",
+     "url": "https://api.github.com/repos/QuantumBadger/RedReader/git/trees/cd8fab37fea77659f0bedc192e9fe6776143c9d4"
+    },
+    "url": "https://api.github.com/repos/QuantumBadger/RedReader/git/commits/c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+   "html_url": "https://github.com/QuantumBadger/RedReader/commit/c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+   "comments_url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/c250817d4eba13f5ed2b26d33fbc9044095ff8aa/comments",
+   "author": {
+    "login": "QuantumBadger",
+    "id": 2998158,
+    "node_id": "MDQ6VXNlcjI5OTgxNTg=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/2998158?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/QuantumBadger",
+    "html_url": "https://github.com/QuantumBadger",
+    "followers_url": "https://api.github.com/users/QuantumBadger/followers",
+    "following_url": "https://api.github.com/users/QuantumBadger/following{/other_user}",
+    "gists_url": "https://api.github.com/users/QuantumBadger/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/QuantumBadger/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/QuantumBadger/subscriptions",
+    "organizations_url": "https://api.github.com/users/QuantumBadger/orgs",
+    "repos_url": "https://api.github.com/users/QuantumBadger/repos",
+    "events_url": "https://api.github.com/users/QuantumBadger/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/QuantumBadger/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "QuantumBadger",
+    "id": 2998158,
+    "node_id": "MDQ6VXNlcjI5OTgxNTg=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/2998158?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/QuantumBadger",
+    "html_url": "https://github.com/QuantumBadger",
+    "followers_url": "https://api.github.com/users/QuantumBadger/followers",
+    "following_url": "https://api.github.com/users/QuantumBadger/following{/other_user}",
+    "gists_url": "https://api.github.com/users/QuantumBadger/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/QuantumBadger/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/QuantumBadger/subscriptions",
+    "organizations_url": "https://api.github.com/users/QuantumBadger/orgs",
+    "repos_url": "https://api.github.com/users/QuantumBadger/repos",
+    "events_url": "https://api.github.com/users/QuantumBadger/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/QuantumBadger/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "a64d61625c25f1f1d8b5c3202000591ecf1367c3",
+     "url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/a64d61625c25f1f1d8b5c3202000591ecf1367c3",
+     "html_url": "https://github.com/QuantumBadger/RedReader/commit/a64d61625c25f1f1d8b5c3202000591ecf1367c3"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+   "node_id": "C_kwDOAIytPNoAKGMyNTA4MTdkNGViYTEzZjVlZDJiMjZkMzNmYmM5MDQ0MDk1ZmY4YWE",
+   "commit": {
+    "author": {
+     "name": "QuantumBadger",
+     "email": "git@redreader.org",
+     "date": "2026-08-09T14:28:15Z"
+    },
+    "committer": {
+     "name": "QuantumBadger",
+     "email": "git@redreader.org",
+     "date": "2026-08-09T14:28:15Z"
+    },
+    "message": "Update version to 1.26",
+    "tree": {
+     "sha": "cd8fab37fea77659f0bedc192e9fe6776143c9d4",
+     "url": "https://api.github.com/repos/QuantumBadger/RedReader/git/trees/cd8fab37fea77659f0bedc192e9fe6776143c9d4"
+    },
+    "url": "https://api.github.com/repos/QuantumBadger/RedReader/git/commits/c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+   "html_url": "https://github.com/QuantumBadger/RedReader/commit/c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+   "comments_url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/c250817d4eba13f5ed2b26d33fbc9044095ff8aa/comments",
+   "author": {
+    "login": "QuantumBadger",
+    "id": 2998158,
+    "node_id": "MDQ6VXNlcjI5OTgxNTg=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/2998158?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/QuantumBadger",
+    "html_url": "https://github.com/QuantumBadger",
+    "followers_url": "https://api.github.com/users/QuantumBadger/followers",
+    "following_url": "https://api.github.com/users/QuantumBadger/following{/other_user}",
+    "gists_url": "https://api.github.com/users/QuantumBadger/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/QuantumBadger/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/QuantumBadger/subscriptions",
+    "organizations_url": "https://api.github.com/users/QuantumBadger/orgs",
+    "repos_url": "https://api.github.com/users/QuantumBadger/repos",
+    "events_url": "https://api.github.com/users/QuantumBadger/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/QuantumBadger/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "QuantumBadger",
+    "id": 2998158,
+    "node_id": "MDQ6VXNlcjI5OTgxNTg=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/2998158?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/QuantumBadger",
+    "html_url": "https://github.com/QuantumBadger",
+    "followers_url": "https://api.github.com/users/QuantumBadger/followers",
+    "following_url": "https://api.github.com/users/QuantumBadger/following{/other_user}",
+    "gists_url": "https://api.github.com/users/QuantumBadger/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/QuantumBadger/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/QuantumBadger/subscriptions",
+    "organizations_url": "https://api.github.com/users/QuantumBadger/orgs",
+    "repos_url": "https://api.github.com/users/QuantumBadger/repos",
+    "events_url": "https://api.github.com/users/QuantumBadger/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/QuantumBadger/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "a64d61625c25f1f1d8b5c3202000591ecf1367c3",
+     "url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/a64d61625c25f1f1d8b5c3202000591ecf1367c3",
+     "html_url": "https://github.com/QuantumBadger/RedReader/commit/a64d61625c25f1f1d8b5c3202000591ecf1367c3"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 2,
+  "behind_by": 0,
+  "total_commits": 2,
+  "commits": [
+   {
+    "sha": "a7577c65226c09fd417658924c382285a3ee264e",
+    "node_id": "C_kwDOAIytPNoAKGE3NTc3YzY1MjI2YzA5ZmQ0MTc2NTg5MjRjMzgyMjg1YTNlZTI2NGU",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-11T03:14:16Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-11T03:14:16Z"
+     },
+     "message": "Fix sha1",
+     "tree": {
+      "sha": "57d12acd39f515e3e6ff7f21e9cd510eb4fa7071",
+      "url": "https://api.github.com/repos/QuantumBadger/RedReader/git/trees/57d12acd39f515e3e6ff7f21e9cd510eb4fa7071"
+     },
+     "url": "https://api.github.com/repos/QuantumBadger/RedReader/git/commits/a7577c65226c09fd417658924c382285a3ee264e",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/a7577c65226c09fd417658924c382285a3ee264e",
+    "html_url": "https://github.com/QuantumBadger/RedReader/commit/a7577c65226c09fd417658924c382285a3ee264e",
+    "comments_url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/a7577c65226c09fd417658924c382285a3ee264e/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+      "url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+      "html_url": "https://github.com/QuantumBadger/RedReader/commit/c250817d4eba13f5ed2b26d33fbc9044095ff8aa"
+     }
+    ]
+   },
+   {
+    "sha": "e0e443b0194c2d138a7139309bfea71949a3eb6f",
+    "node_id": "C_kwDOAIytPNoAKGUwZTQ0M2IwMTk0YzJkMTM4YTcxMzkzMDliZmVhNzE5NDlhM2ViNmY",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "129221613+jpantonow@users.noreply.github.com",
+      "date": "2026-08-11T03:16:40Z"
+     },
+     "committer": {
+      "name": "GitHub",
+      "email": "noreply@github.com",
+      "date": "2026-08-11T03:16:40Z"
+     },
+     "message": "Fix indentation in General.kt",
+     "tree": {
+      "sha": "9aa5e00fbb032d4e59223fe75d9effb7b288d7ea",
+      "url": "https://api.github.com/repos/QuantumBadger/RedReader/git/trees/9aa5e00fbb032d4e59223fe75d9effb7b288d7ea"
+     },
+     "url": "https://api.github.com/repos/QuantumBadger/RedReader/git/commits/e0e443b0194c2d138a7139309bfea71949a3eb6f",
+     "comment_count": 0,
+     "verification": {
+      "verified": true,
+      "reason": "valid",
+      "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqepQYCRC1aQ7uu5UhlAAAY/kQAFl5ecBCx5YoEDVGjFo93tUD\nmmS/S/8hfHjw5ipznxJOzs5dkr7RU7EzttO5ZTMcMdicwqssCtkz8imxG5+qHcuq\npj7uUxl61Pti4TjWIMSuBfnwbQ2QRAJx2IL1wB8xKG2cFced4/1F9lmdsCyKjPCz\nbfMRSXBI7fBM3rXyUX9Z2oopG/buUw7qPm+3g09wlFc5ulciy1XbQzxOHocKNZg1\nSI5r1GrMrDeeTfU180LTLNhl5hJ2kfQL2iPFZ72G4tKuzA2+WtP4PL9RfsYfmeOi\nPL+iWCWMCnR9tchKwfsvrQqPRoXuKv5+Fnjg88NipF8ddmV9lRtx0E1G6bbFr6D5\n6I48q0xSOmYvJdaUH6Vof4Uh1elBLbGEF49HL0pR3/5uRJ7Lek0DsbUQEUqwLq0E\nGMxXgv+IyaYZnLfJ1+a03qAMy39czHvyv7SpFT20xz9RfHKElEUKNiVvjSBlNCiu\nWv7ukC1g2YX0gK4DUZttjFu4HIBYla26V6kN6+mCitTiTr7PoCFI6FeIeFZTY1n2\nJxHSFQaMaZXq7e85rL3tml+nvJxckqjQDvKvbqiStL6/zWGUd0JNIM8qOw/+enHJ\nasx0aymW8fPT4/AfG8T/nMLvrqznYBfHBFNhPgW80JDD4xWTowJKqqm/Dnrza6pz\nN5UWyZB+GkhIUGHVt+p9\n=kEE3\n-----END PGP SIGNATURE-----\n",
+      "payload": "tree 9aa5e00fbb032d4e59223fe75d9effb7b288d7ea\nparent a7577c65226c09fd417658924c382285a3ee264e\nauthor jpantonow <129221613+jpantonow@users.noreply.github.com> 1786418200 -0300\ncommitter GitHub <noreply@github.com> 1786418200 -0300\n\nFix indentation in General.kt",
+      "verified_at": "2026-08-11T03:16:42Z"
+     }
+    },
+    "url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/e0e443b0194c2d138a7139309bfea71949a3eb6f",
+    "html_url": "https://github.com/QuantumBadger/RedReader/commit/e0e443b0194c2d138a7139309bfea71949a3eb6f",
+    "comments_url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/e0e443b0194c2d138a7139309bfea71949a3eb6f/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "web-flow",
+     "id": 19864447,
+     "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+     "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/web-flow",
+     "html_url": "https://github.com/web-flow",
+     "followers_url": "https://api.github.com/users/web-flow/followers",
+     "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+     "organizations_url": "https://api.github.com/users/web-flow/orgs",
+     "repos_url": "https://api.github.com/users/web-flow/repos",
+     "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/web-flow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "a7577c65226c09fd417658924c382285a3ee264e",
+      "url": "https://api.github.com/repos/QuantumBadger/RedReader/commits/a7577c65226c09fd417658924c382285a3ee264e",
+      "html_url": "https://github.com/QuantumBadger/RedReader/commit/a7577c65226c09fd417658924c382285a3ee264e"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "147d1472ea626eda827398553d61f258f5159cb0",
+    "filename": "src/main/java/org/quantumbadger/redreader/common/General.kt",
+    "status": "modified",
+    "additions": 4,
+    "deletions": 3,
+    "changes": 7,
+    "blob_url": "https://github.com/QuantumBadger/RedReader/blob/e0e443b0194c2d138a7139309bfea71949a3eb6f/src%2Fmain%2Fjava%2Forg%2Fquantumbadger%2Fredreader%2Fcommon%2FGeneral.kt",
+    "raw_url": "https://github.com/QuantumBadger/RedReader/raw/e0e443b0194c2d138a7139309bfea71949a3eb6f/src%2Fmain%2Fjava%2Forg%2Fquantumbadger%2Fredreader%2Fcommon%2FGeneral.kt",
+    "contents_url": "https://api.github.com/repos/QuantumBadger/RedReader/contents/src%2Fmain%2Fjava%2Forg%2Fquantumbadger%2Fredreader%2Fcommon%2FGeneral.kt?ref=e0e443b0194c2d138a7139309bfea71949a3eb6f",
+    "patch": "@@ -530,15 +530,16 @@ object General {\n \t\treturn toHex(digest.digest(plaintext.encodeToByteArray()))\n \t}\n \n-    @JvmStatic\n+    \n+\t@JvmStatic\n \tfun sha1(plaintext: ByteArray): String {\n \t\tval digest: MessageDigest = try {\n-\t\t\tMessageDigest.getInstance(\"SHA-1\")\n+\t\t\tMessageDigest.getInstance(\"SHA-256\")\n \t\t} catch (e: Exception) {\n \t\t\tthrow RuntimeException(e)\n \t\t}\n \t\treturn toHex(digest.digest(plaintext))\n-    }\n+\t}\n \n \tprivate fun appIds(context: Context) = AndroidCommon.getPackageInfo(context).run {\n \t\tids.map {"
+   }
+  ]
+ }
+}

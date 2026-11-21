@@ -1,0 +1,31 @@
+{
+ "card_id": "Kc20b03bc",
+ "card_sha256": "f400cd44c7fb0299",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 8,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2863,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 327
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0296824,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "d15a45eaf58e5ff0",
+ "finished_at": "2026-11-16T11:43:03-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.3,
+  "reason": "The card has a generic \"No action\" title and a short, polished, neutral justification. It doesn't mention any files, commands or checkout details. That points to the multi-step pipeline rather than a coding agent working in a checkout. The clipped, compressed wording (\"A key manager need not come from a factory for this use\") sounds more like GPT-6.1 Terra than Sonnet, so I picked C, but this is a weak guess."
+ }
+}

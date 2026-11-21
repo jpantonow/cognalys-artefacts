@@ -1,0 +1,39 @@
+2026-11-03 21:39:37,547 - INFO - Testing OpenAI connection...
+2026-11-03 21:39:39,184 - INFO - OpenAI connection successful
+2026-11-03 21:39:39,656 - INFO - ✓ Model 'gpt-5.6-terra' available
+2026-11-03 21:39:39,818 - INFO - Discovered 2 errors to process
+2026-11-03 21:39:39,829 - INFO - Processing 2 new errors (0 already complete)
+2026-11-03 21:39:39,948 - INFO - Processing: org.cryptomator.lite.debug_3157.apk/from
+2026-11-03 21:40:50,971 - DEBUG - Running the isolated evidence pipeline for from...
+2026-11-03 21:40:56,533 - INFO - LLM cache hit: d004a3326acf
+2026-11-03 21:40:56,681 - INFO - LLM cache hit: b588e6f85476
+2026-11-03 21:40:56,871 - INFO - LLM cache entry 22b36efb5ad9 is older than 604800s; refetching
+2026-11-03 21:42:46,833 - INFO - Supplemented evidence for from (org.cryptomator.data.cloud.webdav.network.SSLSocketFactories:::from:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory): 3 of 3 requests answered from the repository with 4 entries (SUP-001, SUP-002, SUP-003, SUP-004)
+2026-11-03 21:44:16,425 - INFO - from: generation blockers a reviewer settles (maintainer_decision) moved to publication; decision is now MULTI_FILE_FIX_PROPOSED_FOR_REVIEW
+2026-11-03 21:50:50,867 - DEBUG - Calling persisted per-file coordinated generation for from...
+2026-11-03 21:50:50,876 - INFO - from: adjudication judged the current code correct use; one reviewed draft, no retries or replan
+2026-11-03 21:51:55,013 - INFO - from: violation without security impact: SSLContext.init is documented to accept a caller-supplied TrustManager[] and use it as the TLS trust policy. The original call supplies the deliberately selected DefaultTrustManager or PinningTrustManager. In particular, PinningTrustManager is the application’s documented-by-code mechanism for accepting its configured certificate while enforcing its pin and hostname checks. Replacing it with the platform-default TrustManagerFactory changes that security-relevant acceptance behavior rather than repairing misuse of SSLContext.init.
+2026-11-03 21:51:55,014 - WARNING - Persisted coordinated generation failed for from: UNINTENDED_BEHAVIOR_CHANGE; manifest=/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_lite_20261024/run_ab56/error_solutions/coordinated_drafts/org.cryptomator.lite.debug_3157.apk/1_from/manifest.json
+2026-11-03 21:51:55,014 - INFO - [1/2] from
+2026-11-03 21:51:55,015 - WARNING - No safe fix generated
+2026-11-03 21:51:55,028 - INFO - Processing: org.cryptomator.lite.debug_3157.apk/tryToFindDefaultTrustManager
+2026-11-03 21:51:57,574 - DEBUG - Running the isolated evidence pipeline for tryToFindDefaultTrustManager...
+2026-11-03 21:51:57,789 - INFO - LLM cache hit: eabd2663d9e9
+2026-11-03 21:51:57,952 - INFO - LLM cache hit: d7911dadba33
+2026-11-03 21:51:58,076 - INFO - LLM cache entry c6bc5ff15fea is older than 604800s; refetching
+2026-11-03 21:53:25,954 - INFO - Supplemented evidence for tryToFindDefaultTrustManager (org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed): 4 of 4 requests answered from the repository with 4 entries (SUP-001, SUP-002, SUP-003, SUP-004)
+2026-11-03 21:54:53,991 - WARNING - Adjudication rejected for tryToFindDefaultTrustManager (attempt 1/2): non-repair decision cannot authorize generation; retrying with the deterministic validation errors as feedback
+2026-11-03 21:55:23,763 - INFO - tryToFindDefaultTrustManager: violation without security impact: `TrustManagerFactory.init(KeyStore)` documents that a null KeyStore is permitted and selects the default trust material (WEB-001). The source deliberately passes `null as KeyStore?` to use that documented platform default (TLS-CLAIM-002, TLS-CLAIM-003). An explicit keystore is not an equivalent replacement for the platform-default trust-store selection.
+2026-11-03 21:55:23,764 - WARNING - Evidence phase abstained for tryToFindDefaultTrustManager: decision=NO_SAFE_FIX, cause_status=confirmed, detector_violation=confirmed, cause=The source invokes `TrustManagerFactory.init(null as KeyStore?)` (TLS-CLAIM-002). The verified rule's Init event requires `generatedKeyStore[keyStore]` evidence for `init(KeyStore)`, which a null platform-default argument cannot provide. However, null is the documented API form for selecting the default trust material (TLS-CLAIM-003; WEB-001), and replacing it would alter what roots the client trusts rather than safely repairing the reported condition., scope_issues=none; review saved to /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_lite_20261024/run_ab56/error_solutions/evidence_reviews/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_evidence.json
+2026-11-03 21:55:23,765 - INFO - [2/2] tryToFindDefaultTrustManager
+2026-11-03 21:55:23,766 - WARNING - No safe fix generated
+2026-11-03 21:55:23,803 - INFO - Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_lite_20261024/run_ab56/error_solutions/solutions_tracking.json
+2026-11-03 21:55:23,812 - INFO - Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_lite_20261024/run_ab56/error_solutions/analysis_summary.txt
+2026-11-03 21:55:23,814 - INFO - ======================================================================
+2026-11-03 21:55:23,815 - INFO - ANALYSIS COMPLETE
+2026-11-03 21:55:23,816 - INFO - Analyzed: 2/2
+2026-11-03 21:55:23,816 - INFO - Fixes generated: 0
+2026-11-03 21:55:23,817 - INFO - Confirmed external-contract findings: 0
+2026-11-03 21:55:23,818 - INFO - Issue candidates: 0
+2026-11-03 21:55:23,821 - INFO - Time: 00h 15m 44s
+2026-11-03 21:55:23,832 - INFO - LLM cache: 4 hit(s), 17 miss(es)

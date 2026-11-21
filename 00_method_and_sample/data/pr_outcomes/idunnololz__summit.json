@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/idunnololz/summit/pull/54",
+    "state": "closed",
+    "finding_id": "554ed6e23b16",
+    "spec": "MessageDigestSpec",
+    "csv_class": "com.idunnololz.summit.cache.SimpleDiskCache",
+    "method_name": "md5",
+    "title": "Use SHA-256 for disk cache keys",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:40:00.767529+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "idunnololz",
+        "kind": "comment",
+        "body": "Sorry I am not currently accepting PR requests."
+      }
+    ]
+  }
+]

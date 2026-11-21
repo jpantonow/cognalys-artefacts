@@ -1,0 +1,2 @@
+apk,class,method,spec,origin,outcome,label,imported,analysed,violation_confirmed,fix_proposed,solution,applied,built,pr_ready,pr_ready_publishable,pr_ready_review,decision,detector_violation,security_impact,evidence,final_outcome,run,apply_status,build_status,pr_title
+com.example.trigger.debug_408.apk,app.trigger.ssh.GenerateIdentityTask,createKeyPair,KeyPairGeneratorSpec,app,,violation,1,1,1,1,0,0,0,0,0,0,MULTI_FILE_FIX_PROPOSED_FOR_REVIEW,confirmed,non_security,código-fonte,violação sem impacto de segurança,run_ab56,,,

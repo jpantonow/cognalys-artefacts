@@ -1,0 +1,359 @@
+{
+ "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/compare/d05529947a010d850b18058e54b3d864a2fce74d...d64f5609981ec63d01f69a9ee675d5bf05184e4e",
+ "fetched_at": "2026-11-15T16:17:25.341006+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/compare/d05529947a010d850b18058e54b3d864a2fce74d...d64f5609981ec63d01f69a9ee675d5bf05184e4e",
+  "html_url": "https://github.com/jimvixx/ShortMessageSecure/compare/d05529947a010d850b18058e54b3d864a2fce74d...d64f5609981ec63d01f69a9ee675d5bf05184e4e",
+  "permalink_url": "https://github.com/jimvixx/ShortMessageSecure/compare/jimvixx:d055299...jimvixx:d64f560",
+  "diff_url": "https://github.com/jimvixx/ShortMessageSecure/compare/d05529947a010d850b18058e54b3d864a2fce74d...d64f5609981ec63d01f69a9ee675d5bf05184e4e.diff",
+  "patch_url": "https://github.com/jimvixx/ShortMessageSecure/compare/d05529947a010d850b18058e54b3d864a2fce74d...d64f5609981ec63d01f69a9ee675d5bf05184e4e.patch",
+  "base_commit": {
+   "sha": "d05529947a010d850b18058e54b3d864a2fce74d",
+   "node_id": "C_kwDOR8Syv9oAKGQwNTUyOTk0N2EwMTBkODUwYjE4MDU4ZTU0YjNkODY0YTJmY2U3NGQ",
+   "commit": {
+    "author": {
+     "name": "Jimmy",
+     "email": "86015747+jimvixx@users.noreply.github.com",
+     "date": "2026-10-14T11:55:28Z"
+    },
+    "committer": {
+     "name": "Jimmy",
+     "email": "86015747+jimvixx@users.noreply.github.com",
+     "date": "2026-10-14T11:55:28Z"
+    },
+    "message": "build: configure Mockito Java agent for JVM tests",
+    "tree": {
+     "sha": "6ce77a80c2f9104eb6421f2baf45d368eb2b87f3",
+     "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/git/trees/6ce77a80c2f9104eb6421f2baf45d368eb2b87f3"
+    },
+    "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/git/commits/d05529947a010d850b18058e54b3d864a2fce74d",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/d05529947a010d850b18058e54b3d864a2fce74d",
+   "html_url": "https://github.com/jimvixx/ShortMessageSecure/commit/d05529947a010d850b18058e54b3d864a2fce74d",
+   "comments_url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/d05529947a010d850b18058e54b3d864a2fce74d/comments",
+   "author": {
+    "login": "jimvixx",
+    "id": 86015747,
+    "node_id": "MDQ6VXNlcjg2MDE1NzQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/86015747?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jimvixx",
+    "html_url": "https://github.com/jimvixx",
+    "followers_url": "https://api.github.com/users/jimvixx/followers",
+    "following_url": "https://api.github.com/users/jimvixx/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jimvixx/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jimvixx/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jimvixx/subscriptions",
+    "organizations_url": "https://api.github.com/users/jimvixx/orgs",
+    "repos_url": "https://api.github.com/users/jimvixx/repos",
+    "events_url": "https://api.github.com/users/jimvixx/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jimvixx/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "jimvixx",
+    "id": 86015747,
+    "node_id": "MDQ6VXNlcjg2MDE1NzQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/86015747?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jimvixx",
+    "html_url": "https://github.com/jimvixx",
+    "followers_url": "https://api.github.com/users/jimvixx/followers",
+    "following_url": "https://api.github.com/users/jimvixx/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jimvixx/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jimvixx/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jimvixx/subscriptions",
+    "organizations_url": "https://api.github.com/users/jimvixx/orgs",
+    "repos_url": "https://api.github.com/users/jimvixx/repos",
+    "events_url": "https://api.github.com/users/jimvixx/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jimvixx/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "0c17457b3f262840158ccca400746cc6f296e41d",
+     "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/0c17457b3f262840158ccca400746cc6f296e41d",
+     "html_url": "https://github.com/jimvixx/ShortMessageSecure/commit/0c17457b3f262840158ccca400746cc6f296e41d"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "d05529947a010d850b18058e54b3d864a2fce74d",
+   "node_id": "C_kwDOR8Syv9oAKGQwNTUyOTk0N2EwMTBkODUwYjE4MDU4ZTU0YjNkODY0YTJmY2U3NGQ",
+   "commit": {
+    "author": {
+     "name": "Jimmy",
+     "email": "86015747+jimvixx@users.noreply.github.com",
+     "date": "2026-10-14T11:55:28Z"
+    },
+    "committer": {
+     "name": "Jimmy",
+     "email": "86015747+jimvixx@users.noreply.github.com",
+     "date": "2026-10-14T11:55:28Z"
+    },
+    "message": "build: configure Mockito Java agent for JVM tests",
+    "tree": {
+     "sha": "6ce77a80c2f9104eb6421f2baf45d368eb2b87f3",
+     "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/git/trees/6ce77a80c2f9104eb6421f2baf45d368eb2b87f3"
+    },
+    "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/git/commits/d05529947a010d850b18058e54b3d864a2fce74d",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/d05529947a010d850b18058e54b3d864a2fce74d",
+   "html_url": "https://github.com/jimvixx/ShortMessageSecure/commit/d05529947a010d850b18058e54b3d864a2fce74d",
+   "comments_url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/d05529947a010d850b18058e54b3d864a2fce74d/comments",
+   "author": {
+    "login": "jimvixx",
+    "id": 86015747,
+    "node_id": "MDQ6VXNlcjg2MDE1NzQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/86015747?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jimvixx",
+    "html_url": "https://github.com/jimvixx",
+    "followers_url": "https://api.github.com/users/jimvixx/followers",
+    "following_url": "https://api.github.com/users/jimvixx/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jimvixx/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jimvixx/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jimvixx/subscriptions",
+    "organizations_url": "https://api.github.com/users/jimvixx/orgs",
+    "repos_url": "https://api.github.com/users/jimvixx/repos",
+    "events_url": "https://api.github.com/users/jimvixx/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jimvixx/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "jimvixx",
+    "id": 86015747,
+    "node_id": "MDQ6VXNlcjg2MDE1NzQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/86015747?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jimvixx",
+    "html_url": "https://github.com/jimvixx",
+    "followers_url": "https://api.github.com/users/jimvixx/followers",
+    "following_url": "https://api.github.com/users/jimvixx/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jimvixx/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jimvixx/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jimvixx/subscriptions",
+    "organizations_url": "https://api.github.com/users/jimvixx/orgs",
+    "repos_url": "https://api.github.com/users/jimvixx/repos",
+    "events_url": "https://api.github.com/users/jimvixx/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jimvixx/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "0c17457b3f262840158ccca400746cc6f296e41d",
+     "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/0c17457b3f262840158ccca400746cc6f296e41d",
+     "html_url": "https://github.com/jimvixx/ShortMessageSecure/commit/0c17457b3f262840158ccca400746cc6f296e41d"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 2,
+  "behind_by": 0,
+  "total_commits": 2,
+  "commits": [
+   {
+    "sha": "a4e7f2271937c3c1a82e82d031814174efbbe677",
+    "node_id": "C_kwDOR8Syv9oAKGE0ZTdmMjI3MTkzN2MzYzFhODJlODJkMDMxODE0MTc0ZWZiYmU2Nzc",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-16T08:37:24Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-16T08:37:24Z"
+     },
+     "message": "Use HmacSHA256 for generated MAC secrets\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+     "tree": {
+      "sha": "8060af77053f3cd64c6dd24c515194c62512a10c",
+      "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/git/trees/8060af77053f3cd64c6dd24c515194c62512a10c"
+     },
+     "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/git/commits/a4e7f2271937c3c1a82e82d031814174efbbe677",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/a4e7f2271937c3c1a82e82d031814174efbbe677",
+    "html_url": "https://github.com/jimvixx/ShortMessageSecure/commit/a4e7f2271937c3c1a82e82d031814174efbbe677",
+    "comments_url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/a4e7f2271937c3c1a82e82d031814174efbbe677/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "d05529947a010d850b18058e54b3d864a2fce74d",
+      "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/d05529947a010d850b18058e54b3d864a2fce74d",
+      "html_url": "https://github.com/jimvixx/ShortMessageSecure/commit/d05529947a010d850b18058e54b3d864a2fce74d"
+     }
+    ]
+   },
+   {
+    "sha": "d64f5609981ec63d01f69a9ee675d5bf05184e4e",
+    "node_id": "C_kwDOR8Syv9oAKGQ2NGY1NjA5OTgxZWM2M2QwMWY2OWE5ZWU2NzVkNWJmMDUxODRlNGU",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-17T22:06:22Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-17T22:06:22Z"
+     },
+     "message": "Address pull request feedback for generateMacSecret\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+     "tree": {
+      "sha": "d61343ff5439240cb68e98a3d5f8fdfb8f7b3306",
+      "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/git/trees/d61343ff5439240cb68e98a3d5f8fdfb8f7b3306"
+     },
+     "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/git/commits/d64f5609981ec63d01f69a9ee675d5bf05184e4e",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/d64f5609981ec63d01f69a9ee675d5bf05184e4e",
+    "html_url": "https://github.com/jimvixx/ShortMessageSecure/commit/d64f5609981ec63d01f69a9ee675d5bf05184e4e",
+    "comments_url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/d64f5609981ec63d01f69a9ee675d5bf05184e4e/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "a4e7f2271937c3c1a82e82d031814174efbbe677",
+      "url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/commits/a4e7f2271937c3c1a82e82d031814174efbbe677",
+      "html_url": "https://github.com/jimvixx/ShortMessageSecure/commit/a4e7f2271937c3c1a82e82d031814174efbbe677"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "3d5fe1e8766fd4474ada6306a88d5720c76dd588",
+    "filename": "app/src/main/java/org/jimvixx/smsecure/crypto/MasterSecretUtil.java",
+    "status": "modified",
+    "additions": 1,
+    "deletions": 0,
+    "changes": 1,
+    "blob_url": "https://github.com/jimvixx/ShortMessageSecure/blob/d64f5609981ec63d01f69a9ee675d5bf05184e4e/app%2Fsrc%2Fmain%2Fjava%2Forg%2Fjimvixx%2Fsmsecure%2Fcrypto%2FMasterSecretUtil.java",
+    "raw_url": "https://github.com/jimvixx/ShortMessageSecure/raw/d64f5609981ec63d01f69a9ee675d5bf05184e4e/app%2Fsrc%2Fmain%2Fjava%2Forg%2Fjimvixx%2Fsmsecure%2Fcrypto%2FMasterSecretUtil.java",
+    "contents_url": "https://api.github.com/repos/jimvixx/ShortMessageSecure/contents/app%2Fsrc%2Fmain%2Fjava%2Forg%2Fjimvixx%2Fsmsecure%2Fcrypto%2FMasterSecretUtil.java?ref=d64f5609981ec63d01f69a9ee675d5bf05184e4e",
+    "patch": "@@ -279,6 +279,7 @@ private static byte[] generateEncryptionSecret() {\n   private static byte[] generateMacSecret() {\n     try {\n       KeyGenerator generator = KeyGenerator.getInstance(\"HmacSHA1\");\n+      generator.init(160);\n       return generator.generateKey().getEncoded();\n     } catch (NoSuchAlgorithmException e) {\n       Log.w(TAG, e);"
+   }
+  ]
+ }
+}

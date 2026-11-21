@@ -1,0 +1,78 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T221227_601284_2595_0007_adjudication",
+  "parent_call_id": "",
+  "finding_id": "app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+  "stage": "adjudication",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 60039,
+  "input_tokens": 13672,
+  "cached_input_tokens": 0,
+  "output_tokens": 4281,
+  "latency_ms": 65727,
+  "retry_count": 0,
+  "request_id": "req_712d44aa3ef342bd8b0ea94e36514925",
+  "section_telemetry": {
+    "finding": {
+      "characters": 571,
+      "approx_tokens": 143,
+      "sha256": "6f595ecb4d52cfc98791c04701ea6b9ffd9d2486a1f7b1880769a0eccbf8e500"
+    },
+    "scope_completeness": {
+      "characters": 219,
+      "approx_tokens": 55,
+      "sha256": "f3a15e9d124572300d86f253e1c9608853f35e24681f8d889d918d9b67824e19"
+    },
+    "case_policy": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "validated_evidence_extraction": {
+      "characters": 11663,
+      "approx_tokens": 2916,
+      "sha256": "84b64b3c5865a7d2e80eeacbdaed2dc1793246ce3c236c0c52be4a6faee3a470"
+    },
+    "external_evidence_catalog": {
+      "characters": 7866,
+      "approx_tokens": 1966,
+      "sha256": "d775427a86b9e50f80cfbe2b7358397d4de9fad62eb61fec29650e3eaf024af4"
+    },
+    "valid_evidence_ids": {
+      "characters": 415,
+      "approx_tokens": 104,
+      "sha256": "36d381f2d5be177e606844e45e65e95d40037855b0d9c95d394de572b95e5cf6"
+    },
+    "reported_by_rule": {
+      "characters": 4944,
+      "approx_tokens": 1236,
+      "sha256": "263434261f987557993ec301619a23a29eec5bb5297748119f6aee00f7d66fac"
+    },
+    "rename_safety": {
+      "characters": 976,
+      "approx_tokens": 244,
+      "sha256": "cf19fa53fac1985aacb9b2fda631c6cc6492e2ee7fdea9d236d43aaef48bcc0e"
+    },
+    "app_purpose": {
+      "characters": 413,
+      "approx_tokens": 103,
+      "sha256": "5bf2c75c56fdb40cdd2eb3407d75c995c716b7653be33462b1e60c0444ff9928"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 332,
+  "openai_response_id": "resp_073261064ac81fee006aea867c6e0c87d2a8c4987c06ad1ba0",
+  "response_status": "completed",
+  "background_polls": 8,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T22:13:34"
+}

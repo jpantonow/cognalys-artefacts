@@ -1,0 +1,810 @@
+{
+ "co_0a32f516feb2": {
+  "repo": "https://github.com/chrismiceli/motp",
+  "spec": [
+   "MacSpec",
+   "SecretKeySpecSpec"
+  ],
+  "prompt_report_order": [
+   "MacSpec TOTP.hmac_sha",
+   "SecretKeySpecSpec TOTP.hmac_sha"
+  ],
+  "primary_finding": "MacSpec TOTP.hmac_sha",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "MacSpec",
+   "SecretKeySpecSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [],
+  "repositories": [],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_0a32f516feb2/r1/application_results/openai_prompt_logs/20261113T141015_366375_1730_0005_adjudication_request.json",
+   "co_0a32f516feb2/r2/application_results/openai_prompt_logs/20261113T173224_960535_10747_0005_adjudication_request.json",
+   "co_0a32f516feb2/r2/application_results/openai_prompt_logs/20261113T173519_321122_10747_0014_adjudication_request.json",
+   "co_0a32f516feb2/r3/application_results/openai_prompt_logs/20261113T210549_123371_20510_0005_adjudication_request.json",
+   "co_0a32f516feb2/r3/application_results/openai_prompt_logs/20261113T210829_552226_20510_0015_adjudication_request.json",
+   "co_0a32f516feb2/r4/application_results/openai_prompt_logs/20261113T234112_793810_27184_0005_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "co_0b7656970a91": {
+  "repo": "https://github.com/StellarSand/Password-Monitor",
+  "spec": [
+   "MessageDigestSpec"
+  ],
+  "prompt_report_order": [
+   "MessageDigestSpec AppModuleKt.appModule$lambda$0$3"
+  ],
+  "primary_finding": "MessageDigestSpec AppModuleKt.appModule$lambda$0$3",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "MessageDigestSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "Crustack/NotallyX",
+   "ItzSkyeYT/InterTune",
+   "VREMSoftwareDevelopment/WiFiAnalyzer",
+   "javalc6/rssreader"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_0b7656970a91/r1/application_results/openai_prompt_logs/20261113T142551_581520_1920_0006_adjudication_request.json",
+   "co_0b7656970a91/r2/application_results/openai_prompt_logs/20261113T174454_786661_11510_0006_adjudication_request.json",
+   "co_0b7656970a91/r3/application_results/openai_prompt_logs/20261113T211307_762259_20718_0006_adjudication_request.json",
+   "co_0b7656970a91/r4/application_results/openai_prompt_logs/20261113T234447_590069_27390_0006_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "co_2aaa72c51c14": {
+  "repo": "https://github.com/M66B/FairEmail",
+  "spec": [
+   "MessageDigestSpec"
+  ],
+  "prompt_report_order": [
+   "MessageDigestSpec Helper.getFingerprint"
+  ],
+  "primary_finding": "MessageDigestSpec Helper.getFingerprint",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "MessageDigestSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "Crustack/NotallyX",
+   "ItzSkyeYT/InterTune",
+   "VREMSoftwareDevelopment/WiFiAnalyzer",
+   "javalc6/rssreader"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_2aaa72c51c14/r1/application_results/openai_prompt_logs/20261113T143535_785702_2532_0006_adjudication_request.json",
+   "co_2aaa72c51c14/r2/application_results/openai_prompt_logs/20261113T175142_776801_11823_0006_adjudication_request.json",
+   "co_2aaa72c51c14/r3/application_results/openai_prompt_logs/20261113T211701_182163_21019_0006_adjudication_request.json",
+   "co_2aaa72c51c14/r4/application_results/openai_prompt_logs/20261113T234913_780477_27685_0006_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "co_3c8e59dbbfb4": {
+  "repo": "https://github.com/CriticalMaps/criticalmaps-android",
+  "spec": [
+   "MessageDigestSpec"
+  ],
+  "prompt_report_order": [
+   "MessageDigestSpec AeSimpleSHA1.SHA1"
+  ],
+  "primary_finding": "MessageDigestSpec AeSimpleSHA1.SHA1",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "MessageDigestSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "Crustack/NotallyX",
+   "ItzSkyeYT/InterTune",
+   "VREMSoftwareDevelopment/WiFiAnalyzer",
+   "javalc6/rssreader"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_3c8e59dbbfb4/r1/application_results/openai_prompt_logs/20261113T143930_551668_2770_0005_adjudication_request.json",
+   "co_3c8e59dbbfb4/r2/application_results/openai_prompt_logs/20261113T180050_159314_12083_0005_adjudication_request.json",
+   "co_3c8e59dbbfb4/r3/application_results/openai_prompt_logs/20261113T212016_777526_21238_0005_adjudication_request.json",
+   "co_3c8e59dbbfb4/r4/application_results/openai_prompt_logs/20261113T235320_605820_27902_0005_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "co_737920a862cd": {
+  "repo": "https://github.com/Giton22/kyllene",
+  "spec": [
+   "SSLContextSpec"
+  ],
+  "prompt_report_order": [
+   "SSLContextSpec ClientCerts_androidKt.tlsContext"
+  ],
+  "primary_finding": "SSLContextSpec ClientCerts_androidKt.tlsContext",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "SSLContextSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "bitcraze/crazyflie-android-client",
+   "openhab/openhab-android",
+   "paroj/DSub2000"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_737920a862cd/r1/application_results/openai_prompt_logs/20261113T144308_598667_3001_0006_adjudication_request.json",
+   "co_737920a862cd/r2/application_results/openai_prompt_logs/20261113T181317_544965_12379_0006_adjudication_request.json",
+   "co_737920a862cd/r3/application_results/openai_prompt_logs/20261113T212439_687743_21469_0006_adjudication_request.json",
+   "co_737920a862cd/r4/application_results/openai_prompt_logs/20261113T235755_628408_28148_0006_adjudication_request.json"
+  ],
+  "notes": [
+   "plan/file-draft requests (r1,r2,r3) carried automated review comments the adjudication did not (as_maintainer_position strips them); they are included, labelled"
+  ]
+ },
+ "co_911173ce3742": {
+  "repo": "https://github.com/paroj/DSub2000",
+  "spec": [
+   "MessageDigestSpec"
+  ],
+  "prompt_report_order": [
+   "MessageDigestSpec Util.md5Hex"
+  ],
+  "primary_finding": "MessageDigestSpec Util.md5Hex",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "MessageDigestSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "Crustack/NotallyX",
+   "ItzSkyeYT/InterTune",
+   "VREMSoftwareDevelopment/WiFiAnalyzer",
+   "javalc6/rssreader"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_911173ce3742/r1/application_results/openai_prompt_logs/20261113T145654_557522_4465_0006_adjudication_request.json",
+   "co_911173ce3742/r2/application_results/openai_prompt_logs/20261113T183207_921244_13551_0006_adjudication_request.json",
+   "co_911173ce3742/r3/application_results/openai_prompt_logs/20261113T213625_527879_21712_0006_adjudication_request.json",
+   "co_911173ce3742/r4/application_results/openai_prompt_logs/20261114T000243_137143_28366_0006_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "co_9da181fd6978": {
+  "repo": "https://github.com/chrismiceli/motp",
+  "spec": [
+   "MessageDigestSpec"
+  ],
+  "prompt_report_order": [
+   "MessageDigestSpec MD5.<init>"
+  ],
+  "primary_finding": "MessageDigestSpec MD5.<init>",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "MessageDigestSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "Crustack/NotallyX",
+   "ItzSkyeYT/InterTune",
+   "VREMSoftwareDevelopment/WiFiAnalyzer",
+   "javalc6/rssreader"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_9da181fd6978/r1/application_results/openai_prompt_logs/20261113T150032_198806_4660_0005_adjudication_request.json",
+   "co_9da181fd6978/r2/application_results/openai_prompt_logs/20261113T183707_051610_13766_0005_adjudication_request.json",
+   "co_9da181fd6978/r3/application_results/openai_prompt_logs/20261113T214347_453800_21911_0005_adjudication_request.json",
+   "co_9da181fd6978/r4/application_results/openai_prompt_logs/20261114T000738_441468_28638_0005_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "co_bdc0d1804c88": {
+  "repo": "https://github.com/VREMSoftwareDevelopment/WifiAnalyzer",
+  "spec": [
+   "MessageDigestSpec"
+  ],
+  "prompt_report_order": [
+   "MessageDigestSpec AccessPointsAdapterData.calculateChildType"
+  ],
+  "primary_finding": "MessageDigestSpec AccessPointsAdapterData.calculateChildType",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "MessageDigestSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "Crustack/NotallyX",
+   "ItzSkyeYT/InterTune",
+   "Wilm0r/giggity",
+   "javalc6/rssreader"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_bdc0d1804c88/r1/application_results/openai_prompt_logs/20261113T150442_511815_4884_0005_adjudication_request.json",
+   "co_bdc0d1804c88/r2/application_results/openai_prompt_logs/20261113T183958_826228_14080_0005_adjudication_request.json",
+   "co_bdc0d1804c88/r3/application_results/openai_prompt_logs/20261113T215318_474048_22137_0005_adjudication_request.json",
+   "co_bdc0d1804c88/r4/application_results/openai_prompt_logs/20261114T001046_410215_28863_0005_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "co_ed824f6818ef": {
+  "repo": "https://github.com/treehouses/remote",
+  "spec": [
+   "IvParameterSpecSpec",
+   "SecretKeySpecSpec"
+  ],
+  "prompt_report_order": [
+   "IvParameterSpecSpec Encryptor.encrypt",
+   "SecretKeySpecSpec Encryptor.encrypt"
+  ],
+  "primary_finding": "IvParameterSpecSpec Encryptor.encrypt",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "IvParameterSpecSpec",
+   "SecretKeySpecSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [],
+  "repositories": [],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_ed824f6818ef/r1/application_results/openai_prompt_logs/20261113T150940_116112_5207_0005_adjudication_request.json",
+   "co_ed824f6818ef/r2/application_results/openai_prompt_logs/20261113T185018_938306_14284_0006_adjudication_request.json",
+   "co_ed824f6818ef/r3/application_results/openai_prompt_logs/20261113T220009_210540_22339_0006_adjudication_request.json",
+   "co_ed824f6818ef/r4/application_results/openai_prompt_logs/20261114T001504_652042_29072_0005_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "co_f637c4b8467e": {
+  "repo": "https://github.com/ThHSzR/winterhold",
+  "spec": [
+   "PBEKeySpecSpec"
+  ],
+  "prompt_report_order": [
+   "PBEKeySpecSpec WebAccessUsers$Companion.derive"
+  ],
+  "primary_finding": "PBEKeySpecSpec WebAccessUsers$Companion.derive",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "PBEKeySpecSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [],
+  "repositories": [],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "co_f637c4b8467e/r1/application_results/openai_prompt_logs/20261113T151443_035042_5426_0006_adjudication_request.json",
+   "co_f637c4b8467e/r2/application_results/openai_prompt_logs/20261113T185350_893189_14507_0006_adjudication_request.json",
+   "co_f637c4b8467e/r3/application_results/openai_prompt_logs/20261113T221122_232868_22580_0006_adjudication_request.json",
+   "co_f637c4b8467e/r4/application_results/openai_prompt_logs/20261114T001945_397531_29312_0006_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "pr_013d2748f3f8": {
+  "repo": "https://github.com/yogeshpaliyal/KeyPass",
+  "spec": [
+   "CipherSpec"
+  ],
+  "prompt_report_order": [
+   "CipherSpec CryptoManager.encrypt"
+  ],
+  "primary_finding": "CipherSpec CryptoManager.encrypt",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "CipherSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "freeotp/freeotp-android",
+   "gigabytedevelopers/CometOTP"
+  ],
+  "redactions": {
+   "handles": 1,
+   "commits": 1
+  },
+  "adjudication_requests": [
+   "pr_013d2748f3f8/r1/application_results/openai_prompt_logs/20261113T152622_815898_6097_0006_adjudication_request.json",
+   "pr_013d2748f3f8/r2/application_results/openai_prompt_logs/20261113T185942_301818_14734_0006_adjudication_request.json",
+   "pr_013d2748f3f8/r2/application_results/openai_prompt_logs/20261113T191020_364004_14734_0021_adjudication_request.json",
+   "pr_013d2748f3f8/r3/application_results/openai_prompt_logs/20261113T221943_980661_23240_0006_adjudication_request.json",
+   "pr_013d2748f3f8/r4/application_results/openai_prompt_logs/20261114T002421_911590_29572_0006_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "pr_06ff0c1fc96c": {
+  "repo": "https://github.com/ounben/AMARadio",
+  "spec": [
+   "MessageDigestSpec"
+  ],
+  "prompt_report_order": [
+   "MessageDigestSpec Utils.md5"
+  ],
+  "primary_finding": "MessageDigestSpec Utils.md5",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "MessageDigestSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "Crustack/NotallyX",
+   "ItzSkyeYT/InterTune",
+   "VREMSoftwareDevelopment/WiFiAnalyzer",
+   "javalc6/rssreader"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "pr_06ff0c1fc96c/r1/application_results/openai_prompt_logs/20261113T153346_665102_6336_0005_adjudication_request.json",
+   "pr_06ff0c1fc96c/r2/application_results/openai_prompt_logs/20261113T191831_048634_15877_0005_adjudication_request.json",
+   "pr_06ff0c1fc96c/r3/application_results/openai_prompt_logs/20261113T222449_482193_23479_0005_adjudication_request.json",
+   "pr_06ff0c1fc96c/r4/application_results/openai_prompt_logs/20261114T003748_881635_30669_0005_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "pr_1381cd4ddb3f": {
+  "repo": "https://github.com/jenspfahl/anotherpass",
+  "spec": [
+   "KeyStoreSpec"
+  ],
+  "prompt_report_order": [
+   "KeyStoreSpec SecretService.getAndroidSecretKey"
+  ],
+  "primary_finding": "KeyStoreSpec SecretService.getAndroidSecretKey",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "KeyStoreSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "christianrowlands/android-network-survey",
+   "leekleak/traffic-light",
+   "nextcloud/news-android",
+   "tokn-authenticator/tokn"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "pr_1381cd4ddb3f/r1/application_results/openai_prompt_logs/20261113T154802_482934_6614_0006_adjudication_request.json",
+   "pr_1381cd4ddb3f/r2/application_results/openai_prompt_logs/20261113T192816_860343_16159_0006_adjudication_request.json",
+   "pr_1381cd4ddb3f/r3/application_results/openai_prompt_logs/20261113T223030_949758_23756_0005_adjudication_request.json",
+   "pr_1381cd4ddb3f/r4/application_results/openai_prompt_logs/20261114T052046_022528_1526_0006_adjudication_request.json"
+  ],
+  "notes": [
+   "LATE base-port process (r2) received a different maintainer_responses_to_this_rule_elsewhere: ['christianrowlands/android-network-survey', 'jenspfahl/ANOTHERpass', 'leekleak/traffic-light', 'tokn-authenticator/tokn']"
+  ]
+ },
+ "pr_2b8cb7f6653b": {
+  "repo": "https://github.com/vauth/salty-app",
+  "spec": [
+   "CipherSpec",
+   "PBEKeySpecSpec"
+  ],
+  "prompt_report_order": [
+   "PBEKeySpecSpec HashUtils.deriveKey",
+   "CipherSpec HashUtils.encode"
+  ],
+  "primary_finding": "CipherSpec HashUtils.encode",
+  "primary_listed_position": 2,
+  "rules_rendered": [
+   "CipherSpec",
+   "PBEKeySpecSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "freeotp/freeotp-android",
+   "gigabytedevelopers/CometOTP"
+  ],
+  "redactions": {
+   "handles": 1,
+   "commits": 1
+  },
+  "adjudication_requests": [
+   "pr_2b8cb7f6653b/r1/application_results/openai_prompt_logs/20261113T155931_888785_7372_0006_adjudication_request.json",
+   "pr_2b8cb7f6653b/r1/application_results/openai_prompt_logs/20261113T160813_006566_7372_0020_adjudication_request.json",
+   "pr_2b8cb7f6653b/r2/application_results/openai_prompt_logs/20261113T200536_234582_16916_0006_adjudication_request.json",
+   "pr_2b8cb7f6653b/r3/application_results/openai_prompt_logs/20261113T224253_635406_24048_0006_adjudication_request.json",
+   "pr_2b8cb7f6653b/r4/application_results/openai_prompt_logs/20261114T052555_075313_1837_0005_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "pr_39bba5f1270f": {
+  "repo": "https://github.com/vitorpamplona/amethyst",
+  "spec": [
+   "GCMParameterSpecSpec"
+  ],
+  "prompt_report_order": [
+   "GCMParameterSpecSpec SecretEncryption.decrypt"
+  ],
+  "primary_finding": "GCMParameterSpecSpec SecretEncryption.decrypt",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "GCMParameterSpecSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [],
+  "repositories": [],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "pr_39bba5f1270f/r1/application_results/openai_prompt_logs/20261113T162626_605898_8144_0006_adjudication_request.json",
+   "pr_39bba5f1270f/r2/application_results/openai_prompt_logs/20261113T202212_978238_17703_0006_adjudication_request.json",
+   "pr_39bba5f1270f/r3/application_results/openai_prompt_logs/20261113T225258_427095_24792_0006_adjudication_request.json",
+   "pr_39bba5f1270f/r4/application_results/openai_prompt_logs/20261114T053700_777400_2599_0006_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "pr_6d0a3cf73013": {
+  "repo": "https://github.com/Ashinch/ReadYou",
+  "spec": [
+   "SSLContextSpec"
+  ],
+  "prompt_report_order": [
+   "SSLContextSpec OkHttpClientModuleKt.setupSsl"
+  ],
+  "primary_finding": "SSLContextSpec OkHttpClientModuleKt.setupSsl",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "SSLContextSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "bitcraze/crazyflie-android-client",
+   "openhab/openhab-android",
+   "paroj/DSub2000"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "pr_6d0a3cf73013/r1/application_results/openai_prompt_logs/20261113T163015_149033_8560_0006_adjudication_request.json",
+   "pr_6d0a3cf73013/r1/application_results/openai_prompt_logs/20261113T163613_554689_8560_0018_adjudication_request.json",
+   "pr_6d0a3cf73013/r2/application_results/openai_prompt_logs/20261113T202606_661849_18081_0006_adjudication_request.json",
+   "pr_6d0a3cf73013/r3/application_results/openai_prompt_logs/20261113T225541_755590_25172_0005_adjudication_request.json",
+   "pr_6d0a3cf73013/r3/application_results/openai_prompt_logs/20261113T230000_921012_25172_0015_adjudication_request.json",
+   "pr_6d0a3cf73013/r4/application_results/openai_prompt_logs/20261114T054005_228841_2996_0005_adjudication_request.json"
+  ],
+  "notes": [
+   "plan/file-draft requests (r1,r2,r3,r4) carried automated review comments the adjudication did not (as_maintainer_position strips them); they are included, labelled"
+  ]
+ },
+ "pr_7d98a07e751d": {
+  "repo": "https://github.com/thatSFguy/meshcore-mobile-app",
+  "spec": [
+   "CipherSpec",
+   "KeyGeneratorSpec"
+  ],
+  "prompt_report_order": [
+   "KeyGeneratorSpec KeystoreSecretVault.getOrCreateKey",
+   "CipherSpec KeystoreSecretVault.seal"
+  ],
+  "primary_finding": "CipherSpec KeystoreSecretVault.seal",
+  "primary_listed_position": 2,
+  "rules_rendered": [
+   "CipherSpec",
+   "KeyGeneratorSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "freeotp/freeotp-android",
+   "gigabytedevelopers/CometOTP"
+  ],
+  "redactions": {
+   "handles": 1,
+   "commits": 1
+  },
+  "adjudication_requests": [
+   "pr_7d98a07e751d/r1/application_results/openai_prompt_logs/20261113T164447_080289_8831_0006_adjudication_request.json",
+   "pr_7d98a07e751d/r2/application_results/openai_prompt_logs/20261113T203523_584432_18762_0006_adjudication_request.json",
+   "pr_7d98a07e751d/r3/application_results/openai_prompt_logs/20261113T230716_520227_25431_0006_adjudication_request.json",
+   "pr_7d98a07e751d/r4/application_results/openai_prompt_logs/20261114T054830_173168_3694_0006_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "pr_9215f97597a6": {
+  "repo": "https://github.com/schorschii/Droid_SCEP",
+  "spec": [
+   "KeyPairGeneratorSpec"
+  ],
+  "prompt_report_order": [
+   "KeyPairGeneratorSpec ScepClient.CertReq"
+  ],
+  "primary_finding": "KeyPairGeneratorSpec ScepClient.CertReq",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "KeyPairGeneratorSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [],
+  "repositories": [],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "pr_9215f97597a6/r1/application_results/openai_prompt_logs/20261113T170509_225256_9534_0006_adjudication_request.json",
+   "pr_9215f97597a6/r2/application_results/openai_prompt_logs/20261113T204047_532614_19420_0005_adjudication_request.json",
+   "pr_9215f97597a6/r2/application_results/openai_prompt_logs/20261113T204509_989028_19420_0016_adjudication_request.json",
+   "pr_9215f97597a6/r3/application_results/openai_prompt_logs/20261113T231331_479130_26095_0006_adjudication_request.json",
+   "pr_9215f97597a6/r3/application_results/openai_prompt_logs/20261113T231711_291957_26095_0018_adjudication_request.json",
+   "pr_9215f97597a6/r4/application_results/openai_prompt_logs/20261114T055933_978000_4909_0006_adjudication_request.json",
+   "pr_9215f97597a6/r4/application_results/openai_prompt_logs/20261114T060715_136376_4909_0020_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "pr_ac1a8dd4d680": {
+  "repo": "https://github.com/christianrowlands/android-network-survey",
+  "spec": [
+   "KeyStoreSpec"
+  ],
+  "prompt_report_order": [
+   "KeyStoreSpec CryptoManager.getOrCreateKey"
+  ],
+  "primary_finding": "KeyStoreSpec CryptoManager.getOrCreateKey",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "KeyStoreSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "jenspfahl/ANOTHERpass",
+   "leekleak/traffic-light",
+   "nextcloud/news-android",
+   "tokn-authenticator/tokn"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "pr_ac1a8dd4d680/r1/application_results/openai_prompt_logs/20261113T171423_047400_9752_0005_adjudication_request.json",
+   "pr_ac1a8dd4d680/r2/application_results/openai_prompt_logs/20261113T204908_025310_19619_0005_adjudication_request.json",
+   "pr_ac1a8dd4d680/r3/application_results/openai_prompt_logs/20261113T232327_966441_26302_0005_adjudication_request.json",
+   "pr_ac1a8dd4d680/r4/application_results/openai_prompt_logs/20261114T061057_949283_6131_0005_adjudication_request.json"
+  ],
+  "notes": []
+ },
+ "pr_fff072cb8953": {
+  "repo": "https://github.com/Crustack/NotallyX",
+  "spec": [
+   "MessageDigestSpec"
+  ],
+  "prompt_report_order": [
+   "MessageDigestSpec IOExtensionsKt.md5Hash"
+  ],
+  "primary_finding": "MessageDigestSpec IOExtensionsKt.md5Hash",
+  "primary_listed_position": 1,
+  "rules_rendered": [
+   "MessageDigestSpec"
+  ],
+  "rules_missing": [],
+  "rule_section_runs": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "keys": [
+   "maintainer_responses_to_this_rule_elsewhere"
+  ],
+  "repositories": [
+   "ItzSkyeYT/InterTune",
+   "VREMSoftwareDevelopment/WiFiAnalyzer",
+   "javalc6/rssreader",
+   "jimvixx/ShortMessageSecure"
+  ],
+  "redactions": {
+   "handles": 0,
+   "commits": 0
+  },
+  "adjudication_requests": [
+   "pr_fff072cb8953/r1/application_results/openai_prompt_logs/20261113T172148_389494_10404_0006_adjudication_request.json",
+   "pr_fff072cb8953/r1/application_results/openai_prompt_logs/20261113T172607_435190_10404_0020_adjudication_request.json",
+   "pr_fff072cb8953/r2/application_results/openai_prompt_logs/20261113T205634_072863_20264_0006_adjudication_request.json",
+   "pr_fff072cb8953/r2/application_results/openai_prompt_logs/20261113T210013_991271_20264_0020_adjudication_request.json",
+   "pr_fff072cb8953/r3/application_results/openai_prompt_logs/20261113T233126_587131_26937_0006_adjudication_request.json",
+   "pr_fff072cb8953/r3/application_results/openai_prompt_logs/20261113T233532_877421_26937_0020_adjudication_request.json",
+   "pr_fff072cb8953/r4/application_results/openai_prompt_logs/20261114T061845_322222_6774_0006_adjudication_request.json",
+   "pr_fff072cb8953/r4/application_results/openai_prompt_logs/20261114T062214_619460_6774_0020_adjudication_request.json"
+  ],
+  "notes": []
+ }
+}

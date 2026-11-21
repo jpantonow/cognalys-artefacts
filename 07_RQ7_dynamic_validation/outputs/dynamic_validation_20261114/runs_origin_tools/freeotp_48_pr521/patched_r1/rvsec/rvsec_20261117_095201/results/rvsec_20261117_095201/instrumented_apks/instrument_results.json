@@ -1,0 +1,35 @@
+{
+  "variant": "dexlib2",
+  "results": [
+    {
+      "apkName": "org.fedorahosted.freeotp.debug_48.apk",
+      "success": true,
+      "message": "instrumented + signed \u2192 results/rvsec_20261117_095201/instrumented_apks/org.fedorahosted.freeotp.debug_48.apk",
+      "phase": "signed",
+      "weaveCounts": {
+        "advices": 193,
+        "dexFiles": 9,
+        "maxInputApi": 23,
+        "wrappersGenerated": 141,
+        "advicesExcludedByArity": 10,
+        "wrapperTargetsUnresolved": 0,
+        "classesSeen": 14338,
+        "methodsSeen": 98502,
+        "matchesApplied": 36,
+        "plansSkipped": 0,
+        "plansSkippedAliasing": 1,
+        "wrappersSubstituted": 59,
+        "wrappersAliasedToSubtype": 1,
+        "wrapperAliasesUnmerged": 0,
+        "constructorInlineApplied": 16,
+        "constructorInlineSkippedAliasing": 0,
+        "plansSkippedHighRegister": 0,
+        "plansSkippedUnresolvedBinding": 0,
+        "coverageInstrumented": 29312,
+        "coverageSpillFailed": 0,
+        "wovenDexes": 9,
+        "monitorDexes": 1
+      }
+    }
+  ]
+}

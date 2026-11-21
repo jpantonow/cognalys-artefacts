@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/jenspfahl/ANOTHERpass/pull/103",
+    "state": "merged",
+    "finding_id": "1381cd4ddb3f",
+    "spec": "KeyStoreSpec",
+    "csv_class": "de.jepfa.yapm.service.secret.SecretService",
+    "method_name": "getAndroidSecretKey",
+    "title": "Use KeyStore.getKey to read Android secret keys",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:39:29.240536+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "jenspfahl",
+        "kind": "comment",
+        "body": "Thanks for flagging this! I was not aware of this best practise, although the current code should not expose any vulnerability. "
+      }
+    ]
+  }
+]

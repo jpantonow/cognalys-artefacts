@@ -1,0 +1,83 @@
+{
+ "unit": "co_911173ce3742",
+ "phase": "phase2",
+ "order": [
+  "K5d364b98",
+  "K760860c0"
+ ],
+ "card_sha256": {
+  "K5d364b98": "eb6ea89927f33add",
+  "K760860c0": "e39a85cd4b16ec2c"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "Util.md5Hex (Util.java:1000) has two kinds of caller, and neither can move to SHA-256. (1) Util.getRestUrl (Util.java:397-404) uses it for Subsonic token authentication: it sends s=<random salt> and t=md5Hex(password + salt). The Subsonic/Madsonic/Airsonic REST API fixes this formula. The server recomputes MD5(password + salt) and compares the result, so a SHA-256 token would be rejected and every user on a token-capable server would be locked out. (2) FileUtil (lines 271, 274, 296, 323, 350) uses it to build cache file names for album art, playlist/podcast covers, avatars and misc images (md5Hex(path/username/url) + \".jpeg\"). That is a non-security name hash. Changing the algorithm would orphan every existing cached image on users' devices for no security gain. In neither case is MD5 doing work that collision or preimage resistance would protect: the token is protocol-mandated, and the file names are only identifiers. The real weaknesses of token auth (MD5 of the password, a cleartext password needed on the server) are properties of the Subsonic protocol, so this app cannot fix them on its own. The rule's suggested fix of swapping in SHA-256 for the token would break authentication.\n\nSecond judge: Util.md5Hex computes lowercase hexadecimal MD5 over UTF-8 input. Its security-sensitive caller, getRestUrl, sends t=MD5(password + salt) with s=salt for Subsonic token authentication. ServerInfo.canUseToken enables this for stock Subsonic REST versions >=1.14 unless blocked. Replacing MD5 with SHA-256 would change the authentication protocol and cause server rejection; the repository provides no alternative digest negotiation. Other callers in FileUtil use MD5 solely for deterministic image-cache filenames, not security checks. A delivery must not claim that a client-only SHA substitution of the token fixes it.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [],
+  "must_not_break": [
+   "Subsonic REST token authentication: t must stay hex(MD5(password + salt)), sent with s=salt, or servers (Subsonic, Airsonic, Navidrome, Madsonic, etc.) will reject every request when ServerInfo.canUseToken is true",
+   "The cached token/salt pairs in Util.getRestUrl and the server's matching recomputation",
+   "Existing on-disk image cache file names (album art, avatars, playlist/podcast covers, misc URL images) built from md5Hex(...) + \".jpeg\" in FileUtil; changing the hash orphans the cached files and forces re-downloads",
+   "Compatibility with older servers that use the legacy p=enc: path and with token-capable servers, as chosen by ServerInfo",
+   "Preserve the server-compatible token calculation: 32 lowercase hexadecimal characters from MD5 of UTF-8(password + salt), paired with the corresponding s parameter. Substituting SHA-2 would break token authentication and authenticated requests.",
+   "Preserve server capability and blocked-token handling, including the existing enc:-prefixed UTF-8 hexadecimal password fallback for setups without token authentication. Disabling tokens merely to avoid MD5 would transmit the reversibly encoded password instead.",
+   "Preserve access to existing MD5-named .jpeg files for playlist and podcast artwork, album-directory artwork, avatars, and URL-based miscellaneous images, including offline artwork and the existing migration from hashed album artwork to the album directory. Changing filenames without compatible lookup or migration would orphan cached images."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 19,
+ "tokens": {
+  "input_tokens": 8,
+  "cache_creation_input_tokens": 21813,
+  "cache_read_input_tokens": 54413,
+  "output_tokens": 1889
+ },
+ "turns": 6,
+ "tool_calls": 5,
+ "claude_reported_cost_usd": 0.2231986,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "3460425250827668",
+ "finished_at": "2026-11-17T19:06:09-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K5d364b98",
+    "r2": 0,
+    "regression_scenario": "A user updates while offline (or with a full art cache). FileUtil.getAlbumArtFile, getAvatarFile and getMiscFile now look for SHA-256 names, so every cached playlist/podcast cover, avatar and misc image stored under its MD5 name is not found. Legacy MD5-named hex album art is also never migrated into the album directory by the rename at FileUtil.java:279-285. All of this artwork shows as missing until it is downloaded again, and the old files sit orphaned.",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": null,
+    "notes": "The PR breaks the must-not-break image-cache naming without any lookup or migration path, and Util.md5Hex still calls MD5 for the token, so the reported method is unchanged. The description is candid about both points, but it overstates cleanup: CacheCleaner only sweeps the album-art directory, not misc."
+   },
+   {
+    "card_id": "K760860c0",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific: the protocol fixes the Subsonic token as MD5(password+salt) under canUseToken, and the FileUtil callers are only filename keys, including the getHexAlbumArtFile migration, with accurate line references. The unsupported remark about other apps' maintainers is a minor aside."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

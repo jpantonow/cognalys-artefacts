@@ -1,0 +1,995 @@
+{
+  "repositories": {
+    "org.fossify.gallery_28.apk": {
+      "verified_imports": {
+        "ensureBackgroundThread": {
+          "import": "import org.fossify.commons.helpers.ensureBackgroundThread",
+          "run": "run_20260913_210831",
+          "finding_key": "966c9e64ed27",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.craxiom.networksurvey_115.apk": {
+      "verified_imports": {
+        "After": {
+          "import": "import org.junit.After",
+          "run": "run_20260914_141852",
+          "finding_key": "19def42b0fba",
+          "build_status": "success"
+        },
+        "Before": {
+          "import": "import org.junit.Before",
+          "run": "run_20260914_141852",
+          "finding_key": "19def42b0fba",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_20260914_141852",
+          "finding_key": "19def42b0fba",
+          "build_status": "success"
+        },
+        "RunWith": {
+          "import": "import org.junit.runner.RunWith",
+          "run": "run_20260914_141852",
+          "finding_key": "19def42b0fba",
+          "build_status": "success"
+        },
+        "RobolectricTestRunner": {
+          "import": "import org.robolectric.RobolectricTestRunner",
+          "run": "run_20260914_141852",
+          "finding_key": "19def42b0fba",
+          "build_status": "success"
+        },
+        "Shadows": {
+          "import": "import org.robolectric.Shadows",
+          "run": "run_20260914_141852",
+          "finding_key": "19def42b0fba",
+          "build_status": "success"
+        },
+        "assertEquals": {
+          "import": "import static org.junit.Assert.assertEquals",
+          "run": "run_20260914_141852",
+          "finding_key": "19def42b0fba",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import static org.junit.Assert.assertTrue",
+          "run": "run_20260914_141852",
+          "finding_key": "19def42b0fba",
+          "build_status": "success"
+        },
+        "assertSame": {
+          "import": "import static org.junit.Assert.assertSame",
+          "run": "run_20260914_141852",
+          "finding_key": "19def42b0fba",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.ivanovsky.passnotes_11700.apk": {
+      "verified_imports": {
+        "assertEquals": {
+          "import": "import org.junit.Assert.assertEquals",
+          "run": "run_20261010_200449",
+          "finding_key": "6d29118e4263",
+          "build_status": "success_app_module_only"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_20261010_200449",
+          "finding_key": "6d29118e4263",
+          "build_status": "success_app_module_only"
+        }
+      }
+    },
+    "org.bombusmod_1422.apk": {
+      "verified_imports": {}
+    },
+    "org.nick.wwwjdic_2370.apk": {
+      "verified_imports": {
+        "TestCase": {
+          "import": "import junit.framework.TestCase",
+          "run": "run_20260915_202333",
+          "finding_key": "4e3c203d8253",
+          "build_status": "success_app_module_only"
+        }
+      }
+    },
+    "se.bitcraze.crazyfliecontrol2_22.apk": {
+      "verified_imports": {}
+    },
+    "com.omaawr.tuisku_24.apk": {
+      "verified_imports": {}
+    },
+    "uk.org.retallack.slimbook_1.apk": {
+      "verified_imports": {}
+    },
+    "io.github.stardomains3.oxproxion_218.apk": {
+      "verified_imports": {
+        "assertFalse": {
+          "import": "import org.junit.Assert.assertFalse",
+          "run": "run_20260920_175850",
+          "finding_key": "a4a15d9fd6ab",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_20260920_175850",
+          "finding_key": "a4a15d9fd6ab",
+          "build_status": "success"
+        }
+      }
+    },
+    "dnsfilter.android_1505401.apk": {
+      "verified_imports": {}
+    },
+    "com.mine.autoshine_3.apk": {
+      "verified_imports": {}
+    },
+    "sh.hnet.comfychair_38.apk": {
+      "verified_imports": {
+        "assertFalse": {
+          "import": "import org.junit.Assert.assertFalse",
+          "run": "run_20260927_012948",
+          "finding_key": "8267eb61836d",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import org.junit.Assert.assertTrue",
+          "run": "run_20260927_012948",
+          "finding_key": "8267eb61836d",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_20260927_012948",
+          "finding_key": "8267eb61836d",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.hfut.schedule_2554.apk": {
+      "verified_imports": {
+        "GiteeService": {
+          "import": "import com.hfut.schedule.network.api.inf.GiteeService",
+          "run": "run_20260927_012948",
+          "finding_key": "b71c759b9fd6",
+          "build_status": "success"
+        },
+        "Constant": {
+          "import": "import com.hfut.schedule.network.api.model.Constant",
+          "run": "run_20260926_205559",
+          "finding_key": "b71c759b9fd6",
+          "build_status": "success"
+        },
+        "assertFalse": {
+          "import": "import org.junit.Assert.assertFalse",
+          "run": "run_20260927_012948",
+          "finding_key": "b71c759b9fd6",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import org.junit.Assert.assertTrue",
+          "run": "run_20260927_012948",
+          "finding_key": "b71c759b9fd6",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_20260927_012948",
+          "finding_key": "b71c759b9fd6",
+          "build_status": "success"
+        },
+        "Retrofit": {
+          "import": "import retrofit2.Retrofit",
+          "run": "run_20260927_012948",
+          "finding_key": "b71c759b9fd6",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.hiddenramblings.tagmo.eightbit_4520.apk": {
+      "verified_imports": {
+        "BuildConfig": {
+          "import": "import com.hiddenramblings.tagmo.BuildConfig",
+          "run": "run_20260927_175748",
+          "finding_key": "1f136df321e0",
+          "build_status": "success"
+        }
+      }
+    },
+    "io.github.anenasa.news_v6.0.0.apk": {
+      "verified_imports": {}
+    },
+    "io.github.domi04151309.home_1131.apk": {
+      "verified_imports": {}
+    },
+    "org.woheller69.omweather_50.apk": {
+      "verified_imports": {}
+    },
+    "com.craxiom.networksurvey_114.apk": {
+      "verified_imports": {
+        "assertTrue": {
+          "import": "import org.junit.Assert.assertTrue",
+          "run": "run_20261006_223750",
+          "finding_key": "ac1a8dd4d680",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_20261006_223750",
+          "finding_key": "ac1a8dd4d680",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.nononsenseapps.feeder.play_4025.apk": {
+      "verified_imports": {}
+    },
+    "org.cry.otp_31.apk": {
+      "verified_imports": {}
+    },
+    "systems.sieber.droid_scep_7.apk": {
+      "verified_imports": {}
+    },
+    "app.michaelwuensch.bitbanana_79.apk": {
+      "verified_imports": {
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_20261010_200449",
+          "finding_key": "744531f6d880",
+          "build_status": "success"
+        },
+        "AppLockUtil": {
+          "import": "import app.michaelwuensch.bitbanana.util.AppLockUtil",
+          "run": "run_20261010_200449",
+          "finding_key": "744531f6d880",
+          "build_status": "success"
+        },
+        "UtilFunctions": {
+          "import": "import app.michaelwuensch.bitbanana.util.UtilFunctions",
+          "run": "run_20261010_200449",
+          "finding_key": "744531f6d880",
+          "build_status": "success"
+        },
+        "assertArrayEquals": {
+          "import": "import static org.junit.Assert.assertArrayEquals",
+          "run": "run_20261010_200449",
+          "finding_key": "744531f6d880",
+          "build_status": "success"
+        },
+        "assertEquals": {
+          "import": "import static org.junit.Assert.assertEquals",
+          "run": "run_20261010_200449",
+          "finding_key": "744531f6d880",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import static org.junit.Assert.assertTrue",
+          "run": "run_20261010_200449",
+          "finding_key": "744531f6d880",
+          "build_status": "success"
+        },
+        "fail": {
+          "import": "import static org.junit.Assert.fail",
+          "run": "run_20261010_200449",
+          "finding_key": "744531f6d880",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.gelakinetic.mtgfam_99.apk": {
+      "verified_imports": {
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "subset_revisao_lacunas",
+          "finding_key": "e8f0a6ad109e",
+          "build_status": "success"
+        },
+        "assertEquals": {
+          "import": "import static org.junit.Assert.assertEquals",
+          "run": "subset_revisao_lacunas",
+          "finding_key": "e8f0a6ad109e",
+          "build_status": "success"
+        },
+        "fail": {
+          "import": "import static org.junit.Assert.fail",
+          "run": "subset_revisao_lacunas",
+          "finding_key": "e8f0a6ad109e",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.vrem.wifianalyzer_71.apk": {
+      "verified_imports": {}
+    },
+    "com.password.monitor_102.apk": {
+      "verified_imports": {}
+    },
+    "com.sapuseven.untis_29198884.apk": {
+      "verified_imports": {
+        "assertEquals": {
+          "import": "import static org.junit.Assert.assertEquals",
+          "run": "run_verificacao_biblioteca_20261012_011346",
+          "finding_key": "21b3aced6bcf",
+          "build_status": "success"
+        },
+        "assertNotNull": {
+          "import": "import static org.junit.Assert.assertNotNull",
+          "run": "run_verificacao_biblioteca_20261012_011346",
+          "finding_key": "21b3aced6bcf",
+          "build_status": "success"
+        },
+        "assertNull": {
+          "import": "import static org.junit.Assert.assertNull",
+          "run": "run_verificacao_biblioteca_20261012_011346",
+          "finding_key": "21b3aced6bcf",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import static org.junit.Assert.assertTrue",
+          "run": "run_verificacao_biblioteca_20261012_011346",
+          "finding_key": "21b3aced6bcf",
+          "build_status": "success"
+        },
+        "fail": {
+          "import": "import static org.junit.Assert.fail",
+          "run": "run_melhorias_20261011_203822",
+          "finding_key": "21b3aced6bcf",
+          "build_status": "success"
+        },
+        "After": {
+          "import": "import org.junit.After",
+          "run": "run_verificacao_biblioteca_20261012_011346",
+          "finding_key": "21b3aced6bcf",
+          "build_status": "success"
+        },
+        "Before": {
+          "import": "import org.junit.Before",
+          "run": "run_verificacao_biblioteca_20261012_011346",
+          "finding_key": "21b3aced6bcf",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_verificacao_biblioteca_20261012_011346",
+          "finding_key": "21b3aced6bcf",
+          "build_status": "success"
+        }
+      }
+    },
+    "github.paroj.dsub2000_217.apk": {
+      "verified_imports": {}
+    },
+    "cryptoapp.apk": {
+      "verified_imports": {
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_cryptoapp_2",
+          "finding_key": "fb60dd33c294",
+          "build_status": "success"
+        },
+        "assertArrayEquals": {
+          "import": "import static org.junit.Assert.assertArrayEquals",
+          "run": "run_cryptoapp_2",
+          "finding_key": "23455501d8f1",
+          "build_status": "success"
+        },
+        "assertEquals": {
+          "import": "import static org.junit.Assert.assertEquals",
+          "run": "run_cryptoapp_2",
+          "finding_key": "23455501d8f1",
+          "build_status": "success"
+        },
+        "assertFalse": {
+          "import": "import static org.junit.Assert.assertFalse",
+          "run": "run_cryptoapp_2",
+          "finding_key": "fb60dd33c294",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import static org.junit.Assert.assertTrue",
+          "run": "run_cryptoapp_2",
+          "finding_key": "fb60dd33c294",
+          "build_status": "success"
+        },
+        "fail": {
+          "import": "import static org.junit.Assert.fail",
+          "run": "run_cryptoapp_2",
+          "finding_key": "23455501d8f1",
+          "build_status": "success"
+        }
+      }
+    },
+    "silentcoderhere__aihub.apk": {
+      "verified_imports": {
+        "assertFalse": {
+          "import": "import org.junit.Assert.assertFalse",
+          "run": "run_aihub_4",
+          "finding_key": "0ed162e6e9df",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import org.junit.Assert.assertTrue",
+          "run": "run_aihub_4",
+          "finding_key": "5f907c4459c9",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_aihub_4",
+          "finding_key": "0ed162e6e9df",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.javimetallab.papercript.debug_3.apk": {
+      "verified_imports": {}
+    },
+    "io.github.exclude0122.xivpn.debug_484.apk": {
+      "verified_imports": {
+        "assertFalse": {
+          "import": "import static org.junit.Assert.assertFalse",
+          "run": "run",
+          "finding_key": "505d3a766276",
+          "build_status": "success"
+        },
+        "assertNotNull": {
+          "import": "import static org.junit.Assert.assertNotNull",
+          "run": "run",
+          "finding_key": "505d3a766276",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import static org.junit.Assert.assertTrue",
+          "run": "run",
+          "finding_key": "505d3a766276",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run",
+          "finding_key": "505d3a766276",
+          "build_status": "success"
+        }
+      }
+    },
+    "network.loki.messenger.fdroid.debug_4545.apk": {
+      "verified_imports": {
+        "assertTrue": {
+          "import": "import static org.junit.Assert.assertTrue",
+          "run": "run",
+          "finding_key": "cc82e04f1c05",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run",
+          "finding_key": "cc82e04f1c05",
+          "build_status": "success"
+        },
+        "RunWith": {
+          "import": "import org.junit.runner.RunWith",
+          "run": "run",
+          "finding_key": "cc82e04f1c05",
+          "build_status": "success"
+        },
+        "RobolectricTestRunner": {
+          "import": "import org.robolectric.RobolectricTestRunner",
+          "run": "run",
+          "finding_key": "cc82e04f1c05",
+          "build_status": "success"
+        },
+        "assertArrayEquals": {
+          "import": "import static org.junit.Assert.assertArrayEquals",
+          "run": "run",
+          "finding_key": "cc82e04f1c05",
+          "build_status": "success"
+        },
+        "assertEquals": {
+          "import": "import static org.junit.Assert.assertEquals",
+          "run": "run",
+          "finding_key": "cc82e04f1c05",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.zhangke.fread.debug_109000.apk": {
+      "verified_imports": {}
+    },
+    "org.jimvixx.smsecure.debug_10400.apk": {
+      "verified_imports": {}
+    },
+    "livio.rssreader.debug_120.apk": {
+      "verified_imports": {}
+    },
+    "com.vrem.wifianalyzer.debug_72.apk": {
+      "verified_imports": {}
+    },
+    "com.ounben.amaradio.debug_159.apk": {
+      "verified_imports": {}
+    },
+    "com.idunnololz.summit.fdroid.debug_355.apk": {
+      "verified_imports": {}
+    },
+    "com.zfdang.zsmth_android.debug_1031.apk": {
+      "verified_imports": {
+        "R": {
+          "import": "import com.zfdang.zsmth_android.R",
+          "run": "run8",
+          "finding_key": "b1a40c2fc69e",
+          "build_status": "success"
+        }
+      }
+    },
+    "me.ash.reader.debug_47.apk": {
+      "verified_imports": {}
+    },
+    "org.woheller69.whobird.debug_54.apk": {
+      "verified_imports": {}
+    },
+    "com.leekleak.trafficlight_38.apk": {
+      "verified_imports": {}
+    },
+    "me.diamondforge.tokn_19.apk": {
+      "verified_imports": {}
+    },
+    "rocks.poopjournal.metadataremover_20020.apk": {
+      "verified_imports": {}
+    },
+    "org.quantumbadger.redreader_117.apk": {
+      "verified_imports": {
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_v4",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "assertArrayEquals": {
+          "import": "import static org.junit.Assert.assertArrayEquals",
+          "run": "run_v4",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "assertEquals": {
+          "import": "import static org.junit.Assert.assertEquals",
+          "run": "run_v4",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "assertFalse": {
+          "import": "import static org.junit.Assert.assertFalse",
+          "run": "run_v4",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import static org.junit.Assert.assertTrue",
+          "run": "run_v4",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "fail": {
+          "import": "import static org.junit.Assert.fail",
+          "run": "run_v4",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "RunWith": {
+          "import": "import org.junit.runner.RunWith",
+          "run": "subset_redreader_sha1_v2",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "RobolectricTestRunner": {
+          "import": "import org.robolectric.RobolectricTestRunner",
+          "run": "subset_redreader_sha1_v2",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "General": {
+          "import": "import org.quantumbadger.redreader.common.General",
+          "run": "run_v4",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "Rule": {
+          "import": "import org.junit.Rule",
+          "run": "run_v4",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        },
+        "TemporaryFolder": {
+          "import": "import org.junit.rules.TemporaryFolder",
+          "run": "run_v4",
+          "finding_key": "d2b58eae2982",
+          "build_status": "success"
+        }
+      }
+    },
+    "info.plateaukao.einkbro.debug_160701.apk": {
+      "verified_imports": {
+        "sha256": {
+          "import": "import io.github.edsuns.adfilter.util.sha256",
+          "run": "run",
+          "finding_key": "daa09e102370",
+          "build_status": "success"
+        }
+      }
+    },
+    "de.jepfa.yapm.debug_202006.apk": {
+      "verified_imports": {}
+    },
+    "org.fedorahosted.freeotp_48.apk": {
+      "verified_imports": {
+        "Assert": {
+          "import": "import org.junit.Assert",
+          "run": "subset_revisao_lacunas_v7",
+          "finding_key": "4b81532bb668",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "subset_revisao_lacunas_v7",
+          "finding_key": "4b81532bb668",
+          "build_status": "success"
+        }
+      }
+    },
+    "org.cleverfox.bluegate.debug_20260105.apk": {
+      "verified_imports": {
+        "assertEquals": {
+          "import": "import org.junit.Assert.assertEquals",
+          "run": "run",
+          "finding_key": "57941f11e352",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import org.junit.Assert.assertTrue",
+          "run": "run",
+          "finding_key": "57941f11e352",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run",
+          "finding_key": "57941f11e352",
+          "build_status": "success"
+        },
+        "RunWith": {
+          "import": "import org.junit.runner.RunWith",
+          "run": "run",
+          "finding_key": "57941f11e352",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.hazelhope.dubster.nightblast.debug_106.apk": {
+      "verified_imports": {}
+    },
+    "com.vauth.salty.debug_2.apk": {
+      "verified_imports": {}
+    },
+    "at.bitfire.icsdroid.debug_92.apk": {
+      "verified_imports": {
+        "assertSame": {
+          "import": "import org.junit.Assert.assertSame",
+          "run": "run",
+          "finding_key": "689f21c9838e",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import org.junit.Assert.assertTrue",
+          "run": "run",
+          "finding_key": "689f21c9838e",
+          "build_status": "success"
+        },
+        "fail": {
+          "import": "import org.junit.Assert.fail",
+          "run": "run",
+          "finding_key": "689f21c9838e",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run",
+          "finding_key": "689f21c9838e",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.eddyizm.degoogled.tempus.debug_51.apk": {
+      "verified_imports": {
+        "assertEquals": {
+          "import": "import org.junit.Assert.assertEquals",
+          "run": "run",
+          "finding_key": "0b875a076bfe",
+          "build_status": "success"
+        },
+        "assertNotNull": {
+          "import": "import org.junit.Assert.assertNotNull",
+          "run": "run",
+          "finding_key": "0b875a076bfe",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run",
+          "finding_key": "0b875a076bfe",
+          "build_status": "success"
+        }
+      }
+    },
+    "xyz.zedler.patrick.grocy.debug_64.apk": {
+      "verified_imports": {}
+    },
+    "org.cryptomator.lite.debug_3157.apk": {
+      "verified_imports": {}
+    },
+    "io.olvid.messenger.nogoogle.debug_31404.apk": {
+      "verified_imports": {}
+    },
+    "com.vitorpamplona.amethyst.debug_464.apk": {
+      "verified_imports": {}
+    },
+    "com.yogeshpaliyal.keypass.debug_1442.apk": {
+      "verified_imports": {
+        "CryptoManager": {
+          "import": "import com.yogeshpaliyal.common.utils.CryptoManager",
+          "run": "run",
+          "finding_key": "926be6264488",
+          "build_status": "success"
+        },
+        "assertArrayEquals": {
+          "import": "import org.junit.Assert.assertArrayEquals",
+          "run": "run",
+          "finding_key": "926be6264488",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import org.junit.Assert.assertTrue",
+          "run": "run",
+          "finding_key": "926be6264488",
+          "build_status": "success"
+        },
+        "fail": {
+          "import": "import org.junit.Assert.fail",
+          "run": "run",
+          "finding_key": "926be6264488",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run",
+          "finding_key": "926be6264488",
+          "build_status": "success"
+        },
+        "RunWith": {
+          "import": "import org.junit.runner.RunWith",
+          "run": "run",
+          "finding_key": "926be6264488",
+          "build_status": "success"
+        }
+      }
+    },
+    "org.tasks.debug_151202.apk": {
+      "verified_imports": {}
+    },
+    "dev.dettmer.simplenotes.debug_67.apk": {
+      "verified_imports": {}
+    },
+    "com.github.catfriend1.syncthinglite.debug_2000001.apk": {
+      "verified_imports": {}
+    },
+    "com.orgzlyrevived.debug_292.apk": {
+      "verified_imports": {}
+    },
+    "dev.skye.intertune.debug_96.apk": {
+      "verified_imports": {}
+    },
+    "me.diamondforge.tokn.debug_22.apk": {
+      "verified_imports": {}
+    },
+    "com.nemu.clashfest.clash.alpha.debug_10300004.apk": {
+      "verified_imports": {}
+    },
+    "com.example.trigger.debug_408.apk": {
+      "verified_imports": {}
+    },
+    "app.passwordstore.agrahn.debug_20003.apk": {
+      "verified_imports": {
+        "Ed25519KeyPairGenerator": {
+          "import": "import org.bouncycastle.crypto.generators.Ed25519KeyPairGenerator",
+          "run": "run_v3",
+          "finding_key": "9b40df0d816f",
+          "build_status": "success"
+        },
+        "Ed25519KeyGenerationParameters": {
+          "import": "import org.bouncycastle.crypto.params.Ed25519KeyGenerationParameters",
+          "run": "run_v3",
+          "finding_key": "9b40df0d816f",
+          "build_status": "success"
+        },
+        "PrivateKeyInfoFactory": {
+          "import": "import org.bouncycastle.crypto.util.PrivateKeyInfoFactory",
+          "run": "run_v3",
+          "finding_key": "9b40df0d816f",
+          "build_status": "success"
+        },
+        "SubjectPublicKeyInfoFactory": {
+          "import": "import org.bouncycastle.crypto.util.SubjectPublicKeyInfoFactory",
+          "run": "run_v3",
+          "finding_key": "9b40df0d816f",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.philkes.notallyx.debug_71134.apk": {
+      "verified_imports": {
+        "sha256Hash": {
+          "import": "import com.philkes.notallyx.utils.sha256Hash",
+          "run": "run_v7",
+          "finding_key": "fff072cb8953",
+          "build_status": "success"
+        },
+        "assertArrayEquals": {
+          "import": "import org.junit.Assert.assertArrayEquals",
+          "run": "run_v7",
+          "finding_key": "fff072cb8953",
+          "build_status": "success"
+        },
+        "assertFalse": {
+          "import": "import org.junit.Assert.assertFalse",
+          "run": "run_v7",
+          "finding_key": "fff072cb8953",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_v7",
+          "finding_key": "fff072cb8953",
+          "build_status": "success"
+        }
+      }
+    },
+    "org.osservatorionessuno.bugbane.beta.debug_9.apk": {
+      "verified_imports": {}
+    },
+    "io.github.mouse233.localsendkotlin.debug_23.apk": {
+      "verified_imports": {}
+    },
+    "nl.privacydragon.bookwyrm.debug_16.apk": {
+      "verified_imports": {}
+    },
+    "com.zoffcc.applications.tofshare.debug_10022.apk": {
+      "verified_imports": {}
+    },
+    "it.rfmariano.denaro.debug_25818056.apk": {
+      "verified_imports": {}
+    },
+    "io.github.muntashirakon.AppManager.debug_451.apk": {
+      "verified_imports": {
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run",
+          "finding_key": "a5006892d988",
+          "build_status": "success"
+        },
+        "assertNotNull": {
+          "import": "import static org.junit.Assert.assertNotNull",
+          "run": "run",
+          "finding_key": "a5006892d988",
+          "build_status": "success"
+        }
+      }
+    },
+    "org.thosp.yourlocalweather.debug_213.apk": {
+      "verified_imports": {}
+    },
+    "com.m57.hermescontrol.debug_20800.apk": {
+      "verified_imports": {}
+    },
+    "org.primftpd.debug_71.apk": {
+      "verified_imports": {}
+    },
+    "com.odiousapps.weewxweather.debug_2002016.apk": {
+      "verified_imports": {}
+    },
+    "org.cryptomator.lite.debug_3163.apk": {
+      "verified_imports": {}
+    },
+    "com.lladlam.melox.android.debug_26.apk": {
+      "verified_imports": {
+        "HttpUrl": {
+          "import": "import okhttp3.HttpUrl",
+          "run": "run",
+          "finding_key": "0924040f7eec",
+          "build_status": "success"
+        },
+        "JSONException": {
+          "import": "import org.json.JSONException",
+          "run": "run",
+          "finding_key": "0924040f7eec",
+          "build_status": "success"
+        }
+      }
+    },
+    "com.jagr.fridamusic.debug_27.apk": {
+      "verified_imports": {
+        "After": {
+          "import": "import org.junit.After",
+          "run": "run",
+          "finding_key": "9b18d0e0d46b",
+          "build_status": "success"
+        },
+        "assertEquals": {
+          "import": "import org.junit.Assert.assertEquals",
+          "run": "run",
+          "finding_key": "9b18d0e0d46b",
+          "build_status": "success"
+        },
+        "assertNull": {
+          "import": "import org.junit.Assert.assertNull",
+          "run": "run",
+          "finding_key": "9b18d0e0d46b",
+          "build_status": "success"
+        },
+        "Before": {
+          "import": "import org.junit.Before",
+          "run": "run",
+          "finding_key": "9b18d0e0d46b",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run",
+          "finding_key": "9b18d0e0d46b",
+          "build_status": "success"
+        }
+      }
+    },
+    "eu.fliegendewurst.triliumdroid.debug_24.apk": {
+      "verified_imports": {}
+    },
+    "io.github.thatsfguy.meshcore.native.debug_1.apk": {
+      "verified_imports": {}
+    },
+    "com.inputleaf.android.debug_15.apk": {
+      "verified_imports": {}
+    },
+    "com.gigabytedevelopersinc.app.CometOTP.debug_1.apk": {
+      "verified_imports": {}
+    },
+    "br.eng.thsouza.winterhold.debug_8.apk": {
+      "verified_imports": {
+        "assertArrayEquals": {
+          "import": "import org.junit.Assert.assertArrayEquals",
+          "run": "run_v5",
+          "finding_key": "f637c4b8467e",
+          "build_status": "success"
+        },
+        "assertEquals": {
+          "import": "import org.junit.Assert.assertEquals",
+          "run": "run_v5",
+          "finding_key": "f637c4b8467e",
+          "build_status": "success"
+        },
+        "assertTrue": {
+          "import": "import org.junit.Assert.assertTrue",
+          "run": "run_v5",
+          "finding_key": "f637c4b8467e",
+          "build_status": "success"
+        },
+        "Test": {
+          "import": "import org.junit.Test",
+          "run": "run_v5",
+          "finding_key": "f637c4b8467e",
+          "build_status": "success"
+        }
+      }
+    }
+  },
+  "findings": {}
+}

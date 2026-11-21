@@ -1,0 +1,9 @@
+{
+  "library": {
+    "commit": "80bfc75c101df70f27654523f48a5c8c9a936700",
+    "dirty": false,
+    "src_tree_sha256": "2a6f169dc29783154df9504c3f4b2d447cfa35a7944db7bfc205a92a5f25f77d"
+  },
+  "findings_csv": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_trigger_20261028/findings_ab56.jsonl",
+  "findings_csv_sha256": "6fe4762caa1b151b852568efa681017eb5531c5900d42b5a9711296296de8a3e"
+}

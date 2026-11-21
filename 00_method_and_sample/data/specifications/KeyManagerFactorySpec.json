@@ -1,0 +1,171 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The supplied rule has no clause of the form if(value == null), no condition(...) runtime predicate, and no special-case rule-language treatment for a null KeyStore.",
+      "The rule contains no AspectJ target(T) or args(T) matcher, so it does not itself state a subtype-matching condition.",
+      "The meanings and interprocedural recognition rules for generatedKeyStore, generatedManagerFactoryParameters, and notHardCoded are not defined in this CrySL file.",
+      "A warning about absent abstract provenance is not runtime evidence about an argument's value, loading state, contents, or provider treatment.",
+      "The representative null-KeyStore message is not entailed by an explicit null-related clause in the reproduced rule; any such interpretation requires detector behavior or evidence beyond this rule."
+    ],
+    "predicates": [
+      "generatedKeyStore[keyStore] is required for init(keyStore, password).",
+      "generatedManagerFactoryParameters[params] is required for init(params).",
+      "neverTypeOf[password, java.lang.String] and notHardCoded[password] constrain the password object used by init(keyStore, password).",
+      "algorithm in {\"PKIX\", \"SunX509\"} constrains both getInstance event alternatives.",
+      "generatedKeyManager[this] is ensured after either Init alternative.",
+      "generatedKeyManagers[keyManager] is ensured after getKeyManagers()."
+    ],
+    "claim": "The rule defines the event language Get, Init, GetKeyMng? with ORDER Get, Init, GetKeyMng?, together with its listed algorithm/password constraints, required abstract predicates, and ensured abstract predicates."
+  },
+  "unknowns": [
+    "Whether the detector that produced the representative warning implements null-specific behavior beyond the reproduced CrySL rule.",
+    "The formal analysis semantics of generatedKeyStore, generatedManagerFactoryParameters, neverTypeOf, and notHardCoded in the detector version used.",
+    "The selected provider and its exact null-KeyStore behavior in the affected runtime.",
+    "Whether the relevant key material is actually loaded, contains usable private-key entries and certificate chains, and is selected during TLS authentication.",
+    "Why the rule permits SunX509 while the current Java Security Standard Algorithm Names specification names PKIX as the standard KeyManagerFactory algorithm."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "KeyManagerFactory is a factory for key managers based on key material sources.",
+      "getInstance selects an implementation from a supporting security provider; provider selection is runtime-dependent when no provider is explicitly named.",
+      "init(KeyStore, char[]) initializes from key material; its KeyStore parameter is documented as \"the key store or null.\"",
+      "init(ManagerFactoryParameters) accepts provider-specific key-material parameters.",
+      "getKeyManagers() returns one key manager for each type of key material and throws IllegalStateException if the factory was not initialized."
+    ],
+    "preconditions": [
+      "getInstance requires a non-null algorithm name.",
+      "The String-provider overload requires a non-null, non-empty provider name; the Provider overload requires a non-null Provider.",
+      "The API documents that the password is used to recover keys in the KeyStore; a wrong password can cause UnrecoverableKeyException.",
+      "A KeyStore normally must be loaded before it can be accessed, unless it was already loaded during instantiation; the exact interaction with a KeyManagerFactory implementation remains provider-specific."
+    ],
+    "unknowns": [
+      "Java SE documentation does not specify what a particular provider does when init is called with a null KeyStore.",
+      "Java SE documentation does not define the CrySL abstract predicates generatedKeyStore or generatedManagerFactoryParameters.",
+      "The provider, provider ordering, configured default algorithm, supported provider-specific algorithms, and source of actual key material cannot be determined from this rule alone."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyManagerFactory.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/KeyManagerFactory.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/ManagerFactoryParameters.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/KeyStore.html"
+  ],
+  "schema_version": 2,
+  "non_security_violation_shapes": [
+    "Calling getKeyManagers() before initialization in diagnostic or dead code where the resulting IllegalStateException is handled and no key manager is used for TLS.",
+    "Creating and initializing a factory solely for a local test or capability probe with a hard-coded test password, where no production credential or TLS identity is involved.",
+    "Initializing with a locally constructed input that lacks the rule's generated* provenance predicate, where the resulting factory is never used to authenticate a peer or present a credential.",
+    "Using init(ManagerFactoryParameters) with an application-specific parameter object that the selected provider accepts, but which has no producer predicate recognized by this rule, in code with no security-sensitive use of the result."
+  ],
+  "source_verified": true,
+  "important_note": "This is a CrySL-style static rule for javax.net.ssl.KeyManagerFactory. It establishes only the stated call-order, value-constraint, and abstract-provenance predicates. It does not prove that a KeyStore was loaded, contains an appropriate private key and certificate chain, that a provider uses a particular default source, or that resulting managers are installed in and used by a TLS context. In particular, the reproduced rule does not contain a null-KeyStore condition.",
+  "events": [
+    {
+      "condition": "Matches getInstance(algorithm). The rule constrains algorithm to {\"PKIX\", \"SunX509\"}.",
+      "name": "g1",
+      "api_patterns": [
+        "KeyManagerFactory.getInstance("
+      ]
+    },
+    {
+      "condition": "Matches getInstance(algorithm, _). The second argument is unconstrained by the rule; algorithm is constrained to {\"PKIX\", \"SunX509\"}.",
+      "name": "g2",
+      "api_patterns": [
+        "KeyManagerFactory.getInstance("
+      ]
+    },
+    {
+      "condition": "Matches init(keyStore, password) on the governed factory. The rule requires generatedKeyStore[keyStore], neverTypeOf[password, java.lang.String], and notHardCoded[password]. It has no explicit null test or other runtime-value predicate for keyStore.",
+      "name": "i1",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Matches init(params) on the governed factory. The rule requires generatedManagerFactoryParameters[params].",
+      "name": "i2",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Matches keyManager = getKeyManagers(). ORDER permits it only after Get followed by Init; the rule ensures generatedKeyManagers[keyManager] after this event.",
+      "name": "gkm1",
+      "api_patterns": [
+        ".getKeyManagers()"
+      ]
+    }
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, KeyManagerFactory behavior depends on the selected provider and supplied values. In particular, a null KeyStore is API-permitted, while its semantics are provider-specific.",
+    "equivalent": false,
+    "detector_claim": "The rule enforces a narrow static policy: algorithm values restricted to PKIX or SunX509, a non-String and non-hard-coded password representation, recognized provenance of initialization inputs, and factory initialization before optional retrieval of managers."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm that the deployed provider supports the requested algorithm name.",
+      "Use PKIX when Java SE standard-name portability is required; treat SunX509 and other names as provider compatibility questions.",
+      "For ManagerFactoryParameters initialization, confirm that the selected provider accepts the concrete parameter implementation."
+    ],
+    "runtime": [
+      "Identify the actual security provider and KeyManagerFactory implementation selected in the deployment.",
+      "For a null KeyStore, inspect that provider's documented or source-defined behavior and the actual source of key material.",
+      "Verify the selected key material, recoverability password, key-manager output, and whether those managers are passed to a TLS context and exercised."
+    ],
+    "source_level": [
+      "Resolve the receiver as javax.net.ssl.KeyManagerFactory rather than a similarly named factory or a namesake type ending in Spec.",
+      "Establish the relevant getInstance, init, and getKeyManagers call order on the same factory object.",
+      "Trace the algorithm value, password representation and origin, and any producer evidence for the KeyStore or ManagerFactoryParameters argument.",
+      "For a null-related report, determine whether the warning is solely an unestablished generatedKeyStore predicate or relies on additional detector behavior outside the supplied rule."
+    ]
+  },
+  "forbidden_inferences_without_evidence": [
+    "That a null KeyStore argument is prohibited by the Java API; init(KeyStore, char[]) documents its KeyStore parameter as \"the key store or null.\"",
+    "That a null KeyStore necessarily selects a platform-default key source; Java SE leaves a provider's null-KeyStore behavior unspecified.",
+    "That failure to establish generatedKeyStore[keyStore] proves that no KeyStore was loaded or that its contents are insecure.",
+    "That successful KeyManagerFactory initialization proves the returned managers are later supplied to SSLContext.init or used in a completed TLS handshake.",
+    "That the rule's allowance of SunX509 makes it a current Java Security Standard Algorithm Name; the standard-names specification lists PKIX for KeyManagerFactory, while providers may support additional names.",
+    "That the rule checks certificate validity, key strength, key-manager alias selection, TLS protocol versions, cipher suites, peer authentication, or hostname verification."
+  ],
+  "name": "KeyManagerFactorySpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyManagerFactory.crysl",
+  "applies_to_types": [
+    "javax.net.ssl.KeyManagerFactory"
+  ],
+  "source_title": "KeyManagerFactory.crysl",
+  "semantic_scope": "For every finding of this rule, the detector observes the specified construction, initialization, and optional key-manager retrieval events on javax.net.ssl.KeyManagerFactory; restricts the requested algorithm to PKIX or SunX509; rejects a password represented as java.lang.String or considered hard-coded; and requires abstract producer predicates for the KeyStore or ManagerFactoryParameters argument. It does not directly observe provider internals, KeyStore contents, default-source loading, null-value semantics, or TLS-session behavior.",
+  "spec_id": "KeyManagerFactorySpec",
+  "known_false_positive_shapes": [
+    "A provider-supported and deployment-tested init(null, password) invocation reported only because the analyzer cannot establish generatedKeyStore[null]. Java SE permits a null KeyStore argument, while the rule has no corresponding exception.",
+    "A valid provider-specific KeyManagerFactory algorithm reported because it is not exactly PKIX or SunX509, despite Java SE permitting implementations to support additional algorithms.",
+    "A KeyStore or ManagerFactoryParameters object produced through a wrapper, library boundary, reflection, dependency injection, or unsupported interprocedural path that is semantically valid but not recognized as satisfying the rule's generated* predicate.",
+    "A runtime-derived char[] password incorrectly classified as hard-coded by the detector's value/provenance analysis."
+  ],
+  "protocol": "getInstance(algorithm[, provider]) → (init(KeyStore, char[]) | init(ManagerFactoryParameters)) → getKeyManagers()?",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyManagerFactory.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:javax.net.ssl.KeyManagerFactory"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.conscrypt.SSLParametersImpl",
+        "method": "createDefaultX509KeyManager",
+        "message": "a null KeyStore given to KeyManagerFactory.init requests the platform default key source, whose loading was not observed"
+      }
+    ],
+    "expected_api_simple_name": "KeyManagerFactory",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.net.ssl.KeyManagerFactory",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyManagerFactory.crysl"
+  }
+}

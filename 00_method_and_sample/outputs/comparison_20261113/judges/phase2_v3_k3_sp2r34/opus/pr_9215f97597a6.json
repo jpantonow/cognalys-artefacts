@@ -1,0 +1,96 @@
+{
+ "unit": "pr_9215f97597a6",
+ "phase": "phase2",
+ "order": [
+  "K20e4b8de",
+  "Ke0e06a3d"
+ ],
+ "card_sha256": {
+  "K20e4b8de": "a5be97cda3f315c4",
+  "Ke0e06a3d": "5aab836c9a8be06f"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The finding is real. In ScepClient.CertReq (ScepClient.java:124-125), the key size passed to KeyPairGenerator.getInstance(\"RSA\").initialize(isKeyLen) is never checked. It comes from one of two places. (1) The manual UI spinner (ScepFragment.request, which reads spinnerKeyLen). Its entries come from @array/rsa_lens in values/strings.xml, which offers 1024, 2048, 4096 and 8192. The choice is saved in the \"rsa-key-length\" shared preference. (2) The MDM managed restriction \"rsa-key-length\", an unrestricted integer read in CertInstaller.doWork and in ScepFragment. So the app lets users pick 1024-bit RSA, and lets an MDM push any integer at all (1024, 512, an odd value). The resulting private key protects a client certificate that the CA issues and that gets installed into the Android KeyChain or a PKCS12 file for authentication (Wi-Fi/VPN/802.1X). 1024-bit RSA is below current minimums (NIST, CA/B). The default is safe (default_rsa_len = 4096), and ExtrasFragment hardcodes 4096. So the weak size only happens when a user or admin chooses it. That is exactly the situation the rule reports: a selectable insecure option with no enforced minimum. A PR can drop 1024 from the list and enforce a 2048-bit minimum in CertReq or where the restriction is read. Whether to keep 1024 for legacy SCEP/NDES servers or CA templates is a policy call for the maintainer, and the managed-config path is controlled by the admin. The app actively offers a weak option and passes MDM values through with no check. 8192 and 4096 are strong. If the rule also flags 8192, that part is a false positive and is not a reason to remove 8192; a delivery that keeps to the size the report observed is not marked down for leaving the 1024 option, which must_change describes for a PR that tightens the policy.\n\nSecond judge: CertReq passes its isKeyLen argument directly to the Java RSA KeyPairGenerator. The manual UI offers 1024, 2048, 4096 and 8192 bits, while managed automatic enrollment passes the unrestricted rsa-key-length integer directly. Thus weak 1024-bit generation is reachable, although the default is already 4096 and the report does not identify the observed size. This is a configurable enrollment-key issue, not an Android KeyPairGeneratorSpec configuration problem. The repository does not establish that any peer requires 1024-bit keys.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "Stop CertReq from generating RSA keys smaller than 2048 bits: remove the 1024 entry from the rsa_lens string-array used by the key-size spinner in fragment_scep.xml",
+   "Enforce a minimum of 2048 bits on the value that reaches keyGen.initialize() in ScepClient.CertReq (or in every caller: ScepFragment.request and CertInstaller.doWork/requestScep). That covers values from the MDM 'rsa-key-length' restriction and any previously stored preference of 1024. Either clamp to 2048 or the 4096 default, or fail with a clear error or log. Never silently generate a weak key.",
+   "Handle a stale stored 'rsa-key-length' preference of 1024 (and an MDM value that is no longer in the list) cleanly, so the spinner falls back to a valid strong value instead of breaking",
+   "Address weak new RSA key generation consistently across manual enrollment and managed automatic enrollment, preferably with shared validation in CertReq. Use a minimum of 2048 bits, or explicitly gate and warn about any retained 1024-bit legacy mode.",
+   "Align the UI choices, saved-setting handling and rsa-key-length managed configuration with that policy. Removing the UI's 1024 entry alone leaves automatic enrollment unprotected.",
+   "Handle rejected or obsolete settings clearly rather than silently substituting an administrator's requested size. Preserve a secure default; the existing 4096-bit default needs no increase."
+  ],
+  "must_not_break": [
+   "Keep the 4096-bit default (default_rsa_len) and the 2048, 4096 and 8192 options",
+   "The MDM managed-configuration key 'rsa-key-length' (app_restrictions.xml) must keep its name and integer type, and valid values (>=2048) must still be honoured and still lock the spinner",
+   "The ScepClient.CertReq signature and its callers ScepFragment and CertInstaller (auto-enroll/renew worker) must keep working",
+   "SCEP enrollment interop with NDES/Cisco/other SCEP servers: self-signed signer cert with SHA256withRSA, CSR attributes (challengePassword, UPN SAN extensionRequest), MD5 CA fingerprint verifier input format",
+   "Pending enrollments: the PEM cert/key stored by RequestPendingException and later loaded by CertPoll/pem2key must still parse and poll, including keys generated earlier at any size. Do not add a size check to CertPoll or pem2key.",
+   "PKCS12 export via certResponse2pkcs12 and certificate installation into KeyChain",
+   "The existing shared preference 'rsa-key-length' must still load without crashing (no NumberFormatException or wrong index)",
+   "minSdk and existing BouncyCastle/jscep dependency setup",
+   "Preserve configurable stronger RSA lengths, including the existing 2048, 4096 and 8192 choices where supported by the provider and server. Do not replace configuration with one hard-coded size or silently downgrade it.",
+   "Preserve RSA SCEP interoperability: matching keys in the CSR, self-signed enrollment certificate and request signing, SHA256withRSA signatures, enrollment profile, challenge password and UPN extension.",
+   "Continue polling existing pending enrollments using their stored certificate, PKCS#8 private key and transaction ID, including previously generated 1024-bit keys. Do not regenerate or discard these identities when tightening new-key policy.",
+   "Preserve exportable private keys, PKCS#12 file export, Android KeyChain installation and delegated installation/renewal. A non-exportable AndroidKeyStore replacement would disrupt these flows.",
+   "Retain the rsa-key-length managed configuration interface and Android API 19 support, with managed enrollment retaining its existing API 21 guard. Clearly disclose any deliberate withdrawal of legacy 1024-bit enrollment support."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 20,
+ "tokens": {
+  "input_tokens": 10,
+  "cache_creation_input_tokens": 23921,
+  "cache_read_input_tokens": 81048,
+  "output_tokens": 1952
+ },
+ "turns": 7,
+ "tool_calls": 6,
+ "claude_reported_cost_usd": 0.24665759999999998,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "75d8a00412f2dc3c",
+ "finished_at": "2026-11-17T19:17:16-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K20e4b8de",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Removing 1024 and clamping with Math.max(isKeyLen, 2048) in CertReq covers both the manual and MDM paths. A stale saved 1024 falls back to index 0 (2048) through setSpinnerDefault. A reviewer would still ask for a log or warning, because an admin-set 1024 is raised to 2048 without notice. The description is accurate but uses jargon ('build_check') and makes an unverified claim that RVSec 'expects 3072 or 4096'."
+   },
+   {
+    "card_id": "Ke0e06a3d",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Same correct fix as the other card, plus a code comment; the only missing piece is a log or warning when an MDM-requested size is raised. The description is accurate: the NIST 800-131A note is right, the spinner falls back to 2048, the googleDebug build and the lack of tests check out, and it states what was not tested."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

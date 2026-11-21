@@ -1,0 +1,319 @@
+{
+ "unit": "pr_06ff0c1fc96c",
+ "phase": "phase2",
+ "order": [
+  "K92776a0f",
+  "Kbcf3fcea",
+  "Kac86799d",
+  "K912fb63d",
+  "Ka396d98a",
+  "Kb9d2c708",
+  "Ka867721d",
+  "K19623e14",
+  "Kf6bcacfa",
+  "K043a1c93",
+  "Kb8a4f735",
+  "K19e4e422",
+  "Kebf3b324",
+  "K37afc04e",
+  "K431a66c2",
+  "K566b0eb2",
+  "Kdf1aa92a",
+  "K75bc8ed4",
+  "K9dc9035b",
+  "K953b099a",
+  "K42b368df",
+  "Kf303cf3a",
+  "Kee783569"
+ ],
+ "card_sha256": {
+  "K043a1c93": "126b8f2e8728e8b9",
+  "K19623e14": "18d725e884b5090f",
+  "K19e4e422": "e4f016173c72ccca",
+  "K37afc04e": "3accb86723364e1f",
+  "K42b368df": "d63f57c866212955",
+  "K431a66c2": "46cdc1c287ff6620",
+  "K566b0eb2": "89f8b357fa1890ff",
+  "K75bc8ed4": "2a00e4736c88703a",
+  "K912fb63d": "96acac7dc4ec121a",
+  "K92776a0f": "67acc00232725b33",
+  "K953b099a": "7e38f89b26f6a705",
+  "K9dc9035b": "12e8a78e1b3ecac1",
+  "Ka396d98a": "7bdf35f204931b83",
+  "Ka867721d": "6f8d8c362aca9ff7",
+  "Kac86799d": "a7ecc1b6eaf4c848",
+  "Kb8a4f735": "460a8130d72aea14",
+  "Kb9d2c708": "cd9444be65c88131",
+  "Kbcf3fcea": "77ececf965522d8e",
+  "Kdf1aa92a": "871bfd5bbbef527c",
+  "Kebf3b324": "660b6fcf29ac34b3",
+  "Kee783569": "ba4d7093111014a0",
+  "Kf303cf3a": "17ec6dbf92088eb5",
+  "Kf6bcacfa": "c7c801f905230e50"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The flagged `Utils.md5()` (private extension `String.md5()` in app/src/main/kotlin/com/ounben/amaradio/Utils.kt:104) is used only by `getCacheFile`/`writeFileCache`. It turns a cache key into a file name, `\"cache_\" + hex`, inside the app's private `ctx.cacheDir`. The cache key is a radio-browser.info relative URI plus `dictParams.toString()`, so it is built from public station-search and lookup query strings. There is nothing secret here: no password, token, signature, integrity check or authentication. The hash is just a compact, filesystem-safe name for a JSON response cached for 48 hours. The CHANGELOG (\"MD5-hashed, server-independent storage\") confirms this was the intent. The rule fires only on the algorithm name, so for this code it is a false positive. MD5 collision attacks would need an attacker to pick two cache keys the app itself builds, and the result would at worst be a wrong cached public station list in the app's own sandbox. That is not a realistic threat. So the careful choice is NO_ACTION. An ISSUE reporting this as a weak-crypto vulnerability would mislead the maintainers. A small hygiene PR is still acceptable and low-risk, as long as it doesn't claim to fix a security hole. Switching to SHA-256 (or a non-crypto key such as a UUID from the bytes) only changes the names of throwaway cache files. Old `cache_<md5>` files simply stop being hit, and the app refetches from the network. Nothing persistent, exported or exchanged with a peer depends on the name, and SHA-256 `MessageDigest` is available on every Android version.\n\nSecond judge: Utils.md5 is used only by getCacheFile and writeFileCache to name local files as cache_<hex digest> under Context.cacheDir. downloadFeedRelative hashes the relative API path plus parameter-map text, allowing cached Radio Browser responses to survive server rotation. The digest neither authenticates response contents nor protects passwords, signatures, or TLS, and it is not sent to a peer or used as an exported identifier. This report therefore does not establish a security vulnerability. NO_ACTION is reasonable; an ISSUE explaining this limited use and optional replacement is acceptable; a small PR replacing MD5 with SHA-256 is also acceptable as maintenance hardening. Existing entries are disposable response caches with a 48-hour lifetime, so their filenames are not a permanent data-format constraint.",
+  "must_change": [
+   "Replace `MessageDigest.getInstance(\"MD5\")` in `Utils.md5()` (`Utils.kt`) with SHA-256 (or another approved digest), and rename the helper to match, e.g. `sha256()`.",
+   "Use the same new hashing function in both `getCacheFile` and `writeFileCache`, so that reads and writes compute the same file name for a given cache key.",
+   "Describe the change as hygiene / scanner silencing for a non-security cache-file name, not as a vulnerability fix.",
+   "For an algorithm-replacement PR, replace the private MD5 filename helper with a deterministic, filesystem-safe digest such as SHA-256, and update its name and both cache read/write call sites consistently.",
+   "Account for the changed filenames: treating old MD5 cache entries as misses and rebuilding them is acceptable; mandatory migration of this disposable cache is unnecessary. Describe any resulting temporary loss of cache hits accurately."
+  ],
+  "must_not_break": [
+   "`downloadFeedRelative` caching must keep working: the same `cacheKey` must map to the same file on write and later read, and the 48-hour expiry and deletion logic must stay the same.",
+   "Cache file names must stay filesystem-safe (hex or similar) and stay in the app-private `ctx.cacheDir`, using the same `cache_` prefix convention.",
+   "Behaviour when the cache misses or an error is thrown: errors are caught and logged, and the app falls back to the network (official server, then rotation, then mirror) without crashing. Old MD5-named cache files becoming unreachable is acceptable, but must not cause errors.",
+   "The `forceUpdate` / cache-buster behaviour and the cache-key composition (relative URI + params), which keep the cache independent of which server answered.",
+   "Must keep compiling on the app's supported minSdk with no new dependencies (use the platform `java.security.MessageDigest`).",
+   "Keep cache reads and writes using the same key encoding and filename derivation, preserving separation by relative API path and request parameters and independence from the selected server.",
+   "Preserve UTF-8 response storage, the 48-hour freshness check and expired-entry deletion, graceful cache misses and I/O failures, and background I/O.",
+   "Preserve forceUpdate bypassing cached reads, its request cache-buster, successful-response caching, and official-server rotation and mirror fallback.",
+   "Do not change Radio Browser requests or response formats, station identifiers, user databases, favorites, history, or playlist import/export; these have no dependency on this MD5 value.",
+   "Retain Android API 26 support and both foss and play builds; SHA-256 is available through MessageDigest without a new provider or higher minimum SDK."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 43,
+ "tokens": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 51600,
+  "cache_read_input_tokens": 46377,
+  "output_tokens": 4624
+ },
+ "turns": 3,
+ "tool_calls": 2,
+ "claude_reported_cost_usd": 0.5145714,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "a4870ac4b26f2af9",
+ "finished_at": "2026-11-16T10:29:23-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K92776a0f",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The diff is a correct, minimal swap to SHA-256, and reads and writes stay consistent. The text frames MD5 as 'unsuitable where collision resistance is required' without saying this use is not security-relevant."
+   },
+   {
+    "card_id": "Kbcf3fcea",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The SHA-256 swap is correct and honestly framed as hygiene. The diff also adds an unrelated Room schema 7.json that the description never mentions, and the build claim is not confirmed by the metadata."
+   },
+   {
+    "card_id": "Kac86799d",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The swap is clean and both call sites are consistent. The text correctly calls this a non-security cache-file name and notes the cache misses."
+   },
+   {
+    "card_id": "K912fb63d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 0,
+    "notes": "It describes the cache-file use accurately, but it does not judge that the finding is a false positive. Its stated reason, that no behaviour-preserving change exists, is wrong: a SHA-256 swap is trivial."
+   },
+   {
+    "card_id": "Ka396d98a",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The diff is correct and minimal. The text lacks the caveat that this is not a security fix and hints that collision resistance matters here."
+   },
+   {
+    "card_id": "Kb9d2c708",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific: a request path plus params becomes a private cache filename with a 48-hour lifetime, and no security use."
+   },
+   {
+    "card_id": "Ka867721d",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The swap is clean. The text notes the digest is not a security control and that old entries are disposable cache misses."
+   },
+   {
+    "card_id": "K19623e14",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is accurate and specific to the shared read/write filename mapping and the 48-hour cache."
+   },
+   {
+    "card_id": "Kf6bcacfa",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The swap is clean and the build was verified. The text is accurate about the non-authenticating use and the one-time refetch."
+   },
+   {
+    "card_id": "K043a1c93",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The swap is clean. The description is thorough and accurate: no security impact, minSdk 26, orphaned old files, and the build verified."
+   },
+   {
+    "card_id": "Kb8a4f735",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific: Radio Browser request keys become local cache filenames, the cache is temporary, and nothing is authenticated."
+   },
+   {
+    "card_id": "K19e4e422",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The SHA-256 swap is correct and the text frames it fairly as non-security. The diff carries a stray, unmentioned Room schema 7.json, and the build claim is unconfirmed."
+   },
+   {
+    "card_id": "Kebf3b324",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The swap is correct and the framing is good. The diff includes an unrelated generated schema 7.json that the description never mentions, and the build claim does not match the metadata."
+   },
+   {
+    "card_id": "K37afc04e",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The swap is clean and the build was verified. The text is accurate and notes the digest only names files."
+   },
+   {
+    "card_id": "K431a66c2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific: a private, temporary cache with 48-hour expiry and no collision-resistance requirement."
+   },
+   {
+    "card_id": "K566b0eb2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "A detailed, accurate rationale naming getCacheFile/writeFileCache. It correctly notes CustomStationManager already uses SHA-256."
+   },
+   {
+    "card_id": "Kdf1aa92a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific to the private response cache and its 48-hour reuse."
+   },
+   {
+    "card_id": "K75bc8ed4",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and reasonably specific: a disposable cache, 48-hour expiry, and a refetch on miss."
+   },
+   {
+    "card_id": "K9dc9035b",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The swap is clean and the build was verified. The text says accurately that the digest is not a security check and notes the refetch and downgrade effects."
+   },
+   {
+    "card_id": "K953b099a",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The swap is clean and the build was verified. The text accurately says there is no security use and explains the cache refetch."
+   },
+   {
+    "card_id": "K42b368df",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The swap is correct and explicitly not a vulnerability fix. The diff carries a stray, unmentioned Room schema 7.json, and the build claim is unconfirmed by the metadata."
+   },
+   {
+    "card_id": "Kf303cf3a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The reason is right but fairly generic: it does not mention the private cacheDir or the 48-hour expiry."
+   },
+   {
+    "card_id": "Kee783569",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific: the cache_ prefix, private cacheDir, shared read/write mapping, and 48-hour discard."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

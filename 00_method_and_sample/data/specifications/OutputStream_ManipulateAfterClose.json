@@ -1,0 +1,140 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "Events are recorded before invocation, so exception outcomes and state changes caused by the calls are not predicates of a match.",
+      "The rule has no explicit reset, reopen, ownership-transfer, alias, lock, or thread predicate.",
+      "The rule excludes only ByteArrayOutputStream by type test; it does not encode exceptions or lifecycle rules for other concrete OutputStream subclasses.",
+      "The exact reporting multiplicity and monitor lifecycle behavior beyond the stated ERE expression are not established by the supplied rule text alone."
+    ],
+    "predicates": [
+      "`close`: before `call(* OutputStream+.close(..)) && target(o) && !target(ByteArrayOutputStream)`.",
+      "`manipulate`: before `(call(* OutputStream+.write*(..)) || call(* OutputStream+.flush(..))) && target(o) && !target(ByteArrayOutputStream)`.",
+      "`ere : close+ manipulate+`: at least one observed close event precedes at least one observed manipulate event for monitor parameter `o`."
+    ],
+    "claim": "The monitor logs a critical match when its per-object event sequence satisfies `close+ manipulate+` for a non-ByteArrayOutputStream OutputStream target."
+  },
+  "unknowns": [
+    "The supplied MOP rule does not specify whether monitor state is reset after a match or how many reports a longer sequence produces.",
+    "The supplied rule does not establish the exact weaving configuration, Java version, or whether all candidate call sites were instrumented in a particular execution.",
+    "The supplied rule does not define concrete post-close semantics for OutputStream subclasses other than excluding ByteArrayOutputStream targets.",
+    "The supplied rule does not determine whether a reported call was reachable in production, concurrent with close, intentional, or harmful."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "`java.io.OutputStream` is the superclass for byte-output streams.",
+      "The general `OutputStream.close()` contract describes releasing associated system resources; the rule's cited documentation states that a closed stream cannot perform output operations and cannot generally be reopened.",
+      "`write(int)` may throw `IOException` if the stream has been closed, and `write(byte[], int, int)` documents `IOException` if the stream is closed.",
+      "`flush()` forces buffered bytes toward their intended destination but does not guarantee persistence to a physical device.",
+      "`ByteArrayOutputStream` is a documented exception: closing it has no effect, and its methods may be called after close without generating `IOException`."
+    ],
+    "preconditions": [
+      "For the general OutputStream lifecycle contract, the stream must not be closed before an output operation expected to perform output.",
+      "For `OutputStream.write(byte[], int, int)`, the byte array must be non-null and offset and length must be in range; these argument checks are independent of the detector's lifecycle predicate.",
+      "The detector's exclusion condition is determined by the runtime target type, not by the source-level spelling of the receiver expression."
+    ],
+    "unknowns": [
+      "Whether the concrete runtime stream class treats a close failure, repeated close, or another lifecycle transition as leaving the stream usable.",
+      "Whether a particular matched `write*` method is an output operation covered by the concrete class's contract, especially for subclass-specific methods matched solely because their name begins with `write`.",
+      "Whether a concrete stream's `flush()` has meaningful behavior after close."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/OutputStream_ManipulateAfterClose.mop",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/ByteArrayOutputStream.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observed immediately before a call matching `call(* OutputStream+.close(..))` whose runtime target is bound as `o` by `target(o)`. The runtime target must be an instance of `java.io.OutputStream` or a subtype and must not be `java.io.ByteArrayOutputStream` or one of its subtypes, due to `!target(ByteArrayOutputStream)`.",
+      "name": "close",
+      "api_patterns": [
+        ".close("
+      ]
+    },
+    {
+      "condition": "Observed immediately before either `call(* OutputStream+.write*(..))` or `call(* OutputStream+.flush(..))`, with the same target binding requirements as the close event: runtime target `o` is an `OutputStream` subtype but not a `ByteArrayOutputStream` subtype. `write*` is a method-name prefix pattern, so it can include subtype methods whose names begin with `write`, not solely the three `OutputStream.write` overloads.",
+      "name": "manipulate",
+      "api_patterns": [
+        ".write",
+        ".flush("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "A match establishes only that the instrumented before-call events occurred in the rule's order for the same target object. It does not establish that close completed successfully, that output was actually emitted, that a write or flush completed, or that the application violated every concrete subclass's documented behavior.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that the prior `close()` call returned normally or actually transitioned the concrete stream to a closed state; both rule events run before their calls.",
+    "Do not infer that the later `write` or `flush` succeeded, emitted bytes, reached an operating-system resource, or threw an `IOException`.",
+    "Do not infer that every `OutputStream` subtype rejects post-close operations. The base-class contract states that a closed stream cannot perform output operations, but concrete subtype behavior must be established separately.",
+    "Do not infer that the target was exactly `java.io.OutputStream`; AspectJ `OutputStream+` and `target(OutputStream)` include subtypes.",
+    "Do not infer that only `write(int)`, `write(byte[])`, and `write(byte[], int, int)` were matched. The pointcut uses the broader method-name pattern `write*`.",
+    "Do not infer that a `ByteArrayOutputStream` target was reported by this rule; it is expressly excluded, including subclasses matching the target type test.",
+    "Do not infer a security impact, exploitability, data loss, resource leak, or confidentiality/integrity violation from this detector finding alone."
+  ],
+  "security_semantics": {
+    "runtime_claim": "The detector does not prove that a closed resource was successfully manipulated, that bytes were disclosed or corrupted, or that an attacker can influence the sequence.",
+    "equivalent": false,
+    "detector_claim": "The detector reports an API-protocol ordering pattern: a matching close call was observed before a matching write-prefix or flush call on the same eligible target."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm the Java runtime and concrete OutputStream implementation used by the application.",
+      "Confirm that the deployed instrumentation recognizes the relevant call join points.",
+      "Confirm that the concrete type is not ByteArrayOutputStream or a subtype, which the rule intentionally filters out."
+    ],
+    "runtime": [
+      "Collect a trace showing the calls occur in the reported order on the same object identity.",
+      "Record whether `close()` completed normally or threw, and whether the later operation completed, threw, or produced output.",
+      "Record the concrete runtime stream class and its applicable lifecycle documentation or implementation behavior."
+    ],
+    "source_level": [
+      "Identify the `close` call and the subsequent write-prefix or `flush` call.",
+      "Establish that both receiver expressions can denote the same runtime object.",
+      "Establish that the runtime receiver is an `OutputStream` subtype and is not `ByteArrayOutputStream` or a subtype.",
+      "For a `write*` finding, identify the resolved concrete method because the rule's prefix pattern can cover methods beyond the base `OutputStream` write overloads."
+    ]
+  },
+  "name": "OutputStream_ManipulateAfterClose",
+  "source_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/OutputStream_ManipulateAfterClose.mop",
+  "applies_to_types": [
+    "java.io.OutputStream",
+    "java.io.ByteArrayOutputStream"
+  ],
+  "source_title": "OutputStream_ManipulateAfterClose.mop",
+  "semantic_scope": "For every finding of this rule, the detector observes AspectJ call join points before a close-like call followed later by a write-prefix or flush-like call on the same runtime target object. The target must be assignable to `java.io.OutputStream` and not assignable to `java.io.ByteArrayOutputStream`. The rule observes call ordering only; it does not inspect call results, exceptions, stream contents, resource state, synchronization, reachability, or whether an output operation took effect.",
+  "spec_id": "OutputStream_ManipulateAfterClose",
+  "known_false_positive_shapes": [
+    "`close()` is observed before it throws or otherwise fails to close the concrete stream, followed by a later matching call; the monitor nevertheless saw the before-call close event.",
+    "A non-`ByteArrayOutputStream` concrete subclass deliberately permits a particular post-close flush or write-like operation, despite the general `OutputStream` contract.",
+    "A subclass-specific method with a name beginning with `write` is matched by `write*` but is not semantically an output operation whose post-close use is prohibited by that subclass.",
+    "A later matching call fails before performing output because of independent argument validation or another condition, while the rule reports solely from ordering.",
+    "A matched `flush()` is operationally a no-op for the concrete stream, yet it still satisfies the monitor's manipulate event."
+  ],
+  "protocol": "For the same target object `o`: `close+ ; manipulate+`, where `manipulate` is a matching `write*` or `flush` call and `o` is not a `ByteArrayOutputStream` (including its subtypes).",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/OutputStream_ManipulateAfterClose.mop",
+    "format": "mop",
+    "catalog_entry": "javamop_property",
+    "detail": "mop_property_declaration:OutputStream_ManipulateAfterClose"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "dnsfilter.DNSResolver",
+        "method": "processIPPackageMode",
+        "message": "OutputStream_ManipulateAfterClose write() or flush() was invoked after close()."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "mop"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "mop_property_declaration:OutputStream_ManipulateAfterClose",
+    "checked_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/OutputStream_ManipulateAfterClose.mop"
+  }
+}

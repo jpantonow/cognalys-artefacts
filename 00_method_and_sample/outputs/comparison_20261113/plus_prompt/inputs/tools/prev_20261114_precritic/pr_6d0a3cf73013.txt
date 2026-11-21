@@ -1,0 +1,26 @@
+Earlier proposals for this rule in other repositories, and what their maintainers answered:
+
+1. Repository: openhab/openhab-android
+   Outcome: closed
+   Proposal: Fix updateHttpClientForClientCert
+   Maintainer said: Thanks for the contribution and for the detailed write-up! As far as I can tell, this finding is a false positive for the OkHttp path. OkHttp already rejects TLS 1.1 and older by default, so filtering the protocols on the socket ourselves doesn't change anything. In OkHttp 5.5.0 (the version we use): - OkHttpClient uses DEFAULT_CONNECTION_SPECS = listOf(ConnectionSpec.MODERN_TLS, ConnectionSpec.CLEARTEXT) (OkHttpClient.kt). - MODERN_TLS only allows TlsVersion.TLS_1_3 and TlsVersion.TLS_1_2. TLS 1.0 and 1.1 are only in COMPATIBLE_TLS, which you have to opt into explicitly (ConnectionSpec.kt). - Before every handshake, ConnectionSpec.apply() intersects sslSocket.enabledProtocols with those versions and sets the result on the socket. That's the same filtering this PR adds by hand. We don't override connectionSpecs anywhere, so the default applies. The generic "TLS" argument to SSLContext.getInstance() is fine here: it picks the provider, and the protocol versions are then restricted per socket.
+
+2. Repository: paroj/DSub2000
+   Outcome: closed
+   Proposal: Use platform trust managers for HTTPS connections
+   Maintainer said: skipping certificate checks is the whole point here. When that setting is off the default path should also be good already, no?
+
+3. Repository: bitcraze/crazyflie-android-client
+   Outcome: merged
+   Proposal: Fix <init>
+   Maintainer said: Hi, thanks for the contribution! Could you please clean up the PR title and description to make it clearer what is being fixed and why? “Fix `<init>`” does not really explain the change, and it is difficult to understand the practical impact from the description. A short explanation of the problem and how it affects firmware downloads would help. Looking at the code, I would prefer removing `TLSSocketFactory` and its usage rather than patching it. This helper was added to support TLS 1.2 on Android versions older than 5.0, but we now require Android 8.0. Its original purpose is no longer relevant, so relying on the platform HTTPS defaults seems simpler. This would not explicitly enforce TLS 1.2 as a minimum on every supported device. If there is a concrete reason we need that additional restriction, please explain it in the description. Otherwise, could you update the PR to remove the helper and verify that fetching the release list and downloading firmware still work? | Thanks! Looks good, merged.
+
+4. Repository: paroj/DSub2000
+   Outcome: merged
+   Proposal: Fix <init>
+   Maintainer said: (no comment)
+   Automated review comments (not from the maintainer):
+   - Copilot (bot): Wrapping the global HttpsURLConnection default SSLSocketFactory unconditionally in the constructor can lead to wrapper stacking if RESTMusicService is instantiated more than once, and it makes the global TLS behavior dependent on object construction order. Guard against double-wrapping so subsequent instances don’t keep nesting factories.
+   - Copilot (bot): If legacy-protocol filtering removes all enabled protocols, filterLegacyTlsProtocols throws IllegalStateException, which currently bubbles out of SSLSocketFactory.createSocket(...) as an unchecked exception. That’s surprising for callers expecting an IOException/SSLException from socket creation and can make failures harder to handle consistently; convert this to an SSLException (and still close the socket) when it occurs during socket configuration.
+   - Copilot (bot): This test file’s declared package (`github.paroj.dsub2000.service`) no longer matches its directory (`.../androidTest/java/github/paroj/dsub2000/ApplicationTest.java`). While it may still compile, it makes the test harder to locate/maintain and is inconsistent with the other androidTest files (which mirror package-to-directory). Consider moving this file under `app/src/androidTest/java/github/paroj/dsub2000/service/` to match its package declaration.
+   - Copilot (bot): X509TrustManager.getAcceptedIssuers() should not return null; some TLS stacks assume a non-null array and may NPE. Even for a permissive trust manager, return an empty certificate array instead.

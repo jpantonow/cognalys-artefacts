@@ -1,0 +1,2449 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{flafter}
+\usepackage{float}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
+\newcommand{\system}{\textsc{Cognalys}}
+\newcommand{\researchq}[1]{\textbf{QP#1}}
+\newcommand{\pending}[1]{\textbf{[TODO: #1]}}
+
+\title{Cognalys: Uma Biblioteca Python que Complementa o RVSec com Análise e Reparo Guiados por Evidências}
+
+\author{\IEEEauthorblockN{João Pedro Antonow}
+\IEEEauthorblockA{Departamento de Ciência da Computação (CIC)\\
+Universidade de Brasília (UnB)\\
+Brasília, Brasil\\
+\texttt{jpantonow@gmail.com}\\[3pt]
+Orientador: Prof.\ Rodrigo Bonifácio\\Coorientador: Prof.\ Guilherme Novaes Ramos}}
+
+\begin{document}
+\renewcommand{\IEEEkeywordsname}{Palavras-chave}
+
+\maketitle
+
+\begin{abstract}
+O RVSec relata usos indevidos de APIs criptográficas que uma aplicação Android executou,
+mas não qual alteração no código-fonte é segura: uma correção pode depender de dados armazenados, de
+pares de protocolo, de chamadores e da política da aplicação. O \system, uma biblioteca Python e
+ferramenta de linha de comando, trata cada achado do RVSec como uma afirmação a ser verificada antes
+de corrigi-lo. Com evidências do repositório na revisão analisada, etapas baseadas em modelos
+de linguagem de grande porte, sob verificações determinísticas, decidem se a violação
+é real e se uma correção preserva o comportamento da aplicação. Uma
+violação confirmada com tal correção, mesmo que seja apenas de regra, torna-se um patch aplicado em um
+worktree isolado na ponta do branch alvo e submetido a build; os demais achados
+terminam com seu motivo registrado, ou com uma issue quando seu impacto de segurança
+foi confirmado. Nada é publicado sem aprovação humana explícita.
+Relatamos um estudo de caso datado de uma versão anterior do pipeline e duas
+avaliações pré-registradas com desvios declarados; todos os resultados são
+descritivos. Em 18 de novembro de 2026, dos 49 pull requests submetidos para achados
+do RVSec da campanha do grupo do RVSec (8), de relatos anteriores do RVSec (15)
+e de nossas próprias execuções do RVSec (26), 21 haviam sido incorporados (um apenas adiciona um teste), 10 haviam sido fechados e 18
+estavam abertos; seis dos dez fechamentos questionaram a relevância de segurança do
+uso relatado. Quando o RVSec foi reexecutado sobre o APK original e o APK com patch, a
+violação relatada não apareceu mais no método alterado pelo patch em 33 dos
+38 pull requests que ele pôde verificar (25 pela regra registrada), e um patch corrigido manteve
+o mesmo material de chave e apenas mudou a forma como o monitor o via. Em 20 unidades de análise, dois juízes LLM, sem saber qual braço produziu cada
+entrega, compararam o \system{} com agentes de programação em dois blocos. Agentes
+que receberam apenas o achado e o repositório propuseram menos pull requests do
+que o \system{}, com menos julgados aceitáveis (7 a 18, contra 28). Agentes
+instruídos a seguir o mesmo processo propuseram mais, com tantos ou mais julgados
+aceitáveis na leitura completa (28 e 32), mas também mais julgados inaceitáveis
+(10 e 14, contra 3). Um escore por execução que conta issues e desfechos de nenhuma
+ação como aceitáveis, e assim recompensa a abstenção, colocou o primeiro bloco
+perto do \system{} ou acima dele (0,90 a 0,97, contra 0,96) e o segundo abaixo
+dele (0,85 e 0,80). Nem o build nem a reexecução mostram que um patch preserva o
+comportamento da aplicação.
+\end{abstract}
+
+\begin{IEEEkeywords}
+uso indevido de APIs criptográficas, verificação em tempo de execução, Android, modelos de linguagem
+de grande porte, reparo de programas, agentes de programação, contribuições de código aberto, falsos
+positivos
+\end{IEEEkeywords}
+
+\section{Introdução}
+\label{sec:introduction}
+
+Desenvolvedores têm dificuldade em usar corretamente as APIs criptográficas
+de Java~\cite{nadi2016hoops}, e usos indevidos continuam comuns em aplicações
+Android~\cite{egele2013crypto,costa2026rv4android}; muitas ferramentas os
+detectam: analisadores estáticos como CogniCrypt e CryptoGuard, e ferramentas dinâmicas
+como CryLogger e RVSec~\cite{krueger2017cognicrypt,krueger2021crysl,
+rahaman2019cryptoguard,piccolboni2021crylogger,torres2023runtime}. A detecção foi
+amplamente estudada; agir a partir de um relato, muito menos. Um relato diz que uma
+regra foi violada, não se a violação importa naquela aplicação nem como
+alterar o programa sem quebrá-lo. Substituir \texttt{SHA-1} por
+\texttt{SHA-256} altera os bytes que o armazenamento, a sincronização ou um servidor
+esperam, e fixar uma versão de TLS remove protocolos de que um par ainda pode precisar. Os
+mantenedores que responderam aos nossos pull requests levantaram exatamente essas preocupações:
+comportamento que consideram intencional, a compatibilidade de valores armazenados e
+se a regra importa em seu contexto (Seção~\ref{sec:results}).
+
+O RVSec~\cite{torres2023runtime,costa2026rv4android} monitora chamadas a APIs criptográficas enquanto um
+APK instrumentado executa e relata cada violação no método que fez a
+chamada. Seus achados mostram que o uso indevido é executado, o que um alerta estático não
+mostra, mas referem-se a um APK compilado e não ao código-fonte: o método
+relatado pode ser uma lambda ou corrotina Kotlin, um nome alterado pelo compilador ou
+código de biblioteca empacotado no aplicativo. Transformar tal achado em uma alteração que um
+mantenedor possa aceitar exige mais três passos: localizar o código na
+revisão do repositório a partir da qual o APK foi gerado, decidir se a violação é
+real e se importa ali, e produzir um patch que preserve o comportamento da aplicação
+e passe no build.
+
+Modelos de linguagem de grande porte tornam possível tentar esses passos: eles corrigem código,
+às vezes melhor do que sistemas de reparo
+anteriores~\cite{xia2023apr,zhang2023apimisuse}, e agentes de programação resolvem parte das issues reais
+de repositórios, como mede o benchmark
+SWE-bench~\cite{jimenez2024swebench,yang2024sweagent}. Eles também tornam os passos mais arriscados: código gerado pode conter
+fraquezas de segurança~\cite{pearce2022asleep}, um patch pode satisfazer seu oráculo, aqui o
+build, sem estar correto~\cite{smith2015overfitting}, e um modelo pode
+errar tanto sobre se uma violação importa quanto sobre seu próprio patch. Uma
+pergunta natural é se um agente de programação de propósito geral basta, dado o
+achado e o repositório, ou dado também o mesmo processo escrito como
+instruções (Seção~\ref{subsec:rq6}).
+
+Este artigo apresenta o \system, uma biblioteca Python e ferramenta de linha de comando para aplicações
+Android em Java e Kotlin que verifica cada achado de uso indevido de API antes de
+agir sobre ele. Para cada achado, ele decide, em ordem, se a
+violação relatada de fato ocorre no código e se existe uma correção que preserve o
+comportamento da aplicação. Uma violação confirmada com tal correção torna-se um patch,
+tenha ela impacto de segurança ou não. Caso contrário, o achado termina com seu
+motivo registrado: um falso positivo, código que já usa a API conforme documentado
+(de modo que qualquer correção mudaria aquilo em que ele confia ou o que protege), ou uma correção que exige
+uma decisão fora do repositório; uma violação confirmada sem correção torna-se
+uma issue somente quando seu impacto de segurança foi confirmado. Essas abstenções são
+desfechos válidos, não falhas. A principal escolha de projeto é separar
+responsabilidades: componentes determinísticos coletam evidências, etapas de LLM
+adjudicam, planejam, redigem, revisam e descrevem o patch sob esquemas
+versionados, e validadores determinísticos rejeitam afirmações sem suporte, planos
+incompletos, padrões de falha conhecidos e textos que descrevem edições ausentes do
+diff. Patches aceitos são portados para a ponta do branch alvo e passam por build
+antes que alguém seja solicitado a publicá-los, e as respostas de mantenedores a
+pull requests anteriores são lidas por análises posteriores. Achados de outros detectores nos
+formatos SARIF ou Semgrep JSON entram no mesmo fluxo de trabalho, mas não são avaliados
+aqui.
+
+Este trabalho traz cinco contribuições:
+\begin{itemize}
+  \item uma biblioteca Python e CLI que complementam o RVSec ao conectar cada
+  achado de tempo de execução em um APK à revisão do código-fonte de onde ele veio, a uma decisão
+  sobre se ele é real e a um patch ou issue passível de revisão;
+  \item um projeto em etapas com contratos separados para evidências, adjudicação,
+  edições autorizadas, validação isolada e revisão humana, no qual a abstenção
+  e toda decisão intermediária permanecem inspecionáveis;
+  \item um estudo dos 49 pull requests (46 sobre especificações criptográficas)
+  e 10 issues submetidos a mantenedores até 18 de novembro de 2026 para achados
+  do RVSec da campanha do grupo do RVSec (8 pull requests), de relatos anteriores
+  do RVSec (15) e de nossas próprias execuções do RVSec (26), com 21 pull requests
+  incorporados, 10 fechados e 18 abertos, incluindo os motivos que os mantenedores
+  deram para suas decisões;
+  \item uma validação dinâmica, pré-registrada antes do build de qualquer caso novo, na
+  qual o RVSec reexecuta o APK original e o APK com patch de 45 pull requests
+  publicados (33 que atenderam aos critérios de inclusão e 12 dos 13 acrescentados
+  após seus resultados): a violação relatada não apareceu mais em 33 dos 38 que ele
+  pôde verificar (25 pela regra registrada); e
+  \item uma comparação pré-registrada em 20 unidades de análise (24 achados) com
+  agentes de programação (Codex~\cite{openai2026codex}
+  com dois modelos e Claude Code~\cite{anthropic2026claudecode}) em dois blocos, que receberam o achado e o
+  repositório, ou também o mesmo processo com o porte do patch para a ponta do
+  branch alvo, com as entregas pontuadas por dois juízes LLM: os agentes do primeiro
+  bloco propuseram menos pull requests do que o \system{}, com menos julgados aceitáveis;
+  os agentes do segundo bloco tiveram tantos ou mais julgados aceitáveis na leitura
+  completa, mas mais julgados inaceitáveis (10 e 14, contra 3). Com o mesmo modelo e as mesmas
+  instruções do \system{} em um dos braços, a diferença é compatível com a
+  execução do processo em etapas separadas, com a decisão de agir tomada à parte
+  da edição, e não com as instruções.
+\end{itemize}
+
+A Seção~\ref{sec:background} revisa os trabalhos relacionados,
+a Seção~\ref{sec:pipeline} descreve o pipeline, a Seção~\ref{sec:settings}
+as questões de pesquisa, um estudo de caso do pipeline como estava em outubro
+de 2026 e as duas avaliações pré-registradas, a Seção~\ref{sec:results} os
+resultados, e a Seção~\ref{sec:discussion} as implicações e as ameaças à
+validade; a Seção~\ref{sec:conclusion} conclui.
+\section{Fundamentação e Trabalhos Relacionados}
+\label{sec:background}
+
+\subsection{Usos Indevidos de APIs Criptográficas}
+
+Uma especificação de uso de API descreve restrições que vão além da verificação
+de tipos, como chamar \texttt{load} antes de ler um repositório de chaves, usar
+um digest adequado, inicializar uma cifra de forma consistente com seu modo ou
+impedir a negociação de protocolos obsoletos; algumas dependem de fluxo de
+dados, do comportamento do provedor ou do estado em tempo de execução.
+Analisadores estáticos como CogniCrypt
+e CryptoGuard verificam código-fonte ou bytecode contra essas regras, e o
+CryLogger observa valores em tempo de
+execução~\cite{krueger2017cognicrypt,rahaman2019cryptoguard,piccolboni2021crylogger}.
+CrySL, a linguagem de regras por trás do CogniCrypt, combina sequências de
+eventos permitidas, restrições sobre valores e predicados que um objeto repassa
+a outro~\cite{krueger2021crysl}.
+
+O RVSec aplica verificação em tempo de execução ao mesmo problema; suas
+especificações criptográficas são monitores JavaMOP~\cite{jin2012javamop}
+traduzidos manualmente de regras CrySL, e técnicas estáticas e de tempo de
+execução revelam conjuntos diferentes de usos indevidos e são
+complementares~\cite{torres2023runtime}. O RVSec é a ferramenta do grupo,
+publicada como RV4Android~\cite{costa2026rv4android}: ele instrumenta com esses
+monitores o bytecode de um APK e exercita o aplicativo instrumentado em um
+emulador com ferramentas de geração de testes como Monkey~\cite{androidmonkey},
+APE~\cite{gu2019ape} e DroidBot~\cite{li2017droidbot}. Nos relatórios que
+analisamos, cada violação traz um código que nomeia a restrição violada e,
+quando disponíveis, os valores observados e esperados. O conjunto criptográfico
+na versão que usamos (jca\_android) tem 47 especificações que seguem as regras
+CrySL. Executado com onze configurações de exploração sobre 163 aplicações
+do F-Droid~\cite{fdroid}, o RVSec relatou 453 usos indevidos distintos em 89 aplicações, 82\% deles
+em código de bibliotecas embutidas, enquanto os métodos que chamam diretamente uma
+API monitorada raramente foram exercitados~\cite{costa2026effectiveness}. Aquele
+estudo mede o que o RVSec encontra; este trabalho parte de seus achados e de nossas
+próprias execuções do RVSec, e pergunta que mudança, se alguma, um mantenedor
+deveria receber.
+
+Cada fonte de relato traz sua própria incerteza. Um monitor vê apenas os
+caminhos alcançados pela exploração, de modo que um uso indevido por trás de uma
+tela de login ou de configuração não é relatado, e ferramentas de exploração
+diferentes alcançam códigos diferentes~\cite{costa2026effectiveness}. Uma regra pode ser mais rígida que o
+comportamento documentado da plataforma: o nome de um algoritmo do Android
+Keystore pode estar ausente de uma regra escrita para provedores de desktop~\cite{costa2026effectiveness}.
+Alguns relatos dizem que um valor \emph{não foi observado} como proveniente de uma fonte
+aprovada, como uma chave gerada fora da execução monitorada: um limite do
+rastreamento, não um uso indevido. Na campanha do grupo, objetos inicializados com
+padrões da plataforma que o monitor nunca vê respondem por 131 dos 453 usos
+indevidos~\cite{costa2026effectiveness}. Detectores estáticos de uso indevido de API também apresentaram
+baixa precisão e revocação~\cite{amann2019evaluation}. Um achado é, portanto, evidência, e não
+prova de que uma determinada edição está correta.
+O \system{} transforma três dessas incertezas em perguntas que responde antes
+de qualquer edição: mapeia o método relatado de volta ao código-fonte, confronta
+a regra com o comportamento documentado da plataforma e permite que a
+adjudicação conclua que um limite de rastreamento não é um uso indevido
+(Seção~\ref{sec:pipeline}). A cobertura continua sendo
+o limite do detector.
+
+\subsection{Reparo Automatizado e Agentes de Programação}
+\label{subsec:apr}
+
+O reparo automatizado de programas (APR) produz patches candidatos para um
+defeito relatado e mantém aqueles que um oráculo, geralmente os testes do
+projeto, aceita~\cite{legoues2019apr}; um patch pode satisfazer esse oráculo sem
+corrigir o defeito, problema conhecido como sobreajuste de
+patch~\cite{smith2015overfitting}. O \system{} não dispõe de teste que codifique
+o uso indevido, e nenhuma das verificações que aceitam seus patches observa se a
+violação desapareceu (Seção~\ref{sec:pipeline}); a avaliação, em vez disso,
+reexecuta o detector (Seção~\ref{subsec:dynval}). Onde o reparo foi implantado em escala, uma pessoa
+permanece no circuito: no Facebook, o SapFix e o Getafix propunham correções que
+engenheiros revisavam antes da integração~\cite{marginean2019sapfix,bader2019getafix}.
+O \system{} mantém esse modelo: cada decisão registra sua justificativa, e o
+autor aprova cada submissão.
+
+Ferramentas de reparo de usos indevidos de criptografia corrigem o que um
+detector relata. O CDRep detecta sete tipos de uso indevido em bytecode Android
+e reescreve cada um com um padrão de correção~\cite{ma2016cdrep}; o Seader
+infere modelos de detecção e de reparo para as APIs criptográficas de Java a
+partir de pares de código inseguro e seguro~\cite{zhang2022seader}. O reparo
+baseado em LLM~\cite{xia2023apr,zhang2023apimisuse} também parte de um defeito
+conhecido; no reparo zero-shot de falhas de segurança, modelos de linguagem
+corrigiram vulnerabilidades sintéticas e construídas à mão, mas tiveram
+dificuldade em produzir correções funcionalmente corretas para vulnerabilidades
+reais~\cite{pearce2023zeroshot}. Todos tomam o defeito relatado como dado,
+premissa que nossos mantenedores questionaram (\researchq{3}, \researchq{4}); o
+\system{}, por isso, decide se um achado é real e se tem uma correção que
+preserve o comportamento antes de gerar qualquer edição.
+
+Agentes de programação executam um modelo em um laço com ferramentas, lendo e
+editando arquivos e executando comandos até que o modelo decida que a tarefa
+está concluída~\cite{yang2024sweagent}; o Codex CLI~\cite{openai2026codex} e o
+Claude Code~\cite{anthropic2026claudecode} executam esse laço na máquina de um
+desenvolvedor. O SWE-bench aceita um patch para uma issue real do GitHub quando
+passam os testes extraídos do pull request que a resolveu~\cite{jimenez2024swebench},
+um oráculo sujeito ao mesmo sobreajuste. A estrutura do trabalho importa: o
+SWE-agent mostrou que a interface pela qual um agente visualiza e edita um
+repositório altera quantas issues ele resolve~\cite{yang2024sweagent}, e o
+Agentless, uma sequência fixa de localização, reparo e validação de patch em que
+nenhum modelo escolhe a próxima ação, superou os agentes de código aberto então
+disponíveis no SWE-bench Lite a um custo menor~\cite{xia2025agentless}. O
+Agentless compara estruturas diante de um oráculo de testes; a tarefa do
+\system{} inclui também decidir se deve agir. Um agente segue um processo apenas
+na medida em que segue suas instruções, ao passo que o \system{} executa cada
+etapa em código e verifica sua saída antes que a próxima comece. A comparação da
+Seção~\ref{subsec:protocol} fornece aos agentes de programação o processo do
+\system{} como instruções, incluindo o porte para a ponta do branch, e
+assim mede a diferença entre um processo que é instruído e outro que é imposto.
+
+\subsection{Contribuições Geradas por Ferramentas para Código Aberto}
+\label{subsec:bots}
+
+Em um estudo de projetos populares do GitHub, cerca de um quarto usava bots, e
+os mantenedores os consideraram úteis, porém limitados~\cite{wessel2018bots}.
+Pull requests automatizados que atualizam dependências desatualizadas levaram os
+projetos a atualizá-las com mais frequência, mas muitos ficaram sem merge, e os
+desenvolvedores citaram o risco de mudanças incompatíveis e o esforço de
+compreender a
+mudança~\cite{mirhosseini2017autopr}. Pull requests abertos por bots são
+mergeados com menos frequência e esperam mais por uma resposta do que os abertos
+por pessoas~\cite{wyrich2021botprs}. Uma atualização de dependência pode ser
+verificada contra uma release; uma correção de uso indevido de API altera o
+próprio código do projeto, e se ela é desejada depende do que esse código
+protege. Todo pull request e toda issue deste estudo foram aprovados pelo autor
+antes de serem abertos; a
+Seção~\ref{subsec:form} mostra como os mantenedores reagiram à forma das
+primeiras submissões e como o texto mudou.
+
+\subsection{LLMs como Juízes}
+\label{subsec:judges-bg}
+
+Em perguntas de assistentes de conversação, juízes LLM fortes concordaram com
+avaliadores humanos com frequência semelhante à concordância entre os próprios
+humanos, mas foram influenciados pela posição e pelo tamanho das respostas e
+podem favorecer suas próprias saídas~\cite{zheng2023judge}. A ordem em que os candidatos são
+apresentados pode mudar um veredito~\cite{wang2024fair}, e avaliadores LLM
+reconhecem e favorecem suas próprias
+gerações~\cite{panickssery2024selfpref}. Em artefatos de engenharia de software,
+as avaliações de LLMs se aproximam da concordância humana em algumas tarefas de
+anotação, mas não em outras, e a concordância entre modelos sinaliza quando
+eles são
+confiáveis~\cite{ahmed2025annotation}. A comparação da
+Seção~\ref{subsec:protocol} usa dois juízes de provedores diferentes e trata
+esses vieses: os cartões são pontuados em ordem aleatória; uma das leituras
+mostra apenas o patch, sem seu título e descrição; a concordância entre
+os juízes é relatada ao lado da pontuação final; e uma sondagem pede a um juiz que
+identifique o braço por trás de um cartão; a Seção~\ref{subsec:threats}
+discute o risco que permanece.
+
+\subsection{Posicionamento Deste Trabalho}
+
+Detectores, estáticos (CogniCrypt, CryptoGuard) ou dinâmicos (CryLogger,
+RVSec), terminam com um relato; o \system{} o trata como uma alegação a ser
+verificada contra a revisão do código-fonte, sem presumir impacto de segurança,
+e decide se e como alterar o código. O reparo baseado em LLM, incluindo o
+trabalho mais próximo, um preprint de Zhang et al.\ que avalia modelos de
+linguagem pré-treinados no reparo de usos indevidos de
+API~\cite{zhang2023apimisuse}, pontua patches candidatos para defeitos
+conhecidos em benchmarks; o \system{} pode se abster, autoriza edições por
+arquivo e símbolo, faz o build de cada patch no projeto real e, neste estudo,
+enviou seus patches a mantenedores reais e os teve verificados novamente pelo
+RVSec. O SWE-bench e o SWE-agent compartilham o cenário em nível de
+repositório, mas aceitam um patch quando passam os testes da issue, ao passo
+que o \system{} parte de evidências do analisador e verifica um patch com um
+build, uma regra estática quando existe e uma revisão do seu comportamento por
+modelo. O Codex CLI e o Claude Code fazem edições em um laço de agente; são as
+linhas de base da nossa comparação, que recebem o processo do \system{} como
+instruções. Pull requests de bots trazem mudanças que um oráculo existente,
+como uma release, pode verificar; as mudanças do \system{} alteram código
+relevante para a segurança, e cada uma é aprovada por uma pessoa antes de ser
+enviada.
+
+\section{O Pipeline \system{}}
+\label{sec:pipeline}
+\label{subsec:library}
+
+O \system{} é uma biblioteca Python e ferramenta de linha de comando que
+transforma cada achado reportado por um detector em um desfecho revisado: uma
+proposta de correção, uma issue para os mantenedores ou uma decisão documentada
+de não propor nada (Figura~\ref{fig:pipeline}). Cada etapa grava seus
+resultados no diretório da execução, em vez de passar uma conversa opaca à
+etapa seguinte, de modo que toda decisão pode ser rastreada até as evidências
+que utilizou.
+
+O \system{} é construído em torno de sete propriedades, cada uma com um limite
+declarado. \emph{Determinismo onde o código pode decidir:} a coleta de
+evidências, as verificações de validação e o build são determinísticos; os
+estágios de modelo que adjudicam, planejam, redigem e revisam não são, de modo
+que o mesmo achado pode terminar de formas diferentes entre execuções
+(Seção~\ref{subsec:threats}). \emph{Rastreabilidade:} cada estágio grava no
+diretório da execução suas entradas, saídas e os identificadores de evidência
+que cita, e uma afirmação que cita um identificador desconhecido é rejeitada.
+\emph{Auditabilidade:} cada chamada de modelo é registrada com sua requisição
+e resposta; prompts, schemas, políticas, especificações, construtores de
+contexto e resolvedores têm versão registrada, cada requisição e cada pacote de
+evidências têm hash, e cada execução registra o commit da biblioteca e um hash
+de seu código-fonte. \emph{Abstenção como desfecho:} um mapeamento ambíguo
+fica sem resolução em vez de ser adivinhado, e terminar sem patch, com o
+motivo registrado, é um resultado válido. \emph{Autoridade apenas da
+evidência:} pesquisa externa, respostas de mantenedores e saídas de modelo
+informam decisões, mas só evidências do repositório e política explícita podem
+autorizar uma edição, de modo que conteúdo da web não pode instruir o
+pipeline. \emph{Isolamento:} os patches são aplicados e compilados em um
+worktree local separado, nada chega ao projeto antes da publicação, e nenhuma
+credencial entra em um prompt, embora a análise possa contatar hosts e
+baixar arquivos que o código revisado nomeia, para verificar suas cadeias de
+certificados ou digests esperados; os builds de terceiros ainda não rodam em
+contêiner (Seção~\ref{subsec:ethics}). \emph{Autonomia limitada:} uma execução
+segue sem supervisão de um achado até um patch compilado, mas nada é publicado
+até que uma pessoa aprove aquele achado específico.
+
+\begin{figure*}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  box/.style={draw,rounded corners,align=center,minimum height=11mm,
+              text width=2.5cm,font=\footnotesize},
+  opt/.style={box,dashed},
+  inp/.style={draw,dashed,rounded corners,align=center,minimum height=8mm,
+              text width=2.6cm,font=\footnotesize,fill=black!4},
+  gate/.style={draw,diamond,aspect=2,align=center,font=\scriptsize,
+               inner sep=0pt,text width=1.3cm},
+  stop/.style={draw,rounded corners,align=left,font=\footnotesize,
+               text width=3.1cm,fill=black!8},
+  flow/.style={-{Latex[length=2mm]},thick},
+  fail/.style={-{Latex[length=2mm]},thick,densely dotted},
+  feed/.style={-{Latex[length=2mm]},dashed},
+  lbl/.style={font=\scriptsize,align=center},
+  lane/.style={font=\footnotesize\bfseries,rotate=90,anchor=south}
+]
+\def\cx#1{#1*2.95}
+% ---------------- lane 1: analysis
+\node[opt] (rvrun)  at (\cx{0},0) {Opcional: APK compilado sem minificação; execução do RVSec (Monkey, APE)};
+\node[box] (reports) at (\cx{1},0) {Relatórios do RVSec: rótulos interpretados, ecos agrupados, código do app ou de biblioteca};
+\node[box] (map)    at (\cx{2},0) {Clone; nome de bytecode para a declaração no código-fonte; índices do código};
+\node[box] (units)  at (\cx{3},0) {Unidades de análise agrupadas; pacote de evidências determinístico};
+\node[box] (claims) at (\cx{4},0) {Extração de afirmações e contrato da função};
+\node[gate] (adj)   at (\cx{5},0) {Adjudicação};
+\draw[flow] (rvrun)--(reports);
+\draw[flow] (reports)--(map);
+\draw[flow] (map)--(units);
+\draw[flow] (units)--(claims);
+\draw[flow] (claims)--(adj);
+% inputs
+\node[inp] (research) at (\cx{3},1.75) {Pesquisa externa (fontes oficiais; parte compartilhada vinda do corpus)};
+\node[inp] (spec)     at (\cx{4.5},1.75) {Especificação da regra, auditada contra a regra};
+\node[inp] (memory)   at (\cx{6},1.75) {Respostas de mantenedores e patches anteriores};
+\draw[feed] (research)--(units);
+\draw[feed] (spec.south)--(claims.north);
+\draw[feed] (spec.south)--(adj.north);
+\draw[feed] (memory.south west)--(adj.north east);
+% ---------------- outcome without patch
+\node[stop,minimum height=26mm] (stop) at (\cx{6},-2.7) {\textbf{Termina sem patch, com o motivo registrado:} falso positivo, evidência insuficiente, sem impacto de segurança, sem correção segura, contrato externo, decisão do mantenedor, já proposto ou corrigido upstream};
+\draw[fail] (adj.east) -| node[above,lbl,pos=0.25]{sem correção} (stop.north);
+% ---------------- lane 2: repair
+\node[box] (plan)   at (\cx{0},-3.2) {Plano do patch: edições, invariantes, mudanças proibidas};
+\node[box] (drafts) at (\cx{1},-3.2) {Rascunhos por arquivo; verificações semânticas};
+\node[gate] (review) at (\cx{2},-3.2) {Revisão comporta\-mental};
+\node[box] (tip)    at (\cx{3},-3.2) {Worktree na ponta do branch: aplicação, merge de três vias ou porte pelo modelo};
+\node[box] (build)  at (\cx{4},-3.2) {Build Gradle; reparo de compilação, revisado novamente};
+\draw[flow] (adj.south) -- ($(adj.south)+(0,-0.75)$) node[right,lbl,pos=0.5]{correção} -| (plan.north);
+\draw[flow] (plan)--(drafts);
+\draw[flow] (drafts)--(review);
+\draw[flow] (review)--node[above=7pt,xshift=-7pt,lbl]{limpo}(tip);
+\draw[flow] (tip)--(build);
+\draw[flow] (review.south west) to[out=-120,in=-60] node[below=-1pt,lbl]{regressão: novo rascunho\\ou novo plano (uma vez)} (drafts.south);
+% failure exits (dotted) to the outcome box
+\coordinate (bus) at ($(stop.west)+(0,0.85)$);
+\draw[fail] (review.north) |- (bus);
+\draw[fail] (tip.north) -- (tip.north |- bus);
+\draw[fail] (build.north) -- (build.north |- bus);
+\node[lbl,anchor=south west] at ($(review.north |- bus)+(0.05,0)$) {regressão persiste};
+\node[lbl,anchor=south west] at ($(tip.north |- bus)+(0.05,0)$) {ponta já corrigida};
+\node[lbl,anchor=south west] at ($(build.north |- bus)+(0.05,0)$) {build ainda falha};
+% memory also informs planning and review
+\draw[feed] (memory.east) -- ++(0.7,0) |- ($(plan.south)+(0,-1.12)$) -- (plan.south);
+\draw[feed] ($(review.south)+(0.9,-1.12)$) -- ($(review.south)+(0.9,-0.3)$) -- (review.south east);
+% ---------------- lane 3: proposal
+\node[box] (text)    at (\cx{3},-6.1) {Texto do PR no template do repositório, ou texto da issue; conferido com o diff};
+\node[box] (checks)  at (\cx{4},-6.1) {Verificações no repositório ao vivo: duplicata, mudança upstream, política};
+\node[gate] (approve) at (\cx{5},-6.1) {Aprovação humana};
+\node[box,text width=2.1cm] (publish) at (\cx{6}+0.35,-6.1) {Publicação remota explícita};
+\draw[flow] (build.south) -- ($(build.south)+(0,-1.3)$) -| (text.north);
+\draw[flow] (text)--(checks);
+\draw[flow] (checks)--(approve);
+\draw[flow] (approve)--node[above=7pt,lbl]{aprovado}(publish);
+\draw[flow] (stop.south) -- ++(0,-0.35) -- ++(1.75,0) |- ($(text.south)+(0,-0.55)$) node[below,lbl,pos=0.75]{issue, apenas com impacto de segurança confirmado} -- (text.south);
+% legend
+\node[draw,rounded corners,align=left,font=\scriptsize,anchor=west,text width=6.3cm] at (\cx{0}-1.25,-6.1)
+ {\tikz\draw[flow](0,0)--(0.6,0); fluxo principal\quad \tikz\draw[fail](0,0)--(0.6,0); termina sem patch\\[2pt]
+  \tikz\draw[feed](0,0)--(0.6,0); informa uma decisão, não autoriza uma edição\\[2pt]
+  caixa tracejada sombreada: entrada externa ao repositório};
+% lane labels
+\node[lane] at (\cx{0}-1.55,0) {Análise};
+\node[lane] at (\cx{0}-1.55,-3.2) {Reparo};
+\node[lane] at (\cx{0}-1.55,-6.1) {Proposta};
+\end{tikzpicture}
+}
+\caption{Fluxo de trabalho exposto pela biblioteca Python e pela CLI. Setas
+cheias são o fluxo principal; setas pontilhadas encerram uma unidade sem patch,
+com o motivo registrado, e só um impacto de segurança confirmado transforma esse
+fim em uma issue. Entradas tracejadas informam decisões, mas não podem autorizar
+uma edição: só evidências do repositório e política explícita podem.}
+\label{fig:pipeline}
+\end{figure*}
+
+\subsection{De um Relatório do RVSec ao Código-Fonte}
+
+Uma tabela de dados no \system{} define o que cada rótulo do RVSec afirma: um
+valor que a verificação não admite, chamadas fora da ordem da regra, uma origem
+que o monitor não observou, uma origem observada que ele não admite, ou um eco
+de um relatório sobre o produtor do objeto. Um eco é agrupado aos achados do
+método que ele repete, a menos que sua origem esteja em outro lugar. Um achado
+é marcado como código da aplicação ou de biblioteca a partir dos pacotes do
+próprio app (os namespaces de todos os módulos do repositório); relatórios
+sobre nomes de classe ofuscados são deixados de lado. Quando o \system{} inicia
+a execução do RVSec, o APK é construído sem minificação onde a receita do
+F-Droid permite, de modo que as localizações em tempo de execução correspondam
+ao código-fonte. A observação em tempo de execução permanece nas evidências, e
+seu rótulo delimita o que o relatório estabelece: uma origem não observada
+indica o que o monitor viu, não o que o objeto é---um IV gerado pelo provedor
+da cifra é aleatório, embora o monitor não consiga rastreá-lo.
+
+O fluxo de trabalho clona o repositório, registra o branch base documentado, lê
+seus arquivos de orientação e mapeia o método de bytecode para uma declaração
+no código-fonte. O mangling de value classes do Kotlin e os sufixos do
+compilador são removidos; o corpo de uma lambda ou corrotina que não nomeia
+nenhuma função do código-fonte é mapeado para a única função de sua classe
+externa que usa a API governada ou, na falta dela, para a única função que ele
+chama no mesmo módulo Gradle e que a usa; um método ausente do arquivo
+resolvido é procurado nos demais arquivos do pacote; e, em Kotlin
+Multiplatform, o source set Android é preferido ao código desktop ou iOS que o
+APK nunca contém. Uma correspondência ambígua permanece não resolvida em vez de
+adivinhada. Índices conservadores de Java e Kotlin baseados em Tree-sitter~\cite{treesitter}
+fornecem o método exato, o contexto da classe, chamadores, sobrescritas,
+referências, consumidores de valores, testes, dependências, SDK mínimo e
+configuração do Gradle; relações que exigem um classpath JVM completo
+permanecem explicitamente ambíguas. O código-fonte alvo nunca é truncado; um
+orçamento limita o contexto auxiliar e registra cada exclusão.
+
+Achados em um mesmo trecho de código formam uma unidade com um único patch:
+mesma classe e arquivo, e um método chama o outro, um método viola duas regras,
+ou uma regra e uma mensagem se repetem ao longo do ciclo de vida de um objeto.
+Achados de uma especificação em classes diferentes de um módulo também são
+agrupados quando um método armazena um valor que o outro lê de volta, como um
+IV gravado na cifragem e lido na decifragem. Rascunhos separados para esses
+achados reescreviam o mesmo código de maneiras incompatíveis. Uma unidade
+termina antes de qualquer chamada ao modelo quando cada achado já tem um pull
+request nosso que está aberto ou foi mergeado após a revisão analisada, ou
+quando o arquivo reportado não está no branch alvo.
+
+Uma correção pode precisar ir além do método reportado. Para cada unidade, o
+índice lista os arquivos que uma mudança pode afetar: chamadores em outros
+arquivos, sobrescritas, consumidores de um símbolo compartilhado, testes
+relacionados, configuração e, quando o valor protegido é armazenado, todo leitor
+e escritor da mesma chave armazenada e todo arquivo por onde o valor passa. Uma
+correção em vários arquivos é aplicada sem leitura humana
+(\texttt{MULTI\_FILE\_FIX\_SUPPORTED}) somente quando esse escopo está completo,
+a adjudicação revisou cada arquivo listado, todo arquivo que ela marca para
+edição está no plano e o patch edita pelo menos dois arquivos. Fora disso, a
+autoridade para aplicar só diminui: quando o índice foi truncado, um nome genérico ficou sem
+resolução, um arquivo listado não foi revisado ou o plano edita além do método
+reportado, a decisão passa a
+\texttt{MULTI\_FILE\_FIX\_}\allowbreak\texttt{PROPOSED\_FOR\_REVIEW}, e os
+arquivos não revisados são listados para a pessoa que a aprova; uma decisão que
+não é apenas de revisão e não tem um arquivo exigido não gera patch. Cada
+arquivo é redigido separadamente, diante da interface declarada dos demais, e
+uma verificação que falha regenera apenas os arquivos que nomeia. A migração do
+verificador armazenado do BitBanana mostra o risco: um candidato inicial
+compilava sem atualizar leitores da credencial (\researchq{2}).
+
+\subsection{Especificações e Pesquisa Externa}
+
+Cada família de regras tem uma especificação JSON com os tipos governados, os
+eventos, a semântica do detector e de tempo de execução, as formas conhecidas
+de falso positivo e os requisitos de evidência, separando o que uma mensagem do
+detector afirma do que estabeleceria um dano em tempo de execução (um aviso
+literal de \texttt{TLS} não revela o protocolo negociado). As especificações
+são escritas por um modelo a partir da regra e da documentação oficial e
+auditadas deterministicamente contra a regra citada, de modo que um evento
+omitido ou um valor acrescentado fica visível antes de influenciar uma análise.
+
+Quatro especificações também trazem políticas de correção curadas; junto com
+um arquivo do operador, que pode definir uma política por achado ou por família
+de achados, elas são a política explícita que pode autorizar uma edição. Quando
+uma política tem variantes, evidências determinísticas tiradas do código
+revisado, e dos hosts e arquivos que ele nomeia, escolhem entre elas, e a
+política resultante dá à adjudicação e ao planejamento o escopo, a estratégia,
+as mudanças proibidas e os testes. Um plano completo em vários arquivos que
+aguarda política só é aplicado sem revisão adicional quando a política o
+autoriza e os dados protegidos se mostram restritos à memória; caso contrário,
+é apenas de revisão.
+
+A pesquisa externa opcional é uma chamada separada ao modelo, restrita a fontes
+oficiais e primárias; o conteúdo da web ou do repositório é tratado como dado
+não confiável, que não pode instruir o pipeline, escolher arquivos nem
+autorizar publicação. Sua parte compartilhada, sobre a API e a regra, é mantida
+em um corpus de pesquisa e reutilizada por até 90 dias apenas por uma
+requisição idêntica byte a byte (mesmos prompts, esquema, modelo, esforço,
+limite de saída e ferramenta de busca); a parte do caso é sempre pesquisada. O
+estudo de caso e os pull requests publicados são anteriores ao corpus; as
+execuções da comparação registram o estado a partir do qual começaram
+(Seção~\ref{subsec:frozen}).
+
+\subsection{Pacote de Evidências e Contratos com o LLM}
+
+O Python constrói um pacote de evidências por unidade; cada item tem um
+identificador, procedência, nível de confiança, estado de completude e hash.
+Observações em tempo de execução e o código-fonte exato têm precedência sobre
+relações semânticas, documentação oficial, pesquisa primária, fontes
+secundárias e inferência do modelo. A ausência é
+\texttt{not\_found\_in\_examined\_scope}, \texttt{confirmed\_absent} ou
+\texttt{unknown\_due\_to\_}\allowbreak\texttt{incomplete\_scope}, valores nunca
+usados de forma intercambiável. Seguem seis contratos com o modelo:
+(1)~a \emph{extração de evidências} classifica afirmações como confirmadas,
+inferidas, hipóteses ou desconhecidas, citando IDs de evidência, e declara o
+contrato da função do código---seu propósito, sua contraparte (um serviço de
+terceiros, um par operado pelo usuário, ou o próprio app ou dispositivo) e se
+essa contraparte depende do comportamento reportado, citando literalmente o
+código do repositório fora do método reportado; (2)~a \emph{adjudicação} decide
+causa, violação, impacto de segurança em tempo de execução, compatibilidade,
+escopo, bloqueadores de geração e de publicação, e a disposição;
+(3)~o \emph{planejamento} autoriza cada arquivo, símbolo, tipo de edição,
+invariante e teste, sem código; (4)~a \emph{geração} retorna substituições
+exatas por arquivo; (5)~a \emph{revisão de comportamento} lê o patch finalizado
+em relação ao arquivo inteiro e às invariantes e mudanças proibidas do plano, e
+responde a cada preocupação da adjudicação; (6)~o \emph{texto da proposta}
+descreve o diff final. Quando a extração aponta evidências ausentes ou a
+adjudicação se abstém por falta delas, o Python as obtém e ambas são executadas
+mais uma vez, mantendo a nova resposta somente se ela for validada. Etapas mais
+estreitas, verificadas por esquema, tratam da pesquisa, do reparo de compilação
+e do porte para a ponta do branch.
+
+A adjudicação escolhe entre quinze decisões em cinco grupos: correções
+aplicadas e construídas sem revisão adicional (correção em um ou em vários
+arquivos, migração interna de digest, correção ou substituição de dependência);
+correções que uma pessoa deve ler antes da aplicação (correção em vários
+arquivos, migração de backend ou de vários repositórios); decisões que aguardam
+uma política explícita; violações confirmadas que não exigem mudança aqui (uso
+de digest sem fins de segurança, ausência de impacto de segurança, ou um
+contrato externo de digest que nenhuma mudança no cliente consegue atender); e
+\texttt{NO\_SAFE\_FIX}. Um patch de uma decisão apenas de revisão
+ainda é compilado e revisado; ele só se torna publicável após um build aprovado,
+um commit e uma revisão de comportamento atual sem regressão nem bloqueio e, como
+toda proposta, apenas com a aprovação do autor.
+
+Uma regra determinística também pode elevar uma resposta \texttt{NO\_SAFE\_FIX},
+ou uma resposta em vários arquivos que aguarda política, à decisão apenas de
+revisão \texttt{MULTI\_FILE\_FIX\_}\allowbreak\texttt{PROPOSED\_FOR\_REVIEW},
+nunca a uma decisão aplicada sem revisão, quando a violação não foi julgada
+falsa e cada bloqueador de geração é uma questão que quem lê o patch decide (a
+autorização de um mantenedor, o comportamento no dispositivo, a compatibilidade
+de dados armazenados ou de um consumidor) ou uma evidência que faltou ao
+pacote. Uma causa que a leitura do código deixou em aberto passa então a se
+apoiar na observação em tempo de execução ou, para um eco, no relatório de seu
+produtor, e uma suposição de revisão registra isso; os bloqueadores de geração
+restantes tornam-se bloqueadores de publicação, e o resultado deve passar pela
+mesma validação. Uma correção confirmada recusada apenas por ter pedido geração
+enquanto uma questão desse tipo seguia aberta também é mantida para revisão, em
+vez de encerrada como \texttt{NO\_SAFE\_FIX}.
+
+\subsection{Salvaguardas Determinísticas e Confiança Residual}
+
+Verificações determinísticas protegem cada transição, porque uma saída
+estruturada não torna uma conclusão verdadeira. Uma afirmação confirmada que
+cita um ID de evidência desconhecido é rejeitada; uma adjudicação sustentada
+exige uma causa e uma violação do detector confirmadas (em uma elevada à
+decisão apenas de revisão, a causa pode se apoiar na observação em tempo de
+execução ou no relatório de um produtor); um plano deve cobrir
+todos os arquivos que o escopo exige, e cada arquivo gerado deve corresponder a
+uma entrada do plano. Cada substituição deve ocorrer exatamente uma vez no
+código-fonte base; caminhos não autorizados, categorias de edição não
+suportadas, edições coordenadas incompletas e inconsistências de símbolos entre
+arquivos são rejeitados; edições de build, de dependências, de interface
+pública e de arquivos novos exigem categorias explícitas. Verificações
+semânticas rejeitam formas de falha conhecidas: alterar um valor armazenado,
+transmitido ou comparado com uma constante sem manter a forma antiga para os
+dados existentes; deixar inalterado um leitor de um valor armazenado alterado;
+remover um texto cifrado que o app distribui; substituir um algoritmo exigido
+por um protocolo; ou deixar o valor reportado intacto. Cada rejeição retorna ao
+gerador com o motivo; quando nenhuma mudança dentro do app consegue satisfazê-la
+(texto cifrado sob uma chave distribuída), o achado vai para os mantenedores
+pelo encaminhamento descrito abaixo. Verificações sobre um comportamento que o
+mantenedor pode ter escolhido (remover ou esvaziar uma configuração ou opção do
+usuário, sobrescrever ou recusar um valor fornecido pelo chamador) não recusam o
+patch: viram notas mostradas ao autor antes da aprovação, e a revisão de
+comportamento ainda conta uma opção esvaziada como regressão. Uma
+renomeação deve atualizar todas as referências no mesmo patch, ou é gerada
+novamente com a falha explicada; autorizá-la ou não é uma nota no pull request,
+não um bloqueio.
+
+Resta uma confiança residual: o índice não é uma análise JVM completa, uma chamada resolvida
+pode depender de despacho dinâmico, reflexão ou código gerado, e a documentação
+descreve o contrato de uma API, não o provedor implantado. Suposições não
+resolvidas permanecem visíveis como \emph{suposições de revisão} para um
+mantenedor ou teste, distintas dos \emph{bloqueadores de geração} (o código não
+teria sustentação) e dos \emph{bloqueadores de publicação} (construível
+localmente, mas não apresentado como pronto).
+
+\subsection{Revisão de Comportamento e Encaminhamento}
+
+Uma regressão exige um cenário concreto alcançável pelo próprio código da
+aplicação. Remover algo obsoleto ou inseguro oferecido a um par ou aceito dele
+é endurecimento, a menos que as evidências mostrem quem depende disso: o
+contrato da função, uma opção no código, outro código que lida com esse par, ou
+os mantenedores. A revisão atribui cada regressão ao plano (nenhum rascunho que
+o siga consegue evitar o cenário) ou ao rascunho. Um deslize do rascunho gera
+um novo rascunho sobre o mesmo plano, com o cenário como feedback, regenerando
+os testes cujo arquivo de produção esse feedback altera. Após o último rascunho
+do plano, ou após duas regressões consecutivas causadas pelo plano, a unidade
+recebe um novo plano com os cenários como restrições---no máximo uma vez, por
+qualquer motivo; se o novo plano não for adotado, os rascunhos restantes do
+primeiro plano ainda são executados. A revisão e as verificações
+determinísticas também rejeitam um patch em que a chamada governada continua
+recebendo o mesmo material (uma constante
+renomeada, um alias ou uma factory em torno do mesmo objeto, uma chave
+reconstruída a partir de seus próprios bytes ou cifrada novamente sob a mesma
+chave); se restarem apenas rejeições desse tipo, o achado é encerrado como
+violação sem impacto de segurança. Uma mudança que altera o valor, como
+\texttt{SSL} para \texttt{TLS}, ainda se torna uma proposta.
+
+Achados sem patch são encaminhados de acordo com o impacto de segurança
+estabelecido. Uma violação confirmada interrompida antes de qualquer rascunho
+(sem correção segura, nenhuma edição encontrada, um contrato externo) torna-se
+uma issue somente quando seu impacto foi confirmado; caso contrário, é
+registrada como sem correção segura ou como bloqueada por um contrato externo,
+com o respectivo bloqueador. Código que já usa a API conforme documentado é
+encerrado como violação sem impacto de segurança somente com um impacto não
+relacionado à segurança. Uma geração que falhou mantém sua issue, a menos que
+todo bloqueador seja uma verificação dos próprios rascunhos do pipeline (uma
+renomeação feita pela metade, um símbolo inventado, o valor reportado deixado
+intacto) ou, quando a adjudicação não deixou pergunta ao mantenedor, da forma
+deles (um rascunho sem edições). Esse achado termina como correção nunca
+produzida, sem issue para ele, pois nenhum mantenedor pode responder por um
+rascunho que o pipeline recusou; o mesmo vale, na mesma condição, para uma
+correção que a adjudicação apoiou e que parou antes de qualquer rascunho apenas
+porque a análise não revisou arquivos que o pipeline calculou como parte do
+escopo. Cada achado
+termina em exatamente um desfecho: pull request pronto (ou um já aberto); patch
+sem pull request (não aplicado, sem build ou retido); não aplicável; correção
+recusada antes de qualquer rascunho ou nunca produzida; issue para a aplicação
+ou para uma biblioteca embarcada; violação confirmada sem correção segura;
+violação sem impacto de segurança; contrato externo; decisão do mantenedor;
+falso positivo reconhecido; evidência insuficiente; ou não analisado.
+
+\subsection{Memória entre Execuções}
+
+As respostas dos mantenedores, atualizadas a partir do GitHub, chegam à
+adjudicação, ao planejamento e à revisão de comportamento para achados da mesma
+especificação, de modo que uma premissa rejeitada não seja proposta novamente e
+um achado cujo pull request foi fechado não seja republicado. Tentativas
+anteriores são lidas apenas quando chegaram a um patch, para que a amostragem
+de uma execução não se torne evidência da execução seguinte; fatos confirmados
+por um sinal determinístico (um import aceito por um build bem-sucedido) são
+dados e nunca alteram código ou prompts. Para fins de avaliação, uma execução
+pode começar sem histórico de tentativas.
+
+\subsection{Aplicação na Ponta do Branch e Build}
+
+A análise lê a revisão do APK, mas um pull request tem como alvo a ponta atual
+do branch base. Cada solução aceita é aplicada atomicamente em um worktree Git
+dedicado na ponta, nunca no clone base, com um caminho distinto por tentativa e
+um registro do commit base, das edições e do motivo de falha. As edições
+literais são tentadas primeiro, acompanhando arquivos renomeados, e depois o
+merge de três vias do Git a partir da revisão analisada. Somente se ambos
+falharem uma etapa estreita do modelo porta o patch, recebendo o patch
+revisado, as mudanças upstream e os arquivos da ponta: ela reancora a correção,
+declara que a ponta não contém mais a violação, ou recusa o porte. Um porte
+deve passar pelas verificações semânticas e de ancoragem; as linhas novas
+passam outra vez pela revisão de comportamento, e um porte rejeitado
+retorna mais uma vez com o motivo; um porte recusado pelas
+verificações enquanto a violação persiste torna-se candidato a issue. Uma
+alegação de que a violação já foi corrigida só é aceita quando uma verificação
+determinística confirma que a instrução reportada não está em nenhum arquivo da
+ponta, ou que todos os blocos corrigidos estão presentes e o código substituído
+não; caso contrário, trata-se de um porte recusado. Um achado é
+\emph{não aplicável}, sem pull request, quando a ponta já contém a correção, o
+arquivo saiu do branch, ou nenhum porte se aplica e o código
+substituído existe apenas na revisão analisada---não resta nada a corrigir tal
+como foi revisado, o que não equivale a uma violação desaparecida. O resumo é
+reescrito após um porte.
+
+O build executa a tarefa Gradle selecionada, normalmente uma montagem de debug
+sem minificação, em um JDK escolhido a partir do wrapper e da versão de Java
+declarada, registrando comandos, código de retorno, APKs, logs e diagnósticos.
+Falhas de SDK, JDK, Gradle, rede ou submódulos são falhas de infraestrutura;
+uma falha compartilhada pela ponta sem modificações é do projeto, mas nunca
+conta como aprovação. Passagens mais estreitas (apenas o módulo modificado,
+apenas o código de produção, ou compilado na revisão analisada porque a ponta
+não compila) mantêm seus próprios status e nunca contam como build completo. Um
+patch em um source set que o APK não compila não é publicado. Uma etapa
+estreita de reparo de compilação pode corrigir novos diagnósticos nos arquivos
+alterados; ela não pode reabrir a decisão de segurança, e edições fora do plano
+são revisadas novamente. Onde existe uma regra estática para a especificação,
+ela é reexecutada antes e depois do patch como medição. Essas verificações
+mostram que o patch se aplica e compila, não que ele remove a violação em tempo
+de execução ou preserva o comportamento; se a violação ainda aparece é
+verificado pela validação dinâmica dos pull requests publicados
+(Seção~\ref{subsec:dynval}).
+
+\subsection{Proposta e Publicação}
+
+O texto é escrito para o mantenedor, não como um relatório do pipeline. Um
+modelo o redige a partir do diff final e dos fatos da revisão em uma forma
+fixa: um título que nomeia a mudança, poucos parágrafos simples sobre o que o
+código fazia, o que mudou e se o build passa, e um fecho fixo que nomeia o
+RVSec como analisador e apresenta o autor. Quando o repositório tem um template
+de pull request, o texto o preenche, mantendo seus títulos e checklists e
+marcando apenas caixas verificadas, como um build bem-sucedido, nunca um teste
+em dispositivo, já que o RVSec executou o APK original. Verificações
+determinísticas então prendem o rascunho a essa forma e ao diff: um título
+genérico como ``Fix \texttt{<init>}'', identificadores de evidência, nomes de
+bytecode compilado, um resumo com mais de 250 palavras, termos do vocabulário
+próprio do pipeline ou uma frase que descreve uma edição
+ausente do diff final devolvem o texto para reescrita com o problema indicado,
+e a publicação só é retida quando a reescrita ainda falha. O objetivo é um
+texto nos termos do projeto, não um que esconda sua origem: o uso de IA é
+declarado quando um template o pergunta. Um \emph{pull request pronto} é um rascunho com commit
+cujo build passou: um candidato à revisão humana, não uma publicação.
+
+Nada é publicado automaticamente: o operador aprova cada achado por seu
+identificador após uma pré-visualização. O \system{} então verifica novamente o
+repositório ao vivo e, por padrão, recusa um achado cujo pull request anterior
+possa estar aberto ou tenha sido fechado sem merge, uma mudança que outro de
+seus pull requests faz ou com a qual se sobrepõe, um diff que o branch
+padrão já contém ou com o qual não corresponde mais, um diff apenas de testes,
+uma revisão feita sob um contrato mais antigo, ou um repositório que não aceita
+contribuições; cada recusa indica a opção que a anula. Uma política sobre
+contribuições de IA é informada ao operador, que então escreve o texto; ela não
+bloqueia. Uma issue é recusada quando seu código saiu do branch padrão. O
+\system{} nunca assina o commit de outra pessoa; comentários de revisão são
+respondidos revisando o pull request, novamente após aprovação. A criação tem
+como alvo o GitHub; em outras plataformas, a análise e o patch validado ainda
+são produzidos. Os registros de prompts guardam requisições, respostas,
+versões, tokens e latência, nunca credenciais.
+
+\subsection{Entradas e Execução}
+
+O \system{} não depende de um único detector. Um achado precisa de quatro campos
+(o projeto, a classe, o método e a especificação violada) e pode trazer também a
+mensagem do detector, o repositório e o commit; os achados são lidos de saídas
+CSV, JSON, SARIF ou Semgrep, ou produzidos por \texttt{cognalys scan}. Para o
+RVSec, \texttt{cognalys fdroid-build} compila APKs sem minificação a partir das
+receitas do F-Droid, \texttt{cognalys github-build} faz o mesmo a partir do
+branch padrão de um aplicativo Android no GitHub sem receita, e
+\texttt{cognalys rvsec-run} executa o RVSec com os exploradores escolhidos e
+importa seus relatos; a instrumentação e as
+especificações monitoradas ficam no RVSec.
+
+Uma execução é iniciada com \texttt{cognalys run} e um arquivo de configuração
+curto. Outros comandos, também disponíveis como API Python
+(\texttt{cognalys.api}), listam as etapas de uma execução, resumem desfechos,
+informam o custo, mostram ou aplicam patches, publicam propostas aprovadas e
+atualizam as respostas dos mantenedores.
+
+As chamadas de modelo vão para a OpenAI ou a Anthropic, ou para um modelo local
+via Ollama, que roda sem pesquisa na web. As chamadas à OpenAI usam o nível Flex,
+cobrado pelas tarifas da API Batch~\cite{openai2026flex}; uma chamada que o Flex não consegue atender passa
+para o nível padrão, e o rastro registra qual nível respondeu. Duas
+salvaguardas limitam uma execução: ela para de chamar modelos ao atingir um
+teto de custo configurado, e uma etapa de modelo sem chamada nem linha de log
+por 30 minutos é interrompida e retomada uma vez a partir do seu cache de
+respostas. As respostas bem-sucedidas do modelo ficam em cache entre execuções,
+sob um hash da requisição inteira, separadamente do corpus de pesquisa.
+
+\subsection{Um Exemplo Completo}
+
+O RVSec relatou que \texttt{CryptoManager.getSecretKey}, no Traffic Light
+(version code 38), executava uma sequência de chamadas que a
+\texttt{KeyStoreSpec} não aceita (a regra rejeita um \texttt{getEntry} não seguido de
+um \texttt{getKey}~\cite{costa2026effectiveness}): lia a chave com \texttt{KeyStore.getEntry} e
+retirava a chave secreta da entrada retornada. O \system{} mapeou o método para
+o código-fonte Kotlin, confirmou a violação e sua causa, e julgou seu impacto
+como não relacionado à segurança: a chave é apenas lida, e o app não a cria nem
+a protege de outro modo. Como uma mudança de uma linha levava o código a uma
+sequência aceita, a unidade seguiu para o reparo. O rascunho trocou a leitura e
+manteve o cache e o fallback que cria uma chave ausente; passou pela revisão de
+comportamento, foi aplicado na ponta do branch e compilou.
+
+{\scriptsize
+\begin{verbatim}
+- (keyStore.getEntry(key, null)
+-     as? KeyStore.SecretKeyEntry)?.secretKey
++ (keyStore.getKey(key, null) as? SecretKey)
+      ?: createKey(key)
+\end{verbatim}}
+
+O pull request (\#238), com cerca de 60 palavras em parágrafos simples e
+nomeando o RVSec como analisador, foi aberto em 20 de outubro de 2026 e
+mergeado no dia seguinte, com uma resposta de uma palavra. Reexecutado sobre o
+APK com o patch, o RVSec não relatou mais a violação no método em nenhuma de
+três execuções (Seção~\ref{subsec:rq7}). O relato desaparece porque o monitor
+passa a ver de onde veio a chave, não porque o app ficou mais seguro: trata-se
+de uma violação confirmada sem impacto de segurança, que ainda assim vira pull
+request quando sua correção é segura.
+
+\section{Configuração do Estudo}
+\label{sec:settings}
+
+O estudo tem quatro partes, com dados e datas distintos. (i)~Um estudo de caso
+retrospectivo dos 34 achados distintos do retrato consolidado do
+experimento de 19 de outubro de 2026, montado em 22 de outubro, quando o pipeline
+ainda estava mudando (\researchq{1}, \researchq{2}, \researchq{4}, \researchq{5}).
+(ii)~Um levantamento dos 49 pull requests e 10 issues submetidos para achados do
+RVSec, coletados do GitHub em 18 de novembro de 2026 (\researchq{3};
+Seção~\ref{subsec:selection}). (iii)~Uma comparação pré-registrada, com juízes
+cegos, entre uma configuração registrada do {\system} e agentes de programação em dois
+blocos, três braços que recebem o achado e o repositório e dois instruídos
+a seguir o processo do {\system}, sobre 20 unidades de análise
+(\researchq{6}; Seções~\ref{subsec:frozen} e~\ref{subsec:protocol}).
+(iv)~Uma validação dinâmica pré-registrada que reexecuta o RVSec sobre o APK original e
+o APK com patch dos pull requests publicados (\researchq{7};
+Seção~\ref{subsec:dynval}). As execuções anteriores a um registro, e todo
+desvio, são declarados; eventos posteriores não reescrevem um resultado anterior de build ou de
+adjudicação. As quatro partes não medem um único sistema em um único momento.
+O estudo de caso descreve o pipeline como estava em outubro de 2026, com um
+modelo anterior e várias revisões da biblioteca; os pull requests foram
+produzidos pelas versões em uso quando cada um foi aberto, de agosto a novembro
+de 2026; a comparação executa uma configuração fixa com o modelo atual; e a
+validação dinâmica reexecuta o RVSec sobre os pull requests publicados,
+qualquer que seja a versão que os produziu. Os números são comparados dentro de
+uma parte, não entre partes.
+
+\subsection{Objetivos e Questões de Pesquisa}
+\label{subsec:rqs}
+
+O objetivo de implementação é complementar a detecção em tempo de execução com
+classificação no nível do código-fonte, abstenção e reparo revisável por meio de uma
+biblioteca reutilizável. O objetivo empírico é descrever o que ela decidiu,
+construiu e gastou e como os mantenedores responderam; verificar com o RVSec se os
+patches publicados removem a violação; e compará-la com
+agentes de programação de propósito geral, com e sem o seu processo como instruções.
+
+\begin{description}
+  \item[\researchq{1}:] \emph{Que resultados de análise e de reparabilidade
+  o {\system} produz para os achados de uso indevido de API selecionados?}
+  Uma decisão de proposta não implica um patch gerado ou validado.
+
+\item[\researchq{2}:] \emph{Em que medida os patches gerados podem ser
+  aplicados e compilados nos projetos-alvo?}
+  Relatamos a aplicação, o escopo do build (APK ou módulo alterado) e a atribuição
+  das falhas; trata-se de compilabilidade, não de correção comportamental ou de segurança.
+
+  \item[\researchq{3}:] \emph{Como os mantenedores respondem às propostas de reparo
+  submetidas, e que razões apresentam para suas decisões?}
+
+  \item[\researchq{4}:] \emph{Quais relatos do detector a análise
+  reconhece como falsos positivos ou como violações sem impacto de segurança,
+  e eles se concentram em especificações particulares?}
+
+  \item[\researchq{5}:] \emph{Quanto uso de modelo a análise
+  requer, e como ele se distribui entre os resultados?}
+
+\item[\researchq{6}:] \emph{(a) Um agente de programação de propósito geral basta quando
+  recebe o achado e o repositório? (b) Executar o processo como um
+  pipeline acrescenta algo em relação a um agente instruído a seguir o mesmo processo?
+  (c) Quanto variam as entregas do {\system} entre execuções?}
+  Uma configuração de agente usa o modelo do {\system}, de modo que uma diferença entre os
+  dois não pode ser atribuída ao modelo.
+
+  \item[\researchq{7}:] \emph{Quando o RVSec é executado novamente sobre o APK com patch de um
+  pull request publicado, a violação relatada ainda aparece no
+  método alterado pelo patch?}
+  Um build ou um merge não mostra que o uso indevido observado desapareceu.
+\end{description}
+
+A identidade de um achado é o identificador do APK, a classe, o método e a especificação; a
+identidade de um pull request é o repositório e o número do pull request. Tentativas repetidas não são casos
+independentes; especificações diferentes em um mesmo método permanecem achados distintos, mesmo
+quando um único patch trata de ambas. O estado do pull request e o estado do build são dimensões
+separadas. O estudo de caso e o levantamento são exploratórios: nenhuma hipótese foi
+fixada de antemão, e o pipeline mudou nesse meio-tempo (cada mudança está registrada
+ao lado da medição que a motivou). A comparação e a validação
+dinâmica seguem procedimentos e regras de análise escritos e datados
+antes de suas execuções; os registros da comparação também guardam os hashes de
+seus prompts, scripts e gabaritos. Cada registro informa quais execuções
+o precederam, e toda regra alterada depois de os resultados serem vistos é declarada como
+desvio. Nenhum teste estatístico é aplicado: os resultados são contagens descritivas e
+explicações de casos (Tabela~\ref{tab:rq-data}).
+
+\begin{table}[tb]
+\centering
+\caption{Dados por trás de cada questão de pesquisa.}
+\label{tab:rq-data}
+\footnotesize
+\begin{tabular}{p{0.9cm}p{3.7cm}p{2.6cm}}
+\toprule
+QP & Dados & Unidades e data \\
+\midrule
+QP1, QP4 & Estudo de caso: retrato consolidado do experimento de 19 de outubro & 34 achados, 22/10 \\
+QP2 & Estudo de caso: correções geradas, aplicação na ponta e builds & 11 correções, 7 com build \\
+QP3 & Levantamento no GitHub de pull requests e issues para achados do RVSec, três origens (Tabela~\ref{tab:origin}) & 49 PRs, 10 issues, 18/11 \\
+QP5 & Rastros de prompts das execuções do estudo de caso & 34 achados, 11 execuções \\
+QP6 & Comparação com agentes de programação (registrada de antemão) & 20 unidades (24 achados), 4 execuções por unidade \\
+QP7 & RVSec sobre APKs originais e com patch (registrado de antemão) & 45 de 49 PRs, 14--19/11 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Seleção de Casos}
+\label{subsec:selection}
+
+\subsubsection{Estudo de caso datado e levantamento de pull requests}
+
+O estudo de caso reúne 34 achados distintos de 23 APKs, cada um com o
+repositório e o commit de origem do seu APK. Os achados vêm da campanha do grupo do
+RVSec sobre 163 aplicações do F-Droid~\cite{costa2026effectiveness}. Nos dados da campanha, dos 109 usos
+selecionados para acompanhamento no código-fonte, 72 estavam em
+código de biblioteca ausente do repositório no commit analisado, três em uma cópia
+vendorizada de uma biblioteca e 34 no código da própria aplicação (31 usos
+indevidos que a campanha estabeleceu e três vistos em uma única execução, que
+ela deixou indecisos). O estudo de caso combina uma execução base e reexecuções
+direcionadas posteriores, mantendo o resultado mais recente de cada achado; assim, contém 34
+achados, e não 34 execuções independentes, e descreve o que a
+versão de outubro de 2026 decidiu, construiu e gastou, não o que a versão atual
+decidiria; a \researchq{6} mede a configuração fixa da
+Seção~\ref{subsec:frozen}. Essas execuções mantiveram o cache de respostas, de
+modo que uma requisição ao modelo idêntica a uma já respondida foi atendida por
+ele em vez de ser amostrada de novo (no caso da pesquisa na web, apenas dentro
+de uma semana).
+
+Os estados e as respostas dos pull requests foram coletados pela API do GitHub em
+18 de novembro de 2026. A inclusão exige um pull request aberto, uma mudança incorporada ou fechamento
+por um mantenedor; tentativas substituídas que foram fechadas pelo autor ou por um bot são
+excluídas. O BombusMod \#316 é uma incorporação manual, não um merge no GitHub.
+
+Um pull request conta como RVSec quando seu achado vem de um relatório do RVSec,
+rastreado até a execução que produziu o pull request. Os pull requests e as
+issues têm três origens (Tabela~\ref{tab:origin}). Os dados da campanha do grupo do
+RVSec~\cite{costa2026effectiveness} fornecem os 34 achados do estudo de caso;
+oito pull requests e três issues vêm de execuções sobre os seus dados depois de
+16 de setembro de 2026. Nossas próprias execuções de 8 de agosto a 16 de
+setembro de 2026, sobre relatórios do RVSec anteriores à campanha, produziram
+15 pull requests e cinco issues; oito desses pull requests tratam de achados do
+estudo de caso, que a campanha relatou de novo, e se ligam a eles pela
+identidade do achado. Nossas filas do RVSec produziram os outros 26 pull
+requests (abertos de 16 de outubro a 7 de novembro) e duas issues: cada
+aplicação foi executada uma vez sob o RVSec, com Monkey e APE, por 600
+segundos, com as especificações criptográficas e de TLS, e apenas achados no
+código da própria aplicação foram analisados. Os candidatos das filas foram
+aplicações do F-Droid e, depois, aplicações Android do GitHub sem receita no
+F-Droid, preferindo aquelas cujo código criptográfico executa sem conta; mais
+tarde, exigiu-se também que seus repositórios estivessem ativos e tivessem
+incorporado, nos doze meses anteriores, um pull request de um colaborador
+externo.
+
+\begin{table}[tb]
+\centering
+\caption{Origem dos pull requests, das issues, das unidades da comparação e
+dos casos da validação dinâmica. Pull requests e issues são atribuídos pela
+execução que os produziu; as unidades da comparação, pela fonte do seu achado.
+Estados em 18 de novembro de 2026: incorporados/fechados/abertos. QP7: casos
+executados/rotulados como corrigidos.}
+\label{tab:origin}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{3.0cm}rcrrc}
+\toprule
+Origem & PRs & Inc./Fech./Abertos & Issues & QP6 & QP7 \\
+\midrule
+Nossas execuções sobre relatórios anteriores do RVSec (8/8--16/9) & 15 & 6/4/5 & 5 & 0 & 12/6 \\
+Campanha do grupo do RVSec (após 16/9) & 8 & 4/1/3 & 3 & 10 & 7/5 \\
+Nossas filas do RVSec (16/10--7/11) & 26 & 11/5/10 & 2 & 10 & 26/22 \\
+\midrule
+Total & 49 & 21/10/18 & 10 & 20 & 45/33 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A Tabela~\ref{tab:sample} apresenta o inventário.
+
+\begin{table}[tb]
+\centering
+\caption{Inventário de casos e sobreposição (as contagens de PRs e de achados usam unidades diferentes).}
+\label{tab:sample}
+\footnotesize
+\begin{tabular}{p{6.1cm}r}
+\toprule
+Componente do inventário & $n$ \\
+\midrule
+Achados consolidados & 34 \\
+Registros de PRs publicados elegíveis & 49 \\
+Registros de PRs com identidade de achado completa & 48 \\
+Achados sobrepostos, mantidos uma única vez & 15 \\
+Achados adicionais de PRs totalmente vinculados & 32 \\
+\quad das nossas filas do RVSec & 26 \\
+\quad das nossas execuções anteriores & 6 \\
+União de achados totalmente vinculados & 66 \\
+Identificadores de APK distintos nessa união & 53 \\
+Registros de PRs com vínculos de origem incompletos & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A correspondência usa a tupla completa do achado e a URL publicada, a identidade do retorno
+ou os metadados de origem, nunca apenas o pertencimento ao repositório; vínculos não resolvidos permanecem
+visíveis em vez de receberem identidades inventadas. Os 48 registros com
+identidade completa correspondem a 47 achados, 15 deles sobrepostos ao estudo de caso,
+de modo que a união contém 66 achados de 53 rótulos de APK. O HTTP Shortcuts \#576,
+sem um vínculo completo de APK/classe/método/especificação, permanece no inventário
+de PRs, mas fora desses denominadores. A seleção é intencional (casos
+efetivamente analisados ou submetidos, incluindo retorno negativo), não uma
+amostra representativa. Quarenta e seis dos 49 pull requests tratam de
+especificações criptográficas (a do HTTP Shortcuts \#576, \texttt{SSLContextSpec},
+foi recuperada de uma fonte registrada para a \researchq{7}); três (BombusMod,
+wwwjdic e ntfy), das nossas execuções anteriores, tratam de especificações de
+manipulação de recursos e de sincronização que nossas filas não habilitam. Quatorze pull requests para candidatos identificados
+manualmente, por pesquisa na web e por regras do Semgrep, submetidos durante o
+desenvolvimento, são relatados à parte, como extra, e ficam fora de todas as contagens: em
+18 de novembro de 2026, cinco haviam sido incorporados (aiHub \#279, HomeApp \#114,
+Auto-Shine \#12, SlimBook \#3 e aaf-easydiary \#253), dois estavam abertos e
+os mantenedores fecharam sete.
+
+\subsubsection{Procedência de APKs e revisões}
+
+O RVSec observa um APK, mas o \system{} corrige um commit, por isso cada achado
+registra o repositório e o commit do seu APK. Dos 26 dos 53 APKs cujo
+binário ainda está disponível, o manifesto coincidiu em 22; os outros quatro são
+builds de depuração cujo pacote traz um sufixo de variante (\texttt{.dev},
+\texttt{.staging}, \texttt{.debug}), dois deles também com um código de versão diferente.
+Para os outros 27, a correspondência é presumida
+(Seção~\ref{subsec:threats}). As aplicações das filas vindas do GitHub sem
+receita no F-Droid foram construídas a partir da ponta do seu branch padrão;
+três dos 49 pull requests vêm delas (TriliumDroid \#177, meshcore-mobile-app
+\#10 e CometOTP \#114). Todos os repositórios estão no GitHub, cuja API é usada
+tanto para publicar quanto para coletar as respostas. Quando o branch base avançou, o
+patch é levado adiante antes de se abrir um pull request
+(Seção~\ref{sec:pipeline}).
+
+\subsection{Procedimentos de Coleta de Dados}
+\label{subsec:collection}
+
+\begin{table}[tb]
+\centering
+\caption{Principais artefatos coletados.}
+\label{tab:artifacts}
+\footnotesize
+\begin{tabular}{p{2.3cm}p{5.0cm}}
+\toprule
+Artefato & Informação usada no estudo \\
+\midrule
+Método extraído & Metadados do achado, código-fonte exato, imports, pontos de chamada,
+contexto da especificação, orientações do repositório \\
+Pacote de evidências & IDs estáveis de evidência, procedência, confiança, relações,
+ambiguidades, exclusões, completude, hashes \\
+Adjudicação & Estados de causa e de impacto, decisão, bloqueios, alegações de suporte,
+testes exigidos \\
+Plano de patch/solução & Arquivos e edições autorizados, invariantes, estado da revisão,
+substituições exatas \\
+Relatório de execução & Worktree/commit base, estado da aplicação, arquivos alterados,
+revisão e erros \\
+Relatório de build & Tarefa, estado, código de retorno, duração, diagnósticos, logs e
+atribuição de falhas \\
+Rastro de prompt & Etapa, requisição/resposta, versões, tokens, latência, cache e
+identificadores de requisição \\
+Cartão julgado & Tipo de entrega, título, texto, diff, indicador de build; notas e observações dos juízes \\
+Reexecução do RVSec & APK original e com patch, violações e cobertura no método alterado pelo patch \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Cada achado guarda os artefatos da Tabela~\ref{tab:artifacts}. Para a
+\researchq{3}, registramos, para os 49 pull requests elegíveis e as 10 issues,
+abertos entre 8 de agosto e 7 de novembro de 2026 (as issues até 5 de novembro), seu
+estado, o merge, quem os fechou
+e se alguém além do autor ou de um bot comentou, revisou ou os
+fechou (uma resposta de mantenedor); as issues são consultas sobre se um pull
+request seria bem-vindo ou relatos de achados sem correção segura. As 23 issues
+abertas em 4 de agosto, um teste com um modelo local, ficam de fora
+(Seção~\ref{subsec:ethics}). Para a
+\researchq{5}, cada chamada rastreada registra seu modelo e os tokens de entrada, de entrada em cache e
+de saída, e é atribuída ao seu achado; as chamadas enviadas a um provedor são precificadas pelos preços
+de tabela e somadas por achado ao longo das execuções do retrato, de 19 e 20 de outubro de 2026, excluindo chamadas feitas para nenhum
+achado e requisições respondidas pelo cache de respostas, que não têm custo. Para a \researchq{6}, cada execução de agente guarda sua entrega, diff, log de
+build, log de eventos e tokens, além da fase de porte no caso de um pull request; a
+chave cartão-braço é mantida separada dos juízes. Para a \researchq{7}, cada caso
+guarda os dois APKs, o registro do build com patch e todos os relatórios do RVSec.
+
+\subsection{Procedimentos de Análise de Dados}
+\label{subsec:analysis}
+
+Mantemos o resultado mais recente de cada achado sem agregar tentativas, e o estado do pull request
+e o retorno separados desse retrato; o inventário legível por máquina guarda
+caminhos de origem, base da correspondência, URLs dos PRs, disponibilidade do binário, pacote do manifesto
+e versão. Uma proposta com build válido não é necessariamente correta, segura,
+aceita ou livre do relato do detector (verificado para os pull
+requests publicados na \researchq{7}, apenas nos caminhos que os exploradores alcançam), e um pull request
+fechado não é necessariamente um patch errado (comportamento intencional, política, uma
+mudança já aplicada ou incorporação manual). Por isso evitamos uma taxa de sucesso
+agregada. Os desfechos de \researchq{1} e \researchq{4} são as decisões
+registradas pelo pipeline; quando o texto chama uma decisão de correta ou não,
+essa é a leitura do autor sobre as evidências da execução. As razões de
+fechamento da Tabela~\ref{tab:closures} foram codificadas pelo autor a partir das
+palavras de cada mantenedor, uma razão por pull request, sem um segundo
+codificador.
+
+\subsection{Configuração Fixa e Unidades da Comparação}
+\label{subsec:frozen}
+
+A comparação executa o {\system} em uma configuração fixa: uma única versão da biblioteca
+(quatro de suas 80 execuções, que haviam falhado por defeitos de
+implementação, foram reexecutadas depois da correção desses defeitos), \texttt{gpt-6.1-terra} em todas as etapas, com esforço de raciocínio
+alto e limite de saída de 32.768 tokens, no nível Flex, com todo patch
+passando por build e um teto de US\$~2 por execução. Uma execução só conta quando o manifesto do
+experimento (modelo, prompts, schemas, políticas, especificações, repositório de aprendizado,
+corpus de pesquisa, commit) coincide. Aplicam-se três controles de vazamento: o próprio
+repositório da unidade é excluído (nem as respostas dos seus mantenedores nem o que execuções
+anteriores aprenderam ali chegam a qualquer prompt, enquanto as respostas de outros repositórios à
+mesma regra permanecem, e os agentes do segundo bloco recebem as mesmas); o
+repositório de aprendizado guarda imports verificados, mas nenhuma tentativa anterior; e nenhuma resposta
+de uma execução anterior é reutilizada, exceto a pesquisa na web compartilhada, no nível da regra, do
+corpus registrado, sendo o caso da própria unidade sempre pesquisado de novo; dentro de
+uma execução, uma requisição que a análise de uma unidade repete sem alteração, como
+em um replanejamento, reutiliza a primeira resposta.
+
+O modelo foi escolhido por uma verificação descritiva: oito unidades (dez achados de
+seis aplicações) foram reexecutadas com \texttt{gpt-5.6-terra}, usado até
+2 de novembro de 2026, e com \texttt{gpt-6.1-terra}
+sob as mesmas configurações. Ambos fizeram 83 chamadas, com custo de US\$~6,31 e US\$~2,43
+aos preços de tabela (US\$~2,71 para o \texttt{gpt-6.1-terra} com seu preço de escrita em cache
+e a taxa de busca); concordaram em quatro das oito unidades. A amostra é pequena demais para comparar a qualidade das decisões;
+o custo menor sustentou a troca.
+
+As 20 unidades de análise foram sorteadas em 13 de novembro de 2026 com uma semente registrada.
+Dez vêm de pull requests publicados cuja execução original terminou com um
+rascunho com commit e build bem-sucedido, estratificados pelo estado nessa data: três incorporados, cinco
+abertos, dois fechados pelo mantenedor. Dez vêm dos 45 achados distintos do estudo
+de caso (34) e de uma comparação exploratória anterior com agentes (12, um deles
+em comum), que o pipeline analisa novamente, excluindo métodos que também
+aparecem na população de pull requests dos dez primeiros: nove sem
+pull request e um cujo pull request o mantenedor fechou. Por origem
+(Tabela~\ref{tab:origin}), dez unidades vêm da campanha do grupo do RVSec (duas
+delas entre as unidades de pull request) e dez das nossas filas (oito). Uma unidade é um achado, ou
+vários achados que o pipeline reúne em um único patch
+(Seção~\ref{sec:pipeline}): quatro unidades reúnem dois achados cada, duas dentro
+de um mesmo método e duas em dois métodos de uma mesma classe.
+
+\subsection{Comparação com Agentes de Programação}
+\label{subsec:protocol}
+
+\emph{Braços.} Cinco braços de agentes, em dois blocos, são comparados com o {\system} (braço
+C), em três configurações: o Codex CLI com \texttt{gpt-6.1-terra}
+(o modelo do {\system}), o Claude Code com Claude Sonnet 5.5 e o Codex CLI
+com \texttt{gpt-6.1-sol}. No primeiro bloco (T, S, O), cada agente recebe
+o achado e o repositório e faz uma única entrega, julgada no commit analisado,
+sem porte; no segundo (TP, SP2), as duas primeiras configurações
+recebem também o processo do {\system} como instruções e portam seus pull requests
+para a ponta do branch. Todos executam com esforço alto, quatro vezes por unidade. T, TP e C
+compartilham o modelo, de modo que suas diferenças refletem as instruções e o local onde o
+processo é executado (uma única sessão, ou etapas separadas com verificações determinísticas
+entre elas). Uma execução parcial do {\system} com Claude Sonnet 5.5 (17 das 40
+execuções planejadas) não é comparada; seus cartões entram apenas na concordância
+entre os juízes e na sondagem de cegamento do primeiro bloco.
+Um terceiro braço do segundo bloco, com \texttt{gpt-6.1-sol}, foi interrompido após 25 de
+suas 80 execuções, antes que qualquer uma fosse julgada, quando a cota da assinatura se esgotou,
+e não é comparado (um desvio declarado).
+
+\emph{Fase 1.} Cada execução parte de um checkout limpo do commit analisado,
+sem remoto, credenciais ou memória, com limite de 60 minutos, busca na web
+e o comando de build do {\system}. O prompt fornece as linhas do relatório do RVSec, pede
+exatamente uma entrega (pull request, issue ou nada a enviar) e enuncia
+as regras de texto do {\system}. O prompt do segundo bloco acrescenta a regra publicada
+de cada relatório, as respostas de mantenedores de outros repositórios a ela e as entradas que o {\system}
+lê, e descreve cada etapa em ordem (evidências, pesquisa, decisão,
+planejamento, rascunho, verificações, revisão de comportamento, novo rascunho e replanejamento, build,
+texto). A primeira versão do braço com Claude Sonnet, o SP, pedia, como o TP,
+anotações etapa a etapa; as salvaguardas do modelo no Claude Code interromperam a
+maioria de suas execuções, por isso o SP2 usa o prompt sem esse pedido. Um prompt
+não consegue reproduzir contextos separados por etapa, validadores e
+novas tentativas impostos por código, nem o corpus de pesquisa.
+
+\emph{Fase 2.} Assim como faz o {\system} (Seção~\ref{sec:pipeline}), os pull requests
+do segundo bloco vão para a ponta única da unidade, obtida das execuções do {\system}:
+primeiro um merge de três vias, com build sem o agente quando não há conflito; havendo conflito, o
+mesmo agente, com o mesmo modelo e esforço, informa o patch como portado, já corrigido ou
+abandonado. ``Já corrigido'' só se mantém quando uma verificação determinística encontra as
+linhas adicionadas presentes e as linhas removidas ausentes na ponta; caso contrário, ele é
+abandonado. Os tokens de ambas as fases entram no custo.
+
+\emph{Cartões e juízes.} Cada entrega se torna um cartão (tipo, título, texto,
+diff em relação ao commit analisado, indicador de build), despojado de assinaturas,
+identificadores, nomes de ferramentas e vocabulário do pipeline, o que é garantido por um lint. Dois
+juízes, Claude Opus 5.5 (principal) e \texttt{gpt-6.1-sol}, com esforço alto,
+sem acesso à web e com um checkout somente leitura, pontuam todos os cartões de uma unidade em
+ordem aleatória, pois a ordem em que os candidatos são apresentados pode mudar
+um veredito~\cite{wang2024fair}. As notas são: patch de 0 (rejeitar) a 3 (mergeável como
+está), precisão do texto de 0 a 2 e a justificativa de uma issue ou abstenção
+de 0 a 2. A pontuação final é a acordada, ou a do Opus quando divergem. Um
+modelo tende a favorecer suas próprias gerações~\cite{panickssery2024selfpref},
+e cada juiz é próximo de alguns braços: o GPT-6.1 Sol é o modelo de O e vem do
+provedor dos modelos de T, TP e {\system}, enquanto o Claude Opus 5.5 vem do
+provedor dos de S e SP2; por isso, a concordância entre os juízes é relatada
+ao lado da pontuação final. A pontuação segue uma
+referência escrita por unidade (o que um patch aceitável deve mudar e não deve
+quebrar), redigida pelos juízes e escrita sem nenhuma resposta de mantenedor.
+
+\emph{Aceitabilidade.} Uma execução é aceitável quando entrega uma issue ou uma
+abstenção, ou um pull request com patch de pelo menos 2 e texto de pelo menos 1,
+com build na ponta após o porte (primeiro bloco: no commit analisado); uma
+falha de build que o código não modificado também apresenta não é atribuída ao patch. Um pull
+request cujo porte encontrou a correção já presente na ponta, ou que foi abandonado, nunca
+é enviado e é julgado apenas pelo patch (pelo menos 2); essa regra foi definida
+depois que os resultados foram vistos e é declarada como desvio.
+Uma execução que falhou conta 0. A medida de um braço é a fração de execuções aceitáveis por
+unidade, com média sobre as unidades, sob duas leituras: a leitura completa julga o
+cartão inteiro, como acima, e a leitura só do patch oculta título e descrição
+(aceitável: patch de pelo menos 2 e com build; issues e abstenções não julgadas e
+aceitáveis). Para o {\system}, um pull request é qualquer correção gerada, a unidade contada
+na \researchq{1}: um rascunho com commit, mesmo um que o pipeline reteria, que
+precisa passar no build na ponta, salvo quando a ponta já tinha a correção ou
+não tinha mais o código (então é julgado apenas pelo patch). Como issues e abstenções sempre
+contam, a medida recompensa a abstenção (um braço que nunca propõe obtém 1),
+por isso relatamos também, por braço, os pull requests propostos, julgados aceitáveis e
+julgados inaceitáveis (propostos menos aceitáveis), e as unidades com pelo menos um
+pull request aceitável. ``Aceitável'' é o veredito dos juízes, não o de um
+mantenedor.
+
+\emph{Cegamento.} Uma sessão separada do juiz principal, recebendo um cartão por
+vez, tenta identificar seu braço em cartões completos e só de patch, relatando sua
+acurácia geral e por palpite. Ela foi executada sobre os cartões do primeiro bloco e do {\system}
+e, antes que qualquer pontuação do segundo bloco fosse lida, sobre 10
+cartões por braço de TP, SP2 e {\system} em cada visão (um acréscimo declarado).
+
+\emph{Custo e análise.} O custo é uma referência, não um critério: os agentes são
+precificados pelos preços de tabela com a taxa de busca na web (os agentes rodaram em assinaturas,
+então esse é o custo dos mesmos tokens pela API), e o {\system} pelo que o
+nível Flex cobrou e pelo preço de tabela. Com 20 unidades e quatro réplicas, nenhum
+teste estatístico é aplicado; relatamos as pontuações finais, a concordância entre os juízes
+(kappa de Cohen) e as diferenças observadas. O RVSec não entra nas pontuações, pois apenas
+os patches publicados do {\system} foram reexecutados (\researchq{7}).
+
+\subsection{Validação Dinâmica dos Pull Requests Publicados}
+\label{subsec:dynval}
+
+O procedimento da \researchq{7} foi registrado em 15 de novembro de 2026, antes que qualquer
+caso novo fosse construído ou executado; ele estende um piloto com as seis prévias do retrato que geraram um APK, extensão
+decidida quando os resultados do piloto já eram conhecidos. Dos 49 pull requests da
+Tabela~\ref{tab:pr-state}, dezesseis são excluídos com motivo registrado:
+especificação fora do conjunto criptográfico e TLS que o RVSec verifica (três), ausência de
+identidade ou metadados do pipeline registrados, nenhuma linha correspondente do detector no
+método relatado, nenhum build que produza o APK analisado, ou um pull request
+que trata de outro achado. Os 33 restantes são 28 casos novos e os cinco
+casos do piloto cujo patch validado é o do pull request publicado (quatro
+corrigidos e o BitBanana, inconclusivo), que o piloto executou três vezes com
+as mesmas configurações do RVSec (o piloto usou um JDK fixo; os casos novos o
+escolhem como o pipeline faz). O caso PassNotes do piloto verificou outro achado
+e outro patch que não os do keepassvault \#347, acrescentado depois como caso
+próprio.
+
+O APK original e o APK com patch são construídos a partir do mesmo commit e da mesma tarefa Gradle,
+sem minificação; o patch é o diff público do pull request em sua
+base de merge, ou o diff do pipeline quando idêntico. O RVSec é executado em cada APK em um
+emulador limpo por 600 segundos, com Monkey e APE e suas especificações criptográficas e
+de TLS. Cada caso recebe uma repetição, e um caso inconclusivo ou
+que não se reproduz recebe uma segunda, se houver tempo. Um build com falha é tentado novamente
+uma vez e, depois, relatado como não construído, assim como um patch que não se aplica; o
+código da aplicação nunca é editado. Os rótulos seguem uma regra fixada antes das
+execuções: \emph{base não reproduz} (fora da contagem) quando o APK original
+não mostra violação da especificação no método em nenhuma repetição;
+caso contrário, \emph{não corrigido} quando o método com patch relata uma em alguma
+repetição, \emph{corrigido} quando ele executa sem nenhuma e
+\emph{inconclusivo} quando nunca executa. Os resultados significam ``a violação
+relatada não aparece mais no método com patch'', e não ``o RVSec não relata mais
+a aplicação''. Casos não concluídos até 18 de novembro de 2026
+(19 de novembro para os seis pull requests recuperados e as repetições extras
+descritas abaixo) são relatados como não
+executados.
+
+\emph{Revisão dos rótulos.} Após as execuções, todo rótulo diferente de
+\emph{corrigido} foi revisado com base nas execuções, no diff do pull request e no
+código-fonte original, e corrigido quando o rótulo da regra descrevia mal o caso;
+o rótulo da regra é mantido ao lado. Quando o método com patch nunca executa, o
+caso é \emph{corrigido} se o patch removeu a chamada governada de seu arquivo ou
+desativou, por padrão, a condição que protege todas as chamadas do método, e
+\emph{não corrigido} se a violação relatada aparece em outro método do mesmo
+arquivo. Uma mensagem relatada que desapareceu, deixando no método apenas
+mensagens da especificação que o APK original já mostrava, é \emph{corrigido}; um
+pull request que altera apenas testes é rotulado como tal. Um caso é \emph{não
+verificável} quando a violação relatada não aparece em nenhum dos APKs e sua
+mensagem não é emitida por nenhuma execução da validação: o relatório veio de um
+conjunto de regras do RVSec anterior ao da campanha.
+
+\emph{Acréscimos após o registro.} Os passos a seguir não faziam parte do
+procedimento registrado. O achado do FreeOTP, um dos do estudo de caso, veio da
+campanha do grupo do RVSec~\cite{costa2026effectiveness}; no relatório original
+da campanha, apenas o DroidBot, o Humanoid~\cite{li2019humanoid} e o
+ARES~\cite{romdhana2022ares} alcançaram o método, de modo que seus dois pull
+requests são também executados com o DroidBot, um dos exploradores do relatório
+original, por 300 segundos e três repetições, ao lado dos resultados de Monkey e
+APE (o Humanoid e o ARES não puderam ser executados aqui). Casos inconclusivos e
+casos cujo APK original não reproduziu a violação receberam mais uma repetição,
+rotulados com todas as repetições juntas: uma terceira para o Read You \#1334,
+o Your Local Weather \#209, o InterTune \#52 e o News \#1716, e uma quarta para
+o BitBanana, inconclusivo no piloto; no Your Local Weather, o APK original
+mostrou a violação apenas na terceira. Depois que os resultados dos
+33 já eram conhecidos, 13 pull requests excluídos foram acrescentados: sete cujo
+relatório registrado usava um formato de mensagem anterior do RVSec, ao qual
+nenhuma linha atual do detector correspondia, rotulados apenas pela especificação
+(contando qualquer violação dela no método), e seis cujo APK analisado ou
+identidade do achado foi recuperado dos registros do pipeline; doze deles foram
+construídos e executados com o RVSec atual nas mesmas configurações. Dos 33 casos
+rotulados ao final como corrigidos (Tabela~\ref{tab:dynval}), 27 foram
+classificados, 21 deles com uma segunda leitura adversarial, como
+alterando o valor ou material governado, alterando a sequência de chamadas ou a
+API para a forma exigida, removendo a chamada governada, ou apenas realocando-a
+para fora da visão do monitor; essa classificação é descritiva, e os seis
+rotulados como corrigidos depois dela não foram classificados
+(Seção~\ref{subsec:rq7}). Ao todo, 46 dos 49
+pull requests entraram na validação: 45 foram executados, o MetadataRemover \#264
+não compila no seu commit base e os três fora do conjunto do RVSec continuam
+excluídos.
+
+\section{Resultados}
+\label{sec:results}
+
+\researchq{1}, \researchq{2} e \researchq{4} usam o retrato de outubro de
+2026, e \researchq{5} o uso de modelo de seus achados: os 34 achados
+do experimento de 19 de outubro de 2026, com o resultado da execução mais
+recente de cada um no experimento consolidado (19 e 20 de outubro); o
+detalhamento dos pull requests por especificação na \researchq{4} usa o
+levantamento de 18 de novembro da \researchq{3}. Essas execuções usaram várias
+revisões da biblioteca com \texttt{gpt-5.6-terra} no nível padrão, antes da
+configuração congelada (Seção~\ref{subsec:frozen}) e de várias regras de roteamento
+(Seção~\ref{sec:pipeline}): um estudo de caso datado de uma versão anterior, não uma
+medição da atual. \researchq{3} relata pull requests e issues
+em 18 de novembro de 2026; \researchq{6}, a comparação da
+Seção~\ref{subsec:protocol}; \researchq{7}, as reexecuções do RVSec sobre os pull
+requests publicados, de 14 a 19 de novembro de 2026.
+
+\subsection{\researchq{1}: Análise dos Achados e Possibilidade de Correção}
+\label{subsec:rq1}
+
+A adjudicação dos 34 achados registrou 17 decisões de propor uma correção
+revisável (\texttt{MULTI\_FILE\_FIX\_PROPOSED\_FOR\_REVIEW}), 13 de que não
+havia correção segura (\texttt{NO\_SAFE\_FIX}) e quatro de que um contrato
+externo de digest impedia uma correção apenas no cliente. A Tabela~\ref{tab:adjudication} mostra
+onde cada achado terminou, como registros locais: ali, uma issue é uma proposta mantida
+para revisão; a publicação é uma etapa separada, fora das execuções do retrato.
+
+\begin{table}[tb]
+\centering
+\caption{Resultado dos 34 achados no retrato de outubro de 2026 (registros
+locais).}
+\label{tab:adjudication}
+\footnotesize
+\begin{tabular}{p{6.1cm}r}
+\toprule
+Resultado registrado & $n$ \\
+\midrule
+Correção gerada & 11 \\
+\quad com commit na ponta do branch e build bem-sucedido\textsuperscript{a} & 7 \\
+\quad aplicada; build falhou, como na base não modificada & 1 \\
+\quad não aplicável ao branch base atual & 3 \\
+Proposta local de issue para os mantenedores & 16 \\
+Falso positivo reconhecido & 3 \\
+Evidência insuficiente & 3 \\
+Violação confirmada sem correção segura & 1 \\
+\midrule
+Total & 34 \\
+\bottomrule
+\end{tabular}
+\\[2pt]\raggedright\scriptsize\textsuperscript{a}Seis até gerar um APK; no Feeder,
+apenas o módulo da aplicação foi compilado.
+\end{table}
+
+As três correções não aplicáveis encontraram um branch base que já havia mudado,
+em dois casos por pull requests mergeados deste próprio trabalho, e por isso
+nenhuma produziu um pull request no retrato. A base do Nextcloud Cookbook continha
+o \#204 (mergeado em 9 de agosto de 2026). O mantenedor do Giggity havia feito uma
+mudança equivalente de forma independente e fechado o \#543. No DSub2000, o método
+relatado havia sido alterado pelo \#160 (mergeado em 31 de agosto de 2026), que
+tratou outra mensagem da mesma regra, mas a base ainda inicializava o TLS com um
+trust manager que aceita tudo; uma verificação rejeitou a adaptação porque ela
+removia o que a opção de conexão insegura do usuário ativava, e a etapa de
+porte se absteve. Uma execução posterior abriu o DSub2000 \#178 para esse
+trust manager em 22 de outubro; ele foi retirado no mesmo dia, depois que o
+mantenedor respondeu que ignorar a verificação de certificados é o propósito
+dessa opção, e não está entre os 49 pull requests.
+
+Seis decisões de proposta terminaram como propostas de issue porque a geração foi
+bloqueada: os rascunhos precisavam de credenciais de produção que o repositório não tem (MTG
+Familiar), alteravam um algoritmo exigido por protocolo (dois no mOTP), alteravam
+nomes de bancos de dados persistidos (RedReader), sobrescreviam um tamanho de chave RSA escolhido pelo chamador
+(Droid SCEP) ou chamavam métodos verificadores inexistentes (BitBanana, cuja
+migração chegou a um pull request por meio de seu achado irmão): uma decisão positiva
+de planejamento é mais fraca que uma correção validada. As outras dez vieram de
+decisões de ausência de correção segura ou de contrato externo; a biblioteca atual abre uma
+issue para esses casos apenas com impacto de segurança confirmado
+(Seção~\ref{sec:pipeline}), que, pelos registros do retrato, faltaria a nove deles.
+
+Quinze dos 34 achados também têm um pull request publicado (16 pull requests;
+Tabela~\ref{tab:sample}); em 18 de novembro de 2026, os pull requests de cinco
+achados estavam incorporados, os de cinco fechados e os de cinco abertos,
+contando o DSub2000 como incorporado pelo \#160. Nove desses pull requests não
+são eventos posteriores: foram abertos a partir de análises anteriores dos
+mesmos achados, antes do retrato (de 8 de agosto a 12 de outubro de 2026), e
+seis já estavam mergeados ou fechados quando ele foi executado. Execuções
+posteriores mudaram alguns resultados. O achado \texttt{CipherSpec} do FreeOTP,
+sem correção segura no retrato, foi analisado novamente em sete execuções
+posteriores, e o FreeOTP mergeou um teste (\#521) e depois a correção de
+produção (\#524). O teste veio da primeira dessas execuções: sua
+adjudicação deixou a causa em aberto, e uma regra determinística, não usada por
+nenhuma execução do retrato, apoiou a causa na observação em tempo de execução
+do RVSec e elevou a resposta à decisão apenas de revisão
+\texttt{MULTI\_FILE\_FIX\_}\allowbreak\texttt{PROPOSED\_FOR\_REVIEW}. A correção
+de produção veio de uma execução posterior, cuja adjudicação confirmou a causa. A proposta de issue do Droid SCEP tornou-se o pull request \#2. Seis issues
+tratam desses achados. As do Critical Maps (\#379, depois fechada por nós, e
+\#380, ainda aberta) e do OpenBible (\#190) foram abertas em agosto, antes do
+retrato. MTG Familiar \#669 e DSub2000 \#177, esta sobre o trust manager do
+DSub2000, vieram em 20 de outubro de uma execução de issues separada, fora do
+experimento consolidado, e RedReader \#1394 veio em 21 de outubro.
+Para o WiFiAnalyzer, o retrato recusou uma correção e não registrou impacto de segurança,
+o motivo do mantenedor para fechar o \#618, mas ainda assim propôs uma issue, o que
+o roteamento atual não faria; para o \texttt{sha1} do RedReader, propôs uma correção
+cuja premissa o mantenedor havia rejeitado ao fechar o \#1373.
+
+\textbf{Resposta à \researchq{1}.} No retrato de outubro, 17 dos 34 achados
+tiveram uma decisão de propor correção e 11 chegaram a uma correção gerada: sete
+tiveram commit na ponta do branch e build bem-sucedido, uma foi aplicada mas
+falhou no build, como também o commit não modificado, e três não eram aplicáveis
+porque a base havia mudado, duas delas por pull requests anteriores deste
+trabalho. Dezesseis terminaram como propostas locais de issue
+(Tabela~\ref{tab:adjudication}). Essas são classificações de uma versão anterior da biblioteca;
+execuções posteriores e respostas de mantenedores mudaram várias delas.
+
+\subsection{\researchq{2}: Aplicação e Build}
+\label{subsec:rq2}
+
+As 17 decisões de proposta produziram 11 correções geradas
+(Tabela~\ref{tab:adjudication}): oito aplicadas na ponta do branch como prévias
+locais de pull request e três não aplicáveis a ela. Sete prévias tiveram
+commit e build bem-sucedido, seis até gerar um APK (no Feeder, apenas o código-fonte do módulo da aplicação
+foi compilado). A oitava, MetadataRemover, falha no processamento de anotações
+do Hilt com o mesmo erro no commit não modificado.
+
+Uma auditoria das prévias encontrou problemas que nenhum build revela: o BetterUntis renomeia
+arquivos de cache persistidos sem declarar essa decisão de compatibilidade, o PassNotes
+mantém um verificador de hostname que aceita tudo em seu branch de debug, e o
+\texttt{trustAllCerts} do Feeder valida certificados após o patch, embora mantenha
+seu nome. No BitBanana, um candidato inicial compilava omitindo leitores de credenciais
+afetados pelo novo verificador armazenado; a entrega de 20 de outubro (um
+auxiliar e seis telas de credenciais) mantém a verificação legada, substitui um
+verificador armazenado apenas após um desbloqueio bem-sucedido e gerou um APK. Nenhum
+fluxo da aplicação foi testado; a \researchq{7} verifica apenas se a violação
+relatada ainda aparece no método alterado pelo patch em tempo de execução.
+
+\textbf{Resposta à \researchq{2}.} Das 11 correções geradas, oito foram aplicadas
+na ponta do branch e sete delas tiveram build bem-sucedido, seis até gerar um APK;
+a oitava também falha no commit não modificado, e três encontraram uma base que
+já havia mudado. O build
+não revelou os problemas que a auditoria encontrou em três prévias.
+
+\subsection{\researchq{3}: Respostas dos Mantenedores e Motivos Relatados}
+\label{subsec:rq3}
+
+A Tabela~\ref{tab:pr-state} apresenta o estado dos 49 pull requests em 18 de
+novembro de 2026; 67\% receberam resposta de alguém que não o autor. Os
+incorporados incluem o BombusMod \#316, aplicado manualmente, e o FreeOTP \#521,
+que apenas adiciona um teste (a mudança de produção, \#524, também foi mergeada).
+Pela origem da execução de cada pull request (Seção~\ref{subsec:selection}), 8
+vêm da campanha do grupo do RVSec (4 incorporados, 1 fechado, 3 abertos), 15 de
+nossas análises de relatórios do RVSec anteriores a ela (6, 4, 5) e 26 de
+nossas próprias filas do RVSec (11, 5, 10); a divisão é descritiva, pois as
+filas favoreceram repositórios que aceitam pull requests externos.
+
+\begin{table}[tb]
+\centering
+\caption{Estado dos 49 pull requests do RVSec em 18 de novembro de 2026.}
+\label{tab:pr-state}
+\begin{tabular}{lr}
+\toprule
+Estado & PRs \\
+\midrule
+Incorporados (20 mergeados, 1 manualmente) & 21 \\
+Fechados após revisão                  & 10 \\
+Abertos (16 sem resposta)            & 18 \\
+\midrule
+Total                                & 49 \\
+Receberam resposta de mantenedor       & 33 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Das dez issues abertas para achados do RVSec (três para achados da campanha
+do grupo, cinco de nossas análises anteriores e duas de nossas filas), duas,
+abertas em setembro junto com
+os pull requests do BombusMod e do wwwjdic, perguntavam se os mantenedores aceitariam
+um pull request; nenhuma recebeu resposta, e nós fechamos ambas. As outras
+oito descreviam um achado sem correção segura e perguntavam como tratá-lo; quatro
+receberam resposta e duas continuam abertas. Três dessas respostas forneceram o que
+a regra não tinha como saber (um fallback mantido por usabilidade, servidores
+autoassinados dos usuários, um algoritmo de checksum definido por uma fonte remota), e o mantenedor do DNSToggle
+corrigiu o achado em uma release.
+
+\begin{table}[tb]
+\centering
+\caption{Motivos apresentados para os 10 pull requests fechados sem
+incorporação.}
+\label{tab:closures}
+\footnotesize
+\begin{tabular}{p{5.8cm}r}
+\toprule
+Motivo declarado & PRs \\
+\midrule
+Digest usado fora de um papel de segurança (checksum, nome de cache ou de arquivo,
+identificador) & 6 \\
+Premissa do detector não se sustenta (o provedor já gera um IV aleatório) & 1 \\
+A mudança apenas satisfaz a regra; o código existente é equivalente & 1 \\
+Mudança equivalente já feita no repositório original & 1 \\
+Projeto não aceita pull requests & 1 \\
+\midrule
+Total & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As respostas dos mantenedores acrescentam conhecimento da aplicação que falta a uma regra genérica
+(Tabela~\ref{tab:closures}). Os seis fechamentos relativos a digest (WiFiAnalyzer, rssreader,
+whoBIRD, BetterUntis, RedReader, InterTune) contestaram a substituição de MD5 ou SHA-1
+usados como checksum, nome de arquivo de cache ou identificador. No entanto, o mesmo tipo de
+mudança foi mergeado em outros projetos: no AMARadio, em nomes de arquivos de cache (\#122);
+no ShortMessageSecure, em identificadores estáveis de lista, mudança que seu mantenedor considerou
+criptograficamente irrelevante, mas uma melhoria razoável (\#89); e no NotallyX,
+na verificação de hash de exportação (\#1167). Se tal mudança é bem-vinda é uma
+decisão do mantenedor, não uma propriedade da regra; por isso, o {\system} ainda propõe
+uma mudança correta para uma violação sem impacto de segurança e registra a
+resposta.
+
+Outras respostas mudaram o patch. No Crazyflie, a revisão redirecionou um patch de um
+auxiliar de TLS para a remoção do auxiliar obsoleto; no ShortMessageSecure \#83,
+a revisão aceita manteve \texttt{HmacSHA1} e tornou explícito o tamanho da chave.
+O revisor do Session observou que, no Android, ``SSL'' e ``TLS'' selecionam a mesma
+implementação. Entre os pull requests abertos, o mantenedor do Feeder objetou
+que restringir protocolos em uma opção que os usuários ativam quebraria alguns sites,
+e o mantenedor do prim-ftpd concordou em remover o RC4 após testes. As respostas
+chegam a análises posteriores da mesma especificação (Seção~\ref{sec:pipeline}),
+e duas tornaram-se verificações da biblioteca: um IV gerado pelo provedor é tratado como aleatório
+(Amethyst \#4642), e remover protocolos de uma opção de compatibilidade ativada pelo usuário
+conta como regressão (Feeder \#1210).
+
+Três pull requests, de nossas análises de relatórios do RVSec anteriores à
+campanha do grupo, que ainda incluíam regras genéricas de API, tratam de especificações não criptográficas (fechamento de streams no BombusMod
+e no wwwjdic, um mapa sincronizado no ntfy); isso não estabelece cobertura de
+famílias arbitrárias de APIs.
+
+\textbf{Resposta à \researchq{3}.} Em 18 de novembro de 2026, 21 dos 49 pull
+requests haviam sido incorporados, 10 fechados e 18 continuavam abertos
+(Tabela~\ref{tab:pr-state}). A maioria dos fechamentos contestou a relevância de segurança de um
+digest usado fora de um papel de segurança, enquanto mudanças comparáveis de digest foram
+mergeadas em três outros projetos. Issues que relatavam um achado sem patch
+obtiveram resposta em quatro de oito casos. A incorporação e o fechamento devem ser lidos
+à luz desses motivos, e duas respostas que mudaram a premissa de um patch tornaram-se
+verificações da biblioteca.
+
+\subsection{\researchq{4}: Falsos Positivos e Violações sem Impacto de Segurança}
+
+O retrato reconheceu três falsos positivos, cada um em uma
+especificação diferente: Aegis (\texttt{GCMParameterSpecSpec}), mOTP
+(\texttt{SecretKeySpecSpec}) e FreeOTP (\texttt{AlgorithmParametersSpec}),
+um julgamento da análise, e não uma medida da precisão do detector. Oito
+achados eram violações reais de regra sem impacto de segurança: os três
+achados de \texttt{KeyStoreSpec} (Network Survey, Traffic Light, Tokn), que tratam
+da sequência de chamadas que lê uma chave, e não de sua proteção; três dos 12
+achados de \texttt{MessageDigestSpec} (dois no WiFiAnalyzer, um no Giggity),
+que usam um digest fraco como identificador; um achado de \texttt{SSLContextSpec}
+do Nextcloud Cookbook; e o achado de
+\texttt{KeyPairGeneratorSpec} do Droid SCEP. Outros quatro achados de \texttt{MessageDigestSpec}
+estão presos a um contrato externo que a aplicação não pode alterar sozinha
+(dois no Password Monitor, um no OpenBible e um no Critical Maps); seu
+impacto não foi estabelecido em três e foi confirmado em um.
+
+Sete das oito violações sem impacto têm um pull request: Traffic
+Light \#238, Tokn \#138 e Nextcloud Cookbook \#204 foram incorporados;
+Network Survey \#154, WiFiAnalyzer \#618 e Giggity \#543 foram fechados; Droid
+SCEP \#2 está aberto. O Network Survey \#154 foi fechado porque \texttt{getEntry}
+e \texttt{getKey} são equivalentes para aquela chave. No Amethyst \#4642, o
+mantenedor mostrou que o provedor já gera um IV aleatório quando
+\texttt{init} recebe apenas a chave, um valor que o RVSec não consegue rastrear (o patch
+alterava apenas a implementação desktop). A Tabela~\ref{tab:pr-spec} detalha todos
+os pull requests por especificação.
+
+\begin{table}[tb]
+\centering
+\caption{Estado dos 49 pull requests do RVSec em 18 de novembro de 2026, por
+especificação do achado.}
+\label{tab:pr-spec}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrr}
+\toprule
+Especificação & Incorp. & Fechados & Abertos & Total \\
+\midrule
+\texttt{MessageDigestSpec} & 3 & 8 & 1 & 12 \\
+\texttt{SSLContextSpec}    & 4 & 0 & 7 & 11 \\
+\texttt{KeyStoreSpec}      & 5 & 1 & 1 & 7 \\
+\texttt{CipherSpec}        & 4 & 0 & 2 & 6 \\
+Outras dez ou sem registro\textsuperscript{a} & 5 & 1 & 7 & 13 \\
+\midrule
+Total & 21 & 10 & 18 & 49 \\
+\bottomrule
+\end{tabular}
+\\[2pt]\raggedright\scriptsize\textsuperscript{a}O HTTP Shortcuts \#576 não tem
+especificação registrada no levantamento; a recuperada para a \researchq{7} é a \texttt{SSLContextSpec}.
+\end{table}
+
+\textbf{Resposta à \researchq{4}.} O retrato reconheceu três falsos
+positivos, em três especificações, e oito violações sem impacto de
+segurança entre os 34 achados, seis delas em \texttt{KeyStoreSpec} e
+\texttt{MessageDigestSpec}; entre os 49 pull requests,
+\texttt{MessageDigestSpec} também responde por oito dos dez fechamentos, quatro
+deles de achados do estudo de caso. Para digests, a
+questão decisiva é para que o valor é usado, o que uma regra sobre o
+nome do algoritmo não consegue responder, e os mantenedores a responderam de forma diferente em
+projetos diferentes.
+
+\subsection{\researchq{5}: Uso de Modelos e Custo}
+
+Os rastros de prompts das execuções do retrato (19 e 20 de outubro de 2026;
+11 execuções) registram 569 chamadas ao modelo enviadas ao provedor para os 34 achados,
+com custo de US\$~35,71 a preços de tabela, uma mediana de US\$~0,77 por
+achado; requisições
+respondidas pelo cache de respostas não têm custo e não são contadas. Para as
+chamadas contadas, esses valores são um limite superior: todas as chamadas foram atendidas no nível padrão,
+antes do nível Flex, e a entrada em cache do \texttt{gpt-5.6-terra} é cobrada pela
+tarifa integral de entrada. O estudo de caso não foi reexecutado com o modelo
+atual: nas oito unidades da checagem de modelo (Seção~\ref{subsec:frozen}), o
+\texttt{gpt-6.1-terra} custou US\$~2,43, contra US\$~6,31 do
+\texttt{gpt-5.6-terra} a preços de tabela, para as mesmas 83 chamadas, e o nível
+Flex reduz esse preço à metade, de modo que os valores do retrato superestimam o
+que a configuração atual gasta. Eles também somam todas as execuções e
+reexecuções de um achado dentro do retrato, enquanto a comparação relata uma
+única execução de uma unidade, de modo que os dois valores não são diretamente
+comparáveis. Execuções anteriores sobre os mesmos achados, de 30 de agosto de
+2026 até o retrato (946 chamadas, US\$~75,50 a preços de tabela), e
+reexecuções posteriores não estão incluídas. As 11 correções geradas custaram
+US\$~13,19 (37\%), dos quais US\$~11,00 (31\%) foram das sete com commit na
+ponta do branch, e as 16 propostas de issue US\$~17,98 (50\%). Achados com
+evidência insuficiente foram os mais baratos (média de US\$~0,42), e falsos
+positivos custaram em média US\$~0,82, perto da mediana. O custo se concentra
+em achados reexecutados: os dois achados do BitBanana, cuja migração do
+verificador armazenado foi revisada repetidamente, respondem por US\$~10,43. O custo da configuração
+congelada é relatado junto com a comparação (\researchq{6}).
+
+\textbf{Resposta à \researchq{5}.} No retrato de outubro, com o
+\texttt{gpt-5.6-terra} a preços de tabela (um limite superior), analisar um achado
+custou uma mediana de US\$~0,77; as 16 propostas locais de issue ficaram com
+metade do gasto e as 11 correções geradas com 37\%. Na
+configuração congelada usada na comparação (\texttt{gpt-6.1-terra}, nível
+Flex), uma execução de uma unidade de análise custou em média US\$~0,10, ou US\$~0,19 a
+preço de tabela; este é um valor por execução, não comparável à mediana por
+achado acima.
+
+\subsection{\researchq{6}: Comparação com Agentes de Programação e Variação entre Execuções}
+\label{subsec:rq6}
+
+A comparação da Seção~\ref{subsec:protocol} foi executada sobre 20 unidades de análise (24 achados): nove
+unidades sem pull request nosso, três cujo pull request um mantenedor
+havia fechado e oito cujo pull request está aberto ou foi incorporado.
+A Tabela~\ref{tab:optiona} apresenta as entregas de cada braço no commit analisado, o
+destino de cada pull request na ponta do branch e as duas leituras dos juízes.
+
+\begin{table*}[t]
+\centering
+\caption{\system{} e cinco braços de agentes de programação (letras como na
+Seção~\ref{subsec:protocol}) em 20 unidades de análise (24 achados do RVSec), quatro execuções por unidade. Primeiro
+bloco: agentes que receberam o achado e o repositório, julgados no commit analisado. Segundo
+bloco: as mesmas configurações recebendo o processo do \system{} como instruções, com o
+porte para a ponta do branch. As execuções aceitáveis são calculadas como média sobre
+as unidades; uma issue ou uma nota de que nada deveria ser enviado conta como aceitável. A
+leitura completa julga o cartão inteiro; a leitura do patch, apenas o patch. Custo: preço de
+tabela para todos os braços; o \system{} foi cobrado em US\$~0,10 por execução no nível Flex.}
+\label{tab:optiona}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{4.2cm}r|rrr|rr}
+\toprule
+ & & \multicolumn{3}{c|}{Primeiro bloco} & \multicolumn{2}{c}{Segundo bloco} \\
+ & \system{} & Codex Terra & Claude Sonnet & Codex Sol & Codex Terra & Claude Sonnet \\
+ & C & T & S & O & TP & SP2 \\
+\midrule
+Execuções & 80 & 80 & 80 & 80 & 80 & 80 \\
+PR / issue / nada / falha & 31/10/39/0 & 23/8/49/0 & 16/13/51/0 & 15/2/63/0 & 38/16/24/2 & 46/5/27/2 \\
+Unidades com PR (de 20) & 9 & 8 & 6 & 5 & 10 & 15 \\
+\multicolumn{7}{l}{\emph{Pull requests na ponta do branch}} \\
+\quad Portados e com build & 20 & --- & --- & --- & 24 & 34 \\
+\quad Já corrigidos ou código removido & 11 & --- & --- & --- & 2 & 1 \\
+\quad Abstenção ou falha & 0 & --- & --- & --- & 12 & 11 \\
+\multicolumn{7}{l}{\emph{Juízes}} \\
+\quad Aceitáveis, leitura completa & 0,96 & 0,94 & 0,97 & 0,90 & 0,85 & 0,80 \\
+\quad Aceitáveis, leitura do patch & 0,93 & 0,99 & 0,97 & 1,00 & 0,85 & 0,70 \\
+\quad PRs propostos & 31 & 23 & 16 & 15 & 38 & 46 \\
+\quad PRs aceitáveis, completa / patch & 28 / 25 & 18 / 22 & 14 / 14 & 7 / 15 & 28 / 28 & 32 / 24 \\
+\quad Unidades com PR aceitável, completa / patch & 8 / 7 & 6 / 7 & 5 / 5 & 3 / 5 & 8 / 8 & 11 / 8 \\
+Custo por execução, tabela (US\$) & 0,19 & 0,04 & 0,12 & 0,13 & 0,21 & 0,37 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Os 11 pull requests do \system{} cuja ponta já continha a correção ou havia perdido
+o código (AMARadio, ANOTHERpass, NotallyX) não passaram por build e são julgados
+apenas pelo patch;
+sobre os 29 que o \system{} publicaria (ele reteria os outros dois, cujo patch não
+tratava um achado reportado), as leituras são 0,95 e 0,91. Dos 84
+do segundo bloco, 57 foram aplicados sem conflito na ponta, 5 foram portados após um
+conflito e 22 terminaram como já corrigidos ou em abstenção; os quatro do Codex Terra portados
+após um conflito não tiveram build bem-sucedido (o sandbox do agente não conseguia gravar o keystore
+de debug), e seus patches já haviam sido julgados inaceitáveis.
+
+\paragraph{(a) Um agente que recebe o achado e o repositório.} O Claude Sonnet
+pontuou acima do \system{} nas duas leituras; o Codex Terra e o Codex Sol pontuaram
+abaixo dele na leitura completa e acima na leitura do patch. Os
+três propuseram menos pull requests (23, 16 e 15 contra 31), com menos
+julgados aceitáveis na leitura completa (18, 14 e 7 contra 28). Eles não portaram
+seus patches para a ponta, onde um pull request do \system{} ainda pode falhar, nem
+receberam a política do \system{} de que uma alteração correta apenas de regra vale a pena ser proposta.
+
+\paragraph{(b) Um agente instruído a seguir o mesmo processo.}
+Recebendo o processo como instruções, os dois agentes propuseram mais pull requests
+que o \system{} (38 e 46 contra 31) e tiveram tantos ou mais julgados aceitáveis
+na leitura completa (28 e 32 contra 28), em tantas ou mais unidades (8 e 11
+contra 8); na leitura do patch, o braço do Claude Sonnet teve menos (28 e 24
+contra 25). Na leitura completa, também tiveram mais julgados inaceitáveis
+(propostos menos aceitáveis): 10 do Codex Terra e 14 do Claude Sonnet, contra 3
+do \system{}. Sua proporção de execuções aceitáveis foi menor (0,85 e 0,80 contra
+0,96 na leitura completa; 0,85 e 0,70 contra 0,93 na leitura do
+patch), e cada um teve duas execuções com falha.
+O \system{} e os braços Codex Terra compartilham o modelo e, no segundo bloco,
+as entradas e as regras; diferem na execução. O \system{} executa cada etapa como uma
+chamada separada ao modelo, decide se a violação é real e se existe uma correção segura
+antes de qualquer rascunho, oculta a extração da adjudicação e os invariantes do plano
+de quem redige o rascunho, e impõe verificações e novas tentativas em código; o agente
+segue as etapas em uma única conversa e verifica o próprio trabalho.
+O Codex Terra com as instruções encontrou tantos pull requests aceitáveis quanto o
+\system{}, mas teve mais julgados inaceitáveis; a diferença é compatível com a
+execução em etapas e com uma etapa de decisão separada da edição, e não com as
+instruções, que ambos tinham, embora 20 unidades não permitam estabelecê-lo.
+
+O custo de tabela do \system{}
+(US\$~0,19 por execução) inclui suas buscas na web e o porte, assim como o do segundo bloco
+(US\$~0,21 e US\$~0,37) inclui seu porte.
+
+\paragraph{Variação entre execuções.} O \system{} executou cada unidade quatro vezes sem o
+cache de respostas. A classe de entrega (pull request, issue ou nenhuma ação) foi a
+mesma nas quatro réplicas em 16 das 20 unidades, e o desfecho registrado, em
+11. A classe mudou para o HMAC do mOTP e a derivação de chave do Salty (pull request
+ou nenhuma ação) e para a derivação de chave do Winterhold e a configuração TLS do Read You (pull
+request ou issue); em quatro unidades mudou apenas o motivo (por exemplo, nenhuma correção segura vs.\
+contrato externo), e o NotallyX alternou entre uma correção que a ponta já continha e um
+pull request com build bem-sucedido. O custo cobrado variou até 3,8 vezes entre as réplicas
+(Read You, de US\$~0,074 a US\$~0,28, sendo a mais cara encerrada como issue).
+A classe dos agentes foi a mesma nas quatro réplicas em 12 a 17 unidades
+(Codex Terra 12, Claude Sonnet 13, Codex Sol 17, e 17 e 14 no segundo
+bloco). Uma única execução amostra uma
+decisão; diferenças de uma ou duas unidades entre braços estão dentro dessa
+variação.
+
+\paragraph{Juízes e cegamento.} Os juízes concordaram quanto à aceitabilidade com
+$\kappa = 0{,}81$ (491 cartões, 15 deles da execução parcial do \system{} com o Claude
+Sonnet 5.5) e quanto à nota do patch com um $\kappa$ ponderado quadraticamente
+de $0{,}82$ (174 pull requests, 5 dessa execução) na leitura completa. Na sondagem do primeiro bloco
+(16 de novembro de 2026), nos cartões completos o juiz principal apontou o \system{} em
+todos os 8 cartões dele, mas também em 13 dos 24 cartões dos três braços de agentes e em 4
+dos 8 cartões da execução parcial do \system{} com o Claude Sonnet 5.5, com confiança média
+entre 0,28 e 0,35: um palpite padrão, não uma identificação. Nos cartões apenas com o patch, apontou o
+\system{} em 1 de 10. Na sondagem do segundo bloco (10 cartões por braço), apontou o \system{} em 23 de
+30 cartões completos, 9 deles do \system{}, e o Codex Terra em 21 de 30 cartões apenas com o patch,
+8 deles do Codex Terra, com confiança média entre 0,38 e 0,53:
+novamente um palpite padrão.
+
+\textbf{Resposta à \researchq{6}.} (a) Agentes que receberam apenas o achado e o
+repositório propuseram menos pull requests que o \system{} (23, 16 e 15 contra 31),
+com menos julgados aceitáveis na leitura completa (18, 14 e 7 contra 28). Um escore
+por execução que conta issues e desfechos sem ação como aceitáveis, e assim recompensa
+a abstenção, os colocou perto do \system{} ou acima dele (0,90 a 0,97, contra
+0,96). (b) Agentes instruídos a seguir o mesmo processo propuseram mais pull
+requests (38 e 46) e tiveram tantos ou mais julgados aceitáveis na leitura completa
+(28 e 32, contra 28), mas mais julgados inaceitáveis (10 e 14, contra 3 de 31 do
+\system{}); o mesmo escore os colocou abaixo dele (0,85 e 0,80). Com o mesmo modelo
+e as mesmas instruções, a diferença é compatível com executar o processo em
+etapas separadas, com a decisão de agir tomada antes de qualquer rascunho. Ao
+longo de suas quatro execuções por unidade, o \system{} entregou o mesmo tipo de
+resultado em 16 de 20 unidades.
+
+\subsection{\researchq{7}: RVSec nos APKs com patch}
+\label{subsec:rq7}
+
+Nas seis prévias do retrato que geraram um APK (três repetições cada), a violação
+reportada deixou de aparecer no método alterado pelo patch em cinco: Tokn, Traffic Light,
+Network Survey, BetterUntis e PassNotes (cujo APK original a exibiu em uma de
+três; isso verificou o patch da própria execução, que substitui um trust manager
+que aceita tudo, e não o keepassvault \#347 publicado, relatado abaixo). BitBanana foi inconclusivo: seu método só é executado com um bloqueio do app
+configurado, alcançado em uma de três execuções do APK original e em nenhuma do APK com patch.
+A Tabela~\ref{tab:dynval} reporta todos os 49 pull requests: os 45 executados conforme a
+Seção~\ref{subsec:dynval}, o MetadataRemover \#264, cujo repositório não
+compila no commit base do pull request (um plugin do Hilt mais antigo que as
+bibliotecas do Hilt trazidas por uma atualização de dependência; o build do
+patch feito pelo próprio pipeline falhou na mesma etapa, enquanto o commit analisado compilou), e três cuja especificação está fora do conjunto
+do RVSec.
+
+\begin{table}[tb]
+\centering
+\caption{Reexecução do RVSec no APK original e no APK com patch dos 49 pull requests
+publicados, por estado em 18 de novembro de 2026. ``Corrigido'': a violação reportada
+deixou de aparecer no método alterado (incluindo a remoção da chamada
+governada, um caminho que o patch desativa e uma mensagem reportada que sumiu, restando no método
+apenas mensagens que o APK original já exibia). ``Não verif.'':
+a violação reportada não apareceu em nenhum dos APKs e sua mensagem não é mais
+emitida. ``Testes'': o pull request altera apenas testes. Dos 38 verificados (Corr., Não corr., Testes),
+33 estão corrigidos (25 pela regra registrada, sem os rótulos acrescentados depois das execuções).}
+\label{tab:dynval}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{lrrrrrrr}
+\toprule
+ & Corr. & Não corr. & Testes & Não verif. & Incon. & Não exec. & Total \\
+\midrule
+Incorporados & 14 & 2 & 1 & 3 & 0 & 1 & 21 \\
+Fechados     & 8 & 2 & 0 & 0 & 0 & 0 & 10 \\
+Abertos      & 11 & 0 & 0 & 3 & 1 & 3 & 18 \\
+\midrule
+Total        & 33 & 4 & 1 & 6 & 1 & 4 & 49 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Pela origem da execução por trás de cada pull request
+(Seção~\ref{subsec:selection}), os 26 das nossas filas do RVSec, que usaram os
+exploradores da reexecução, ficaram em 22 corrigidos e 4 não corrigidos; os 8 da
+campanha do grupo do RVSec, em 5 corrigidos, 1 só com testes, 1 inconclusivo e 1
+não executado; e os 15 das nossas execuções anteriores sobre dados do RVSec
+anteriores à campanha, em 6 corrigidos, 6 não verificáveis e 3 não executados.
+Os quatro não corrigidos vêm todos das filas, e os seis não verificáveis, todos
+das execuções anteriores. A divisão é descritiva: os grupos diferem em como e
+quando o RVSec foi executado.
+
+A incorporação e a reverificação em tempo de execução divergem nos dois sentidos. Alguns pull requests
+incorporados mantiveram a violação reportada: o ShortMessageSecure \#83 manteve \texttt{HmacSHA1} a pedido do mantenedor, de modo que
+a regra do gerador de chaves continua violada, e no ANOTHERpass \#103 a sequência de chamadas
+do KeyStore continua sendo reportada. Em cinco pull requests, dois incorporados (Session \#2241,
+Nextcloud Cookbook \#204) e três abertos (Fread \#168, zSMTH \#66, Grocy
+\#1012), a mensagem reportada desapareceu; outras mensagens da mesma especificação, já presentes no
+APK original e não modificadas pelo patch, permaneceram na mesma chamada.
+Inversamente, a violação desapareceu em seis pull requests cujos mantenedores
+objetaram à mudança (whoBIRD, rssreader, RedReader, BetterUntis, Network
+Survey, WiFiAnalyzer): satisfazer o monitor não tornou essas mudanças
+desejadas. Ela também desapareceu no Giggity \#543, fechado porque o mantenedor
+já havia feito uma mudança equivalente, e no Summit \#54, fechado porque o
+projeto não aceita pull requests. No Amethyst \#4642, fechado pelos motivos dados na \researchq{4},
+a mensagem permaneceu, pois o patch alterou apenas a implementação desktop,
+que o APK não inclui; no InterTune \#52 o digest SHA-1 passou para outra função do
+mesmo arquivo, onde o RVSec continuou a reportá-lo. No Read You \#1334 o método
+alterado deixou de ser executado porque o patch desativou, por padrão, a opção que
+levava a ele.
+Com o DroidBot, o explorador do relatório original, a violação do FreeOTP
+apareceu no APK original em todas as três repetições de ambos os pull requests;
+ela desapareceu após o \#524, a mudança de produção, e permaneceu após o \#521,
+que apenas adiciona um teste.
+
+Seis relatórios não puderam ser verificados com o RVSec atual. No News \#1716 e no
+keepassvault (PassNotes) \#347 o APK original executou o método reportado sem nenhuma
+violação; no DSub2000 \#160, Feeder \#1210, etesync \#301 e HTTP Shortcuts
+\#576 a violação tratada pelo pull request não apareceu em nenhum dos APKs, e
+o que restou na chamada (um key manager ou fonte de aleatoriedade nulos, um
+trust manager definido pela aplicação) já estava no APK original e fora
+do pull request. Os seis relatórios trazem mensagens de protocolo ou de sequência de chamadas que
+nenhuma execução da validação emitiu.
+
+Uma segunda leitura adversarial de 21 diffs rotulados como corrigidos e a
+leitura de um único pesquisador de outros seis (três cuja mensagem reportada
+desapareceu e três acrescentados a partir do formato de mensagem anterior)
+tentaram mostrar que o patch apenas realocava ou encapsulava a chamada. Os
+outros seis casos corrigidos (Your Local Weather \#209, Read You \#1334,
+Session \#2241, Nextcloud Cookbook \#204 e Summit \#54, rotulados depois dessas
+leituras, e FreeOTP \#524, lido abaixo) não foram classificados. Dos 27, catorze alteram o
+valor ou material governado (um algoritmo de digest, um tamanho de chave, um protocolo, os certificados
+confiáveis, a origem de um IV ou de um salt, ou a remoção do RC4), nove alteram a sequência de chamadas ou a API para a
+forma exigida com o mesmo material, quatro removem a chamada governada e nenhum
+apenas a realoca; nenhuma execução com patch reportou a mesma especificação em um novo
+local. Em oito, o comportamento criptográfico não muda: esses patches levam o código à
+forma que a regra exige, como faz a correção de uma violação sem impacto
+de segurança. Nos casos de KeyStore o relatório desaparece porque o monitor
+passa a ver de onde a chave veio, não porque vê menos. Um patch
+corrigido, o FreeOTP \#524, mantém o mesmo material de chave: ele reconstrói a
+chave derivada da senha como uma chave AES a partir dos próprios bytes e acrescenta uma verificação de que
+a chave é AES, de modo que o monitor deixa de reportar a origem da chave enquanto a
+cifração permanece inalterada. Esse é o padrão que a revisão de comportamento deveria
+rejeitar (Seção~\ref{sec:pipeline}), e ele chegou a um pull request mergeado.
+Um comentário no monitor \texttt{CipherSpec} do RVSec, junto à verificação que
+emite esse relatório, aponta essa reconstrução como o caminho que as regras CrySL
+admitem para uma chave derivada de senha usada com AES.
+
+\textbf{Resposta à \researchq{7}.} Ao reexecutar o RVSec nos pull requests
+publicados, a violação reportada deixou de aparecer no método alterado em
+33 dos 38 que ele pôde verificar (25 pela regra registrada); ainda apareceu
+em quatro, e um pull request
+alterou apenas testes. Seis relatórios trazem mensagens que o RVSec atual não
+emite mais e não puderam ser verificados, e em um caso o método alterado nunca foi
+alcançado. Um patch corrigido apenas mudou a forma como o monitor via a mesma chave. Um build, o desaparecimento da violação reportada e a
+aceitação por um mantenedor são propriedades distintas, e os casos mostram cada uma
+sem as demais.
+
+\section{Discussão}
+\label{sec:discussion}
+
+\subsection{Principais Achados}
+
+Quatro observações resumem o estudo. Primeiro, os mantenedores julgaram os achados em
+contexto: dos 49 pull requests, 21 foram incorporados e 10 foram fechados após
+revisão (Seção~\ref{sec:results}). Suas respostas levantaram o comportamento
+intencional, a compatibilidade com valores armazenados e a relevância da regra
+para eles, conhecimento ausente da regra e da chamada reportada. Uma mudança revisável fez
+esse conhecimento emergir com mais frequência do que uma issue: 33 dos 49 pull
+requests e quatro das dez issues receberam resposta (Seção~\ref{subsec:rq3}; uma
+comparação descritiva).
+
+Segundo, uma violação real não exige necessariamente um reparo de segurança. Entre os 34
+achados consolidados em outubro, os relatórios sem impacto de segurança concentraram-se
+em digests de mensagem e key stores, onde o uso do valor é decisivo
+(\researchq{4}); seis dos dez pull requests fechados substituíam MD5 ou SHA-1 que
+o mantenedor via como checksum, nome de cache ou outro valor sem
+papel de segurança.
+
+Terceiro, um patch que compila não necessariamente remove a violação.
+Ao reexecutar o RVSec nos APKs original e com patch, a violação reportada deixou
+de aparecer no método alterado em 33 dos 38 casos verificáveis
+(25 pela regra registrada), ainda apareceu em quatro, e um pull request apenas adicionou um teste
+(Seção~\ref{subsec:rq7}). Dos quatro, um manteve uma escolha que o mantenedor pediu
+para preservar, um deixou uma sequência de chamadas que o monitor ainda rejeita, um alterou
+apenas uma implementação desktop e um moveu o digest para outra função do
+mesmo arquivo.
+
+Quarto, agentes que receberam apenas o achado e o repositório propuseram menos pull
+requests que o \system{} e tiveram menos julgados aceitáveis; só um escore por
+execução que conta a abstenção como aceitável os colocou próximos ou acima dele (0,90 a
+0,97, contra 0,96, na leitura completa; \researchq{6}). Agentes que receberam o processo como
+instruções tiveram tantos ou mais pull requests julgados aceitáveis quanto o
+\system{} na leitura completa, mas de três a cinco vezes mais julgados inaceitáveis; a diferença é compatível com a forma como o
+processo é executado (etapas separadas, cada uma verificada por código, com uma decisão
+antes de qualquer edição) e não com as instruções em si, embora 20 unidades não
+permitam estabelecê-lo.
+
+\subsection{Como uma Contribuição É Lida}
+\label{subsec:form}
+
+A forma das primeiras contribuições suscitou tantos comentários quanto seu conteúdo. Os pull
+requests até meados de setembro seguiam um template de relatório do pipeline: um título como
+``Fix \texttt{<init>}'', de três a onze títulos de seção, checklists e até
+cerca de 950 palavras. Em outubro o pipeline passou a escrever para o mantenedor:
+um resumo curto sob dois títulos e, a partir de 20 de outubro, alguns parágrafos
+simples sobre o que o código fazia, o que mudou e que o build passa, com
+títulos apenas quando o template do repositório pede (Tabela~\ref{tab:pr-format}).
+O exemplo completo da Seção~\ref{sec:pipeline} (\#238) é um desses pull requests
+em texto simples.
+
+\begin{table}[tb]
+\centering
+\caption{Formato dos 49 pull requests do RVSec e seu estado em 18 de novembro de
+2026. Palavras e títulos são medianas do corpo atual, arredondadas.}
+\label{tab:pr-format}
+\footnotesize
+\setlength{\tabcolsep}{1.5pt}
+\begin{tabular}{lrrr}
+\toprule
+ & \begin{tabular}[b]{@{}r@{}}Com template\\8/8--16/9\end{tabular}
+ & \begin{tabular}[b]{@{}r@{}}Seções curtas\\12/10--20/10\end{tabular}
+ & \begin{tabular}[b]{@{}r@{}}Texto simples\\20/10--7/11\end{tabular} \\
+\midrule
+Pull requests & 15 & 12 & 22 \\
+Palavras & 227 & 207 & 157 \\
+Títulos de seção & 6 & 2 & 0 \\
+Títulos ``Fix \textit{método}'' & 12 & 0 & 0 \\
+Incorporados & 6 & 4 & 11 \\
+Fechados após revisão & 4 & 4 & 2 \\
+Abertos & 5 & 4 & 9 \\
+Receberam resposta & 11 & 8 & 14 \\
+Objeção ao texto ou à origem & 3 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O mantenedor do
+BetterUntis recusou contribuições que considerava geradas por IA, o mantenedor do Feeder
+se recusou a ler ``that wall of ai text,'' e o revisor do Crazyflie
+pediu um título e uma descrição explicando o que foi corrigido e por quê.
+Essas objeções se dirigem ao texto ou à sua origem, não à mudança, e todas vieram
+do período com template; nenhum dos 34 pull requests posteriores
+havia recebido alguma até 18 de novembro de 2026, e os seis deles fechados após revisão
+foram fechados por razões técnicas ou por uma política de contribuição.
+
+Um texto que parece saída de ferramenta---um título genérico, vocabulário interno,
+longas seções de evidências---sugere que ninguém revisou a mudança, de modo que o
+mantenedor questiona sua origem antes de seu conteúdo; um texto curto nos
+termos do próprio projeto permite que a revisão comece pelo código. Nada é ocultado: 32 dos 49
+textos nomeiam o RVSec como analisador, e os outros 17, abertos de 8 de agosto a
+22 de outubro, nomeiam o explorador que conduziu a interface (14) ou nenhuma
+ferramenta (3); o autor aprova cada submissão e o uso de IA é declarado onde um
+template pede. A comparação tem fatores de confusão. Os
+períodos diferem na origem dos achados: os 15 pull requests com template vieram
+todos de nossas execuções de agosto e setembro sobre dados do RVSec anteriores à
+campanha do grupo, enquanto 18 dos 22 em texto simples vieram de nossas próprias
+filas, parte deles de uma fila que só admitia repositórios que haviam incorporado
+um pull request externo nos doze meses anteriores. Os pull requests posteriores
+também vieram de uma análise mais madura e de outros projetos, os mais recentes
+tiveram menos tempo para revisão (parte de sua contagem de abertos), e os corpos
+foram lidos após quaisquer alterações feitas na revisão (o do Crazyflie foi
+reescrito conforme solicitado). A tabela não mostra que o formato aumenta a
+aceitação; o que mudou foi o tipo de objeção (os fechamentos restantes dizem
+respeito à mudança em si), e essa mudança pode refletir também a origem dos
+achados e os repositórios que os receberam.
+
+\subsection{Implicações}
+
+Para pesquisadores, avaliações de reparo de segurança deveriam contar a abstenção como um
+resultado, reportando-a ao lado da validade do patch (o \system{} registra falsos
+positivos, violações sem impacto de segurança ou sem correção segura, contratos
+externos, correções já presentes no upstream, issues e pull requests), e deveriam dar
+a um pipeline e a um agente a mesma tarefa (os agentes do nosso primeiro bloco pararam no
+commit analisado; o segundo bloco também faz o porte). A completude das evidências
+merece uma métrica própria: a migração do verificador armazenado deixou leitores de fora mesmo
+com o alvo localizado e um candidato compilável. Benchmarks também deveriam
+manter e atribuir as falhas de infraestrutura (JDK, SDK, desatualização de plugins) em vez
+de descartar projetos que não compilam.
+
+Para praticantes, o fluxo de trabalho é um assistente de revisão, não um autor
+autônomo de commits: a execução registra por que um alerta importa, quais suposições permanecem
+e que validação falta, enquanto o texto para os mantenedores permanece curto.
+A publicação fica fora do ciclo de análise: nenhuma credencial em prompts, nenhuma
+resposta do modelo capaz de publicar, aprovação vinculada a um identificador de achado e a uma
+validação bem-sucedida, e política e testes dedicados para mudanças na aceitação de
+certificados, na verificação de hostname ou em formatos criptográficos.
+
+O custo é uma referência, não o fator decisivo: os custos por execução foram de US\$~0,04 a
+US\$~0,37 a preço de tabela, entre o \system{} e os agentes
+(Tabela~\ref{tab:optiona}), e a escolha depende da qualidade do que é enviado
+(Seção~\ref{subsec:rq6}).
+
+\paragraph{Pipeline ou agente?} A comparação sugere que o que importa é
+executar o processo em etapas separadas, com a decisão de agir tomada antes de
+qualquer edição (Seção~\ref{subsec:rq6}). Além disso, o \system{} mapeia um
+relatório de tempo de execução para seu código-fonte, une
+achados no mesmo código, mantém as respostas anteriores dos mantenedores e submete cada
+patch a verificações determinísticas, a um build, ao porte e a uma revisão de comportamento
+antes que uma pessoa decida. Seu modelo devolve edições como dados e nunca executa
+comandos, mas os builds executam os próprios scripts Gradle de cada repositório na
+estação de trabalho do autor, sem contêiner (Seção~\ref{subsec:ethics}). Os
+agentes da comparação foram executados ali com ferramentas restritas e nenhum segredo além do
+login da CLI; um agente com shell livre sobre centenas de repositórios desconhecidos precisa de um
+contêiner descartável por execução que veja apenas o repositório, alcance apenas
+registros de pacotes e a API do modelo, e não guarde segredos. As abordagens
+são complementares: o \system{} prepara um achado e decide o que chega a um
+mantenedor, enquanto um agente explora e aplica patches dentro de tal ambiente
+(Trabalhos Futuros). Modelos locais via Ollama são suportados, sem pesquisa
+na web, mas não foram avaliados.
+
+\subsection{Lições Aprendidas}
+\label{sec:lessons}
+
+\textbf{Alcançar o código é o primeiro gargalo.} O RVSec reporta apenas o código
+que a exploração executa. Em nossas próprias filas, o Monkey e o APE raramente
+passaram de telas de login ou de configuração, de modo que a criptografia protegida
+por uma conta ou por uma configuração de servidor fica sub-representada entre seus
+achados. Isso também limita a verificação de um patch: nas reexecuções, apenas o
+DroidBot, um dos exploradores do relatório original, alcançou o método reportado do FreeOTP, e o método
+modificado pelo patch do BitBanana nunca foi alcançado (\researchq{7}). Os exploradores decidem quais achados existem e quais
+correções podem ser confirmadas. O grupo do RVSec mediu o mesmo limite em 163
+aplicações: na aplicação mediana com tais métodos, a exploração exercitou cerca de
+1,4\% dos métodos que chamam diretamente uma API monitorada~\cite{costa2026effectiveness}.
+
+\textbf{Localizar o código faz parte do reparo.} O RVSec nomeia um método de
+bytecode, não uma função do código-fonte. Lambdas, corrotinas e nomes alterados
+pelo compilador Kotlin tiveram de ser rastreados até a função que usa a API e,
+em Kotlin Multiplatform, até a implementação Android: o Amethyst \#4642 alterou
+apenas a implementação desktop, código que o APK nunca contém. Um alvo errado
+produz um patch que compila e deixa intocado o código reportado; por isso, uma
+correspondência ambígua fica sem resolução em vez de ser adivinhada.
+
+\textbf{Uma violação não é um defeito até que se conheça o seu uso.} MD5 como chave
+de cache, uma chave lida com \texttt{getEntry} em vez de \texttt{getKey} ou um contexto
+SSL com um trust manager próprio para um servidor autoassinado violam uma regra sem
+expor o usuário; os mantenedores rejeitaram alterações, ou responderam a issues, que
+ignoravam isso, e o que decidiu cada caso foi
+a forma como o valor era consumido, não a chamada de API.
+
+\textbf{Verificações determinísticas são um seguro barato, se enxergarem o mesmo contexto.}
+No retrato de outubro, verificações semânticas recusaram seis das 17 propostas: cinco
+das seis gerações bloqueadas da \researchq{1} e a adaptação do DSub2000 no porte. A
+auditoria considerou corretas quatro recusas: rascunhos que substituíam dois
+algoritmos exigidos por protocolo no mOTP (MD5 para os códigos mOTP, HmacSHA1
+para TOTP), alteravam os nomes de banco de dados armazenados
+do RedReader e sobrescreviam o tamanho de chave escolhido pelo chamador no Droid
+SCEP. As outras duas vieram de defeitos do pipeline: a verificação de exceções leu
+apenas o fragmento editado do rascunho do MTG Familiar e não viu um \texttt{catch}
+envolvente (um bloqueio indevido, embora aquele rascunho também dependesse
+de credenciais de produção que o repositório não tem), e a verificação da opção não havia lido uma alteração que a
+adjudicação autorizara para o DSub2000.
+As verificações removem patches plausíveis porém prejudiciais sem custo de modelo, desde que cada uma
+leia o contexto da etapa que verifica.
+
+\textbf{Uma reexecução é lida restrição por restrição.} O RVSec monitora uma
+especificação inteira, de modo que um patch pode remover a restrição reportada e
+deixar outra, e um mantenedor pode manter o que uma regra rejeita; por isso, o
+veredito de uma reexecução é lido por restrição, ao lado da decisão do mantenedor
+(\researchq{7}).
+
+\textbf{Alterações pequenas são revisadas; grandes são discutidas.} Alterações de uma
+única chamada com poucas frases de explicação costumavam ser resolvidas sem
+debate, enquanto renomeações, configurações ou migrações de dados armazenados suscitavam questões de
+escopo (Crazyflie, ShortMessageSecure, RedReader, InterTune).
+
+\textbf{O alvo é a ponta do branch, não o commit analisado.} Os achados vêm de
+um APK publicado, enquanto os mantenedores revisam sobre o branch atual. O porte
+para ele encontrou correções já presentes no upstream ou arquivos reportados
+removidos, casos em que o desfecho correto era parar; um pull request foi
+fechado porque uma mudança equivalente já havia sido feita no upstream
+(Tabela~\ref{tab:closures}); e o MetadataRemover \#264 foi aberto embora não compile no seu
+commit base, falha que o branch sem modificação também tem e que o texto do pull
+request declara, enquanto o commit analisado compilava (\researchq{7}).
+
+\textbf{O texto é lido antes da mudança.} As objeções ao texto ou à origem
+de um pull request, e não à mudança, vieram apenas do período com template, que
+também difere dos posteriores na origem de seus achados
+(Seção~\ref{subsec:form}). As políticas do repositório fazem
+parte do mesmo contexto: restrições a contribuições assistidas por IA ou regras
+que admitem apenas issues foram mostradas ao autor como informação, não como
+bloqueios automáticos, e a decisão ficou com uma pessoa.
+
+\subsection{Considerações Éticas}
+\label{subsec:ethics}
+
+Os pull requests e issues foram enviados a mantenedores voluntários, cujo tempo
+consumiram e cujas respostas públicas são dados deste trabalho. O autor aprovou cada
+submissão após ler seu diff e seu texto. Um pull request só foi aberto para
+um patch que se aplicava e passava no build, exceto o MetadataRemover \#264, cujo build
+falhou na mesma etapa no branch sem modificação, como seu texto informa. Dos
+49 textos de pull request, 32 nomeiam o RVSec como analisador e os outros 17 nomeiam o
+explorador que conduziu a execução ou nenhuma ferramenta; o uso de IA é declarado quando um
+template o pergunta, e a política de IA de um projeto era mostrada ao autor, que então
+escrevia o texto. Antes do estudo, ao testar o pipeline com um
+modelo local, abrimos 23 issues em 4 de agosto de 2026 com o mesmo texto curto,
+perguntando se um pull request seria bem-vindo; elas ficam fora de todas as contagens. As reações dos mantenedores aos pull
+requests com template nos levaram a encurtar os textos (Seção~\ref{subsec:form}). Todos os dados são registros públicos do GitHub; o artigo
+nomeia projetos e pull requests, não mantenedores. Os builds de terceiros rodaram na
+estação de trabalho do autor sem contêiner, ao lado das credenciais de
+publicação; isolar cada build é trabalho futuro.
+
+\subsection{Ameaças à Validade}
+\label{subsec:threats}
+
+\subsubsection{Validade interna}
+
+\emph{Implementação em evolução.} O pipeline, os prompts e as verificações mudaram durante
+o estudo, de modo que o retrato de outubro com 34 achados é um estudo de caso datado, oriundo de
+várias versões do \system{} (resultado mais recente por achado), e não o desempenho
+de uma única configuração. Os pull requests publicados também vieram de diferentes
+versões, alguns alterados durante a revisão ou portados, e cada desfecho é atribuído à
+revisão submetida. Apenas a comparação com agentes de
+programação usou uma única configuração registrada (Seção~\ref{subsec:frozen}).
+
+\emph{Não determinismo do modelo.} Na comparação, o \system{} analisou cada uma
+das 20 unidades quatro vezes sem o cache de respostas, e sua classe de entrega
+(pull request, issue ou nenhuma ação) mudou entre as quatro execuções em 4 das
+20 unidades, mesmo entre execuções da mesma versão da biblioteca (Seção~\ref{subsec:rq6}).
+Mudanças de decisão entre as reexecuções de outubro podem, portanto, refletir variação do modelo
+tanto quanto mudanças no pipeline. Respostas em cache e pacotes de evidências tornam cada
+decisão auditável, e as verificações e o build rejeitam formas inseguras conhecidas e propostas que não compilam,
+mas a decisão em si não é reprodutível.
+
+\emph{Julgamento do pesquisador.} Um único pesquisador executou o pipeline, escolheu o que
+reexecutar e publicar e classificou os desfechos; as reexecuções favoreceram achados
+próximos de um pull request. Algumas escolhas foram feitas depois de vistos os resultados
+e são declaradas como desvios dos pré-registros: o refinamento do gabarito da comparação
+e sua regra para correções já presentes na ponta do branch e, na validação
+dinâmica, o rótulo para um patch que remove a chamada governada e o acréscimo
+de 13 pull requests após os primeiros resultados. Os rótulos da validação dinâmica para um
+caminho que o patch desliga, uma mensagem reportada que desapareceu, uma violação em
+outro método do arquivo, um pull request só de testes e um relatório não mais
+verificável também foram definidos depois de suas execuções; apenas pela regra registrada, 25 dos pull requests
+contam como corrigidos e 13 como não corrigidos (33 e 4 com os rótulos posteriores;
+Seção~\ref{subsec:dynval}). As respostas dos mantenedores são uma
+verificação independente apenas para os casos publicados.
+
+\emph{Comparação com agentes de programação.} Os agentes do primeiro bloco receberam apenas
+o achado e o repositório, não a política do \system{} de que vale propor uma alteração
+correta apenas de regra, e pararam no commit analisado
+sem o porte para a ponta do branch; o segundo bloco recebe ambos. As 20 unidades, sorteadas com uma
+semente registrada a partir dos pull requests e dos achados do estudo de caso deste trabalho,
+representam este estudo, não o uso indevido de criptografia em Android em geral. Os
+juízes são modelos de linguagem e nenhuma pessoa pontuou os cartões, pois
+não havia revisores independentes disponíveis para ler os 491 cartões: o juiz
+principal, Claude Opus 5.5, compartilha o provedor do braço Claude Code e desempata
+divergências, e o GPT-6.1 Sol é o modelo de um dos braços Codex e compartilha o
+provedor do modelo usado pelo \system{} e pelo outro braço Codex, de modo que um juiz pode
+favorecer sua própria família. A referência de pontuação foi refinada duas vezes antes das
+leituras reportadas, e a regra de pontuação da ponta do branch foi definida depois delas; apenas a
+referência final é usada. Como uma issue ou nenhuma ação é aceitável em todas as
+unidades, a medida recompensa a abstenção. O cegamento foi parcial; nas sondagens dos dois blocos, os
+palpites do juiz principal sobre o braço foram palpites padrão, e não
+identificações (Seção~\ref{subsec:rq6}). O prompt dos agentes, escrito a partir do pipeline, reproduz suas
+etapas, mas não seus contextos separados, as verificações e novas tentativas que seu código
+impõe, nem seu corpus de pesquisa; o Claude Code com Claude Sonnet 5.5 recusou
+a versão que pedia um registro escrito de cada etapa, de modo que o SP2 usou um
+prompt sem esse pedido. Os agentes rodaram em assinaturas com limite de 60 minutos
+por execução. O sandbox dos agentes limitava as escritas ao seu checkout, mas não as
+leituras: em duas execuções de um braço do primeiro bloco, uma busca por arquivos de
+instruções listou caminhos de arquivos de outros repositórios da máquina; nenhuma
+execução leu código de outro repositório nem de outra unidade da comparação.
+
+\subsubsection{Validade de construto}
+
+As observações iniciais são violações de regras, não vulnerabilidades exploráveis
+confirmadas. O sucesso do build mede a compilação, não a corretude funcional,
+a segurança ou a aceitação. Como nenhuma pessoa rotulou cada decisão
+e cada patch, os resultados estabelecem viabilidade e modos de falha, não precisão
+nem revocação. As regras podem ser incompletas ou incompatíveis com os provedores do Android, e
+os monitores do RVSec foram traduzidos manualmente a partir do CrySL, de modo que uma regra errada pode moldar
+os requisitos de evidência.
+
+A validação dinâmica mede algo mais estreito que uma correção: se a
+violação reportada deixou de aparecer no método modificado pelo patch. Um patch que apenas
+tirasse a chamada do campo de visão do monitor passaria, e também um que
+mantivesse o mesmo material de chave e mudasse apenas a forma como o monitor o vê,
+como faz o FreeOTP \#524 (Seção~\ref{subsec:rq7}). Apenas pela regra registrada, um patch correto pode contar como não corrigido
+quando outras restrições da especificação falham no mesmo método. Apenas os pull requests publicados foram reexecutados (as notas dos juízes
+deixam o RVSec de fora), aplicando o diff ao commit sobre o qual o pipeline fez o build ou à
+base do merge, não ao código mergeado. A validação depende da exploração: os novos
+casos rodaram uma vez com Monkey e APE por 600 segundos (mais execuções apenas quando
+inconclusivos ou não reproduzidos; os cinco casos anteriores, três vezes, o BitBanana,
+quatro), e um caso conta como corrigido apenas quando o APK original mostra a violação
+e o APK com o patch executa o método reportado sem ela, a menos que o patch tenha
+removido a chamada governada ou desligado, por padrão, a condição que protege toda
+chamada do método; outras mensagens da especificação que o APK original já mostrava
+podem permanecer.
+O método do FreeOTP, que no relatório original da campanha do grupo do
+RVSec~\cite{costa2026effectiveness} apenas DroidBot, Humanoid e ARES alcançaram
+e que Monkey e APE não alcançaram aqui, também foi reexecutado com o DroidBot, um dos
+exploradores do relatório original (Humanoid e ARES não puderam rodar aqui;
+Seção~\ref{subsec:dynval}).
+
+\subsubsection{Validade externa}
+
+O inventário é intencional: achados de Android analisados e contribuições
+publicadas com artefatos rastreáveis, nem uma amostra aleatória de APKs nem
+proporcional ao volume de alertas. Ele favorece achados com uma tentativa de
+contribuição, pull requests abertos têm desfechos incompletos, e a política afeta a
+aceitação. Os pull requests de nossas próprias filas do RVSec vieram de aplicações
+cujos repositórios estavam ativos, haviam incorporado um pull request de um contribuidor
+externo nos doze meses anteriores e não declaravam acordo de contribuidor nem regra de
+contato prévio; isso favorece a incorporação em relação a uma amostra sem filtro. As contagens cobrem apenas achados do RVSec (não candidatos manuais, pesquisa
+na web ou regras do Semgrep) e, com várias versões de APK, não constituem uma comparação
+de detectores.
+Apenas aplicações hospedadas no GitHub foram consideradas,
+dado o caminho de publicação; as hospedadas em outras plataformas podem diferir. Os resultados podem não se generalizar para aplicações proprietárias, outras
+linguagens ou outras famílias de API; três dos 49 pull requests tratam de
+regras de gerenciamento de recursos ou de sincronização, e não de criptografia.
+O \system{} aceita achados de outros detectores, mas nenhum está nessas contagens.
+
+\subsubsection{Validade de conclusão}
+
+As observações sustentam contagens descritivas e explicações de casos, não
+afirmações inferenciais; nenhum teste estatístico é aplicado. Os 34 achados do
+estudo de caso, os pull requests publicados, sua validação dinâmica e a
+comparação têm denominadores diferentes e se sobrepõem parcialmente. A incorporação
+não estabelece a corretude de segurança, nem o fechamento a incorretude; os resultados das
+reexecuções se apoiam, em sua maioria, em uma única repetição, e as diferenças entre os braços
+da comparação são reportadas como observadas, sem a afirmação de que se generalizam.
+
+\subsection{Trabalhos Futuros}
+\label{subsec:future}
+
+Um estudo confirmatório deveria fixar suas hipóteses de antemão, sortear achados
+de campanhas do RVSec e acrescentar duas revisões de segurança humanas independentes
+por caso, de modo que a precisão das decisões de correção, a taxa de correções inseguras e
+a adequação da abstenção possam ser medidas; a reexecução do detector deveria
+usar várias repetições por APK e os exploradores do relatório original. Como
+a exploração é o primeiro gargalo (Seção~\ref{sec:lessons}), uma exploração
+guiada que priorize telas relacionadas às
+especificações monitoradas poderia aumentar tanto os achados no código da aplicação quanto
+os patches que a reexecução consegue confirmar.
+
+As verificações do \system{} (validação semântica, build, porte, teto de custo) poderiam ser
+oferecidas a agentes de programação como ferramentas ou como uma skill de agente, mantendo o julgamento separado
+da correção e a publicação autorizada por uma pessoa; se isso preserva a qualidade das
+decisões é uma questão para o protocolo da Seção~\ref{subsec:protocol}. O mesmo núcleo poderia rodar como uma GitHub
+Action que analisa os achados do RVSec de cada build e anexa a alteração
+proposta, ou o motivo de não haver nenhuma, onde os mantenedores já trabalham. Este estudo
+não seguiu esse caminho: uma Action só roda em repositórios cujos mantenedores a instalam,
+com suas próprias credenciais de modelo e um runner capaz de compilar a aplicação e hospedar
+um emulador Android; como contribuidores externos, não podíamos executá-la nos projetos
+estudados nem atribuir a eles o custo de suas execuções, e o estudo mediu, em vez disso, o que
+os mantenedores fizeram com as contribuições submetidas a eles. Outros trabalhos incluem builds em contêiner e sem credenciais
+para código de terceiros e, para TLS, um planejamento que considere todas as restrições
+em \texttt{SSLContext.init}, já que a reexecução mostrou patches que removeram
+o nome do protocolo enquanto o RVSec ainda reportava key managers, fontes de aleatoriedade ou
+trust managers, com o pull request declarando quais restrições deixa
+inalteradas.
+
+\section{Conclusões}
+\label{sec:conclusion}
+
+Este artigo apresentou o \system{}, uma biblioteca Python que leva os achados do RVSec de
+um relatório de execução sobre um APK a uma contribuição revisável: ela localiza a revisão
+do código-fonte e o método, decide se a violação é real e se uma correção preserva o
+comportamento da aplicação, constrói o patch, transporta-o para o branch atual e deixa
+a publicação a cargo de uma pessoa. Sua premissa é que um relatório de uso indevido é uma
+alegação a verificar, não um defeito a reparar, de modo que decidir não alterar o código
+é um desfecho válido. O estudo do grupo do RVSec mede o que a verificação em tempo de
+execução encontra~\cite{costa2026effectiveness}; este trabalho pergunta o que um
+mantenedor deveria receber.
+
+Os mantenedores incorporaram 21 dos 49 pull requests para achados do RVSec e fecharam 10
+sem incorporá-los; 33 receberam resposta. Suas objeções raramente diziam respeito ao
+código do patch: tratavam de se a regra importa naquela aplicação, da compatibilidade
+com valores armazenados e de mudanças já feitas upstream, conhecimento que uma regra não
+consegue codificar e que o \system{} agora lê para achados posteriores da mesma
+especificação. Objeções ao texto ou à origem de um
+pull request vieram apenas das submissões iniciais, com template
+(Seção~\ref{subsec:form}).
+
+A abstenção respondeu por boa parte do trabalho. No estudo de caso de outubro, a maioria
+dos achados terminou sem correção gerada, 16 deles como propostas locais de issue e os
+demais como falsos positivos, evidência insuficiente ou violação confirmada sem correção
+segura (Tabela~\ref{tab:adjudication}). Nem toda mudança correta é desejada: seis pull
+requests fechados substituíam um digest que o mantenedor via como checksum ou
+identificador. Onde um patch foi publicado, a reexecução do RVSec no APK
+com o patch deixou de mostrar a violação reportada no método alterado em 33 dos 38 pull
+requests que ela pôde verificar (25 pela regra registrada), uma verificação limitada pelo
+que os exploradores alcançam.
+
+Nas 20 unidades da comparação, um agente de programação de uso geral não bastou sozinho. Recebendo apenas o achado e o
+repositório, os agentes propuseram menos pull requests, com menos julgados aceitáveis;
+recebendo o processo do \system{} como instruções, igualaram seus pull requests
+aceitáveis na leitura completa, mas tiveram de três a cinco vezes mais julgados inaceitáveis.
+Com o mesmo modelo e as mesmas instruções em um dos braços, a diferença é compatível com a
+execução do processo em etapas separadas, verificadas por código, com a decisão de agir
+tomada antes de qualquer edição. Uma execução custou cerca de US\$~0,10 no nível Flex
+(US\$~0,19 a preço de tabela).
+
+As evidências são descritivas e provêm de amostras pequenas e intencionais. Elas
+sustentam o \system{} como um complemento ao RVSec orientado à revisão, e não a precisão
+do detector nem a correção semântica e de segurança dos patches: uma violação que deixa
+de aparecer mostra que o uso monitorado mudou, não que o comportamento foi preservado ou
+que a aplicação se tornou mais segura. Os resultados também descrevem o \system{} operado
+por seu autor, que escolheu o que reexecutar e aprovou cada submissão; eles não mostram
+como ele se comportaria sem supervisão, o que seu projeto não pretende. Os próximos
+passos decorrem das lições: uma exploração que alcance o código por trás de logins e
+configurações, um estudo confirmatório com revisões de segurança independentes, e as
+verificações do \system{} oferecidas como ferramentas a agentes de programação executados
+em contêineres isolados (Seção~\ref{subsec:future}).
+
+\section*{Disponibilidade dos Artefatos}
+
+A biblioteca está disponível em \url{https://github.com/jpantonow/cognalys} e os
+dados por trás de cada resultado em \url{https://github.com/jpantonow/cognalys-artefacts}. O repositório da
+biblioteca contém o pacote, suas especificações e políticas de remediação, e seus
+testes. O repositório de artefatos é organizado por questão de pesquisa: o retrato de
+outubro de 2026, com as evidências, a adjudicação, o plano, os rastros de prompts, os
+logs de build e as prévias de cada achado (\researchq{1}, \researchq{2},
+\researchq{4}, \researchq{5}); os pull requests, as issues e as respostas dos
+mantenedores coletados em 18 de novembro de 2026 (\researchq{3}); as unidades, as
+execuções dos agentes, os cartões, o gabarito e as leituras dos juízes da comparação
+(\researchq{6}); e os registros de build e os relatórios do RVSec da validação dinâmica
+(\researchq{7}). Os pré-registros, com seus desvios declarados e os hashes dos prompts,
+scripts e gabarito da comparação, estão incluídos com suas datas originais. As
+credenciais foram excluídas.
+
+\section*{Agradecimentos}
+
+Agradecemos ao Prof.\ Rodrigo Bonifácio pela orientação deste trabalho, ao
+Prof.\ Guilherme Novaes Ramos pela coorientação e a Pedro Henrique Teixeira Costa
+pela campanha e pelas ferramentas do RVSec sobre as quais este trabalho se apoia.
+
+\bibliographystyle{IEEEtran}
+\bibliography{referencias}
+
+\end{document}

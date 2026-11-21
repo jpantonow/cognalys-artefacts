@@ -1,0 +1,32 @@
+{
+ "card_id": "Kc8757f17",
+ "card_sha256": "193b7005f157f8a0",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 5,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1803,
+  "cache_read_input_tokens": 2756,
+  "output_tokens": 334
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0216632,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "e8eed8848edcabf8",
+ "finished_at": "2026-11-16T11:49:38-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.25,
+  "reason": "The diff is a minimal, focused patch that was built and passed. It moves one line and adds an explanatory comment that echoes the checker's rule (\"one getInstance, one init, one generateKey per instance\"). That tight fit to the finding's wording suggests a pipeline that plans and then reviews its patch. The comment reads like Claude's style. This is a weak signal, so my confidence is low."
+ }
+}

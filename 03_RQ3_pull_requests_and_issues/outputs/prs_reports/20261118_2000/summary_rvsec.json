@@ -1,0 +1,263 @@
+{
+  "report_date": "2026-11-18_2000",
+  "counts": {
+    "merged": 19,
+    "open": 19,
+    "maintainer": 10,
+    "manual": 1
+  },
+  "eligible": 49,
+  "incorporated_by_impact": {
+    "security_impact": 1,
+    "no_security_impact": 4,
+    "impact_not_established": 11,
+    "not_recorded": 4
+  },
+  "prs": [
+    {
+      "url": "https://github.com/gigabytedevelopers/CometOTP/pull/114",
+      "category": "merged",
+      "actor": "enwokoma"
+    },
+    {
+      "url": "https://github.com/thatSFguy/meshcore-mobile-app/pull/10",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/FliegendeWurst/TriliumDroid/pull/177",
+      "category": "merged",
+      "actor": "FliegendeWurst"
+    },
+    {
+      "url": "https://github.com/wolpi/prim-ftpd/pull/453",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/thuryn/your-local-weather/pull/209",
+      "category": "merged",
+      "actor": "thuryn"
+    },
+    {
+      "url": "https://github.com/mouse233/localsend-kotlin/pull/58",
+      "category": "merged",
+      "actor": "mouse233"
+    },
+    {
+      "url": "https://github.com/PrivacyDragon/Bookwyrm_Android/pull/29",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/Crustack/NotallyX/pull/1167",
+      "category": "merged",
+      "actor": "Crustack"
+    },
+    {
+      "url": "https://github.com/jimvixx/ShortMessageSecure/pull/89",
+      "category": "merged",
+      "actor": "jimvixx"
+    },
+    {
+      "url": "https://github.com/Vauth/salty-app/pull/6",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/0xZhangKe/Fread/pull/168",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/freeotp/freeotp-android/pull/524",
+      "category": "merged",
+      "actor": "justin-stephenson"
+    },
+    {
+      "url": "https://github.com/ItzSkyeYT/InterTune/pull/52",
+      "category": "maintainer",
+      "actor": "ItzSkyeYT"
+    },
+    {
+      "url": "https://github.com/yogeshpaliyal/KeyPass/pull/1252",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/vitorpamplona/amethyst/pull/4642",
+      "category": "maintainer",
+      "actor": "vitorpamplona"
+    },
+    {
+      "url": "https://github.com/patzly/grocy-android/pull/1013",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/patzly/grocy-android/pull/1012",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/freeotp/freeotp-android/pull/521",
+      "category": "merged",
+      "actor": "justin-stephenson"
+    },
+    {
+      "url": "https://github.com/schorschii/Droid_SCEP/pull/2",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/jenspfahl/ANOTHERpass/pull/103",
+      "category": "merged",
+      "actor": "jenspfahl"
+    },
+    {
+      "url": "https://github.com/leekleak/traffic-light/pull/238",
+      "category": "merged",
+      "actor": "leekleak"
+    },
+    {
+      "url": "https://github.com/tokn-authenticator/tokn/pull/138",
+      "category": "merged",
+      "actor": "fthomys"
+    },
+    {
+      "url": "https://github.com/christianrowlands/android-network-survey/pull/154",
+      "category": "maintainer",
+      "actor": "christianrowlands"
+    },
+    {
+      "url": "https://github.com/michaelWuensch/BitBanana/pull/184",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/woheller69/whoBIRD/pull/144",
+      "category": "maintainer",
+      "actor": "woheller69"
+    },
+    {
+      "url": "https://github.com/ReadYouApp/ReadYou/pull/1334",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/zfdang/zSMTH-Android/pull/66",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/idunnololz/summit/pull/54",
+      "category": "maintainer",
+      "actor": "idunnololz"
+    },
+    {
+      "url": "https://github.com/ounben/AMARadio/pull/122",
+      "category": "merged",
+      "actor": "ounben"
+    },
+    {
+      "url": "https://github.com/jimvixx/ShortMessageSecure/pull/83",
+      "category": "merged",
+      "actor": "jimvixx"
+    },
+    {
+      "url": "https://github.com/javalc6/rssreader/pull/4",
+      "category": "maintainer",
+      "actor": "javalc6"
+    },
+    {
+      "url": "https://github.com/session-foundation/session-android/pull/2241",
+      "category": "merged",
+      "actor": "mpretty-cyro"
+    },
+    {
+      "url": "https://github.com/Crazy-Marvin/MetadataRemover/pull/264",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/BombusMod/BombusMod/pull/316",
+      "category": "manual",
+      "actor": "vitalyster"
+    },
+    {
+      "url": "https://github.com/nelenkov/wwwjdic/pull/115",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/aivanovski/keepassvault/pull/347",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/nextcloud/news-android/pull/1716",
+      "category": "merged",
+      "actor": "David-Development"
+    },
+    {
+      "url": "https://github.com/Wilm0r/giggity/pull/543",
+      "category": "maintainer",
+      "actor": "Wilm0r"
+    },
+    {
+      "url": "https://github.com/bitcraze/crazyflie-android-client/pull/103",
+      "category": "merged",
+      "actor": "ataffanel"
+    },
+    {
+      "url": "https://github.com/spacecowboy/Feeder/pull/1210",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/paroj/DSub2000/pull/160",
+      "category": "merged",
+      "actor": "paroj"
+    },
+    {
+      "url": "https://github.com/etesync/android/pull/301",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer/pull/618",
+      "category": "maintainer",
+      "actor": "VREMSoftwareDevelopment"
+    },
+    {
+      "url": "https://github.com/binwiederhier/ntfy-android/pull/184",
+      "category": "open",
+      "actor": ""
+    },
+    {
+      "url": "https://github.com/QuantumBadger/RedReader/pull/1373",
+      "category": "maintainer",
+      "actor": "QuantumBadger"
+    },
+    {
+      "url": "https://github.com/SapuSeven/BetterUntis/pull/515",
+      "category": "maintainer",
+      "actor": "SapuSeven"
+    },
+    {
+      "url": "https://github.com/Waboodoo/HTTP-Shortcuts/pull/576",
+      "category": "merged",
+      "actor": "Waboodoo"
+    },
+    {
+      "url": "https://github.com/lneugebauer/nextcloud-cookbook/pull/204",
+      "category": "merged",
+      "actor": "lneugebauer"
+    }
+  ]
+}

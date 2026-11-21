@@ -1,0 +1,431 @@
+{
+ "rows": [
+  {
+   "unit": "co_0a32f516feb2",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_0a32f516feb2",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_0a32f516feb2",
+   "arm": "TP",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_0a32f516feb2",
+   "arm": "TP",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_0a32f516feb2",
+   "arm": "TP",
+   "replica": 3,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_0a32f516feb2",
+   "arm": "TP",
+   "replica": 4,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_3c8e59dbbfb4",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_3c8e59dbbfb4",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_bdc0d1804c88",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": false,
+   "detail": ".kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt"
+  },
+  {
+   "unit": "co_bdc0d1804c88",
+   "arm": "TP",
+   "replica": 1,
+   "applies": false,
+   "detail": ".kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt"
+  },
+  {
+   "unit": "co_bdc0d1804c88",
+   "arm": "TP",
+   "replica": 2,
+   "applies": false,
+   "detail": ".kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt"
+  },
+  {
+   "unit": "co_bdc0d1804c88",
+   "arm": "TP",
+   "replica": 3,
+   "applies": false,
+   "detail": ".kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt"
+  },
+  {
+   "unit": "co_bdc0d1804c88",
+   "arm": "TP",
+   "replica": 4,
+   "applies": false,
+   "detail": ".kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt"
+  },
+  {
+   "unit": "co_ed824f6818ef",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_ed824f6818ef",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_ed824f6818ef",
+   "arm": "TP",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_ed824f6818ef",
+   "arm": "TP",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_ed824f6818ef",
+   "arm": "TP",
+   "replica": 3,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_ed824f6818ef",
+   "arm": "TP",
+   "replica": 4,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_f637c4b8467e",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_f637c4b8467e",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_f637c4b8467e",
+   "arm": "TP",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_f637c4b8467e",
+   "arm": "TP",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_f637c4b8467e",
+   "arm": "TP",
+   "replica": 3,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "co_f637c4b8467e",
+   "arm": "TP",
+   "replica": 4,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_013d2748f3f8",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_06ff0c1fc96c",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": false,
+   "detail": "as/com.ounben.amaradio.database.AMARadioDatabase/7.json' cleanly.\nApplied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt"
+  },
+  {
+   "unit": "pr_06ff0c1fc96c",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt"
+  },
+  {
+   "unit": "pr_06ff0c1fc96c",
+   "arm": "TP",
+   "replica": 1,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt"
+  },
+  {
+   "unit": "pr_06ff0c1fc96c",
+   "arm": "TP",
+   "replica": 2,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt"
+  },
+  {
+   "unit": "pr_06ff0c1fc96c",
+   "arm": "TP",
+   "replica": 3,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt"
+  },
+  {
+   "unit": "pr_06ff0c1fc96c",
+   "arm": "TP",
+   "replica": 4,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt"
+  },
+  {
+   "unit": "pr_1381cd4ddb3f",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt"
+  },
+  {
+   "unit": "pr_1381cd4ddb3f",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt"
+  },
+  {
+   "unit": "pr_1381cd4ddb3f",
+   "arm": "TP",
+   "replica": 1,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt"
+  },
+  {
+   "unit": "pr_1381cd4ddb3f",
+   "arm": "TP",
+   "replica": 2,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt"
+  },
+  {
+   "unit": "pr_1381cd4ddb3f",
+   "arm": "TP",
+   "replica": 3,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt"
+  },
+  {
+   "unit": "pr_1381cd4ddb3f",
+   "arm": "TP",
+   "replica": 4,
+   "applies": false,
+   "detail": "Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt"
+  },
+  {
+   "unit": "pr_2b8cb7f6653b",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_2b8cb7f6653b",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_2b8cb7f6653b",
+   "arm": "TP",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_2b8cb7f6653b",
+   "arm": "TP",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_2b8cb7f6653b",
+   "arm": "TP",
+   "replica": 3,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_2b8cb7f6653b",
+   "arm": "TP",
+   "replica": 4,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_7d98a07e751d",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_7d98a07e751d",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_7d98a07e751d",
+   "arm": "TP",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_7d98a07e751d",
+   "arm": "TP",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_7d98a07e751d",
+   "arm": "TP",
+   "replica": 3,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_7d98a07e751d",
+   "arm": "TP",
+   "replica": 4,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_9215f97597a6",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_ac1a8dd4d680",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_ac1a8dd4d680",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_ac1a8dd4d680",
+   "arm": "TP",
+   "replica": 1,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_ac1a8dd4d680",
+   "arm": "TP",
+   "replica": 2,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_ac1a8dd4d680",
+   "arm": "TP",
+   "replica": 3,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_ac1a8dd4d680",
+   "arm": "TP",
+   "replica": 4,
+   "applies": true,
+   "detail": ""
+  },
+  {
+   "unit": "pr_fff072cb8953",
+   "arm": "SP2",
+   "replica": 1,
+   "applies": false,
+   "detail": "nsions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt"
+  },
+  {
+   "unit": "pr_fff072cb8953",
+   "arm": "SP2",
+   "replica": 2,
+   "applies": false,
+   "detail": "nsions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt"
+  },
+  {
+   "unit": "pr_fff072cb8953",
+   "arm": "TP",
+   "replica": 2,
+   "applies": false,
+   "detail": "nsions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt"
+  },
+  {
+   "unit": "pr_fff072cb8953",
+   "arm": "TP",
+   "replica": 4,
+   "applies": false,
+   "detail": "nsions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt"
+  }
+ ]
+}

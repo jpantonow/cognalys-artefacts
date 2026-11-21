@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/yogeshpaliyal/KeyPass/pull/1252",
+    "state": "open",
+    "finding_id": "013d2748f3f8",
+    "spec": "CipherSpec",
+    "csv_class": "com.yogeshpaliyal.common.utils.CryptoManager",
+    "method_name": "encrypt",
+    "title": "Use AndroidKeyStore explicitly for AES key generation",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:53.419899+00:00",
+    "maintainer_feedback": []
+  }
+]

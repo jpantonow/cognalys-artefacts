@@ -1,0 +1,16 @@
+Earlier proposals for this rule in other repositories, and what their maintainers answered:
+
+1. Repository: freeotp/freeotp-android
+   Outcome: merged
+   Proposal: Add SecretKeyFactory key round-trip coverage
+   Maintainer said: Thank you for the PR, test looks valid. By the way I consider renaming the EncryptedKey class to EncryptedToken to avoid confusion.
+
+2. Repository: freeotp/freeotp-android
+   Outcome: merged
+   Proposal: Require AES keys before initializing encryption
+   Maintainer said: Thank you for the PR, testing backup/restore is successful.
+
+3. Repository: gigabytedevelopers/CometOTP
+   Outcome: merged
+   Proposal: Create a fresh Cipher for each key operation
+   Maintainer said: Thank you for finding this and for the clear write-up, @jpantonow. The fix is merged. Our master branch only accepts signed commits, so I rebased your commit onto master and signed it on our side. You're still the author of the commit that landed (e5e8981). Good luck with the RVSec research!

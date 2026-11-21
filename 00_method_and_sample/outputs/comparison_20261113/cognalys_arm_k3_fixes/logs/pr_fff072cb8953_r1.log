@@ -1,0 +1,186 @@
+=== 2026-11-16T03:08:10-03:00 cognalys run --max-cost 2.0
+Frozen experiment: manifest written to /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3_fixes/manifests/pr_fff072cb8953_r1.json. Specification generation and learning-store writes are disabled for this run; web research not archived is fetched live.
+Preflight passed: declared dependencies, static analysis
+Pipeline steps: spec_generation -> cloning -> repository_setup -> extraction -> spec_context -> detector_rules -> llm -> solutions -> validation -> validation_fix -> revalidation -> prs -> preview -> fix_prs -> revalidation_fix_prs
+
+=== SPEC_GENERATION ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.generate_specifications --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/pr_fff072cb8953.jsonl --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/openai_prompt_logs
+frozen experiment: 1 specification(s) already present; none generated
+
+=== CLONING ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/pr_fff072cb8953.jsonl --output-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_methods --clone-timeout 1800 --clone-retries 3 --clone-only
+2026-11-16 03:08:32 - INFO - Starting single CSV workflow
+2026-11-16 03:08:32 - INFO - Output dir: /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones
+2026-11-16 03:08:32 - INFO - Clone dir: /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones
+2026-11-16 03:08:32 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_methods
+2026-11-16 03:08:32 - INFO - 1 linhas válidas carregadas
+2026-11-16 03:08:32 - INFO - 1 repositórios únicos mapeados
+2026-11-16 03:08:32 - INFO - [1/1] Cloning com.philkes.notallyx.debug_71134.apk from https://github.com/Crustack/NotallyX
+2026-11-16 03:08:44 - INFO - com.philkes.notallyx.debug_71134.apk checked out at the pinned revision f8c9cea0fdc35be7f495bb323ddab50632bdc373
+2026-11-16 03:08:44 - INFO - Successfully cloned com.philkes.notallyx.debug_71134.apk
+2026-11-16 03:08:44 - INFO - Cloning results: 1 success, 0 failed, 0 timeout
+
+=== REPOSITORY_SETUP ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.prepare_repository_branches --projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones --report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/repository_setup.json --project com.philkes.notallyx.debug_71134.apk
+com.philkes.notallyx.debug_71134.apk:  ->  (unchanged)
+
+=== EXTRACTION ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/pr_fff072cb8953.jsonl --output-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_methods --clone-timeout 1800 --clone-retries 3 --skip-cloning
+2026-11-16 03:08:45 - INFO - Starting single CSV workflow
+2026-11-16 03:08:45 - INFO - Output dir: /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones
+2026-11-16 03:08:45 - INFO - Clone dir: /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones
+2026-11-16 03:08:45 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_methods
+2026-11-16 03:08:45 - INFO - 1 linhas válidas carregadas
+2026-11-16 03:08:45 - INFO - 1 repositórios únicos mapeados
+2026-11-16 03:08:45 - INFO - Reutilizando clones existentes em: /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones
+2026-11-16 03:08:45 - INFO - com.philkes.notallyx.debug_71134.apk is already at the pinned revision f8c9cea0fdc35be7f495bb323ddab50632bdc373
+2026-11-16 03:08:45 - INFO - Found clone for com.philkes.notallyx.debug_71134.apk: /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones/com.philkes.notallyx.debug_71134.apk
+2026-11-16 03:08:45 - INFO - Building index for repository: /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones/com.philkes.notallyx.debug_71134.apk
+2026-11-16 03:08:46 - INFO - Indexed 666 classes from 661 unique class definitions
+2026-11-16 03:08:47 - INFO - Extraction complete: 1 success, 0 failed, 0 skipped
+2026-11-16 03:08:47 - INFO - Tracking JSON written to /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones/extraction_tracking.json
+2026-11-16 03:08:47 - INFO - Summary written to /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones/logs/summary_tracked.txt
+
+=== SPEC_CONTEXT ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.enrich_spec_context --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_methods --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/pr_fff072cb8953.jsonl
+Specification registry coverage: 1/1 sample specs available
+Specification context: 1 enriched, 0 missing, 1 total
+
+=== DETECTOR_RULES ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.propose_detector_rules --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/pr_fff072cb8953.jsonl --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/openai_prompt_logs
+MessageDigestSpec: its specification changed after its rule was accepted; the rule is kept as is (rerun with --spec MessageDigestSpec --replace to regenerate)
+MessageDigestSpec: skipped, an accepted rule exists (pass replace to regenerate it)
+Detector rules: nothing to propose
+
+=== LLM ===
+$ /home/antonow/venv/bin/python -m cognalys.llm.generate_error_fixes --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_methods --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_solutions --model gpt-6.1-terra --provider openai --endpoint https://api.openai.com/v1 --timeout 600 --ollama-context-length 16384 --repository-context-budget 140000 --pr-issue-style v3 --max-output-tokens 32768 --reasoning-effort high --validation-mode balanced --validation-feedback-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/build_validation --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/openai_prompt_logs --web-search-cache-ttl-hours 168.0 --web-search-retries 1 --retries 2 --workers 1 --no-cache --research-corpus-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus --research-corpus-max-age-days 90.0 --web-search --migration-policies-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/migration_policies.json
+INFO: Testing OpenAI connection...
+INFO: OpenAI connection successful
+INFO: ✓ Model 'gpt-6.1-terra' available
+INFO: Discovered 1 errors to process
+INFO: Processing 1 new errors (0 already complete)
+INFO: Processing: com.philkes.notallyx.debug_71134.apk/md5Hash
+WARNING: com.philkes.notallyx.debug_71134.apk/md5Hash will not produce a pull request: the reviewed code is no longer in app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt on the contribution base branch main, so the project has most likely already changed it. The analysis still runs; the patch will have nowhere to land; the reported statement is gone too, so no issue will be raised.
+INFO: Research corpus hit: 7ec15512326d
+INFO: md5Hash: the supported plan edits app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt:md5Hash overload family, app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt:md5Hash import and export comparison calls, not only the reported method; generating it as a reviewable declaration change
+INFO: [1/1] md5Hash
+INFO: ✓ Solution saved (confidence: 70%)
+INFO: Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_solutions/solutions_tracking.json
+INFO: Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_solutions/analysis_summary.txt
+INFO: ======================================================================
+INFO: ANALYSIS COMPLETE
+INFO: Analyzed: 1/1
+INFO: Fixes generated: 1
+INFO: Confirmed external-contract findings: 0
+INFO: Issue candidates: 0
+INFO: Time: 00h 03m 14s
+INFO: LLM cache: 0 hit(s), 0 miss(es), 0 replayed within a finding
+INFO: Research corpus: 1 served, 0 researched and stored, 0 kept, 0 expired
+
+======================================================================
+LLM Error Fix Generator
+======================================================================
+Model: gpt-6.1-terra
+Provider: openai
+Endpoint: https://api.openai.com/v1
+Timeout: 600s
+Reasoning effort: high
+Validation mode: balanced
+Repository context budget: 140000 characters
+Allow cache invalidation: False
+Web search: True
+Max output tokens: 32768
+Input: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_methods
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_solutions
+LLM cache: disabled
+Resume: True
+======================================================================
+
+Research corpus: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus (126 entries, max age 90 days)
+
+=== SOLUTIONS ===
+$ /home/antonow/venv/bin/python -m cognalys.solutions.run_apply --error-solutions-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_solutions --cloned-projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results --worktrees-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/worktrees --backup-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/method_backups --approve-review-only-for-validation --port-model gpt-6.1-terra --port-endpoint https://api.openai.com/v1 --port-timeout 600 --port-max-output-tokens 16384 --port-reasoning-effort high --port-prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/openai_prompt_logs
+2026-11-16 03:12:24,909 - INFO - Starting solution application workflow
+2026-11-16 03:12:24,922 - INFO - ============================================================
+2026-11-16 03:12:24,922 - INFO - STAGE 1: DISCOVERY & MAPPING
+2026-11-16 03:12:24,922 - INFO - ============================================================
+2026-11-16 03:12:24,923 - INFO - Building solution to repository mapping...
+2026-11-16 03:12:24,923 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_solutions
+2026-11-16 03:12:25,194 - INFO - Discovered 1 solutions
+2026-11-16 03:12:25,195 - INFO - Mapping complete
+2026-11-16 03:12:25,195 - INFO - Mapping report: {'total_apks': 1, 'total_solutions': 1, 'mappings': {'com.philkes.notallyx.debug_71134.apk': {'apk_name': 'com.philkes.notallyx.debug_71134.apk', 'solutions': [{'method_name': 'md5Hash', 'csv_class': 'com.philkes.notallyx.utils.IOExtensionsKt', 'spec': 'MessageDigestSpec', 'error_message': 'expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5', 'tool': 'rvsec', 'detector_context': {'code': 'MESSAGEDIGEST-ALG-02', 'site_kind': "ALG: the algorithm or transformation string is not in the rule's allow-list", 'label': 'violation', 'label_meaning': 'A value check of the rule fired: an algorithm, key size, protocol, keystore type or other constraint outside what the rule admits, a required origin positively contradicted, or a forbidden call. The value seen and the admitted values are in value/expected.', 'value': 'MD5', 'expected': 'SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512', 'source_location': 'IOExtensions.kt:573', 'codes': 'MESSAGEDIGEST-ORDER-02 [creation-refused] (6), MESSAGEDIGEST-ALG-02 [violation] (3), MESSAGEDIGEST-ALG-00 [violation] (3), MESSAGEDIGEST-ALG-03 [violation] (3)', 'tools': 'monkey:fast', 'runtime_observation': 'Reported in 1 run(s) of the app; each run starts from a clean, read-only emulator.', 'runtime_coverage_file': '/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_notallyx_20261028/findings_all.coverage.json'}, 'relative_method_file': 'com.philkes.notallyx.debug_71134.apk/app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt', 'source_file': 'app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt', 'quality_score': 90, 'decision': 'MULTI_FILE_FIX_PROPOSED_FOR_REVIEW', 'manual_review_required': True, 'auto_apply': False, 'publication_allowed': False, 'publication_status': 'eligible_after_validation'}]}}}
+2026-11-16 03:12:25,203 - INFO - Mapping report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/mapping_report.json
+2026-11-16 03:12:25,203 - INFO - ============================================================
+2026-11-16 03:12:25,203 - INFO - STAGE 2: APPLYING SOLUTIONS
+2026-11-16 03:12:25,204 - INFO - ============================================================
+2026-11-16 03:12:25,204 - INFO - Processing 1/1: md5Hash
+2026-11-16 03:12:25,204 - WARNING - Applying review-only solution for md5Hash to an isolated worktree for validation; publication remains disabled
+2026-11-16 03:12:27,959 - INFO - Created finding worktree /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/worktrees/com.philkes.notallyx.debug_71134.apk/fff072cb8953/6100f823f7 on fix/md5hash-messagedigestspec-fff072cb8953-6100f823f7
+2026-11-16 03:12:28,044 - INFO - Backup saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/method_backups/com.philkes.notallyx.debug_71134.apk/IOExtensions_md5Hash_20261116T061227Z.kt.bak
+2026-11-16 03:12:37,493 - INFO - ============================================================
+2026-11-16 03:12:37,493 - INFO - STAGE 3: GENERATING REPORT
+2026-11-16 03:12:37,494 - INFO - ============================================================
+2026-11-16 03:12:37,533 - INFO - Execution report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/execution_report.json
+2026-11-16 03:12:37,534 - INFO - ============================================================
+2026-11-16 03:12:37,534 - INFO - EXECUTION SUMMARY
+2026-11-16 03:12:37,534 - INFO - ============================================================
+2026-11-16 03:12:37,535 - INFO - Successfully Applied: 0
+2026-11-16 03:12:37,535 - INFO - Failed: 0
+2026-11-16 03:12:37,536 - INFO - Total Time: 12.59s
+
+DONE
+{'execution_timestamp': '2026-11-16T06:12:37.499146+00:00', 'workflow_status': 'SUCCESS_WITH_NO_ACTION', 'execution_time_seconds': 12.589981, 'config': {'error_solutions_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_solutions', 'cloned_projects_dir': '/home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones', 'output_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results', 'worktrees_dir': '/home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/worktrees', 'save_backups': True, 'backup_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/method_backups', 'dry_run': False, 'max_solutions': 0, 'git_user_name': 'jpantonow', 'git_user_email': 'jpantonow@gmail.com'}, 'total_solutions': 1, 'results': {'successfully_applied': 0, 'failed': 0, 'dry_run': 0, 'review_only_not_applied': 0, 'not_applicable_to_base_branch': 1}, 'per_solution_details': [{'apk_name': 'com.philkes.notallyx.debug_71134.apk', 'method_name': 'md5Hash', 'csv_class': 'com.philkes.notallyx.utils.IOExtensionsKt', 'source_file': 'app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt', 'spec': 'MessageDigestSpec', 'error_message': 'expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5', 'tool': 'rvsec', 'detector_context': {'code': 'MESSAGEDIGEST-ALG-02', 'site_kind': "ALG: the algorithm or transformation string is not in the rule's allow-list", 'label': 'violation', 'label_meaning': 'A value check of the rule fired: an algorithm, key size, protocol, keystore type or other constraint outside what the rule admits, a required origin positively contradicted, or a forbidden call. The value seen and the admitted values are in value/expected.', 'value': 'MD5', 'expected': 'SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512', 'source_location': 'IOExtensions.kt:573', 'codes': 'MESSAGEDIGEST-ORDER-02 [creation-refused] (6), MESSAGEDIGEST-ALG-02 [violation] (3), MESSAGEDIGEST-ALG-00 [violation] (3), MESSAGEDIGEST-ALG-03 [violation] (3)', 'tools': 'monkey:fast', 'runtime_observation': 'Reported in 1 run(s) of the app; each run starts from a clean, read-only emulator.', 'runtime_coverage_file': '/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_notallyx_20261028/findings_all.coverage.json'}, 'repository_guidance': [{'path': 'README.md', 'content': '### Contributing\n\nIf you would like to contribute code yourself, just grab any open issue (that has no other developer assigned yet), leave a comment that you want to work on it and start developing by forking this repo.\n\nThe project is a default Android project written in Kotlin, I highly recommend using Android Studio for development. Also be sure to test your changes with an Android device/emulator that uses the same Android SDK Version as defined in the `build.gradle` `targetSdk`.\n\nBefore submitting your proposed changes as a Pull-Request, make sure all tests are still working (`./gradlew test`), and run `./gradlew ktfmtFormat` for common formatting (also executed automatically as pre-commit hook).'}], 'branch_policy': {}, 'compatibility_policy': {'case_migration_policy': {'authorized': True, 'usage_classification': 'pending_evidence', 'consumer_scope': 'internal_recomputed_digest_value', 'scope': 'This authorization is conditional and applies only to a digest whose value is recomputed from live data and compared against another value produced by the same code path in the same process. It does not authorize changing a digest whose value is persisted, transmitted, exported, or compared against a value produced by any other program or by an earlier release.', 'authorization_conditions': ['The examined scope classifies the usage as a cache or runtime discriminator, not as persistence, protocol, public_api, fingerprint, or password.', 'The expected value source is internal to this repository.', 'No persistence, network, protocol, identity, or security sink for the derived value was identified in the examined scope.'], 'strategy': 'Replace the weak algorithm literal with a governed algorithm (SHA-256 preferred) while preserving the surrounding method signature, return type, and value-derivation shape. Both the stored comparison value and the recomputed value come from the same method, so an in-process discriminator stays correct across the change without any value migration.', 'finding_semantics': 'A confirmed algorithm-allowlist violation is a real finding even when the digest is not used for security. Do not claim a runtime security impact that the evidence does not establish, and do not treat the absence of a proven security impact as a reason to leave the governed algorithm in place.', 'absence_of_proof_guidance': 'A bounded scope analysis can never prove that no unexamined, reflective, packaged, or external consumer exists. When the examined scope is complete for the reachable callers and identified no such consumer, treat that as supporting the internal classification rather than as a compatibility blocker. Requiring proof of a universal negative would make every digest migration permanently unfixable, which is not the intent of this policy.', 'forbidden_changes': ["Do not change the method signature or return type; when the method folds digest bytes into a fixed-width value (an int, a long, a hashCode), keep the number of bytes folded, while a helper that returns the whole digest returns the new algorithm's full output; the name may change when rename_safety reports no hard blocker (a repository check the pipeline runs, not a maintainer approval): then rename it and update every reference in the same patch.", 'Do not make a function whose name states the weak algorithm (sha1, md5) compute a different digest: switch every caller of the weak-named function to a correctly named function, an existing one or a new one the patch adds beside it (for example a sha256 helper); or rename the weak-named function when rename_safety reports no hard blocker (a repository check the pipeline runs, not a maintainer approval), updating every reference in the same patch.', "Do not change a digest whose value names or keys stored data (a file, a database, a preferences entry) or is sent out of the process; derived_value_consumers records where it goes. A file in the app's cache directory (a consumer of kind cache), which the platform may delete at any time, is not stored data.", 'Do not migrate a digest whose expected value is produced by an external backend, another repository, or a previous release.', 'Do not introduce a persisted or transmitted representation of the digest that did not already exist.', 'Do not claim the change removes a security vulnerability when the evidence classifies the usage as non-security.'], 'required_tests': ['The discriminator still reports an unmodified value as unmodified.', 'The discriminator still reports a modified value as modified.'], 'review_fallback': 'Generate MULTI_FILE_FIX_PROPOSED_FOR_REVIEW when the digest usage is internal and recomputed in process but any consumer inventory, persisted representation, or cross-release value contract remains unresolved.'}}, 'migration_assessment': {'usage_kind': 'runtime_discriminator', 'evidence': ["The governed call selects MD5, outside the verified specification's algorithm allow-list.", 'MD5 reached the governed call in one measured application run.', 'The identified export use compares a temporary ZIP with its reopened destination copy to guard against null or I/O issues.', 'The lexical rename assessment found no hard blocker for the md5Hash overload family.'], 'legacy_compatibility_required': False, 'safe_strategy': 'Use SHA-256 for both locally compared digests, returning its full digest bytes. Rename the md5Hash overload family and update all references. No digest-value migration is needed because the compared values are recomputed during the same export operation.', 'policy_authorized': True}, 'publication_considerations': [], 'publication_blocker_record': {'decision': 'SAFE_INTERNAL_DIGEST_MIGRATION', 'blockers': [], 'discharged_blockers': [], 'evidence_gap_promoted': [], 'plan_publication_blockers': [], 'behavior_review': {'status': 'reviewed', 'review_contract_version': 23, 'regression_count': 0, 'patch_has_no_effect': False}}, 'digest_contract_assessment': {'security_relevance': 'not_established', 'contract_kind': 'internal', 'expected_digest_source': 'Evidence IDs: SRC-001, SRC-002, FLOW-001, RENAME-001', 'backend_repository_available': False, 'backend_change_required': False, 'client_only_change_safe': True, 'rollout_strategy': '', 'pull_request_note': ''}, 'review_assumptions': ['The examined callers recompute both comparison values in-process; no persisted or cross-release digest consumer was identified.', 'Undiscovered external consumers of the public overloads would need to migrate to the new name and 32-byte digest.', 'The compared digests are recomputed locally and are not persisted or compared with values from another release.', 'This checksum comparison is not an authentication mechanism.', 'No automated test accompanies this patch (the plan found no unit test that observes this change). Before merging, manually confirm: The discriminator still reports an unmodified value as unmodified.; The discriminator still reports a modified value as modified.'], 'review_blockers': [], 'required_tests': ['Verify an unmodified value compares equal and a modified value compares unequal using the recomputed digests.', 'Verify a known SHA-256 vector produces the complete 32-byte digest.', 'Verify that an unchanged exported copy passes the digest comparison.', 'Verify that a modified exported copy fails the digest comparison.'], 'decision': 'MULTI_FILE_FIX_PROPOSED_FOR_REVIEW', 'manual_review_required': True, 'auto_apply': False, 'publication_allowed': False, 'publication_status': 'eligible_after_validation', 'semantic_validation': {'status': 'valid', 'errors': [], 'warnings': [], 'accepted_renames': [{'old': 'md5Hash', 'new': 'sha256Hash'}]}, 'stored_value_contract': {}, 'fix_scope': 'review_only', 'applied_for_validation': True, 'review_contract_version': 23, 'pr_attribution': {}, 'status': 'NOT_APPLICABLE_TO_BASE', 'error': 'ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH', 'original_method_body': 'fun Context.md5Hash(uri: Uri): ByteArray? {\n    return contentResolver.openInputStream(uri)?.md5Hash()\n}\n\nfun File.md5Hash(): ByteArray {\n    return inputStream().md5Hash()\n}\n\nfun InputStream.md5Hash(): ByteArray {\n    val digest = MessageDigest.getInstance("MD5")\n    use { fis ->\n        val buffer = ByteArray(BUFFER_SIZE / 2)\n        var bytes = fis.read(buffer)\n        while (bytes != -1) {\n            digest.update(buffer, 0, bytes)\n            bytes = fis.read(buffer)\n        }\n    }\n    return digest.digest()\n}', 'corrected_method_body': 'fun Context.sha256Hash(uri: Uri): ByteArray? {\n    return contentResolver.openInputStream(uri)?.sha256Hash()\n}\n\nfun File.sha256Hash(): ByteArray {\n    return inputStream().sha256Hash()\n}\n\nfun InputStream.sha256Hash(): ByteArray {\n    val digest = MessageDigest.getInstance("SHA-256")\n    use { fis ->\n        val buffer = ByteArray(BUFFER_SIZE / 2)\n        var bytes = fis.read(buffer)\n        while (bytes != -1) {\n            digest.update(buffer, 0, bytes)\n            bytes = fis.read(buffer)\n        }\n    }\n    return digest.digest()\n}', 'finding_id': 'fff072cb8953', 'branch': 'fix/md5hash-messagedigestspec-fff072cb8953-6100f823f7', 'base_branch': 'main', 'base_commit': '39225b8eb3a4e181ad879dd0255e445c70c22e33', 'solution_revision': '6100f823f7', 'worktree_attempt': 1, 'orphaned_worktree_paths': [], 'worktree_path': '/home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/worktrees/com.philkes.notallyx.debug_71134.apk/fff072cb8953/6100f823f7', 'base_repository_path': '/home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones/com.philkes.notallyx.debug_71134.apk', 'base_port': {'decision': 'ALREADY_FIXED_UPSTREAM', 'explanation': 'The base already replaces the MD5 overload family in IOExtensions.kt with SHA-256 and updates the export comparison, import, and messages in ExportExtensions.kt.', 'attempts': [], 'confirmation': 'the reported statement `val digest = MessageDigest.getInstance("MD5")` is in no file of the base'}, 'contribution_base': {'base_commit': '39225b8eb3a4e181ad879dd0255e445c70c22e33', 'source_file_path': 'app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt', 'target_present': True, 'analyzed_code_present': False, 'violation_absent_per_port': True}, 'coordinated_edits': [], 'changed_files': []}], 'errors': []}
+
+=== VALIDATION ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.applied_solutions --projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/build_validation --execution-report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/execution_report.json --variant debug --timeout 3600
+Running isolated compilation validation for 0 finding(s)
+Compilation validation: 0 passed, 0 failed, 0 not executed; 0 solution records enriched
+
+=== VALIDATION_FIX ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.repair --execution-report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/execution_report.json --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/validation_fixes --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 16384 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/openai_prompt_logs
+Validation fix: no repairable compiler diagnostics or failing tests
+validation_fix applied no repair; skipping revalidation, which would rebuild unchanged worktrees (use --force-revalidation to always run it).
+
+=== PRS ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.run_prs --execution-report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/execution_report.json --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/pull_requests --pr-issue-style v3 --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 16384 --reasoning-effort high --cache-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/.llm_cache --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/openai_prompt_logs
+2026-11-16 03:12:46,496 - INFO - Loaded 1 solutions
+2026-11-16 03:12:46,496 - INFO - PR generation summary: 0 generated, 0 failed
+
+=== PREVIEW ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.generate_github_previews --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/pull_requests --issue-candidates-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_solutions/issue_candidates --evidence-reviews-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/error_solutions/evidence_reviews --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/previews --issue-title "Potential security issue found — would you be open to a pull request?" --issue-title-without-security-impact "Question about the {api} use in {location} — would you be open to a pull request?" --issue-body "Hi! I'm a Computer Engineering student at the University of Brasília (UnB), working on a research project about how Android apps use security-sensitive APIs." --pr-issue-style v3
+ANALYSIS PREVIEW: com.philkes.notallyx.debug_71134.apk_md5Hash_MessageDigestSpec_analysis.md
+Preview summary: 0 PR previews, 0 issue previews, 1 analysis previews, 0 failed
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/previews
+
+=== FIX_PRS ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.pr_feedback --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/pull_requests --projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones --worktrees-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/worktrees --output /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/fix_prs_report.json --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/openai_prompt_logs
+WARNING: No published pull requests found in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/pull_requests: this step scans '*_pr_created.json' there and found none, so nothing was revised. If the pull request you meant to revise was opened by an earlier run, point --pull-requests-dir at that run's pull_requests directory.
+
+=== REVALIDATION_FIX_PRS ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.pr_feedback --revalidate --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/pull_requests --projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/clones --worktrees-dir /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1/worktrees --output /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/application_results/fix_prs_report.json --timeout 600 --build-variant debug --build-timeout 3600
+
+Model calls of this run:
+  code_generation                  3 calls       46,559 in (12,288 cached, 34,262 written)       2,878 out  US$ 0.03
+  evidence_extraction              1 calls       40,310 in (0 cached, 40,307 written)       3,951 out  US$ 0.04
+  solutions                        1 calls       25,907 in (0 cached, 25,904 written)          57 out  US$ 0.02
+  adjudication                     1 calls       13,324 in (0 cached, 13,321 written)       2,293 out  US$ 0.01
+  patch_planning                   1 calls        9,169 in (3,572 cached, 5,594 written)         937 out  US$ 0.01
+  external_research                2 calls        5,722 in (4,597 cached, 370 written)         947 out  US$ 0.00
+  pr_generation                    1 calls        2,174 in (0 cached, 2,171 written)         410 out  US$ 0.00
+  total                           10 calls      143,165 in (20,457 cached, 121,929 written)      11,473 out  US$ 0.11; 0 answered from the cache, 1 served by the research corpus; served tiers flex 10
+
+Pipeline finished successfully.
+Run status: complete
+
+=== RETROSPECTIVE ===
+1 finding(s): 1 at apply; 1 new and 0 recurring failure signature(s)
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/retrospective/retrospective.md
+
+=== STATISTICS ===
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/pr_fff072cb8953/r1/statistics/statistics.md
+Pipeline elapsed time: 00h 04m 40s
+correção não aplicável: código mudou upstream com.philkes.notallyx.debug_71134.apk md5Hash [MessageDigestSpec]  (9 calls, 129k tokens, US$ 0.09)
+
+1 findings. correção não aplicável: código mudou upstream: 1
+Most model use without a pull request:
+  9 calls, 129k tokens, US$ 0.09           com.philkes.notallyx.debug_71134.apk md5Hash [MessageDigestSpec] -> correção não aplicável: código mudou upstream

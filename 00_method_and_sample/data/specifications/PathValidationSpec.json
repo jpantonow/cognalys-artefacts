@@ -1,0 +1,185 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The supplied record is normalized advisory evidence rather than an executable trace.",
+      "The available finding text does not define a public detector implementation, its complete source/sink catalog, taint semantics, dominance model, or validation recognizers.",
+      "Local API-pattern matching can observe calls but cannot decide URI provenance, canonical target identity, provider behavior, permissions, storage accessibility, or copy success."
+    ],
+    "predicates": [
+      "A URI originates from an external or otherwise less-trusted boundary.",
+      "That URI, or a path derived from it, reaches a source-opening or source-copy operation.",
+      "The resulting bytes reach a destination rooted in app-specific external storage.",
+      "No effective validation evidence restricts the resolved source away from protected internal application data on all successful paths."
+    ],
+    "claim": "The finding claims a potential insufficient-validation/confused-deputy pattern: externally originating URI data can influence a privileged source read and a copy into external storage."
+  },
+  "unknowns": [
+    "No public detector-rule catalog or CrySL artifact defining PathValidationSpec was supplied or identified; therefore its label cannot be expanded into a named governed API type.",
+    "The precise matching, taint propagation, sanitizer recognition, and path-sensitivity behavior of the detector are not available from the normalized finding.",
+    "The exact URI scheme and target resource used by any later finding are unknown.",
+    "The exact deployment environment determining external-storage readability is unknown.",
+    "The finding alone does not reveal whether the source bytes were sensitive, whether copying completed, or whether any other application accessed the resulting file.",
+    "The relationship between the concern label and a specific CWE mapping remains descriptive rather than definitive: the directly linked advisory lists CWE-441 and CWE-610, while CWE-22 is related generic pathname guidance rather than a verified universal mapping."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "ContentResolver.openInputStream(Uri) opens an InputStream for content, android.resource, or file URIs; it can throw FileNotFoundException and can return null if the provider recently crashed.",
+      "Uri exposes decoded scheme and path components, but those accessors do not establish the identity, authorization, or safety of the resource ultimately opened.",
+      "Context.getExternalFilesDir(String) returns an app-specific directory on shared/external storage and may return null when that storage is unavailable. FileOutputStream(File) opens the supplied File for writing or throws when it cannot be opened.",
+      "File canonicalization resolves pathname equivalence such as redundant dot segments and, typically on Unix, symbolic links; this is pathname behavior, not proof that an opened descriptor remains the same object after a check. Android ContentResolver guidance distinguishes safe descriptor validation from URI reuse.",
+      "Apache Commons IO provides the observed copy helpers: IOUtils copies between streams and FileUtils copies file contents to a destination."
+    ],
+    "preconditions": [
+      "The receiving code must accept an externally supplied URI.",
+      "The app must be able to open the URI or successfully execute one of the file-path fallback branches.",
+      "External storage must be available and the destination File must be creatable and writable.",
+      "The selected copy helper must complete successfully for source bytes to reach the destination."
+    ],
+    "unknowns": [
+      "Which URI schemes, authorities, grant flags, and provider implementations are accepted by the analyzed build.",
+      "Whether source validation exists outside the local reported slice or dominates every successful resolution and fallback branch.",
+      "Which Apache Commons IO version is packaged by the analyzed artifact and whether helper behavior differs from current documentation.",
+      "Whether any path helper transforms, canonicalizes, rejects, or otherwise constrains URI-derived paths."
+    ]
+  },
+  "authoritative_sources": [
+    "https://github.com/federicoiosue/Omni-Notes/security/advisories/GHSA-g38r-4cf6-3v32",
+    "https://securitylab.github.com/advisories/GHSL-2022-065_Omni-Notes/",
+    "https://github.com/federicoiosue/Omni-Notes/blob/aaa9fcebc756903e5d755eee0a9d005d6bf5adb6/omniNotes/src/main/java/it/feio/android/omninotes/utils/StorageHelper.java",
+    "https://cwe.mitre.org/data/definitions/441.html",
+    "https://cwe.mitre.org/data/definitions/610.html",
+    "https://cwe.mitre.org/data/definitions/22",
+    "https://developer.android.com/privacy-and-security/risks/content-resolver",
+    "https://developer.android.com/privacy-and-security/risks/path-traversal",
+    "https://developer.android.com/reference/android/net/Uri",
+    "https://developer.android.com/reference/android/content/ContentResolver#openInputStream(android.net.Uri)",
+    "https://developer.android.com/reference/android/content/Context#getExternalFilesDir(java.lang.String)",
+    "https://developer.android.com/reference/java/io/File",
+    "https://developer.android.com/reference/java/io/InputStream",
+    "https://developer.android.com/reference/java/io/OutputStream",
+    "https://developer.android.com/reference/java/io/FileOutputStream#FileOutputStream(java.io.File)",
+    "https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/IOUtils.html",
+    "https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/FileUtils.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observed when ContentResolver.openInputStream is invoked. The security predicate requires data flow from an externally controlled URI to this argument and successful resolution to a source that the caller is authorized to read; the call alone does not prove its scheme, provider, resolved object, or successful read.",
+      "name": "uri_resolved_as_input",
+      "api_patterns": [
+        "getContentResolver().openInputStream(",
+        ".openInputStream(uri)"
+      ]
+    },
+    {
+      "condition": "Observed when URI path material, directly or through a path helper, is converted to a File and supplied to a file-copy operation. The security predicate requires that this derived path resolves to a protected or policy-disallowed source and that no effective check constrains that resolved source on the executed branch.",
+      "name": "uri_path_used_as_file_source",
+      "api_patterns": [
+        "new File(uri.getPath())",
+        "FileHelper.getPath(mContext, uri)",
+        "FileUtils.copyFile(new File(uri.getPath()), file)",
+        "FileUtils.copyFile(new File(FileHelper.getPath(mContext, uri)), file)"
+      ]
+    },
+    {
+      "condition": "Observed when a File under the app-specific external-files directory is selected and opened for writing. The security predicate requires that this is the destination receiving the sensitive source bytes and that the deployed Android/storage configuration permits a less-trusted principal to read that destination; the directory API call alone does not prove cross-app readability.",
+      "name": "external_destination_created",
+      "api_patterns": [
+        "getExternalFilesDir(null)",
+        "new File(mContext.getExternalFilesDir(null),",
+        "new FileOutputStream(file)"
+      ]
+    },
+    {
+      "condition": "Observed when a recognized stream or file copy helper is called. The security predicate requires a successful copy from the resolved source to the external destination; invocation alone does not prove that bytes were transferred, committed, retained, or later exposed.",
+      "name": "bytes_copied_to_destination",
+      "api_patterns": [
+        "copyFile(contentResolverInputStream, contentResolverOutputStream)",
+        "IOUtils.copy(is, os)",
+        "FileUtils.copyFile("
+      ]
+    }
+  ],
+  "source_verified": false,
+  "important_note": "PathValidationSpec is a concern label, not a governed API type, CrySL rule, or published detector-rule name. The relevant advisory describes uncontrolled URI-based content resolution and lists CWE-441 and CWE-610; it does not establish that every finding is conventional CWE-22 traversal. Android security guidance separately identifies untrusted file:// URIs passed to ContentResolver as a confused-deputy risk.",
+  "forbidden_inferences_without_evidence": [
+    "That PathValidationSpec names a Java/Kotlin class, a platform API type, a CrySL rule, or a public detector-catalog rule.",
+    "That a similarly named type from another framework governs this concern.",
+    "That the URI uses the file scheme, points to internal application data, or resolves to any particular canonical path.",
+    "That a call to ContentResolver.openInputStream succeeds, returns a non-null stream, or reads bytes from the expected object.",
+    "That a source-level check is effective across all successful branches, including URI-path fallback branches.",
+    "That an external-files destination is readable by every other application on every Android version, target SDK, device configuration, or permission state.",
+    "That a static/advisory finding proves exploitability, successful copying, data sensitivity, or observed runtime exfiltration.",
+    "That the representative advisory's affected-version information applies to a different artifact, variant, commit, dependency set, or deployed build.",
+    "That the CROSSINGTUD corpus is evidence for this specification."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A security impact requires additional facts: an attacker can supply the relevant URI; resolution or fallback accesses protected data using the app's authority; copying succeeds; and the resulting destination is accessible to a less-trusted principal. Android documents untrusted file URI use with ContentResolver as capable of exposing protected data, but platform conditions remain material.",
+    "equivalent": false,
+    "detector_claim": "A potentially less-trusted URI controls a resource reference that the app resolves with its own access and then copies toward external storage; this matches the advisory's uncontrolled-content-resolution framing and the confused-deputy/resource-reference CWE concepts."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "The exact application artifact, variant, commit, and dependency lock state corresponding to the reported source tag.",
+      "The Android API level and target SDK used at runtime.",
+      "The ContentProvider implementation and URI-permission behavior for each tested URI.",
+      "The Apache Commons IO version and behavior bundled with the artifact."
+    ],
+    "runtime": [
+      "The actual incoming URI string, scheme, authority, grant state, and originating component.",
+      "The opened descriptor or canonical source identity, including whether it refers to protected application data.",
+      "Successful copy completion and byte-level correspondence between source and destination.",
+      "The device API level, target SDK, storage mode, installed permissions, and a concrete demonstration of whether another principal can read the destination."
+    ],
+    "source_level": [
+      "A source-to-sink data-flow trace from an externally controlled URI to ContentResolver.openInputStream(Uri) or to a File created from URI-derived path material.",
+      "Evidence that the input stream or file-copy source reaches the same destination opened below Context.getExternalFilesDir(String).",
+      "Evidence about all successful primary and fallback branches, including the stream-copy branch and URI-path-derived FileUtils.copyFile branches.",
+      "Evidence that any source restriction is absent or ineffective for the resolved source on every relevant successful branch."
+    ]
+  },
+  "name": "PathValidationSpec",
+  "source_url": "https://github.com/federicoiosue/Omni-Notes/security/advisories/GHSA-g38r-4cf6-3v32",
+  "applies_to_types": [
+    "android.content.Context",
+    "android.content.ContentResolver",
+    "android.net.Uri",
+    "java.io.File",
+    "java.io.InputStream",
+    "java.io.OutputStream",
+    "java.io.FileOutputStream",
+    "org.apache.commons.io.IOUtils",
+    "org.apache.commons.io.FileUtils"
+  ],
+  "source_title": "Uncontrolled data used in content resolution — GHSA-g38r-4cf6-3v32 / CVE-2023-33188",
+  "semantic_scope": "For every finding of this rule, the detector observes or normalizes a potential static/advisory flow in which an externally supplied URI may be resolved using the receiving app's authority and copied, directly or through a URI-path fallback, to an app-specific external-storage destination without evidence in the finding record of an effective source-identity restriction. It is not a runtime log and does not itself establish URI control, protected-source resolution, byte transfer, destination readability, or exploitability.",
+  "spec_id": "PathValidationSpec",
+  "known_false_positive_shapes": [
+    "The URI is constructed solely from a trusted in-process source and cannot be influenced by an external sender.",
+    "A dominating, effective policy check rejects protected or disallowed resolved sources on every primary and fallback branch, but local matching does not recognize that check.",
+    "The URI is a provider-backed content URI whose provider and URI grants restrict access to only intended non-sensitive content.",
+    "The resolver open fails, returns no usable stream, and every fallback copy path also fails before bytes are written.",
+    "The external destination is not readable by a less-trusted principal in the actual Android version, target-SDK, permission, and storage configuration.",
+    "The copied data is non-sensitive and the security policy permits its placement in that destination."
+  ],
+  "protocol": "externally supplied URI? → resolve/read via ContentResolver.openInputStream(uri) or URI-path-derived File fallback → create destination below Context.getExternalFilesDir(...) → FileOutputStream(destination) → stream/file byte copy",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "it.feio.android.omninotes.utils.StorageHelper",
+        "method": "createExternalStoragePrivateFile",
+        "message": "External finding (CVE-2023-33188): createExternalStoragePrivateFile copies an externally supplied URI into external attachment storage without validating whether the source refers to protected internal app data. Source tag: 6.1.0. This is a normalized advisory record, not a runtime log."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "governs_unevidenced_library_type",
+    "detail": "none of the specification's findings mention org.apache.commons.io.IOUtils, org.apache.commons.io.FileUtils",
+    "checked_url": "https://github.com/federicoiosue/Omni-Notes/security/advisories/GHSA-g38r-4cf6-3v32"
+  }
+}

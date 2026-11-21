@@ -1,0 +1,156 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule does not define the semantics, provenance, or validation strength of speccedKey.",
+      "The algorithm constraint is an allowlist in the detector specification, not the Java platform's complete KeyFactory algorithm registry.",
+      "The rule does not observe getKeySpec, translateKey, getProvider, getAlgorithm, provider selection, or any later cryptographic operation performed with generated keys.",
+      "The rule source alone does not specify analyzer behavior for aliases, interprocedural flow, reflection, dynamically computed strings, or provider-specific algorithm aliases."
+    ],
+    "predicates": [
+      "REQUIRES: speccedKey[keySpec, _] before generatePrivate(keySpec) and generatePublic(keySpec).",
+      "ENSURES: generatedKeyFactory[this, algorithm] after Get.",
+      "ENSURES: generatedPrivkey[privateKey] after GenPriv.",
+      "ENSURES: generatedPubkey[publicKey] after GenPubl."
+    ],
+    "claim": "The CrySL source specifies a usage protocol and abstract facts for java.security.KeyFactory: obtain a factory first, then optionally generate private and/or public keys; constrain the Get algorithm to RSA, DiffieHellman, DH, DSA, or EC; and require speccedKey for generation inputs."
+  },
+  "unknowns": [
+    "The meaning and producers of the CrySL predicate speccedKey[keySpec, _] are unresolved from this rule file.",
+    "The exact static-analysis implementation semantics for CrySL value constraints, aliasing, interprocedural propagation, reflection, and infeasible paths are not established by the supplied rule.",
+    "The target Java version and active cryptographic provider are not supplied, so actual availability of any particular algorithm cannot be concluded for a deployment.",
+    "The rule does not state why its five algorithm names were selected or whether the list was intended as a security policy, a historical portability baseline, or an incomplete API model.",
+    "The rule does not establish whether generated keys are subsequently used in a Signature, Cipher, KeyAgreement, certificate-validation, SSH, or other protocol context."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "java.security.KeyFactory converts between opaque Key objects and transparent key-material specifications.",
+      "getInstance returns a KeyFactory for the requested algorithm.",
+      "generatePublic(KeySpec) produces a PublicKey and generatePrivate(KeySpec) produces a PrivateKey from supplied key material.",
+      "A KeySpec is a transparent description of key material and may be algorithm-specific or an encoding such as ASN.1."
+    ],
+    "preconditions": [
+      "For getInstance(String), algorithm must be non-null and a provider must support a KeyFactory implementation for it; the provider-selected overload searches registered providers in preference order.",
+      "For getInstance(String, String), the provider name must be non-null and non-empty, registered, and provide the requested implementation. For getInstance(String, Provider), the Provider object must be non-null and need not be registered.",
+      "generatePublic and generatePrivate require a KeySpec appropriate for the receiving KeyFactory; otherwise they throw InvalidKeySpecException.",
+      "The CrySL-only precondition speccedKey[keySpec, _] is additional to, and not equivalent to, the Java API's documented InvalidKeySpecException condition."
+    ],
+    "unknowns": [
+      "Which Java release, provider, and provider configuration execute the code.",
+      "Whether the supplied KeySpec is syntactically valid, semantically valid, policy-compliant, or trusted at runtime.",
+      "Whether a provider accepts aliases or additional algorithms beyond Java SE standard names.",
+      "Whether the actual runtime algorithm value is a direct constant, a configuration value, or a value transformed before the call."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyFactory.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/KeyFactory.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/spec/KeySpec.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html"
+  ],
+  "schema_version": 2,
+  "non_security_violation_shapes": [
+    "Creating a KeyFactory with an algorithm outside the rule's five-value list solely to query metadata such as getAlgorithm() or getProvider(), without generating, accepting, trusting, or using a key in a security decision.",
+    "Using a provider-specific KeyFactory algorithm outside the rule's allowlist only in a non-production interoperability probe or test-vector conversion task, where the resulting key is not trusted or used for authentication, confidentiality, authorization, or key agreement.",
+    "Generating a key solely for offline format conversion or display of already-public test material with an algorithm rejected by the rule, where no security property is being asserted by that operation."
+  ],
+  "source_verified": true,
+  "important_note": "This is a CrySL rule for java.security.KeyFactory, not a general specification for other APIs whose type names end in “Spec.” It constrains a fixed algorithm-name allowlist and requires an abstract speccedKey predicate before key generation. It does not establish that a generated key is cryptographically strong, trusted, authorized, correctly encoded, or used safely. The rule's allowlist is stale relative to current Java documentation, which names Ed25519 as a KeyFactory algorithm.",
+  "events": [
+    {
+      "condition": "Observed when a resolved java.security.KeyFactory call matches getInstance(algorithm) or getInstance(algorithm, _), corresponding to g1 or g2. Its algorithm predicate is separately satisfied only when the runtime value bound to algorithm is exactly one of \"RSA\", \"DiffieHellman\", \"DH\", \"DSA\", or \"EC\". The second argument of g2 is unconstrained by this CrySL clause.",
+      "name": "Get",
+      "api_patterns": [
+        "getInstance(",
+        "KeyFactory.getInstance("
+      ]
+    },
+    {
+      "condition": "Observed for privateKey = generatePrivate(keySpec) on the governed KeyFactory. The rule requires speccedKey[keySpec, _] before this event; this rule file does not define how that abstract predicate is established.",
+      "name": "GenPriv",
+      "api_patterns": [
+        "generatePrivate(",
+        ".generatePrivate("
+      ]
+    },
+    {
+      "condition": "Observed for publicKey = generatePublic(keySpec) on the governed KeyFactory. The rule requires speccedKey[keySpec, _] before this event; this rule file does not define how that abstract predicate is established.",
+      "name": "GenPubl",
+      "api_patterns": [
+        "generatePublic(",
+        ".generatePublic("
+      ]
+    }
+  ],
+  "security_semantics": {
+    "runtime_claim": "The Java API claims that a factory converts keys and KeySpecs; provider support and KeySpec appropriateness determine whether creation succeeds. Current Java SE documentation includes Ed25519, Ed448, EdDSA, RSASSA-PSS, XDH, X25519, and X448 among KeyFactory algorithm names, in addition to RSA, DSA, EC, and DiffieHellman.",
+    "equivalent": false,
+    "detector_claim": "The detector claims conformity only with the CrySL protocol, five-item algorithm allowlist, and required abstract input predicate."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "The target Java release and provider documentation must be checked before treating a non-whitelisted algorithm as invalid or insecure.",
+      "Current Java SE standard names are case-insensitive and list Ed25519 as a KeyFactory algorithm; therefore a literal ED25519 input is compatible with the documented standard-name model despite its absence from this rule's list.",
+      "Provider-specific aliases and extensions require provider-specific evidence."
+    ],
+    "runtime": [
+      "The actual algorithm String passed to getInstance at execution time.",
+      "The selected provider and whether it supports that algorithm.",
+      "The concrete KeySpec subtype, contents, and whether the provider considers it appropriate for public or private key generation.",
+      "Evidence of any protocol-level validation, trust decision, or later cryptographic use, none of which is supplied by this CrySL rule."
+    ],
+    "source_level": [
+      "A call-site resolution showing that the invoked member belongs to java.security.KeyFactory rather than a similarly named factory in another framework.",
+      "For a Get finding, evidence of the algorithm expression bound to the first getInstance argument and of whether it is one of the five values written in the rule.",
+      "For a GenPriv or GenPubl finding, evidence that the receiver follows a matched Get in the required protocol and evidence of how speccedKey[keySpec, _] is established.",
+      "For any claim about a particular report, source or intermediate-representation evidence of the resolved overload and relevant dataflow is required."
+    ]
+  },
+  "forbidden_inferences_without_evidence": [
+    "That a KeyFactory finding proves a cryptographic vulnerability rather than a mismatch with this rule's algorithm whitelist.",
+    "That an algorithm outside the five literal values is unsupported by the Java runtime or unsafe.",
+    "That a generated PublicKey or PrivateKey is valid for a particular protocol, trustworthy, bound to an identity, or authorized for use.",
+    "That speccedKey[keySpec, _] means a KeySpec has been parsed, validated, authenticated, range-checked, or obtained from a trusted source; the predicate is not defined in this rule file.",
+    "That the selected provider, provider ordering, key encoding, key size, curve or parameter set, or downstream Signature, Cipher, or KeyAgreement use is secure.",
+    "That a static report identifies the actual runtime algorithm when algorithm is computed, configured, transformed, or provider-aliased."
+  ],
+  "name": "KeyFactorySpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyFactory.crysl",
+  "applies_to_types": [
+    "java.security.KeyFactory"
+  ],
+  "source_title": "Crypto-API-Rules — JavaCryptographicArchitecture/src/KeyFactory.crysl",
+  "semantic_scope": "For every finding of this rule, the detector observes calls resolving to java.security.KeyFactory.getInstance with one or two arguments and, in the prescribed order, zero or more calls resolving to generatePrivate(KeySpec) or generatePublic(KeySpec). It associates the factory with the algorithm supplied at Get, requires that algorithm to be in the rule's five-name set, and requires the abstract speccedKey predicate on each KeySpec supplied for generation. It also emits abstract generatedKeyFactory, generatedPrivkey, and generatedPubkey predicates after the respective events.",
+  "spec_id": "KeyFactorySpec",
+  "known_false_positive_shapes": [
+    "KeyFactory.getInstance(\"ED25519\") or KeyFactory.getInstance(\"Ed25519\") on a Java runtime and provider supporting the standard Ed25519 KeyFactory algorithm. The CrySL list rejects it, while current Java SE standard names list Ed25519 for KeyFactory.",
+    "Use of current standard KeyFactory algorithms absent from the rule's five-value list, such as EdDSA, Ed448, RSASSA-PSS, XDH, X25519, or X448, when supported by the target runtime and provider. This is a compatibility gap between the rule's fixed allowlist and the current API specification.",
+    "A valid standard algorithm written with different casing, such as \"rsa\" or \"ed25519\", if the detector implements the rule's string-membership test as case-sensitive. Java SE standard algorithm names are documented as case-insensitive.",
+    "A dataflow-imprecision report where every feasible runtime value of a computed algorithm is in the rule's allowlist, but the analyzer cannot retain that value constraint through control flow, configuration loading, or helper methods."
+  ],
+  "protocol": "Get, (GenPriv | GenPubl)*, where Get is getInstance(algorithm) or getInstance(algorithm, _); GenPriv is generatePrivate(keySpec); and GenPubl is generatePublic(keySpec).",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyFactory.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:java.security.KeyFactory"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "app.trigger.ssh.PubkeyUtils",
+        "method": "decodePublic",
+        "message": "expecting one of RSA,DiffieHellman,DH,DSA,EC but found ED25519"
+      }
+    ],
+    "expected_api_simple_name": "KeyFactory",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:java.security.KeyFactory",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyFactory.crysl"
+  }
+}

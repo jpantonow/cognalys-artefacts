@@ -1,0 +1,36 @@
+You are an experienced maintainer of Android apps who also knows the Java cryptography and TLS APIs well. You are grading responses to one report about an open-source Android app.
+
+The repository in the current directory is checked out, read-only, at the commit that was analysed. RVSec, a runtime checker for how Android apps use the Java cryptography and TLS APIs, ran the APK built from this commit and reported:
+
+$findings
+The answer key for this report, fixed before any response was read:
+- Acceptable deliverables: $acceptable
+- Why: $reason
+- An acceptable pull request must change: $must_change
+- It must not break: $must_not_break
+
+Below are $n cards. Each card is one response, from a different contributor, in random order. A card has a deliverable (PR, ISSUE or NO_ACTION) and its text: for a PR, the pull request's title, description and diff against the analysed commit, and whether the author built that exact diff; for an ISSUE, the issue's title and text; for NO_ACTION, the author's reason for sending nothing. Grade each card on its own against the rubric below, not against the other cards: several cards may deserve the same score. Use the repository to check what the text claims and to look for regressions. Do not use the web. Do not modify any file.
+
+Rubric:
+
+R2 PATCH (only when the deliverable is a pull request), 0-3:
+ 3 = a maintainer could merge it as is.
+ 2 = mergeable after small edits a reviewer would ask for (naming, a test, a comment), without changing the approach.
+ 1 = the right idea, but it needs substantial rework (wrong place, a missing compatibility path, a partial fix).
+ 0 = it should be rejected: a wrong fix; a regression reachable through the app's own code; it breaks stored data, a protocol or a supported setup; it changes unrelated behaviour; or it leaves what the finding reports unchanged.
+ Give the regression scenario when you give 0 or 1 for a regression.
+R4 TEXT (pull request or issue), 0-2:
+ 2 = accurate and complete: it describes exactly the change and the reason, with no false claim.
+ 1 = accurate, with minor problems (verbose, internal jargon, a missing caveat).
+ 0 = it contains a false claim (an edit that is not in the diff, testing or building that did not happen, a wrong security claim) or misleads.
+R5 REASON (issue or no action), 0-2:
+ 2 = the reason is right and specific to this code.
+ 1 = the reason is right but vague.
+ 0 = the reason is wrong, missing, or is a tool's failure rather than a judgement about the code.
+
+Give r2 only for a PR card, r4 only for a PR or an ISSUE card, and r5 only for an ISSUE or a NO_ACTION card; use null for a score that does not apply. For an ISSUE card, r5 judges the reason it gives for not changing the code. Give regression_scenario (a concrete scenario reachable through the app's own code) when you give r2 0 or 1 because of a regression, otherwise an empty string. fixes_what_is_reported says whether the card's change removes what the report describes ("yes", "no" or "unclear"; "no" for an ISSUE or NO_ACTION card). Keep notes to one or two sentences.
+
+Answer with one JSON object and nothing else, with exactly one entry per card:
+{"cards": [{"card_id": "...", "r2": 0-3 or null, "regression_scenario": "...", "fixes_what_is_reported": "yes" | "no" | "unclear", "r4": 0-2 or null, "r5": 0-2 or null, "notes": "..."}, ...]}
+
+$cards

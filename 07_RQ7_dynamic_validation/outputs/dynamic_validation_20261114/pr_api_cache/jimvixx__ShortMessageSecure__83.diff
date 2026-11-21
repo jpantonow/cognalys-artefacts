@@ -1,0 +1,12 @@
+diff --git a/app/src/main/java/org/jimvixx/smsecure/crypto/MasterSecretUtil.java b/app/src/main/java/org/jimvixx/smsecure/crypto/MasterSecretUtil.java
+index 3a7d3d0..3d5fe1e 100644
+--- a/app/src/main/java/org/jimvixx/smsecure/crypto/MasterSecretUtil.java
++++ b/app/src/main/java/org/jimvixx/smsecure/crypto/MasterSecretUtil.java
+@@ -279,6 +279,7 @@ private static byte[] generateEncryptionSecret() {
+   private static byte[] generateMacSecret() {
+     try {
+       KeyGenerator generator = KeyGenerator.getInstance("HmacSHA1");
++      generator.init(160);
+       return generator.generateKey().getEncoded();
+     } catch (NoSuchAlgorithmException e) {
+       Log.w(TAG, e);

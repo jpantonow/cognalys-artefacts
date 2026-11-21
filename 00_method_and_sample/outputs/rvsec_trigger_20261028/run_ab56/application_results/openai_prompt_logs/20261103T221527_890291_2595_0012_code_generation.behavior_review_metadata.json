@@ -1,0 +1,38 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T221527_890291_2595_0012_code_generation.behavior_review",
+  "parent_call_id": "",
+  "finding_id": "app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+  "stage": "code_generation.behavior_review",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 49782,
+  "input_tokens": 12194,
+  "cached_input_tokens": 5191,
+  "output_tokens": 2263,
+  "latency_ms": 32906,
+  "retry_count": 0,
+  "request_id": "req_9557ee5c6e0240baa937eb218d9ab093",
+  "section_telemetry": {
+    "edits": {
+      "characters": 3627,
+      "approx_tokens": 907,
+      "sha256": "22fb816e1d93fabb199fc51881390a62d4312abc19ce2be7ed744747d372985d"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 38,
+  "openai_response_id": "resp_0c205c74940d301a006aea8730c49c87d2af15b8390cdd3be3",
+  "response_status": "completed",
+  "background_polls": 5,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T22:16:01"
+}

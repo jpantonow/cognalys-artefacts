@@ -1,0 +1,321 @@
+{
+ "unit": "pr_06ff0c1fc96c",
+ "phase": "phase2",
+ "order": [
+  "K566b0eb2",
+  "K953b099a",
+  "K37afc04e",
+  "K92776a0f",
+  "K19e4e422",
+  "Kb9d2c708",
+  "K912fb63d",
+  "K431a66c2",
+  "Ka867721d",
+  "Kf6bcacfa",
+  "Kf303cf3a",
+  "Kbcf3fcea",
+  "K19623e14",
+  "K9dc9035b",
+  "Kac86799d",
+  "Kee783569",
+  "K043a1c93",
+  "Kdf1aa92a",
+  "Kebf3b324",
+  "K42b368df",
+  "K75bc8ed4",
+  "Ka396d98a",
+  "Kb8a4f735"
+ ],
+ "card_sha256": {
+  "K043a1c93": "126b8f2e8728e8b9",
+  "K19623e14": "18d725e884b5090f",
+  "K19e4e422": "e4f016173c72ccca",
+  "K37afc04e": "3accb86723364e1f",
+  "K42b368df": "d63f57c866212955",
+  "K431a66c2": "46cdc1c287ff6620",
+  "K566b0eb2": "89f8b357fa1890ff",
+  "K75bc8ed4": "2a00e4736c88703a",
+  "K912fb63d": "96acac7dc4ec121a",
+  "K92776a0f": "67acc00232725b33",
+  "K953b099a": "7e38f89b26f6a705",
+  "K9dc9035b": "12e8a78e1b3ecac1",
+  "Ka396d98a": "7bdf35f204931b83",
+  "Ka867721d": "6f8d8c362aca9ff7",
+  "Kac86799d": "a7ecc1b6eaf4c848",
+  "Kb8a4f735": "460a8130d72aea14",
+  "Kb9d2c708": "cd9444be65c88131",
+  "Kbcf3fcea": "77ececf965522d8e",
+  "Kdf1aa92a": "871bfd5bbbef527c",
+  "Kebf3b324": "660b6fcf29ac34b3",
+  "Kee783569": "ba4d7093111014a0",
+  "Kf303cf3a": "17ec6dbf92088eb5",
+  "Kf6bcacfa": "c7c801f905230e50"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The flagged `Utils.md5()` (private extension `String.md5()` in app/src/main/kotlin/com/ounben/amaradio/Utils.kt:104) is used only by `getCacheFile`/`writeFileCache`. It turns a cache key into a file name, `\"cache_\" + hex`, inside the app's private `ctx.cacheDir`. The cache key is a radio-browser.info relative URI plus `dictParams.toString()`, so it is built from public station-search and lookup query strings. There is nothing secret here: no password, token, signature, integrity check or authentication. The hash is just a compact, filesystem-safe name for a JSON response cached for 48 hours. The CHANGELOG (\"MD5-hashed, server-independent storage\") confirms this was the intent. The rule fires only on the algorithm name, so for this code it is a false positive. MD5 collision attacks would need an attacker to pick two cache keys the app itself builds, and the result would at worst be a wrong cached public station list in the app's own sandbox. That is not a realistic threat. So the careful choice is NO_ACTION. An ISSUE reporting this as a weak-crypto vulnerability would mislead the maintainers. A small hygiene PR is still acceptable and low-risk, as long as it doesn't claim to fix a security hole. Switching to SHA-256 (or a non-crypto key such as a UUID from the bytes) only changes the names of throwaway cache files. Old `cache_<md5>` files simply stop being hit, and the app refetches from the network. Nothing persistent, exported or exchanged with a peer depends on the name, and SHA-256 `MessageDigest` is available on every Android version.\n\nSecond judge: Utils.md5 is used only by getCacheFile and writeFileCache to name local files as cache_<hex digest> under Context.cacheDir. downloadFeedRelative hashes the relative API path plus parameter-map text, allowing cached Radio Browser responses to survive server rotation. The digest neither authenticates response contents nor protects passwords, signatures, or TLS, and it is not sent to a peer or used as an exported identifier. This report therefore does not establish a security vulnerability. NO_ACTION is reasonable; an ISSUE explaining this limited use and optional replacement is acceptable; a small PR replacing MD5 with SHA-256 is also acceptable as maintenance hardening. Existing entries are disposable response caches with a 48-hour lifetime, so their filenames are not a permanent data-format constraint.",
+  "must_change": [
+   "Replace `MessageDigest.getInstance(\"MD5\")` in `Utils.md5()` (`Utils.kt`) with SHA-256 (or another approved digest), and rename the helper to match, e.g. `sha256()`.",
+   "Use the same new hashing function in both `getCacheFile` and `writeFileCache`, so that reads and writes compute the same file name for a given cache key.",
+   "Describe the change as hygiene / scanner silencing for a non-security cache-file name, not as a vulnerability fix.",
+   "For an algorithm-replacement PR, replace the private MD5 filename helper with a deterministic, filesystem-safe digest such as SHA-256, and update its name and both cache read/write call sites consistently.",
+   "Account for the changed filenames: treating old MD5 cache entries as misses and rebuilding them is acceptable; mandatory migration of this disposable cache is unnecessary. Describe any resulting temporary loss of cache hits accurately."
+  ],
+  "must_not_break": [
+   "`downloadFeedRelative` caching must keep working: the same `cacheKey` must map to the same file on write and later read, and the 48-hour expiry and deletion logic must stay the same.",
+   "Cache file names must stay filesystem-safe (hex or similar) and stay in the app-private `ctx.cacheDir`, using the same `cache_` prefix convention.",
+   "Behaviour when the cache misses or an error is thrown: errors are caught and logged, and the app falls back to the network (official server, then rotation, then mirror) without crashing. Old MD5-named cache files becoming unreachable is acceptable, but must not cause errors.",
+   "The `forceUpdate` / cache-buster behaviour and the cache-key composition (relative URI + params), which keep the cache independent of which server answered.",
+   "Must keep compiling on the app's supported minSdk with no new dependencies (use the platform `java.security.MessageDigest`).",
+   "Keep cache reads and writes using the same key encoding and filename derivation, preserving separation by relative API path and request parameters and independence from the selected server.",
+   "Preserve UTF-8 response storage, the 48-hour freshness check and expired-entry deletion, graceful cache misses and I/O failures, and background I/O.",
+   "Preserve forceUpdate bypassing cached reads, its request cache-buster, successful-response caching, and official-server rotation and mirror fallback.",
+   "Do not change Radio Browser requests or response formats, station identifiers, user databases, favorites, history, or playlist import/export; these have no dependency on this MD5 value.",
+   "Retain Android API 26 support and both foss and play builds; SHA-256 is available through MessageDigest without a new provider or higher minimum SDK."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 100,
+ "tokens": {
+  "input_tokens": 206889,
+  "cached_input_tokens": 160768,
+  "output_tokens": 3517,
+  "reasoning_output_tokens": 1121
+ },
+ "turns": 1,
+ "tool_calls": 9,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [
+   "/home/antonow/comparison_20261113/judges/checkout"
+  ],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "87bac57990869b08",
+ "finished_at": "2026-11-16T10:31:03-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K566b0eb2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies a non-security filename mapping for disposable private caches. The observation that old MD5 files would remain until cache cleanup is accurate."
+   },
+   {
+    "card_id": "K953b099a",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Consistently replaces the helper and both callers while preserving cache behavior. Accurately describes the non-security purpose and resulting cache misses."
+   },
+   {
+    "card_id": "K37afc04e",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The SHA-256 replacement preserves matching read/write filenames and all other cache logic. The description accurately explains cache invalidation and its offline implications."
+   },
+   {
+    "card_id": "K92776a0f",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correctly updates the digest, helper name, and both callers without changing encoding or cache handling. The text accurately describes the change and old-entry misses without claiming a vulnerability."
+   },
+   {
+    "card_id": "K19e4e422",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The digest replacement is sound; remove the unrelated Room schema addition. The successful-build claim contradicts the supplied exact-diff build status."
+   },
+   {
+    "card_id": "Kb9d2c708",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Gives a specific and correct explanation of why private cache filename hashing establishes no security vulnerability."
+   },
+   {
+    "card_id": "K912fb63d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 0,
+    "notes": "Accurately identifies the checker violation and shared cache mapping, but omits the security assessment. Deferring because behavior supposedly cannot be preserved overlooks the acceptable replacement of disposable cache entries."
+   },
+   {
+    "card_id": "K431a66c2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly distinguishes temporary cache naming from security-sensitive hashing and explains why no action is warranted."
+   },
+   {
+    "card_id": "Ka867721d",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "A complete, compatible digest replacement with consistent read/write derivation. The description correctly presents scanner-driven maintenance and disposable cache misses."
+   },
+   {
+    "card_id": "Kf6bcacfa",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Updates both cache paths consistently and preserves expiry, encoding, and fallback behavior. The text accurately describes the limited purpose, cache misses, and validation."
+   },
+   {
+    "card_id": "Kf303cf3a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly acknowledges possible cache aliasing while explaining that this disposable filename mapping is not a security boundary."
+   },
+   {
+    "card_id": "Kbcf3fcea",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The hash replacement is correct, but the unrelated Room schema should be removed. The claimed successful exact-diff build conflicts with the supplied build status."
+   },
+   {
+    "card_id": "K19623e14",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately traces the relative-path-and-parameters cache key and explains the absence of a security dependency on MD5."
+   },
+   {
+    "card_id": "K9dc9035b",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The replacement is complete and preserves the existing cache contract. The description accurately explains the non-security use and filename compatibility consequences."
+   },
+   {
+    "card_id": "Kac86799d",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correctly replaces and renames the helper and updates both callers. The text explicitly identifies the non-security use and accurately describes old-entry misses."
+   },
+   {
+    "card_id": "Kee783569",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Gives a precise account of private cache naming, matching read/write derivation, and 48-hour expiry. Its no-action judgment is well supported."
+   },
+   {
+    "card_id": "K043a1c93",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "A minimal, compatible SHA-256 replacement with both callers updated. The description accurately covers motivation, lack of identified security impact, old files, and validation."
+   },
+   {
+    "card_id": "Kdf1aa92a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains that the digest only names temporary public-response cache files and supports the no-action decision."
+   },
+   {
+    "card_id": "Kebf3b324",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The digest swap is correct; remove the unrelated Room schema addition. The successful-build claim contradicts the supplied exact-diff build status."
+   },
+   {
+    "card_id": "K42b368df",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The digest change is sound, but the unrelated Room schema should be removed. The build claim contradicts the supplied status, and SHA-256 does not make collisions impossible."
+   },
+   {
+    "card_id": "K75bc8ed4",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly connects the disposable cache, expiry, and network refetch behavior to the absence of a demonstrated security problem."
+   },
+   {
+    "card_id": "Ka396d98a",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Consistently replaces the helper and both callers while preserving filename safety and cache behavior. The description accurately states the change and old-cache consequences without asserting a vulnerability."
+   },
+   {
+    "card_id": "Kb8a4f735",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the non-security local cache use and bounds a collision's effect to returning another temporary cached response."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

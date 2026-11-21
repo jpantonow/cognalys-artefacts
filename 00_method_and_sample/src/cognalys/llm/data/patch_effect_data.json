@@ -1,0 +1,34 @@
+{
+  "_comment": "Platform methods whose whole body calls another public method of the same object with the same arguments. Replacing the second with the first leaves every call a runtime checker observes as it was (App Manager generateRSAKeyPair, 2026-11-01). Only add an entry with a citation of the delegating body in OpenJDK and Android libcore; an SPI default that a provider may override (KeyStore.setEntry -> engineSetEntry) is not an alias.",
+  "aliases": [
+    {
+      "class": "java.security.KeyPairGenerator",
+      "alias": "genKeyPair",
+      "delegates_to": "generateKeyPair",
+      "source": "OpenJDK and Android libcore java/security/KeyPairGenerator.java: public final KeyPair genKeyPair() { return generateKeyPair(); }"
+    }
+  ],
+  "required_parameter_specs": [
+    {
+      "transformation_word": "GCM",
+      "parameter_spec": "GCMParameterSpec",
+      "source": "Android Keystore AndroidKeyStoreAuthenticatedAESCipherSpi.GCM rejects any AlgorithmParameterSpec but GCMParameterSpec (\"Only GCMParameterSpec supported\"); JDK/Conscrypt GCM ciphers take the tag length only from GCMParameterSpec."
+    }
+  ],
+  "empty_store_types": {
+    "_comment": "Store types that hold nothing after load(null): file-format stores, whose content comes only from the stream they load or the entries set on them. A provider-backed store (AndroidCAStore, AndroidKeyStore) is filled by the platform on load(null) and is never listed here (Cryptomator Lite tryToFindDefaultTrustManager, 2026-11-04 measurement). KeyStore.getDefaultType() is a file format on Android (BKS/PKCS12) and on the JDK (PKCS12 since 9).",
+    "source": "Java Security Standard Algorithm Names, KeyStore Types; Android KeyStore docs (AndroidKeyStore / AndroidCAStore are system-backed)",
+    "default_type_call": "getDefaultType",
+    "literals": [
+      "PKCS12",
+      "JKS",
+      "JCEKS",
+      "BKS",
+      "BKS-V1",
+      "BCFKS",
+      "UBER",
+      "DKS",
+      "PKCS12-DEF"
+    ]
+  }
+}

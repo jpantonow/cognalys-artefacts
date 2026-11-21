@@ -1,0 +1,13 @@
+2026-10-27 22:53:23,479 - INFO - Testing OpenAI connection...
+2026-10-27 22:53:24,467 - INFO - OpenAI connection successful
+2026-10-27 22:53:25,340 - INFO - ✓ Model 'gpt-5.6-terra' available
+2026-10-27 22:53:25,387 - INFO - Discovered 1 errors to process
+2026-10-27 22:53:25,392 - INFO - Processing 1 new errors (0 already complete)
+2026-10-27 22:53:25,392 - INFO - Processing: org.fedorahosted.freeotp_48.apk/encrypt
+2026-10-27 22:53:26,762 - DEBUG - Running the isolated evidence pipeline for encrypt...
+2026-10-27 22:53:30,582 - INFO - LLM cache hit: c6dfdb150558
+2026-10-27 22:53:30,767 - INFO - LLM cache hit: 4151f07ba432
+2026-10-27 22:53:30,887 - INFO - LLM cache hit: cba8c9d8f626
+2026-10-27 22:53:31,011 - INFO - LLM cache hit: 4e5ba0d3d802
+2026-10-27 22:53:31,204 - INFO - LLM cache hit: 4021559eb5ea
+2026-10-27 22:54:15,146 - WARNING - Adjudication rejected for encrypt (attempt 1/2): supported decision has generation blockers; retrying with the deterministic validation errors as feedback

@@ -1,0 +1,3 @@
+Prepared the change and [PR.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r2/repo/PR.md). The reported MD5 call is replaced with direct package-name selection, with tests for the declared release and debug IDs and the fallback path.
+
+The app build and focused unit tests passed. One compatibility question remains in the PR: the package name corresponding to a third existing hash value could not be identified from the repository. The stage-by-stage record is in [ANALYSIS.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r2/repo/ANALYSIS.md).

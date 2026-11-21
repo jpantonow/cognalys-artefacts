@@ -1,0 +1,34 @@
+Preflight passed: declared dependencies, static analysis
+Pipeline steps: prs
+
+=== PRS ===
+$ /home/antonow/venv/bin/python3 -m cognalys.prs.run_prs --execution-report /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v7/application_results/execution_report.json --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v7/pull_requests --pr-issue-style v3 --model gpt-5.6-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 16384 --reasoning-effort high --cache-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v7/.llm_cache
+2026-10-28 00:37:03,330 - INFO - Loaded 1 solutions
+2026-10-28 00:37:03,330 - INFO - Generating a non-publishable PR preview for review-only solution org.fedorahosted.freeotp_48.apk
+2026-10-28 00:37:03,677 - INFO - Branch already exists: fix/encrypt-cipherspec-4b81532bb668-ab14005dbd
+2026-10-28 00:37:07,455 - INFO - No changes to commit
+2026-10-28 00:37:07,465 - INFO - Reusing commit 4dc8567193 that an earlier run already created on fix/encrypt-cipherspec-4b81532bb668-ab14005dbd for encrypt
+2026-10-28 00:37:07,491 - INFO - PR generated: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v7/pull_requests/org.fedorahosted.freeotp_48.apk_encrypt_CipherSpec_pr.json
+2026-10-28 00:37:07,492 - INFO - PR generation summary: 1 generated, 0 failed
+
+Model calls of this run:
+  code_generation                 18 calls      101,214 in (25,148 cached)      79,769 out  US$ 1.16
+  patch_planning                   4 calls       28,084 in (3,963 cached)      16,090 out  US$ 0.25
+  pr_generation                    1 calls        2,748 in (0 cached)         644 out  US$ 0.01
+  external_research                0 calls            0 in (0 cached)           0 out  US$ 0.00
+  evidence_extraction              0 calls            0 in (0 cached)           0 out  US$ 0.00
+  adjudication                     0 calls            0 in (0 cached)           0 out  US$ 0.00
+  total                           23 calls      132,046 in (29,111 cached)      96,503 out  US$ 1.42; 14 answered from the cache
+
+Pipeline finished successfully.
+
+=== RETROSPECTIVE ===
+1 finding(s): 1 at published; 0 new and 0 recurring failure signature(s)
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v7/retrospective/retrospective.md
+
+=== STATISTICS ===
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v7/statistics/statistics.md
+Pipeline elapsed time: 00h 00m 11s
+PR pronto                                  org.fedorahosted.freeotp_48.apk encrypt [CipherSpec] -> Require AES keys before initializing encryption  (23 calls, 229k tokens, US$ 1.42)
+
+1 findings. PR pronto: 1

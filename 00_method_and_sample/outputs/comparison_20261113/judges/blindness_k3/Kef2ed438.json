@@ -1,0 +1,31 @@
+{
+ "card_id": "Kef2ed438",
+ "card_sha256": "b2757975c35d58fb",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 8,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 4303,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 553
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0457224,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "f51ffda033035031",
+ "finished_at": "2026-11-16T11:44:51-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.3,
+  "reason": "The description is plain, careful prose with no headers or bullet lists. It explains the runtime finding in everyday terms and states what was and wasn't tested. That template-like but natural phrasing (\"I did not run the app on a device... I ran the project's debug build and it passed\") fits the Cognalys pipeline's write-up stage better than a Codex agent, which tends to be terser, or Claude Code, which tends to use markdown sections. The smooth wording and the KDoc comment on the helper lean slightly toward Sonnet (D) over Terra (C), but that call is weak."
+ }
+}

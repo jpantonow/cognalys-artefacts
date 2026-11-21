@@ -1,0 +1,644 @@
+2026-10-27 22:11:21,705 - INFO - Evidence analysis for encrypt:
+{
+  "architecture_version": "v2",
+  "versions": {
+    "prompt_version": "llm-pipeline-v2.0",
+    "schema_version": "2.0",
+    "policy_version": "2.0",
+    "spec_version": "2",
+    "context_builder_version": "2.14",
+    "semantic_resolver_version": "tree-sitter-semantic-v2"
+  },
+  "input_hashes": {
+    "finding_sha256": "64c974fc9774351710855ddaaf1670a249b36f0fac3c0aa16c8ddc4260c057b3",
+    "diagnostic_evidence_sha256": "fc5f2b16b7e8b2e1aee9c8795b0b641e4aea24f58fcd691d0d40fe1dc0dcc960",
+    "policy_sha256": "09b111a59cf77f065479cd7d822a98fc4ceb2676924ca258f810c1f30ad92417",
+    "evidence_sha256": "ea02077810f88aca70043d2d8aaf4d74331afed4b02f7c344e345702a5278772",
+    "packet_sha256": "3dab33b074cad4a59a9b9a2b858e88cfcc6d533d4a5562ad07f00c16634aded3",
+    "external_research_sha256": "0b07f3572a3f611b793a1ada739ec512bb8004adeac7e6e6045d2c8c77453fa1"
+  },
+  "diagnostic_evidence": {
+    "evidence_id": "DET-001",
+    "kind": "detector_diagnostic",
+    "trust_level": "reported_detector_output",
+    "informational_only": true,
+    "decision_authority": "none",
+    "sha256": "c25d86ba834c60b66cad545b2f0a73dccafec6b65ca81fe1728f656bf0505dd0",
+    "data": {
+      "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+      "tool": "ares",
+      "specification": "CipherSpec",
+      "message": "the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+      "reported_class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+      "reported_method": "encrypt",
+      "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java",
+      "detector_context": {
+        "code": "CIPHER-CONSTR-00",
+        "site_kind": "CONSTR: a value constraint was broken, or a required origin was positively contradicted",
+        "label": "violation",
+        "label_meaning": "A value check of the rule fired: an algorithm, key size, protocol, keystore type or other constraint outside what the rule admits, a required origin positively contradicted, or a forbidden call. The value seen and the admitted values are in value/expected.",
+        "expected": "a key produced by one of the generators the rule names",
+        "source_location": "EncryptedKey.java:42",
+        "runtime_observation": "Reported in 12 run(s) of the app; each run starts from a clean, read-only emulator."
+      }
+    }
+  },
+  "cause_status": "confirmed",
+  "detector_violation": "confirmed",
+  "runtime_security_impact": "not_established",
+  "generation_status": "supported_for_review",
+  "publication_status": "blocked",
+  "evidence_status": {
+    "cause_status": "confirmed",
+    "detector_violation": "confirmed",
+    "runtime_security_impact": "not_established",
+    "scope_status": "complete",
+    "generation_status": "supported_for_review",
+    "publication_status": "blocked"
+  },
+  "external_sources": [
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/javax/crypto/Cipher.html",
+      "supported_claim": "`Cipher` is the JCE cryptographic engine API and documents initialization and data/key-processing contracts."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/26/security/java-cryptography-architecture-jca-reference-guide.html",
+      "supported_claim": "Use fully specified transformations; retain/use applicable parameters and AAD; change a GCM IV when reusing a key for encryption."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/spec/GCMParameterSpec.html",
+      "supported_claim": "`GCMParameterSpec` has existed since Java 7."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/javase/8/docs/technotes/guides/security/enhancements-8.html",
+      "supported_claim": "Oracle documented SunJCE support for AES/GCM/NoPadding and GCM algorithm parameters as a JDK 8 enhancement."
+    },
+    {
+      "title": "primary",
+      "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Cipher.crysl",
+      "supported_claim": "The rule is declared for `javax.crypto.Cipher`, models listed event parameter shapes, and requires one of three key-origin predicates for its `key` variable."
+    },
+    {
+      "title": "official",
+      "url": "https://developer.android.com/reference/javax/crypto/Cipher",
+      "supported_claim": "`Cipher.getInstance` accepts a `String` transformation argument, so `mCipher` must be compatible with `String` when passed directly to this overload."
+    }
+  ],
+  "observed_events": [
+    "EncryptedKey.encrypt: Cipher.getInstance(\"AES/GCM/NoPadding\") creates the encryption Cipher. [SRC-001]",
+    "EncryptedKey.encrypt: cipher.init(Cipher.ENCRYPT_MODE, key) initializes that Cipher. [SRC-001]",
+    "EncryptedKey constructor: cipher.updateAAD(mToken UTF-8 bytes) precedes cipher.doFinal(token.getEncoded()). [SRC-001]",
+    "EncryptedKey constructor: cipher.getParameters().getEncoded() is retained after encryption finalization. [SRC-001]",
+    "EncryptedKey.decrypt: Cipher.getInstance(mCipher) is initialized, retained parameters are reconstructed, and the Cipher is reinitialized in DECRYPT_MODE with those parameters. [SRC-001]",
+    "EncryptedKey.decrypt: cipher.updateAAD(mToken UTF-8 bytes) precedes cipher.doFinal(mCipherText). [SRC-001]"
+  ],
+  "predicate_assessment": [
+    {
+      "event": "The Cipher transformation used by EncryptedKey.encrypt is an AES/GCM transformation with NoPadding permitted by CipherSpec.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. The method obtains a javax.crypto.Cipher with the literal transformation \"AES/GCM/NoPadding\". CipherSpec permits AES with GCM and requires NoPadding for AES.",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "A Cipher instance is obtained before it is initialized for encryption in EncryptedKey.encrypt.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. EncryptedKey.encrypt calls Cipher.getInstance(\"AES/GCM/NoPadding\") and then calls init(Cipher.ENCRYPT_MODE, key) on the resulting local cipher variable.",
+      "rule_section": "order"
+    },
+    {
+      "event": "Additional authenticated data is supplied before final cipher processing on the encryption and decryption flows.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. The constructor calls cipher.updateAAD(mToken bytes) before cipher.doFinal(token bytes). Decrypt similarly calls updateAAD before doFinal(ciphertext). Neither flow contains an update call between AAD submission and finalization.",
+      "rule_section": "order"
+    },
+    {
+      "event": "Every key supplied to the AES/GCM Cipher initialization has a CipherSpec-accepted key origin for the transformation.",
+      "status": "violated",
+      "evidence": "Evidence IDs: SRC-001, SRC-003, CALL-004, SPEC-001. CipherSpec requires generatedKey[key, alg(transformation)], generatedPubkey[key], or generatedPrivkey[key]. On the MasterKey call path, the value passed as EncryptedKey.encrypt's first argument is pwd, produced by a PBKDF2 SecretKeyFactory, and it reaches the AES/GCM Cipher.init call directly. This is not a generated AES key for alg(transformation), nor is it a public or private key origin.",
+      "rule_section": "required_predicate"
+    },
+    {
+      "event": "The encryption parameters retained by EncryptedKey are supplied to the decryption Cipher initialization.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001. Encryption stores cipher.getParameters().getEncoded() in mParameters. Decryption reconstructs AlgorithmParameters from mParameters and passes that object to cipher.init(Cipher.DECRYPT_MODE, key, ap).",
+      "rule_section": "required_predicate"
+    },
+    {
+      "event": "Each AES/GCM encryption using a given key uses a fresh nonce or IV.",
+      "status": "unknown",
+      "evidence": "Evidence IDs: SRC-001, WEB-002. The encryption initialization supplies no explicit GCM parameter object, and the source does not reveal the provider-generated parameter values or establish uniqueness across separate encryptions using the same key.",
+      "rule_section": "required_predicate"
+    }
+  ],
+  "collateral_violations": [
+    {
+      "predicate": "Every key supplied to the AES/GCM Cipher initialization has a CipherSpec-accepted key origin for the transformation.",
+      "evidence_ids": [
+        "SRC-001",
+        "SRC-003",
+        "CALL-004",
+        "SPEC-001"
+      ],
+      "explanation": "CipherSpec requires generatedKey[key, alg(transformation)], generatedPubkey[key], or generatedPrivkey[key]. On the MasterKey call path, the value passed as EncryptedKey.encrypt's first argument is pwd, produced by a PBKDF2 SecretKeyFactory, and it reaches the AES/GCM Cipher.init call directly. This is not a generated AES key for alg(transformation), nor is it a public or private key origin."
+    }
+  ],
+  "confirmed_facts": [
+    "EncryptedKey.encrypt creates a resolved javax.crypto.Cipher for the literal transformation AES/GCM/NoPadding and initializes it in ENCRYPT_MODE with its key argument.",
+    "The EncryptedKey encryption flow supplies the protected key algorithm name as AAD, finalizes the protected key encoding, and retains the Cipher's encoded parameters.",
+    "The EncryptedKey decryption flow reconstructs retained AlgorithmParameters, initializes a Cipher in DECRYPT_MODE with those parameters, supplies the retained algorithm name as AAD, and finalizes the retained ciphertext.",
+    "The MasterKey constructor passes a PBKDF2 SecretKeyFactory result as the encryption key to EncryptedKey.encrypt, which forwards it to AES/GCM Cipher.init.",
+    "CipherSpec requires a key initialization to carry generatedKey for the transformation algorithm, generatedPubkey, or generatedPrivkey; the PBKDF2-derived MasterKey path does not meet that requirement for the AES transformation.",
+    "The source selects an authenticated AES/GCM mode and supplies AAD before final processing on both the encryption and decryption flows; this establishes use of an authenticated-mode construction, not the success of any particular runtime operation.",
+    "The runtime detector measurement records a value-constraint observation at EncryptedKey.java:42 in 12 application runs, but it does not identify the source expression that produced the observed key value."
+  ],
+  "unsupported_hypotheses": [],
+  "missing_evidence": [
+    "Whether every provider-generated AES/GCM nonce or IV is unique for repeated encryption with the same key.",
+    "Which concrete provider and parameter values are used at runtime when encryption initializes AES/GCM without explicit GCM parameters.",
+    "Whether the AndroidKeyStore key retrieval path satisfies a named CipherSpec key-origin predicate.",
+    "Whether Cipher.getParameters() is non-null and produces transferable encoded parameters on every supported runtime path.",
+    "Whether each encryption and decryption operation completes successfully at runtime; source event order does not establish successful operation or exception behavior."
+  ],
+  "confirmed_cause": "On the confirmed MasterKey caller path, a PBKDF2 SecretKeyFactory result is passed as EncryptedKey.encrypt's key argument and then directly to AES/GCM Cipher.init. CipherSpec requires that initialization key to carry generatedKey for the transformation algorithm, generatedPubkey, or generatedPrivkey; this PBKDF2-derived value carries none of those admitted origins.",
+  "forward_compatibility_assessment": {
+    "status": "regression_risk",
+    "dimensions_checked": [
+      "master-key/key-origin lifecycle remediation across callers",
+      "explicit fresh GCM parameter preparation for encryption",
+      "preservation of retained GCM parameters and AAD during decryption",
+      "legacy encrypted-record compatibility or versioned migration coverage",
+      "Android/provider interoperability testing"
+    ],
+    "evidence": "Claim IDs: CLM-001, CLM-002, CLM-003, CLM-004, CLM-005, CLM-006",
+    "strategy": "Use a CipherSpec-recognized key-production and lifecycle design for each key source that reaches EncryptedKey.encrypt, rather than using PBKDF2 output directly as the AES/GCM Cipher key. Prepare compliant fresh GCM parameters for encryption while retaining the resulting parameters and algorithm AAD for decryption. Preserve existing decryptability unless a reviewer approves a versioned legacy-data migration."
+  },
+  "migration_assessment": {
+    "usage_kind": "unknown",
+    "evidence": [
+      "EncryptedKey.encrypt creates a resolved javax.crypto.Cipher for the literal transformation AES/GCM/NoPadding and initializes it in ENCRYPT_MODE with its key argument.",
+      "The EncryptedKey encryption flow supplies the protected key algorithm name as AAD, finalizes the protected key encoding, and retains the Cipher's encoded parameters.",
+      "The EncryptedKey decryption flow reconstructs retained AlgorithmParameters, initializes a Cipher in DECRYPT_MODE with those parameters, supplies the retained algorithm name as AAD, and finalizes the retained ciphertext.",
+      "The MasterKey constructor passes a PBKDF2 SecretKeyFactory result as the encryption key to EncryptedKey.encrypt, which forwards it to AES/GCM Cipher.init.",
+      "CipherSpec requires a key initialization to carry generatedKey for the transformation algorithm, generatedPubkey, or generatedPrivkey; the PBKDF2-derived MasterKey path does not meet that requirement for the AES transformation.",
+      "The source selects an authenticated AES/GCM mode and supplies AAD before final processing on both the encryption and decryption flows; this establishes use of an authenticated-mode construction, not the success of any particular runtime operation."
+    ],
+    "legacy_compatibility_required": true,
+    "safe_strategy": "Use a CipherSpec-recognized key-production and lifecycle design for each key source that reaches EncryptedKey.encrypt, rather than using PBKDF2 output directly as the AES/GCM Cipher key. Prepare compliant fresh GCM parameters for encryption while retaining the resulting parameters and algorithm AAD for decryption. Preserve existing decryptability unless a reviewer approves a versioned legacy-data migration.",
+    "policy_authorized": false
+  },
+  "digest_contract_assessment": {
+    "security_relevance": "false",
+    "contract_kind": "unknown",
+    "expected_digest_source": "",
+    "backend_repository_available": false,
+    "backend_change_required": false,
+    "client_only_change_safe": false,
+    "rollout_strategy": "",
+    "pull_request_note": ""
+  },
+  "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+  "dependency_fix_assessment": {
+    "external_class_confirmed": false,
+    "declared_artifact": "",
+    "current_version": "",
+    "target_version": "",
+    "target_artifact": "",
+    "official_migration_source": "",
+    "upgrade_kind": "unknown",
+    "build_files": [],
+    "call_site_migration_required": false,
+    "compatibility_constraints_satisfied": false,
+    "replacement_preserves_required_capabilities": false,
+    "fork_or_vcs_dependency": false
+  },
+  "coordinated_fix_plan": {
+    "affected_symbols": [
+      "EncryptedKey.encrypt",
+      "EncryptedKeyTest encryption/decryption test cases",
+      "KeyStoreAccessTest existing AndroidKeyStore access flow",
+      "MasterKey constructor path that derives PBKDF2 material and invokes EncryptedKey.encrypt",
+      "MasterKeyTest existing MasterKey construction/use cases"
+    ],
+    "required_edits": [
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java",
+        "symbol": "EncryptedKey.encrypt",
+        "reason": "Before AES/GCM encryption, create a fresh explicit GCMParameterSpec from a newly generated nonce for each encryption operation and initialize Cipher in ENCRYPT_MODE with that specification and the caller-provided lifecycle key. Continue supplying the protected-key algorithm as AAD before finalization, and continue retaining the Cipher-produced AlgorithmParameters. This replaces the unsupported two-argument GCM init form without changing the existing retained-parameter/AAD representation consumed by decrypt.",
+        "create_new_file": false,
+        "edit_category": "explicit GCM parameter preparation while preserving encrypted-record metadata",
+        "supporting_claim_ids": [
+          "CLM-001",
+          "CLM-002",
+          "CLM-003",
+          "CLM-005",
+          "CLM-006"
+        ]
+      },
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java",
+        "symbol": "MasterKey constructor path that derives PBKDF2 material and invokes EncryptedKey.encrypt",
+        "reason": "Replace the direct PBKDF2 SecretKeyFactory-result-to-EncryptedKey.encrypt path with the reviewer-approved AES KeyGenerator-produced key lifecycle, so the AES/GCM key reaching EncryptedKey.encrypt is generated for AES rather than password-derived. Keep the existing constructor/entry point and its established exception handling intact. The approved lifecycle must define how any PBKDF2 material is retained or used without reintroducing it as the AES/GCM Cipher.init key.",
+        "create_new_file": false,
+        "edit_category": "master-key/key-origin lifecycle remediation",
+        "supporting_claim_ids": [
+          "CLM-004",
+          "CLM-005"
+        ]
+      },
+      {
+        "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java",
+        "symbol": "EncryptedKeyTest encryption/decryption test cases",
+        "reason": "Preserve existing encoding-equality assertions and add coverage through the existing EncryptedKey interface that encrypts with the explicit GCM setup, verifies retained parameters are available to decryption, and verifies decryption returns the original key encoding and algorithm after the existing AAD-protected round trip. Do not assert a fixed ciphertext, nonce, or parameter byte sequence because encryption parameters are intentionally fresh per operation.",
+        "create_new_file": false,
+        "edit_category": "round-trip regression coverage",
+        "supporting_claim_ids": [
+          "CLM-001",
+          "CLM-002",
+          "CLM-003",
+          "CLM-006"
+        ]
+      },
+      {
+        "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java",
+        "symbol": "MasterKeyTest existing MasterKey construction/use cases",
+        "reason": "Exercise the unchanged MasterKey entry point after the generated-AES-key lifecycle replacement and verify its observable encryption/decryption behavior remains usable without relying on PBKDF2 output as the AES/GCM key. Retain existing expectations rather than changing them to accommodate new ciphertext or key bytes.",
+        "create_new_file": false,
+        "edit_category": "MasterKey lifecycle regression coverage",
+        "supporting_claim_ids": [
+          "CLM-004",
+          "CLM-005"
+        ]
+      },
+      {
+        "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java",
+        "symbol": "KeyStoreAccessTest existing AndroidKeyStore access flow",
+        "reason": "Use the existing AndroidKeyStore test access path to cover an EncryptedKey encryption/decryption round trip with the patched explicit GCM parameter handling. This confirms that retained parameters and AAD still support decryption for the repository's AndroidKeyStore-origin flow without changing that caller's key lifecycle.",
+        "create_new_file": false,
+        "edit_category": "AndroidKeyStore interoperability regression coverage",
+        "supporting_claim_ids": [
+          "CLM-001",
+          "CLM-002",
+          "CLM-003"
+        ]
+      }
+    ],
+    "required_tests": [
+      "Edit mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java to preserve existing assertions and add an explicit-GCM-parameter encryption/decryption round-trip test that observes retained parameters, AAD-protected decryption, original key encoding, and original algorithm restoration.",
+      "Edit mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java to exercise the unchanged MasterKey entry point with the generated-AES-key lifecycle and verify its observable encryption/decryption behavior without using PBKDF2 output as the Cipher key.",
+      "Edit mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java to run the existing AndroidKeyStore access flow through the patched EncryptedKey encryption/decryption behavior and verify provider interoperability.",
+      "Run the patched module Gradle build and test tasks, compile androidTest sources, and run the three edited instrumentation tests on supported devices/providers.",
+      "Before publication, perform the source-level CipherSpec recheck and, if persisted/external records are confirmed, add and run an approved legacy-record decryption fixture as a compatibility review requirement."
+    ],
+    "compatibility_policy_required": true,
+    "scope_evidence": [
+      "Claim IDs: CLM-001, CLM-002, CLM-003, CLM-004, CLM-005, CLM-006"
+    ]
+  },
+  "scope_assessment": {
+    "status": "complete",
+    "local_code_scope": "complete",
+    "external_contract_scope": "unresolved",
+    "multi_file_change_required": true,
+    "reviewed_files": [
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java",
+        "action": "edit",
+        "symbols": [
+          "EncryptedKey.encrypt"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-001, CLM-002, CLM-003, CLM-005, CLM-006"
+      },
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java",
+        "action": "edit",
+        "symbols": [
+          "MasterKey constructor path that derives PBKDF2 material and invokes EncryptedKey.encrypt"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-004, CLM-005"
+      },
+      {
+        "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java",
+        "action": "required_test",
+        "symbols": [
+          "EncryptedKeyTest encryption/decryption test cases"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-001, CLM-002, CLM-003, CLM-006"
+      },
+      {
+        "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java",
+        "action": "required_test",
+        "symbols": [
+          "MasterKeyTest existing MasterKey construction/use cases"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-004, CLM-005"
+      },
+      {
+        "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java",
+        "action": "required_test",
+        "symbols": [
+          "KeyStoreAccessTest existing AndroidKeyStore access flow"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-001, CLM-002, CLM-003"
+      },
+      {
+        "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-002 records a related_source relation; it is accounted for but is not automatically an edit target."
+      }
+    ],
+    "unresolved_relations": [
+      {
+        "kind": "other",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "A reviewer must approve the replacement key lifecycle and the intended role, if any, of password-derived material. Compilation, unit tests, and source rechecking cannot decide this product and security-design choice."
+      },
+      {
+        "kind": "other",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "A reviewer must verify that previously created or externally supplied encrypted records remain decryptable, or approve a versioned migration. The pipeline cannot discover unknown persisted or external consumers."
+      },
+      {
+        "kind": "other",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "The replacement must be exercised on supported Android/provider configurations to verify generated-key access, explicit GCM parameter handling, and encrypt/decrypt interoperability. The pipeline compiles androidTest sources but does not run instrumentation tests or execute on a device."
+      }
+    ]
+  },
+  "issue_candidate": {
+    "eligible": false,
+    "title": "",
+    "finding_summary": "",
+    "why_no_pr": "",
+    "maintainer_question": "",
+    "proposed_next_step": ""
+  },
+  "v2": {
+    "evidence_packet_sha256": "3dab33b074cad4a59a9b9a2b858e88cfcc6d533d4a5562ad07f00c16634aded3",
+    "claims": [
+      {
+        "claim_id": "CLM-001",
+        "statement": "EncryptedKey.encrypt creates a resolved javax.crypto.Cipher for the literal transformation AES/GCM/NoPadding and initializes it in ENCRYPT_MODE with its key argument.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001",
+          "SPEC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-002",
+        "statement": "The EncryptedKey encryption flow supplies the protected key algorithm name as AAD, finalizes the protected key encoding, and retains the Cipher's encoded parameters.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-003",
+        "statement": "The EncryptedKey decryption flow reconstructs retained AlgorithmParameters, initializes a Cipher in DECRYPT_MODE with those parameters, supplies the retained algorithm name as AAD, and finalizes the retained ciphertext.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-004",
+        "statement": "The MasterKey constructor passes a PBKDF2 SecretKeyFactory result as the encryption key to EncryptedKey.encrypt, which forwards it to AES/GCM Cipher.init.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001",
+          "SRC-003",
+          "CALL-004"
+        ]
+      },
+      {
+        "claim_id": "CLM-005",
+        "statement": "CipherSpec requires a key initialization to carry generatedKey for the transformation algorithm, generatedPubkey, or generatedPrivkey; the PBKDF2-derived MasterKey path does not meet that requirement for the AES transformation.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001",
+          "SRC-003",
+          "CALL-004",
+          "SPEC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-006",
+        "statement": "The source selects an authenticated AES/GCM mode and supplies AAD before final processing on both the encryption and decryption flows; this establishes use of an authenticated-mode construction, not the success of any particular runtime operation.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001",
+          "WEB-001",
+          "WEB-002"
+        ]
+      },
+      {
+        "claim_id": "CLM-007",
+        "statement": "The runtime detector measurement records a value-constraint observation at EncryptedKey.java:42 in 12 application runs, but it does not identify the source expression that produced the observed key value.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "RUN-001"
+        ]
+      }
+    ],
+    "adjudication": {
+      "generation_status": "supported_for_review",
+      "forward_compatibility_strategy": "Use a CipherSpec-recognized key-production and lifecycle design for each key source that reaches EncryptedKey.encrypt, rather than using PBKDF2 output directly as the AES/GCM Cipher key. Prepare compliant fresh GCM parameters for encryption while retaining the resulting parameters and algorithm AAD for decryption. Preserve existing decryptability unless a reviewer approves a versioned legacy-data migration.",
+      "review_assumptions": [
+        "The detector rendered a message. The reviewed source and verified CipherSpec rule corroborate the reported required-predicate failure, so source_established is inapplicable.",
+        "The PBKDF2-derived MasterKey caller path alone establishes the reported violation. The AndroidKeyStore caller path is not classified under CipherSpec's generated-key predicates by the supplied evidence; this is not negative evidence about that path.",
+        "CipherSpec separately requires preparedGCM[paramSpec] for GCM. EncryptedKey.encrypt uses the two-argument GCM init form with no explicit parameter object. This is a separate source-level predicate concern and does not establish provider nonce reuse.",
+        "The source establishes parameter and AAD round-tripping within EncryptedKey, but does not establish whether EncryptedKey records are persisted, exchanged, or consumed outside the examined repository scope.",
+        "The supplied evidence does not establish PBKDF2 parameters, password entropy, salt lifecycle, or an actual GCM nonce-reuse event. The unknown nonce lifecycle is not treated as resolved.",
+        "Master-key lifecycle selection and legacy-record handling require human review before publication, but do not prevent generation of a review-only multi-file change."
+      ],
+      "cause_status": "confirmed",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "blocking_for_generation": [],
+      "blocking_for_publication": [
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "Master-key lifecycle selection",
+          "supporting_claim_ids": [
+            "CLM-004",
+            "CLM-005"
+          ],
+          "category": "maintainer_decision",
+          "description": "A reviewer must approve the replacement key lifecycle and the intended role, if any, of password-derived material. Compilation, unit tests, and source rechecking cannot decide this product and security-design choice."
+        },
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "Legacy encrypted-data compatibility",
+          "supporting_claim_ids": [
+            "CLM-002",
+            "CLM-003",
+            "CLM-004"
+          ],
+          "category": "compatibility_contract",
+          "description": "A reviewer must verify that previously created or externally supplied encrypted records remain decryptable, or approve a versioned migration. The pipeline cannot discover unknown persisted or external consumers."
+        },
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "Android/provider execution of the replacement lifecycle",
+          "supporting_claim_ids": [
+            "CLM-001",
+            "CLM-002",
+            "CLM-003"
+          ],
+          "category": "runtime_behavior",
+          "description": "The replacement must be exercised on supported Android/provider configurations to verify generated-key access, explicit GCM parameter handling, and encrypt/decrypt interoperability. The pipeline compiles androidTest sources but does not run instrumentation tests or execute on a device."
+        }
+      ],
+      "compatibility_status": "regression_risk",
+      "required_tests": [
+        "Run the patched module Gradle build and unit-test task.",
+        "Compile the patched module's androidTest sources.",
+        "Run the deterministic source-level recheck confirming that the reported PBKDF2-to-Cipher.init key-origin predicate is absent from patched files and that explicit GCM parameter preparation satisfies the applicable source predicate.",
+        "Add or run round-trip tests for the PBKDF2-origin and AndroidKeyStore-origin caller paths, covering encryption, retained parameters/AAD, and decryption.",
+        "Add or run compatibility fixtures that decrypt records created by the pre-change implementation if persisted records are supported.",
+        "Run supported-device instrumentation coverage for the selected provider/key-lifecycle design and explicit AES/GCM parameter handling."
+      ],
+      "scope_status": "complete",
+      "confirmed_cause": "On the confirmed MasterKey caller path, a PBKDF2 SecretKeyFactory result is passed as EncryptedKey.encrypt's key argument and then directly to AES/GCM Cipher.init. CipherSpec requires that initialization key to carry generatedKey for the transformation algorithm, generatedPubkey, or generatedPrivkey; this PBKDF2-derived value carries none of those admitted origins.",
+      "cause_rule_section": "required_predicate",
+      "decision_claim_ids": [
+        "CLM-001",
+        "CLM-002",
+        "CLM-003",
+        "CLM-004",
+        "CLM-005",
+        "CLM-006"
+      ],
+      "detector_violation": "confirmed",
+      "publication_status": "blocked",
+      "required_edit_categories": [
+        "master-key/key-origin lifecycle remediation across callers",
+        "explicit fresh GCM parameter preparation for encryption",
+        "preservation of retained GCM parameters and AAD during decryption",
+        "legacy encrypted-record compatibility or versioned migration coverage",
+        "Android/provider interoperability testing"
+      ],
+      "runtime_security_impact": "not_established",
+      "authorized_behavior_change": {
+        "authorized": false,
+        "description": "No case_policy authorization was supplied. The source confirms a CipherSpec violation, but publication of a master-key lifecycle or legacy-data behavior change requires reviewer approval.",
+        "policy_reference": ""
+      }
+    },
+    "patch_plan": {
+      "publication_blockers": [
+        "Reviewer approval is required for the MasterKey replacement lifecycle and for the defined role of PBKDF2-derived material; source analysis cannot decide the product/security design choice (CLM-004, CLM-005).",
+        "Do not publish until a reviewer verifies that all persisted or externally supplied pre-change EncryptedKey records remain decryptable, or explicitly approves a versioned legacy-data migration. No stored_value_contract, legacy fixture, reader/writer path, or emergency-value format was supplied for such a migration (CLM-002, CLM-003, CLM-004).",
+        "If a versioned migration is approved, every identified reader and writer must accept the legacy and current formats, preserve emergency actions/values, and write the current format only after successful authentication; no current-record overwrite may occur before authentication succeeds.",
+        "Run the patched Android instrumentation tests on supported Android/provider configurations to confirm generated-key access, explicit GCMParameterSpec handling, retained-parameter/AAD round trips, and decryption interoperability (CLM-001, CLM-002, CLM-003).",
+        "Run the deterministic CipherSpec/source recheck before publication: the PBKDF2 result must no longer reach AES/GCM Cipher.init as its key, and encryption must initialize GCM with an explicitly prepared parameter specification (CLM-001, CLM-004, CLM-005).",
+        "Add and run a compatibility fixture for a pre-change encrypted record if review confirms persisted or externally supplied records exist; the supplied packet does not contain such a fixture or establish its storage format."
+      ],
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "forbidden_changes": [
+        "Do not change EncryptedKey, MasterKey, or Encryptor public entry-point names, signatures, visibility, or checked-exception contracts; earlier attempts regressed the public API and exception propagation.",
+        "Do not weaken, delete, or rewrite existing assertions that require decrypted key encodings to equal the original encodings; retain those behavioral expectations and add coverage alongside them.",
+        "Do not pass PBKDF2-derived SecretKeyFactory output directly, or through a new alias/wrapper, to AES/GCM Cipher.init (CLM-004, CLM-005).",
+        "Do not replace AES/GCM/NoPadding, remove AAD, omit retained AlgorithmParameters, or use implicit/provider-generated GCM parameters for the patched encryption path (CLM-001, CLM-002, CLM-003, CLM-006).",
+        "Do not alter serialized encrypted-record formats, stored verifier formats, reader/writer behavior, or emergency values without the separately approved compatibility/migration design; stored_value_contract provides no required paths for such an edit.",
+        "Do not edit build files, ProGuard rules, AndroidManifest.xml, TokenPersistence.java, Adapter.java, or unrelated/generated tests for this finding.",
+        "Do not modify Encryptor.java solely because it is a related AndroidKeyStore caller: the supplied evidence does not establish that its key origin violates CipherSpec, and EncryptedKey's corrected GCM setup covers its encryption calls."
+      ],
+      "required_edits": [
+        {
+          "create_new_file": false,
+          "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java",
+          "supporting_claim_ids": [
+            "CLM-001",
+            "CLM-002",
+            "CLM-003",
+            "CLM-005",
+            "CLM-006"
+          ],
+          "edit_category": "explicit GCM parameter preparation while preserving encrypted-record metadata",
+          "symbol": "EncryptedKey.encrypt",
+          "reason": "Before AES/GCM encryption, create a fresh explicit GCMParameterSpec from a newly generated nonce for each encryption operation and initialize Cipher in ENCRYPT_MODE with that specification and the caller-provided lifecycle key. Continue supplying the protected-key algorithm as AAD before finalization, and continue retaining the Cipher-produced AlgorithmParameters. This replaces the unsupported two-argument GCM init form without changing the existing retained-parameter/AAD representation consumed by decrypt."
+        },
+        {
+          "create_new_file": false,
+          "source_file_path": "mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java",
+          "supporting_claim_ids": [
+            "CLM-004",
+            "CLM-005"
+          ],
+          "edit_category": "master-key/key-origin lifecycle remediation",
+          "symbol": "MasterKey constructor path that derives PBKDF2 material and invokes EncryptedKey.encrypt",
+          "reason": "Replace the direct PBKDF2 SecretKeyFactory-result-to-EncryptedKey.encrypt path with the reviewer-approved AES KeyGenerator-produced key lifecycle, so the AES/GCM key reaching EncryptedKey.encrypt is generated for AES rather than password-derived. Keep the existing constructor/entry point and its established exception handling intact. The approved lifecycle must define how any PBKDF2 material is retained or used without reintroducing it as the AES/GCM Cipher.init key."
+        },
+        {
+          "create_new_file": false,
+          "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java",
+          "supporting_claim_ids": [
+            "CLM-001",
+            "CLM-002",
+            "CLM-003",
+            "CLM-006"
+          ],
+          "edit_category": "round-trip regression coverage",
+          "symbol": "EncryptedKeyTest encryption/decryption test cases",
+          "reason": "Preserve existing encoding-equality assertions and add coverage through the existing EncryptedKey interface that encrypts with the explicit GCM setup, verifies retained parameters are available to decryption, and verifies decryption returns the original key encoding and algorithm after the existing AAD-protected round trip. Do not assert a fixed ciphertext, nonce, or parameter byte sequence because encryption parameters are intentionally fresh per operation."
+        },
+        {
+          "create_new_file": false,
+          "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java",
+          "supporting_claim_ids": [
+            "CLM-004",
+            "CLM-005"
+          ],
+          "edit_category": "MasterKey lifecycle regression coverage",
+          "symbol": "MasterKeyTest existing MasterKey construction/use cases",
+          "reason": "Exercise the unchanged MasterKey entry point after the generated-AES-key lifecycle replacement and verify its observable encryption/decryption behavior remains usable without relying on PBKDF2 output as the AES/GCM key. Retain existing expectations rather than changing them to accommodate new ciphertext or key bytes."
+        },
+        {
+          "create_new_file": false,
+          "source_file_path": "mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java",
+          "supporting_claim_ids": [
+            "CLM-001",
+            "CLM-002",
+            "CLM-003"
+          ],
+          "edit_category": "AndroidKeyStore interoperability regression coverage",
+          "symbol": "KeyStoreAccessTest existing AndroidKeyStore access flow",
+          "reason": "Use the existing AndroidKeyStore test access path to cover an EncryptedKey encryption/decryption round trip with the patched explicit GCM parameter handling. This confirms that retained parameters and AAD still support decryption for the repository's AndroidKeyStore-origin flow without changing that caller's key lifecycle."
+        }
+      ],
+      "behavioral_invariants": [
+        "AES/GCM/NoPadding remains the encryption transformation (CLM-001, CLM-006).",
+        "Each encryption uses a freshly prepared explicit GCMParameterSpec and does not reuse an encryption nonce/parameter object across encryption operations.",
+        "Encryption continues to authenticate the protected key's algorithm name as AAD before final processing (CLM-002, CLM-006).",
+        "Encryption continues to retain the Cipher's encoded AlgorithmParameters, and decryption continues to reconstruct and use those retained parameters before applying the same retained algorithm name as AAD and finalizing ciphertext (CLM-002, CLM-003).",
+        "The existing EncryptedKey and MasterKey entry-point names, public API shape, checked-exception behavior, and existing successful round-trip expectations remain unchanged.",
+        "The confirmed MasterKey PBKDF2 result no longer becomes the AES/GCM Cipher.init encryption key; the replacement AES/GCM key originates from an AES key-generation lifecycle (CLM-004, CLM-005).",
+        "No persisted-record, verifier, legacy/current format, reader/writer, or emergency-value migration is performed by this patch because no stored_value_contract or required migration paths were supplied. Existing records must not be overwritten as an implicit side effect of the key-origin fix.",
+        "Encryptor.java requires no code change: its AndroidKeyStore caller path is not established as a CipherSpec key-origin violation, while EncryptedKey.encrypt supplies the common corrected GCM initialization behavior to all callers."
+      ],
+      "generation_blockers": [],
+      "allowed_apis": [
+        "javax.crypto.KeyGenerator configured for AES and used to generate the replacement AES lifecycle key",
+        "javax.crypto.spec.GCMParameterSpec for explicit encryption parameters",
+        "java.security.SecureRandom or the platform-supported secure-random mechanism used to generate a fresh nonce per encryption",
+        "javax.crypto.Cipher initialized with ENCRYPT_MODE, the generated AES key, and the explicit GCMParameterSpec",
+        "Existing java.security.AlgorithmParameters retention/reconstruction and existing Cipher.updateAAD/doFinal calls"
+      ],
+      "required_tests": [
+        "Edit mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java to preserve existing assertions and add an explicit-GCM-parameter encryption/decryption round-trip test that observes retained parameters, AAD-protected decryption, original key encoding, and original algorithm restoration.",
+        "Edit mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java to exercise the unchanged MasterKey entry point with the generated-AES-key lifecycle and verify its observable encryption/decryption behavior without using PBKDF2 output as the Cipher key.",
+        "Edit mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java to run the existing AndroidKeyStore access flow through the patched EncryptedKey encryption/decryption behavior and verify provider interoperability.",
+        "Run the patched module Gradle build and test tasks, compile androidTest sources, and run the three edited instrumentation tests on supported devices/providers.",
+        "Before publication, perform the source-level CipherSpec recheck and, if persisted/external records are confirmed, add and run an approved legacy-record decryption fixture as a compatibility review requirement."
+      ]
+    }
+  }
+}

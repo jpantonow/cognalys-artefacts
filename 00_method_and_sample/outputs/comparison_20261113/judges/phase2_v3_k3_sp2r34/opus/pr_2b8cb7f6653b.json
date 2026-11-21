@@ -1,0 +1,96 @@
+{
+ "unit": "pr_2b8cb7f6653b",
+ "phase": "phase2",
+ "order": [
+  "K01f8e75e",
+  "K35ce5fd1"
+ ],
+ "card_sha256": {
+  "K01f8e75e": "db90c6b247bb7093",
+  "K35ce5fd1": "892f3323c7eba0ff"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The first finding is a real weakness. In HashUtils.deriveKey the user's shared \"Salt\" string is really the password: it is passed as the PBEKeySpec password, and the PBKDF2 salt is BuildConfig.APP_SALT + that same password. APP_SALT is built into the APK and defaults to the public value \"Salty@AES-256\" in app/build.gradle. So the salt is fixed and can be computed from the password; it is not random. An attacker can therefore build one dictionary of PBKDF2-SHA256 outputs (600k iterations) that works against every message made by every install of the official build. The salt does nothing to make each message different, and user-chosen shared keys are likely to be weak. The second finding (CipherSpec in encode) only follows from the first: the key passed to Cipher.init was derived from that PBEKeySpec. AES-GCM with a fresh 12-byte IV from SecureRandom and a 128-bit tag is fine and is not a separate problem. A fix is not a one-line change. The encoded string Base64(iv || ciphertext) is a format that users exchange between installs (the README describes swapping encrypted messages using a shared Salt). It is also stored in the Room history (MessageEntry.encodedMessage). The format has no salt field, which is why the salt is deterministic today. A fix has to generate a random salt (16+ bytes from SecureRandom) for each message, put it in the output with a version marker, and keep decoding the old format. Older app versions still could not read new messages. A careful contributor could send that PR, or could open an ISSUE that explains the precomputation risk and the compatibility cost and leaves the format decision to the maintainers. The salt really is fixed and public in the default build, and the report correctly points to it.\n\nSecond judge: The finding identifies a real KDF weakness. deriveKey uses the user-entered shared secret as the PBKDF2 password and APP_SALT concatenated with that same secret as its salt. APP_SALT defaults to \"Salty@AES-256\" and can be overridden at build time; neither source supplies an independent random KDF salt. Reusing a password therefore reuses its derived key across messages and compatible installations, allowing password-guessing work to be amortized. The CipherSpec finding propagates that upstream finding; it does not identify a separate cipher configuration defect. encode already generates a fresh 12-byte SecureRandom GCM IV and uses a 128-bit authentication tag. Simply inserting randomness into deriveKey would break decryption: ciphertext currently contains only Base64(IV || ciphertext || tag), is copied to recipients, and is saved in Room history.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "deriveKey must use a salt of at least 16 bytes, freshly generated with SecureRandom for each encode, instead of APP_SALT + the user's password; the password itself stays the user's shared key",
+   "encode must put the random salt in its output (e.g. version/marker byte || salt || 12-byte IV || ciphertext+tag, Base64 NO_WRAP) so the receiver can read it and derive the same key",
+   "decode must read the salt from the new format and derive the key with it, telling the new format apart from the old one by an explicit version/marker rather than by guessing",
+   "isValidEncodedMessage and the length checks in decode must account for the longer new format (salt + IV + tag)",
+   "For new encryptions, derive the key using an independent cryptographically random KDF salt, while retaining the user-entered shared secret as the password. Randomizing APP_SALT at build time is insufficient.",
+   "Carry the KDF salt in the copied/stored message envelope and have decode extract and reuse it. Introduce an identifiable format/version, validate its structure, and update both encoding and decoding; do not regenerate the salt during decryption or keep it only on the sender's device.",
+   "Provide a legacy decoding path and verify legacy compatibility, new-format round trips across independent instances, randomized salt generation, and rejection of wrong passwords or tampered messages."
+  ],
+  "must_not_break": [
+   "Decoding of existing messages in the old Base64(iv || ciphertext) format, created with the deterministic APP_SALT+password salt, both those pasted from other users on older app versions and those stored in the Room history (MessageEntry.encodedMessage); the old derivation path must stay available for decode",
+   "The APP_SALT build-time configuration (env var with default \"Salty@AES-256\"): builds that set a custom APP_SALT must still decode their own old messages",
+   "Two installs of the new version must still exchange messages using only the shared Salt string, with no extra secret or key exchange",
+   "AES-256-GCM with a 12-byte random IV per message, a 128-bit tag, PBKDF2WithHmacSHA256 with 600,000 iterations, and a 256-bit key, as the README advertises; must not be weakened",
+   "Room database schema version 2 and the stored MessageEntry fields, with no destructive migration of history",
+   "minSdk 24 support (no APIs that need a higher SDK level than the current code uses)",
+   "Error handling in SaltyViewModel: a wrong key or corrupted message must still surface as DecodingException / 'Wrong key or corrupted message', not crash",
+   "Existing saved and previously copied ciphertext must remain decryptable with the original shared secret and matching APP_SALT. Legacy decoding must preserve PBKDF2WithHmacSHA256, 600000 iterations, 256-bit output, the exact UTF-8 APP_SALT-plus-password salt construction, and the existing 12-byte-IV AES-GCM layout.",
+   "Preserve cross-device exchange using only the encoded text and shared secret. A new format requires an explicit peer compatibility transition; unchanged releases cannot decode it automatically. Do not silently replace the shared-secret scheme with device-bound keys or local-only salt storage.",
+   "Preserve Room history and its copy workflows without destructive migration. History contains the original message, encoded message, and shared secret; fixing this report must not discard those records.",
+   "Preserve authenticated encryption, fresh GCM IVs, strong derivation parameters, UTF-8 message handling, and failure on authentication errors. Do not remove authentication or weaken cryptography to silence the checker.",
+   "Account for both default and custom APP_SALT builds, and retain the declared Android minSdk 24 support when choosing implementation APIs or dependencies."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 25,
+ "tokens": {
+  "input_tokens": 6,
+  "cache_creation_input_tokens": 23816,
+  "cache_read_input_tokens": 38475,
+  "output_tokens": 1985
+ },
+ "turns": 4,
+ "tool_calls": 3,
+ "claude_reported_cost_usd": 0.23794700000000002,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "66b4a025f80022df",
+ "finished_at": "2026-11-17T19:13:26-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K01f8e75e",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Each message now gets a 16-byte SecureRandom salt, written as salt||IV||ct with APP_SALT bound as AAD, and decode falls back to the old derivation so legacy and history messages still decrypt. It tells the formats apart by trial decryption (any GeneralSecurityException triggers the fallback) instead of an explicit version byte, and has no tests; the description is accurate and states its caveats."
+   },
+   {
+    "card_id": "K35ce5fd1",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Same sound approach: a 16-byte random salt per message is prepended, APP_SALT is used as AAD, and a legacy fallback runs on AEADBadTagException behind a proper minimum-length guard (salt+IV+tag), so wrong keys still end in DecodingException. It has no explicit version marker or tests, but the description is accurate and complete, including the cost of the extra key derivation and the compatibility impact."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

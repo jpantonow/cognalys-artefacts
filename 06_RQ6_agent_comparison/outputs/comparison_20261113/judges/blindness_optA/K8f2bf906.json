@@ -1,0 +1,31 @@
+{
+ "card_id": "K8f2bf906",
+ "card_sha256": "5127cab82feedbd9",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 5,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3158,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 336
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0322218,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "4bf615002988f363",
+ "finished_at": "2026-11-17T18:57:02-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.55,
+  "reason": "The description reads like slots filled into a fixed template. It uses the awkward phrase \"I found that the loaded AndroidKeyStore reads an entry\", a generic \"This is a documented non-security mismatch\" label, a boilerplate line about RVSec, and stock closing sentences. That rigid, formulaic structure points to a pipeline (C) rather than an agent writing freely."
+ }
+}

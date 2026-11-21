@@ -1,0 +1,39 @@
+{
+  "trace_version": 2,
+  "call_id": "20261027T225331_013132_9851_0004_external_research.synthesis",
+  "parent_call_id": "group-20261027T225330_867097-9851-3",
+  "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+  "stage": "external_research.synthesis",
+  "status": "cache_hit",
+  "delivery": "cache_hit",
+  "prompt_version": "llm-pipeline-v2.0",
+  "schema_version": "2.0",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 6867,
+  "input_tokens": 0,
+  "cached_input_tokens": 0,
+  "output_tokens": 0,
+  "latency_ms": 0,
+  "retry_count": 0,
+  "request_id": "",
+  "section_telemetry": {
+    "finding": {
+      "characters": 579,
+      "approx_tokens": 145,
+      "sha256": "64c974fc9774351710855ddaaf1670a249b36f0fac3c0aa16c8ddc4260c057b3"
+    },
+    "questions": {
+      "characters": 1405,
+      "approx_tokens": 351,
+      "sha256": "45c420cde637d96635668c8f1bac189f2067a299e60cb2253de4c36229332435"
+    },
+    "spec_policy": {
+      "characters": 300,
+      "approx_tokens": 75,
+      "sha256": "56c48124f090efee5a0ac0fc25e1903c8a93b082833d5cb1fe52ec3bcf6c21c2"
+    }
+  },
+  "completed_at": "2026-10-27T22:53:31"
+}

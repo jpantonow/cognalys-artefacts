@@ -1,0 +1,312 @@
+{
+ "unit": "pr_9215f97597a6",
+ "phase": "phase2",
+ "order": [
+  "K74823d9e",
+  "K25d6d8e2",
+  "K64afe6f8",
+  "K8a76289a",
+  "K0af26df4",
+  "K7ec21e35",
+  "Kdd238b3e",
+  "Ke2b5812b",
+  "Kea3a4b57",
+  "K33c46ebc",
+  "Kbc10a712",
+  "K2b75606f",
+  "K7e144187",
+  "K909a21b4",
+  "Ke5ee3109",
+  "Kc6b78692",
+  "Kc9f71fe6",
+  "K822180d6",
+  "K7853b19a",
+  "Kc0a05a55",
+  "K9b3c5b03",
+  "Kb0013529"
+ ],
+ "card_sha256": {
+  "K0af26df4": "d73737b5dbf3de22",
+  "K25d6d8e2": "e2a826579db2fe1a",
+  "K2b75606f": "037bcee00219c4f4",
+  "K33c46ebc": "71141e3dfde2366e",
+  "K64afe6f8": "5ca9caa9fb396043",
+  "K74823d9e": "2552193fb57413ae",
+  "K7853b19a": "809be8295d1cbf28",
+  "K7e144187": "bd8b17f1022e4ced",
+  "K7ec21e35": "d5bacca2044e38c4",
+  "K822180d6": "f575520c0c284245",
+  "K8a76289a": "f4a2a1623680def5",
+  "K909a21b4": "74733b31a9104fae",
+  "K9b3c5b03": "e3764ca1d6b60059",
+  "Kb0013529": "1b33d3ee34964543",
+  "Kbc10a712": "a3bc60d4f07c9930",
+  "Kc0a05a55": "216531c40bbb2c8b",
+  "Kc6b78692": "643f71d0a7c48d9d",
+  "Kc9f71fe6": "c5fda03b0cb11fbb",
+  "Kdd238b3e": "b551d382088d1eee",
+  "Ke2b5812b": "0b48bfbdbe618d05",
+  "Ke5ee3109": "914f770133b72e6a",
+  "Kea3a4b57": "8dc65ed15a81a23a"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The finding is real. In ScepClient.CertReq (ScepClient.java:124-125), the key size passed to KeyPairGenerator.getInstance(\"RSA\").initialize(isKeyLen) is never checked. It comes from one of two places. (1) The manual UI spinner (ScepFragment.request, which reads spinnerKeyLen). Its entries come from @array/rsa_lens in values/strings.xml, which offers 1024, 2048, 4096 and 8192. The choice is saved in the \"rsa-key-length\" shared preference. (2) The MDM managed restriction \"rsa-key-length\", an unrestricted integer read in CertInstaller.doWork and in ScepFragment. So the app lets users pick 1024-bit RSA, and lets an MDM push any integer at all (1024, 512, an odd value). The resulting private key protects a client certificate that the CA issues and that gets installed into the Android KeyChain or a PKCS12 file for authentication (Wi-Fi/VPN/802.1X). 1024-bit RSA is below current minimums (NIST, CA/B). The default is safe (default_rsa_len = 4096), and ExtrasFragment hardcodes 4096. So the weak size only happens when a user or admin chooses it. That is exactly the situation the rule reports: a selectable insecure option with no enforced minimum. A PR can drop 1024 from the list and enforce a 2048-bit minimum in CertReq or where the restriction is read. Whether to keep 1024 for legacy SCEP/NDES servers or CA templates is a policy call for the maintainer, and the managed-config path is controlled by the admin. The app actively offers a weak option and passes MDM values through with no check. 8192 and 4096 are strong. If the rule also flags 8192, that part is a false positive and is not a reason to remove 8192; a delivery that keeps to the size the report observed is not marked down for leaving the 1024 option, which must_change describes for a PR that tightens the policy.\n\nSecond judge: CertReq passes its isKeyLen argument directly to the Java RSA KeyPairGenerator. The manual UI offers 1024, 2048, 4096 and 8192 bits, while managed automatic enrollment passes the unrestricted rsa-key-length integer directly. Thus weak 1024-bit generation is reachable, although the default is already 4096 and the report does not identify the observed size. This is a configurable enrollment-key issue, not an Android KeyPairGeneratorSpec configuration problem. The repository does not establish that any peer requires 1024-bit keys.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "Stop CertReq from generating RSA keys smaller than 2048 bits: remove the 1024 entry from the rsa_lens string-array used by the key-size spinner in fragment_scep.xml",
+   "Enforce a minimum of 2048 bits on the value that reaches keyGen.initialize() in ScepClient.CertReq (or in every caller: ScepFragment.request and CertInstaller.doWork/requestScep). That covers values from the MDM 'rsa-key-length' restriction and any previously stored preference of 1024. Either clamp to 2048 or the 4096 default, or fail with a clear error or log. Never silently generate a weak key.",
+   "Handle a stale stored 'rsa-key-length' preference of 1024 (and an MDM value that is no longer in the list) cleanly, so the spinner falls back to a valid strong value instead of breaking",
+   "Address weak new RSA key generation consistently across manual enrollment and managed automatic enrollment, preferably with shared validation in CertReq. Use a minimum of 2048 bits, or explicitly gate and warn about any retained 1024-bit legacy mode.",
+   "Align the UI choices, saved-setting handling and rsa-key-length managed configuration with that policy. Removing the UI's 1024 entry alone leaves automatic enrollment unprotected.",
+   "Handle rejected or obsolete settings clearly rather than silently substituting an administrator's requested size. Preserve a secure default; the existing 4096-bit default needs no increase."
+  ],
+  "must_not_break": [
+   "Keep the 4096-bit default (default_rsa_len) and the 2048, 4096 and 8192 options",
+   "The MDM managed-configuration key 'rsa-key-length' (app_restrictions.xml) must keep its name and integer type, and valid values (>=2048) must still be honoured and still lock the spinner",
+   "The ScepClient.CertReq signature and its callers ScepFragment and CertInstaller (auto-enroll/renew worker) must keep working",
+   "SCEP enrollment interop with NDES/Cisco/other SCEP servers: self-signed signer cert with SHA256withRSA, CSR attributes (challengePassword, UPN SAN extensionRequest), MD5 CA fingerprint verifier input format",
+   "Pending enrollments: the PEM cert/key stored by RequestPendingException and later loaded by CertPoll/pem2key must still parse and poll, including keys generated earlier at any size. Do not add a size check to CertPoll or pem2key.",
+   "PKCS12 export via certResponse2pkcs12 and certificate installation into KeyChain",
+   "The existing shared preference 'rsa-key-length' must still load without crashing (no NumberFormatException or wrong index)",
+   "minSdk and existing BouncyCastle/jscep dependency setup",
+   "Preserve configurable stronger RSA lengths, including the existing 2048, 4096 and 8192 choices where supported by the provider and server. Do not replace configuration with one hard-coded size or silently downgrade it.",
+   "Preserve RSA SCEP interoperability: matching keys in the CSR, self-signed enrollment certificate and request signing, SHA256withRSA signatures, enrollment profile, challenge password and UPN extension.",
+   "Continue polling existing pending enrollments using their stored certificate, PKCS#8 private key and transaction ID, including previously generated 1024-bit keys. Do not regenerate or discard these identities when tightening new-key policy.",
+   "Preserve exportable private keys, PKCS#12 file export, Android KeyChain installation and delegated installation/renewal. A non-exportable AndroidKeyStore replacement would disrupt these flows.",
+   "Retain the rsa-key-length managed configuration interface and Android API 19 support, with managed enrollment retaining its existing API 21 guard. Clearly disclose any deliberate withdrawal of legacy 1024-bit enrollment support."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 92,
+ "tokens": {
+  "input_tokens": 8,
+  "cache_creation_input_tokens": 45973,
+  "cache_read_input_tokens": 99715,
+  "output_tokens": 9624
+ },
+ "turns": 6,
+ "tool_calls": 5,
+ "claude_reported_cost_usd": 0.580239,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "6d884934a4fe371b",
+ "finished_at": "2026-11-16T17:59:56-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K74823d9e",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "The issue correctly traces both input paths and notes that the MDM value is unvalidated. It frames everything around the rule's 3072/4096 set, never says plainly that 1024 is weak, and only lists dropping 1024 as one option."
+   },
+   {
+    "card_id": "K25d6d8e2",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Removes 1024 from the list and adds a 2048 minimum in CertReq, which covers both the manual and MDM paths. A stale stored 1024 falls back to 2048 without crashing, and the existing catch blocks report the rejection. The text is accurate and discloses the MDM impact."
+   },
+   {
+    "card_id": "K64afe6f8",
+    "r2": 1,
+    "regression_scenario": "An MDM rsa-key-length of 3072 (or another valid size ≥2048 that isn't in rsa_lens) used to be honoured by CertInstaller auto-enrollment. It is now silently replaced with 4096, with only a log warning.",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": null,
+    "notes": "Only the auto-enroll path is touched, and 1024 is still generated, so the weak size stays reachable. The claim that 512 or 3000 makes key generation fail is doubtful on Android providers, and the text doesn't disclose that valid sizes like 3072 get overridden."
+   },
+   {
+    "card_id": "K8a76289a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "The reason calls 1024 an ordinary RSA size and blames the finding on a synthetic test. That ignores the real weakness: 1024-bit keys can be picked in the UI, and MDM values pass through unchecked."
+   },
+   {
+    "card_id": "K0af26df4",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Standard fix: drops 1024 and enforces a 2048 minimum in CertReq. The callers' existing catch(Exception) blocks surface the error, and 2048, 4096 and 8192 plus the 4096 default are kept. The description is accurate."
+   },
+   {
+    "card_id": "K7ec21e35",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 1,
+    "notes": "The analysis is otherwise good, but it wrongly says CertInstaller.requestScep doesn't catch InvalidParameterException and the worker would crash. requestScep has catch(Exception). The reason (legacy SCEP servers, a product decision) is generic."
+   },
+   {
+    "card_id": "Kdd238b3e",
+    "r2": 1,
+    "regression_scenario": "An MDM rsa-key-length of 3072 used to be honoured in auto-enrollment. It is now not in rsa_lens and is silently replaced with 4096.",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": null,
+    "notes": "Only the auto-enroll path is validated, against a list that still contains 1024, so weak keys stay reachable. The example that 1000 throws is doubtful, and the 3072 override isn't disclosed."
+   },
+   {
+    "card_id": "Ke2b5812b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 1,
+    "notes": "The issue is accurate: it flags 1024 as weak and asks about removing it and adding a managed-config minimum. The reason for not sending a patch is mostly about the rule's 3072/4096 set rather than why dropping 1024 couldn't simply be done."
+   },
+   {
+    "card_id": "Kea3a4b57",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 1,
+    "notes": "Accurate and short, and it identifies 1024 as weak. The reason not to patch is valid but vague, and it doesn't mention that the MDM value is never validated."
+   },
+   {
+    "card_id": "K33c46ebc",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Correctly identifies 1024 as below the NIST minimum for the request-signing key. It gives specific reasons for asking: the observed size is unknown, and conforming to the rule would remove strong options."
+   },
+   {
+    "card_id": "Kbc10a712",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Same approach as the other minimum-size PRs, with the check placed just before keyGen.initialize. The behaviour is equivalent and the description is accurate."
+   },
+   {
+    "card_id": "K2b75606f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "It asserts that 8192 was the measured size and treats 1024 only as another rule violation, not as a weakness. The reason for not patching (it would lose 2048/8192) is sound for 8192 but misses the real 1024 problem."
+   },
+   {
+    "card_id": "K7e144187",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Mentions that the size isn't validated, but focuses on 8192 and never names 1024 as weak. The explanation of why its attempted change failed is confusing."
+   },
+   {
+    "card_id": "K909a21b4",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Removes 1024 and adds a 2048 minimum in CertReq, covering both enrollment paths. The description is accurate, discloses the MDM impact and states the limits of its testing."
+   },
+   {
+    "card_id": "Ke5ee3109",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "unclear",
+    "r4": 2,
+    "r5": null,
+    "notes": "Replacing 1024 with 3072 in the UI list is fine, but there is no minimum in CertReq, so MDM-driven auto-enrollment can still generate 1024-bit keys. That is a partial fix. The description is candid about this."
+   },
+   {
+    "card_id": "Kc6b78692",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "The issue is accurate and names 1024 as weak for signature generation. The reason is specific: the observed size is unknown, and conforming to the rule would remove 2048/8192."
+   },
+   {
+    "card_id": "Kc9f71fe6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Notes the unvalidated manual and managed inputs, but presents only a rule mismatch around 8192 and never flags 1024 as weak. The text is somewhat jargon-heavy."
+   },
+   {
+    "card_id": "K822180d6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Correctly says the size isn't validated, but frames the problem only as 8192 falling outside {3072, 4096} and misses the 1024 weakness. The reason (its change rejected valid sizes) is sound but narrow."
+   },
+   {
+    "card_id": "K7853b19a",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Drops 1024 and enforces a 2048 minimum in CertReq. The fix is correct and covers both callers, and the text accurately describes the change and the impact on admins."
+   },
+   {
+    "card_id": "Kc0a05a55",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The fix is the same as the other minimum-size PRs and is correct. The description is short and accurate."
+   },
+   {
+    "card_id": "K9b3c5b03",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correctly removes 1024 and adds a minimum check in CertReq. The text is accurate, with validation claims scoped to the size check."
+   },
+   {
+    "card_id": "Kb0013529",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Same correct fix, plus it documents the minimum in the rsa-key-length restriction description, which aligns the managed config with the new policy. The description leaks an internal absolute build-tool path."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "unit": "co_0b7656970a91",
+ "phase": "phase2",
+ "order": [
+  "Kbd30bc85",
+  "K69a74389"
+ ],
+ "card_sha256": {
+  "K69a74389": "734a5d85af723b58",
+  "Kbd30bc85": "c5e012badad357f2"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive. The SHA-1 MessageDigest singleton created at AppModule.kt:32 has one consumer, HashUtils.getHashPrefixAndSuffix (HashUtils.kt:32-43). That function hashes the user's password, hex-encodes it in uppercase, and splits it into a 5-character prefix and a 35-character suffix. ApiService.kt:27 sends the prefix to https://api.pwnedpasswords.com/range/{prefix}. getHashCount then matches the suffix against the returned SUFFIX:COUNT lines. This is the Have I Been Pwned Pwned Passwords k-anonymity range API, and it is defined over SHA-1 hashes: 40 hex characters split 5 + 35. SHA-1 is used here as a lookup key the external protocol requires. It is not used for signatures, integrity, password storage, or any security decision. Nothing is stored, and the hash itself is never sent; only a 5-character prefix leaves the device, which is how the protocol is designed. Switching to SHA-256/384/512 would send the wrong-length or wrong prefixes and suffixes, so no suffix would ever match and every password would wrongly show as never breached. The app's only feature would silently stop working. The upstream API does offer an NTLM mode, but that is not stronger and is not what the rule asks for. A PR that replaces the digest therefore breaks the feature; the algorithm is fixed by the third-party API.\n\nSecond judge: The SHA-1 digest in AppModule.kt serves the Have I Been Pwned Pwned Passwords lookup protocol, not password storage or authentication. HashUtils hashes the password, formats uppercase hexadecimal, sends its first five characters to https://api.pwnedpasswords.com/range/{prefix}, and compares the remaining suffix locally against returned breach counts. Both single and batch scans use this path. SHA-1 is required for compatibility with that dataset; replacing it with SHA-256/384/512 would cause missed matches and misleading 'not breached' results. This algorithm-only warning does not establish a vulnerability.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [],
+  "must_not_break": [
+   "The HIBP Pwned Passwords range lookup must keep working: the app must hash with SHA-1 and send the first 5 uppercase hex characters to https://api.pwnedpasswords.com/range/{prefix}",
+   "Suffix matching in HashUtils.getHashCount must keep working; it depends on the 35-character SHA-1 suffix format the API returns",
+   "Breach counts must stay correct; changing the digest would make every password show as not found (ITEM_NOT_FOUND)",
+   "The k-anonymity property must hold: only the 5-character prefix leaves the device, never the full hash or the password",
+   "The Koin DI wiring that HashUtils uses (get<MessageDigest>()) must keep providing the digest",
+   "Preserve the protocol's SHA-1 of UTF-8 password bytes, formatted as 40 uppercase hexadecimal characters and split into a five-character prefix and 35-character suffix.",
+   "Preserve correct suffix matching and breach counts for both single-password and batch scans; substituting a SHA-2 digest would invalidate those lookups.",
+   "Keep the range request over HTTPS and send only the hash prefix; keep the password, full digest, and suffix out of the request."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 22,
+ "tokens": {
+  "input_tokens": 51642,
+  "cached_input_tokens": 30720,
+  "output_tokens": 480,
+  "reasoning_output_tokens": 49
+ },
+ "turns": 1,
+ "tool_calls": 3,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "b496391de888c400",
+ "finished_at": "2026-11-17T19:02:52-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Kbd30bc85",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies SHA-1 as required by the HIBP range protocol and traces prefix transmission and local suffix matching. Leaving the code unchanged preserves lookup correctness and privacy."
+   },
+   {
+    "card_id": "K69a74389",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Gives a correct, code-specific false-positive assessment covering both single-password and batch scans. Replacing SHA-1 with SHA-2 would invalidate suffix matching and produce misleading not-found results."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "unit": "pr_06ff0c1fc96c",
+ "phase": "phase2",
+ "order": [
+  "Ka77a7dd2",
+  "K965c7a10"
+ ],
+ "card_sha256": {
+  "K965c7a10": "4a0cf9501afe38db",
+  "Ka77a7dd2": "a83005b659bddb65"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The flagged `Utils.md5()` (private extension `String.md5()` in app/src/main/kotlin/com/ounben/amaradio/Utils.kt:104) is used only by `getCacheFile`/`writeFileCache`. It turns a cache key into a file name, `\"cache_\" + hex`, inside the app's private `ctx.cacheDir`. The cache key is a radio-browser.info relative URI plus `dictParams.toString()`, so it is built from public station-search and lookup query strings. There is nothing secret here: no password, token, signature, integrity check or authentication. The hash is just a compact, filesystem-safe name for a JSON response cached for 48 hours. The CHANGELOG (\"MD5-hashed, server-independent storage\") confirms this was the intent. The rule fires only on the algorithm name, so for this code it is a false positive. MD5 collision attacks would need an attacker to pick two cache keys the app itself builds, and the result would at worst be a wrong cached public station list in the app's own sandbox. That is not a realistic threat. An ISSUE reporting this as a weak-crypto vulnerability would mislead the maintainers. A small hygiene PR is low-risk, as long as it doesn't claim to fix a security hole. Switching to SHA-256 (or a non-crypto key such as a UUID from the bytes) only changes the names of throwaway cache files. Old `cache_<md5>` files simply stop being hit, and the app refetches from the network. Nothing persistent, exported or exchanged with a peer depends on the name, and SHA-256 `MessageDigest` is available on every Android version.\n\nSecond judge: Utils.md5 is used only by getCacheFile and writeFileCache to name local files as cache_<hex digest> under Context.cacheDir. downloadFeedRelative hashes the relative API path plus parameter-map text, allowing cached Radio Browser responses to survive server rotation. The digest neither authenticates response contents nor protects passwords, signatures, or TLS, and it is not sent to a peer or used as an exported identifier. This report therefore does not establish a security vulnerability. Existing entries are disposable response caches with a 48-hour lifetime, so their filenames are not a permanent data-format constraint.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "Replace `MessageDigest.getInstance(\"MD5\")` in `Utils.md5()` (`Utils.kt`) with SHA-256 (or another approved digest), and rename the helper to match, e.g. `sha256()`.",
+   "Use the same new hashing function in both `getCacheFile` and `writeFileCache`, so that reads and writes compute the same file name for a given cache key.",
+   "Describe the change as hygiene / scanner silencing for a non-security cache-file name, not as a vulnerability fix.",
+   "For an algorithm-replacement PR, replace the private MD5 filename helper with a deterministic, filesystem-safe digest such as SHA-256, and update its name and both cache read/write call sites consistently.",
+   "Account for the changed filenames: treating old MD5 cache entries as misses and rebuilding them is acceptable; mandatory migration of this disposable cache is unnecessary. Describe any resulting temporary loss of cache hits accurately."
+  ],
+  "must_not_break": [
+   "`downloadFeedRelative` caching must keep working: the same `cacheKey` must map to the same file on write and later read, and the 48-hour expiry and deletion logic must stay the same.",
+   "Cache file names must stay filesystem-safe (hex or similar) and stay in the app-private `ctx.cacheDir`, using the same `cache_` prefix convention.",
+   "Behaviour when the cache misses or an error is thrown: errors are caught and logged, and the app falls back to the network (official server, then rotation, then mirror) without crashing. Old MD5-named cache files becoming unreachable is acceptable, but must not cause errors.",
+   "The `forceUpdate` / cache-buster behaviour and the cache-key composition (relative URI + params), which keep the cache independent of which server answered.",
+   "Must keep compiling on the app's supported minSdk with no new dependencies (use the platform `java.security.MessageDigest`).",
+   "Keep cache reads and writes using the same key encoding and filename derivation, preserving separation by relative API path and request parameters and independence from the selected server.",
+   "Preserve UTF-8 response storage, the 48-hour freshness check and expired-entry deletion, graceful cache misses and I/O failures, and background I/O.",
+   "Preserve forceUpdate bypassing cached reads, its request cache-buster, successful-response caching, and official-server rotation and mirror fallback.",
+   "Do not change Radio Browser requests or response formats, station identifiers, user databases, favorites, history, or playlist import/export; these have no dependency on this MD5 value.",
+   "Retain Android API 26 support and both foss and play builds; SHA-256 is available through MessageDigest without a new provider or higher minimum SDK."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 14,
+ "tokens": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 23009,
+  "cache_read_input_tokens": 17997,
+  "output_tokens": 1330
+ },
+ "turns": 3,
+ "tool_calls": 2,
+ "claude_reported_cost_usd": 0.2142874,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "f8c5932359d77eb3",
+ "finished_at": "2026-11-17T19:11:27-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Ka77a7dd2",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The Utils.kt change is correct and consistent: SHA-256 is used for both the cache read and write, and the cache_ prefix and 48h expiry are unchanged. However, the diff also adds an unrelated 359-line generated Room schema file (schemas/.../7.json) that a reviewer would ask to remove. The text says \"Nothing else changed\" and never mentions that file, and it claims the build passed although this exact diff was not built."
+   },
+   {
+    "card_id": "K965c7a10",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "A minimal, correct, built change: SHA-256 is applied consistently in both getCacheFile and writeFileCache with the same hex encoding, prefix and expiry. The description accurately presents it as non-security hygiene and correctly says old MD5-named cache entries become misses."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

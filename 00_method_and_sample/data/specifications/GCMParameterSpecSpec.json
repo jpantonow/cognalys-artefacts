@@ -1,0 +1,155 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule contains no Cipher.init, Cipher.doFinal, Cipher.updateAAD, key-generation, IV-reuse, or authentication-failure event.",
+      "The rule does not define the operational meaning or accepted evidence sources for randomized[src].",
+      "The rule does not define the consumption semantics of preparedGCM[this].",
+      "The rule text leaves c1's relationship to offset and len unresolved because those variables occur in global constraints but are not bound by c1."
+    ],
+    "predicates": [
+      "tagLen in {96, 104, 112, 120, 128}",
+      "length[src] >= offset + len",
+      "offset >= 0",
+      "len > 0",
+      "randomized[src]",
+      "preparedGCM[this] after the recognized constructor event"
+    ],
+    "claim": "The CrySL rule recognizes either listed javax.crypto.spec.GCMParameterSpec constructor event, requires its declared CONSTRAINTS and REQUIRES predicates, and ENSURES preparedGCM[this]."
+  },
+  "unknowns": [
+    "How the detector implementation evaluates length[src] >= offset + len, offset >= 0, and len > 0 for c1, where offset and len are not event-bound.",
+    "What source-, dataflow-, or runtime-level evidence the detector recognizes as randomized[src].",
+    "Whether and where another detector rule consumes preparedGCM[this].",
+    "Which Java version, JCA provider, cipher transformation, and runtime deployment constraints apply to a particular finding.",
+    "Whether the IV is later used for encryption under a particular key and whether its lifecycle satisfies the required per-key uniqueness property."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "javax.crypto.spec.GCMParameterSpec specifies the IV and authentication-tag-length parameters used by a GCM Cipher.",
+      "Its two-argument constructor copies the whole IV source buffer.",
+      "Its four-argument constructor copies the specified source-buffer subset."
+    ],
+    "preconditions": [
+      "The documented constructors reject a negative tLen and a null src.",
+      "The four-argument constructor also rejects a negative offset or len and a range extending beyond src.",
+      "The documented API does not require len > 0: zero is not listed as invalid for the four-argument constructor, while the detector rule requires len > 0.",
+      "The JCA documentation identifies 128-, 120-, 112-, 104-, and 96-bit GCM tag lengths, and 64- and 32-bit tags for certain applications; other nonnegative values can be constructed but may not be supported by all providers. The detector rule permits only 96, 104, 112, 120, and 128."
+    ],
+    "unknowns": [
+      "The rule provides no evidence of the eventual cipher transformation or provider, so actual provider support for a constructed tag length is unresolved.",
+      "The API constructor copies IV bytes but does not document a runtime check that the IV is random, fresh, or unique for a key.",
+      "The rule does not state whether its length expression uses mathematical integers or machine-integer overflow semantics."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/GCMParameterSpec.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/spec/GCMParameterSpec.html",
+    "https://raw.githubusercontent.com/openjdk/jdk/master/src/java.base/share/classes/javax/crypto/spec/GCMParameterSpec.java",
+    "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observed event clause: GCMParameterSpec(tagLen, src). The rule requires tagLen in {96, 104, 112, 120, 128} and randomized[src]. The global rule constraints also state length[src] >= offset + len, offset >= 0, and len > 0, but c1 does not bind offset or len; the rule text does not define how those variables are evaluated for c1. randomized[src] is a semantic provenance predicate, not a lexical requirement that a random-generator call appear in the source expression.",
+      "name": "c1",
+      "api_patterns": [
+        "new javax.crypto.spec.GCMParameterSpec(tagLen, src)",
+        "new GCMParameterSpec(tagLen, src)"
+      ]
+    },
+    {
+      "condition": "Observed event clause: GCMParameterSpec(tagLen, src, offset, len). To satisfy the rule predicates, tagLen must be in {96, 104, 112, 120, 128}; length[src] >= offset + len; offset >= 0; len > 0; and randomized[src] must hold. These predicates concern argument values and source provenance, not merely how arguments are spelled in source.",
+      "name": "c2",
+      "api_patterns": [
+        "new javax.crypto.spec.GCMParameterSpec(tagLen, src, offset, len)",
+        "new GCMParameterSpec(tagLen, src, offset, len)"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "This is a constructor-parameter rule, not proof that a Cipher is initialized, encryption or decryption occurs, a provider accepts the parameters, or IV uniqueness is maintained across uses. The rule produces the abstract postcondition preparedGCM[this], whose downstream meaning is not defined by this rule.",
+  "forbidden_inferences_without_evidence": [
+    "A matched constructor call does not establish that the resulting object is ever supplied to javax.crypto.Cipher.",
+    "A satisfying tagLen predicate does not establish that the selected JCA cryptographic-service provider supports that tag length for the eventual cipher transformation.",
+    "The rule's randomized[src] predicate does not by itself establish the NIST requirement that an IV not be repeated with the same key across authenticated-encryption invocations.",
+    "A constructor call does not prove use of a 96-bit IV; the rule constrains authentication-tag length, not IV length.",
+    "preparedGCM[this] is a detector-level abstract predicate, not a documented runtime state of javax.crypto.spec.GCMParameterSpec.",
+    "The two constructor events do not prove successful encryption, successful authentication-tag verification, AAD handling, key management, nonce lifecycle management, or absence of IV reuse."
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, the Java constructor validates basic argument legality and copies the selected IV bytes; it does not enforce the detector's exact tag-length allow-list, nonempty-IV condition, or randomness predicate. NIST's central GCM requirement is IV uniqueness with a given key, and NIST permits both deterministic and random-bit-generator-based IV constructions.",
+    "equivalent": false,
+    "detector_claim": "The detector policy treats a GCMParameterSpec as prepared only after one listed constructor event satisfies its selected tag-length policy, range/nonempty conditions, and randomized[src] requirement."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm the target Java/JCA implementation exposes javax.crypto.spec.GCMParameterSpec and the applicable constructor overloads.",
+      "Confirm the selected cryptographic-service provider supports the intended GCM tag length; Java documentation warns that not every provider supports every constructible length.",
+      "Where 32- or 64-bit tags are intentionally used for a permitted application, treat the detector rule's narrower allow-list as a policy mismatch requiring explicit evidence, not as proof that the API call is invalid."
+    ],
+    "runtime": [
+      "Establish the actual tagLen and, for c2, actual offset, len, and source-array bounds at the call.",
+      "Establish the provenance needed to support randomized[src]; an argument expression need not visibly contain a random-generator call for its runtime value to be random.",
+      "Separately establish IV uniqueness for each encryption key across actual GCM encryptions; this is stronger and different from merely observing a random-looking source buffer.",
+      "If compatibility matters, establish that the actual provider and cipher transformation accept the selected tag length and IV length."
+    ],
+    "source_level": [
+      "Resolve the constructed type to javax.crypto.spec.GCMParameterSpec rather than a namesake type.",
+      "Identify whether the invoked overload is (int, byte[]) or (int, byte[], int, int).",
+      "For c2, establish the relevant tagLen, src, offset, and len values, or preserve an unresolved result where they cannot be established.",
+      "For c1, preserve uncertainty about how the rule implementation handles the unbound offset and len variables rather than assuming a binding."
+    ]
+  },
+  "name": "GCMParameterSpecSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/GCMParameterSpec.crysl",
+  "applies_to_types": [
+    "javax.crypto.spec.GCMParameterSpec"
+  ],
+  "source_title": "CrySL detector rule for javax.crypto.spec.GCMParameterSpec",
+  "semantic_scope": "For every finding of this rule, the detector observes construction of the exact JCA type javax.crypto.spec.GCMParameterSpec through either its two-argument or four-argument constructor signature, then evaluates only the rule's declared tag-length, buffer-range, nonempty-length, and source-randomization predicates. It does not govern similarly named parameter-specification types from other frameworks.",
+  "spec_id": "GCMParameterSpecSpec",
+  "known_false_positive_shapes": [
+    "A valid use intentionally configured with a 64-bit or 32-bit GCM tag for an application for which that tag size is permitted, because the rule accepts only 96, 104, 112, 120, or 128.",
+    "A valid deterministic IV construction that meets the per-key uniqueness requirement but cannot satisfy a detector policy requiring randomized[src]; NIST permits deterministic as well as random-bit-generator-based IV constructions.",
+    "A runtime-random IV buffer whose provenance cannot be established by the detector's implementation, despite being random when passed to the constructor.",
+    "A legal four-argument JCA constructor call with len equal to zero, because the API's documented invalid-input conditions do not prohibit zero while the rule requires len > 0.",
+    "A two-argument constructor call whose analysis result depends on unspecified handling of the rule's offset and len constraints, since those variables are not present in c1."
+  ],
+  "protocol": "Con := c1 | c2; ORDER Con. One invocation of either listed GCMParameterSpec constructor is the complete modeled event sequence.",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/GCMParameterSpec.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:javax.crypto.spec.GCMParameterSpec"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.beemdevelopment.aegis.crypto.CryptoUtils",
+        "method": "createCipher",
+        "message": "unknown"
+      },
+      {
+        "class": "io.ktor.network.tls.cipher.GCMCipherKt",
+        "method": "gcmDecryptCipher",
+        "message": "unknown"
+      },
+      {
+        "class": "io.ktor.network.tls.cipher.GCMCipherKt",
+        "method": "gcmEncryptCipher",
+        "message": "unknown"
+      }
+    ],
+    "expected_api_simple_name": "GCMParameterSpec",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.crypto.spec.GCMParameterSpec",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/GCMParameterSpec.crysl"
+  },
+  "analysis_family": "cipher"
+}

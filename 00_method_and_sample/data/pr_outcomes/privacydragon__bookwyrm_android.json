@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/PrivacyDragon/Bookwyrm_Android/pull/29",
+    "state": "open",
+    "finding_id": "84d27d2c74e7",
+    "spec": "GCMParameterSpecSpec",
+    "csv_class": "nl.privacydragon.bookwyrm.MainActivity",
+    "method_name": "LogIn",
+    "title": "Use SecureRandom for stored AES-GCM IVs",
+    "impact_class": "not_recorded",
+    "recorded_at": "2026-11-19T20:39:36.796133+00:00",
+    "maintainer_feedback": []
+  }
+]

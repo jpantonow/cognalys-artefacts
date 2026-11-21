@@ -1,0 +1,357 @@
+{
+  "run_id": "run_ab56",
+  "pipeline": {
+    "commit": "80bfc75",
+    "uncommitted_changes": false
+  },
+  "funnel": {
+    "analysed": 2,
+    "cause_confirmed": 2,
+    "generation_supported": 1,
+    "plan_valid": 1,
+    "generated": 0,
+    "build_passed": 0,
+    "published": 0
+  },
+  "coverage": {
+    "findings_attributed": 2,
+    "actions": {
+      "repair_unattended": 0,
+      "repair_for_review": 1,
+      "await_policy": 0,
+      "classify_no_change": 0,
+      "abstain": 1,
+      "invalid": 0
+    },
+    "proposal_coverage": 0.5,
+    "proposals": 1,
+    "abstentions": 1,
+    "abstention_rate": 0.5,
+    "undecided_or_invalid": 0,
+    "published": 0,
+    "publication_rate": 0.0,
+    "avoidable_abstention": {
+      "status": "no_labels",
+      "detail": "evals/ground_truth.csv carries no reviewer labels, so whether an abstention was avoidable is unmeasured. This is not a count of zero."
+    },
+    "known_positive_abstention": {
+      "status": "none_in_run"
+    }
+  },
+  "findings": [
+    {
+      "finding_key": "5c2165816401",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_patch_plan.json"
+      },
+      "unique_error_id": "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed",
+      "apk": "org.cryptomator.lite.debug_3157.apk",
+      "method": "tryToFindDefaultTrustManager",
+      "spec": "TrustManagerFactorySpec",
+      "decision": "NO_SAFE_FIX",
+      "evidence_fingerprint": "5c7e3a0d3f89246f6c7eedb62c78e9d6073bc7c35f3c420ca399f800bd52cc01",
+      "terminal_stage": "adjudication",
+      "reached": {
+        "analysed": true,
+        "cause_confirmed": true,
+        "generation_supported": false,
+        "plan_valid": false,
+        "generated": false,
+        "build_passed": false,
+        "published": false
+      },
+      "signals": [
+        {
+          "signature": "adjudication:no_safe_fix",
+          "detail": "The source invokes `TrustManagerFactory.init(null as KeyStore?)` (TLS-CLAIM-002). The verified rule's Init event requires `generatedKeyStore[keyStore]` evidence for `init(KeyStore)`, which a null platform-default argument cannot provide. However, null is the documented API form for selecting the def",
+          "artifact": "error_solutions/evidence_reviews/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_evidence.json"
+        }
+      ],
+      "signatures": [
+        "adjudication:no_safe_fix"
+      ],
+      "pull_request": "",
+      "known_positive": {}
+    },
+    {
+      "finding_key": "fdcdba8e5a66",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.cryptomator.lite.debug_3157.apk/1_from_evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.cryptomator.lite.debug_3157.apk/1_from/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/1_from_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/1_from_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/1_from_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/1_from_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/org.cryptomator.lite.debug_3157.apk/1_from/manifest.json"
+      },
+      "unique_error_id": "org.cryptomator.data.cloud.webdav.network.SSLSocketFactories:::from:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+      "apk": "org.cryptomator.lite.debug_3157.apk",
+      "method": "from",
+      "spec": "SSLContextSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "evidence_fingerprint": "496be3dd1da3da4af405a77fb8e304a72de28af0a1f2f6d98d3ecc0d46f4ee95",
+      "terminal_stage": "generation",
+      "reached": {
+        "analysed": true,
+        "cause_confirmed": true,
+        "generation_supported": true,
+        "plan_valid": true,
+        "generated": false,
+        "build_passed": false,
+        "published": false
+      },
+      "signals": [
+        {
+          "signature": "generation:semantic:unintended_behavior_change",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/org.cryptomator.lite.debug_3157.apk/1_from/semantic_validation.json"
+        }
+      ],
+      "signatures": [
+        "generation:semantic:unintended_behavior_change"
+      ],
+      "pull_request": "",
+      "known_positive": {}
+    }
+  ],
+  "llm_performance": {
+    "per_stage": {
+      "external_research.research": {
+        "calls": 4,
+        "cache_hits": 2,
+        "latency_ms": 94711,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "external_research.synthesis": {
+        "calls": 4,
+        "cache_hits": 2,
+        "latency_ms": 24295,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "evidence_extraction": {
+        "calls": 4,
+        "cache_hits": 0,
+        "latency_ms": 170649,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "adjudication": {
+        "calls": 2,
+        "cache_hits": 0,
+        "latency_ms": 77340,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "patch_planning": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 22708,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "patch_planning.correction": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 365333,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "code_generation.coordinated_file": {
+        "calls": 2,
+        "cache_hits": 0,
+        "latency_ms": 28242,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "code_generation.behavior_review": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 32384,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "adjudication.correction": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 22630,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "issue_presentation": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 6037,
+        "hung_connections": 0,
+        "failed": 0
+      }
+    },
+    "signals": []
+  },
+  "comparison": {
+    "new": [],
+    "recurring": [
+      "adjudication:no_safe_fix",
+      "generation:semantic:unintended_behavior_change"
+    ],
+    "reappeared": [
+      "adjudication:no_safe_fix",
+      "generation:semantic:unintended_behavior_change"
+    ],
+    "resolved_for_rerun_findings": [
+      {
+        "finding": "org.cryptomator.lite.debug_3157.apk/tryToFindDefaultTrustManager",
+        "signature": "adjudication:no_behavior_preserving_compliant_replacement",
+        "previous_run": "run_v9",
+        "now_ends_at": "adjudication"
+      }
+    ],
+    "finding_progress": [
+      {
+        "finding": "org.cryptomator.lite.debug_3157.apk/tryToFindDefaultTrustManager",
+        "stages": [
+          "adjudication",
+          "adjudication"
+        ]
+      },
+      {
+        "finding": "org.cryptomator.lite.debug_3157.apk/from",
+        "stages": [
+          "generation",
+          "generation"
+        ]
+      }
+    ],
+    "verdict_changes": []
+  },
+  "ledger_signatures": {
+    "generation:semantic:unintended_behavior_change": {
+      "stage": "generation",
+      "occurrences": 13,
+      "runs": [
+        "run_research_medium",
+        "subset_revisao_lacunas_v4",
+        "run7",
+        "run_v11",
+        "run_v4",
+        "run_v9",
+        "run_ab56"
+      ],
+      "first_seen": "run_research_medium",
+      "last_seen": "run_ab56",
+      "examples": [
+        {
+          "run": "run_v11",
+          "finding_key": "16e0fde005ac",
+          "apk": "org.cleverfox.bluegate.debug_20260105.apk",
+          "method": "getOrCreateKeyPair",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/org.cleverfox.bluegate.debug_20260105.apk/1_getOrCreateKeyPair/semantic_validation.json"
+        },
+        {
+          "run": "run_v4",
+          "finding_key": "e2654a54d12a",
+          "apk": "org.thosp.yourlocalweather.debug_213.apk",
+          "method": "encryptKey",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/org.thosp.yourlocalweather.debug_213.apk/0_encryptKey/semantic_validation.json"
+        },
+        {
+          "run": "run_v9",
+          "finding_key": "fdcdba8e5a66",
+          "apk": "org.cryptomator.lite.debug_3157.apk",
+          "method": "from",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/org.cryptomator.lite.debug_3157.apk/1_from/semantic_validation.json"
+        },
+        {
+          "run": "run_v9",
+          "finding_key": "fdcdba8e5a66",
+          "apk": "org.cryptomator.lite.debug_3157.apk",
+          "method": "from",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/org.cryptomator.lite.debug_3157.apk/1_from/semantic_validation.json"
+        },
+        {
+          "run": "run_ab56",
+          "finding_key": "fdcdba8e5a66",
+          "apk": "org.cryptomator.lite.debug_3157.apk",
+          "method": "from",
+          "detail": "",
+          "artifact": "error_solutions/coordinated_drafts/org.cryptomator.lite.debug_3157.apk/1_from/semantic_validation.json"
+        }
+      ]
+    },
+    "adjudication:no_safe_fix": {
+      "stage": "adjudication",
+      "occurrences": 24,
+      "runs": [
+        "run_20260913_194203",
+        "run_20260929_231422",
+        "run_20261006_223750",
+        "run_20261009_012517",
+        "run_20261011_134205",
+        "run_20261010_200449",
+        "run_aihub",
+        "run3",
+        "run4",
+        "run2",
+        "subset_revisao_lacunas",
+        "run_v10",
+        "run_ab56"
+      ],
+      "first_seen": "run_20260913_194203",
+      "last_seen": "run_ab56",
+      "examples": [
+        {
+          "run": "run2",
+          "finding_key": "bdc0d1804c88",
+          "apk": "com.vrem.wifianalyzer_71.apk",
+          "method": "calculateChildType",
+          "detail": "The governed java.security.MessageDigest factory invocation uses the literal \"MD5\", which is outside MessageDigestSpec's required SHA-256/SHA-384/SHA-512 allow-list.",
+          "artifact": "error_solutions/evidence_reviews/com.vrem.wifianalyzer_71.apk/9_calculateChildType_evidence.json"
+        },
+        {
+          "run": "run2",
+          "finding_key": "f021173c7b4a",
+          "apk": "org.cry.otp_31.apk",
+          "method": "hmac_sha",
+          "detail": "Matched documented false-positive shape: a valid SecretKeySpec API-boundary construction uses the RAW key-format label, which lies outside the rule's narrow keyAlgorithm allow-list. The source-level constraint is literal, but the rule's classification is not a source defect requiring an edit.",
+          "artifact": "error_solutions/evidence_reviews/org.cry.otp_31.apk/18_hmac_sha_evidence.json"
+        },
+        {
+          "run": "subset_revisao_lacunas",
+          "finding_key": "5a17f30915ba",
+          "apk": "com.vrem.wifianalyzer_71.apk",
+          "method": "calculateGraphType",
+          "detail": "GraphWrapper.calculateGraphType calls java.security.MessageDigest.getInstance with the literal \"MD5\", which is outside the MessageDigestSpec factory-algorithm allow-list of SHA-256, SHA-384, and SHA-512. The update/digest call order is separately conforming; the confirmed cause is the reported const",
+          "artifact": "error_solutions/evidence_reviews/com.vrem.wifianalyzer_71.apk/2_calculateGraphType_evidence.json"
+        },
+        {
+          "run": "run_v10",
+          "finding_key": "16e0fde005ac",
+          "apk": "org.cleverfox.bluegate.debug_20260105.apk",
+          "method": "getOrCreateKeyPair",
+          "detail": "The direct KeyPair construction receives component keys loaded from an AndroidKeyStore PrivateKeyEntry, but the detector admits neither required generatedPubkey/generatedPrivkey provenance for those components. The joined generator path similarly lacks an admitted preparedEC predicate for its KeyGen",
+          "artifact": "error_solutions/evidence_reviews/org.cleverfox.bluegate.debug_20260105.apk/1_getOrCreateKeyPair_evidence.json"
+        },
+        {
+          "run": "run_ab56",
+          "finding_key": "5c2165816401",
+          "apk": "org.cryptomator.lite.debug_3157.apk",
+          "method": "tryToFindDefaultTrustManager",
+          "detail": "The source invokes `TrustManagerFactory.init(null as KeyStore?)` (TLS-CLAIM-002). The verified rule's Init event requires `generatedKeyStore[keyStore]` evidence for `init(KeyStore)`, which a null platform-default argument cannot provide. However, null is the documented API form for selecting the def",
+          "artifact": "error_solutions/evidence_reviews/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_evidence.json"
+        }
+      ]
+    }
+  },
+  "knowledge_added": [],
+  "learning_store_written": true
+}

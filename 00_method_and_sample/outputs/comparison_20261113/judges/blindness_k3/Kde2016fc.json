@@ -1,0 +1,31 @@
+{
+ "card_id": "Kde2016fc",
+ "card_sha256": "05db7a4da05ccb79",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 8,
+ "tokens": {
+  "input_tokens": 6,
+  "cache_creation_input_tokens": 5357,
+  "cache_read_input_tokens": 7221,
+  "output_tokens": 661
+ },
+ "turns": 3,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.057544200000000004,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "3f32e273d8356824",
+ "finished_at": "2026-11-16T11:43:17-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.3,
+  "reason": "The description follows a fixed template: a note that the author built the diff, the line 'The project builds with this change (`assembleDebug`)' and a stock closing line. That points to the Cognalys pipeline rather than an agent working in a checkout. Within the pipeline, I lean towards Sonnet because the patch is careful: it adds a format marker for backward compatibility, falls back to the old path if decryption fails, and states plainly that new data can't be read by older versions. This is a weak signal, so confidence is low."
+ }
+}

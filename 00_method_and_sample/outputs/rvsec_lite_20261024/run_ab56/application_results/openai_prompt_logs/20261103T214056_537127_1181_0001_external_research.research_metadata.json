@@ -1,0 +1,44 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T214056_537127_1181_0001_external_research.research",
+  "parent_call_id": "group-20261103T214056_516500-1181-1",
+  "finding_id": "org.cryptomator.data.cloud.webdav.network.SSLSocketFactories:::from:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+  "stage": "external_research.research",
+  "status": "cache_hit",
+  "delivery": "cache_hit",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 7517,
+  "input_tokens": 0,
+  "cached_input_tokens": 0,
+  "output_tokens": 0,
+  "latency_ms": 0,
+  "retry_count": 0,
+  "request_id": "",
+  "section_telemetry": {
+    "question_scope": {
+      "characters": 412,
+      "approx_tokens": 103,
+      "sha256": "de6aa02fbeecbf549d2189d76947b57b485707dc7e753cd02576697c604eb124"
+    },
+    "questions": {
+      "characters": 1359,
+      "approx_tokens": 340,
+      "sha256": "e1568cef2ad8eb73515981d5cc4bf3f8c7f07c9fe24ebc42ad0098f1dea33c50"
+    },
+    "spec_policy": {
+      "characters": 435,
+      "approx_tokens": 109,
+      "sha256": "7d66e1664a1ff79e625a5a92da99c6b31b04266ac7ae4f918c427b1e72bc9959"
+    },
+    "reported_by_rule": {
+      "characters": 4222,
+      "approx_tokens": 1056,
+      "sha256": "fe1c26b1fd09efdcb065d587551436ea2a53bfea71da988640db42452db98f26"
+    }
+  },
+  "completed_at": "2026-11-03T21:40:56"
+}

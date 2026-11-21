@@ -1,0 +1,171 @@
+=== 2026-11-16T01:58:49-03:00 cognalys run --max-cost 3.0
+Frozen experiment: manifest written to /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/manifests/co_bdc0d1804c88_r1.json. Specification generation and learning-store writes are disabled for this run; web research not archived is fetched live.
+Preflight passed: declared dependencies, static analysis
+Pipeline steps: spec_generation -> cloning -> repository_setup -> extraction -> spec_context -> detector_rules -> llm -> solutions -> validation -> validation_fix -> revalidation -> prs -> preview -> fix_prs -> revalidation_fix_prs
+
+=== SPEC_GENERATION ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.generate_specifications --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_bdc0d1804c88.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model claude-sonnet-5-5 --endpoint https://api.anthropic.com --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/openai_prompt_logs
+frozen experiment: 1 specification(s) already present; none generated
+
+=== CLONING ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_bdc0d1804c88.csv --output-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_methods --clone-timeout 1800 --clone-retries 3 --clone-only
+2026-11-16 01:59:19 - INFO - Starting single CSV workflow
+2026-11-16 01:59:19 - INFO - Output dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones
+2026-11-16 01:59:19 - INFO - Clone dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones
+2026-11-16 01:59:19 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_methods
+2026-11-16 01:59:19 - INFO - 1 linhas válidas carregadas
+2026-11-16 01:59:19 - INFO - 1 repositórios únicos mapeados
+2026-11-16 01:59:19 - INFO - [1/1] Cloning com.vrem.wifianalyzer_71.apk from https://github.com/VREMSoftwareDevelopment/WifiAnalyzer
+2026-11-16 01:59:24 - INFO - com.vrem.wifianalyzer_71.apk checked out at the pinned revision 131c2fae4f86e54aa71d87e522a3b4874bb4e68a
+2026-11-16 01:59:24 - INFO - Successfully cloned com.vrem.wifianalyzer_71.apk
+2026-11-16 01:59:24 - INFO - Cloning results: 1 success, 0 failed, 0 timeout
+
+=== REPOSITORY_SETUP ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.prepare_repository_branches --projects-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones --report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/repository_setup.json --project com.vrem.wifianalyzer_71.apk
+com.vrem.wifianalyzer_71.apk:  ->  (unchanged)
+
+=== EXTRACTION ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_bdc0d1804c88.csv --output-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_methods --clone-timeout 1800 --clone-retries 3 --skip-cloning
+2026-11-16 01:59:25 - INFO - Starting single CSV workflow
+2026-11-16 01:59:25 - INFO - Output dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones
+2026-11-16 01:59:25 - INFO - Clone dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones
+2026-11-16 01:59:25 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_methods
+2026-11-16 01:59:25 - INFO - 1 linhas válidas carregadas
+2026-11-16 01:59:25 - INFO - 1 repositórios únicos mapeados
+2026-11-16 01:59:25 - INFO - Reutilizando clones existentes em: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones
+2026-11-16 01:59:25 - INFO - com.vrem.wifianalyzer_71.apk is already at the pinned revision 131c2fae4f86e54aa71d87e522a3b4874bb4e68a
+2026-11-16 01:59:25 - INFO - Found clone for com.vrem.wifianalyzer_71.apk: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones/com.vrem.wifianalyzer_71.apk
+2026-11-16 01:59:25 - INFO - Building index for repository: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones/com.vrem.wifianalyzer_71.apk
+2026-11-16 01:59:26 - INFO - Indexed 640 classes from 639 unique class definitions
+2026-11-16 01:59:26 - INFO - Extraction complete: 1 success, 0 failed, 0 skipped
+2026-11-16 01:59:26 - INFO - Tracking JSON written to /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones/extraction_tracking.json
+2026-11-16 01:59:26 - INFO - Summary written to /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones/logs/summary_tracked.txt
+
+=== SPEC_CONTEXT ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.enrich_spec_context --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_methods --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_bdc0d1804c88.csv
+Specification registry coverage: 1/1 sample specs available
+Specification context: 1 enriched, 0 missing, 1 total
+
+=== DETECTOR_RULES ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.propose_detector_rules --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_bdc0d1804c88.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model claude-sonnet-5-5 --endpoint https://api.anthropic.com --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/openai_prompt_logs
+MessageDigestSpec: its specification changed after its rule was accepted; the rule is kept as is (rerun with --spec MessageDigestSpec --replace to regenerate)
+MessageDigestSpec: skipped, an accepted rule exists (pass replace to regenerate it)
+Detector rules: nothing to propose
+
+=== LLM ===
+$ /home/antonow/venv/bin/python -m cognalys.llm.generate_error_fixes --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_methods --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions --model claude-sonnet-5-5 --provider anthropic --endpoint https://api.anthropic.com --timeout 600 --ollama-context-length 16384 --repository-context-budget 140000 --pr-issue-style v3 --max-output-tokens 32768 --reasoning-effort high --validation-mode balanced --validation-feedback-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/build_validation --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/openai_prompt_logs --web-search-cache-ttl-hours 168.0 --web-search-retries 1 --retries 2 --workers 1 --no-cache --research-corpus-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus --research-corpus-max-age-days 90.0 --web-search --migration-policies-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/migration_policies.json
+INFO: Testing Anthropic connection...
+INFO: Anthropic connection successful
+INFO: ✓ Model 'claude-sonnet-5-5' available
+INFO: Discovered 1 errors to process
+INFO: Processing 1 new errors (0 already complete)
+INFO: Processing: com.vrem.wifianalyzer_71.apk/calculateChildType
+INFO: Research corpus hit: 0695c6eb2d01
+INFO: calculateChildType: blocked only on missing evidence (code_evidence_missing); generated for review, decision is now MULTI_FILE_FIX_PROPOSED_FOR_REVIEW
+WARNING: Usage of calculateChildType's value corrected from runtime_discriminator to protocol by its call site app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt:77: private fun type(value: Int): Int = if (value == TYPE1 || value == TYPE2 || value == TYPE3) SIZE_MAX else SIZE_MIN; the in-process digest policy no longer authorises a patch
+INFO: Rewrote the issue text of calculateChildType
+INFO: Issue candidate prepared for manual review: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions/issue_candidates/com.vrem.wifianalyzer_71.apk/0_calculateChildType_issue.json
+WARNING: Evidence phase abstained for calculateChildType: decision=NO_SAFE_FIX, cause_status=confirmed, detector_violation=confirmed, cause=AccessPointsAdapterData.calculateChildType calls MessageDigest.getInstance("MD5") with a literal algorithm. MD5 is outside the rule's allow-list of SHA-256, SHA-384 and SHA-512. The same MD5/package-name pattern is in GraphWrapper.calculateGraphType, a sibling occurrence outside the reported method. The digest only selects a UI size setting, but it is folded to an Int with contentHashCode() and compared in type() with fixed source constants TYPE1-TYPE3. These are not recomputed by the same code path, so swapping the algorithm alone changes the result and the comparison stops matching., scope_issues=none; review saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions/evidence_reviews/com.vrem.wifianalyzer_71.apk/0_calculateChildType_evidence.json
+INFO: [1/1] calculateChildType
+WARNING: No safe fix generated
+INFO: Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions/solutions_tracking.json
+INFO: Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions/analysis_summary.txt
+INFO: ======================================================================
+INFO: ANALYSIS COMPLETE
+INFO: Analyzed: 1/1
+INFO: Fixes generated: 0
+INFO: Confirmed external-contract findings: 0
+INFO: Issue candidates: 1
+INFO: Time: 00h 01m 44s
+INFO: LLM cache: 0 hit(s), 0 miss(es), 0 replayed within a finding
+INFO: Research corpus: 1 served, 0 researched and stored, 0 kept, 0 expired
+
+======================================================================
+LLM Error Fix Generator
+======================================================================
+Model: claude-sonnet-5-5
+Provider: anthropic
+Endpoint: https://api.anthropic.com
+Timeout: 600s
+Reasoning effort: high
+Validation mode: balanced
+Repository context budget: 140000 characters
+Allow cache invalidation: False
+Web search: True
+Max output tokens: 32768
+Input: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_methods
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions
+LLM cache: disabled
+Resume: True
+======================================================================
+
+Research corpus: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus (126 entries, max age 90 days)
+
+=== SOLUTIONS ===
+$ /home/antonow/venv/bin/python -m cognalys.solutions.run_apply --error-solutions-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions --cloned-projects-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results --worktrees-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/worktrees --backup-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/method_backups --approve-review-only-for-validation --port-model claude-sonnet-5-5 --port-endpoint https://api.anthropic.com --port-timeout 600 --port-max-output-tokens 16384 --port-reasoning-effort high --port-prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/openai_prompt_logs
+2026-11-16 02:01:35,712 - INFO - Starting solution application workflow
+2026-11-16 02:01:35,722 - INFO - ============================================================
+2026-11-16 02:01:35,723 - INFO - STAGE 1: DISCOVERY & MAPPING
+2026-11-16 02:01:35,723 - INFO - ============================================================
+2026-11-16 02:01:35,723 - INFO - Building solution to repository mapping...
+2026-11-16 02:01:35,724 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions
+2026-11-16 02:01:35,985 - INFO - Discovered 0 solutions
+2026-11-16 02:01:35,986 - INFO - Mapping complete
+2026-11-16 02:01:35,986 - INFO - Building solution to repository mapping...
+2026-11-16 02:01:35,987 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions
+2026-11-16 02:01:36,212 - INFO - Discovered 0 solutions
+2026-11-16 02:01:36,212 - INFO - Mapping complete
+2026-11-16 02:01:36,212 - INFO - Mapping report: {'total_apks': 0, 'total_solutions': 0, 'mappings': {}}
+2026-11-16 02:01:36,212 - INFO - Building solution to repository mapping...
+2026-11-16 02:01:36,212 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions
+2026-11-16 02:01:36,504 - INFO - Discovered 0 solutions
+2026-11-16 02:01:36,504 - INFO - Mapping complete
+2026-11-16 02:01:36,513 - INFO - Mapping report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/mapping_report.json
+2026-11-16 02:01:36,514 - INFO - ============================================================
+2026-11-16 02:01:36,514 - INFO - STAGE 2: APPLYING SOLUTIONS
+2026-11-16 02:01:36,514 - INFO - ============================================================
+2026-11-16 02:01:36,514 - INFO - ============================================================
+2026-11-16 02:01:36,515 - INFO - STAGE 3: GENERATING REPORT
+2026-11-16 02:01:36,515 - INFO - ============================================================
+2026-11-16 02:01:36,575 - INFO - Execution report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/execution_report.json
+2026-11-16 02:01:36,576 - INFO - ============================================================
+2026-11-16 02:01:36,576 - INFO - EXECUTION SUMMARY
+2026-11-16 02:01:36,576 - INFO - ============================================================
+2026-11-16 02:01:36,576 - INFO - Successfully Applied: 0
+2026-11-16 02:01:36,577 - INFO - Failed: 0
+2026-11-16 02:01:36,577 - INFO - Total Time: 0.81s
+
+DONE
+{'execution_timestamp': '2026-11-16T05:01:36.520709+00:00', 'workflow_status': 'SUCCESS_WITH_NO_ACTION', 'execution_time_seconds': 0.808203, 'config': {'error_solutions_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions', 'cloned_projects_dir': '/home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/clones', 'output_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results', 'worktrees_dir': '/home/antonow/cognalys_work/d_arm_sonnet_k3/co_bdc0d1804c88_r1/worktrees', 'save_backups': True, 'backup_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/application_results/method_backups', 'dry_run': False, 'max_solutions': 0, 'git_user_name': 'jpantonow', 'git_user_email': 'jpantonow@gmail.com'}, 'total_solutions': 0, 'results': {'successfully_applied': 0, 'failed': 0, 'dry_run': 0, 'review_only_not_applied': 0, 'not_applicable_to_base_branch': 0}, 'per_solution_details': [], 'errors': []}
+Nothing was applied; skipping validation and validation_fix and revalidation and prs and fix_prs and revalidation_fix_prs (use --force-downstream-steps to always run them). preview still runs.
+
+=== PREVIEW ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.generate_github_previews --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/pull_requests --issue-candidates-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions/issue_candidates --evidence-reviews-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/error_solutions/evidence_reviews --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/previews --issue-title "Potential security issue found — would you be open to a pull request?" --issue-title-without-security-impact "Question about the {api} use in {location} — would you be open to a pull request?" --issue-body "Hi! I'm a Computer Engineering student at the University of Brasília (UnB), working on a research project about how Android apps use security-sensitive APIs." --pr-issue-style v3
+ISSUE PREVIEW: VREMSoftwareDevelopment/WifiAnalyzer -> com.vrem.wifianalyzer_71.apk_calculateChildType_MessageDigestSpec_no_safe_fix.md
+ANALYSIS PREVIEW: com.vrem.wifianalyzer_71.apk_calculateChildType_MessageDigestSpec_analysis.md
+Preview summary: 0 PR previews, 1 issue previews, 1 analysis previews, 0 failed
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/previews
+
+Model calls of this run:
+  evidence_extraction              1 calls       70,611 in (4,448 cached, 0 written)       3,594 out  US$ 0.17
+  adjudication                     1 calls       25,366 in (13,882 cached, 0 written)       1,879 out  US$ 0.04
+  patch_planning                   1 calls       15,690 in (0 cached, 5,816 written)       2,447 out  US$ 0.06
+  external_research                2 calls        9,153 in (6,880 cached, 0 written)       1,474 out  US$ 0.02
+  issue_text_rewrite               1 calls        1,943 in (0 cached, 745 written)         331 out  US$ 0.01
+  total                            6 calls      122,763 in (25,210 cached, 6,561 written)       9,725 out  US$ 0.30; 0 answered from the cache, 1 served by the research corpus
+
+Pipeline finished successfully.
+Run status: complete
+
+=== RETROSPECTIVE ===
+1 finding(s): 1 at adjudication; 1 new and 0 recurring failure signature(s)
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/retrospective/retrospective.md
+
+=== STATISTICS ===
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_bdc0d1804c88/r1/statistics/statistics.md
+Pipeline elapsed time: 00h 02m 49s
+issue para o mantenedor do app             com.vrem.wifianalyzer_71.apk calculateChildType [MessageDigestSpec]  (6 calls, 132k tokens, US$ 0.30)
+
+1 findings. issue para o mantenedor do app: 1
+Most model use without a pull request:
+  6 calls, 132k tokens, US$ 0.30           com.vrem.wifianalyzer_71.apk calculateChildType [MessageDigestSpec] -> issue para o mantenedor do app

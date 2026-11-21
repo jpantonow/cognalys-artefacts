@@ -1,0 +1,148 @@
+diff --git a/app/src/androidTest/java/com/etesync/syncadapter/HttpClientProtocolFilterTest.kt b/app/src/androidTest/java/com/etesync/syncadapter/HttpClientProtocolFilterTest.kt
+new file mode 100644
+index 000000000..aa50c355a
+--- /dev/null
++++ b/app/src/androidTest/java/com/etesync/syncadapter/HttpClientProtocolFilterTest.kt
+@@ -0,0 +1,53 @@
++package com.etesync.syncadapter
++
++import java.util.Arrays
++import javax.net.ssl.SSLException
++import org.junit.Assert.assertEquals
++import org.junit.Assert.assertFalse
++import org.junit.Assert.assertTrue
++import org.junit.Assert.fail
++import org.junit.Test
++
++class HttpClientProtocolFilterTest {
++    @Test
++    fun filterEnabledTlsProtocols_removesLegacyProtocolsWithoutAddingOrReorderingProtocols() {
++        val providerEnabledProtocols = arrayOf(
++            "SSL",
++            "SSLv2Hello",
++            "SSLv3",
++            "TLSv1",
++            "TLSv1.0",
++            "TLSv1.1",
++            "TLSv1.2",
++            "TLSv1.3",
++            "TLSv1.4"
++        )
++
++        val filteredProtocols = filterEnabledTlsProtocols(providerEnabledProtocols)
++
++        assertEquals(
++            Arrays.asList("TLSv1.2", "TLSv1.3", "TLSv1.4"),
++            filteredProtocols.toList()
++        )
++        assertTrue(filteredProtocols.size < providerEnabledProtocols.size)
++        for (protocol in filteredProtocols) {
++            assertTrue(
++                "Filtered protocol $protocol was not enabled by the provider",
++                providerEnabledProtocols.contains(protocol)
++            )
++        }
++        assertFalse(filteredProtocols.contains("TLSv1.5"))
++    }
++
++    @Test
++    fun filterEnabledTlsProtocols_failsClosedWhenOnlyLegacyProtocolsAreEnabled() {
++        try {
++            filterEnabledTlsProtocols(
++                arrayOf("SSL", "SSLv2Hello", "SSLv3", "TLSv1", "TLSv1.0", "TLSv1.1")
++            )
++            fail("Filtering an all-legacy provider protocol list must fail closed")
++        } catch (_: SSLException) {
++            // Expected: assigning an empty or broadened protocol list is forbidden.
++        }
++    }
++}
+diff --git a/app/src/androidTest/java/com/etesync/syncadapter/ui/setup/DavResourceFinderTest.java b/app/src/androidTest/java/com/etesync/syncadapter/ui/setup/DavResourceFinderTest.java
+index ae6543e8c..2f12f81f8 100644
+--- a/app/src/androidTest/java/com/etesync/syncadapter/ui/setup/DavResourceFinderTest.java
++++ b/app/src/androidTest/java/com/etesync/syncadapter/ui/setup/DavResourceFinderTest.java
+@@ -51,7 +51,7 @@ public void initServerAndClient() throws Exception {
+         credentials = new LoginCredentials(URI.create("/"), "mock", "12345");
+         finder = new BaseConfigurationFinder(getTargetContext(), credentials);
+ 
+-        client = HttpClient.create(null);
++        client = new HttpClient.Builder(null, null, java.util.logging.Logger.getLogger(HttpClient.class.getName())).build().getOkHttpClient();
+     }
+ 
+     @After
+@@ -106,7 +106,7 @@ else if (path.startsWith(PATH_CALDAV_AND_CARDDAV))
+                                 "</resourcetype>";
+                         break;
+                 }
+-                App.Companion.getLog().info("Sending props: " + props);
++                java.util.logging.Logger.getLogger(DavResourceFinderTest.class.getName()).info("Sending props: " + props);
+                 return new MockResponse()
+                         .setResponseCode(207)
+                         .setBody("<multistatus xmlns='DAV:' xmlns:CARD='urn:ietf:params:xml:ns:carddav'>" +
+diff --git a/app/src/main/java/com/etesync/syncadapter/HttpClient.kt b/app/src/main/java/com/etesync/syncadapter/HttpClient.kt
+index c3574f66f..b32e8f0f8 100644
+--- a/app/src/main/java/com/etesync/syncadapter/HttpClient.kt
++++ b/app/src/main/java/com/etesync/syncadapter/HttpClient.kt
+@@ -30,6 +30,53 @@ import java.util.concurrent.TimeUnit
+ import java.util.logging.Level
+ import javax.net.ssl.*
+ 
++internal fun filterEnabledTlsProtocols(enabledProtocols: Array<String>): Array<String> {
++    val filteredProtocols = enabledProtocols.filterNot { protocol ->
++        protocol.startsWith("SSL") ||
++                protocol == "TLSv1" ||
++                protocol == "TLSv1.0" ||
++                protocol == "TLSv1.1"
++    }
++
++    if (filteredProtocols.isEmpty())
++        throw SSLException("No supported TLS protocols remain after filtering legacy protocols")
++
++    return filteredProtocols.toTypedArray()
++}
++
++internal class TlsProtocolFilteringSocketFactory internal constructor(
++        private val delegate: SSLSocketFactory
++) : SSLSocketFactory() {
++
++    override fun getDefaultCipherSuites(): Array<String> = delegate.defaultCipherSuites
++
++    override fun getSupportedCipherSuites(): Array<String> = delegate.supportedCipherSuites
++
++    override fun createSocket(): Socket = configure(delegate.createSocket())
++
++    override fun createSocket(host: String?, port: Int): Socket =
++            configure(delegate.createSocket(host, port))
++
++    override fun createSocket(host: String?, port: Int, localHost: java.net.InetAddress?, localPort: Int): Socket =
++            configure(delegate.createSocket(host, port, localHost, localPort))
++
++    override fun createSocket(host: java.net.InetAddress?, port: Int): Socket =
++            configure(delegate.createSocket(host, port))
++
++    override fun createSocket(host: java.net.InetAddress?, port: Int, localHost: java.net.InetAddress?, localPort: Int): Socket =
++            configure(delegate.createSocket(host, port, localHost, localPort))
++
++    override fun createSocket(socket: Socket?, host: String?, port: Int, autoClose: Boolean): Socket =
++            configure(delegate.createSocket(socket, host, port, autoClose))
++
++    private fun configure(socket: Socket): Socket {
++        val sslSocket = socket as? SSLSocket
++                ?: throw SSLException("TLS socket factory created a non-SSL socket")
++        sslSocket.enabledProtocols = filterEnabledTlsProtocols(sslSocket.enabledProtocols)
++        return sslSocket
++    }
++}
++
+ class HttpClient private constructor(
+         val okHttpClient: OkHttpClient,
+         private val certManager: CustomCertManager?
+@@ -234,7 +281,7 @@ class HttpClient private constructor(
+                     if (keyManager != null) arrayOf(keyManager) else null,
+                     arrayOf(trustManager),
+                     null)
+-            orig.sslSocketFactory(sslContext.socketFactory, trustManager)
++            orig.sslSocketFactory(TlsProtocolFilteringSocketFactory(sslContext.socketFactory), trustManager)
+             orig.hostnameVerifier(hostnameVerifier)
+ 
+             return HttpClient(orig.build(), certManager)

@@ -1,0 +1,164 @@
+{
+  "schema_version": 2,
+  "spec_id": "IndexOutOfBoundsSpec",
+  "name": "IndexOutOfBoundsSpec",
+  "applies_to_types": [
+    "java.lang.IndexOutOfBounds"
+  ],
+  "source_title": "Requested canonical CrySL source: not found; the supplied raw URL returned HTTP 404 when consulted.",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IndexOutOfBounds.crysl",
+  "source_verified": false,
+  "protocol": "Unverified: no canonical CrySL event-order expression was recoverable.",
+  "important_note": "The required nominal target java.lang.IndexOutOfBounds has simple name IndexOutOfBounds, but it was not verified as an existing Java platform API type. Java documents java.lang.IndexOutOfBoundsException and java.lang.StringIndexOutOfBoundsException instead. Consequently, this is not a verified CrySL protocol or API-type mapping; it only records the bounds-failure evidence represented by the findings.",
+  "events": [
+    {
+      "name": "observe_positional_collection_access",
+      "api_patterns": [
+        ".get(",
+        ".set(",
+        ".remove("
+      ],
+      "condition": "Observation only: a positional collection-access call substring occurs. The bounds predicate is satisfied only with evidence that the index is invalid for the concrete operation and collection at that invocation; a matching call alone proves neither invalidity nor an exception."
+    },
+    {
+      "name": "observe_string_indexed_access",
+      "api_patterns": [
+        ".charAt(",
+        ".substring(",
+        "StringIndexOutOfBoundsException"
+      ],
+      "condition": "Observation only: a string-indexing call substring or exception-type substring occurs. The bounds predicate is satisfied only with runtime or sound value-range evidence that the specific String operation receives an invalid index or range; the substring alone does not prove failure."
+    },
+    {
+      "name": "observe_bounds_exception_reference",
+      "api_patterns": [
+        "IndexOutOfBoundsException",
+        "throw new IndexOutOfBoundsException(",
+        "StringIndexOutOfBoundsException"
+      ],
+      "condition": "Observation only: source, a log, or a stack trace names a Java bounds exception. The predicate is satisfied only when the exception is shown to originate from the relevant indexed operation on the reported execution path; constructing, catching, logging, or mentioning it is insufficient."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That IndexOutOfBoundsSpec is a real canonical CrySL rule, or that its protocol is empty.",
+    "That java.lang.IndexOutOfBounds is an existing Java platform class; the documented Java type is java.lang.IndexOutOfBoundsException.",
+    "That RepoAdapter.onBindViewHolder invoked a particular List implementation or a specific .get(int) call.",
+    "That MarkdownParser.highlight invoked a particular String method rather than application or library code below it.",
+    "That either message identifies the causal input, source line, collection or String instance, mutation, lifecycle issue, or race responsible for the bound.",
+    "That the exception report proves a cryptographic misuse, exploitable security vulnerability, or confidentiality, integrity, or availability impact.",
+    "That generic IndexOutOfBoundsException and StringIndexOutOfBoundsException have interchangeable operation-specific boundary rules."
+  ],
+  "semantic_scope": "The available evidence is limited to two detector reports naming application classes and methods and Java-family exception-message text: requested index 10 with list size 8, and string length 150 with index 151. It distinguishes a general IndexOutOfBoundsException report from a StringIndexOutOfBoundsException report, but provides no detector implementation, canonical CrySL file, stack trace, bytecode call target, argument values, event ordering, object identity, or feasibility semantics.",
+  "detector_semantics": {
+    "claim": "At most, a report indicates that the detector observed or reconstructed an index/length mismatch associated with the named application method.",
+    "predicates": [
+      "RepoAdapter.onBindViewHolder reports requested index 10 and list size 8.",
+      "MarkdownParser.highlight reports string length 150 and index 151.",
+      "For java.util.List.get(int), set(int,E), and remove(int), the valid positional-access interval is 0 <= index < size().",
+      "For String operations, permitted boundaries depend on the operation; StringIndexOutOfBoundsException documents invalid String indexes, and charAt rejects an index equal to the String size."
+    ],
+    "limitations": [
+      "No primary IndexOutOfBounds.crysl source was found at the supplied canonical raw URL.",
+      "The findings do not establish whether the analysis is static, dynamic, log-derived, or exception-pattern matching.",
+      "Exception-message presentation is implementation- and version-specific; it is not a stable Java API contract.",
+      "No event ordering, object identity, interprocedural propagation, synchronization, lifecycle, or path-feasibility semantics is available.",
+      "The actual indexed API call in either reported application method is unknown."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "java.lang.IndexOutOfBoundsException is a RuntimeException indicating that an index is out of range.",
+      "Documented subclasses include java.lang.ArrayIndexOutOfBoundsException and java.lang.StringIndexOutOfBoundsException.",
+      "For java.util.List.get(int), set(int,E), and remove(int), valid indexes satisfy 0 <= index < size().",
+      "For java.util.List.add(int,E), insertion permits 0 <= index <= size(); therefore bounds validity is operation-specific.",
+      "For String methods, exact accepted boundaries depend on the called method; charAt rejects an index equal to the String size."
+    ],
+    "preconditions": [
+      "A collection positional-access predicate requires the concrete invoked operation, its index, and the collection size at that invocation.",
+      "A String predicate requires the concrete String operation and its applicable single-index or range boundary contract.",
+      "If a bound was sampled separately from the indexed operation, evidence is needed that mutation, concurrency, and lifecycle changes cannot invalidate that comparison."
+    ],
+    "unknowns": [
+      "The actual source-level API calls in RepoAdapter.onBindViewHolder and MarkdownParser.highlight.",
+      "The JDK/Android runtime, List implementation, String implementation, and library versions involved.",
+      "Whether the messages were thrown at runtime, synthesized by an analyzer, or normalized from another exception source.",
+      "Whether a project-local type named IndexOutOfBounds exists and was intended by the requested specification name.",
+      "Whether the supplied raw URL is stale, misspelled, moved, or intentionally absent."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The reports support, at most, a potential bounds-safety or runtime-correctness issue in the named methods.",
+    "runtime_claim": "A genuine Java bounds exception means that the relevant runtime operation rejected an index or range under that operation's contract. It does not by itself establish attacker control, exploitability, cryptographic misuse, confidentiality impact, integrity impact, or availability impact beyond the failing execution.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A canonical IndexOutOfBounds.crysl file, or an authoritative repository path and revision, whose SPEC target resolves to a real fully qualified type with simple name exactly IndexOutOfBounds.",
+      "The complete CrySL EVENTS, ORDER, CONSTRAINTS, REQUIRES, ENSURES, FORBIDDEN, and exception-related clauses, if present.",
+      "A source or bytecode reference connecting each reported method to its actual indexed API call.",
+      "The detector version and its rule/configuration source."
+    ],
+    "runtime": [
+      "A reproducible execution with complete stack trace, runtime and library versions, and the exact throwing call.",
+      "The index or range value and relevant list size or String length at the failing operation.",
+      "Evidence concerning concurrent mutation or lifecycle changes where size or length was observed separately from indexed access."
+    ],
+    "compatibility": [
+      "Target JDK and Android API levels, because exception-message formatting is not a stable API contract.",
+      "The concrete collection and String-related library implementations.",
+      "The detector version, configuration, and whether its findings are static, dynamic, log-derived, or normalized."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A source matcher finds .get(, .set(, .remove(, .charAt(, or .substring( but cannot establish argument validity at the call.",
+    "A report attributes a bounds exception to a caller although the throwing indexed operation is in a downstream library or callback.",
+    "An exception type name in a catch block, test assertion, comment, log statement, or constructed exception is treated as proof of a runtime bounds failure.",
+    "A comparison uses a stale, different, or concurrently mutated collection or String bound rather than the bound at the indexed operation.",
+    "A generic IndexOutOfBoundsException report is conflated with the more specific StringIndexOutOfBoundsException semantics.",
+    "A namesake IndexOutOfBounds type from another framework is selected despite the Java-specific representative exception messages."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IndexOutOfBounds.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IndexOutOfBoundsException.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/StringIndexOutOfBoundsException.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html"
+  ],
+  "unknowns": [
+    "Whether IndexOutOfBoundsSpec is a project-local detector specification rather than a CrySL corpus rule.",
+    "What real fully qualified API type with simple name exactly IndexOutOfBounds is intended by the naming convention.",
+    "The precise rule predicate, event alphabet, state machine/order, and any constraints for this purported specification.",
+    "Whether the two representative findings arise from one shared detector rule, two exception subclasses handled under one category, or independent rules.",
+    "The actual indexed operations and root causes in RepoAdapter.onBindViewHolder and MarkdownParser.highlight.",
+    "Whether the detector reports runtime exceptions, statically inferred infeasible accesses, or text-pattern matches."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IndexOutOfBounds.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.fdroid.fdroid.views.repos.RepoAdapter",
+        "method": "onBindViewHolder",
+        "message": "IndexOutOfBoundsException: Requested index 10, but list size is 8."
+      },
+      {
+        "class": "net.gsantner.markor.format.markdown.MarkdownParser",
+        "method": "highlight",
+        "message": "StringIndexOutOfBoundsException: length=150; index=151."
+      }
+    ],
+    "expected_api_simple_name": "IndexOutOfBounds",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IndexOutOfBounds.crysl"
+  }
+}

@@ -1,0 +1,532 @@
+[
+ {
+  "apk": "app.michaelwuensch.bitbanana_79.apk",
+  "class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+  "method": "encodePbkdf2",
+  "specs": [
+   "SecretKeyFactorySpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "br.eng.thsouza.winterhold.debug_8.apk",
+  "class": "br.eng.thsouza.winterhold.WebAccessUsers$Companion",
+  "method": "derive",
+  "specs": [
+   "PBEKeySpecSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "bench"
+  ],
+  "bench_id": [
+   "winterhold_salt"
+  ],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "com.beemdevelopment.aegis_81.apk",
+  "class": "com.beemdevelopment.aegis.crypto.CryptoUtils",
+  "method": "createCipher",
+  "specs": [
+   "GCMParameterSpecSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "falso positivo reconhecido"
+  ]
+ },
+ {
+  "apk": "com.craxiom.networksurvey_114.apk",
+  "class": "com.craxiom.networksurvey.util.CryptoManager",
+  "method": "getOrCreateKey",
+  "specs": [
+   "KeyStoreSpec"
+  ],
+  "stratum": [
+   "our_pr_closed"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "PR pronto"
+  ]
+ },
+ {
+  "apk": "com.gelakinetic.mtgfam_99.apk",
+  "class": "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1",
+  "method": "fetch",
+  "specs": [
+   "IvParameterSpecSpec",
+   "SecretKeySpecSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "violação confirmada sem correção segura",
+   "violação confirmada sem correção segura"
+  ]
+ },
+ {
+  "apk": "com.gigabytedevelopersinc.app.CometOTP.debug_1.apk",
+  "class": "com.gigabytedevelopersinc.app.cometOTP.Utilities.EncryptionHelper",
+  "method": "loadOrGenerateWrappedKey",
+  "specs": [
+   "SecretKeySpecSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "bench"
+  ],
+  "bench_id": [
+   "cometotp_fp"
+  ],
+  "latest": [
+   "falso positivo reconhecido"
+  ]
+ },
+ {
+  "apk": "com.inputleaf.android.debug_15.apk",
+  "class": "com.inputleaf.android.network.ServerScanner$Companion",
+  "method": "discoverySslContext",
+  "specs": [
+   "SSLContextSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "bench"
+  ],
+  "bench_id": [
+   "inputleaf_discovery"
+  ],
+  "latest": [
+   "PR pronto"
+  ]
+ },
+ {
+  "apk": "com.lladlam.melox.android.debug_26.apk",
+  "class": "com.lladlam.melox.core.library.NeteaseLibraryClient",
+  "method": "aesEcbEncrypt",
+  "specs": [
+   "SecretKeySpecSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "bench"
+  ],
+  "bench_id": [
+   "melox_aes"
+  ],
+  "latest": [
+   "PR pronto"
+  ]
+ },
+ {
+  "apk": "com.password.monitor_102.apk",
+  "class": "com.password.monitor.koin_di.AppModuleKt",
+  "method": "appModule$lambda$0$3",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "com.password.monitor_102.apk",
+  "class": "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2",
+  "method": "invokeSuspend",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "com.sapuseven.untis_29198884.apk",
+  "class": "com.sapuseven.untis.data.cache.DiskCache",
+  "method": "getCacheFile",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "our_pr_closed"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "PR pronto"
+  ]
+ },
+ {
+  "apk": "com.schwegelbin.openbible_46.apk",
+  "class": "com.schwegelbin.openbible.logic.GettersKt",
+  "method": "getChecksum",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+  "class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+  "method": "decrypt",
+  "specs": [
+   "GCMParameterSpecSpec"
+  ],
+  "stratum": [
+   "our_pr_closed"
+  ],
+  "part": [
+   "bench"
+  ],
+  "bench_id": [
+   "amethyst_gcm"
+  ],
+  "latest": [
+   "PR pronto"
+  ]
+ },
+ {
+  "apk": "com.vrem.wifianalyzer_71.apk",
+  "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+  "method": "calculateChildType",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "our_pr_closed"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "com.vrem.wifianalyzer_71.apk",
+  "class": "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper",
+  "method": "calculateGraphType",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "de.stephanlindauer.criticalmaps_104.apk",
+  "class": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1",
+  "method": "SHA1",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "dev.herald.android.debug_1.apk",
+  "class": "dev.hermeskotlin.core.gateway.ClientCerts_androidKt",
+  "method": "tlsContext",
+  "specs": [
+   "SSLContextSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "bench"
+  ],
+  "bench_id": [
+   "herald_tls"
+  ],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "dev.skye.intertune.debug_96.apk",
+  "class": "com.dd3boh.outertune.widget.WidgetStore",
+  "method": "hash",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "our_pr_closed"
+  ],
+  "part": [
+   "bench"
+  ],
+  "bench_id": [
+   "intertune_hash"
+  ],
+  "latest": [
+   "PR pronto"
+  ]
+ },
+ {
+  "apk": "eu.faircode.email_2322.apk",
+  "class": "eu.faircode.email.Helper",
+  "method": "getFingerprint",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "correção gerada, sem PR"
+  ]
+ },
+ {
+  "apk": "github.aeonbtc.ibiswallet.debug_24.apk",
+  "class": "github.aeonbtc.ibiswallet.util.TofuTrustManager$Companion",
+  "method": "createSSLSocketFactory",
+  "specs": [
+   "SSLContextSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "bench"
+  ],
+  "bench_id": [
+   "ibiswallet_tofu"
+  ],
+  "latest": [
+   "violação confirmada sem correção segura"
+  ]
+ },
+ {
+  "apk": "github.paroj.dsub2000_217.apk",
+  "class": "github.paroj.dsub2000.util.Util",
+  "method": "md5Hex",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "io.treehouses.remote_6098.apk",
+  "class": "io.treehouses.remote.ssh.Encryptor",
+  "method": "encrypt",
+  "specs": [
+   "IvParameterSpecSpec",
+   "SecretKeySpecSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "evidência insuficiente",
+   "evidência insuficiente"
+  ]
+ },
+ {
+  "apk": "net.gaast.giggity_769.apk",
+  "class": "net.gaast.giggity.Schedule$Item",
+  "method": "hashCode",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "our_pr_closed"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "correção não aplicável: código mudou upstream"
+  ]
+ },
+ {
+  "apk": "org.cry.otp_31.apk",
+  "class": "org.cry.otp.MD5",
+  "method": "<init>",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app"
+  ]
+ },
+ {
+  "apk": "org.cry.otp_31.apk",
+  "class": "org.cry.otp.TOTP",
+  "method": "hmac_sha",
+  "specs": [
+   "MacSpec",
+   "SecretKeySpecSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "issue para o mantenedor do app",
+   "falso positivo reconhecido"
+  ]
+ },
+ {
+  "apk": "org.fedorahosted.freeotp_48.apk",
+  "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+  "method": "decrypt",
+  "specs": [
+   "AlgorithmParametersSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "falso positivo reconhecido"
+  ]
+ },
+ {
+  "apk": "org.quantumbadger.redreader_117.apk",
+  "class": "org.quantumbadger.redreader.common.General",
+  "method": "parseConfig",
+  "specs": [
+   "IvParameterSpecSpec",
+   "SecretKeySpecSpec"
+  ],
+  "stratum": [
+   "no_pr"
+  ],
+  "part": [
+   "consolidated"
+  ],
+  "bench_id": [],
+  "latest": [
+   "PR pronto",
+   "PR pronto"
+  ]
+ },
+ {
+  "apk": "org.quantumbadger.redreader_117.apk",
+  "class": "org.quantumbadger.redreader.common.General",
+  "method": "sha1",
+  "specs": [
+   "MessageDigestSpec"
+  ],
+  "stratum": [
+   "our_pr_closed"
+  ],
+  "part": [
+   "both"
+  ],
+  "bench_id": [
+   "redreader_sha1"
+  ],
+  "latest": [
+   "PR pronto"
+  ]
+ }
+]

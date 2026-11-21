@@ -1,0 +1,17 @@
+run,apk,task,status,attribution,cause
+run2,app.michaelwuensch.bitbanana_79.apk,assembleDebug,success,–,sucesso
+run2,com.craxiom.networksurvey_114.apk,:networksurvey:assembleCdrDebug,success,–,sucesso
+run2,com.ivanovsky.passnotes_11700.apk,:app:assembleAutomationDebug,success,–,sucesso
+run2,com.leekleak.trafficlight_38.apk,:app:assembleFullDebug,success,–,sucesso
+run2,com.nononsenseapps.feeder.play_4025.apk,:app:compileFdroidDebugSources,success_app_module_only,–,sucesso
+run2,com.sapuseven.untis_29198884.apk,assembleDebug,success,–,sucesso
+run2,github.paroj.dsub2000_217.apk,:app:assembleFlossDebug,success,–,sucesso
+run2,me.diamondforge.tokn_19.apk,assembleDebug,success,–,sucesso
+run2,systems.sieber.droid_scep_7.apk,:app:assembleGoogleDebug,success,–,sucesso
+run2,app.michaelwuensch.bitbanana_79.apk,assembleDebug,failed,generated_patch,ambiente: processador de anotações
+run2,com.gelakinetic.mtgfam_99.apk,:mobile:assembleDebugAndroidTest,success,–,sucesso
+run2,org.cry.otp_31.apk,assembleDebug,failed,–,não classificada
+run2,rocks.poopjournal.metadataremover_20020.apk,assembleDebug,failed,verified_preexisting_build_failure,ambiente: processador de anotações
+subset_policy,org.cry.otp_31.apk,assembleDebug,failed,–,não classificada
+subset_bitbanana,app.michaelwuensch.bitbanana_79.apk,assembleDebug,success,–,sucesso
+subset_bitbanana_scope6,app.michaelwuensch.bitbanana_79.apk,assembleDebug,success,–,sucesso

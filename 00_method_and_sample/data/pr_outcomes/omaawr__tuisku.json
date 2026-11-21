@@ -1,0 +1,32 @@
+[
+  {
+    "pull_request": "https://github.com/omaawr/tuisku/pull/11",
+    "state": "closed",
+    "finding_id": "e70b42e2ce47",
+    "spec": "ZipSlipSpec",
+    "csv_class": "com.omaawr.tuisku.managers.PortManager",
+    "method_name": "importUnencryptedNotes",
+    "title": "Fix importUnencryptedNotes",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:39.536536+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "omaawr",
+        "kind": "comment",
+        "body": "i would appreciate your pull request but ai generated or assisted code/pull requests aren't allowed in tuisku, sorry\r\n(also canonicalizing paths is not needed, among other things)"
+      }
+    ]
+  },
+  {
+    "pull_request": "https://github.com/omaawr/tuisku/pull/12",
+    "state": "closed",
+    "finding_id": "e70b42e2ce47",
+    "spec": "ZipSlipSpec",
+    "csv_class": "com.omaawr.tuisku.managers.PortManager",
+    "method_name": "importUnencryptedNotes",
+    "title": "Fix importUnencryptedNotes",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:44.707475+00:00",
+    "maintainer_feedback": []
+  }
+]

@@ -1,0 +1,87 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T215516_862236_1181_0021_issue_presentation",
+  "parent_call_id": "",
+  "stage": "issue_presentation",
+  "recorded_at": "2026-11-03T21:55:16",
+  "delivery": "sent_to_openai",
+  "endpoint": "https://api.openai.com/v1",
+  "model": "gpt-5.6-terra",
+  "timeout_seconds": 600,
+  "max_output_tokens": 32768,
+  "reasoning_effort": "high",
+  "web_search": false,
+  "json_mode": true,
+  "schema_name": "issue_candidate_v2",
+  "json_schema": {
+    "type": "object",
+    "properties": {
+      "eligible": {
+        "type": "boolean"
+      },
+      "title": {
+        "type": "string"
+      },
+      "finding_summary": {
+        "type": "string"
+      },
+      "why_no_pr": {
+        "type": "string"
+      },
+      "maintainer_question": {
+        "type": "string"
+      },
+      "proposed_next_step": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "eligible",
+      "title",
+      "finding_summary",
+      "why_no_pr",
+      "maintainer_question",
+      "proposed_next_step"
+    ],
+    "additionalProperties": false
+  },
+  "instructions": "You write presentation text only after adjudication. Do not call a finding a vulnerability unless that exact runtime impact is confirmed. Ask one concrete maintainer question and explain why no PR is ready. When project_documentation is present it is this project's own writing. Read it before choosing the question, and never ask what it already answers -- a maintainer who sees their own document being asked back at them learns only that it was not read. If it records a deliberate decision and the reason for it, name that reason and ask about the specific point this finding raises against it, including whether the reason covers the reported code at all. Prefer the narrow question the documentation leaves genuinely open over the broad one it settles. Write each field in the first person, as the student who read this code, in the words a developer of this app would use; the four text fields together stay under 150 words. finding_summary: two or three sentences on what the code does today and what the rule expects instead, in plain language; you may quote the one line at fault in backticks. why_no_pr: one or two sentences, starting 'I didn't open a pull request because'. maintainer_question: one direct question a maintainer can answer in a sentence, and say that the issue can simply be closed if the current behaviour is intentional. proposed_next_step: one sentence offering what you would do next ('Otherwise I'm happy to...'). title: under 70 characters, naming the code and the concern (e.g. 'Fixed all-zero IV in General.parseConfig'), never 'Review requested for ...' or 'Fix <method>'. No headings, no evidence or claim ids, no specification ids such as IvParameterSpecSpec, and none of the words governed, predicate, adjudication, coordinated, finalized, deterministic, fail-closed or evidence packet. Never describe the work as automated or produced by a pipeline.",
+  "input": "Prepare cautious maintainer communication from this finalized technical status. Do not introduce new technical claims.\n\n{\"finding\":{\"finding_id\":\"org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed\",\"specification\":\"TrustManagerFactorySpec\",\"spec_family\":\"tls\",\"error_message\":\"a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed\",\"target\":{\"class\":\"org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion\",\"method\":\"tryToFindDefaultTrustManager\",\"source_file_path\":\"data/src/main/java/org/cryptomator/data/cloud/webdav/network/DefaultTrustManager.kt\"},\"reported_violation\":\"UnsatisfiedConstraint\"},\"confirmed_cause\":\"The source invokes `TrustManagerFactory.init(null as KeyStore?)` (TLS-CLAIM-002). The verified rule's Init event requires `generatedKeyStore[keyStore]` evidence for `init(KeyStore)`, which a null platform-default argument cannot provide. However, null is the documented API form for selecting the default trust material (TLS-CLAIM-003; WEB-001), and replacing it would alter what roots the client trusts rather than safely repairing the reported condition.\",\"decision\":\"NO_SAFE_FIX\",\"generation_blockers\":[],\"publication_blockers\":[]}",
+  "context": {
+    "finding_id": "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed",
+    "stage": "issue_presentation",
+    "prompt_version": "llm-pipeline-v2.1",
+    "schema_version": "2.1",
+    "policy_version": "2.0",
+    "context_builder_version": "2.16",
+    "semantic_resolver_version": "tree-sitter-semantic-v2",
+    "section_telemetry": {
+      "finding": {
+        "characters": 782,
+        "approx_tokens": 196,
+        "sha256": "297bf0ec9a506fa06ba195beb9d1461fbfba4132627c9b80f2c0bdf26c241ba8"
+      },
+      "confirmed_cause": {
+        "characters": 456,
+        "approx_tokens": 114,
+        "sha256": "1e330b98ce8aa413e2f515fd475c3060c81a35cefd5811f10166c0ea62d058c5"
+      },
+      "decision": {
+        "characters": 11,
+        "approx_tokens": 3,
+        "sha256": "e25c8d0559822d0cc2331a09543be2cb0cd3858bba2d606bec967d426592f4b2"
+      },
+      "generation_blockers": {
+        "characters": 2,
+        "approx_tokens": 1,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "publication_blockers": {
+        "characters": 2,
+        "approx_tokens": 1,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    }
+  },
+  "input_sha256": "a72cab48ead045ba15c3f4d1e6c9fe3b27ff202060cd9694b03b4e4b00552297"
+}

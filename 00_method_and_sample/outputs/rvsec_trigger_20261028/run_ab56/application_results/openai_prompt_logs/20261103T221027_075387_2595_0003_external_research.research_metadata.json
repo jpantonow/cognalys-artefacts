@@ -1,0 +1,39 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T221027_075387_2595_0003_external_research.research",
+  "parent_call_id": "group-20261103T221027_058127-2595-3",
+  "finding_id": "app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+  "stage": "external_research.research",
+  "status": "cache_hit",
+  "delivery": "cache_hit",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 2938,
+  "input_tokens": 0,
+  "cached_input_tokens": 0,
+  "output_tokens": 0,
+  "latency_ms": 0,
+  "retry_count": 0,
+  "request_id": "",
+  "section_telemetry": {
+    "finding": {
+      "characters": 571,
+      "approx_tokens": 143,
+      "sha256": "6f595ecb4d52cfc98791c04701ea6b9ffd9d2486a1f7b1880769a0eccbf8e500"
+    },
+    "questions": {
+      "characters": 1083,
+      "approx_tokens": 271,
+      "sha256": "fac31d98e20e0699954cee8e4f2eccbf6c533be2fb5690308c8134622c12151b"
+    },
+    "spec_policy": {
+      "characters": 222,
+      "approx_tokens": 56,
+      "sha256": "6a751e92d3eb3c8a3a8ecfc7a1a171d607d90c2c0c07dc1662f6740a2d9f208d"
+    }
+  },
+  "completed_at": "2026-11-03T22:10:27"
+}

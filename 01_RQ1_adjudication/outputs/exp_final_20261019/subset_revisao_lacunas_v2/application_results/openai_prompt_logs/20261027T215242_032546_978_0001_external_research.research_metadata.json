@@ -1,0 +1,50 @@
+{
+  "trace_version": 2,
+  "call_id": "20261027T215242_032546_978_0001_external_research.research",
+  "parent_call_id": "group-20261027T215241_983751-978-1",
+  "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+  "stage": "external_research.research",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.0",
+  "schema_version": "2.0",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 8262,
+  "input_tokens": 64638,
+  "cached_input_tokens": 0,
+  "output_tokens": 7837,
+  "latency_ms": 95254,
+  "retry_count": 0,
+  "request_id": "req_eb569670632c4ef19e74103c4bf09eed",
+  "section_telemetry": {
+    "question_scope": {
+      "characters": 337,
+      "approx_tokens": 84,
+      "sha256": "810c94099d7f2f4449b2150dd0c29d3f39a5e8715430577ea454534f32ade3f6"
+    },
+    "questions": {
+      "characters": 1239,
+      "approx_tokens": 310,
+      "sha256": "34ae2bd5e7714e3be7d0226c5c1ce46f1b18c72ade1b3275399d154f06ff4622"
+    },
+    "spec_policy": {
+      "characters": 300,
+      "approx_tokens": 75,
+      "sha256": "56c48124f090efee5a0ac0fc25e1903c8a93b082833d5cb1fe52ec3bcf6c21c2"
+    },
+    "reported_by_rule": {
+      "characters": 5297,
+      "approx_tokens": 1324,
+      "sha256": "dae3b92f3c0aaa1bb249ea29caca88a7c42e8788fc44c1b54884601b51584ac9"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "server_created_after_ms": 920,
+  "openai_response_id": "resp_0db3bc896ccf27d6006ae1475bc1a087d297818204ff8e4cde",
+  "response_status": "completed",
+  "background_polls": 11,
+  "completed_at": "2026-10-27T21:54:18"
+}

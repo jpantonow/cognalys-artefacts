@@ -1,0 +1,165 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The supplied representative message alone does not define the detector's exact interprocedural, alias, exception, nullness, or Kotlin-inline-function analysis.",
+      "A syntactic absence of use, try/finally, or a local close does not prove that no equivalent cleanup exists through a wrapper, helper, ownership transfer, generated code, or lifecycle mechanism.",
+      "The detector does not prove that query(...) returned a non-null Cursor or that the identified intervening call throws on a reachable execution."
+    ],
+    "predicates": [
+      "A call resolved to android.content.ContentResolver.query(...) produces, or flows into, a value resolved to android.database.Cursor.",
+      "One or more Cursor-use operations occur after acquisition and before the visible close operation.",
+      "The visible cleanup is ordered after those uses rather than proven to execute for all normal and exceptional exits.",
+      "The analysis treats the resulting path as a static candidate and explicitly does not claim it was executed."
+    ],
+    "claim": "The supplied finding wording supports a potential exceptional-path Cursor-leak claim: a query-produced Cursor is closed only after subsequent use operations succeed, so an abrupt exit during an intervening operation can bypass that close."
+  },
+  "unknowns": [
+    "No public result was found for an exact search for \"CursorLeakSpec\" or \"CursorLeakSpec\" paired with CrySL or detector-rule terminology; this supports treating the name as a detector concern label, but an absence of public search results cannot prove that no private catalog exists.",
+    "The representative result does not identify the detector implementation, version, rule configuration, or exact control-flow and exception model.",
+    "It is unresolved whether the detector analyzes only direct local close calls or recognizes interprocedural cleanup, aliases, ownership transfer, Kotlin use(), and Java try-with-resources.",
+    "It is unresolved whether the reported Cursor came from a nullable query result guarded by a null check, an assertion, or an assumption not included in the representative message.",
+    "The concrete resource retained by the actual Cursor implementation and the severity of any resulting exhaustion remain unresolved."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "android.content.ContentResolver.query(...) returns a Cursor over a result set and may return null when the underlying provider returns null or crashes.",
+      "android.database.Cursor is a Closeable API; Cursor.close() releases all Cursor resources and makes the Cursor invalid.",
+      "Cursor.moveToFirst() moves to the first row; getColumnIndex(String) returns -1 when the requested column does not exist; getString(int) retrieves a column value as a String.",
+      "Android's content-provider guidance states that query-result resources should be released by calling close(), Java try-with-resources, or Kotlin use()."
+    ],
+    "preconditions": [
+      "A Cursor must be non-null before invoking instance methods on it.",
+      "The Cursor position must be moved appropriately before reading row values.",
+      "The documented value range for getString(int) requires a non-negative column index.",
+      "Because getColumnIndex(String) can return -1, code that passes its result to getString(int) requires evidence that the requested column exists or that the invalid-index case is otherwise handled.",
+      "Cleanup evidence must apply to the same Cursor instance or a proven alias, not merely to another closeable resource."
+    ],
+    "unknowns": [
+      "The precise runtime exception behavior of moveToFirst(), getColumnIndex(String), and getString(int) can depend on the concrete Cursor implementation, Cursor state, provider behavior, and invalid inputs.",
+      "The Android API references do not establish that each intermediate operation in every query result necessarily throws; they establish the Cursor contract and resource-release requirement.",
+      "The specific ContentResolver.query overload, Android API-level compatibility range, and provider implementation are not identified by the representative finding."
+    ]
+  },
+  "authoritative_sources": [
+    "https://developer.android.com/guide/topics/providers/content-provider-basics",
+    "https://developer.android.com/reference/android/database/Cursor",
+    "https://developer.android.com/reference/android/content/ContentResolver",
+    "https://cwe.mitre.org/data/definitions/772.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/lang/AutoCloseable.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observed when a local source occurrence invokes query(...). The acquisition predicate is satisfied only when type resolution identifies android.content.ContentResolver as the receiver and the returned value flows to an android.database.Cursor value; the documented result may be null.",
+      "name": "acquire_cursor_from_content_resolver",
+      "api_patterns": [
+        "contentResolver.query(",
+        "getContentResolver().query(",
+        ".query("
+      ]
+    },
+    {
+      "condition": "Observed when one of these source substrings occurs. The use predicate is satisfied only when its receiver is the acquired android.database.Cursor, or an alias of it, and the operation is ordered after successful non-null acquisition.",
+      "name": "use_acquired_cursor",
+      "api_patterns": [
+        ".moveToFirst()",
+        ".getColumnIndex(",
+        ".getString("
+      ]
+    },
+    {
+      "condition": "Observed when a possible cleanup construct occurs. The release predicate is satisfied only when control-flow and alias evidence show that it closes the same acquired Cursor on every applicable normal and exceptional exit after acquisition.",
+      "name": "release_cursor",
+      "api_patterns": [
+        ".close()",
+        ".use {",
+        "?.use {",
+        "try (",
+        "finally"
+      ]
+    },
+    {
+      "condition": "Observed when Cursor-use calls precede a later close call. The candidate predicate is satisfied when cleanup is success-path ordered rather than structurally guaranteed around the acquisition-and-use region, leaving a possible abrupt exit before close().",
+      "name": "exceptional_path_without_structural_cleanup",
+      "api_patterns": [
+        ".moveToFirst()",
+        ".getColumnIndex(",
+        ".getString(",
+        ".close()"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "CursorLeakSpec is a detector concern name, not an Android API type or published CrySL rule. A finding is a static candidate for missing exceptional-path cleanup; it does not establish that a Cursor was returned at runtime, that an operation actually threw, or that resources were leaked in an executed trace.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that CursorLeakSpec is an SDK, AndroidX, Java, Kotlin, or third-party API type.",
+    "Do not infer that a CrySL rule, governed API class, or detector-rule catalog entry named CursorLeakSpec exists.",
+    "Do not substitute a similarly named class from another framework merely because its name ends in \"Spec\".",
+    "Do not infer that every android.database.Cursor implementation allocates the same underlying native, file-descriptor, IPC, or database resources.",
+    "Do not infer that moveToFirst(), getColumnIndex(), or getString() necessarily throws for the concrete Cursor implementation and input.",
+    "Do not infer an executed leak, availability impact, exploitability, or attacker control solely from the static finding.",
+    "Do not use the CROSSINGTUD corpus as evidence for this specification."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A runtime resource leak requires a non-null Cursor acquisition, a reachable abrupt path after acquisition and before effective cleanup, and no other mechanism that closes the same Cursor on that path. Repetition or resource scarcity may be needed for observable availability impact.",
+    "equivalent": false,
+    "detector_claim": "Potential CWE-772-style missing release: an acquired Cursor may not be closed if a post-acquisition operation exits abruptly before the later close call."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm the Android API level and exact ContentResolver.query overload used by the compiled application.",
+      "Confirm whether the language and toolchain support the cleanup construct being recognized, including Java try-with-resources and Kotlin Closeable.use().",
+      "Confirm the concrete Cursor/provider implementation where behavior of invalid indices, type conversion, null values, or exceptions is material.",
+      "Analyze generated, transformed, or desugared code if source-level cleanup evidence is incomplete."
+    ],
+    "runtime": [
+      "Show that the relevant query overload can return a non-null Cursor on a reachable execution.",
+      "Show a reachable abrupt exit after acquisition and before effective cleanup, such as a concrete exception, cancellation-related failure, invalid Cursor state, or other non-local exit.",
+      "Show that the same Cursor is not closed by an enclosing scope, callback, wrapper, lifecycle owner, or provider-specific mechanism.",
+      "If security impact is asserted, show repeated or attacker-influenced acquisition sufficient to consume constrained resources."
+    ],
+    "source_level": [
+      "Resolve the acquisition receiver to android.content.ContentResolver and the queried result or alias to android.database.Cursor.",
+      "Establish ordering from successful non-null Cursor acquisition to the identified Cursor-use operation and subsequently to close().",
+      "Check whether a Java try-with-resources region, finally block, Kotlin use() scope, or equivalent helper structurally closes the same Cursor on every exit.",
+      "Account for aliases, ownership transfer, return/field escape, callbacks, and interprocedural cleanup before asserting an unprotected path."
+    ]
+  },
+  "name": "CursorLeakSpec",
+  "source_url": "https://developer.android.com/guide/topics/providers/content-provider-basics",
+  "applies_to_types": [
+    "android.content.ContentResolver",
+    "android.database.Cursor"
+  ],
+  "source_title": "Content provider basics — Release query result resources",
+  "semantic_scope": "For every finding of this rule, the detector reports a static candidate in which an android.database.Cursor acquired through android.content.ContentResolver.query(...) is used before a visible cleanup that is ordered after the uses, without source-level evidence of cleanup structurally guaranteed on all post-acquisition exits. The rule observes source structure and local resource-flow/ordering evidence, not a runtime execution or a confirmed retained resource.",
+  "spec_id": "CursorLeakSpec",
+  "known_false_positive_shapes": [
+    "The Cursor is enclosed in a Kotlin use() scope, Java try-with-resources statement, or finally block that the detector did not recognize through an alias or helper.",
+    "Ownership of the Cursor is deliberately transferred to a caller, field owner, wrapper, callback, or lifecycle component that reliably closes it.",
+    "The apparent later close is not the only cleanup: an earlier exceptional handler or enclosing scope closes the same Cursor.",
+    "The query result is always null on reachable executions, so no Cursor is acquired.",
+    "The flagged use sequence is unreachable, or the supposed abrupt path cannot occur for the resolved provider, projection, and Cursor implementation.",
+    "Source patterns resolve to a different query-like method or Cursor-like type rather than android.content.ContentResolver and android.database.Cursor."
+  ],
+  "protocol": "ContentResolver.query(...) => Cursor?; for a non-null Cursor, cursor-use operations may occur; every normal or abrupt exit after successful acquisition must be dominated by cleanup of that same Cursor via close().",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.caydey.ffshare.utils.Utils",
+        "method": "getFilenameFromUri",
+        "message": "Static candidate (not executed): getFilenameFromUri obtains a Cursor from contentResolver.query and closes it only after moveToFirst/getColumnIndex/getString succeed, with no use {} or finally, so any exception on those calls leaks the Cursor."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:ContentResolver",
+    "checked_url": "https://developer.android.com/guide/topics/providers/content-provider-basics"
+  }
+}

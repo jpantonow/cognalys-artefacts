@@ -1,0 +1,31 @@
+{
+ "card_id": "K76b5b215",
+ "card_sha256": "b789687d5e6beff0",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 7744,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 406
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0703104,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "cc890619423d117b",
+ "finished_at": "2026-11-16T11:44:57-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.45,
+  "reason": "The description mentions a `build_check` tool, and the card says the author did not build this exact diff. Both point to the multi-step pipeline rather than an agent working in a checkout. The prose is short and plain, with no headers or bullet lists, and the code is compact. That style fits GPT more than Sonnet, so C (the pipeline on GPT-6.1 Terra) is more likely than D (the pipeline on Sonnet)."
+ }
+}

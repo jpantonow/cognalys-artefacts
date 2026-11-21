@@ -1,0 +1,231 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule has no event for setParameter(AlgorithmParameterSpec), even though an AlgorithmParameterSpec object is declared.",
+      "The rule does not model provider selection, provider implementation behavior, parameter compatibility, key/algorithm compatibility, certificate-path validation, signature format, or trust policy.",
+      "The Verify events bind a returned boolean but do not require a true result or any control-flow use of that result.",
+      "The supplied CrySL text contains no AspectJ target(T) or args(T) clause. If an external detector binding uses AspectJ target(T) or args(T), those type patterns are hierarchy-inclusive and can match subtype instances; that behavior is not separately specified by this raw rule."
+    ],
+    "predicates": [
+      "algorithm in {SHA256withRSA, SHA256withECDSA, SHA256withDSA, SHA384withRSA, SHA512withRSA, SHA384withECDSA, SHA512withECDSA}",
+      "length[input] >= offset + len",
+      "offset >= 0",
+      "len > 0",
+      "generatedPrivkey[privateKey] before initSign",
+      "generatedPubkey[publicKey] before initVerify(PublicKey)",
+      "signed[output, inputByte], signed[output, input], and signed[output, inputByteBuffer] after Sign",
+      "verified[verified, sign] after Verify"
+    ],
+    "claim": "The detector rule accepts traces beginning with a modeled Signature.getInstance event and then following either a signing branch or a verification branch. The signing branch requires one or more Update events before each Sign group; the verification branch permits zero or more Update events before Verify groups. It constrains the requested algorithm to seven literal names, requires generatedPrivkey for signing initialization and generatedPubkey for PublicKey verification initialization, and declares signed and verified relations after Sign and Verify respectively."
+  },
+  "unknowns": [
+    "What exact detector implementation and analysis configuration produced the reported finding, including how it maps CrySL event clauses onto call sites and interprocedural wrappers.",
+    "Whether the reported path has a complete object-sensitive trace from getInstance through initialization and terminal sign or verify.",
+    "The formal semantics and trusted producers of generatedPrivkey[...] and generatedPubkey[...] in the detector ecosystem.",
+    "Whether the runtime algorithm value, provider, key type, and parameters are compatible on the relevant deployment.",
+    "Whether any verification result was true and enforced by surrounding application logic.",
+    "Whether certificate validation and application-level authorization requirements are satisfied outside the modeled Signature calls."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "java.security.Signature provides digital-signature functionality. Its documented lifecycle is initialization with a private key for signing or a public key or certificate for verification, updating data, then signing or verifying.",
+      "getInstance returns a Signature implementation for the requested algorithm. update contributes bytes. sign returns or writes signature bytes and resets the object to its signing-initialized state. verify returns true on successful verification and false otherwise, then resets the object to its verification-initialized state."
+    ],
+    "preconditions": [
+      "getInstance requires a non-null algorithm name; provider-specific overloads additionally require a valid provider argument and provider availability.",
+      "initSign requires a valid PrivateKey; initVerify requires a valid PublicKey or Certificate. For a Certificate, documented key-usage restrictions can cause InvalidKeyException.",
+      "update, sign, and verify require an appropriately initialized Signature object.",
+      "For update(byte[], off, len), the JDK requires non-null data, non-negative off and len, and off + len not greater than data.length. The CrySL rule is stricter about len (> 0) but names only length[input] for its explicit bound.",
+      "For sign(byte[], offset, len) and verify(byte[], offset, length), the JDK documents non-null arrays, non-negative offsets and lengths, and an in-bounds offset-plus-length range. The CrySL rule does not explicitly encode all of these API preconditions."
+    ],
+    "unknowns": [
+      "The rule does not specify which provider is selected when a provider argument is omitted, nor does it state provider-version compatibility.",
+      "The rule does not constrain AlgorithmParameterSpec configuration, including parameters required by algorithm families such as RSASSA-PSS.",
+      "The rule does not define the detector-internal meanings or evidence sources for generatedPrivkey[...] and generatedPubkey[...].",
+      "The rule does not define whether its verified[verified, sign] relation is intended to distinguish a true boolean result from a false one; the event merely binds the boolean return value."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Signature.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/Signature.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/specs/security/standard-names.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observation: getInstance(String), binding algorithm. Predicate: algorithm must be one of {\"SHA256withRSA\", \"SHA256withECDSA\", \"SHA256withDSA\", \"SHA384withRSA\", \"SHA512withRSA\", \"SHA384withECDSA\", \"SHA512withECDSA\"}.",
+      "name": "g1",
+      "api_patterns": [
+        ".getInstance("
+      ]
+    },
+    {
+      "condition": "Observation: getInstance(String, _), binding algorithm and ignoring the provider argument. Predicate: algorithm must be one of {\"SHA256withRSA\", \"SHA256withECDSA\", \"SHA256withDSA\", \"SHA384withRSA\", \"SHA512withRSA\", \"SHA384withECDSA\", \"SHA512withECDSA\"}.",
+      "name": "g2",
+      "api_patterns": [
+        ".getInstance("
+      ]
+    },
+    {
+      "condition": "Observation: initSign(PrivateKey), binding privateKey. Requirement predicate: generatedPrivkey[privateKey]. The rule does not define this predicate as a Java runtime test; analysis evidence of the detector's key-provenance fact is required.",
+      "name": "i1",
+      "api_patterns": [
+        ".initSign("
+      ]
+    },
+    {
+      "condition": "Observation: initSign(PrivateKey, _), binding privateKey and ignoring the second argument. Requirement predicate: generatedPrivkey[privateKey]. The rule does not constrain the supplied randomness argument.",
+      "name": "i2",
+      "api_patterns": [
+        ".initSign("
+      ]
+    },
+    {
+      "condition": "Observation: initVerify(Certificate), binding cert. The rule states no additional constraint or provenance requirement for cert.",
+      "name": "i3",
+      "api_patterns": [
+        ".initVerify("
+      ]
+    },
+    {
+      "condition": "Observation: initVerify(PublicKey), binding publicKey. Requirement predicate: generatedPubkey[publicKey]. The rule does not define this predicate as a Java runtime test; analysis evidence of the detector's public-key provenance fact is required.",
+      "name": "i4",
+      "api_patterns": [
+        ".initVerify("
+      ]
+    },
+    {
+      "condition": "Observation: update(byte[]), binding input. No event-local value predicate is stated. The global length[input] >= offset + len constraint is evaluable only when the shared offset and len variables are also bound in the modeled trace.",
+      "name": "u1",
+      "api_patterns": [
+        ".update("
+      ]
+    },
+    {
+      "condition": "Observation: update(byte), binding inputByte. No additional predicate is stated by the rule.",
+      "name": "u2",
+      "api_patterns": [
+        ".update("
+      ]
+    },
+    {
+      "condition": "Observation: update(byte[], int, int), binding input, offset, and len. Predicates: length[input] >= offset + len; offset >= 0; len > 0. These are value conditions, not requirements that source text literally contain a particular arithmetic expression.",
+      "name": "u3",
+      "api_patterns": [
+        ".update("
+      ]
+    },
+    {
+      "condition": "Observation: update(ByteBuffer), binding inputByteBuffer. No additional predicate is stated by the rule.",
+      "name": "u4",
+      "api_patterns": [
+        ".update("
+      ]
+    },
+    {
+      "condition": "Observation: sign() with its returned byte[] bound to output by output = sign(). No separate value predicate is stated.",
+      "name": "s1",
+      "api_patterns": [
+        ".sign()"
+      ]
+    },
+    {
+      "condition": "Observation: sign(byte[], int, int), binding output, offset, and len. The shared-variable predicates include offset >= 0 and len > 0; the rule does not state the documented output-buffer bound offset + len <= output.length.",
+      "name": "s2",
+      "api_patterns": [
+        ".sign("
+      ]
+    },
+    {
+      "condition": "Observation: verify(byte[]) with its returned boolean bound to verified and its argument bound to sign. No predicate requires verified to be true, and the rule does not require the caller to branch on or otherwise consume the result.",
+      "name": "v1",
+      "api_patterns": [
+        ".verify("
+      ]
+    },
+    {
+      "condition": "Observation: verify(byte[], int, int), binding sign, offset, len, and returned verified. The shared-variable predicates include offset >= 0 and len > 0; no predicate requires verified == true.",
+      "name": "v2",
+      "api_patterns": [
+        ".verify("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "This specification establishes only the rule's modeled API-event order, algorithm allowlist, symbolic key-provenance requirements, and declared relational labels. It does not establish that a signature was successfully verified at runtime, that a verification result was checked, that a certificate is trusted, that keys are cryptographically strong, or that the selected provider implements secure parameters.",
+  "forbidden_inferences_without_evidence": [
+    "A finding does not prove that a runtime verification returned true or that the returned boolean was checked.",
+    "A finding does not prove that a certificate chain was validated, that the certificate identity was authorized, or that revocation was checked.",
+    "The generatedPrivkey and generatedPubkey predicates do not, from this rule alone, prove a particular key-generation mechanism, key size, entropy source, storage practice, or non-compromise of a key.",
+    "The allowlist does not prove that the runtime provider accepted the algorithm, used a particular implementation, or used secure algorithm-specific parameters.",
+    "A call observed through a wrapper does not itself prove the wrapper's independent contract; the governed API is java.security.Signature.",
+    "A static proof of an offset, length, algorithm, or key-provenance predicate is not equivalent to observing the corresponding runtime values on every execution.",
+    "The signed[...] and verified[...] ENSURES labels do not prove that the bytes signed are the intended application message or that a successful verification authorizes a business operation."
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, Java documents that Signature.verify returns true if the passed signature verifies and false if it does not. Java also documents that a Signature object delegates to a selected provider implementation and that supported algorithms can vary beyond the platform-required set.",
+    "equivalent": false,
+    "detector_claim": "The rule claims compliance with its limited Signature protocol and symbolic predicates: a listed algorithm, modeled initialization, required key-provenance facts where specified, modeled updates, and signing or verification events. It additionally emits signed and verified relational facts after the corresponding terminal events."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm JDK and provider support for the requested Signature algorithm and the supplied key type and parameters.",
+      "Confirm algorithm-specific signature encoding expectations between signer and verifier.",
+      "Confirm that any provider-specific or deployment-specific policy does not alter algorithm availability or key acceptance."
+    ],
+    "runtime": [
+      "Observe or test the actual algorithm string, selected provider, key material, parameters, input bytes, offsets, lengths, and return value on the relevant execution path.",
+      "For verification security, establish that verify returned true and that application control flow rejects failures.",
+      "For certificate-based verification, establish the relevant certificate validation, identity-binding, and trust-policy behavior separately."
+    ],
+    "source_level": [
+      "Resolve the receiver or interprocedural result to java.security.Signature rather than a namesake API.",
+      "Identify the exact overload and its bound arguments or return value for each reported event.",
+      "Establish the event order for the same modeled Signature object or alias.",
+      "For i1 and i4, provide the analysis evidence that establishes generatedPrivkey[privateKey] or generatedPubkey[publicKey], rather than treating a declared Java type as proof.",
+      "For constrained values, establish the algorithm and relevant offset/length values; source spelling alone is not proof of their runtime values."
+    ]
+  },
+  "name": "SignatureSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Signature.crysl",
+  "applies_to_types": [
+    "java.security.Signature"
+  ],
+  "source_title": "Crypto-API-Rules — JavaCryptographicArchitecture/src/Signature.crysl",
+  "semantic_scope": "For every finding of this rule, the observed subject is use of the Java Cryptography Architecture java.security.Signature API: acquisition through getInstance, initialization for signing or verification, zero or more modeled updates as permitted by the selected branch, and sign or verify termination. The rule may be encountered in arbitrary calling or wrapper code, but it does not govern similarly named non-JCA APIs or a type merely because its name ends in “Spec.” The supplied rule names java.security.Signature as its SPEC target.",
+  "spec_id": "SignatureSpec",
+  "known_false_positive_shapes": [
+    "A correct signing flow intentionally signs an empty message without calling update: the API can support it, but this rule's signing branch requires Update+ before Sign.",
+    "A correct update(byte[], off, len) with len == 0: the JDK permits non-negative len, while the rule requires len > 0.",
+    "A valid Signature algorithm outside the rule's seven-name allowlist, including other standard JCA algorithms or provider-supported algorithms, can violate this detector policy despite API support.",
+    "A valid key loaded from a keystore, certificate, HSM, remote signer, or other source may lack the detector's generatedPrivkey/generatedPubkey provenance fact.",
+    "A statically unanalyzable but runtime-safe algorithm, offset, length, or key dataflow can fail to satisfy the detector's symbolic predicates.",
+    "A correctly configured Signature using setParameter(AlgorithmParameterSpec) has behavior not represented in this rule because setParameter is not an event."
+  ],
+  "protocol": "Get, ((InitSign+, (Update+, Sign+)+)+ | (InitVerify+, (Update*, Verify+)+)+), where Get = getInstance(String) | getInstance(String, _); InitSign = initSign(PrivateKey) | initSign(PrivateKey, _); InitVerify = initVerify(Certificate) | initVerify(PublicKey); Update = update(byte[]) | update(byte) | update(byte[], int, int) | update(ByteBuffer); Sign = sign() | sign(byte[], int, int); Verify = verify(byte[]) | verify(byte[], int, int).",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Signature.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:java.security.Signature"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.bouncycastle.jcajce.util.DefaultJcaJceHelper",
+        "method": "createSignature",
+        "message": "unknown"
+      }
+    ],
+    "expected_api_simple_name": "Signature",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:java.security.Signature",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Signature.crysl"
+  }
+}

@@ -1,0 +1,32 @@
+{
+ "card_id": "Kb0013529",
+ "card_sha256": "1b33d3ee34964543",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3771,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 427
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0389464,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "8a124998d333a017",
+ "finished_at": "2026-11-16T11:48:28-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.26,
+  "reason": "The patch fixes the problem in several layers at once, and each change is small. It adds a runtime check in CertReq, removes 1024 from the UI key-size list, and adds a new string resource plus a description on the MDM restriction. Adding the description is a thoughtful extra, which feels like Claude. The patch is tidy and planned, and it matches the repo's style, including writing `if(` with no space. That suggests the planning and review steps of a pipeline more than a free-running agent. This is a low-confidence guess between D and S."
+ }
+}

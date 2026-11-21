@@ -1,0 +1,27 @@
+{
+  "execution_timestamp": "2026-10-28T01:01:52.675372+00:00",
+  "workflow_status": "SUCCESS_WITH_NO_ACTION",
+  "execution_time_seconds": 0.350152,
+  "config": {
+    "error_solutions_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions",
+    "cloned_projects_dir": "/home/antonow/cognalys_work/exp_final_v2/clones",
+    "output_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results",
+    "worktrees_dir": "/home/antonow/cognalys_work/exp_final_v2/finding_worktrees",
+    "save_backups": true,
+    "backup_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/method_backups",
+    "dry_run": false,
+    "max_solutions": 0,
+    "git_user_name": "jpantonow",
+    "git_user_email": "jpantonow@gmail.com"
+  },
+  "total_solutions": 0,
+  "results": {
+    "successfully_applied": 0,
+    "failed": 0,
+    "dry_run": 0,
+    "review_only_not_applied": 0,
+    "not_applicable_to_base_branch": 0
+  },
+  "per_solution_details": [],
+  "errors": []
+}

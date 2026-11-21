@@ -1,0 +1,37 @@
+{
+ "unit": "co_bdc0d1804c88",
+ "source": "spec_cohort",
+ "group": "our_pr_closed",
+ "finding_ids": [
+  "bdc0d1804c88"
+ ],
+ "apk": "com.vrem.wifianalyzer_71.apk",
+ "repo_url": "https://github.com/VREMSoftwareDevelopment/WifiAnalyzer",
+ "pinned_commit": "131c2fae4f86e54aa71d87e522a3b4874bb4e68a",
+ "spec": [
+  "MessageDigestSpec"
+ ],
+ "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+ "method": "calculateChildType",
+ "latest_outcome": [
+  "issue para o mantenedor do app"
+ ],
+ "bench_id": [],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "bdc0d1804c88",
+   "unique_error_id": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "spec": "MessageDigestSpec",
+   "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+   "method": "calculateChildType",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "apk": "com.vrem.wifianalyzer_71.apk",
+   "repo_url": "https://github.com/VREMSoftwareDevelopment/WifiAnalyzer",
+   "commit": "131c2fae4f86e54aa71d87e522a3b4874bb4e68a",
+   "detector_source_location": "AccessPointsAdapterData.kt:67"
+  }
+ ]
+}

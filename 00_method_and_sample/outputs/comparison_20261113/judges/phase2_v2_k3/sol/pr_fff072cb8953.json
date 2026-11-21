@@ -1,0 +1,287 @@
+{
+ "unit": "pr_fff072cb8953",
+ "phase": "phase2",
+ "order": [
+  "Kb5fff80a",
+  "Kbe8944df",
+  "K9a6b5a2d",
+  "K5addd4d3",
+  "Kc93900cd",
+  "Kc79b0332",
+  "K1a3a5f21",
+  "K5b2c3fc0",
+  "Keb9edc94",
+  "Ke1f80df1",
+  "Kdb74e11c",
+  "Kf4721416",
+  "K518cfee5",
+  "Kdce556a7",
+  "Kbc8a664e",
+  "K3c4ec7b1",
+  "K7fcfb8c2",
+  "K6e01a2fd",
+  "K03c352fd",
+  "Kb0e11d04"
+ ],
+ "card_sha256": {
+  "K03c352fd": "7e066ef37634feb7",
+  "K1a3a5f21": "121592932dfd7a6a",
+  "K3c4ec7b1": "01242f0045eb9e28",
+  "K518cfee5": "db89e5465e999b72",
+  "K5addd4d3": "581d2eb0aad541b7",
+  "K5b2c3fc0": "6d5307adce2ccea4",
+  "K6e01a2fd": "ae4ef1d391c02820",
+  "K7fcfb8c2": "f308c2c6236496e9",
+  "K9a6b5a2d": "f71ce9a81a5c6ac3",
+  "Kb0e11d04": "63984b9aa03f0ac4",
+  "Kb5fff80a": "04f4b00dfa077020",
+  "Kbc8a664e": "eee6fb6d50225535",
+  "Kbe8944df": "ec2c0cce1d66e572",
+  "Kc79b0332": "4c9238b250b2ac81",
+  "Kc93900cd": "ad8b21af755565d4",
+  "Kdb74e11c": "4ed64991a111510c",
+  "Kdce556a7": "5d27330d21505744",
+  "Ke1f80df1": "113ca608dc2ce75a",
+  "Keb9edc94": "9ddacaf2ba58c4c3",
+  "Kf4721416": "fde39689c897bfc0"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The finding is real: `InputStream.md5Hash()` in IOExtensions.kt:572-583 calls MessageDigest.getInstance(\"MD5\"). But it is not a security weakness here. The only callers are in `Context.exportAsZip`, ExportExtensions.kt:487-489. After the app copies its temporary backup ZIP (zipFile.file) to the user-chosen SAF Uri, it hashes the local temp file and the file it just wrote, in the same process a moment apart. It compares the two digests, and on a mismatch it deletes the output and retries once. This is a check for accidental copy corruption or truncation, the job a checksum does. No attacker gets to choose both inputs, and finding a collision would gain nothing. The digest is never stored, written into the backup, sent anywhere, or used for authentication, keying or password handling. Backup confidentiality and integrity come from the ZIP's own encryption when a password is set, not from this hash. Since MD5 is fine for this purpose, sending nothing is a correct response. An ISSUE that reports this as a crypto vulnerability would mislead the maintainers and waste their time. A PR is still acceptable as low-risk hygiene that also silences scanners. Both digests are recomputed on every export and only compared with each other, so switching to SHA-256 changes no stored or exchanged data, and SHA-256 is guaranteed on every Android API level, including minSdk 24. Such a PR is only acceptable if it is a pure algorithm swap and leaves the verify-and-retry behaviour exactly as it is.\n\nSecond judge: The MD5 call is real, but its only callers are in exportAsZip: they compare a freshly generated temporary ZIP with the destination reopened through ContentResolver to detect failed or corrupted copying. This is an immediate checksum, not password hashing, authentication, signature verification, or TLS. The digest is neither stored nor exported, and no importer or peer requires MD5. NO_ACTION is reasonable because the repository does not establish a security vulnerability here; an ISSUE explaining the limited purpose and optional hardening is also reasonable. A focused PR switching both sides to SHA-256 is acceptable without a data migration. SHA-256 alone would still not authenticate backups.",
+  "must_change": [
+   "Replace MessageDigest.getInstance(\"MD5\") in InputStream.md5Hash() (IOExtensions.kt) with SHA-256 (or SHA-384/SHA-512), and use the same algorithm for both the source-file and target-Uri hashes compared in exportAsZip",
+   "Optionally rename md5Hash and its overloads (e.g. to sha256Hash), and update the import, the call sites, and the 'wrong MD5 hash' log/exception messages in ExportExtensions.kt to match",
+   "For a digest-upgrade PR, replace MD5 with a supported SHA-2 algorithm such as SHA-256 consistently for both the temporary file and destination URI.",
+   "Update the helper overloads, imports, caller names, variables, and MD5-specific diagnostic messages to accurately describe the chosen algorithm."
+  ],
+  "must_not_break": [
+   "The post-copy check in exportAsZip: hash the temp ZIP and the written SAF Uri, compare them, and on mismatch or null delete the output and retry once (retryOnFail), then throw IOException",
+   "The null-safe handling: Context hash(uri) still returns null when openInputStream returns null, and calls stay wrapped in runCatching",
+   "Streaming with a buffer and closing the stream via use{}, so large backup ZIPs are not loaded into memory",
+   "The backup ZIP format and its contents, and the ZIP password encryption; restoring/importing existing backups must not change",
+   "Support down to minSdk 24: use an algorithm every Android provider has (SHA-256), not anything that needs an extra provider or library",
+   "Running the export on Dispatchers.IO (no hashing on the main thread)",
+   "Preserve full-content comparison using byte-array content equality; reject unequal digests and null or unreadable inputs rather than treating verification failure as success.",
+   "Preserve bounded streaming, stream closure, and verification after the destination output stream has been flushed and closed; continue supporting ContentResolver/SAF URIs without requiring filesystem paths.",
+   "Preserve the existing bounded retry and final IOException behavior for failed verification, along with cleanup and backup completion reporting.",
+   "Keep existing ZIP contents and restore compatibility, including database and attachments, compressed and uncompressed exports, and password-protected AES ZIPs. No persisted digest or backup-format migration is needed.",
+   "Keep the separate ZIP CRC/encrypted-entry verification and database WAL checkpoint before copying.",
+   "Maintain Android API 24 support and background execution for large backup I/O; SHA-256 requires no new provider or dependency."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 142,
+ "tokens": {
+  "input_tokens": 124196,
+  "cached_input_tokens": 77568,
+  "output_tokens": 4980,
+  "reasoning_output_tokens": 2549
+ },
+ "turns": 1,
+ "tool_calls": 6,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "4d9264eb1ee5ea9f",
+ "finished_at": "2026-11-16T11:06:38-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Kb5fff80a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the transient copy checksum and explains why MD5 collisions do not establish a security defect here."
+   },
+   {
+    "card_id": "Kbe8944df",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Consistently switches both hashes and diagnostics to SHA-256 while preserving streaming and verification behavior. The description distinguishes the incomplete build check from focused testing."
+   },
+   {
+    "card_id": "K9a6b5a2d",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Focused algorithm swap preserving null handling, content equality, cleanup and retries. The description accurately limits the security and validation claims."
+   },
+   {
+    "card_id": "K5addd4d3",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Complete SHA-256 replacement with unchanged export verification and backup compatibility. Correctly presents this as scanner hygiene rather than a vulnerability fix."
+   },
+   {
+    "card_id": "Kc93900cd",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately explains the fixed source, immediate comparison and absence of authentication or protection against later modification."
+   },
+   {
+    "card_id": "Kc79b0332",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Consistent SHA-256 swap with accurate generic checksum diagnostics and preserved retry behavior. The non-security rationale and backup compatibility explanation are correct."
+   },
+   {
+    "card_id": "K1a3a5f21",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Preserves the export workflow and adds a correct multi-buffer SHA-256 known-answer test. The description accurately states the change and validation limits."
+   },
+   {
+    "card_id": "K5b2c3fc0",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly grounds no action in the immediate copy comparison and absence of persisted digests or restore authentication."
+   },
+   {
+    "card_id": "Keb9edc94",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Complete algorithm and naming update that preserves existing verification behavior. Accurately states that the comparison does not authenticate backups."
+   },
+   {
+    "card_id": "Ke1f80df1",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The algorithm swap works, but the log and exception messages still incorrectly identify MD5. The rationale should clarify that this checksum does not require collision resistance."
+   },
+   {
+    "card_id": "Kdb74e11c",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Consistent SHA-256 replacement preserving all export checks, with a useful known-answer and stream-closure test. The compatibility explanation is accurate."
+   },
+   {
+    "card_id": "Kf4721416",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The SHA-256 replacement preserves verification, but the redundant empty-input bookkeeping should be removed because the original loop already handles empty and zero-length reads. The description falsely claims the algorithm call is unchanged and the diff does not change the reported MD5 call."
+   },
+   {
+    "card_id": "K518cfee5",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies an accidental-corruption checksum with no persisted digest or authentication role."
+   },
+   {
+    "card_id": "Kdce556a7",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The no-action decision correctly follows the only caller through the immediate comparison and bounded retry. The optional one-line algorithm suggestion would leave misleading MD5 names, but does not undermine the core reasoning."
+   },
+   {
+    "card_id": "Kbc8a664e",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Complete SHA-256 swap preserving backup compatibility and verification behavior. Calling MD5 broken needs the caveat that its weaknesses do not establish a vulnerability in this copy checksum."
+   },
+   {
+    "card_id": "K3c4ec7b1",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Focused, consistent algorithm replacement with unchanged verification and retry behavior. The description accurately explains the transient digest and makes no unsupported security claim."
+   },
+   {
+    "card_id": "K7fcfb8c2",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Correctly replaces both hashes and diagnostics while preserving the export checks. The rationale omits that collision resistance is not required for this immediate copy checksum."
+   },
+   {
+    "card_id": "K6e01a2fd",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Consistent SHA-256 replacement with unchanged streaming, full-digest comparison and retries. The compatibility explanation is correct, but the rationale should clarify that this is optional hygiene."
+   },
+   {
+    "card_id": "K03c352fd",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Complete algorithm and diagnostic update preserving verification behavior. Accurately explains Android compatibility and why this is not a vulnerability fix."
+   },
+   {
+    "card_id": "Kb0e11d04",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains the transient corruption check, failure handling and lack of a security-sensitive digest use."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

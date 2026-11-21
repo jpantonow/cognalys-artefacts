@@ -1,0 +1,130 @@
+{
+  "schema_version": 2,
+  "spec_id": "Closeable_MeaninglessClose",
+  "name": "Closeable_MeaninglessClose",
+  "applies_to_types": [
+    "mop.Closeable_MeaninglessClose",
+    "java.io.ByteArrayInputStream",
+    "java.io.ByteArrayOutputStream",
+    "java.io.CharArrayWriter",
+    "java.io.StringWriter"
+  ],
+  "source_title": "Runtime Verification property-db: Closeable_MeaninglessClose.rvm and generated AspectJ monitor",
+  "source_url": "https://raw.githubusercontent.com/runtimeverification/property-db/refs/heads/master/java-api/properties/java/io/Closeable_MeaninglessClose.rvm",
+  "source_verified": true,
+  "protocol": "close(receiver ∈ {ByteArrayInputStream, ByteArrayOutputStream, CharArrayWriter, StringWriter}) → report",
+  "important_note": "This is not a verified CrySL rule from the CROSSINGTUD Crypto-API-Rules corpus: the requested canonical CrySL URL was reportedly fetched and returned HTTP 404, and the current JavaCryptographicArchitecture directory reportedly does not contain this specification. The verified primary source is a JavaMOP/RV-Monitor property. mop.Closeable_MeaninglessClose is included because it is the property declaration with the required exact simple name, not because it is a JDK API class. The concrete monitored API targets are the four listed java.io classes. This source does not establish the receiver type at the representative ImageReceiver finding.",
+  "events": [
+    {
+      "name": "close",
+      "api_patterns": [
+        ".close()",
+        "ByteArrayInputStream",
+        "ByteArrayOutputStream",
+        "CharArrayWriter",
+        "StringWriter"
+      ],
+      "condition": "Observation: a no-argument `.close()` call is seen. Predicate: in the verified generated AspectJ monitor, the call join point matches `call(* Closeable+.close())` and its runtime target matches at least one of `target(ByteArrayInputStream)`, `target(ByteArrayOutputStream)`, `target(CharArrayWriter)`, or `target(StringWriter)`. Every observed call satisfying that target predicate emits the message; no prior event, postcondition, argument value, or resource-state predicate is required."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That the reported close call leaks a resource or causes a resource-management failure.",
+    "That the receiver is definitely one of the four exact JDK classes rather than a subtype or project-defined substitute.",
+    "That no subclass override, wrapper behavior, instrumentation behavior, or call-site side effect exists.",
+    "That removing the close call preserves application-level behavior, style conventions, ownership contracts, or compatibility with a future receiver implementation.",
+    "That the finding identifies a cryptographic misuse, confidentiality failure, integrity failure, or exploitable vulnerability.",
+    "That the detector uses the same dynamic AspectJ `target(...)` semantics as the verified runtime monitor."
+  ],
+  "semantic_scope": "The verified rule observes calls to no-argument `close()` on Closeable-compatible runtime targets restricted to ByteArrayInputStream, ByteArrayOutputStream, CharArrayWriter, and StringWriter. It reports the call itself as a suggestion that it has no effect; it does not track a lifecycle protocol.",
+  "detector_semantics": {
+    "claim": "A matching `close()` call is reported with the message `close() has no effect.`",
+    "predicates": [
+      "A `close()` call is observed.",
+      "The monitor target predicate matches ByteArrayInputStream, ByteArrayOutputStream, CharArrayWriter, or StringWriter.",
+      "No ordering, closed-state, resource-ownership, return-value, or exception predicate is present in the primary property."
+    ],
+    "limitations": [
+      "The `.rvm` property defines an unconditional `close` event that logs the message; the target restriction is supplied by the separate generated AspectJ monitor.",
+      "The primary source is a runtime-monitoring specification, whereas the supplied finding is from another detector; equivalence of their instrumentation and type-resolution behavior is unverified.",
+      "The source does not establish the concrete receiver type in `de.kaffeemitkoffein.imagepipe.ImageReceiver$processJpegInBackground.doInBackground`."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Oracle JDK documentation states that closing ByteArrayInputStream, ByteArrayOutputStream, CharArrayWriter, and StringWriter has no effect.",
+      "For ByteArrayInputStream, ByteArrayOutputStream, and StringWriter, the documentation additionally states that methods can be called after close without generating IOException."
+    ],
+    "preconditions": [
+      "The documented no-effect behavior applies to the documented JDK implementations of the four concrete classes.",
+      "For a call through a polymorphic receiver, the runtime implementation must not be a subtype that overrides `close()` with meaningful behavior.",
+      "The applicable platform/JDK implementation must retain the documented behavior."
+    ],
+    "unknowns": [
+      "The static and runtime type of the receiver at the representative finding.",
+      "Whether an application or library subtype overrides `close()`.",
+      "Which Java or Android library implementation and version the analyzed program targets.",
+      "Whether closing participates in an external ownership, framework, or coding-policy contract despite being operationally a no-op for the concrete JDK class."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The observed call is unnecessary because the selected target class's close operation has no effect.",
+    "runtime_claim": "For the documented JDK implementations of the four selected classes, invoking close does not release or invalidate the in-memory buffer or stream state.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Resolve the call receiver to one of java.io.ByteArrayInputStream, java.io.ByteArrayOutputStream, java.io.CharArrayWriter, or java.io.StringWriter, or provide an explicit source-level type constraint equivalent to the monitor target predicate.",
+      "Inspect declarations and reachable overrides of `close()` when the receiver may be a subtype.",
+      "Preserve the distinction between observing a `.close()` call and proving that its concrete receiver satisfies the no-effect target predicate."
+    ],
+    "runtime": [
+      "Capture or otherwise establish the receiver's runtime class at the reported call site.",
+      "Establish whether dynamic dispatch invokes an override of `close()`.",
+      "If behavior matters, execute a focused test showing the effects of close and subsequent API use for the deployed runtime."
+    ],
+    "compatibility": [
+      "Check the documented behavior for the actual JDK or Android API level used by the application.",
+      "Check whether libraries, wrappers, generated code, or future substitutions rely on calling close as part of an ownership or lifecycle convention.",
+      "Check whether the detector's static matching reproduces the primary monitor's AspectJ `call(* Closeable+.close())` and `target(...)` constraints."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A receiver is declared as one of the monitored base classes but is actually a subclass whose `close()` override performs work.",
+    "A no-op close is intentionally retained to satisfy a generic cleanup pattern such as try-with-resources, a shared ownership policy, or uniform API usage.",
+    "The detector infers a monitored type from an imprecise static type even though dynamic dispatch reaches a different implementation.",
+    "The call is wrapped by instrumentation, interception, or a framework convention whose behavior is not represented in the JavaMOP property.",
+    "The source-level call is harmless but intentionally communicates ownership transfer or end-of-use to maintainers."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/runtimeverification/property-db/refs/heads/master/java-api/properties/java/io/Closeable_MeaninglessClose.rvm",
+    "https://raw.githubusercontent.com/runtimeverification/property-db/refs/heads/master/java-api/properties/java/io/Closeable_MeaninglessCloseMonitorAspect.aj",
+    "https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/ByteArrayInputStream.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/io/ByteArrayOutputStream.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/io/CharArrayWriter.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/io/StringWriter.html"
+  ],
+  "unknowns": [
+    "No primary CrySL source named `Closeable_MeaninglessClose.crysl` was found at the requested CROSSINGTUD URL: the direct fetch reportedly returned HTTP 404, and the current JavaCryptographicArchitecture source directory reportedly does not list that file.",
+    "Whether the project's detector has transformed, reimplemented, or only name-collided with the verified JavaMOP property.",
+    "Why the detector associates the representative `ImageReceiver$processJpegInBackground.doInBackground` finding with this rule; the reported class, method, and message alone do not identify the receiver expression or its resolved type.",
+    "Whether `mop.Closeable_MeaninglessClose` is represented as an actual generated analysis type in the detector's rule-loading pipeline; the primary source establishes it only as the package-qualified JavaMOP property declaration."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "de.kaffeemitkoffein.imagepipe.ImageReceiver$processJpegInBackground",
+        "method": "doInBackground",
+        "message": "Closeable_MeaninglessClose close() has no effect."
+      }
+    ],
+    "expected_api_simple_name": "Closeable_MeaninglessClose",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:Closeable_MeaninglessClose",
+    "checked_url": "https://raw.githubusercontent.com/runtimeverification/property-db/refs/heads/master/java-api/properties/java/io/Closeable_MeaninglessClose.rvm"
+  }
+}

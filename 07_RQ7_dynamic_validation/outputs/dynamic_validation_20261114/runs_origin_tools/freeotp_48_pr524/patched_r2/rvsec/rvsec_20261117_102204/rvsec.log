@@ -1,0 +1,571 @@
+=== RV-Android Docker: validation passed; exec rv-experiment ===
+/opt/rvsec/rv-android/.venv/lib/python3.12/site-packages/androguard/core/bytecodes/apk.py:1039: SyntaxWarning: invalid escape sequence '\>'
+  Thus specifiying :code:`{"name": "foobar"}` will match on :code:`<bla name="foobar" \>`
+2026-11-17 10:22:07,315 - rv_android_core.util.validation.config - INFO - Validation configured: enabled=False, strict=False, logging=False
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered tool: ape
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered 5 variants for tool: ape
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered tool: monkey
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered 3 variants for tool: monkey
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered tool: ares
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered 1 variants for tool: ares
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered tool: droidbot
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered 6 variants for tool: droidbot
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered tool: droidmate
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered 1 variants for tool: droidmate
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered tool: fastbot
+2026-11-17 10:22:07,335 - rv_tools.registry - INFO - Registered 4 variants for tool: fastbot
+2026-11-17 10:22:07,336 - rv_tools.registry - INFO - Registered tool: humanoid
+2026-11-17 10:22:07,336 - rv_tools.registry - INFO - Registered 1 variants for tool: humanoid
+2026-11-17 10:22:07,336 - rv_tools.registry - INFO - Registered tool: qtesting
+2026-11-17 10:22:07,336 - rv_tools.registry - INFO - Registered 1 variants for tool: qtesting
+2026-11-17 10:22:07,342 - rv_tools.registry - INFO - Registered tool: rvagent
+2026-11-17 10:22:07,342 - rv_tools.registry - INFO - Registered 6 variants for tool: rvagent
+2026-11-17 10:22:07,355 - rv_tools.registry - INFO - Registered tool: aperv
+2026-11-17 10:22:07,355 - rv_tools.registry - INFO - Registered 10 variants for tool: aperv
+2026-11-17 10:22:07,428 - rv_experiment.cli - INFO - CLI context initialized successfully
+2026-11-17 10:22:07,428 - rv_experiment.cli - INFO - CLI logging configured successfully
+2026-11-17 10:22:07,429 - rv_experiment.cli - INFO - Starting experiment execution
+2026-11-17 10:22:07,429 - rv_tools.builtin.ape - INFO - Initialized APE tool for systematic exploration
+2026-11-17 10:22:07,429 - rv_tools.builtin.monkey - INFO - Initialized Monkey tool for random event generation
+2026-11-17 10:22:07,429 - rv_tools.builtin.ares - INFO - Initialized Ares tool for Docker-based exploration
+2026-11-17 10:22:07,430 - rv_tools.builtin.droidbot - INFO - Initialized DroidBot tool for lightweight test input generation
+2026-11-17 10:22:07,430 - rv_tools.builtin.fastbot - INFO - Initialized FastBot tool for model-based exploration
+2026-11-17 10:22:07,430 - rv_tools.builtin.humanoid - INFO - Initialized Humanoid tool (DroidBot + humanoid inference)
+2026-11-17 10:22:07,430 - rvagent_tool.tools.rvagent - INFO - RVAgent tool initialized
+2026-11-17 10:22:07,430 - rv_tools.builtin.ape - INFO - Initialized APE tool for systematic exploration
+2026-11-17 10:22:07,430 - rv_tools.builtin.monkey - INFO - Initialized Monkey tool for random event generation
+2026-11-17 10:22:07,430 - rv_tools.builtin.ares - INFO - Initialized Ares tool for Docker-based exploration
+2026-11-17 10:22:07,430 - rv_tools.builtin.droidbot - INFO - Initialized DroidBot tool for lightweight test input generation
+2026-11-17 10:22:07,430 - rv_tools.builtin.fastbot - INFO - Initialized FastBot tool for model-based exploration
+2026-11-17 10:22:07,430 - rv_tools.builtin.humanoid - INFO - Initialized Humanoid tool (DroidBot + humanoid inference)
+2026-11-17 10:22:07,430 - rvagent_tool.tools.rvagent - INFO - RVAgent tool initialized
+2026-11-17 10:22:07,434 - rv_experiment.config - INFO - Configuration validation completed successfully
+2026-11-17 10:22:07,434 - rv_experiment.config - INFO - ExperimentConfig initialized: {
+  "name": "rvsec_20261117_102204",
+  "description": "Experiment created via CLI interface",
+  "output_dir": "results/rvsec_20261117_102204",
+  "rvsec_root": null,
+  "tool_configs": [
+    {
+      "name": "droidbot",
+      "variant": "dfs_greedy",
+      "parameters": {}
+    },
+    {
+      "name": "droidbot",
+      "variant": "bfs_greedy",
+      "parameters": {}
+    }
+  ],
+  "repetitions": 1,
+  "timeouts": [
+    300
+  ],
+  "no_window": true,
+  "device_port": null,
+  "generate_monitors": true,
+  "instrument_apks": true,
+  "instrumentation_variant": "dexlib2",
+  "run_static_analysis": false,
+  "run_execution": true,
+  "enable_quarantine": true,
+  "logcat_diagnostics": false,
+  "package_detector": false,
+  "strip_build_type_suffix": false,
+  "stamp_handlers": false,
+  "specification_set": "jca_android",
+  "custom_specs_dir": null,
+  "custom_aspects_dir": null,
+  "apks_dir": "/opt/rvsec/rv-android/apks",
+  "apks_filter": null,
+  "analysis_timeout": null,
+  "jvm_memory": null,
+  "results_dir": "results/rvsec_20261117_102204",
+  "metadata": {
+    "created_via": "cli",
+    "tool_specifications": "droidbot:dfs_greedy,droidbot:bfs_greedy"
+  },
+  "created_at": "2026-11-17T10:22:07.430780",
+  "resume_mode": false,
+  "status_file": null
+}
+2026-11-17 10:22:07,434 - rv_experiment.cli - INFO - Created experiment configuration: rvsec_20261117_102204
+2026-11-17 10:22:07,438 - rv_experiment.config - INFO - Configuration validation completed successfully
+2026-11-17 10:22:07,438 - rv_experiment.cli - INFO - Run log: results/rvsec_20261117_102204/rvsec_20261117_102204_20261117-102207.log
+🧪 Starting experiment: rvsec_20261117_102204
+🔧 Tools: droidbot, droidbot
+📊 Monitored operations: jca_android
+⏱️  Timeouts: 300s, Repetitions: 1
+📁 Output directory: results/rvsec_20261117_102204
+📱 APK directory: /opt/rvsec/rv-android/apks
+2026-11-17 10:22:07,439 - rv_experiment.cli - INFO - Executing experiment via experiment controller
+2026-11-17 10:22:07,439 - rv_experiment.experiment.workflow.execution_controller - INFO - ExecutionController initialized
+2026-11-17 10:22:07,439 - rv_platform.storage.task_storage - INFO - Storage file results/rvsec_20261117_102204/tasks.json does not exist, starting with empty storage
+2026-11-17 10:22:07,439 - rv_experiment.experiment.controller - INFO - Experiment 'rvsec_20261117_102204' initialized: results/rvsec_20261117_102204
+2026-11-17 10:22:07,439 - rv_experiment.experiment.controller - INFO - Starting experiment 20261117_102207
+2026-11-17 10:22:07,439 - rv_experiment.config - INFO - Configuration saved to: results/rvsec_20261117_102204/experiment_config.json
+2026-11-17 10:22:07,439 - rv_experiment.experiment.controller - INFO - Experiment configuration saved to results/rvsec_20261117_102204/experiment_config.json
+2026-11-17 10:22:07,439 - rv_experiment.experiment.controller - INFO - Starting pre-processing phase
+2026-11-17 10:22:07,439 - rv_experiment.experiment.workflow.pre_processor - INFO - Starting APK pre-processing
+2026-11-17 10:22:07,439 - rv_experiment.experiment.workflow.pre_processor - INFO - Starting monitor generation
+2026-11-17 10:22:07,659 - rv_monitor_generator.RuntimeVerificationGenerator - INFO - RuntimeVerificationGenerator initialized
+2026-11-17 10:22:07,660 - rv_monitor_generator.RuntimeVerificationGenerator - INFO - Starting runtime verification monitor generation pipeline
+2026-11-17 10:22:07,660 - rv_monitor_generator.RuntimeVerificationGenerator - INFO - Executing JavaMOP ...
+-Processing 47 specification(s)
+ AlgorithmParameterGeneratorSpec.rvm is generated
+ AlgorithmParametersSpec.rvm is generated
+ CertPathTrustManagerParametersSpec.rvm is generated
+ CertificateFactorySpec.rvm is generated
+ CipherInputStreamSpec.rvm is generated
+ CipherOutputStreamSpec.rvm is generated
+ CipherSpec.rvm is generated
+ DHGenParameterSpecSpec.rvm is generated
+ DHParameterSpecSpec.rvm is generated
+ DSAParameterSpecSpec.rvm is generated
+ DigestInputStreamSpec.rvm is generated
+ DigestOutputStreamSpec.rvm is generated
+ ECGenParameterSpecSpec.rvm is generated
+ ECParameterSpecSpec.rvm is generated
+ GCMParameterSpecSpec.rvm is generated
+ HMACParameterSpecSpec.rvm is generated
+ IvChainJunction.rvm is generated
+ IvParameterSpec.rvm is generated
+ KeyAgreementSpec.rvm is generated
+ KeyFactorySpec.rvm is generated
+ KeyGeneratorSpec.rvm is generated
+ KeyManagerFactorySpec.rvm is generated
+ KeyPairGeneratorSpec.rvm is generated
+ KeyPairSpec.rvm is generated
+ KeySpec.rvm is generated
+ KeyStoreBuilderParametersSpec.rvm is generated
+ KeyStoreSpec.rvm is generated
+ MGF1ParameterSpecSpec.rvm is generated
+ MacSpec.rvm is generated
+ MessageDigestSpec.rvm is generated
+ OAEPParameterSpecSpec.rvm is generated
+ PBEKeySpecSpec.rvm is generated
+ PBEParameterSpecSpec.rvm is generated
+ PKIXBuilderParametersSpec.rvm is generated
+ PKIXParametersSpec.rvm is generated
+ RSAKeyGenParameterSpecSpec.rvm is generated
+ SSLContextSpec.rvm is generated
+ SSLEngineSpec.rvm is generated
+ SSLParametersSpec.rvm is generated
+ SecretKeyFactorySpec.rvm is generated
+ SecretKeySpec.rvm is generated
+ SecretKeySpecSpec.rvm is generated
+ SecureRandomSpec.rvm is generated
+ SignatureSpec.rvm is generated
+ TrustAnchorSpec.rvm is generated
+ TrustManagerFactorySpec.rvm is generated
+ X509EncodedKeySpecSpec.rvm is generated
+ MultiSpec_1MonitorAspect.aj is generated
+ MultiSpec_1MonitorAspect.json is generated
+2026-11-17 10:22:08,226 - rv_android_core.util.utils - INFO - Copying 'Coverage.aj' to results/rvsec_20261117_102204/monitors
+2026-11-17 10:22:08,227 - rv_monitor_generator.RuntimeVerificationGenerator - INFO - Executing rv-monitor ...
+-Processing 47 specification(s)
+ MultiSpec_1RuntimeMonitor.java is generated
+2026-11-17 10:23:04,401 - rv_monitor_generator.RuntimeVerificationGenerator - INFO - Monitor generation pipeline completed successfully
+2026-11-17 10:23:04,401 - rv_experiment.experiment.workflow.pre_processor - INFO - Completed monitor generation
+2026-11-17 10:23:04,401 - rv_experiment.experiment.workflow.pre_processor - INFO - Monitors generated
+2026-11-17 10:23:04,401 - rv_experiment.experiment.workflow.pre_processor - INFO - Starting APK instrumentation
+2026-11-17 10:23:06,141 - rv_instrumentation_dexlib2.DexlibInstrumentation - INFO - Starting batch instrumentation: 1 APKs (apk_paths mode)
+2026-11-17 10:23:06,141 - rv_instrumentation_dexlib2.DexlibInstrumentation - INFO - Processing APK 1/1: /opt/rvsec/rv-android/apks/org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:23:06,144 - rv_instrumentation_dexlib2.DexlibInstrumentation - INFO - Invoking instr-cli (instrument) — argv length 25
+2026-11-17 10:23:48,118 - rv_instrumentation_dexlib2.DexlibInstrumentation - INFO - instr-cli (instrument) returned exit=0 in 42.0s
+2026-11-17 10:23:48,119 - rv_instrumentation_dexlib2.DexlibInstrumentation - INFO - Instrumented /opt/rvsec/rv-android/apks/org.fedorahosted.freeotp.debug_48.apk in 42.0s
+2026-11-17 10:23:48,119 - rv_instrumentation_dexlib2.DexlibInstrumentation - INFO - Weaver counters merged into results/rvsec_20261117_102204/instrumented_apks/instrument_results.json (1 APK entries)
+2026-11-17 10:23:48,119 - rv_instrumentation_dexlib2.DexlibInstrumentation - INFO - Batch complete: 1/1 successful, 0 errors
+2026-11-17 10:23:48,119 - rv_instrumentation_dexlib2.DexlibInstrumentation - INFO - Error report saved to: results/rvsec_20261117_102204/instrumented_apks/instrument_errors.json
+2026-11-17 10:23:48,119 - rv_experiment.experiment.workflow.pre_processor - INFO - Completed APK instrumentation
+2026-11-17 10:23:48,119 - rv_experiment.experiment.workflow.pre_processor - INFO - Instrumentation completed
+2026-11-17 10:23:48,119 - rv_experiment.experiment.workflow.pre_processor - WARNING - Skipping static analysis
+2026-11-17 10:23:48,120 - rv_experiment.experiment.workflow.pre_processor - WARNING - Static analysis skipped by flag (--skip-static): 1 of 1 APKs will run without a coverage denominator. Their coverage cells are left empty and their rows are marked measured=false (INV-PLT-35); their violation columns are written as usual.
+2026-11-17 10:23:48,120 - rv_experiment.experiment.workflow.pre_processor - INFO - Completed APK pre-processing
+2026-11-17 10:23:48,120 - rv_experiment.experiment.workflow.pre_processor - INFO - Pre-processing phase completed
+2026-11-17 10:23:48,120 - rv_experiment.experiment.controller - INFO - Starting execution phase
+2026-11-17 10:23:48,131 - rv_experiment.experiment.workflow.pre_processor - WARNING - 1 of 1 instrumented APKs have no static analysis artefact and will run WITHOUT a coverage denominator: org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:23:48,131 - rv_experiment.experiment.workflow.pre_processor - INFO - Executing 1 APKs
+2026-11-17 10:23:48,131 - rv_tools.builtin.droidbot - INFO - Initialized DroidBot tool for lightweight test input generation
+2026-11-17 10:23:48,131 - rv_tools.builtin.droidbot - INFO - Configured DroidBot tool - Policy: dfs_greedy, Count: 10000000000, Interval: 3s
+2026-11-17 10:23:48,131 - rv_tools.registry.factory - INFO - Created tool instance: droidbot:dfs_greedy
+2026-11-17 10:23:48,131 - rv_tools.builtin.droidbot - INFO - Initialized DroidBot tool for lightweight test input generation
+2026-11-17 10:23:48,131 - rv_tools.builtin.droidbot - INFO - Configured DroidBot tool - Policy: bfs_greedy, Count: 10000000000, Interval: 3s
+2026-11-17 10:23:48,132 - rv_tools.registry.factory - INFO - Created tool instance: droidbot:bfs_greedy
+2026-11-17 10:23:48,132 - rv_experiment.experiment.workflow.execution_controller - INFO - Starting execution setup
+2026-11-17 10:23:48,132 - rv_experiment.experiment.workflow.execution_controller - INFO - Created platform configuration: 2 tools, 1 repetitions, 1 timeouts
+2026-11-17 10:23:48,132 - rv_platform.storage.task_storage - INFO - Storage file results/rvsec_20261117_102204/tasks.json does not exist, starting with empty storage
+2026-11-17 10:23:48,132 - rv_platform.platform - INFO - Platform initialized with config: results/rvsec_20261117_102204/instrumented_apks
+2026-11-17 10:23:48,132 - rv_experiment.experiment.workflow.execution_controller - INFO - Completed execution setup
+2026-11-17 10:23:48,132 - rv_experiment.experiment.workflow.execution_controller - INFO - Starting platform execution
+2026-11-17 10:23:48,132 - rv_platform.platform - INFO - Starting platform execution
+2026-11-17 10:23:48,133 - rv_platform.platform - INFO - Generating tasks
+2026-11-17 10:23:48,133 - rv_platform.platform - INFO - Discovered 1 APK files
+2026-11-17 10:23:48,138 - rv_android_core.domain.task - INFO - Task d2b952a3-16f6-430d-ad8a-6ec5a5374deb created with configuration: TaskConfiguration(apk=org.fedorahosted.freeotp.debug_48.apk, rep=1, timeout=300, tool=droidbot:dfs_greedy)
+2026-11-17 10:23:48,138 - rv_android_core.domain.task - INFO - Initializing task d2b952a3-16f6-430d-ad8a-6ec5a5374deb: TaskConfiguration(apk=org.fedorahosted.freeotp.debug_48.apk, rep=1, timeout=300, tool=droidbot:dfs_greedy)
+2026-11-17 10:23:48,139 - rv_android_core.domain.task - INFO - Task f6cc085b-4604-423a-bd2d-7b16c6683cdd created with configuration: TaskConfiguration(apk=org.fedorahosted.freeotp.debug_48.apk, rep=1, timeout=300, tool=droidbot:bfs_greedy)
+2026-11-17 10:23:48,139 - rv_android_core.domain.task - INFO - Initializing task f6cc085b-4604-423a-bd2d-7b16c6683cdd: TaskConfiguration(apk=org.fedorahosted.freeotp.debug_48.apk, rep=1, timeout=300, tool=droidbot:bfs_greedy)
+2026-11-17 10:23:48,139 - rv_platform.platform - INFO - Generated 2 tasks
+2026-11-17 10:23:48,139 - rv_platform.platform - INFO - Executing 2 tasks
+2026-11-17 10:23:48,139 - rv_platform.platform - INFO - Executing task 1/2: Task[id=d2b952a3-16f6-430d-ad8a-6ec5a5374deb, TaskConfiguration(apk=org.fedorahosted.freeotp.debug_48.apk, rep=1, timeout=300, tool=droidbot:dfs_greedy), state=READY]
+2026-11-17 10:23:48,139 - rv_tools.builtin.droidbot - INFO - Initialized DroidBot tool for lightweight test input generation
+2026-11-17 10:23:48,139 - rv_tools.builtin.droidbot - INFO - Configured DroidBot tool - Policy: dfs_greedy, Count: 10000000000, Interval: 3s
+2026-11-17 10:23:48,139 - rv_tools.registry.factory - INFO - Created tool instance: droidbot:dfs_greedy
+2026-11-17 10:23:48,140 - rv_platform.execution.executor - INFO - Starting execution of task Task[id=d2b952a3-16f6-430d-ad8a-6ec5a5374deb, TaskConfiguration(apk=org.fedorahosted.freeotp.debug_48.apk, rep=1, timeout=300, tool=droidbot:dfs_greedy), state=READY]
+2026-11-17 10:23:48,140 - rv_android_core.domain.task - INFO - Task d2b952a3-16f6-430d-ad8a-6ec5a5374deb started at 2026-11-17 10:23:48.140166
+2026-11-17 10:23:48,140 - rv_platform.execution.executor - INFO - Task started: d2b952a3-16f6-430d-ad8a-6ec5a5374deb tool=droidbot apk=org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:23:48,140 - rv_platform.execution.executor - INFO - Executing component: StaticAnalysisComponent
+2026-11-17 10:23:48,140 - rv_platform.components.static_analysis - INFO - Copying static analysis files for org.fedorahosted.freeotp.debug_48.apk to results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:23:48,140 - rv_platform.components.static_analysis - WARNING - No static analysis files found for org.fedorahosted.freeotp.debug_48.apk in results/rvsec_20261117_102204/instrumented_apks
+2026-11-17 10:23:48,140 - rv_platform.components.static_analysis - INFO - Starting loading static analysis data
+2026-11-17 10:23:48,140 - rv_static_analysis.parser.static.static_analysis_parser - WARNING - Analysis file not found: results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk.json
+2026-11-17 10:23:48,140 - rv_platform.components.static_analysis - INFO - Completed loading static analysis data
+2026-11-17 10:23:48,141 - rv_platform.components.static_analysis - INFO - Static analysis completed for org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:23:48,141 - rv_platform.components.static_analysis - INFO - Static analysis component completed
+2026-11-17 10:23:48,141 - rv_platform.execution.executor - INFO - Executing component: CoverageComponent
+2026-11-17 10:23:48,141 - rv_platform.components.coverage - INFO - Initializing coverage tracker
+2026-11-17 10:23:48,141 - rv_coverage.analysis.coverage.tracker - INFO - Initializing coverage tracker from static analysis data
+2026-11-17 10:23:48,141 - rv_coverage.analysis.coverage.tracker - INFO - Initialized repository with 0 classes and 0 methods from static data
+2026-11-17 10:23:48,141 - rv_platform.components.coverage - INFO - Coverage tracker initialized successfully
+2026-11-17 10:23:48,141 - rv_platform.components.emulator - INFO - Starting emulator RVSec (port 5554)
+2026-11-17 10:23:48,141 - rv_platform.components.emulator - INFO - Emulator started for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb device=emulator-5554
+2026-11-17 10:23:48,141 - rv_android_core.util.android.emulator_manager - INFO - Starting emulator: RVSec (port 5554)
+2026-11-17 10:23:48,141 - rv_android_core.util.android.android - INFO - Starting emulator on emulator-5554
+2026-11-17 10:23:48,142 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot (timeout=600s)
+2026-11-17 10:23:48,201 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:23:48,201 - rv_android_core.util.android.android - WARNING - ADB probe failed for emulator-5554 (exit code 1): STDERR: * daemon not running; starting now at tcp:5037
+* daemon started successfully
+adb: device 'emulator-5554' not found
+2026-11-17 10:23:53,201 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:23:53,208 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:23:53,208 - rv_android_core.util.android.android - WARNING - ADB probe failed for emulator-5554 (exit code 1): STDERR: adb: device 'emulator-5554' not found
+2026-11-17 10:24:01,568 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:24:01,572 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:24:01,572 - rv_android_core.util.android.android - WARNING - ADB probe failed for emulator-5554 (exit code 1): STDERR: adb: device offline
+2026-11-17 10:24:06,572 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:24:06,574 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:24:11,575 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:24:11,577 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:24:16,577 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:24:16,591 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:24:21,591 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:24:21,598 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:24:26,602 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:24:26,608 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:24:31,609 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:24:31,614 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:24:40,184 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:24:40,404 - rv_android_core.util.android.android - INFO - emulator-5554 booted!
+2026-11-17 10:24:40,404 - rv_android_core.util.android.android - INFO - emulator-5554 took 52 seconds to boot
+2026-11-17 10:24:41,119 - rv_android_core.util.android.emulator_manager - INFO - System animations disabled for optimal performance
+2026-11-17 10:24:41,119 - rv_android_core.util.android.emulator_manager - INFO - Completed emulator RVSec startup
+2026-11-17 10:24:41,120 - rv_platform.execution.executor - INFO - Installing application
+2026-11-17 10:24:41,120 - rv_platform.components.emulator - INFO - Starting installing app org.fedorahosted.freeotp.debug_48.apk on emulator-5554
+2026-11-17 10:24:41,120 - rv_android_core.util.android.android - INFO - Installing APK: org.fedorahosted.freeotp.debug_48.apk on emulator-5554
+2026-11-17 10:24:44,063 - rv_android_core.util.android.emulator_manager - INFO - Completed installation of app: org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:24:44,063 - rv_platform.components.emulator - INFO - Completed installing app org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:24:44,063 - rv_platform.components.emulator - INFO - App installed for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb
+2026-11-17 10:24:44,063 - rv_platform.components.logcat - INFO - Starting logcat capture to results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:dfs_greedy.logcat
+2026-11-17 10:24:44,107 - util.logcat_manager - INFO - Set logcat buffer size 16M on device emulator-5554
+2026-11-17 10:24:44,271 - util.logcat_manager - INFO - Completed logcat capture to /opt/rvsec/rv-android/results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:dfs_greedy.logcat
+2026-11-17 10:24:44,272 - rv_platform.components.logcat - INFO - Completed starting logcat capture to results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:dfs_greedy.logcat
+2026-11-17 10:24:44,272 - rv_platform.execution.executor - INFO - Tool execution started: droidbot for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb
+2026-11-17 10:24:44,273 - rv_platform.components.coverage - INFO - Starting coverage tracking
+2026-11-17 10:24:44,273 - rv_coverage.analysis.coverage.tracker - INFO - Coverage tracker started for results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:dfs_greedy.logcat
+2026-11-17 10:24:44,273 - rv_platform.components.coverage - INFO - Coverage tracking started for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb
+2026-11-17 10:24:44,273 - rv_platform.execution.executor - INFO - Executing component: ToolExecutionComponent
+2026-11-17 10:24:44,273 - rv_platform.components.tool_execution - INFO - Starting tool: droidbot
+2026-11-17 10:24:44,274 - rv_platform.components.tool_execution - INFO - Tool started: droidbot for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb
+2026-11-17 10:24:44,274 - rv_tools.builtin.droidbot - INFO - Executing monitored operations tool: droidbot
+2026-11-17 10:24:44,274 - rv_tools.builtin.droidbot - INFO - Executing DroidBot tool for org.fedorahosted.freeotp.debug
+2026-11-17 10:24:44,274 - rv_tools.builtin.droidbot - INFO - DroidBot execution timeout: 300 seconds
+2026-11-17 10:24:44,274 - rv_tools.builtin.droidbot - INFO - Starting DroidBot execution for org.fedorahosted.freeotp.debug
+2026-11-17 10:24:58,786 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:24:59,288 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:25:00,789 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:25:01,292 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:25:01,792 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:25:13,658 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:25:26,166 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:26:27,783 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: SecretKeySpecSpec in org.fedorahosted.freeotp.encryptor.MasterKey.<init>
+2026-11-17 10:26:27,785 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.MasterKey.<init>: v=1 code=SECRETKEYSPEC-NOBS-03 ev=c1 obj=SecretKeySpec val='' exp='prepared key material' msg='the keyMaterial given to SecretKeySpec(byte[], String) was filled by a SecureRandom and not prepared by a Key.getEncoded()' vfp='sha256:57aa2573b367bd31'
+2026-11-17 10:26:27,786 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: AlgorithmParametersSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.<init>
+2026-11-17 10:26:27,786 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.<init>: v=1 code=ALGORITHMPARAMETERS-ORDER-01 ev=encoded obj=AlgorithmParameters val='' exp='' msg='the observed call sequence is not one AlgorithmParametersSpec accepts and no creation of the AlgorithmParameters was observed'
+2026-11-17 10:26:27,786 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: PBEKeySpecSpec in org.fedorahosted.freeotp.encryptor.MasterKey.decrypt
+2026-11-17 10:26:27,786 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.MasterKey.decrypt: v=1 code=PBEKEYSPEC-NOBS-01 ev=c1 obj=PBEKeySpec val='' exp='a randomized byte[]' msg='the second argument was not observed to come from a randomized source' vfp='sha256:7bb09405dd32afd2'
+2026-11-17 10:26:27,787 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: SecretKeyFactorySpec in org.fedorahosted.freeotp.encryptor.MasterKey.decrypt
+2026-11-17 10:26:27,787 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.MasterKey.decrypt: v=1 code=SECRETKEYFACTORY-NOBS-01 ev=gen obj=SecretKeyFactory val='PBKDF2withHmacSHA512' exp='a key spec this instrumentation observed being built from key material' msg='the key spec was already reported when it was constructed'
+2026-11-17 10:26:27,787 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: SecretKeySpecSpec in org.fedorahosted.freeotp.encryptor.MasterKey.provisionEncryptionKey
+2026-11-17 10:26:27,787 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.MasterKey.provisionEncryptionKey: v=1 code=SECRETKEYSPEC-NOBS-02 ev=c1 obj=SecretKeySpec val='' exp='prepared key material' msg='the keyMaterial given to SecretKeySpec(byte[], String) comes from an object that was already reported upstream' vfp='sha256:7ffc0792a5b80425'
+2026-11-17 10:26:27,787 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: CipherSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt
+2026-11-17 10:26:27,787 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt: v=1 code=CIPHER-NOBS-01 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init was already reported by the specification that produced it'
+2026-11-17 10:26:27,788 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:26:27,788 - rv_coverage.analysis.coverage.tracker - INFO - Coverage update - Methods: 0.00%, Activities: 0.00%, MOP Methods: 0.00%, Called methods: 0
+2026-11-17 10:26:28,288 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: AlgorithmParametersSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt
+2026-11-17 10:26:28,288 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt: v=1 code=ALGORITHMPARAMETERS-ALG-00 ev=get obj=AlgorithmParameters val='GCM' exp='AES,DiffieHellman,DH,OAEP,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256' msg='expecting one of AES,DiffieHellman,DH,OAEP,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256 but found GCM'
+2026-11-17 10:26:28,289 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: CipherSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt
+2026-11-17 10:26:28,289 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt: v=1 code=CIPHER-NOBS-01 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init was already reported by the specification that produced it'
+2026-11-17 10:26:28,289 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: SecretKeySpecSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt
+2026-11-17 10:26:28,289 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt: v=1 code=SECRETKEYSPEC-NOBS-00 ev=c1 obj=SecretKeySpec val='' exp='prepared key material' msg='the keyMaterial given to SecretKeySpec(byte[], String) was not observed to have been prepared by a Key.getEncoded()' vfp='sha256:57aa2573b367bd31'
+2026-11-17 10:26:28,291 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:26:28,291 - rv_coverage.analysis.coverage.tracker - INFO - Coverage update - Methods: 0.00%, Activities: 0.00%, MOP Methods: 0.00%, Called methods: 0
+2026-11-17 10:26:30,791 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:26:50,294 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:26:52,796 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:27:15,866 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:27:41,528 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:27:54,031 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:28:03,532 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:28:10,141 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:28:11,642 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:28:50,497 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:28:55,999 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:29:09,558 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:30:14,703 - rv_android_core.commands.command - WARNING - Command timed out after 300.0 seconds
+2026-11-17 10:30:14,706 - rv_android_core.commands.command - WARNING - The command has timed out after 300.0 seconds
+2026-11-17 10:30:14,727 - rv_tools.builtin.droidbot - INFO - Tool timeout detected during command execution: droidbot execution timed out after 300.0 seconds
+2026-11-17 10:30:14,732 - rv_android_core.util.error.error_handler - WARNING - Timeout: RVToolTimeoutError: droidbot execution timed out after 300.0 seconds caused by RVCommandTimeoutError: RVCommandTimeoutError: Command 'droidbot -d emulator-5554 -a /opt/rvsec/rv-android/results/rvsec_20261117_102204/instrumented_apks/org.fedorahosted.freeotp.debug_48.apk -policy dfs_greedy -count 10000000000 -timeout 300 -ignore_ad -is_emulator' timed out after 300.0 seconds (Timeout: 300.0s) (Command: droidbot -d emulator-5554 -a /opt/rvsec/rv-android/results/rvsec_20261117_102204/instrumented_apks/org.fedorahosted.freeotp.debug_48.apk -policy dfs_greedy -count 10000000000 -timeout 300 -ignore_ad -is_emulator) (Tool: droidbot) (Timeout: 300.0s)
+2026-11-17 10:30:14,736 - rv_platform.components.tool_execution - INFO - Completed tool: droidbot (timeout)
+2026-11-17 10:30:14,737 - rv_platform.components.tool_execution - INFO - Tool stopped: droidbot for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb (timeout)
+2026-11-17 10:30:14,741 - rv_platform.components.logcat - INFO - Starting stopping logcat capture
+2026-11-17 10:30:14,745 - util.logcat_manager - INFO - Completed logcat capture shutdown
+2026-11-17 10:30:14,746 - rv_platform.components.logcat - INFO - Completed stopping logcat capture
+2026-11-17 10:30:14,748 - rv_platform.components.coverage - INFO - Stopping coverage tracking
+2026-11-17 10:30:14,893 - rv_coverage.analysis.coverage.tracker - INFO - Coverage tracker stopped
+2026-11-17 10:30:14,893 - rv_platform.components.coverage - INFO - Coverage tracking stopped for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb
+2026-11-17 10:30:14,894 - rv_platform.components.coverage - INFO - Processing coverage data
+2026-11-17 10:30:14,894 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:30:14,895 - rv_platform.components.coverage - INFO - Final coverage: Methods: 0.00%, Activities: 0.00%, MOP Methods: 0.00%, Errors: 8
+2026-11-17 10:30:14,895 - rv_platform.components.coverage - INFO - Coverage updated for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb: {'method_coverage': 0.0, 'activities_coverage': 0.0, 'methods_mop_reachable_coverage': 0.0, 'total_errors': 8, 'total_method_calls': 0}
+2026-11-17 10:30:14,895 - rv_platform.components.coverage - INFO - Coverage data processing completed
+2026-11-17 10:30:14,896 - rv_android_core.util.android.emulator_manager - INFO - Shutting down emulator RVSec (emulator-5554)
+2026-11-17 10:30:14,897 - rv_android_core.util.android.android - INFO - Killing emulator emulator-5554...
+2026-11-17 10:30:24,908 - rv_android_core.util.android.android - INFO - Emulator emulator-5554 has been killed
+2026-11-17 10:30:24,913 - rv_platform.components.logcat - INFO - Starting stopping logcat capture
+2026-11-17 10:30:24,913 - util.logcat_manager - INFO - Completed logcat capture shutdown
+2026-11-17 10:30:24,913 - rv_platform.components.logcat - INFO - Completed stopping logcat capture
+2026-11-17 10:30:24,913 - rv_platform.components.coverage - INFO - Stopping coverage tracking
+2026-11-17 10:30:24,913 - rv_platform.components.coverage - INFO - Coverage tracking stopped for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb
+2026-11-17 10:30:24,913 - rv_platform.components.coverage - INFO - Processing coverage data
+2026-11-17 10:30:24,913 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:30:24,914 - rv_platform.components.coverage - INFO - Final coverage: Methods: 0.00%, Activities: 0.00%, MOP Methods: 0.00%, Errors: 8
+2026-11-17 10:30:24,914 - rv_platform.components.coverage - INFO - Coverage updated for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb: {'method_coverage': 0.0, 'activities_coverage': 0.0, 'methods_mop_reachable_coverage': 0.0, 'total_errors': 8, 'total_method_calls': 0}
+2026-11-17 10:30:24,914 - rv_platform.components.coverage - INFO - Coverage data processing completed
+2026-11-17 10:30:24,916 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb shell ps | grep droidbot
+2026-11-17 10:30:24,919 - rv_android_core.domain.task - INFO - Task d2b952a3-16f6-430d-ad8a-6ec5a5374deb completed successfully
+2026-11-17 10:30:24,919 - rv_android_core.domain.task - INFO - Execution time: 396 seconds
+2026-11-17 10:30:24,919 - rv_platform.execution.executor - INFO - Task completed: d2b952a3-16f6-430d-ad8a-6ec5a5374deb
+2026-11-17 10:30:24,920 - rv_platform.execution.executor - INFO - Completed Task d2b952a3-16f6-430d-ad8a-6ec5a5374deb
+2026-11-17 10:30:24,933 - rv_platform.storage.task_storage - INFO - Saved 1 tasks to results/rvsec_20261117_102204/tasks.json
+2026-11-17 10:30:24,934 - rv_platform.platform - INFO - Task completed: True
+2026-11-17 10:30:24,935 - rv_platform.platform - INFO - Executing task 2/2: Task[id=f6cc085b-4604-423a-bd2d-7b16c6683cdd, TaskConfiguration(apk=org.fedorahosted.freeotp.debug_48.apk, rep=1, timeout=300, tool=droidbot:bfs_greedy), state=READY]
+2026-11-17 10:30:24,938 - rv_tools.builtin.droidbot - INFO - Initialized DroidBot tool for lightweight test input generation
+2026-11-17 10:30:24,939 - rv_tools.builtin.droidbot - INFO - Configured DroidBot tool - Policy: bfs_greedy, Count: 10000000000, Interval: 3s
+2026-11-17 10:30:24,940 - rv_tools.registry.factory - INFO - Created tool instance: droidbot:bfs_greedy
+2026-11-17 10:30:24,947 - rv_platform.execution.executor - INFO - Starting execution of task Task[id=f6cc085b-4604-423a-bd2d-7b16c6683cdd, TaskConfiguration(apk=org.fedorahosted.freeotp.debug_48.apk, rep=1, timeout=300, tool=droidbot:bfs_greedy), state=READY]
+2026-11-17 10:30:24,947 - rv_android_core.domain.task - INFO - Task f6cc085b-4604-423a-bd2d-7b16c6683cdd started at 2026-11-17 10:30:24.947411
+2026-11-17 10:30:24,947 - rv_platform.execution.executor - INFO - Task started: f6cc085b-4604-423a-bd2d-7b16c6683cdd tool=droidbot apk=org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:30:24,947 - rv_platform.execution.executor - INFO - Executing component: StaticAnalysisComponent
+2026-11-17 10:30:24,948 - rv_platform.components.static_analysis - INFO - Copying static analysis files for org.fedorahosted.freeotp.debug_48.apk to results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:30:24,948 - rv_platform.components.static_analysis - WARNING - No static analysis files found for org.fedorahosted.freeotp.debug_48.apk in results/rvsec_20261117_102204/instrumented_apks
+2026-11-17 10:30:24,948 - rv_platform.components.static_analysis - INFO - Starting loading static analysis data
+2026-11-17 10:30:24,950 - rv_static_analysis.parser.static.static_analysis_parser - WARNING - Analysis file not found: results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk.json
+2026-11-17 10:30:24,962 - rv_platform.components.static_analysis - INFO - Completed loading static analysis data
+2026-11-17 10:30:24,962 - rv_platform.components.static_analysis - INFO - Static analysis completed for org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:30:24,962 - rv_platform.components.static_analysis - INFO - Static analysis component completed
+2026-11-17 10:30:24,962 - rv_platform.execution.executor - INFO - Executing component: CoverageComponent
+2026-11-17 10:30:24,963 - rv_platform.components.coverage - INFO - Initializing coverage tracker
+2026-11-17 10:30:24,964 - rv_coverage.analysis.coverage.tracker - INFO - Initializing coverage tracker from static analysis data
+2026-11-17 10:30:24,964 - rv_coverage.analysis.coverage.tracker - INFO - Initialized repository with 0 classes and 0 methods from static data
+2026-11-17 10:30:24,965 - rv_platform.components.coverage - INFO - Coverage tracker initialized successfully
+2026-11-17 10:30:24,965 - rv_platform.components.emulator - INFO - Starting emulator RVSec (port 5554)
+2026-11-17 10:30:24,965 - rv_platform.components.emulator - INFO - Emulator started for task f6cc085b-4604-423a-bd2d-7b16c6683cdd device=emulator-5554
+2026-11-17 10:30:24,965 - rv_android_core.util.android.emulator_manager - INFO - Starting emulator: RVSec (port 5554)
+2026-11-17 10:30:24,965 - rv_android_core.util.android.android - INFO - Starting emulator on emulator-5554
+2026-11-17 10:30:24,966 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot (timeout=600s)
+2026-11-17 10:30:24,968 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:30:24,969 - rv_android_core.util.android.android - WARNING - ADB probe failed for emulator-5554 (exit code 1): STDERR: adb: device 'emulator-5554' not found
+2026-11-17 10:30:33,434 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:30:33,437 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:30:33,437 - rv_android_core.util.android.android - WARNING - ADB probe failed for emulator-5554 (exit code 1): STDERR: adb: device offline
+2026-11-17 10:30:38,437 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:30:38,440 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:30:43,440 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:30:43,442 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:30:48,443 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:30:48,446 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:30:53,447 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:30:53,453 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:30:58,454 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:30:58,462 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:31:03,462 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:31:03,467 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb -s emulator-5554 shell getprop init.svc.bootanim
+2026-11-17 10:31:11,950 - rv_android_core.util.android.android - INFO - Waiting for emulator-5554 to boot
+2026-11-17 10:31:12,014 - rv_android_core.util.android.android - INFO - emulator-5554 booted!
+2026-11-17 10:31:12,016 - rv_android_core.util.android.android - INFO - emulator-5554 took 47 seconds to boot
+2026-11-17 10:31:12,421 - rv_android_core.util.android.emulator_manager - INFO - System animations disabled for optimal performance
+2026-11-17 10:31:12,421 - rv_android_core.util.android.emulator_manager - INFO - Completed emulator RVSec startup
+2026-11-17 10:31:12,421 - rv_platform.execution.executor - INFO - Installing application
+2026-11-17 10:31:12,422 - rv_platform.components.emulator - INFO - Starting installing app org.fedorahosted.freeotp.debug_48.apk on emulator-5554
+2026-11-17 10:31:12,424 - rv_android_core.util.android.android - INFO - Installing APK: org.fedorahosted.freeotp.debug_48.apk on emulator-5554
+2026-11-17 10:31:13,733 - rv_android_core.util.android.emulator_manager - INFO - Completed installation of app: org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:31:13,734 - rv_platform.components.emulator - INFO - Completed installing app org.fedorahosted.freeotp.debug_48.apk
+2026-11-17 10:31:13,734 - rv_platform.components.emulator - INFO - App installed for task f6cc085b-4604-423a-bd2d-7b16c6683cdd
+2026-11-17 10:31:13,734 - rv_platform.components.logcat - INFO - Starting logcat capture to results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:bfs_greedy.logcat
+2026-11-17 10:31:13,762 - util.logcat_manager - INFO - Set logcat buffer size 16M on device emulator-5554
+2026-11-17 10:31:13,835 - util.logcat_manager - INFO - Completed logcat capture to /opt/rvsec/rv-android/results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:bfs_greedy.logcat
+2026-11-17 10:31:13,836 - rv_platform.components.logcat - INFO - Completed starting logcat capture to results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:bfs_greedy.logcat
+2026-11-17 10:31:13,837 - rv_platform.execution.executor - INFO - Tool execution started: droidbot for task f6cc085b-4604-423a-bd2d-7b16c6683cdd
+2026-11-17 10:31:13,838 - rv_platform.components.coverage - INFO - Starting coverage tracking
+2026-11-17 10:31:13,839 - rv_coverage.analysis.coverage.tracker - INFO - Coverage tracker started for results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk__1__300__droidbot:bfs_greedy.logcat
+2026-11-17 10:31:13,840 - rv_platform.components.coverage - INFO - Coverage tracking started for task f6cc085b-4604-423a-bd2d-7b16c6683cdd
+2026-11-17 10:31:13,840 - rv_platform.execution.executor - INFO - Executing component: ToolExecutionComponent
+2026-11-17 10:31:13,840 - rv_platform.components.tool_execution - INFO - Starting tool: droidbot
+2026-11-17 10:31:13,840 - rv_platform.components.tool_execution - INFO - Tool started: droidbot for task f6cc085b-4604-423a-bd2d-7b16c6683cdd
+2026-11-17 10:31:13,841 - rv_tools.builtin.droidbot - INFO - Executing monitored operations tool: droidbot
+2026-11-17 10:31:13,842 - rv_tools.builtin.droidbot - INFO - Executing DroidBot tool for org.fedorahosted.freeotp.debug
+2026-11-17 10:31:13,843 - rv_tools.builtin.droidbot - INFO - DroidBot execution timeout: 300 seconds
+2026-11-17 10:31:13,843 - rv_tools.builtin.droidbot - INFO - Starting DroidBot execution for org.fedorahosted.freeotp.debug
+2026-11-17 10:31:29,346 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:31:29,849 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:31:30,349 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:31:31,850 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:31:32,351 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:31:36,852 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:31:54,847 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:32:09,350 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:32:09,852 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:33:14,421 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:33:14,927 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: SecretKeySpecSpec in org.fedorahosted.freeotp.encryptor.MasterKey.<init>
+2026-11-17 10:33:14,927 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.MasterKey.<init>: v=1 code=SECRETKEYSPEC-NOBS-03 ev=c1 obj=SecretKeySpec val='' exp='prepared key material' msg='the keyMaterial given to SecretKeySpec(byte[], String) was filled by a SecureRandom and not prepared by a Key.getEncoded()' vfp='sha256:4bb91b43f3c776a7'
+2026-11-17 10:33:14,927 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: AlgorithmParametersSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.<init>
+2026-11-17 10:33:14,927 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.<init>: v=1 code=ALGORITHMPARAMETERS-ORDER-01 ev=encoded obj=AlgorithmParameters val='' exp='' msg='the observed call sequence is not one AlgorithmParametersSpec accepts and no creation of the AlgorithmParameters was observed'
+2026-11-17 10:33:14,928 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: PBEKeySpecSpec in org.fedorahosted.freeotp.encryptor.MasterKey.decrypt
+2026-11-17 10:33:14,928 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.MasterKey.decrypt: v=1 code=PBEKEYSPEC-NOBS-01 ev=c1 obj=PBEKeySpec val='' exp='a randomized byte[]' msg='the second argument was not observed to come from a randomized source' vfp='sha256:fb1802e99c65b768'
+2026-11-17 10:33:14,928 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:33:14,928 - rv_coverage.analysis.coverage.tracker - INFO - Coverage update - Methods: 0.00%, Activities: 0.00%, MOP Methods: 0.00%, Called methods: 0
+2026-11-17 10:33:15,428 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: SecretKeyFactorySpec in org.fedorahosted.freeotp.encryptor.MasterKey.decrypt
+2026-11-17 10:33:15,428 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.MasterKey.decrypt: v=1 code=SECRETKEYFACTORY-NOBS-01 ev=gen obj=SecretKeyFactory val='PBKDF2withHmacSHA512' exp='a key spec this instrumentation observed being built from key material' msg='the key spec was already reported when it was constructed'
+2026-11-17 10:33:15,429 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: SecretKeySpecSpec in org.fedorahosted.freeotp.encryptor.MasterKey.provisionEncryptionKey
+2026-11-17 10:33:15,429 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.MasterKey.provisionEncryptionKey: v=1 code=SECRETKEYSPEC-NOBS-02 ev=c1 obj=SecretKeySpec val='' exp='prepared key material' msg='the keyMaterial given to SecretKeySpec(byte[], String) comes from an object that was already reported upstream' vfp='sha256:b4777a057ca407a0'
+2026-11-17 10:33:15,429 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: CipherSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt
+2026-11-17 10:33:15,429 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt: v=1 code=CIPHER-NOBS-01 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init was already reported by the specification that produced it'
+2026-11-17 10:33:15,429 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: AlgorithmParametersSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt
+2026-11-17 10:33:15,430 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt: v=1 code=ALGORITHMPARAMETERS-ALG-00 ev=get obj=AlgorithmParameters val='GCM' exp='AES,DiffieHellman,DH,OAEP,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256' msg='expecting one of AES,DiffieHellman,DH,OAEP,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256 but found GCM'
+2026-11-17 10:33:15,430 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: CipherSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt
+2026-11-17 10:33:15,430 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt: v=1 code=CIPHER-NOBS-01 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init was already reported by the specification that produced it'
+2026-11-17 10:33:15,431 - rv_coverage.analysis.coverage.tracker - WARNING - MOP violation detected: SecretKeySpecSpec in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt
+2026-11-17 10:33:15,431 - rv_coverage.analysis.coverage.tracker - INFO - Tracked formal property violation in org.fedorahosted.freeotp.encryptor.EncryptedKey.decrypt: v=1 code=SECRETKEYSPEC-NOBS-00 ev=c1 obj=SecretKeySpec val='' exp='prepared key material' msg='the keyMaterial given to SecretKeySpec(byte[], String) was not observed to have been prepared by a Key.getEncoded()' vfp='sha256:4bb91b43f3c776a7'
+2026-11-17 10:33:15,432 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:33:15,432 - rv_coverage.analysis.coverage.tracker - INFO - Coverage update - Methods: 0.00%, Activities: 0.00%, MOP Methods: 0.00%, Called methods: 0
+2026-11-17 10:33:16,932 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:33:22,434 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:33:22,934 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:01,001 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:08,042 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:20,572 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:34,074 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:38,576 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:46,635 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:54,141 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:54,642 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:56,143 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:34:59,644 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:35:38,702 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:35:43,205 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:36:45,735 - rv_android_core.commands.command - WARNING - Command timed out after 300.0 seconds
+2026-11-17 10:36:45,735 - rv_android_core.commands.command - WARNING - The command has timed out after 300.0 seconds
+2026-11-17 10:36:45,738 - rv_tools.builtin.droidbot - INFO - Tool timeout detected during command execution: droidbot execution timed out after 300.0 seconds
+2026-11-17 10:36:45,739 - rv_android_core.util.error.error_handler - WARNING - Timeout: RVToolTimeoutError: droidbot execution timed out after 300.0 seconds caused by RVCommandTimeoutError: RVCommandTimeoutError: Command 'droidbot -d emulator-5554 -a /opt/rvsec/rv-android/results/rvsec_20261117_102204/instrumented_apks/org.fedorahosted.freeotp.debug_48.apk -policy bfs_greedy -count 10000000000 -timeout 300 -ignore_ad -is_emulator' timed out after 300.0 seconds (Timeout: 300.0s) (Command: droidbot -d emulator-5554 -a /opt/rvsec/rv-android/results/rvsec_20261117_102204/instrumented_apks/org.fedorahosted.freeotp.debug_48.apk -policy bfs_greedy -count 10000000000 -timeout 300 -ignore_ad -is_emulator) (Tool: droidbot) (Timeout: 300.0s)
+2026-11-17 10:36:45,739 - rv_platform.components.tool_execution - INFO - Completed tool: droidbot (timeout)
+2026-11-17 10:36:45,739 - rv_platform.components.tool_execution - INFO - Tool stopped: droidbot for task f6cc085b-4604-423a-bd2d-7b16c6683cdd (timeout)
+2026-11-17 10:36:45,739 - rv_platform.components.logcat - INFO - Starting stopping logcat capture
+2026-11-17 10:36:45,739 - util.logcat_manager - INFO - Completed logcat capture shutdown
+2026-11-17 10:36:45,739 - rv_platform.components.logcat - INFO - Completed stopping logcat capture
+2026-11-17 10:36:45,739 - rv_platform.components.coverage - INFO - Stopping coverage tracking
+2026-11-17 10:36:45,844 - rv_coverage.analysis.coverage.tracker - INFO - Coverage tracker stopped
+2026-11-17 10:36:45,845 - rv_platform.components.coverage - INFO - Coverage tracking stopped for task f6cc085b-4604-423a-bd2d-7b16c6683cdd
+2026-11-17 10:36:45,845 - rv_platform.components.coverage - INFO - Processing coverage data
+2026-11-17 10:36:45,846 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:36:45,846 - rv_platform.components.coverage - INFO - Final coverage: Methods: 0.00%, Activities: 0.00%, MOP Methods: 0.00%, Errors: 8
+2026-11-17 10:36:45,846 - rv_platform.components.coverage - INFO - Coverage updated for task f6cc085b-4604-423a-bd2d-7b16c6683cdd: {'method_coverage': 0.0, 'activities_coverage': 0.0, 'methods_mop_reachable_coverage': 0.0, 'total_errors': 8, 'total_method_calls': 0}
+2026-11-17 10:36:45,846 - rv_platform.components.coverage - INFO - Coverage data processing completed
+2026-11-17 10:36:45,846 - rv_android_core.util.android.emulator_manager - INFO - Shutting down emulator RVSec (emulator-5554)
+2026-11-17 10:36:45,847 - rv_android_core.util.android.android - INFO - Killing emulator emulator-5554...
+2026-11-17 10:36:55,850 - rv_android_core.util.android.android - INFO - Emulator emulator-5554 has been killed
+2026-11-17 10:36:55,851 - rv_platform.components.logcat - INFO - Starting stopping logcat capture
+2026-11-17 10:36:55,853 - util.logcat_manager - INFO - Completed logcat capture shutdown
+2026-11-17 10:36:55,853 - rv_platform.components.logcat - INFO - Completed stopping logcat capture
+2026-11-17 10:36:55,853 - rv_platform.components.coverage - INFO - Stopping coverage tracking
+2026-11-17 10:36:55,853 - rv_platform.components.coverage - INFO - Coverage tracking stopped for task f6cc085b-4604-423a-bd2d-7b16c6683cdd
+2026-11-17 10:36:55,853 - rv_platform.components.coverage - INFO - Processing coverage data
+2026-11-17 10:36:55,853 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:36:55,853 - rv_platform.components.coverage - INFO - Final coverage: Methods: 0.00%, Activities: 0.00%, MOP Methods: 0.00%, Errors: 8
+2026-11-17 10:36:55,854 - rv_platform.components.coverage - INFO - Coverage updated for task f6cc085b-4604-423a-bd2d-7b16c6683cdd: {'method_coverage': 0.0, 'activities_coverage': 0.0, 'methods_mop_reachable_coverage': 0.0, 'total_errors': 8, 'total_method_calls': 0}
+2026-11-17 10:36:55,854 - rv_platform.components.coverage - INFO - Coverage data processing completed
+2026-11-17 10:36:55,856 - rv_android_core.commands.command - WARNING - Command failed with exit code 1: adb shell ps | grep droidbot
+2026-11-17 10:36:55,856 - rv_android_core.domain.task - INFO - Task f6cc085b-4604-423a-bd2d-7b16c6683cdd completed successfully
+2026-11-17 10:36:55,856 - rv_android_core.domain.task - INFO - Execution time: 390 seconds
+2026-11-17 10:36:55,856 - rv_platform.execution.executor - INFO - Task completed: f6cc085b-4604-423a-bd2d-7b16c6683cdd
+2026-11-17 10:36:55,856 - rv_platform.execution.executor - INFO - Completed Task f6cc085b-4604-423a-bd2d-7b16c6683cdd
+2026-11-17 10:36:55,859 - rv_platform.storage.task_storage - INFO - Saved 2 tasks to results/rvsec_20261117_102204/tasks.json
+2026-11-17 10:36:55,859 - rv_platform.platform - INFO - Task completed: True
+2026-11-17 10:36:55,859 - rv_platform.platform - INFO - Processing experiment results
+2026-11-17 10:36:55,861 - rv_platform.components.result_processor - INFO - Starting result processor initialization
+2026-11-17 10:36:55,861 - rv_platform.components.result_processor - INFO - Completed result processor initialization
+2026-11-17 10:36:55,861 - rv_platform.components.result_processor - INFO - Starting experiment result processing
+2026-11-17 10:36:55,862 - rv_platform.components.result_processor - INFO - Filtered 2 completed tasks out of 2 total tasks
+2026-11-17 10:36:55,862 - rv_platform.components.result_processor - INFO - Starting coverage CSV generation
+2026-11-17 10:36:55,864 - rv_platform.components.result_processor - INFO - Coverage CSV generated: results/rvsec_20261117_102204/coverage.csv
+2026-11-17 10:36:55,864 - rv_platform.components.result_processor - INFO - Starting errors CSV generation
+2026-11-17 10:36:55,864 - rv_platform.components.result_processor - INFO - Errors CSV generated: results/rvsec_20261117_102204/errors.csv
+2026-11-17 10:36:55,865 - rv_platform.components.result_processor - INFO - Starting app events CSV generation
+2026-11-17 10:36:55,865 - rv_platform.components.result_processor - INFO - App events CSV generated: results/rvsec_20261117_102204/app_events.csv
+2026-11-17 10:36:55,865 - rv_platform.components.result_processor - INFO - Starting summary CSV generation
+2026-11-17 10:36:55,865 - rv_platform.components.result_processor - INFO - Summary CSV generated: results/rvsec_20261117_102204/summary.csv
+2026-11-17 10:36:55,867 - rv_static_analysis.parser.static.static_analysis_parser - WARNING - Analysis file not found: results/rvsec_20261117_102204/org.fedorahosted.freeotp.debug_48.apk/org.fedorahosted.freeotp.debug_48.apk.json
+2026-11-17 10:36:55,867 - rv_platform.components.result_processor - WARNING - Static analysis JSON unresolved for task f6cc085b-4604-423a-bd2d-7b16c6683cdd (apk=org.fedorahosted.freeotp.debug_48.apk) — no per-method coverage rows and empty coverage cells, MOP violations preserved
+2026-11-17 10:36:55,874 - rv_platform.components.result_processor - INFO - Reconstructed 9 MOP violations from logcat for task f6cc085b-4604-423a-bd2d-7b16c6683cdd (errors-only (static analysis JSON unavailable))
+2026-11-17 10:36:55,874 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:36:55,877 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:36:55,877 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:36:55,879 - rv_platform.components.result_processor - WARNING - Static analysis JSON unresolved for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb (apk=org.fedorahosted.freeotp.debug_48.apk) — no per-method coverage rows and empty coverage cells, MOP violations preserved
+2026-11-17 10:36:55,887 - rv_platform.components.result_processor - INFO - Reconstructed 9 MOP violations from logcat for task d2b952a3-16f6-430d-ad8a-6ec5a5374deb (errors-only (static analysis JSON unavailable))
+2026-11-17 10:36:55,888 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:36:55,888 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:36:55,888 - rv_android_core.domain.coverage - WARNING - No static analysis data available, returning 0% for all metrics
+2026-11-17 10:36:55,889 - rv_platform.components.result_processor - INFO - Starting results JSON generation
+2026-11-17 10:36:55,889 - rv_platform.components.result_processor - INFO - Results JSON generated: results/rvsec_20261117_102204/results.json
+2026-11-17 10:36:55,890 - rv_platform.components.result_processor - INFO - Starting performance CSV generation
+2026-11-17 10:36:55,905 - rv_platform.components.performance_processor - INFO - Starting performance metrics processing
+2026-11-17 10:36:55,906 - rv_platform.components.performance_processor - INFO - Starting performance CSV generation
+2026-11-17 10:36:55,907 - rv_platform.components.performance_processor - INFO - Performance CSV generated: results/rvsec_20261117_102204/performance.csv
+2026-11-17 10:36:55,907 - rv_platform.components.performance_processor - INFO - Completed performance metrics processing
+2026-11-17 10:36:55,907 - rv_platform.components.result_processor - INFO - Performance processing completed: Processed 2 tasks
+2026-11-17 10:36:55,907 - rv_platform.components.result_processor - INFO - Completed performance CSV generation
+2026-11-17 10:36:55,907 - rv_platform.components.result_processor - WARNING - Resume coverage health: 2/2 resumed tasks had unresolved static data — coverage cells left empty for those tasks (MOP errors preserved). Verify the static-analysis JSON is co-located with each logcat if coverage was expected.
+2026-11-17 10:36:55,907 - rv_platform.components.result_processor - INFO - Completed experiment result processing
+2026-11-17 10:36:55,909 - rv_platform.storage.task_storage - INFO - Saved 2 tasks to results/rvsec_20261117_102204/tasks.json
+2026-11-17 10:36:55,909 - rv_platform.platform - INFO - Experiment results processing completed
+2026-11-17 10:36:55,910 - rv_platform.platform - INFO - Execution summary: 2/2 tasks successful (0 skipped from previous runs)
+2026-11-17 10:36:55,910 - rv_platform.platform - INFO - Platform execution completed successfully
+2026-11-17 10:36:55,911 - rv_experiment.experiment.workflow.execution_controller - INFO - Platform execution completed: 2 tasks, 2 successful, 0 failed
+2026-11-17 10:36:55,911 - rv_experiment.experiment.workflow.execution_controller - INFO - Completed platform execution
+2026-11-17 10:36:55,966 - rv_experiment.experiment.controller - INFO - Starting post-processing phase
+2026-11-17 10:36:55,972 - experiment.workflow.post_processor - INFO - Starting experiment post-processing
+2026-11-17 10:36:55,972 - experiment.workflow.post_processor - INFO - Starting generating instrumentation errors JSON
+2026-11-17 10:36:55,973 - experiment.workflow.result_manager - INFO - Starting experiment result generation
+2026-11-17 10:36:55,973 - experiment.workflow.result_manager - INFO - Loaded 0 completed tasks out of 0 total tasks
+2026-11-17 10:36:55,973 - experiment.workflow.result_manager - WARNING - No completed tasks found for result generation
+2026-11-17 10:36:55,973 - experiment.workflow.post_processor - INFO - Completed instrumentation errors JSON generation
+2026-11-17 10:36:55,973 - experiment.workflow.post_processor - INFO - Starting generating completion diagnostics
+2026-11-17 10:36:55,974 - experiment.workflow.post_processor - INFO - Experiment completion diagnostics: {'results_directory': 'results/rvsec_20261117_102204', 'completion_timestamp': '2026-11-17T10:36:55.974169', 'post_processing_completed': True}
+2026-11-17 10:36:55,974 - experiment.workflow.post_processor - INFO - Completion diagnostics saved to results/rvsec_20261117_102204/experiment_completion.json
+2026-11-17 10:36:55,974 - experiment.workflow.post_processor - INFO - Completed generating completion diagnostics
+2026-11-17 10:36:55,974 - experiment.workflow.post_processor - INFO - Completed experiment post-processing
+2026-11-17 10:36:55,974 - experiment.workflow.post_processor - INFO - Post-processing completed
+2026-11-17 10:36:55,974 - rv_experiment.experiment.controller - INFO - Experiment completed: 20261117_102207
+2026-11-17 10:36:55,974 - rv_experiment.experiment.controller - INFO - Completed experiment 20261117_102207
+✅ Experiment completed successfully!
+📊 Results available in: results/rvsec_20261117_102204
+2026-11-17 10:36:56,023 - rv_experiment.cli - INFO - Completed experiment execution

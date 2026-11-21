@@ -1,0 +1,2493 @@
+{
+ "generated_by": "scripts/rq5_cost_snapshot.py",
+ "prices_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/data/llm_prices.json",
+ "run_start": "earliest YYYYMMDDTHHMMSS prefix of the run's trace file names (local time)",
+ "window1_end_start_of": "outputs/exp_final_20261019/subset_bitbanana_scope6",
+ "window1_end": "2026-10-20T13:49:30",
+ "window2": "runs started 2026-10-19T00:00 .. 2026-11-03T23:59:59",
+ "median_convention": "over the 34 findings, US$ 0 for a finding without calls; mean of the 17th and 18th values",
+ "values": {
+  "N": 11,
+  "CALLS": 569,
+  "TOTAL": 35.7144698,
+  "MED": 0.7663866,
+  "PR": 11.0048857,
+  "PR_share": 0.30813521134786664,
+  "ISS": 17.982655700000002,
+  "ISS_share": 0.5035117642989622,
+  "FP": 0.8163189000000001,
+  "IE": 0.4222432333333333,
+  "BITBANANA": 10.432174,
+  "K": 16,
+  "ALL": 53.380839,
+  "FREEOTP": 7.841276,
+  "CALLS_window2": 864,
+  "findings_without_calls_window1": 0
+ },
+ "groups_window1": [
+  {
+   "name": "PR (committed draft, build success)",
+   "count": 7,
+   "total_usd": 11.0048857,
+   "mean_usd": 1.5721265285714288,
+   "findings": [
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec",
+    "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec",
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec",
+    "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec",
+    "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt:::trustAllCerts:::SSLContextSpec",
+    "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec",
+    "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec"
+   ]
+  },
+  {
+   "name": "issue proposal",
+   "count": 16,
+   "total_usd": 17.982655700000002,
+   "mean_usd": 1.1239159812500001,
+   "findings": [
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec",
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec",
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec",
+    "com.password.monitor.koin_di.AppModuleKt:::appModule$lambda$0$3:::MessageDigestSpec",
+    "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2:::invokeSuspend:::MessageDigestSpec",
+    "com.schwegelbin.openbible.logic.GettersKt:::getChecksum:::MessageDigestSpec",
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec",
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec",
+    "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec",
+    "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec",
+    "github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec",
+    "org.cry.otp.MD5:::<init>:::MessageDigestSpec",
+    "org.cry.otp.TOTP:::hmac_sha:::MacSpec",
+    "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec",
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec",
+    "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec"
+   ]
+  },
+  {
+   "name": "recognised false positive",
+   "count": 3,
+   "total_usd": 2.4489567,
+   "mean_usd": 0.8163189000000001,
+   "findings": [
+    "com.beemdevelopment.aegis.crypto.CryptoUtils:::createCipher:::GCMParameterSpecSpec",
+    "org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec",
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec"
+   ]
+  },
+  {
+   "name": "insufficient evidence",
+   "count": 3,
+   "total_usd": 1.2667297,
+   "mean_usd": 0.4222432333333333,
+   "findings": [
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec",
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec",
+    "org.quantumbadger.redreader.common.General:::parseConfig:::SecretKeySpecSpec"
+   ]
+  },
+  {
+   "name": "BitBanana",
+   "count": 2,
+   "total_usd": 10.432174,
+   "mean_usd": 5.216087,
+   "findings": [
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec",
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec"
+   ]
+  }
+ ],
+ "runs_window1": [
+  "outputs/exp_final_20261019/run",
+  "outputs/exp_final_20261019/subset_openai",
+  "outputs/exp_final_20261019/run2",
+  "outputs/exp_final_20261019/subset_gates",
+  "outputs/exp_final_20261019/subset_policy",
+  "outputs/exp_final_20261019/subset_policy2",
+  "outputs/exp_final_20261019/subset_bitbanana",
+  "outputs/exp_final_20261019/subset_bitbanana_readers",
+  "outputs/exp_final_20261019/subset_bitbanana_readers2",
+  "outputs/exp_final_20261019/subset_bitbanana_scope",
+  "outputs/exp_final_20261019/subset_bitbanana_scope2"
+ ],
+ "runs_window1_with_only_hex_keyed_calls": [
+  "outputs/exp_final_20261019/subset_bitbanana_scope6"
+ ],
+ "runs_window2_extra": [
+  "outputs/exp_final_20261019/subset_newpr",
+  "outputs/exp_final_20261019/subset_newpr2",
+  "outputs/exp_final_20261019/subset_newpr3",
+  "outputs/exp_final_20261019/subset_newpr4",
+  "outputs/exp_final_20261019/subset_issues",
+  "outputs/rerun_correcoes_20261022/run",
+  "outputs/exp_final_20261019/subset_revisao_lacunas",
+  "outputs/exp_final_20261019/subset_revisao_lacunas_v2",
+  "outputs/exp_final_20261019/subset_revisao_lacunas_v3",
+  "outputs/exp_final_20261019/subset_revisao_lacunas_v4",
+  "outputs/exp_final_20261019/subset_revisao_lacunas_v5",
+  "outputs/exp_final_20261019/subset_revisao_lacunas_v6",
+  "outputs/exp_final_20261019/subset_revisao_lacunas_v7",
+  "outputs/exp_final_20261019/subset_redreader_sha1",
+  "outputs/exp_final_20261019/subset_redreader_sha1_v2",
+  "outputs/exp_final_20261019/subset_mtgfam_fetch"
+ ],
+ "before_window2": {
+  "runs": [
+   "outputs/run_20260830_012144_password_monitor",
+   "outputs/run_20260830_023950",
+   "outputs/run_20260830_025839",
+   "outputs/run_20260830_085401",
+   "outputs/run_20260830_135852",
+   "outputs/run_20260830_142650",
+   "outputs/run_20260830_145404",
+   "outputs/run_20260830_195549",
+   "outputs/run_20260830_223931",
+   "outputs/run_20260830_231136",
+   "outputs/run_20260830_231740",
+   "outputs/run_20260830_234039",
+   "outputs/run_20260902_002440",
+   "outputs/run_20260906_064747",
+   "outputs/run_20260906_070723",
+   "outputs/run_20260906_074827",
+   "outputs/run_20260906_080507",
+   "outputs/run_20260911_174242",
+   "outputs/run_20260915_124127",
+   "outputs/run_20261006_223750",
+   "outputs/run_20261009_012517",
+   "outputs/run_20261010_200449",
+   "outputs/run_20261011_101038",
+   "outputs/run_20261011_134205",
+   "outputs/run_20261011_161752",
+   "outputs/rv_import_consolidado_20261011/reexecucoes/run_realocados_20261011_192407",
+   "outputs/rv_import_consolidado_20261011/reexecucoes/run_melhorias_20261011_203822",
+   "outputs/rv_import_consolidado_20261011/reexecucoes/run_verificacao_biblioteca_20261012_011346",
+   "outputs/rvsec_misuse3_20261016/run",
+   "outputs/rvsec_misuse3_20261016/run2",
+   "outputs/rvsec_misuse3_20261016/run3",
+   "outputs/rvsec_misuse3_20261016/run4",
+   "outputs/rvsec_misuse3_20261016/run5",
+   "outputs/rvsec_misuse3_20261016/run6"
+  ],
+  "calls": 946,
+  "cost_usd": 75.495966
+ },
+ "left_out_by_usage_by_finding": {
+  "window1_hex_keyed_calls_mapped_to_the_34": {
+   "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+    "calls": 1,
+    "cost_usd": 0.072828
+   },
+   "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+    "calls": 1,
+    "cost_usd": 0.062286
+   },
+   "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+    "calls": 4,
+    "cost_usd": 0.37496
+   }
+  },
+  "window1_no_finding_calls": 22,
+  "window1_no_finding_cost_usd": 1.6110548
+ },
+ "per_finding_window1": {
+  "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+   "calls": 93,
+   "cost_usd": 5.8690560000000005
+  },
+  "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+   "calls": 74,
+   "cost_usd": 4.563118
+  },
+  "com.beemdevelopment.aegis.crypto.CryptoUtils:::createCipher:::GCMParameterSpecSpec": {
+   "calls": 10,
+   "cost_usd": 0.7780332000000001
+  },
+  "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec": {
+   "calls": 16,
+   "cost_usd": 1.0821315
+  },
+  "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+   "calls": 15,
+   "cost_usd": 1.0724035
+  },
+  "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+   "calls": 23,
+   "cost_usd": 1.69462
+  },
+  "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+   "calls": 10,
+   "cost_usd": 0.619584
+  },
+  "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec": {
+   "calls": 18,
+   "cost_usd": 1.0961691
+  },
+  "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt:::trustAllCerts:::SSLContextSpec": {
+   "calls": 7,
+   "cost_usd": 0.35494200000000004
+  },
+  "com.password.monitor.koin_di.AppModuleKt:::appModule$lambda$0$3:::MessageDigestSpec": {
+   "calls": 5,
+   "cost_usd": 0.153714
+  },
+  "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2:::invokeSuspend:::MessageDigestSpec": {
+   "calls": 6,
+   "cost_usd": 0.218326
+  },
+  "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+   "calls": 13,
+   "cost_usd": 0.751198
+  },
+  "com.schwegelbin.openbible.logic.GettersKt:::getChecksum:::MessageDigestSpec": {
+   "calls": 5,
+   "cost_usd": 0.24885400000000002
+  },
+  "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+   "calls": 5,
+   "cost_usd": 0.29849000000000003
+  },
+  "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+   "calls": 5,
+   "cost_usd": 0.34601800000000005
+  },
+  "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider:::configureTrustAllCertificates:::SSLContextSpec": {
+   "calls": 10,
+   "cost_usd": 0.6107400000000001
+  },
+  "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec": {
+   "calls": 11,
+   "cost_usd": 0.8897439
+  },
+  "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+   "calls": 16,
+   "cost_usd": 1.5151845000000002
+  },
+  "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+   "calls": 12,
+   "cost_usd": 0.75474
+  },
+  "github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec": {
+   "calls": 6,
+   "cost_usd": 0.375568
+  },
+  "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec": {
+   "calls": 9,
+   "cost_usd": 0.6666737
+  },
+  "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec": {
+   "calls": 6,
+   "cost_usd": 0.374152
+  },
+  "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec": {
+   "calls": 18,
+   "cost_usd": 1.2318051
+  },
+  "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+   "calls": 8,
+   "cost_usd": 0.35707
+  },
+  "org.cry.otp.MD5:::<init>:::MessageDigestSpec": {
+   "calls": 28,
+   "cost_usd": 0.857018
+  },
+  "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+   "calls": 28,
+   "cost_usd": 1.5956051000000002
+  },
+  "org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec": {
+   "calls": 7,
+   "cost_usd": 0.441352
+  },
+  "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+   "calls": 15,
+   "cost_usd": 1.2295715
+  },
+  "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+   "calls": 9,
+   "cost_usd": 0.829514
+  },
+  "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+   "calls": 14,
+   "cost_usd": 0.9340651000000002
+  },
+  "org.quantumbadger.redreader.common.General:::parseConfig:::SecretKeySpecSpec": {
+   "calls": 4,
+   "cost_usd": 0.225904
+  },
+  "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+   "calls": 28,
+   "cost_usd": 1.6880511000000002
+  },
+  "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec": {
+   "calls": 10,
+   "cost_usd": 0.459178
+  },
+  "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+   "calls": 25,
+   "cost_usd": 1.5318765000000003
+  }
+ },
+ "per_finding_window2": {
+  "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+   "calls": 93,
+   "cost_usd": 5.8690560000000005
+  },
+  "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+   "calls": 74,
+   "cost_usd": 4.563118
+  },
+  "com.beemdevelopment.aegis.crypto.CryptoUtils:::createCipher:::GCMParameterSpecSpec": {
+   "calls": 10,
+   "cost_usd": 0.7780332000000001
+  },
+  "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec": {
+   "calls": 16,
+   "cost_usd": 1.0821315
+  },
+  "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+   "calls": 39,
+   "cost_usd": 2.12991465
+  },
+  "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+   "calls": 33,
+   "cost_usd": 2.3596880000000002
+  },
+  "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+   "calls": 10,
+   "cost_usd": 0.619584
+  },
+  "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec": {
+   "calls": 18,
+   "cost_usd": 1.0961691
+  },
+  "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt:::trustAllCerts:::SSLContextSpec": {
+   "calls": 7,
+   "cost_usd": 0.35494200000000004
+  },
+  "com.password.monitor.koin_di.AppModuleKt:::appModule$lambda$0$3:::MessageDigestSpec": {
+   "calls": 5,
+   "cost_usd": 0.153714
+  },
+  "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2:::invokeSuspend:::MessageDigestSpec": {
+   "calls": 6,
+   "cost_usd": 0.218326
+  },
+  "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+   "calls": 13,
+   "cost_usd": 0.751198
+  },
+  "com.schwegelbin.openbible.logic.GettersKt:::getChecksum:::MessageDigestSpec": {
+   "calls": 5,
+   "cost_usd": 0.24885400000000002
+  },
+  "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+   "calls": 5,
+   "cost_usd": 0.29849000000000003
+  },
+  "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+   "calls": 9,
+   "cost_usd": 0.627826
+  },
+  "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider:::configureTrustAllCertificates:::SSLContextSpec": {
+   "calls": 10,
+   "cost_usd": 0.6107400000000001
+  },
+  "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec": {
+   "calls": 11,
+   "cost_usd": 0.8897439
+  },
+  "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+   "calls": 26,
+   "cost_usd": 2.3130365
+  },
+  "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+   "calls": 25,
+   "cost_usd": 1.782578
+  },
+  "github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec": {
+   "calls": 6,
+   "cost_usd": 0.375568
+  },
+  "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec": {
+   "calls": 12,
+   "cost_usd": 0.9899777000000001
+  },
+  "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec": {
+   "calls": 8,
+   "cost_usd": 0.544088
+  },
+  "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec": {
+   "calls": 18,
+   "cost_usd": 1.2318051
+  },
+  "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+   "calls": 8,
+   "cost_usd": 0.35707
+  },
+  "org.cry.otp.MD5:::<init>:::MessageDigestSpec": {
+   "calls": 28,
+   "cost_usd": 0.857018
+  },
+  "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+   "calls": 28,
+   "cost_usd": 1.5956051000000002
+  },
+  "org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec": {
+   "calls": 7,
+   "cost_usd": 0.441352
+  },
+  "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+   "calls": 18,
+   "cost_usd": 1.4159955
+  },
+  "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+   "calls": 123,
+   "cost_usd": 7.841276
+  },
+  "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+   "calls": 22,
+   "cost_usd": 1.4709891000000002
+  },
+  "org.quantumbadger.redreader.common.General:::parseConfig:::SecretKeySpecSpec": {
+   "calls": 11,
+   "cost_usd": 0.625544
+  },
+  "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+   "calls": 103,
+   "cost_usd": 6.01273315
+  },
+  "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec": {
+   "calls": 21,
+   "cost_usd": 0.70908
+  },
+  "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+   "calls": 36,
+   "cost_usd": 2.1655945
+  }
+ },
+ "runs": [
+  {
+   "run": "outputs/run_20260830_012144_password_monitor",
+   "start": "2026-08-30T01:21:47",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 4,
+   "cost_usd": 0.41398,
+   "findings": {
+    "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2:::invokeSuspend:::MessageDigestSpec": {
+     "calls": 4,
+     "cost_usd": 0.41398
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_023950",
+   "start": "2026-08-30T02:44:37",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 1,
+   "cost_usd": 0.274146,
+   "findings": {
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 1,
+     "cost_usd": 0.274146
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_025839",
+   "start": "2026-08-30T03:03:00",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 8,
+   "cost_usd": 0.689954,
+   "findings": {
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 8,
+     "cost_usd": 0.689954
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_085401",
+   "start": "2026-08-30T08:57:20",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 4,
+   "cost_usd": 0.5267040000000001,
+   "findings": {
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 4,
+     "cost_usd": 0.5267040000000001
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_135852",
+   "start": "2026-08-30T14:00:53",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 8,
+   "cost_usd": 0.675584,
+   "findings": {
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 8,
+     "cost_usd": 0.675584
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_142650",
+   "start": "2026-08-30T14:28:30",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 7,
+   "cost_usd": 0.625156,
+   "findings": {
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 7,
+     "cost_usd": 0.625156
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_145404",
+   "start": "2026-08-30T14:55:25",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 7,
+   "cost_usd": 0.6995779999999999,
+   "findings": {
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 7,
+     "cost_usd": 0.6995779999999999
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_195549",
+   "start": "2026-08-30T19:56:20",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 5,
+   "cost_usd": 0.48062400000000005,
+   "findings": {
+    "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+     "calls": 5,
+     "cost_usd": 0.48062400000000005
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_223931",
+   "start": "2026-08-30T22:40:38",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 4,
+   "cost_usd": 0.474162,
+   "findings": {
+    "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec": {
+     "calls": 4,
+     "cost_usd": 0.474162
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_231136",
+   "start": "2026-08-30T23:12:06",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 5,
+   "cost_usd": 0.34044,
+   "findings": {
+    "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.34044
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_231740",
+   "start": "2026-08-30T23:20:52",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 8,
+   "cost_usd": 0.46813,
+   "findings": {
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 8,
+     "cost_usd": 0.46813
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260830_234039",
+   "start": "2026-08-30T23:44:10",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 8,
+   "cost_usd": 0.46347199999999994,
+   "findings": {
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 8,
+     "cost_usd": 0.46347199999999994
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260902_002440",
+   "start": "2026-09-02T00:26:50",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 8,
+   "cost_usd": 0.5090579999999999,
+   "findings": {
+    "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt:::trustAllCerts:::SSLContextSpec": {
+     "calls": 8,
+     "cost_usd": 0.5090579999999999
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260906_064747",
+   "start": "2026-09-06T06:49:28",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 5,
+   "cost_usd": 0.31556199999999995,
+   "findings": {
+    "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.31556199999999995
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260906_070723",
+   "start": "2026-09-06T07:07:55",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 5,
+   "cost_usd": 0.514662,
+   "findings": {
+    "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.514662
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260906_074827",
+   "start": "2026-09-06T07:48:51",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 7,
+   "cost_usd": 0.642652,
+   "findings": {
+    "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+     "calls": 7,
+     "cost_usd": 0.642652
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260906_080507",
+   "start": "2026-09-06T08:05:28",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 7,
+   "cost_usd": 0.558972,
+   "findings": {
+    "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+     "calls": 7,
+     "cost_usd": 0.558972
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260911_174242",
+   "start": "2026-09-11T17:43:26",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 4,
+   "cost_usd": 0.363062,
+   "findings": {
+    "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+     "calls": 4,
+     "cost_usd": 0.363062
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20260915_124127",
+   "start": "2026-09-15T12:44:01",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 7,
+   "cost_usd": 0.5220159999999999,
+   "findings": {
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 7,
+     "cost_usd": 0.5220159999999999
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20261006_223750",
+   "start": "2026-10-06T22:38:05",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 209,
+   "cost_usd": 17.683654,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 11,
+     "cost_usd": 0.825108
+    },
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+     "calls": 11,
+     "cost_usd": 0.896424
+    },
+    "com.beemdevelopment.aegis.crypto.CryptoUtils:::createCipher:::GCMParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.368454
+    },
+    "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 10,
+     "cost_usd": 0.7262979999999999
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.396238
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.36309400000000003
+    },
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 6,
+     "cost_usd": 0.597934
+    },
+    "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec": {
+     "calls": 10,
+     "cost_usd": 0.697834
+    },
+    "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt:::trustAllCerts:::SSLContextSpec": {
+     "calls": 7,
+     "cost_usd": 0.5932340000000002
+    },
+    "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2:::invokeSuspend:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.537042
+    },
+    "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.37002
+    },
+    "com.schwegelbin.openbible.logic.GettersKt:::getChecksum:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.40616
+    },
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 8,
+     "cost_usd": 0.6202699999999999
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.44182
+    },
+    "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider:::configureTrustAllCertificates:::SSLContextSpec": {
+     "calls": 9,
+     "cost_usd": 0.635486
+    },
+    "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.417838
+    },
+    "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+     "calls": 4,
+     "cost_usd": 0.493226
+    },
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 10,
+     "cost_usd": 1.013724
+    },
+    "github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.600834
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.377702
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.374468
+    },
+    "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 8,
+     "cost_usd": 0.696282
+    },
+    "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.5388459999999999
+    },
+    "org.cry.otp.MD5:::<init>:::MessageDigestSpec": {
+     "calls": 15,
+     "cost_usd": 0.9990999999999999
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+     "calls": 5,
+     "cost_usd": 0.39720800000000006
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.389398
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+     "calls": 5,
+     "cost_usd": 0.41038600000000003
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 5,
+     "cost_usd": 0.482058
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.42418599999999995
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.386924
+    },
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.46498800000000007
+    },
+    "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec": {
+     "calls": 4,
+     "cost_usd": 0.369988
+    },
+    "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+     "calls": 4,
+     "cost_usd": 0.371082
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20261009_012517",
+   "start": "2026-10-09T01:54:03",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 200,
+   "cost_usd": 16.786648,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 10,
+     "cost_usd": 0.833912
+    },
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+     "calls": 1,
+     "cost_usd": 0.0
+    },
+    "com.beemdevelopment.aegis.crypto.CryptoUtils:::createCipher:::GCMParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.425802
+    },
+    "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 6,
+     "cost_usd": 0.674606
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.48953
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.38978
+    },
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 7,
+     "cost_usd": 0.533454
+    },
+    "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec": {
+     "calls": 4,
+     "cost_usd": 0.48028600000000005
+    },
+    "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt:::trustAllCerts:::SSLContextSpec": {
+     "calls": 9,
+     "cost_usd": 0.674572
+    },
+    "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2:::invokeSuspend:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.476904
+    },
+    "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.40072599999999997
+    },
+    "com.schwegelbin.openbible.logic.GettersKt:::getChecksum:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.41778799999999994
+    },
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 9,
+     "cost_usd": 0.7711659999999999
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 11,
+     "cost_usd": 0.885752
+    },
+    "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider:::configureTrustAllCertificates:::SSLContextSpec": {
+     "calls": 10,
+     "cost_usd": 0.595412
+    },
+    "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.414376
+    },
+    "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.44643
+    },
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 6,
+     "cost_usd": 0.611632
+    },
+    "github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec": {
+     "calls": 7,
+     "cost_usd": 0.690454
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.343912
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.341736
+    },
+    "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 5,
+     "cost_usd": 0.46860399999999997
+    },
+    "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.49556199999999995
+    },
+    "org.cry.otp.MD5:::<init>:::MessageDigestSpec": {
+     "calls": 10,
+     "cost_usd": 0.755404
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+     "calls": 5,
+     "cost_usd": 0.408758
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec": {
+     "calls": 7,
+     "cost_usd": 0.474046
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+     "calls": 5,
+     "cost_usd": 0.391538
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 5,
+     "cost_usd": 0.515198
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.38149800000000006
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.35561200000000004
+    },
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.413686
+    },
+    "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec": {
+     "calls": 8,
+     "cost_usd": 0.688946
+    },
+    "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+     "calls": 7,
+     "cost_usd": 0.539566
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20261010_200449",
+   "start": "2026-10-10T20:42:55",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 236,
+   "cost_usd": 18.723856,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 11,
+     "cost_usd": 0.9903239999999999
+    },
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+     "calls": 11,
+     "cost_usd": 0.785348
+    },
+    "com.beemdevelopment.aegis.crypto.CryptoUtils:::createCipher:::GCMParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.37373
+    },
+    "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 5,
+     "cost_usd": 0.43603000000000003
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.390994
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+     "calls": 8,
+     "cost_usd": 0.61776
+    },
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 7,
+     "cost_usd": 0.5436139999999999
+    },
+    "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec": {
+     "calls": 5,
+     "cost_usd": 0.41066400000000003
+    },
+    "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt:::trustAllCerts:::SSLContextSpec": {
+     "calls": 10,
+     "cost_usd": 0.6210340000000001
+    },
+    "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2:::invokeSuspend:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.5535260000000001
+    },
+    "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+     "calls": 9,
+     "cost_usd": 0.733638
+    },
+    "com.schwegelbin.openbible.logic.GettersKt:::getChecksum:::MessageDigestSpec": {
+     "calls": 9,
+     "cost_usd": 0.593074
+    },
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 12,
+     "cost_usd": 0.81632
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 9,
+     "cost_usd": 0.662156
+    },
+    "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider:::configureTrustAllCertificates:::SSLContextSpec": {
+     "calls": 9,
+     "cost_usd": 0.6207659999999999
+    },
+    "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.42572599999999994
+    },
+    "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+     "calls": 7,
+     "cost_usd": 0.6094839999999999
+    },
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 13,
+     "cost_usd": 0.9848939999999999
+    },
+    "github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.587476
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.499774
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.321164
+    },
+    "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 5,
+     "cost_usd": 0.48936
+    },
+    "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+     "calls": 9,
+     "cost_usd": 0.7044320000000002
+    },
+    "org.cry.otp.MD5:::<init>:::MessageDigestSpec": {
+     "calls": 12,
+     "cost_usd": 0.8714160000000002
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+     "calls": 9,
+     "cost_usd": 0.6286800000000001
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.390168
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+     "calls": 5,
+     "cost_usd": 0.41416200000000003
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 5,
+     "cost_usd": 0.5436380000000001
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.462434
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.373252
+    },
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.470606
+    },
+    "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec": {
+     "calls": 6,
+     "cost_usd": 0.396126
+    },
+    "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+     "calls": 5,
+     "cost_usd": 0.402086
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20261011_101038",
+   "start": "2026-10-11T10:31:46",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 6,
+   "cost_usd": 0.5271960000000001,
+   "findings": {
+    "com.password.monitor.koin_di.AppModuleKt:::appModule$lambda$0$3:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.5271960000000001
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20261011_134205",
+   "start": "2026-10-11T13:53:54",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 8,
+   "cost_usd": 0.7066460000000001,
+   "findings": {
+    "com.password.monitor.koin_di.AppModuleKt:::appModule$lambda$0$3:::MessageDigestSpec": {
+     "calls": 8,
+     "cost_usd": 0.7066460000000001
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/run_20261011_161752",
+   "start": "2026-10-11T17:33:18",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 9,
+   "cost_usd": 0.858222,
+   "findings": {
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+     "calls": 5,
+     "cost_usd": 0.355326
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 4,
+     "cost_usd": 0.502896
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/rv_import_consolidado_20261011/reexecucoes/run_realocados_20261011_192407",
+   "start": "2026-10-11T19:29:47",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 13,
+   "cost_usd": 0.9972979999999999,
+   "findings": {
+    "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+     "calls": 8,
+     "cost_usd": 0.5870839999999999
+    },
+    "com.schwegelbin.openbible.logic.GettersKt:::getChecksum:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.41021399999999997
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/rv_import_consolidado_20261011/reexecucoes/run_melhorias_20261011_203822",
+   "start": "2026-10-11T20:50:27",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 54,
+   "cost_usd": 4.583844,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 10,
+     "cost_usd": 0.8401980000000001
+    },
+    "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+     "calls": 4,
+     "cost_usd": 0.241726
+    },
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 10,
+     "cost_usd": 0.840168
+    },
+    "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider:::configureTrustAllCertificates:::SSLContextSpec": {
+     "calls": 7,
+     "cost_usd": 0.5480160000000001
+    },
+    "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+     "calls": 8,
+     "cost_usd": 0.66639
+    },
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 8,
+     "cost_usd": 0.90174
+    },
+    "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+     "calls": 7,
+     "cost_usd": 0.545606
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/rv_import_consolidado_20261011/reexecucoes/run_verificacao_biblioteca_20261012_011346",
+   "start": "2026-10-12T01:20:47",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 4,
+   "cost_usd": 0.191012,
+   "findings": {
+    "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+     "calls": 4,
+     "cost_usd": 0.191012
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/rvsec_misuse3_20261016/run",
+   "start": "2026-10-16T19:24:39",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 15,
+   "cost_usd": 1.1530900000000002,
+   "findings": {
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.57432
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 9,
+     "cost_usd": 0.57877
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/rvsec_misuse3_20261016/run2",
+   "start": "2026-10-16T20:09:49",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 18,
+   "cost_usd": 0.9738580000000001,
+   "findings": {
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 3,
+     "cost_usd": 0.220914
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 15,
+     "cost_usd": 0.7529440000000001
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/rvsec_misuse3_20261016/run3",
+   "start": "2026-10-16T20:40:25",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 14,
+   "cost_usd": 0.518122,
+   "findings": {
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 2,
+     "cost_usd": 0.049432000000000004
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 12,
+     "cost_usd": 0.46869
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/rvsec_misuse3_20261016/run4",
+   "start": "2026-10-16T21:09:18",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 11,
+   "cost_usd": 0.5765539999999999,
+   "findings": {
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 1,
+     "cost_usd": 0.03355
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 10,
+     "cost_usd": 0.5430039999999999
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/rvsec_misuse3_20261016/run5",
+   "start": "2026-10-16T21:34:26",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 18,
+   "cost_usd": 0.850774,
+   "findings": {
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 2,
+     "cost_usd": 0.047686000000000006
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 16,
+     "cost_usd": 0.803088
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/rvsec_misuse3_20261016/run6",
+   "start": "2026-10-16T21:52:50",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": false,
+   "calls": 19,
+   "cost_usd": 0.8072779999999998,
+   "findings": {
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 2,
+     "cost_usd": 0.050306000000000003
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 17,
+     "cost_usd": 0.7569719999999999
+    }
+   },
+   "side_calls": null
+  },
+  {
+   "run": "outputs/exp_final_20261019/run",
+   "start": "2026-10-19T00:53:36",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 52,
+   "cost_usd": 4.3478698,
+   "findings": {
+    "com.beemdevelopment.aegis.crypto.CryptoUtils:::createCipher:::GCMParameterSpecSpec": {
+     "calls": 3,
+     "cost_usd": 0.2641472
+    },
+    "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 4,
+     "cost_usd": 0.2771215
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.2901395
+    },
+    "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec": {
+     "calls": 4,
+     "cost_usd": 0.26470710000000003
+    },
+    "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+     "calls": 1,
+     "cost_usd": 0.0
+    },
+    "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec": {
+     "calls": 4,
+     "cost_usd": 0.4003359
+    },
+    "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+     "calls": 3,
+     "cost_usd": 0.3663805
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec": {
+     "calls": 3,
+     "cost_usd": 0.2847497
+    },
+    "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 4,
+     "cost_usd": 0.31318910000000005
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+     "calls": 4,
+     "cost_usd": 0.2851551
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+     "calls": 4,
+     "cost_usd": 0.3225015
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 3,
+     "cost_usd": 0.300728
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.3283671
+    },
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 4,
+     "cost_usd": 0.3702771
+    },
+    "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+     "calls": 3,
+     "cost_usd": 0.2800705
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 3,
+    "no_finding_cost": 0.08849080000000001,
+    "no_finding_stages": {
+     "detector_rule_proposal": 3
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_openai",
+   "start": "2026-10-19T10:30:43",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 67,
+   "cost_usd": 4.8897900000000005,
+   "findings": {
+    "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 1,
+     "cost_usd": 0.0
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.36501
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.384036
+    },
+    "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec": {
+     "calls": 7,
+     "cost_usd": 0.543246
+    },
+    "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.44473599999999996
+    },
+    "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 7,
+     "cost_usd": 0.567686
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+     "calls": 9,
+     "cost_usd": 0.505298
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+     "calls": 4,
+     "cost_usd": 0.39416
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.3834160000000001
+    },
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 13,
+     "cost_usd": 0.819408
+    },
+    "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+     "calls": 8,
+     "cost_usd": 0.482794
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 3,
+    "no_finding_cost": 0.043227999999999996,
+    "no_finding_stages": {
+     "detector_rule_proposal": 2,
+     "solutions.base_port": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/run2",
+   "start": "2026-10-19T14:19:48",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 283,
+   "cost_usd": 16.621978000000002,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 11,
+     "cost_usd": 0.588826
+    },
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+     "calls": 17,
+     "cost_usd": 1.122908
+    },
+    "com.beemdevelopment.aegis.crypto.CryptoUtils:::createCipher:::GCMParameterSpecSpec": {
+     "calls": 7,
+     "cost_usd": 0.5138860000000001
+    },
+    "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 11,
+     "cost_usd": 0.8050099999999999
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+     "calls": 7,
+     "cost_usd": 0.41725399999999996
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+     "calls": 13,
+     "cost_usd": 0.82567
+    },
+    "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec": {
+     "calls": 10,
+     "cost_usd": 0.619584
+    },
+    "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec": {
+     "calls": 7,
+     "cost_usd": 0.28821599999999997
+    },
+    "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt:::trustAllCerts:::SSLContextSpec": {
+     "calls": 7,
+     "cost_usd": 0.35494200000000004
+    },
+    "com.password.monitor.koin_di.AppModuleKt:::appModule$lambda$0$3:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.153714
+    },
+    "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2:::invokeSuspend:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.218326
+    },
+    "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec": {
+     "calls": 12,
+     "cost_usd": 0.751198
+    },
+    "com.schwegelbin.openbible.logic.GettersKt:::getChecksum:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.24885400000000002
+    },
+    "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.29849000000000003
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 5,
+     "cost_usd": 0.34601800000000005
+    },
+    "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider:::configureTrustAllCertificates:::SSLContextSpec": {
+     "calls": 10,
+     "cost_usd": 0.6107400000000001
+    },
+    "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec": {
+     "calls": 7,
+     "cost_usd": 0.489408
+    },
+    "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+     "calls": 8,
+     "cost_usd": 0.7040680000000001
+    },
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 8,
+     "cost_usd": 0.55644
+    },
+    "github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec": {
+     "calls": 6,
+     "cost_usd": 0.375568
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec": {
+     "calls": 6,
+     "cost_usd": 0.38192400000000004
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec": {
+     "calls": 6,
+     "cost_usd": 0.374152
+    },
+    "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec": {
+     "calls": 7,
+     "cost_usd": 0.35092999999999996
+    },
+    "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec": {
+     "calls": 8,
+     "cost_usd": 0.35707
+    },
+    "org.cry.otp.MD5:::<init>:::MessageDigestSpec": {
+     "calls": 12,
+     "cost_usd": 0.480984
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::MacSpec": {
+     "calls": 15,
+     "cost_usd": 0.8051520000000002
+    },
+    "org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec": {
+     "calls": 7,
+     "cost_usd": 0.441352
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+     "calls": 7,
+     "cost_usd": 0.51291
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 6,
+     "cost_usd": 0.528786
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+     "calls": 5,
+     "cost_usd": 0.22228200000000004
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::SecretKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.225904
+    },
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 11,
+     "cost_usd": 0.49836600000000003
+    },
+    "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec": {
+     "calls": 10,
+     "cost_usd": 0.459178
+    },
+    "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+     "calls": 12,
+     "cost_usd": 0.693868
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {
+     "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+      "calls": 1,
+      "cost_usd": 0.072828
+     },
+     "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+      "calls": 1,
+      "cost_usd": 0.062286
+     }
+    },
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 5,
+    "no_finding_cost": 0.266784,
+    "no_finding_stages": {
+     "solutions.base_port": 5
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_gates",
+   "start": "2026-10-20T00:07:16",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 27,
+   "cost_usd": 1.497724,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 6,
+     "cost_usd": 0.273552
+    },
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+     "calls": 15,
+     "cost_usd": 0.950728
+    },
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 4,
+     "cost_usd": 0.19829999999999998
+    },
+    "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+     "calls": 2,
+     "cost_usd": 0.075144
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 2,
+    "no_finding_cost": 0.142698,
+    "no_finding_stages": {
+     "solutions.base_port": 1,
+     "solutions.base_port.correction": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_policy",
+   "start": "2026-10-20T02:06:30",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 45,
+   "cost_usd": 2.624454,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 13,
+     "cost_usd": 0.866142
+    },
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+     "calls": 19,
+     "cost_usd": 1.111484
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+     "calls": 6,
+     "cost_usd": 0.48491400000000007
+    },
+    "org.cry.otp.MD5:::<init>:::MessageDigestSpec": {
+     "calls": 7,
+     "cost_usd": 0.161914
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 2,
+    "no_finding_cost": 0.134578,
+    "no_finding_stages": {
+     "detector_rule_proposal": 2
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_policy2",
+   "start": "2026-10-20T10:27:29",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 34,
+   "cost_usd": 1.7140799999999998,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 12,
+     "cost_usd": 0.704658
+    },
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+     "calls": 13,
+     "cost_usd": 0.7953019999999998
+    },
+    "org.cry.otp.MD5:::<init>:::MessageDigestSpec": {
+     "calls": 9,
+     "cost_usd": 0.21412
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_bitbanana",
+   "start": "2026-10-20T10:48:25",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 19,
+   "cost_usd": 1.174662,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 9,
+     "cost_usd": 0.591966
+    },
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::SecretKeyFactorySpec": {
+     "calls": 10,
+     "cost_usd": 0.582696
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 2,
+    "no_finding_cost": 0.26105999999999996,
+    "no_finding_stages": {
+     "solutions.base_port": 1,
+     "solutions.base_port.correction": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_bitbanana_readers",
+   "start": "2026-10-20T11:58:10",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 4,
+   "cost_usd": 0.261384,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 4,
+     "cost_usd": 0.261384
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {
+     "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+      "calls": 1,
+      "cost_usd": 0.087816
+     }
+    },
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 1,
+    "no_finding_cost": 0.091302,
+    "no_finding_stages": {
+     "solutions.base_port": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_bitbanana_readers2",
+   "start": "2026-10-20T12:06:22",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 8,
+   "cost_usd": 0.434124,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 8,
+     "cost_usd": 0.434124
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_bitbanana_scope",
+   "start": "2026-10-20T12:53:18",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 15,
+   "cost_usd": 1.0604799999999999,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 15,
+     "cost_usd": 1.0604799999999999
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_bitbanana_scope2",
+   "start": "2026-10-20T13:08:41",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 15,
+   "cost_usd": 1.0879240000000001,
+   "findings": {
+    "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+     "calls": 15,
+     "cost_usd": 1.0879240000000001
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 3,
+    "no_finding_cost": 0.38766599999999996,
+    "no_finding_stages": {
+     "detector_rule_proposal": 1,
+     "solutions.base_port": 1,
+     "solutions.base_port.correction": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_bitbanana_scope6",
+   "start": "2026-10-20T13:49:30",
+   "start_source": "trace_file_name",
+   "window1": true,
+   "window2": true,
+   "calls": 0,
+   "cost_usd": 0,
+   "findings": {},
+   "side_calls": {
+    "hex_mapped": {
+     "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec": {
+      "calls": 3,
+      "cost_usd": 0.287144
+     }
+    },
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 1,
+    "no_finding_cost": 0.195248,
+    "no_finding_stages": {
+     "solutions.base_port": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_newpr",
+   "start": "2026-10-20T15:34:33",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 12,
+   "cost_usd": 0.7963859999999999,
+   "findings": {
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 7,
+     "cost_usd": 0.6154639999999999
+    },
+    "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec": {
+     "calls": 5,
+     "cost_usd": 0.180922
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {
+     "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+      "calls": 1,
+      "cost_usd": 0.058196
+     }
+    },
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 1,
+    "no_finding_cost": 0.05466,
+    "no_finding_stages": {
+     "solutions.base_port": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_newpr2",
+   "start": "2026-10-20T16:56:31",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 13,
+   "cost_usd": 0.78229,
+   "findings": {
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 10,
+     "cost_usd": 0.747082
+    },
+    "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec": {
+     "calls": 3,
+     "cost_usd": 0.035207999999999996
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_newpr3",
+   "start": "2026-10-20T17:29:20",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 14,
+   "cost_usd": 0.8909940000000001,
+   "findings": {
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 11,
+     "cost_usd": 0.857222
+    },
+    "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec": {
+     "calls": 3,
+     "cost_usd": 0.033772
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 1,
+    "no_finding_cost": 0.092016,
+    "no_finding_stages": {
+     "solutions.base_port": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_newpr4",
+   "start": "2026-10-20T18:51:58",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 7,
+   "cost_usd": 0.372592,
+   "findings": {
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 7,
+     "cost_usd": 0.372592
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 1,
+    "no_finding_cost": 0.089896,
+    "no_finding_stages": {
+     "solutions.base_port": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_issues",
+   "start": "2026-10-20T19:01:58",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 11,
+   "cost_usd": 0.8546560000000001,
+   "findings": {
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+     "calls": 3,
+     "cost_usd": 0.190742
+    },
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 8,
+     "cost_usd": 0.6639140000000001
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/rerun_correcoes_20261022/run",
+   "start": "2026-10-22T11:24:04",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 21,
+   "cost_usd": 1.5503339999999999,
+   "findings": {
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec": {
+     "calls": 3,
+     "cost_usd": 0.323304
+    },
+    "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec": {
+     "calls": 2,
+     "cost_usd": 0.169936
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::decrypt:::AlgorithmParametersSpec": {
+     "calls": 3,
+     "cost_usd": 0.186424
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 2,
+     "cost_usd": 0.236952
+    },
+    "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+     "calls": 11,
+     "cost_usd": 0.633718
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {
+     "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec": {
+      "calls": 1,
+      "cost_usd": 0.029182
+     }
+    },
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_revisao_lacunas",
+   "start": "2026-10-22T13:55:29",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 66,
+   "cost_usd": 3.939846,
+   "findings": {
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+     "calls": 16,
+     "cost_usd": 0.799704
+    },
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::SecretKeySpecSpec": {
+     "calls": 7,
+     "cost_usd": 0.474326
+    },
+    "com.vrem.wifianalyzer.wifi.graphutils.GraphWrapper:::calculateGraphType:::MessageDigestSpec": {
+     "calls": 4,
+     "cost_usd": 0.281808
+    },
+    "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec": {
+     "calls": 10,
+     "cost_usd": 0.797852
+    },
+    "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+     "calls": 5,
+     "cost_usd": 0.36392399999999997
+    },
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 9,
+     "cost_usd": 0.285668
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+     "calls": 8,
+     "cost_usd": 0.5369240000000001
+    },
+    "org.quantumbadger.redreader.common.General:::parseConfig:::SecretKeySpecSpec": {
+     "calls": 7,
+     "cost_usd": 0.39964
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {
+     "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+      "calls": 1,
+      "cost_usd": 0.028596
+     },
+     "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec": {
+      "calls": 1,
+      "cost_usd": 0.143686
+     },
+     "org.quantumbadger.redreader.common.General:::parseConfig:::IvParameterSpecSpec": {
+      "calls": 1,
+      "cost_usd": 0.045134
+     }
+    },
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 1,
+    "no_finding_cost": 0.090878,
+    "no_finding_stages": {
+     "solutions.base_port": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_revisao_lacunas_v2",
+   "start": "2026-10-27T21:52:42",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 14,
+   "cost_usd": 0.8713419999999998,
+   "findings": {
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 14,
+     "cost_usd": 0.8713419999999998
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_revisao_lacunas_v3",
+   "start": "2026-10-27T22:07:17",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 15,
+   "cost_usd": 0.8354460000000001,
+   "findings": {
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 15,
+     "cost_usd": 0.8354460000000001
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_revisao_lacunas_v4",
+   "start": "2026-10-27T22:26:09",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 28,
+   "cost_usd": 1.801178,
+   "findings": {
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 28,
+     "cost_usd": 1.801178
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_revisao_lacunas_v5",
+   "start": "2026-10-27T22:53:30",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 3,
+   "cost_usd": 0.134116,
+   "findings": {
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 3,
+     "cost_usd": 0.134116
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_revisao_lacunas_v6",
+   "start": "2026-10-27T23:01:47",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 20,
+   "cost_usd": 1.4249319999999999,
+   "findings": {
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 20,
+     "cost_usd": 1.4249319999999999
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_revisao_lacunas_v7",
+   "start": "2026-10-27T23:30:08",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 23,
+   "cost_usd": 1.422128,
+   "findings": {
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec": {
+     "calls": 23,
+     "cost_usd": 1.422128
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_redreader_sha1",
+   "start": "2026-11-03T13:12:45",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 27,
+   "cost_usd": 1.0819519000000002,
+   "findings": {
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 27,
+     "cost_usd": 1.0819519000000002
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_redreader_sha1_v2",
+   "start": "2026-11-03T14:14:31",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 13,
+   "cost_usd": 0.6503701499999999,
+   "findings": {
+    "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec": {
+     "calls": 13,
+     "cost_usd": 0.6503701499999999
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 2,
+    "no_finding_cost": 0.04859975,
+    "no_finding_stages": {
+     "solutions.base_port": 1,
+     "pr_generation.maintainer_summary": 1
+    }
+   }
+  },
+  {
+   "run": "outputs/exp_final_20261019/subset_mtgfam_fetch",
+   "start": "2026-11-03T18:26:47",
+   "start_source": "trace_file_name",
+   "window1": false,
+   "window2": true,
+   "calls": 8,
+   "cost_usd": 0.25780715,
+   "findings": {
+    "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1:::fetch:::IvParameterSpecSpec": {
+     "calls": 8,
+     "cost_usd": 0.25780715
+    }
+   },
+   "side_calls": {
+    "hex_mapped": {},
+    "hex_unmapped_calls": 0,
+    "hex_unmapped_cost": 0.0,
+    "no_finding_calls": 0,
+    "no_finding_cost": 0.0,
+    "no_finding_stages": {}
+   }
+  }
+ ]
+}

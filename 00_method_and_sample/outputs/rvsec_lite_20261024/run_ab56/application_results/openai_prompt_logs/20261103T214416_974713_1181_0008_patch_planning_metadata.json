@@ -1,0 +1,108 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T214416_974713_1181_0008_patch_planning",
+  "parent_call_id": "",
+  "finding_id": "org.cryptomator.data.cloud.webdav.network.SSLSocketFactories:::from:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+  "stage": "patch_planning",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 72190,
+  "input_tokens": 17132,
+  "cached_input_tokens": 2816,
+  "output_tokens": 1355,
+  "latency_ms": 22708,
+  "retry_count": 0,
+  "request_id": "req_e0810d8d45c44c0799b8f02e8a9846c4",
+  "section_telemetry": {
+    "finding": {
+      "characters": 745,
+      "approx_tokens": 186,
+      "sha256": "0f2af540c959c05968940c50ead5421b6af67329d994a903d2f6e0df2ccb2d75"
+    },
+    "validated_claims": {
+      "characters": 1642,
+      "approx_tokens": 410,
+      "sha256": "84cfa174f80c9a4efce6555dd6960309dcf07323a50dfe1040fafc9e8d3c4af2"
+    },
+    "adjudication": {
+      "characters": 5243,
+      "approx_tokens": 1311,
+      "sha256": "b08a6862bb279f38bc4fe18e67bc37dd11c690409617f9cdd3b78cea9b944d9d"
+    },
+    "exact_source_manifest": {
+      "characters": 6662,
+      "approx_tokens": 1666,
+      "sha256": "328cc1a350cb052a69f8855a33e5a9bdf41867459faf3878d7ab5f360fa6f4fe"
+    },
+    "established_test_source_roots": {
+      "characters": 22,
+      "approx_tokens": 6,
+      "sha256": "5f7e59998b46b4ac3e2557ba1d311999088f65006f0e841f24060a3fdbf997fd"
+    },
+    "repository_has_test_source_set": {
+      "characters": 4,
+      "approx_tokens": 1,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    "test_classpath": {
+      "characters": 1094,
+      "approx_tokens": 274,
+      "sha256": "ca61e37fe8c5b6d74545e2632e289aa7912497f4ae2bf4a6d392b887049237a2"
+    },
+    "case_policy": {
+      "characters": 621,
+      "approx_tokens": 155,
+      "sha256": "cba973055b6788fc2bdac09a47c3fca901a5b2a78ed501a0f61f55c02c5aeb09"
+    },
+    "stored_value_contract": {
+      "characters": 28907,
+      "approx_tokens": 7227,
+      "sha256": "779120a45a1e070d60fe0ce5a180249f5685c90a70e4f33876a9c4c77f872d4c"
+    },
+    "previous_attempts_of_this_finding": {
+      "characters": 909,
+      "approx_tokens": 227,
+      "sha256": "dd9f4844e8fcba9888852ae264df5a7ac7cb66064e4d0a43aa808a4e1fa43e4b"
+    },
+    "maintainer_responses_to_this_rule_elsewhere": {
+      "characters": 1802,
+      "approx_tokens": 450,
+      "sha256": "bbe8c8381e374bd41842ab142f56e9748a5609c1c7751c7cf5ceadd99fd238bd"
+    },
+    "detector": {
+      "characters": 41,
+      "approx_tokens": 10,
+      "sha256": "1b2c89ea7d809fad077c55065d421c2d6b97a0415b9359e4965fab7e8ef978e2"
+    },
+    "value_exports": {
+      "characters": 5002,
+      "approx_tokens": 1250,
+      "sha256": "a82f2c26ee05dc8055efc5a9d37b9ea46c8cd4fc7c820d69ac8fccc6c73a7bda"
+    },
+    "persisted_object_formats": {
+      "characters": 629,
+      "approx_tokens": 157,
+      "sha256": "7ebda3458c1ededabe261d00376fe4e4276f6112aae91b3d9a1d5a6428442f3c"
+    },
+    "rename_safety": {
+      "characters": 5550,
+      "approx_tokens": 1388,
+      "sha256": "7d9f3acf2510ed1cc3adbf66f4bd93b84ab5b83c7d3a59a170ee1a87c7b7eaae"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 0,
+  "openai_response_id": "resp_002ae23de78aa9e3006aea7fe1846087d2a4069f3cc7f1f804",
+  "response_status": "completed",
+  "background_polls": 4,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T21:44:40"
+}

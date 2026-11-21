@@ -1,0 +1,320 @@
+{
+ "unit": "co_ed824f6818ef",
+ "phase": "phase2",
+ "order": [
+  "K4d7ca437",
+  "K9f59b45e",
+  "K76dd5723",
+  "K42588634",
+  "K481ce53a",
+  "Kf2f5c3b5",
+  "K7b1982b5",
+  "Kde2016fc",
+  "Kdf4fc59d",
+  "Ke3d119e2",
+  "K24e0e45d",
+  "Kead28b38",
+  "K4bcbb6ae",
+  "Kfd522574",
+  "K0ca6173f",
+  "Kd5c5dbb5",
+  "K33261f92",
+  "K5334e115",
+  "K774e08a9",
+  "K2e642863",
+  "K4bb70588",
+  "Kf8aef910",
+  "K3e613553"
+ ],
+ "card_sha256": {
+  "K0ca6173f": "01625ede122864a1",
+  "K24e0e45d": "8840878c76165884",
+  "K2e642863": "8442b369cbb077b2",
+  "K33261f92": "49632eb6fb1cf354",
+  "K3e613553": "d63305d2827d4078",
+  "K42588634": "48b403fffc24aecb",
+  "K481ce53a": "7b88ba6ed7918692",
+  "K4bb70588": "86288627de4310b5",
+  "K4bcbb6ae": "0a5f910069441000",
+  "K4d7ca437": "0d1fe1790585bff3",
+  "K5334e115": "5a9c23a111681030",
+  "K76dd5723": "258ddf59d4142880",
+  "K774e08a9": "e268340a40ab12ac",
+  "K7b1982b5": "32b9af5c4688a750",
+  "K9f59b45e": "2d3cd7c80a700f4b",
+  "Kd5c5dbb5": "511aebe2ed6fade4",
+  "Kde2016fc": "05db7a4da05ccb79",
+  "Kdf4fc59d": "4ef46f7fd916aa31",
+  "Ke3d119e2": "c7da83a25ac37d67",
+  "Kead28b38": "5110cfb17ae542ed",
+  "Kf2f5c3b5": "7c534f9f72033dcb",
+  "Kf8aef910": "88c069ba015324d2",
+  "Kfd522574": "aa3ffe06beca8c75"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "Encryptor.encrypt (app/src/main/kotlin/io/treehouses/remote/ssh/Encryptor.kt) is the password-based wrapper taken from ConnectBot/Zach Scrivena. It encrypts an SSH private key only when the user chose a passphrase. Its only caller is PubKeyUtils.encrypt, reached through getEncodedPrivate from BaseSSHKeyGen.generateKey and KeyUtils.generateSmartConnectKey. Each call first fills a new 8-byte salt from SecureRandom. It then runs 1000 rounds of SHA-256 over passphrase||salt and splits the 32-byte digest into a 16-byte AES key and a 16-byte CBC IV. The key and IV handed to SecretKeySpec and IvParameterSpec are therefore neither hardcoded nor constant, and neither repeats across encryptions: both are derived from the user's secret and a random per-message salt. The salt is stored as a prefix of the blob (salt||ciphertext), Base64 in the PubKeyBean JSON in SharedPreferences, so decrypt can derive the same key and IV again. RVSec's 'unknown' message only says it could not trace where the bytes came from. That is expected here, because they come from a KDF and not from KeyGenerator or a direct SecureRandom fill. The fix these rules imply (a random key from KeyGenerator, or an independent random IV) does not fit password-based encryption: the key has to be reproducible from the passphrase. As a statement about key or IV misuse, the finding is a false positive. Real but separate weaknesses exist: a home-made, low-cost KDF instead of PBKDF2 or another standard KDF, an 8-byte salt, SHA1PRNG named explicitly, and unauthenticated CBC. Any change to how the key or IV is derived changes the stored format. The blob has no version marker, and keys users have already saved with a passphrase would stop decrypting in SSH.kt (decodePrivate) unless the PR adds versioning and a legacy decrypt path.\n\nSecond judge: The 'unknown' reports do not establish invalid SecretKeySpec or IvParameterSpec use. Encryptor generates a fresh salt with SecureRandom, applies repeated SHA-256 to the UTF-8 password and salt, and splits the result into a valid 16-byte AES key and 16-byte CBC IV. These are not constants; clearing the source arrays after cipher.init does not erase the initialized cipher. Nevertheless, this is an aging password-encryption scheme: only 1000 rounds of a custom fast hash construction, with unauthenticated CBC. PubKeyUtils uses it to protect generated SSH private keys locally, storing eight salt bytes followed by ciphertext, without format or derivation metadata. KeyUtils serializes those bytes as Base64 in PubKeyBean JSON in SharedPreferences. Consequently, changing only Encryptor would risk making saved SSH identities unreadable.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For new password-protected records, replace the custom password hashing with a standard salted password KDF with an appropriately chosen work factor. Preserve password-based unlocking rather than substituting an unrecoverable random key.",
+   "If replacing the IV derivation or cipher, generate and persist the required fresh IV or nonce and update encryption and decryption together; authenticated encryption is preferable to the existing unauthenticated CBC.",
+   "Introduce distinguishable format or record metadata for changed encryption parameters, while retaining legacy decoding or safely migrating records after successful password-based decryption.",
+   "Verify legacy-record recovery, new-record round trips, and clean failure for incorrect passwords and malformed records."
+  ],
+  "must_not_break": [
+   "Decrypting passphrase-protected private keys that are already stored: the PubKeyBean.privateKey blob in SharedPreferences is salt(8 bytes)||AES-128-CBC/PKCS5 ciphertext, with the key and IV taken from 1000 rounds of SHA-256(passphrase||salt). PubKeyUtils.decodePrivate and Encryptor.decrypt must keep reading it.",
+   "Symmetry between encrypt and decrypt: the same passphrase, salt and iteration count must derive the same key and IV, and the salt must stay prepended to the ciphertext so decrypt can recover it.",
+   "Unencrypted keys (empty passphrase, including the SmartConnectKey) must keep being stored as plain PKCS#8 without going through Encryptor.",
+   "A new random salt on every encryption.",
+   "minSdkVersion 23: any algorithm used must exist in the platform providers on API 23 and later.",
+   "SSH public-key authentication in SSH.kt, which decrypts the private key with the user's passphrase before connecting.",
+   "Existing encrypted private keys: eight-byte salt followed by AES-128-CBC/PKCS5Padding ciphertext, with key and IV reconstructed by 1000 SHA-256 rounds over the UTF-8 password and salt. Do not silently reinterpret or overwrite them using new parameters.",
+   "Existing PubKeyBean persistence, key nicknames, public/private key correspondence, and SSH authentication using the recovered private key. Migration must preserve the SSH identity already authorized on servers.",
+   "Null or empty passwords deliberately produce unencrypted PKCS#8 private-key bytes. Preserve this supported path, including the passwordless SmartConnectKey.",
+   "Password prompting through isEncrypted, cancellation and incorrect-password handling, and the existing in-memory key-use behavior.",
+   "OpenSSH public-key copying and Bluetooth installation on the Raspberry Pi. The local encrypted private-key blob is not an SSH wire format, so hardening it must not alter the public-key output.",
+   "Android API 23 support. Any new KDF or cipher implementation must work there; do not assume platform PBKDF2WithHmacSHA256 availability on every supported version."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 102,
+ "tokens": {
+  "input_tokens": 12,
+  "cache_creation_input_tokens": 64932,
+  "cache_read_input_tokens": 287488,
+  "output_tokens": 10523
+ },
+ "turns": 10,
+ "tool_calls": 9,
+ "claude_reported_cost_usd": 0.7874616000000001,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "e6654eb82f972cf0",
+ "finished_at": "2026-11-16T17:25:20-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K4d7ca437",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and code-specific: the key and IV come from a salted, iterated digest with a fresh SecureRandom salt, and both spec constructors copy their input, so zeroing the arrays afterwards is harmless."
+   },
+   {
+    "card_id": "K9f59b45e",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Marks the new format with a version byte and size%16==1 and keeps the legacy reader, but PBKDF2-SHA1 runs at only 1000 iterations, so the work factor is not raised and CBC stays unauthenticated. The description says the build and tests pass, but the author did not build this diff."
+   },
+   {
+    "card_id": "K76dd5723",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate and specific: the salt is random, the key and IV are derived from the digest, the constructors copy their input, and the salt is stored so decrypt can rebuild the key and IV."
+   },
+   {
+    "card_id": "K42588634",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The new blob has no marker; it is the same length mod 16 as legacy data, and old keys are recognised only through a try-new-then-catch fallback. PBKDF2 still runs at 1000 iterations, so it needs format metadata and a real work factor."
+   },
+   {
+    "card_id": "K481ce53a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Gives up as undetermined because of unbound rule parameters. That is a tool-level failure, not a judgement about this code."
+   },
+   {
+    "card_id": "Kf2f5c3b5",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Uses a cipher-generated IV with a leading byte and detects the new format by length mod 16; the legacy path is kept. PBKDF2 at 1000 iterations is still a weak work factor. Claims the build and unit tests pass, but the author did not build this diff."
+   },
+   {
+    "card_id": "K7b1982b5",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Versioned record with the version byte checked, a random IV and a legacy reader, but PBKDF2 at 1000 iterations is still a low work factor. Claims the build and tests pass, but the author did not build this diff."
+   },
+   {
+    "card_id": "Kde2016fc",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "unclear",
+    "r4": 1,
+    "r5": null,
+    "notes": "Adds a marked format with a random IV and keeps the legacy reader, but leaves the custom 1000-round SHA-256 key derivation and the SecretKeySpec path unchanged. The text states the reason RVSec fired as fact, although the report's message was 'unknown'."
+   },
+   {
+    "card_id": "Kdf4fc59d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurate description of the KDF and the lack of a MAC, correctly says the IV is not reused, and gives a sound versioning and migration plan. It does not mention that PBKDF2WithHmacSHA256 is unavailable on API 23."
+   },
+   {
+    "card_id": "Ke3d119e2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "An undetermined verdict based on rule-binding internals, with no judgement about the code."
+   },
+   {
+    "card_id": "K24e0e45d",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Solid design: an 8-byte magic prefix, PBKDF2 at 310k iterations, AES-GCM with the header as AAD, a legacy CBC reader, and tests that build a legacy blob in code. Unlock time on low-end API 23 devices needs checking. The description says the build and tests pass, but the author did not build this diff."
+   },
+   {
+    "card_id": "Kead28b38",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Short and accurate: weak KDF, no authentication, and a request for a versioned format that keeps old keys readable. It names no files."
+   },
+   {
+    "card_id": "K4bcbb6ae",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Undetermined because of unbound rule parameters. It reports the tool's limits, not a judgement about the code."
+   },
+   {
+    "card_id": "Kfd522574",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurate: weak iterated SHA-256 KDF, unauthenticated CBC, and a need for versioning and migration so users keep access to their keys."
+   },
+   {
+    "card_id": "K0ca6173f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Thorough and accurate about the callers, the derivation, the IV not repeating, and the format-compatibility constraint, with a reasonable plan. It does not say that PBKDF2-HMAC-SHA256 needs API 26 or later."
+   },
+   {
+    "card_id": "Kd5c5dbb5",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Notes that the IV and key are 16 bytes but still leaves the verdict unconfirmed, so it reaches no judgement about the code."
+   },
+   {
+    "card_id": "K33261f92",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct: the salt is random, so the key and IV are neither constant nor repeated. It explains why changing the format needs migration and acknowledges that the KDF is weak."
+   },
+   {
+    "card_id": "K5334e115",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "unclear",
+    "r4": 1,
+    "r5": null,
+    "notes": "A version byte and length-based detection keep legacy keys readable and the IV is now random, but the custom 1000-round SHA-256 key derivation is unchanged. The text uses internal jargon ('build_check') and slightly overstates the IV problem."
+   },
+   {
+    "card_id": "K2e642863",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Puts the version byte at the end and detects the format by length mod 16 plus that byte; the legacy reader is kept. PBKDF2 at 1000 iterations is still a weak work factor. Claims the build and tests pass, but the author did not build this diff."
+   },
+   {
+    "card_id": "K4bb70588",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "The analysis and migration plan are sound, but it wrongly says keys can be imported (the import code is commented out) and calls the store the 'app database' when it is SharedPreferences."
+   },
+   {
+    "card_id": "Kf8aef910",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurate about the derivation and the format, which records no derivation parameters, and calls for versioning, legacy decryption and compatibility tests."
+   },
+   {
+    "card_id": "K774e08a9",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurate, detailed description of the derivation and the stored format, with a correct migration requirement."
+   },
+   {
+    "card_id": "K3e613553",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Short and accurate: low work factor, 8-byte salt, unauthenticated CBC, and old keys must stay readable and be migrated."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

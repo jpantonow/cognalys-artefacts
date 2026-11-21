@@ -1,0 +1,61 @@
+{
+ "unit": "co_bdc0d1804c88",
+ "arm": "SP2",
+ "replica": 4,
+ "cli": "claude",
+ "model": "claude-sonnet-5-5",
+ "effort": "high",
+ "prompt_file": "prompt_plus_sp2.txt",
+ "prompt_sha256": "0a287fd9848d445edf12244bafe7ac20eaa8adcb73b0b54ecc7a92094e38f1a6",
+ "working_notes_bytes": null,
+ "pinned_commit": "131c2fae4f86e54aa71d87e522a3b4874bb4e68a",
+ "status": "exit 0",
+ "seconds": 56,
+ "decision": "invalid",
+ "delivery_class": "FALHA",
+ "invalid_reason": "no deliverable",
+ "deliverables": [],
+ "diff_sha": "e3b0c44298fc1c14",
+ "diff_lines": 0,
+ "files_changed": 0,
+ "untracked": [],
+ "build": {
+  "agent_calls": 0,
+  "agent_last_status": null
+ },
+ "turns": 9,
+ "tokens": {
+  "input_tokens": 16,
+  "cache_creation_input_tokens": 51421,
+  "cache_read_input_tokens": 423586,
+  "output_tokens": 4230
+ },
+ "web_searches": 0,
+ "web_fetches": 0,
+ "claude_reported_cost_usd": 0.2903745999999999,
+ "model_usage": {
+  "claude-sonnet-5-5": {
+   "inputTokens": 16,
+   "outputTokens": 4230,
+   "cacheReadInputTokens": 423586,
+   "cacheCreationInputTokens": 51421,
+   "webSearchRequests": 0,
+   "costUSD": 0.2903745999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 128000,
+   "thinkingTokens": 1281,
+   "cacheCreationEphemeral5mInputTokens": 0,
+   "cacheCreationEphemeral1hInputTokens": 51421,
+   "canonicalModel": "claude-sonnet-5-5",
+   "provider": "firstParty",
+   "costBasis": "list"
+  }
+ },
+ "tool_calls": 8,
+ "urls_touched": [],
+ "consulted_upstream": false,
+ "upstream_urls": [],
+ "credential_refreshed": false,
+ "error_text": "",
+ "finished_at": "2026-11-17T03:09:29-0300"
+}

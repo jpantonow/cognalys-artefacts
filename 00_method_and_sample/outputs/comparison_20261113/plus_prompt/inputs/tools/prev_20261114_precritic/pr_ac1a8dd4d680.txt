@@ -1,0 +1,21 @@
+Earlier proposals for this rule in other repositories, and what their maintainers answered:
+
+1. Repository: jenspfahl/ANOTHERpass
+   Outcome: merged
+   Proposal: Use KeyStore.getKey to read Android secret keys
+   Maintainer said: Thanks for flagging this! I was not aware of this best practise, although the current code should not expose any vulnerability.
+
+2. Repository: leekleak/traffic-light
+   Outcome: merged
+   Proposal: Use KeyStore.getKey to read secret keys
+   Maintainer said: Thanks
+
+3. Repository: tokn-authenticator/tokn
+   Outcome: merged
+   Proposal: Read Android keystore keys with getKey
+   Maintainer said: thanks
+
+4. Repository: nextcloud/news-android
+   Outcome: merged
+   Proposal: Fix loadAppKeyStore
+   Maintainer said: (no comment)

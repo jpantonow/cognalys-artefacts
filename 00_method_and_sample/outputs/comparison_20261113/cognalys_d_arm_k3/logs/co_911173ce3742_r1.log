@@ -1,0 +1,167 @@
+=== 2026-11-16T01:52:19-03:00 cognalys run --max-cost 3.0
+Frozen experiment: manifest written to /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/manifests/co_911173ce3742_r1.json. Specification generation and learning-store writes are disabled for this run; web research not archived is fetched live.
+Preflight passed: declared dependencies, static analysis
+Pipeline steps: spec_generation -> cloning -> repository_setup -> extraction -> spec_context -> detector_rules -> llm -> solutions -> validation -> validation_fix -> revalidation -> prs -> preview -> fix_prs -> revalidation_fix_prs
+
+=== SPEC_GENERATION ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.generate_specifications --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_911173ce3742.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model claude-sonnet-5-5 --endpoint https://api.anthropic.com --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/openai_prompt_logs
+frozen experiment: 1 specification(s) already present; none generated
+
+=== CLONING ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_911173ce3742.csv --output-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_methods --clone-timeout 1800 --clone-retries 3 --clone-only
+2026-11-16 01:52:43 - INFO - Starting single CSV workflow
+2026-11-16 01:52:43 - INFO - Output dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones
+2026-11-16 01:52:43 - INFO - Clone dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones
+2026-11-16 01:52:43 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_methods
+2026-11-16 01:52:43 - INFO - 1 linhas válidas carregadas
+2026-11-16 01:52:43 - INFO - 1 repositórios únicos mapeados
+2026-11-16 01:52:43 - INFO - [1/1] Cloning github.paroj.dsub2000_217.apk from https://github.com/paroj/DSub2000
+2026-11-16 01:52:47 - INFO - github.paroj.dsub2000_217.apk checked out at the pinned revision 474f6ca847649220f7965fe95f1285d1d8b4ca64
+2026-11-16 01:52:47 - INFO - Successfully cloned github.paroj.dsub2000_217.apk
+2026-11-16 01:52:47 - INFO - Cloning results: 1 success, 0 failed, 0 timeout
+
+=== REPOSITORY_SETUP ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.prepare_repository_branches --projects-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones --report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/repository_setup.json --project github.paroj.dsub2000_217.apk
+github.paroj.dsub2000_217.apk:  ->  (unchanged)
+
+=== EXTRACTION ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_911173ce3742.csv --output-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_methods --clone-timeout 1800 --clone-retries 3 --skip-cloning
+2026-11-16 01:52:48 - INFO - Starting single CSV workflow
+2026-11-16 01:52:48 - INFO - Output dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones
+2026-11-16 01:52:48 - INFO - Clone dir: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones
+2026-11-16 01:52:48 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_methods
+2026-11-16 01:52:48 - INFO - 1 linhas válidas carregadas
+2026-11-16 01:52:48 - INFO - 1 repositórios únicos mapeados
+2026-11-16 01:52:48 - INFO - Reutilizando clones existentes em: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones
+2026-11-16 01:52:48 - INFO - github.paroj.dsub2000_217.apk is already at the pinned revision 474f6ca847649220f7965fe95f1285d1d8b4ca64
+2026-11-16 01:52:48 - INFO - Found clone for github.paroj.dsub2000_217.apk: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones/github.paroj.dsub2000_217.apk
+2026-11-16 01:52:48 - INFO - Building index for repository: /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones/github.paroj.dsub2000_217.apk
+2026-11-16 01:52:49 - INFO - Indexed 399 classes from 396 unique class definitions
+2026-11-16 01:52:49 - INFO - Extraction complete: 1 success, 0 failed, 0 skipped
+2026-11-16 01:52:49 - INFO - Tracking JSON written to /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones/extraction_tracking.json
+2026-11-16 01:52:49 - INFO - Summary written to /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones/logs/summary_tracked.txt
+
+=== SPEC_CONTEXT ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.enrich_spec_context --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_methods --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_911173ce3742.csv
+Specification registry coverage: 1/1 sample specs available
+Specification context: 1 enriched, 0 missing, 1 total
+
+=== DETECTOR_RULES ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.propose_detector_rules --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/co_911173ce3742.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model claude-sonnet-5-5 --endpoint https://api.anthropic.com --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/openai_prompt_logs
+MessageDigestSpec: its specification changed after its rule was accepted; the rule is kept as is (rerun with --spec MessageDigestSpec --replace to regenerate)
+MessageDigestSpec: skipped, an accepted rule exists (pass replace to regenerate it)
+Detector rules: nothing to propose
+
+=== LLM ===
+$ /home/antonow/venv/bin/python -m cognalys.llm.generate_error_fixes --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_methods --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions --model claude-sonnet-5-5 --provider anthropic --endpoint https://api.anthropic.com --timeout 600 --ollama-context-length 16384 --repository-context-budget 140000 --pr-issue-style v3 --max-output-tokens 32768 --reasoning-effort high --validation-mode balanced --validation-feedback-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/build_validation --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/openai_prompt_logs --web-search-cache-ttl-hours 168.0 --web-search-retries 1 --retries 2 --workers 1 --no-cache --research-corpus-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus --research-corpus-max-age-days 90.0 --web-search --migration-policies-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/migration_policies.json
+INFO: Testing Anthropic connection...
+INFO: Anthropic connection successful
+INFO: ✓ Model 'claude-sonnet-5-5' available
+INFO: Discovered 1 errors to process
+INFO: Processing 1 new errors (0 already complete)
+INFO: Processing: github.paroj.dsub2000_217.apk/md5Hex
+INFO: Research corpus hit: 0695c6eb2d01
+INFO: Supplemented evidence for md5Hex (github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5): 1 of 1 requests answered from the repository with 1 entries (SUP-001)
+INFO: md5Hex: a counterpart outside the repository fixes the value: The token digest is built only for stock Subsonic 1.14+ servers and is presumably verified by the server against MD5(password+salt). The evidence does not show that the server accepts any other algorithm, so a client-only switch to SHA-256 would likely break token authentication.; The md5 value name
+WARNING: Evidence phase abstained for md5Hex: decision=EXTERNAL_DIGEST_CONTRACT_NO_CLIENT_ONLY_FIX, cause_status=confirmed, detector_violation=confirmed, cause=Util.md5Hex calls MessageDigest.getInstance("MD5") with a literal algorithm that is outside the rule's allow-list of SHA-256, SHA-384 and SHA-512. This is a constraint violation on the algorithm argument. The same helper serves two uses that a client-only algorithm change cannot cover. In getRestUrl it builds the token md5(password+salt) sent as &t=, which only a stock Subsonic 1.14+ server verifies, so the algorithm is presumably fixed by that server's token scheme. In FileUtil it names persisted .jpeg artwork, avatar and misc files under getExternalFilesDir, which are read back, renamed and exposed to other apps by share intent. Changing the algorithm would orphan those files and break token authentication. The md5Hex function therefore cannot be made compliant without breaking the server contract., scope_issues=none; review saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions/evidence_reviews/github.paroj.dsub2000_217.apk/0_md5Hex_evidence.json
+INFO: [1/1] md5Hex
+WARNING: No safe fix generated
+INFO: Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions/solutions_tracking.json
+INFO: Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions/analysis_summary.txt
+INFO: ======================================================================
+INFO: ANALYSIS COMPLETE
+INFO: Analyzed: 1/1
+INFO: Fixes generated: 0
+INFO: Confirmed external-contract findings: 1
+INFO: Issue candidates: 0
+INFO: Time: 00h 02m 31s
+INFO: LLM cache: 0 hit(s), 0 miss(es), 0 replayed within a finding
+INFO: Research corpus: 1 served, 0 researched and stored, 0 kept, 0 expired
+
+======================================================================
+LLM Error Fix Generator
+======================================================================
+Model: claude-sonnet-5-5
+Provider: anthropic
+Endpoint: https://api.anthropic.com
+Timeout: 600s
+Reasoning effort: high
+Validation mode: balanced
+Repository context budget: 140000 characters
+Allow cache invalidation: False
+Web search: True
+Max output tokens: 32768
+Input: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_methods
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions
+LLM cache: disabled
+Resume: True
+======================================================================
+
+Research corpus: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus (126 entries, max age 90 days)
+
+=== SOLUTIONS ===
+$ /home/antonow/venv/bin/python -m cognalys.solutions.run_apply --error-solutions-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions --cloned-projects-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results --worktrees-dir /home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/worktrees --backup-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/method_backups --approve-review-only-for-validation --port-model claude-sonnet-5-5 --port-endpoint https://api.anthropic.com --port-timeout 600 --port-max-output-tokens 16384 --port-reasoning-effort high --port-prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/openai_prompt_logs
+2026-11-16 01:55:43,391 - INFO - Starting solution application workflow
+2026-11-16 01:55:43,410 - INFO - ============================================================
+2026-11-16 01:55:43,411 - INFO - STAGE 1: DISCOVERY & MAPPING
+2026-11-16 01:55:43,411 - INFO - ============================================================
+2026-11-16 01:55:43,411 - INFO - Building solution to repository mapping...
+2026-11-16 01:55:43,412 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions
+2026-11-16 01:55:43,665 - INFO - Discovered 0 solutions
+2026-11-16 01:55:43,665 - INFO - Mapping complete
+2026-11-16 01:55:43,666 - INFO - Building solution to repository mapping...
+2026-11-16 01:55:43,666 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions
+2026-11-16 01:55:43,889 - INFO - Discovered 0 solutions
+2026-11-16 01:55:43,890 - INFO - Mapping complete
+2026-11-16 01:55:43,890 - INFO - Mapping report: {'total_apks': 0, 'total_solutions': 0, 'mappings': {}}
+2026-11-16 01:55:43,891 - INFO - Building solution to repository mapping...
+2026-11-16 01:55:43,891 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions
+2026-11-16 01:55:44,109 - INFO - Discovered 0 solutions
+2026-11-16 01:55:44,110 - INFO - Mapping complete
+2026-11-16 01:55:44,126 - INFO - Mapping report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/mapping_report.json
+2026-11-16 01:55:44,127 - INFO - ============================================================
+2026-11-16 01:55:44,128 - INFO - STAGE 2: APPLYING SOLUTIONS
+2026-11-16 01:55:44,128 - INFO - ============================================================
+2026-11-16 01:55:44,128 - INFO - ============================================================
+2026-11-16 01:55:44,128 - INFO - STAGE 3: GENERATING REPORT
+2026-11-16 01:55:44,129 - INFO - ============================================================
+2026-11-16 01:55:44,162 - INFO - Execution report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/execution_report.json
+2026-11-16 01:55:44,163 - INFO - ============================================================
+2026-11-16 01:55:44,163 - INFO - EXECUTION SUMMARY
+2026-11-16 01:55:44,163 - INFO - ============================================================
+2026-11-16 01:55:44,164 - INFO - Successfully Applied: 0
+2026-11-16 01:55:44,164 - INFO - Failed: 0
+2026-11-16 01:55:44,164 - INFO - Total Time: 0.74s
+
+DONE
+{'execution_timestamp': '2026-11-16T04:55:44.136256+00:00', 'workflow_status': 'SUCCESS_WITH_NO_ACTION', 'execution_time_seconds': 0.744894, 'config': {'error_solutions_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions', 'cloned_projects_dir': '/home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/clones', 'output_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results', 'worktrees_dir': '/home/antonow/cognalys_work/d_arm_sonnet_k3/co_911173ce3742_r1/worktrees', 'save_backups': True, 'backup_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/application_results/method_backups', 'dry_run': False, 'max_solutions': 0, 'git_user_name': 'jpantonow', 'git_user_email': 'jpantonow@gmail.com'}, 'total_solutions': 0, 'results': {'successfully_applied': 0, 'failed': 0, 'dry_run': 0, 'review_only_not_applied': 0, 'not_applicable_to_base_branch': 0}, 'per_solution_details': [], 'errors': []}
+Nothing was applied; No issue candidates were produced; skipping validation and validation_fix and revalidation and prs and fix_prs and revalidation_fix_prs (use --force-downstream-steps to always run them). preview still runs.
+
+=== PREVIEW ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.generate_github_previews --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/pull_requests --issue-candidates-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions/issue_candidates --evidence-reviews-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/error_solutions/evidence_reviews --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/previews --issue-title "Potential security issue found — would you be open to a pull request?" --issue-title-without-security-impact "Question about the {api} use in {location} — would you be open to a pull request?" --issue-body "Hi! I'm a Computer Engineering student at the University of Brasília (UnB), working on a research project about how Android apps use security-sensitive APIs." --pr-issue-style v3
+ANALYSIS PREVIEW: github.paroj.dsub2000_217.apk_md5Hex_MessageDigestSpec_analysis.md
+Preview summary: 0 PR previews, 0 issue previews, 1 analysis previews, 0 failed
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/previews
+
+Model calls of this run:
+  evidence_extraction              2 calls      219,786 in (4,448 cached, 4,448 written)       8,194 out  US$ 0.52
+  adjudication                     1 calls       27,038 in (0 cached, 13,882 written)       2,348 out  US$ 0.08
+  external_research                2 calls        9,185 in (6,880 cached, 0 written)       2,614 out  US$ 0.03
+  issue_presentation               1 calls        2,158 in (920 cached, 0 written)         374 out  US$ 0.01
+  total                            6 calls      258,167 in (12,248 cached, 18,330 written)      13,530 out  US$ 0.64; 0 answered from the cache, 1 served by the research corpus
+
+Pipeline finished successfully.
+Run status: complete
+
+=== RETROSPECTIVE ===
+1 finding(s): 1 at adjudication; 2 new and 0 recurring failure signature(s)
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/retrospective/retrospective.md
+
+=== STATISTICS ===
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/co_911173ce3742/r1/statistics/statistics.md
+Pipeline elapsed time: 00h 03m 23s
+contrato externo impede a correção         github.paroj.dsub2000_217.apk md5Hex [MessageDigestSpec]  (6 calls, 272k tokens, US$ 0.64)
+
+1 findings. contrato externo impede a correção: 1
+Most model use without a pull request:
+  6 calls, 272k tokens, US$ 0.64           github.paroj.dsub2000_217.apk md5Hex [MessageDigestSpec] -> contrato externo impede a correção

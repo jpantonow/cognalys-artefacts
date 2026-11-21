@@ -1,0 +1,38 @@
+[
+  {
+    "pull_request": "https://github.com/freeotp/freeotp-android/pull/521",
+    "state": "merged",
+    "finding_id": "4b81532bb668",
+    "spec": "CipherSpec",
+    "csv_class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+    "method_name": "encrypt",
+    "title": "Add SecretKeyFactory key round-trip coverage",
+    "impact_class": "not_recorded",
+    "recorded_at": "2026-11-19T20:39:23.692509+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "justin-stephenson",
+        "kind": "comment",
+        "body": "Thank you for the PR, test looks valid.\r\n\r\nBy the way I consider renaming the EncryptedKey class to EncryptedToken to avoid confusion."
+      }
+    ]
+  },
+  {
+    "pull_request": "https://github.com/freeotp/freeotp-android/pull/524",
+    "state": "merged",
+    "finding_id": "4b81532bb668",
+    "spec": "CipherSpec",
+    "csv_class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+    "method_name": "encrypt",
+    "title": "Require AES keys before initializing encryption",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:25.881136+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "justin-stephenson",
+        "kind": "comment",
+        "body": "Thank you for the PR, testing backup/restore is successful."
+      }
+    ]
+  }
+]

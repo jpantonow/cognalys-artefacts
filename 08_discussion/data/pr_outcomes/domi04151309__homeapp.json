@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/Domi04151309/HomeApp/pull/114",
+    "state": "merged",
+    "finding_id": "9bd2876436e2",
+    "spec": "WebViewSslErrorBypassSpec",
+    "csv_class": "io.github.domi04151309.home.activities.WebActivityWebViewClient",
+    "method_name": "onReceivedSslError",
+    "title": "Cancel navigation for every SSL certificate error",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:04.280861+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "Domi04151309",
+        "kind": "comment",
+        "body": "This is intentional to allow self-signed certificates. If you need this feature you can put it behind a toggle in the settings."
+      }
+    ]
+  }
+]

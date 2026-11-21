@@ -1,0 +1,191 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The CrySL file does not define how randomized[random] is established, whether it is a direct run-time test, or how the analyzer approximates it.",
+      "The file does not say how the AES-to-keysize implication is evaluated when initialization uses AlgorithmParameterSpec or SecureRandom-only overloads and no keysize variable is bound.",
+      "The rule permits no explicit init call because Init is optional, even though the JCA API documentation recommends explicit initialization rather than relying on provider defaults.",
+      "The file does not specify exception-path handling, alias handling, interprocedural value resolution, reflection, provider behavior, or the exact static-analysis approximation used by a detector."
+    ],
+    "predicates": [
+      "algorithm in {\"AES\", \"HmacSHA256\", \"HmacSHA384\", \"HmacSHA512\"}",
+      "algorithm in {\"AES\"} => keysize in {128, 192, 256}",
+      "REQUIRES randomized[random]",
+      "ENSURES generatedKey[key, algorithm]"
+    ],
+    "claim": "The source rule permits the event order Get, then optionally one Init, then GenKey. It constrains algorithm to exactly AES, HmacSHA256, HmacSHA384, or HmacSHA512. If algorithm is AES, it constrains the rule variable keysize to exactly 128, 192, or 256. It requires randomized[random] and ensures generatedKey[key, algorithm]."
+  },
+  "unknowns": [
+    "The supplied detector finding's expected algorithm set is not the same as the fetched KeyGenerator.crysl rule's set of {AES, HmacSHA256, HmacSHA384, HmacSHA512}. The source provided does not explain that discrepancy, so it cannot establish which ruleset artifact generated that finding.",
+    "The supplied finding text alone does not establish that its observed call resolves to javax.crypto.KeyGenerator rather than another JCA API or another framework API.",
+    "The exact operational definition and production rules for randomized[random] are absent from the supplied KeyGenerator.crysl file.",
+    "The supplied source does not define how the analyzer treats an AES trace using init(AlgorithmParameterSpec), init(AlgorithmParameterSpec, SecureRandom), or init(SecureRandom), where no keysize object is bound.",
+    "The supplied source does not state whether CrySL string-membership comparisons normalize standard algorithm-name case or provider aliases.",
+    "Provider-specific support, defaults, parameter semantics, and deployed JDK version remain unresolved without runtime and dependency evidence."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "javax.crypto.KeyGenerator is the JCA API for generating secret symmetric keys. getInstance selects a provider implementation for the requested algorithm; generateKey returns a new SecretKey.",
+      "The API supports initialization by key size, key size plus caller-supplied SecureRandom, AlgorithmParameterSpec, AlgorithmParameterSpec plus SecureRandom, or SecureRandom alone.",
+      "For init(int) and init(AlgorithmParameterSpec) overloads, if random bytes are needed, the JCA documentation says the implementation uses the highest-priority SecureRandom provider or a system-provided source when necessary.",
+      "If no init method is called, every provider must supply and document a default initialization, but defaults can vary by provider and may change in future versions.",
+      "SecureRandom is documented as a cryptographically strong random-number generator whose output must be non-deterministic."
+    ],
+    "preconditions": [
+      "getInstance requires a non-null algorithm name; it throws NoSuchAlgorithmException if no provider supports the requested KeyGenerator algorithm.",
+      "The two-argument getInstance overloads additionally require a valid provider name or Provider object as documented by the selected overload.",
+      "For init(int) and init(int, SecureRandom), keysize is an algorithm-specific number of bits; unsupported or incorrect sizes can cause InvalidParameterException.",
+      "For init(AlgorithmParameterSpec) overloads, inappropriate parameters can cause InvalidAlgorithmParameterException."
+    ],
+    "unknowns": [
+      "Supported algorithms, parameter types, default initialization, and accepted key sizes beyond documented platform requirements are provider- and deployment-dependent.",
+      "The JCA API documentation does not define the CrySL predicates randomized[random] or generatedKey[key, algorithm].",
+      "The JCA API does not establish the supplied CrySL rule's four-algorithm policy. Current Java documentation recognizes additional KeyGenerator algorithm names, including ChaCha20 and DESede."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyGenerator.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/KeyGenerator.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/SecureRandom.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/spec/AlgorithmParameterSpec.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html"
+  ],
+  "schema_version": 2,
+  "non_security_violation_shapes": [
+    "A negative or compatibility test deliberately invokes KeyGenerator.getInstance(\"DES\").generateKey() only to verify policy handling or legacy-provider behavior, with no resulting key used to protect data or authenticate messages. This violates the rule's algorithm allowlist but does not itself establish a security-relevant deployment impact.",
+    "A test deliberately calls KeyGenerator.getInstance(\"AES\").init(64) to assert that the provider rejects an unsupported key size. It breaks the rule's AES keysize constraint, but the test's purpose need not involve protecting an asset.",
+    "Unreachable, disposable benchmark, or test-fixture code generates a key through an algorithm excluded by the rule and never persists, distributes, or uses the key in a security boundary. It remains a rule violation, not a detector false positive."
+  ],
+  "source_verified": true,
+  "important_note": "This is a CrySL usage-and-policy rule for javax.crypto.KeyGenerator, not a general specification for Cipher or a proof that generated keys are safely stored, selected for an appropriate protocol, or used correctly. Its four-name algorithm allowlist is stricter than the current JCA KeyGenerator API's recognized algorithm names.",
+  "events": [
+    {
+      "condition": "Observation: resolves to javax.crypto.KeyGenerator.getInstance(String) with one argument. It binds algorithm to that argument's run-time String value. Predicate satisfaction: the run-time algorithm value must be one of \"AES\", \"HmacSHA256\", \"HmacSHA384\", or \"HmacSHA512\".",
+      "name": "g1",
+      "api_patterns": [
+        "KeyGenerator.getInstance("
+      ]
+    },
+    {
+      "condition": "Observation: resolves to a two-argument javax.crypto.KeyGenerator.getInstance overload; the first argument binds algorithm and the second argument is ignored by the rule via _. Predicate satisfaction: the run-time algorithm value must be one of \"AES\", \"HmacSHA256\", \"HmacSHA384\", or \"HmacSHA512\".",
+      "name": "g2",
+      "api_patterns": [
+        "KeyGenerator.getInstance("
+      ]
+    },
+    {
+      "condition": "Observation: resolves on the governed KeyGenerator receiver to init(int), binding keysize to the run-time integer argument. Predicate satisfaction: when the previously bound run-time algorithm is \"AES\", keysize must be 128, 192, or 256.",
+      "name": "i1",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Observation: resolves on the governed KeyGenerator receiver to init(int, SecureRandom), binding keysize and random to their run-time arguments. Predicate satisfaction: when algorithm is \"AES\", keysize must be 128, 192, or 256; the rule also requires the abstract predicate randomized[random].",
+      "name": "i2",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Observation: resolves on the governed KeyGenerator receiver to init(AlgorithmParameterSpec), binding params to the run-time argument. The event itself binds neither keysize nor random; the supplied rule states no parameter-content predicate for params.",
+      "name": "i3",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Observation: resolves on the governed KeyGenerator receiver to init(AlgorithmParameterSpec, SecureRandom), binding params and random to their run-time arguments. Predicate satisfaction: the rule requires the abstract predicate randomized[random]; it states no parameter-content predicate for params.",
+      "name": "i4",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Observation: resolves on the governed KeyGenerator receiver to init(SecureRandom), binding random to the run-time argument. Predicate satisfaction: the rule requires the abstract predicate randomized[random].",
+      "name": "i5",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Observation: resolves on the governed KeyGenerator receiver to generateKey() and binds key to the returned javax.crypto.SecretKey. On the accepted trace, the rule ensures the abstract predicate generatedKey[key, algorithm].",
+      "name": "gk1",
+      "api_patterns": [
+        ".generateKey()"
+      ]
+    }
+  ],
+  "security_semantics": {
+    "runtime_claim": "At run time, KeyGenerator creates a SecretKey through a selected provider. The actual algorithm support, key-size validity, parameter semantics, defaults, and source of randomness depend on the invoked overload and provider. A SecureRandom object is documented as cryptographically strong, but the CrySL source alone does not demonstrate its provenance or the security properties of the complete deployment.",
+    "equivalent": false,
+    "detector_claim": "A conforming detector trace uses an allowlisted KeyGenerator algorithm, uses an AES keysize in {128, 192, 256} when the rule's keysize variable is bound, meets the abstract randomized[random] requirement for explicitly supplied random arguments, and yields generatedKey[key, algorithm]."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Verify that the deployed JDK and selected provider support the requested KeyGenerator algorithm, key size, and parameter specification.",
+      "Verify that the generated key algorithm and size are compatible with the downstream MAC, cipher, key-wrap, or protocol implementation.",
+      "Treat JCA-standard-name case insensitivity and provider aliases separately from the CrySL rule's literal algorithm-string allowlist."
+    ],
+    "runtime": [
+      "Establish the actual algorithm string selected on every reachable execution path, including configuration and environment inputs.",
+      "For AES, establish the effective generated key size, including any size encoded through provider-specific AlgorithmParameterSpec rather than init(int).",
+      "Identify the provider selected by getInstance, the provider defaults used when init is omitted, and the actual SecureRandom provenance when a caller supplies one.",
+      "Establish whether the generated key reaches a security-relevant cryptographic operation and what asset or protocol it protects."
+    ],
+    "source_level": [
+      "Resolve the receiver type to javax.crypto.KeyGenerator and resolve the exact overload for each getInstance, init, and generateKey call.",
+      "Establish the value flow for the first getInstance argument as algorithm and, where applicable, the int init argument as keysize.",
+      "Use the actual CrySL ruleset artifact/version used by the detector. The supplied source URL is a mutable branch reference, so it does not by itself identify a fixed commit.",
+      "For a finding described as KeyGeneratorSpec, compare its rendered expected-value set with this fetched source rule's exact four allowed algorithm strings."
+    ]
+  },
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that this specification governs javax.crypto.Cipher, a cipher transformation string, encryption, decryption, or an arbitrary application method; its SPEC target is javax.crypto.KeyGenerator.",
+    "Do not infer that an algorithm name accepted by a JCA provider is permitted by this CrySL rule. The API's supported names and this rule's four-name policy are distinct.",
+    "Do not infer that a source expression's spelling alone establishes a run-time algorithm, key size, parameter object, or SecureRandom object when the value is configuration-, environment-, reflection-, or data-flow-derived.",
+    "Do not infer that randomized[random] proves OS entropy, seed provenance, provider validation, FIPS status, non-reuse, or any particular SecureRandom implementation property; the supplied rule does not define that predicate.",
+    "Do not infer that generatedKey[key, algorithm] proves key confidentiality, zeroization, storage, distribution, rotation, protocol suitability, or correct downstream cryptographic use.",
+    "Do not infer that a reported allowlist mismatch establishes an exploitable security impact without evidence that a key is generated and used to protect a security-relevant asset."
+  ],
+  "name": "KeyGeneratorSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyGenerator.crysl",
+  "applies_to_types": [
+    "javax.crypto.KeyGenerator"
+  ],
+  "source_title": "KeyGenerator.crysl — SPEC javax.crypto.KeyGenerator",
+  "semantic_scope": "For every finding attributed to this rule, the observed API is javax.crypto.KeyGenerator. The rule observes the algorithm String at KeyGenerator.getInstance, an optional one-of-five KeyGenerator.init call, and KeyGenerator.generateKey returning a SecretKey. It does not govern javax.crypto.Cipher, cipher transformation selection, encryption/decryption operations, or arbitrary application methods.",
+  "spec_id": "KeyGeneratorSpec",
+  "known_false_positive_shapes": [
+    "A report solely because the source spells a standard algorithm name with different case, such as KeyGenerator.getInstance(\"aes\"), while the deployed JCA implementation accepts standard algorithm names case-insensitively. This requires evidence that the detector compares CrySL's literal tokens case-sensitively.",
+    "A report solely because KeyGenerator.getInstance(\"ChaCha20\") is outside this historical four-name allowlist. Current Java documentation lists ChaCha20 as a KeyGenerator algorithm and requires Java-platform implementations to support it; the rule's allowlist is therefore not a complete statement of current JCA capability.",
+    "A report caused only by unresolved configuration or interprocedural data flow even though every reachable run-time value of algorithm is one of the four rule-permitted names.",
+    "A report against valid parameter-based initialization only if the implementation incorrectly treats the absence of an init(int) keysize binding as failure of the AES keysize implication. The rule explicitly includes init(AlgorithmParameterSpec), and the JCA API explicitly supports parameter-based initialization; the supplied CrySL text does not resolve the unbound-keysize semantics."
+  ],
+  "protocol": "Get · Init? · GenKey, where Get is getInstance(String[, provider]), Init is one of five KeyGenerator.init overloads, and GenKey is generateKey().",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyGenerator.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:javax.crypto.KeyGenerator"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "br.unb.cic.cryptoapp.cipher.CipherUtil",
+        "method": "des",
+        "message": "expecting one of ChaCha20,ARC4,HmacSHA224,DESede,HmacSHA256,HmacMD5,HmacSHA1,HmacSHA512,AES,BLOWFISH,HmacSHA384 but found DES"
+      }
+    ],
+    "expected_api_simple_name": "KeyGenerator",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.crypto.KeyGenerator",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/KeyGenerator.crysl"
+  },
+  "analysis_family": "key_generation"
+}

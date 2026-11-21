@@ -1,0 +1,75 @@
+{
+  "trace_version": 2,
+  "call_id": "20261027T220954_277491_971_0007_adjudication.correction",
+  "parent_call_id": "",
+  "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+  "stage": "adjudication.correction",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.0",
+  "schema_version": "2.0",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 53085,
+  "input_tokens": 11710,
+  "cached_input_tokens": 5470,
+  "output_tokens": 1531,
+  "latency_ms": 22209,
+  "retry_count": 0,
+  "request_id": "req_cc1385a1955346b8990fd1da9d74cf7e",
+  "section_telemetry": {
+    "finding": {
+      "characters": 579,
+      "approx_tokens": 145,
+      "sha256": "64c974fc9774351710855ddaaf1670a249b36f0fac3c0aa16c8ddc4260c057b3"
+    },
+    "scope_completeness": {
+      "characters": 200,
+      "approx_tokens": 50,
+      "sha256": "068a571b317f41616eff51d6491139721d551fe9f2bd06ccdd44e4213e785189"
+    },
+    "case_policy": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "validated_evidence_extraction": {
+      "characters": 10504,
+      "approx_tokens": 2626,
+      "sha256": "aeafcd9aa364292c8299fb9b1f5d9818f82eeb4da9b890cbce87351552743bbe"
+    },
+    "external_evidence_catalog": {
+      "characters": 4515,
+      "approx_tokens": 1129,
+      "sha256": "c5ea63197cb8b648c46cdfbda57055d0b07da5ff78e78264b60fc9706dda9ff2"
+    },
+    "valid_evidence_ids": {
+      "characters": 360,
+      "approx_tokens": 90,
+      "sha256": "c42316e9b39de51c513b2e76b2386661fa613de44f62f732c56cca6b0bffdb30"
+    },
+    "reported_by_rule": {
+      "characters": 5297,
+      "approx_tokens": 1324,
+      "sha256": "dae3b92f3c0aaa1bb249ea29caca88a7c42e8788fc44c1b54884601b51584ac9"
+    },
+    "rejected_adjudication": {
+      "characters": 6739,
+      "approx_tokens": 1685,
+      "sha256": "78df87ad4becd124452e8df62616768af41d6b36ac421fd66d7ad65bb74eaf88"
+    },
+    "deterministic_validation_errors": {
+      "characters": 46,
+      "approx_tokens": 12,
+      "sha256": "4f9f23c506dfa567defca85f61ee52e149ed848661aae25b5dee5a458d7501fc"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "server_created_after_ms": 0,
+  "openai_response_id": "resp_0ae4a80025bc8dd8006ae14b62f50487d2b53146890caa00b3",
+  "response_status": "completed",
+  "background_polls": 4,
+  "completed_at": "2026-10-27T22:10:17"
+}

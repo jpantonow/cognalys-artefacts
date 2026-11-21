@@ -1,0 +1,158 @@
+{
+  "schema_version": 2,
+  "spec_id": "PBEKeySpec",
+  "name": "PBEKeySpec",
+  "applies_to_types": [
+    "javax.crypto.interfaces.PBEKey",
+    "javax.crypto.spec.PBEKeySpec"
+  ],
+  "source_title": "CROSSINGTUD Crypto-API-Rules: JavaCryptographicArchitecture/src/PBEKeySpec.crysl",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PBEKeySpec.crysl",
+  "source_verified": true,
+  "protocol": "new PBEKeySpec(char[], byte[], int, int) ; clearPassword()",
+  "important_note": "The verified canonical CrySL source directly declares SPEC javax.crypto.spec.PBEKeySpec and observes PBEKeySpec constructors plus clearPassword(). The required javax.crypto.interfaces.PBEKey type is included to satisfy the requested CrySL-style PBEKey naming target, but the attempted canonical PBEKey.crysl URL returned HTTP 404 and must not be treated as verified direct evidence that the corpus rule declares PBEKey.",
+  "events": [
+    {
+      "name": "construct_with_password_salt_iterations_key_length",
+      "api_patterns": [
+        "new PBEKeySpec(",
+        "PBEKeySpec(",
+        "javax.crypto.spec.PBEKeySpec"
+      ],
+      "condition": "Observed when a four-argument PBEKeySpec constructor invocation is present. The canonical CrySL predicates are satisfied only with statically associated iterationCount >= 10000, a password not typed as java.lang.String, a non-hard-coded password, and randomized[salt] evidence. Observing the call alone does not establish those predicates."
+    },
+    {
+      "name": "clear_password",
+      "api_patterns": [
+        ".clearPassword()",
+        "clearPassword()"
+      ],
+      "condition": "Observed when clearPassword() is invoked on the relevant PBEKeySpec instance. In the verified rule protocol it follows permitted four-argument construction; observing this substring does not prove receiver identity, all-path execution, or clearing of external password-array copies."
+    },
+    {
+      "name": "forbidden_password_only_constructor",
+      "api_patterns": [
+        "new PBEKeySpec(password)",
+        "PBEKeySpec(password)"
+      ],
+      "condition": "Observed when the one-argument PBEKeySpec(char[]) constructor is invoked. The verified CrySL source lists this overload as FORBIDDEN; a salt and iteration-count predicate cannot be established through this overload because those arguments are absent."
+    },
+    {
+      "name": "forbidden_password_salt_iterations_constructor",
+      "api_patterns": [
+        "new PBEKeySpec(password, salt, iterationCount)",
+        "PBEKeySpec(password, salt, iterationCount)"
+      ],
+      "condition": "Observed when the three-argument PBEKeySpec(char[], byte[], int) constructor is invoked. The verified CrySL source lists this overload as FORBIDDEN, although JDK documentation provides it for fixed-key-size PBE ciphers; the CrySL protocol permits only the four-argument constructor event."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "A PBEKeySpec construction proves that SecretKeyFactory.generateSecret(...) was called or that a derived key was actually produced.",
+    "A PBEKeySpec construction proves the KDF, PRF, provider, cipher, key length actually used, or the document-encryption format.",
+    "The reported value 10000 proves a runtime call occurred; the representative message expressly says the hardening candidate was not executed.",
+    "The reported value 10000 violates the verified CrySL constraint; that source specifies iterationCount >= 10000, so exactly 10000 meets that baseline.",
+    "A salt byte array is randomized merely because it is non-null, non-empty, or named salt; randomized[salt] requires provenance evidence.",
+    "clearPassword() clears the caller's original char[] or every copy returned by getPassword(); documented behavior concerns PBEKeySpec's internal password copy, and returned copies remain the caller's responsibility to erase.",
+    "The verified CrySL source directly governs javax.crypto.interfaces.PBEKey. It directly declares javax.crypto.spec.PBEKeySpec; inclusion of PBEKey reflects the required naming target and API relationship, not a verified PBEKey.crysl declaration."
+  ],
+  "semantic_scope": "This is a static protocol-and-predicate context for javax.crypto.spec.PBEKeySpec: selected constructor overloads, clearPassword(), an iteration-count floor, password type/source restrictions, and salt-randomization evidence. The representative finding narrows this to other.de.stanetz.jpencconverter.JavaPasswordbasedCryption.createKeyFromPassword, where V001 and U001 reportedly supply 10000 as the PBEKeySpec iteration argument for password-derived document-encryption keys. No implementation, call graph, or execution trace was supplied.",
+  "detector_semantics": {
+    "claim": "The supplied message reports a static hardening candidate for a PBEKeySpec iteration argument of 10000 in JavaPasswordbasedCryption.createKeyFromPassword. It explicitly characterizes the candidate as not executed and recommends calibrating a stronger work factor only for a new format version.",
+    "predicates": [
+      "Verified canonical CrySL predicate: iterationCount >= 10000.",
+      "Verified canonical CrySL predicate: neverTypeOf[password, java.lang.String].",
+      "Verified canonical CrySL predicate: notHardCoded[password].",
+      "Verified canonical CrySL requirement: randomized[salt].",
+      "Representative-finding predicate as reported: V001 and U001 both resolve to 10000 for the PBEKeySpec iteration argument."
+    ],
+    "limitations": [
+      "No repository source, call graph, data-flow trace, or runtime trace was provided for the reported class and method.",
+      "The message does not identify the SecretKeyFactory algorithm, provider, PRF, salt origin, key length, cipher, or persisted-format compatibility constraints.",
+      "The verified CrySL source establishes a minimum of 10000, not that 10000 is adequate for every password-derived-key deployment."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "javax.crypto.spec.PBEKeySpec represents a user-chosen password usable with password-based encryption.",
+      "Its four-argument constructor accepts password, salt, iteration count, and desired derived-key length for variable-key-size PBE ciphers; password and salt are cloned.",
+      "clearPassword() clears PBEKeySpec's internal password copy.",
+      "The related javax.crypto.interfaces.PBEKey interface exposes password, salt, and iteration count for a PBE key."
+    ],
+    "preconditions": [
+      "For the three- and four-argument JDK constructors, salt must not be null or empty.",
+      "For the three- and four-argument JDK constructors, iterationCount must be positive.",
+      "For the four-argument JDK constructor, keyLength must be positive.",
+      "After clearPassword(), getPassword() throws IllegalStateException according to the JDK documentation.",
+      "The JDK API permits a null password by treating it as an empty char[]; the CrySL rule separately disallows a password value typed as java.lang.String."
+    ],
+    "unknowns": [
+      "Whether the reported code uses PBKDF2, legacy PKCS #5 PBE, PKCS #12 PBE, or another provider-specific SecretKeyFactory algorithm.",
+      "Whether V001 and U001 are literal constants, configuration values, version fields, tainted values, or detector-internal symbolic labels.",
+      "Whether the salt is freshly generated per protected document and retained for decryption.",
+      "Whether clearPassword() is reached for every constructed PBEKeySpec instance."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The representative message treats the reported 10000-iteration construction as a CWE-916-oriented static hardening candidate, not evidence of a runtime exploit or a confirmed CrySL-rule violation.",
+    "runtime_claim": "No runtime security conclusion follows from the finding alone. Such a conclusion requires evidence of the executed KDF and provider, resolved iteration count, password properties, salt generation and uniqueness, derived-key use, and applicable format/version behavior.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Resolve the constructed type and overload to javax.crypto.spec.PBEKeySpec rather than a namesake type.",
+      "Show the expression or value flow supplying password, salt, iterationCount, and keyLength.",
+      "For canonical CrySL compliance, establish iterationCount >= 10000, non-String and non-hard-coded password handling, and randomized salt provenance.",
+      "If asserting a direct PBEKey rule target, provide a source declaring SPEC javax.crypto.interfaces.PBEKey; the attempted PBEKey.crysl URL was missing."
+    ],
+    "runtime": [
+      "Provide a trace or test showing that the reported createKeyFromPassword path executes.",
+      "Identify the resolved SecretKeyFactory algorithm and provider behavior.",
+      "Capture the effective iteration count, salt bytes and provenance, derived-key length, and whether secret generation's result is used.",
+      "Establish object identity and path coverage showing clearPassword() is invoked on the constructed PBEKeySpec after use."
+    ],
+    "compatibility": [
+      "Identify the format-version fields or serialized metadata represented by V001 and U001.",
+      "Determine whether documents created with the current format must remain decryptable and where KDF parameters are stored.",
+      "Verify that encrypting and decrypting code agree on KDF algorithm, salt, iteration count, and derived-key length.",
+      "Establish migration or version-selection behavior; none is established by the supplied finding."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A policy labels exactly 10000 as weak even though the verified CrySL rule accepts it because its written condition is >= 10000.",
+    "The static analysis sees a dead, test-only, unsupported-version, or otherwise unexecuted constructor path.",
+    "Salt randomization is provided by an approved helper or external boundary whose provenance is unavailable to the analysis.",
+    "A non-literal secure password source loses provenance through intermediate representations and is classified as hard-coded or String-typed.",
+    "clearPassword() occurs through an alias, helper, exceptional-cleanup path, or language interoperation that the detector does not connect to the constructed instance.",
+    "The message labels the use document encryption, but the specification is later used for another purpose or key generation fails before use."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PBEKeySpec.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/spec/PBEKeySpec.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/interfaces/PBEKey.html"
+  ],
+  "unknowns": [
+    "Why the consumer-facing identifier is PBEKeySpec while the requested naming convention requires a PBEKey target: the available verified corpus source is PBEKeySpec.crysl and directly declares SPEC javax.crypto.spec.PBEKeySpec.",
+    "Whether a separate historical, generated, or project-local PBEKeySpec specification maps that identifier to javax.crypto.interfaces.PBEKey.",
+    "Whether the supplied detector applies a policy stricter than the canonical >= 10000 CrySL floor. The message suggests a stronger-work-factor recommendation but supplies neither a threshold nor its authority.",
+    "The repository expressions and data flows in JavaPasswordbasedCryption.createKeyFromPassword, including V001/U001 meanings and whether the path executes.",
+    "The attempted URL https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PBEKey.crysl returned HTTP 404; this does not disprove every possible PBEKey rule outside that exact corpus location."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "other.de.stanetz.jpencconverter.JavaPasswordbasedCryption",
+        "method": "createKeyFromPassword",
+        "message": "Static hardening candidate (not executed): PBEKeySpec receives 10000 iterations from both V001 and U001 for password-derived document encryption keys (CWE-916); calibrate a stronger work factor for a new format version."
+      }
+    ],
+    "expected_api_simple_name": "PBEKey",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.crypto.spec.PBEKeySpec",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PBEKeySpec.crysl"
+  }
+}

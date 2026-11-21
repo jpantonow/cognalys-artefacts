@@ -1,0 +1,31 @@
+{
+ "card_id": "Kf5096721",
+ "card_sha256": "7bd81e9ae64f1d18",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 9,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2713,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 362
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0291824,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "159d710a2fc5ba51",
+ "finished_at": "2026-11-16T11:45:58-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.35,
+  "reason": "The card follows a fixed template (Assessment, Cause, and an evidence tag like \"[;; C3]\"), which points to the Cognalys pipeline rather than a free-form coding agent. The wording is short and clipped (\"client-only algorithm change is not authorized\"), which reads more like GPT-6.1 Terra than Sonnet, so C is a slightly better guess than D."
+ }
+}

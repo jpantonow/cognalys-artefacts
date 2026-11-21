@@ -1,0 +1,55 @@
+The published rule behind each report
+
+Report on Encryptor.encrypt (IvParameterSpec), rule IvParameterSpecSpec
+RVSec's record classifies this report as UnsatisfiedConstraint.
+Rule source: CrySL rule for javax.crypto.spec.IvParameterSpec, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IvParameterSpec.crysl
+Types it governs: javax.crypto.spec.IvParameterSpec
+Call order it requires: Con := c1 | c2; ORDER Con
+Events it matches:
+- c1: Observation condition: constructor event `IvParameterSpec(iv)`. Rule-wide declarative requirements are `randomized[iv]`, `length[iv] >= offset + len`, `offset >= 0`, and `len > 0`; these are not runtime `if` conditions. `offset` and `len` are not bound by this event declaration. Call shapes: `IvParameterSpec(iv)`.
+- c2: Observation condition: constructor event `IvParameterSpec(iv, offset, len)`. Rule-wide declarative requirements are `randomized[iv]`, `length[iv] >= offset + len`, `offset >= 0`, and `len > 0`; these are not runtime `if` conditions. Call shapes: `IvParameterSpec(iv, offset, len)`.
+What RVSec checks under this rule: For either matched constructor event, the CrySL rule requires `randomized[iv]` and ensures `preparedIV[this]`.
+Requirements the rule states:
+- `randomized[iv]` is a REQUIRES predicate for the input byte array.
+- `preparedIV[this]` is an ENSURES predicate for the constructed `IvParameterSpec` object.
+Limits of the check, recorded with the rule:
+- The rule text does not define which sources, library calls, interprocedural summaries, or data transformations establish `randomized[iv]`.
+- The rule text does not specify whether `randomized[iv]` concerns every byte of the array, a selected subrange, a provenance label, or a runtime entropy measurement.
+- The rule declares constraints over `offset` and `len` even for `c1`, whose event declaration binds only `iv`.
+- The human-readable wording that no randomized source was observed is an analyzer result derived from the required predicate; the rule itself declares predicates but no error-message text.
+- The rule does not observe cipher initialization, cipher mode, encryption versus decryption, IV reuse, nonce uniqueness, key scope, or a later use of the constructed object.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- A valid IV read from a ciphertext, message, database, configuration, or protocol record for decryption may lack a statically modeled `randomized[iv]` provenance, although generating a new random IV during decryption would be inappropriate.
+- An IV produced by a suitable helper, native implementation, dependency, separate module, or unmodeled interprocedural path may not receive the required predicate.
+- An IV whose bytes are copied, encoded, decoded, serialized, or sliced through transformations lacking analyzer summaries may lose recognizable randomized provenance.
+- A call can be API-valid while conflicting with the rule's stronger `len > 0` condition: the OpenJDK implementation permits a zero-length selected range, while application of that rule condition to `c1` is unresolved.
+- A finding can be over-interpreted as proof of an encryption vulnerability even though the rule establishes no later encryption use.
+
+Report on Encryptor.encrypt (SecretKeySpec), rule SecretKeySpecSpec
+Rule source: SecretKeySpec.crysl in CROSSINGTUD/Crypto-API-Rules, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SecretKeySpec.crysl
+Types it governs: javax.crypto.spec.SecretKeySpec
+Call order it requires: Con := c1 | c2; ORDER Con: exactly one governed SecretKeySpec construction event, using either constructor.
+Events it matches:
+- c1: Observation: SecretKeySpec(keyMaterial, keyAlgorithm). In addition to observing c1, the rule requires keyAlgorithm in {"AES", "HmacSHA256", "HmacSHA384", "HmacSHA512"}; length[keyMaterial] >= offset + len; neverTypeOf[keyMaterial, java.lang.String]; and preparedKeyMaterial[keyMaterial] || randomized[keyMaterial]. The rule declares offset and len but does not bind them in c1, so the standalone source does not resolve how its length predicate is evaluated for this event. Call shapes: `SecretKeySpec(keyMaterial, keyAlgorithm)`.
+- c2: Observation: SecretKeySpec(keyMaterial, offset, len, keyAlgorithm). In addition to observing c2, the rule requires keyAlgorithm in {"AES", "HmacSHA256", "HmacSHA384", "HmacSHA512"}; length[keyMaterial] >= offset + len; neverTypeOf[keyMaterial, java.lang.String]; and preparedKeyMaterial[keyMaterial] || randomized[keyMaterial]. Call shapes: `SecretKeySpec(keyMaterial, offset, len, keyAlgorithm)`.
+What RVSec checks under this rule: The rule permits either constructor event and requires the stated CONSTRAINTS and REQUIRES predicates. Its ENSURES section emits speccedKey[this, _] and generatedKey[this, keyAlgorithm] after the event.
+Requirements the rule states:
+- keyAlgorithm in {"AES", "HmacSHA256", "HmacSHA384", "HmacSHA512"}
+- length[keyMaterial] >= offset + len
+- neverTypeOf[keyMaterial, java.lang.String]
+- preparedKeyMaterial[keyMaterial] || randomized[keyMaterial]
+Limits of the check, recorded with the rule:
+- No runtime if-condition, condition(...) clause, AspectJ target(...), or AspectJ args(...) clause appears in this rule; no subtype-matching semantics can be inferred from this source.
+- preparedKeyMaterial, randomized, speccedKey, and generatedKey are predicate names only in this rule. Their definitions, producers, propagation behavior, and evidence thresholds are not present.
+- The source does not explain how offset and len are assigned when c1, the two-argument constructor event, is used.
+- The rule's algorithm allow-list is narrower than the general SecretKeySpec API contract and is not documentation of all Java or provider-supported secret-key algorithm names.
+- A diagnostic saying that material was not observed to have been prepared by Key.getEncoded() is not a clause of the supplied rule; its mapping to preparedKeyMaterial requires detector-implementation evidence.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- Key material is securely derived, imported, or validated through a path that the detector does not mark as preparedKeyMaterial or randomized.
+- The algorithm value is computed or passed through an analysis path that prevents the detector from proving membership in the four-value list, although its runtime value is allowed by the rule.
+- A call is valid at the SecretKeySpec API boundary but uses an algorithm name outside the rule's narrow allow-list; whether this is a security-policy violation is not established by the constructor documentation.
+- A valid two-argument constructor call is affected by the rule's unbound offset and len variables if the detector applies the shared length predicate conservatively.
+- The array has suitable runtime provenance or entropy but there is no available rule or analysis summary that produces the required provenance predicate.
+
+
+Earlier proposals, in other repositories, for the rule of the report on Encryptor.encrypt (IvParameterSpec): none with a maintainer response.

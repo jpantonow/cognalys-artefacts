@@ -1,0 +1,145 @@
+{
+  "schema_version": 2,
+  "spec_id": "IllegalStateSpec",
+  "name": "IllegalStateSpec",
+  "applies_to_types": [
+    "unresolved.IllegalState"
+  ],
+  "source_title": "Requested canonical CrySL source, IllegalState.crysl — fetch returned HTTP 404; no rule text was available to consult.",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IllegalState.crysl",
+  "source_verified": false,
+  "protocol": "Unverified: EngineReady → TerminalSession.initialize; LayoutPassesComplete → DesktopLayout.restoreState.",
+  "important_note": "No primary IllegalState.crysl rule was found. \"unresolved.IllegalState\" is an explicit placeholder used to preserve the requested CrySL XSpec naming shape; it is not a verified Java/Kotlin API type and must not be replaced with an unrelated namesake API. The reported readiness predicates are finding-derived, not verified CrySL protocol semantics.",
+  "events": [
+    {
+      "name": "terminal_session_initialize_observation",
+      "api_patterns": [
+        "TerminalSession",
+        ".initialize(",
+        "IllegalStateException",
+        "\"Cannot start terminal session before engine is ready.\""
+      ],
+      "condition": "Observing a call textually matching .initialize( on a TerminalSession-like receiver, or observing construction or throwing of the quoted exception message, is only a candidate event. It does not establish that the EngineReady predicate holds."
+    },
+    {
+      "name": "desktop_layout_restore_state_observation",
+      "api_patterns": [
+        "DesktopLayout",
+        ".restoreState(",
+        "IllegalStateException",
+        "\"Workspace state cannot be restored before layout passes.\""
+      ],
+      "condition": "Observing a call textually matching .restoreState( on a DesktopLayout-like receiver, or observing construction or throwing of the quoted exception message, is only a candidate event. It does not establish that the LayoutPassesComplete predicate holds."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That com.termux.terminal.TerminalSession has a method named initialize in the analyzed revision.",
+    "That ch.deletescape.lawnchair.workspace.DesktopLayout and its restoreState method belong to the CrySL corpus.",
+    "That either reported exception message is present verbatim in upstream source rather than being generated, normalized, transformed, or supplied by a project-local wrapper.",
+    "That EngineReady or LayoutPassesComplete is represented by any particular field, callback, lifecycle state, thread, or happens-before relation.",
+    "That IllegalStateSpec describes java.lang.IllegalStateException, any type ending in Exception, or an unrelated namesake such as a nested IllegalState type from another framework.",
+    "That a reported IllegalStateException is a security vulnerability or that avoiding the exception proves correct runtime behavior."
+  ],
+  "semantic_scope": "At most, this detector label can describe potential violations of the two reported readiness-before-operation predicates at the indicated call sites. It does not establish a CrySL rule, a common governed API class, an implementation-level state machine, or a security property.",
+  "detector_semantics": {
+    "claim": "A finding would indicate that a reported operation may be reached without evidence for the readiness condition stated by that operation's reported IllegalStateException message.",
+    "predicates": [
+      "For TerminalSession.initialize, observing a matching call or matching exception-message site is distinct from proving EngineReady before the operation.",
+      "For DesktopLayout.restoreState, observing a matching call or matching exception-message site is distinct from proving LayoutPassesComplete before the operation."
+    ],
+    "limitations": [
+      "The requested canonical CrySL source was missing at the supplied URL.",
+      "No primary Lawnchair source for the reported DesktopLayout type, method, and message was located during the source-discovery pass.",
+      "The current upstream Termux TerminalSession source declares initializeEmulator(...) and invokes it from updateSize(...); this does not verify the reported initialize method or its reported exception message.",
+      "Static local substring matching cannot prove object identity, dynamic-dispatch target, predicate truth, exception reachability, thread ordering, or runtime configuration."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "The supplied findings state two proposed preconditions: terminal-session start requires a ready engine, and workspace restoration requires layout passes. These are unverified claims from the findings, not documented semantics recovered from an IllegalState.crysl source.",
+      "The current primary Termux source documents that terminal emulation begins after updateSize(...) makes size known, and implements initialization through initializeEmulator(...). This does not verify the reported initialize method or quoted message."
+    ],
+    "preconditions": [
+      "Unverified finding-derived precondition: EngineReady before TerminalSession.initialize.",
+      "Unverified finding-derived precondition: LayoutPassesComplete before DesktopLayout.restoreState."
+    ],
+    "unknowns": [
+      "The actual fully qualified type governed by IllegalStateSpec.",
+      "Whether IllegalStateSpec exists in the target project's local rule set under another path, branch, revision, generated artifact, or non-CrySL format.",
+      "The exact method signatures, visibility, receiver types, and state variables for both representative findings.",
+      "Whether the two reported messages represent actual thrown exceptions, detector diagnostics, or synthetic summaries."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "Potential lifecycle or precondition misuse only.",
+    "runtime_claim": "Unknown; no canonical rule or runtime implementation was found that establishes a security consequence.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A primary, revision-pinned IllegalState.crysl source whose SPEC declaration identifies a real fully qualified governed type with simple name IllegalState.",
+      "Primary source for the exact Termux revision containing com.termux.terminal.TerminalSession.initialize and the quoted message, if such a revision exists.",
+      "Primary source for the exact Lawnchair or fork revision containing ch.deletescape.lawnchair.workspace.DesktopLayout.restoreState and the quoted message.",
+      "If a local detector rule is intended, the project-local rule file or generated detector metadata mapping IllegalStateSpec to its governed type."
+    ],
+    "runtime": [
+      "A reproducible execution showing the exact operation, receiver object, state transition, and thrown IllegalStateException.",
+      "Instrumentation or test assertions demonstrating the relevant readiness predicate immediately before the operation.",
+      "For concurrent lifecycle code, evidence of the required ordering and visibility relationship between readiness publication and the operation."
+    ],
+    "compatibility": [
+      "Repository commit, release tag, artifact version, Android/API level where applicable, and build flavor.",
+      "Confirmation that package relocation, shading, forks, generated sources, or source transformations have not changed the reported class or method names.",
+      "Confirmation that the detector resolves calls to the intended concrete implementation rather than a same-named API."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "The matching call occurs only on a path where the readiness predicate has already been established but the analysis does not track the relevant state.",
+    "Readiness is established indirectly through a callback, framework lifecycle hook, dependency injection, native code, reflection, coroutine, or cross-thread synchronization not modeled by the detector.",
+    "The exception text is a detector-generated summary or wrapper message rather than a literal runtime throw site.",
+    "A method name matches textually but resolves to a different overload, receiver type, package-relocated copy, or generated implementation.",
+    "The representative Termux finding was collected from a fork or historical revision: current upstream source exposes initializeEmulator(...), not the reported initialize method.",
+    "A rule target is inferred from a same-named IllegalState type in an unrelated framework instead of from a verified SPEC declaration."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IllegalState.crysl",
+    "https://raw.githubusercontent.com/termux/termux-app/refs/heads/master/terminal-emulator/src/main/java/com/termux/terminal/TerminalSession.java"
+  ],
+  "unknowns": [
+    "Does an IllegalStateSpec source exist outside the requested Crypto-API-Rules path, and if so, what is its revision-pinned primary URL?",
+    "What real fully qualified API type with simple name exactly IllegalState does this specification govern?",
+    "Are the two representative findings intended as one generic exception-state detector, or are they from separate project-local rules incorrectly grouped under IllegalStateSpec?",
+    "What concrete events establish EngineReady and LayoutPassesComplete?",
+    "Do the reported methods and messages exist in the analyzed dependency revisions, and are they runtime behavior rather than detector-provided text?"
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IllegalState.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.termux.terminal.TerminalSession",
+        "method": "initialize",
+        "message": "IllegalStateException: Cannot start terminal session before engine is ready."
+      },
+      {
+        "class": "ch.deletescape.lawnchair.workspace.DesktopLayout",
+        "method": "restoreState",
+        "message": "IllegalStateException: Workspace state cannot be restored before layout passes."
+      }
+    ],
+    "expected_api_simple_name": "IllegalState",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IllegalState.crysl"
+  }
+}

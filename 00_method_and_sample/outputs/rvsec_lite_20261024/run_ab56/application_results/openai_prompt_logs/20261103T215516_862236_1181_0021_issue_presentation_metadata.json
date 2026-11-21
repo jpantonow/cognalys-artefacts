@@ -1,0 +1,58 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T215516_862236_1181_0021_issue_presentation",
+  "parent_call_id": "",
+  "finding_id": "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed",
+  "stage": "issue_presentation",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 3357,
+  "input_tokens": 759,
+  "cached_input_tokens": 0,
+  "output_tokens": 330,
+  "latency_ms": 6037,
+  "retry_count": 0,
+  "request_id": "req_e3a90a4340584ab2b72e0ff50497a7db",
+  "section_telemetry": {
+    "finding": {
+      "characters": 782,
+      "approx_tokens": 196,
+      "sha256": "297bf0ec9a506fa06ba195beb9d1461fbfba4132627c9b80f2c0bdf26c241ba8"
+    },
+    "confirmed_cause": {
+      "characters": 456,
+      "approx_tokens": 114,
+      "sha256": "1e330b98ce8aa413e2f515fd475c3060c81a35cefd5811f10166c0ea62d058c5"
+    },
+    "decision": {
+      "characters": 11,
+      "approx_tokens": 3,
+      "sha256": "e25c8d0559822d0cc2331a09543be2cb0cd3858bba2d606bec967d426592f4b2"
+    },
+    "generation_blockers": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "publication_blockers": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 79,
+  "openai_response_id": "resp_04cae955edd194d0006aea82758d8087d287aa527f256aaf8c",
+  "response_status": "completed",
+  "background_polls": 2,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T21:55:23"
+}

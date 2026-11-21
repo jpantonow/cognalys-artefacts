@@ -1,0 +1,116 @@
+{
+  "repository": "outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+  "remote_name": "origin",
+  "remote_url": "https://github.com/Crazy-Marvin/MetadataRemover",
+  "repo_host": "github.com",
+  "repo_owner": "Crazy-Marvin",
+  "repo_name": "MetadataRemover",
+  "branch": "fix/clinit-securerandomspec-40d39da41dec-be04b4d231-3",
+  "base_branch": "development",
+  "base_commit": "1a48772b3713711add80eedcf8207cddcaeb6fd3",
+  "finding_id": "40d39da41dec",
+  "solution_revision": "be04b4d231",
+  "commit_hash": "",
+  "source_file": "app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt",
+  "spec": "SecureRandomSpec",
+  "method_name": "<clinit>",
+  "csv_class": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+  "error_message": "the constructor expects a byte array observed to come from a randomized source",
+  "tool": "ape",
+  "build_validation": {
+    "status": "failed",
+    "task": "assembleDebug",
+    "return_code": 1,
+    "reason": "production_failure_reproduces_on_base_commit",
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/40d39da41dec/production/logs/projects/be04b4d231-3.log",
+    "finding_id": "40d39da41dec",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+    "failure_attribution": "verified_preexisting_build_failure",
+    "unselected_flavor": "",
+    "compiler_diagnostics": [],
+    "baseline_compiler_diagnostics": [],
+    "new_compiler_diagnostics": [],
+    "failing_tests": [],
+    "baseline_failing_tests": [],
+    "new_failing_tests": [],
+    "phases": {
+      "production": {
+        "project_name": "be04b4d231-3",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+        "task": "assembleDebug",
+        "status": "failed",
+        "return_code": 1,
+        "duration_seconds": 66.11,
+        "apk_count": 0,
+        "copied_apks": [],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/40d39da41dec/production/logs/projects/be04b4d231-3.log",
+        "reason": "gradle_return_code_1",
+        "incremental_after_failed_build": true
+      },
+      "baseline_production": {
+        "project_name": "baseline_50ff16c19884247c",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/baseline_build_cache/50ff16c19884247c_worktree/baseline_50ff16c19884247c",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/baseline_build_cache/50ff16c19884247c_worktree/baseline_50ff16c19884247c",
+        "task": "assembleDebug",
+        "status": "failed",
+        "return_code": 1,
+        "duration_seconds": 196.99,
+        "apk_count": 0,
+        "copied_apks": [],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/baseline_build_cache/50ff16c19884247c/logs/projects/baseline_50ff16c19884247c.log",
+        "reason": "gradle_return_code_1",
+        "from_cache": true
+      }
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "detector_replay": {
+      "outcome": "no_detector_coverage",
+      "detector": {
+        "tool": "ape"
+      },
+      "detail": "no detector adapter re-runs ape and its specification has no Semgrep rule; whether the alert still fires was not checked, and any correctness claim has to rest on other evidence"
+    },
+    "patch_correctness": {
+      "verdict": "unverified",
+      "satisfied": [],
+      "missing": [
+        "build_fails_for_a_reason_not_attributed_to_the_patch",
+        "no_executable_oracle_for_this_detector",
+        "regression_suite_not_run"
+      ],
+      "contradicted": []
+    }
+  },
+  "manual_review_required": true,
+  "auto_apply": false,
+  "publication_allowed": false,
+  "publishable": false,
+  "preview_status": "BUILD_VALIDATION_BLOCKED",
+  "original_method_body": "        val random = SecureRandom(\"75rgu86gr59ht86\".toByteArray(Charsets.UTF_8))",
+  "corrected_method_body": "        val random = SecureRandom()",
+  "coordinated_edits": [
+    {
+      "source_file": "app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt",
+      "symbol": "MainViewModel.Companion.random",
+      "edit_kind": "declaration",
+      "original_code": "        val random = SecureRandom(\"75rgu86gr59ht86\".toByteArray(Charsets.UTF_8))",
+      "corrected_code": "        val random = SecureRandom()",
+      "reason": "Avoid supplying compiled literal byte material as SecureRandom seed while retaining the existing shared random instance used for bounded filename selection and timestamps."
+    }
+  ],
+  "changed_files": [
+    "app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt"
+  ],
+  "diff": "diff --git a/app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt b/app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt\nindex 8773368..5f6f5ea 100644\n--- a/app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt\n+++ b/app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt\n@@ -43,7 +43,7 @@ class MainViewModel @Inject constructor(\n ) : ViewModel() {\n \n     companion object {\n-        val random = SecureRandom(\"75rgu86gr59ht86\".toByteArray(Charsets.UTF_8))\n+        val random = SecureRandom()\n         const val FILE_NAME_ALPHABET = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\"\n         const val FILE_NAME_LENGTH = 10\n     }\n",
+  "title": "Use an unseeded SecureRandom for filename selection",
+  "body": "## Summary\n\nAffects `MainViewModel.<clinit>` in `app/src/main/java/rocks/poopjournal/metadataremover/viewmodel/MainViewModel.kt`.\n\nI found that the companion object initializes `SecureRandom` with UTF-8 bytes from a compiled string literal. This violates `SecureRandomSpec` because that constructor expects seed bytes from a randomized source, not fixed literal data.\n\nI replaced the literal-seeded constructor call with `SecureRandom()`. This retains the shared random instance used for bounded filename selection and timestamps without supplying compiled seed material.\n\nI found this while running the app under RVSec, a runtime-verification tool that watches the app's calls to the Java cryptography and TLS APIs and checks each sequence of calls against usage rules written in CrySL. `SecureRandomSpec` is the rule this code did not satisfy.\n\n## How was this tested?\n\n- No automated test was added in this change\n- [ ] Build validation has not completed successfully (local preview only)\n\n---\n\n*I'm an undergraduate Computer Engineering student at the University of Bras\u00edlia (UnB); this contribution is part of a research project on the analysis of Android apps, and I'm happy to adjust it to match the project's conventions.*",
+  "text_problems": [],
+  "dry_run": false,
+  "existing_open_pull_request": ""
+}

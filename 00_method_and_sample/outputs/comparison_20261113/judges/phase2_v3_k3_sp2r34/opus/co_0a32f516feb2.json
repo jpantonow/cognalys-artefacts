@@ -1,0 +1,90 @@
+{
+ "unit": "co_0a32f516feb2",
+ "phase": "phase2",
+ "order": [
+  "Kab8c968a",
+  "Kf48cf03b"
+ ],
+ "card_sha256": {
+  "Kab8c968a": "d6bc7d8e48593e78",
+  "Kf48cf03b": "99885f0e5010eac2"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "Both findings are false positives for this code. TOTP.hmac_sha is a direct port of the RFC 6238 reference code. TOTP.gen picks the MAC from an int shaType: 0 gives HmacSHA1, 1 gives HmacSHA256, anything else gives HmacSHA512. In Home.java that int comes from the totpSHATypeSpinner, whose choices (arrays.xml SHATypes) are SHA-1, SHA-256 and SHA-512. HmacSHA1 is only used when the user picks SHA-1, which is the RFC 6238 default and the algorithm almost every TOTP server uses. The app cannot choose the algorithm: the server that issued the shared secret decides it, and codes only match if both sides use the same one. HMAC-SHA1 is also not broken in this role, because HMAC security does not depend on SHA-1 collision resistance. SHA-256 and SHA-512 are already offered. Removing or replacing HmacSHA1 would make the app produce wrong codes for every SHA-1 account, so it would no longer work as an authenticator for most services. It would also fail the RFC 6238 test vectors in app/src/test/java/TotpTests.java, which call TOTP.gen(seed, t, 8, 0, 30) and expect the SHA-1 results. The SecretKeySpecSpec finding is about the algorithm label \"RAW\" on the key. That label does not affect the computation: HMAC Mac implementations only read the key bytes, and the HMAC itself is identical. Changing it is cosmetic: the HMAC output stays the same. HOTP.java uses the same pattern (HmacSHA1 with a \"RAW\" key, as RFC 4226 requires) for the same reasons.\n\nSecond judge: TOTP.java implements RFC 6238 and deliberately selects HmacSHA1, HmacSHA256, or HmacSHA512. Home.java takes that selection from the SHA spinner; SHA-1 is its first/default option. The algorithm must match the verifier: replacing SHA-1 with SHA-256 changes passwords and breaks existing enrollments. SHA-1 collision weaknesses do not by themselves establish a vulnerability in this HMAC-based use. The RAW argument to SecretKeySpec labels the supplied key bytes; Mac.getInstance(crypto) selects the actual computation. It does not mean unencrypted storage or an unkeyed hash. A PR can replace RAW with the actual selected HMAC algorithm without changing OTP results; this improves API specificity but does not eliminate the checker's rejection of intentional HMAC-SHA1.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For a code fix, construct the TOTP SecretKeySpec with the selected crypto value, e.g. new SecretKeySpec(keyBytes, crypto), matching Mac.getInstance(crypto). Do not hard-code an allowlisted algorithm unrelated to the selected MAC.",
+   "Validate unchanged TOTP results for SHA-1, SHA-256, and SHA-512 using the RFC vectors in TotpTests.java. If relying on that suite for full coverage, correct its iteration: the current loop exercises only the first two of six timestamps."
+  ],
+  "must_not_break": [
+   "HmacSHA1 must stay available when shaType == 0 (user picks SHA-1). It is the RFC 6238 default and what most TOTP servers use; removing or replacing it makes the app generate codes that don't match the server",
+   "The RFC 6238 test vectors in TotpTests (SHA-1, SHA-256 and SHA-512 with the reference seeds) must still pass",
+   "The mapping from spinner position to algorithm (0=SHA-1, 1=SHA-256, 2=SHA-512) in Home.java and arrays.xml SHATypes must stay the same",
+   "Existing saved profiles/seeds in DBAdapter must keep producing the same codes; the HMAC output for a given key and time must not change",
+   "HOTP's RFC 4226 HMAC-SHA1 computation must not change; it shares the same pattern and is required for compatibility with HOTP servers",
+   "Code generation must keep working on every supported Android version (minSdk 21 to targetSdk 36)",
+   "Preserve SHA selection semantics: 0 selects SHA-1, 1 selects SHA-256, and the existing remaining branch selects SHA-512. Retain SHA-1 support and the existing default so enrolled accounts continue matching their verifiers.",
+   "Preserve identical OTPs for the same seed, time, algorithm, interval, and digit count, including the eight-byte counter encoding, dynamic truncation, modulo operation, and leading-zero padding. Keep the supported 30/60-second intervals and configurable output length.",
+   "Preserve existing hexadecimal seed bytes in the SQLite profiles database and active-profile preferences, including seeds entered through ASCII or Base32 conversion and those displayed by View Secret. Do not hash, regenerate, resize, or reinterpret seeds. SHA selection currently comes from the generation spinner, not a stored profile algorithm field.",
+   "Retain compatibility with the declared Android minimum API 21 and its JCA providers. Do not require a newer Android version, a new provider, or key migration for this metadata change.",
+   "Leave HOTP and mOTP behavior intact; changing their algorithms is neither required nor justified by this TOTP report."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 18,
+ "tokens": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 18955,
+  "cache_read_input_tokens": 12781,
+  "output_tokens": 1390
+ },
+ "turns": 3,
+ "tool_calls": 2,
+ "claude_reported_cost_usd": 0.1820122,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "1221509ca55d9689",
+ "finished_at": "2026-11-17T19:01:40-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Kab8c968a",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "unclear",
+    "r4": 2,
+    "r5": null,
+    "notes": "The change is the one the answer key wants: SecretKeySpec now uses crypto, so OTP output is unchanged and HmacSHA1 is kept. The RFC vectors were not run and the TotpTests loop bug was not fixed, so validation is missing. The description is honest about not running the tests and about the HmacSHA1 finding remaining."
+   },
+   {
+    "card_id": "Kf48cf03b",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "unclear",
+    "r4": 2,
+    "r5": null,
+    "notes": "The diff is identical: a correct change that only touches the key label, keeping HmacSHA1 and leaving HOTP alone. It still lacks a run of the RFC vectors and the fix to the test loop. The description is accurate: it says the tests were not run and correctly notes that HOTP was not reported."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

@@ -1,0 +1,3116 @@
+{
+ "generated_at": "2026-11-19T01:41:51.949362+00:00",
+ "preregistration": "docs/preregistro_validacao_prs_20261115.md",
+ "source": "outputs/dynamic_validation_20261114/pr_cases.json (unchanged)",
+ "build_order_rule": "accepted, open, closed_by_maintainer; within a group the pr_cases.json order",
+ "counts": {
+  "cases": 28,
+  "no_problems": 21,
+  "fixed_by_rule": 7,
+  "by_status": {
+   "accepted": 10,
+   "open": 13,
+   "closed_by_maintainer": 5
+  }
+ },
+ "cases": [
+  {
+   "pr_url": "https://github.com/gigabytedevelopers/CometOTP/pull/114",
+   "status": "accepted",
+   "case": "cometotp_1",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Create a fresh Cipher for each key operation",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-11-08T13:23:48Z",
+    "base_repo": "gigabytedevelopers/CometOTP",
+    "base_ref": "master",
+    "base_sha": "48a123c11970650384e95aa9da6ab9b17aa0397b",
+    "head_repo": "jpantonow/CometOTP",
+    "head_ref": "fix/unwrap-cipherspec-689272974dc1-baf36eb7c1",
+    "head_sha": "e5e8981d3a1020ee8215b33807c0f07970c04ffb",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/gigabytedevelopers__CometOTP__114.diff",
+   "metadata": "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/run/pull_requests/com.gigabytedevelopersinc.app.CometOTP.debug_1.apk_unwrap_CipherSpec_pr.json",
+   "run_dir": "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/run",
+   "apk": "com.gigabytedevelopersinc.app.CometOTP.debug_1.apk",
+   "spec": "CipherSpec",
+   "class": "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper",
+   "method": "unwrap",
+   "finding_id_sources": {
+    "outcome_record": "689272974dc1",
+    "pr_metadata": "689272974dc1",
+    "inventory_findings": null
+   },
+   "finding_id": "689272974dc1",
+   "spec_active": true,
+   "repo_url": "https://github.com/gigabytedevelopers/CometOTP",
+   "sources_csv": [
+    "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/sources.csv"
+   ],
+   "analysed_commit": "b903ee6ffdd692c9f575bf9d624e762d9117350e",
+   "app_packages": [
+    "com.gigabytedevelopersinc.app.cometOTP",
+    "com.gigabytedevelopersinc.app.CometOTP",
+    "com.gigabytedevelopersinc.app"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "b903ee6ffdd692c9f575bf9d624e762d9117350e",
+   "pipeline_patch_commit": "1b473b4c7c02f72eb41feeb2d21cedf97eb08865",
+   "head_sha_is_pipeline_commit": false,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the Cipher was initialised again after it completed an operation, which the rule does not accept",
+   "detector_code": "CIPHER-ORDER-02",
+   "message": "the Cipher was initialised again after it completed an operation, which the rule does not accept",
+   "detector_source": [
+    "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "CIPHER-ORDER-02",
+     "the Cipher was initialised again after it completed an operation, which the rule does not accept"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "CometOTP-debug-9.2.0-dev.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "b903ee6ffdd6",
+    "rvsec_build_log": "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "CometOTP-debug-9.2.0-dev.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper",
+     "unwrap"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper",
+     "unwrap"
+    ]
+   ],
+   "site_check": "declaration of 'unwrap' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "b903ee6ffdd692c9f575bf9d624e762d9117350e",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/gigabytedevelopers__CometOTP__114.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 1,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/FliegendeWurst/TriliumDroid/pull/177",
+   "status": "accepted",
+   "case": "triliumdroid_24",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Remove the unused key manager factory initialization",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-11-06T23:06:05Z",
+    "base_repo": "FliegendeWurst/TriliumDroid",
+    "base_ref": "master",
+    "base_sha": "e0390a996b7439fa0ef65ac9a3bb90f7cffd7e64",
+    "head_repo": "jpantonow/TriliumDroid",
+    "head_ref": "fix/invokesuspend-keymanagerfactoryspec-75875e2caca6-c3cf5a7391",
+    "head_sha": "c9da3caba2223056c0e25623be2479ca29890ce5",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/FliegendeWurst__TriliumDroid__177.diff",
+   "metadata": "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/run/pull_requests/eu.fliegendewurst.triliumdroid.debug_24.apk_invokeSuspend_KeyManagerFactorySpec_pr.json",
+   "run_dir": "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/run",
+   "apk": "eu.fliegendewurst.triliumdroid.debug_24.apk",
+   "spec": "KeyManagerFactorySpec",
+   "class": "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2",
+   "method": "invokeSuspend",
+   "finding_id_sources": {
+    "outcome_record": "75875e2caca6",
+    "pr_metadata": "75875e2caca6",
+    "inventory_findings": null
+   },
+   "finding_id": "75875e2caca6",
+   "spec_active": true,
+   "repo_url": "https://github.com/FliegendeWurst/TriliumDroid",
+   "sources_csv": [
+    "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/sources.csv"
+   ],
+   "analysed_commit": "e0390a996b7439fa0ef65ac9a3bb90f7cffd7e64",
+   "app_packages": [
+    "eu.fliegendewurst.triliumdroid"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "e0390a996b7439fa0ef65ac9a3bb90f7cffd7e64",
+   "pipeline_patch_commit": "c9da3caba2223056c0e25623be2479ca29890ce5",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "a null KeyStore given to KeyManagerFactory.init requests the platform default key source, whose loading was not observed",
+   "detector_code": "KEYMANAGERFACTORY-NOBS-02",
+   "message": "a null KeyStore given to KeyManagerFactory.init requests the platform default key source, whose loading was not observed",
+   "detector_source": [
+    "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "KEYMANAGERFACTORY-NOBS-02",
+     "a null KeyStore given to KeyManagerFactory.init requests the platform default key source, whose loading was not observed"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "e0390a996b74",
+    "rvsec_build_log": "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2",
+     "invokeSuspend"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2",
+     "invokeSuspend"
+    ]
+   ],
+   "site_check": "synthetic or special method name 'invokeSuspend': not checked against the diff",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "e0390a996b7439fa0ef65ac9a3bb90f7cffd7e64",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/FliegendeWurst__TriliumDroid__177.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 2,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/mouse233/localsend-kotlin/pull/58",
+   "status": "accepted",
+   "case": "localsendkotlin_23",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Store TLS keys with a KeyStore entry",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-11-13T03:27:11Z",
+    "base_repo": "mouse233/localsend-kotlin",
+    "base_ref": "main",
+    "base_sha": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+    "head_repo": "jpantonow/localsend-kotlin",
+    "head_ref": "fix/loadorcreatekeystore-keystorespec-97b5f3b80d25-e2fa9e9048",
+    "head_sha": "3d321e3d5b173d6a3ec5e29715314094284f2a74",
+    "commits": 2,
+    "changed_files": 2,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/mouse233__localsend-kotlin__58.diff",
+   "metadata": "outputs/rvsec_localsendkotlin_20261029/run_v5/pull_requests/io.github.mouse233.localsendkotlin.debug_23.apk_loadOrCreateKeyStore_KeyPairSpec_pr.json",
+   "run_dir": "outputs/rvsec_localsendkotlin_20261029/run_v5",
+   "apk": "io.github.mouse233.localsendkotlin.debug_23.apk",
+   "spec": "KeyStoreSpec",
+   "class": "io.github.mouse233.localsendkotlin.security.TlsIdentity",
+   "method": "loadOrCreateKeyStore",
+   "finding_id_sources": {
+    "outcome_record": "97b5f3b80d25",
+    "pr_metadata": "97b5f3b80d25",
+    "inventory_findings": null
+   },
+   "finding_id": "97b5f3b80d25",
+   "spec_active": true,
+   "repo_url": "https://github.com/mouse233/localsend-kotlin",
+   "sources_csv": [
+    "outputs/rvsec_localsendkotlin_20261029/sources.csv"
+   ],
+   "analysed_commit": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "app_packages": [
+    "io.github.mouse233.localsendkotlin",
+    "io.github.mouse233"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "pipeline_patch_commit": "6c72e89f4eb9a3886ca15f37fc4b4622926d6ce9",
+   "head_sha_is_pipeline_commit": false,
+   "pr_diff_matches_pipeline_diff": false,
+   "pr_message": "the observed call sequence is not one KeyStoreSpec accepts",
+   "detector_code": "KEYSTORE-ORDER-00",
+   "message": "the observed call sequence is not one KeyStoreSpec accepts",
+   "detector_source": [
+    "outputs/rvsec_localsendkotlin_20261029/findings_v5.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "KEYSTORE-ORDER-00",
+     "the observed call sequence is not one KeyStoreSpec accepts"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "53fbdad7e3e1",
+    "rvsec_build_log": "outputs/rvsec_localsendkotlin_20261029/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "io.github.mouse233.localsendkotlin.security.TlsIdentity",
+     "loadOrCreateKeyStore"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "io.github.mouse233.localsendkotlin.security.TlsIdentity",
+     "loadOrCreateKeyStore"
+    ]
+   ],
+   "site_check": "declaration of 'loadOrCreateKeyStore' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/mouse233__localsend-kotlin__58.diff",
+   "pr_merge_base": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+   "problems": [],
+   "notes": [
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": true,
+   "build_order": 3,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/Crustack/NotallyX/pull/1167",
+   "status": "accepted",
+   "case": "notallyx_71134",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use SHA-256 for export hash verification",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-11-07T15:05:34Z",
+    "base_repo": "Crustack/NotallyX",
+    "base_ref": "main",
+    "base_sha": "549707d367ac925f7f5a34ce20d2e87236ebe705",
+    "head_repo": "jpantonow/NotallyX",
+    "head_ref": "fix/md5hash-messagedigestspec-fff072cb8953-748164c488",
+    "head_sha": "4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+    "commits": 3,
+    "changed_files": 3,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/Crustack__NotallyX__1167.diff",
+   "metadata": "outputs/rvsec_notallyx_20261028/run_v7/pull_requests/com.philkes.notallyx.debug_71134.apk_md5Hash_MessageDigestSpec_pr.json",
+   "run_dir": "outputs/rvsec_notallyx_20261028/run_v7",
+   "apk": "com.philkes.notallyx.debug_71134.apk",
+   "spec": "MessageDigestSpec",
+   "class": "com.philkes.notallyx.utils.IOExtensionsKt",
+   "method": "md5Hash",
+   "finding_id_sources": {
+    "outcome_record": "fff072cb8953",
+    "pr_metadata": "fff072cb8953",
+    "inventory_findings": null
+   },
+   "finding_id": "fff072cb8953",
+   "spec_active": true,
+   "repo_url": "https://github.com/Crustack/NotallyX",
+   "sources_csv": [
+    "outputs/rvsec_notallyx_20261028/sources.csv"
+   ],
+   "analysed_commit": "f8c9cea0fdc35be7f495bb323ddab50632bdc373",
+   "app_packages": [
+    "com.philkes.notallyx"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "549707d367ac925f7f5a34ce20d2e87236ebe705",
+   "pipeline_patch_commit": "7841ba4ec4f3797c9b85725daa3ef4dc908554fb",
+   "head_sha_is_pipeline_commit": false,
+   "pr_diff_matches_pipeline_diff": false,
+   "pr_message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "detector_code": "MESSAGEDIGEST-ALG-02",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "detector_source": [
+    "outputs/rvsec_notallyx_20261028/findings_v7.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ALG-02",
+     "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:testDebugUnitTest",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "NotallyX-7.11.4.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "f8c9cea0fdc3",
+    "rvsec_build_log": "outputs/rvsec_notallyx_20261028/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "NotallyX-7.11.4.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.philkes.notallyx.utils.IOExtensionsKt",
+     "md5Hash"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.philkes.notallyx.utils.IOExtensionsKt",
+     "sha256Hash"
+    ]
+   ],
+   "site_check": "the diff removes 3 declaration line(s) of 'md5Hash' and adds none (method renamed or removed); declarations added in that file: ['sha256Hash']",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "549707d367ac925f7f5a34ce20d2e87236ebe705",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/Crustack__NotallyX__1167.diff",
+   "pr_merge_base": "549707d367ac925f7f5a34ce20d2e87236ebe705",
+   "problems": [
+    "patched_sites need reading the diff: the diff removes 3 declaration line(s) of 'md5Hash' and adds none (method renamed or removed); declarations added in that file: ['sha256Hash']"
+   ],
+   "notes": [
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": false,
+   "build_order": 4,
+   "inclusion": "one value fixed by rule (pre-registration)",
+   "problems_in_pr_cases": [
+    "patched_sites need reading the diff: the diff removes 3 declaration line(s) of 'md5Hash' and adds none (method renamed or removed); declarations added in that file: ['sha256Hash']"
+   ],
+   "filled": {
+    "patched_sites": {
+     "value": [
+      [
+       "com.philkes.notallyx.utils.IOExtensionsKt",
+       "sha256Hash"
+      ]
+     ],
+     "how": "PR diff Crustack__NotallyX__1167.diff, app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt: the three top-level md5Hash overloads are renamed sha256Hash; the governed call `MessageDigest.getInstance(\"SHA-256\")` (was \"MD5\") is in `fun InputStream.sha256Hash()`. Kotlin top-level functions of IOExtensions.kt compile to class IOExtensionsKt.",
+     "rule": "pre-registration: method renamed or removed by the patch -> the method(s) holding the governed call after the patch, read from the diff; if the call is removed, the method that held it"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/jimvixx/ShortMessageSecure/pull/89",
+   "status": "accepted",
+   "case": "smsecure_10400_pr89",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use SHA-256 for conversation stable IDs",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-11-02T16:48:05Z",
+    "base_repo": "jimvixx/ShortMessageSecure",
+    "base_ref": "main",
+    "base_sha": "3cfb03e840562262924b30b937340d09f8bf2085",
+    "head_repo": "jpantonow/ShortMessageSecure",
+    "head_ref": "fix/init-messagedigestspec-bb98bd300a0c-4bdedf3d9f",
+    "head_sha": "a9406215b897bf88a5dacbc64115b954d07db44e",
+    "commits": 2,
+    "changed_files": 1,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/jimvixx__ShortMessageSecure__89.diff",
+   "metadata": "outputs/rvsec_misuse_20261016/run_v3/pull_requests/org.jimvixx.smsecure.debug_10400.apk_init_MessageDigestSpec_pr.json",
+   "run_dir": "outputs/rvsec_misuse_20261016/run_v3",
+   "apk": "org.jimvixx.smsecure.debug_10400.apk",
+   "spec": "MessageDigestSpec",
+   "class": "org.jimvixx.smsecure.ConversationListAdapter",
+   "method": "<init>",
+   "finding_id_sources": {
+    "outcome_record": "bb98bd300a0c",
+    "pr_metadata": "bb98bd300a0c",
+    "inventory_findings": null
+   },
+   "finding_id": "bb98bd300a0c",
+   "spec_active": true,
+   "repo_url": "https://github.com/jimvixx/ShortMessageSecure",
+   "sources_csv": [
+    "outputs/rvsec_misuse_20261016/sources.csv"
+   ],
+   "analysed_commit": "0c17457b3f262840158ccca400746cc6f296e41d",
+   "app_packages": [
+    "org.jimvixx.smsecure",
+    "org.whispersystems.libsignal"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "3cfb03e840562262924b30b937340d09f8bf2085",
+   "pipeline_patch_commit": "56fa7cec2e50cdf01e9960935d29e43cd2aa269f",
+   "head_sha_is_pipeline_commit": false,
+   "pr_diff_matches_pipeline_diff": false,
+   "pr_message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA1",
+   "detector_code": "MESSAGEDIGEST-ALG-02",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA1",
+   "detector_source": [
+    "outputs/rvsec_misuse_20261016/findings_v3.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ALG-02",
+     "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA1"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "0c17457b3f26",
+    "rvsec_build_log": "outputs/rvsec_misuse_20261016/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "org.jimvixx.smsecure.ConversationListAdapter",
+     "<init>"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "org.jimvixx.smsecure.ConversationListAdapter",
+     "<init>"
+    ]
+   ],
+   "site_check": "synthetic or special method name '<init>': not checked against the diff",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "3cfb03e840562262924b30b937340d09f8bf2085",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/jimvixx__ShortMessageSecure__89.diff",
+   "pr_merge_base": "3cfb03e840562262924b30b937340d09f8bf2085",
+   "problems": [],
+   "notes": [
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": true,
+   "build_order": 5,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/freeotp/freeotp-android/pull/524",
+   "status": "accepted",
+   "case": "freeotp_48_pr524",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Require AES keys before initializing encryption",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-11-03T15:25:40Z",
+    "base_repo": "freeotp/freeotp-android",
+    "base_ref": "master",
+    "base_sha": "7f7f68351a80c9ea175256f339ee6f7428b3d128",
+    "head_repo": "jpantonow/freeotp-android",
+    "head_ref": "fix/encrypt-cipherspec-4b81532bb668-ab14005dbd",
+    "head_sha": "4dc8567193c9c46c1c0f03287418405f8d9a509e",
+    "commits": 1,
+    "changed_files": 4,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/freeotp__freeotp-android__524.diff",
+   "metadata": "outputs/exp_final_20261019/subset_revisao_lacunas_v7/pull_requests/org.fedorahosted.freeotp_48.apk_encrypt_CipherSpec_pr.json",
+   "run_dir": "outputs/exp_final_20261019/subset_revisao_lacunas_v7",
+   "apk": "org.fedorahosted.freeotp_48.apk",
+   "spec": "CipherSpec",
+   "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+   "method": "encrypt",
+   "finding_id_sources": {
+    "outcome_record": "4b81532bb668",
+    "pr_metadata": "4b81532bb668",
+    "inventory_findings": null
+   },
+   "finding_id": "4b81532bb668",
+   "spec_active": true,
+   "repo_url": "https://github.com/freeotp/freeotp-android",
+   "sources_csv": null,
+   "analysed_commit": "bcecd3761a565cdc17a9dd710fcf35dd03d29622",
+   "app_packages": [
+    "org.fedorahosted.freeotp.debug"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "7f7f68351a80c9ea175256f339ee6f7428b3d128",
+   "pipeline_patch_commit": "4dc8567193c9c46c1c0f03287418405f8d9a509e",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+   "detector_code": "CIPHER-CONSTR-00",
+   "message": "the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+   "detector_source": [
+    "data/processed/exp_final/findings_freeotp_v2.csv"
+   ],
+   "detector_candidates": [
+    [
+     "CIPHER-CONSTR-00",
+     "the key given to Cipher.init carries a key-origin predicate the rule does not admit"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":mobile:assembleDebugAndroidTest",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "mobile-debug.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "mobile-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+     "encrypt"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+     "encrypt"
+    ]
+   ],
+   "site_check": "declaration of 'encrypt' in 1 removed / 1 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "7f7f68351a80c9ea175256f339ee6f7428b3d128",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/freeotp__freeotp-android__524.diff",
+   "problems": [
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: org.fedorahosted.freeotp"
+   ],
+   "notes": [],
+   "complete": false,
+   "build_order": 6,
+   "inclusion": "one value fixed by rule (pre-registration)",
+   "problems_in_pr_cases": [
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: org.fedorahosted.freeotp"
+   ],
+   "filled": {
+    "app_packages": {
+     "value": [
+      "org.fedorahosted.freeotp.debug"
+     ],
+     "how": "manifest package of the built base APK, `aapt2 dump badging` (build/freeotp_48_pr524/base.badging: package: name='org.fedorahosted.freeotp.debug' versionCode='48' versionName='2.0.6' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersio)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK",
+     "note": "differs from the APK-name hint org.fedorahosted.freeotp in pr_cases.json; the rule's value (badging) is used"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/freeotp/freeotp-android/pull/521",
+   "status": "accepted",
+   "case": "freeotp_48_pr521",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Add SecretKeyFactory key round-trip coverage",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-10-27T20:15:07Z",
+    "base_repo": "freeotp/freeotp-android",
+    "base_ref": "master",
+    "base_sha": "1275d7808969f18f05e917bee19424f37ca89eb5",
+    "head_repo": "jpantonow/freeotp-android",
+    "head_ref": "fix/encrypt-cipherspec-4b81532bb668-7ac689dcf3",
+    "head_sha": "a0b43ac89e650cc0b2c03dcabbfb4c29e9521447",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/freeotp__freeotp-android__521.diff",
+   "metadata": "outputs/exp_final_20261019/subset_revisao_lacunas/pull_requests/org.fedorahosted.freeotp_48.apk_encrypt_CipherSpec_pr.json",
+   "run_dir": "outputs/exp_final_20261019/subset_revisao_lacunas",
+   "apk": "org.fedorahosted.freeotp_48.apk",
+   "spec": "CipherSpec",
+   "class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+   "method": "encrypt",
+   "finding_id_sources": {
+    "outcome_record": "4b81532bb668",
+    "pr_metadata": "4b81532bb668",
+    "inventory_findings": null
+   },
+   "finding_id": "4b81532bb668",
+   "spec_active": true,
+   "repo_url": "https://github.com/freeotp/freeotp-android",
+   "sources_csv": null,
+   "analysed_commit": "bcecd3761a565cdc17a9dd710fcf35dd03d29622",
+   "app_packages": [
+    "org.fedorahosted.freeotp.debug"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "1275d7808969f18f05e917bee19424f37ca89eb5",
+   "pipeline_patch_commit": "a0b43ac89e650cc0b2c03dcabbfb4c29e9521447",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+   "detector_code": "CIPHER-CONSTR-00",
+   "message": "the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+   "detector_source": [
+    "data/processed/exp_final/findings_subset_revisao_lacunas.csv"
+   ],
+   "detector_candidates": [
+    [
+     "CIPHER-CONSTR-00",
+     "the key given to Cipher.init carries a key-origin predicate the rule does not admit"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":mobile:assembleDebugAndroidTest",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "mobile-debug.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "mobile-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+     "encrypt"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+     "encrypt"
+    ]
+   ],
+   "site_check": "declaration of 'encrypt' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "1275d7808969f18f05e917bee19424f37ca89eb5",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/freeotp__freeotp-android__521.diff",
+   "problems": [
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: org.fedorahosted.freeotp"
+   ],
+   "notes": [],
+   "complete": false,
+   "build_order": 7,
+   "inclusion": "one value fixed by rule (pre-registration)",
+   "problems_in_pr_cases": [
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: org.fedorahosted.freeotp"
+   ],
+   "filled": {
+    "app_packages": {
+     "value": [
+      "org.fedorahosted.freeotp.debug"
+     ],
+     "how": "manifest package of the built base APK, `aapt2 dump badging` (build/freeotp_48_pr521/base.badging: package: name='org.fedorahosted.freeotp.debug' versionCode='48' versionName='2.0.6' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersio)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK",
+     "note": "differs from the APK-name hint org.fedorahosted.freeotp in pr_cases.json; the rule's value (badging) is used"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/jenspfahl/ANOTHERpass/pull/103",
+   "status": "accepted",
+   "case": "yapm_202006",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use KeyStore.getKey to read Android secret keys",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-10-25T19:21:23Z",
+    "base_repo": "jenspfahl/ANOTHERpass",
+    "base_ref": "master",
+    "base_sha": "c12d9b5a6044355da668413cfaee738c212c7815",
+    "head_repo": "jpantonow/ANOTHERpass",
+    "head_ref": "fix/getandroidsecretkey-keystorespec-1381cd4ddb3f-64fe2f73d8",
+    "head_sha": "040206734abc69eeb47c8a2e625720f4bd1b9897",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/jenspfahl__ANOTHERpass__103.diff",
+   "metadata": "outputs/rerun_correcoes_20261022/run/pull_requests/de.jepfa.yapm.debug_202006.apk_getAndroidSecretKey_KeyStoreSpec_pr.json",
+   "run_dir": "outputs/rerun_correcoes_20261022/run",
+   "apk": "de.jepfa.yapm.debug_202006.apk",
+   "spec": "KeyStoreSpec",
+   "class": "de.jepfa.yapm.service.secret.SecretService",
+   "method": "getAndroidSecretKey",
+   "finding_id_sources": {
+    "outcome_record": "1381cd4ddb3f",
+    "pr_metadata": "1381cd4ddb3f",
+    "inventory_findings": null
+   },
+   "finding_id": "1381cd4ddb3f",
+   "spec_active": true,
+   "repo_url": "https://github.com/jenspfahl/ANOTHERpass",
+   "sources_csv": [
+    "outputs/rvsec_misuse2_20261016/sources.csv"
+   ],
+   "analysed_commit": "89b0b68ce403b1fd199255990bf026f02d317eb9",
+   "app_packages": [
+    "de.jepfa.yapm"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "c12d9b5a6044355da668413cfaee738c212c7815",
+   "pipeline_patch_commit": "040206734abc69eeb47c8a2e625720f4bd1b9897",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the observed call sequence is not one KeyStoreSpec accepts",
+   "detector_code": "KEYSTORE-ORDER-00",
+   "message": "the observed call sequence is not one KeyStoreSpec accepts",
+   "detector_source": [
+    "outputs/rerun_correcoes_20261022/run/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "KEYSTORE-ORDER-00",
+     "the observed call sequence is not one KeyStoreSpec accepts"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "89b0b68ce403",
+    "rvsec_build_log": "outputs/rvsec_misuse2_20261016/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "de.jepfa.yapm.service.secret.SecretService",
+     "getAndroidSecretKey"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "de.jepfa.yapm.service.secret.SecretService",
+     "getAndroidSecretKey"
+    ]
+   ],
+   "site_check": "declaration of 'getAndroidSecretKey' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "c12d9b5a6044355da668413cfaee738c212c7815",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/jenspfahl__ANOTHERpass__103.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 8,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/ounben/AMARadio/pull/122",
+   "status": "accepted",
+   "case": "amaradio_159",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use SHA-256 for cache file names",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-10-17T14:09:42Z",
+    "base_repo": "ounben/AMARadio",
+    "base_ref": "master",
+    "base_sha": "df24911bbf11981236ae17f5abab8fb316921d77",
+    "head_repo": "jpantonow/AMARadio",
+    "head_ref": "fix/md5-messagedigestspec-06ff0c1fc96c-e2a44d5dd8",
+    "head_sha": "277874526fa5049c9dd6a9dd9d41cea08893863b",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/ounben__AMARadio__122.diff",
+   "metadata": "outputs/rvsec_misuse3_20261016/run6/pull_requests/com.ounben.amaradio.debug_159.apk_md5_MessageDigestSpec_pr.json",
+   "run_dir": "outputs/rvsec_misuse3_20261016/run6",
+   "apk": "com.ounben.amaradio.debug_159.apk",
+   "spec": "MessageDigestSpec",
+   "class": "com.ounben.amaradio.Utils",
+   "method": "md5",
+   "finding_id_sources": {
+    "outcome_record": "06ff0c1fc96c",
+    "pr_metadata": "06ff0c1fc96c",
+    "inventory_findings": null
+   },
+   "finding_id": "06ff0c1fc96c",
+   "spec_active": true,
+   "repo_url": "https://github.com/ounben/AMARadio",
+   "sources_csv": [
+    "outputs/rvsec_misuse3_20261016/sources.csv"
+   ],
+   "analysed_commit": "e01537f78694fdee5ad9ac6c216a5e3bedb47b9a",
+   "app_packages": [
+    "com.ounben.amaradio"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "df24911bbf11981236ae17f5abab8fb316921d77",
+   "pipeline_patch_commit": "277874526fa5049c9dd6a9dd9d41cea08893863b",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "detector_code": "MESSAGEDIGEST-ALG-02",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "detector_source": [
+    "outputs/rvsec_misuse3_20261016/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ALG-02",
+     "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:assembleFossDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": ":app:assembleFossDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "AMARadio_1.42_foss.apk"
+    ],
+    "rvsec_build_task": ":app:assembleFossDebug",
+    "rvsec_build_commit_prefix": "e01537f78694",
+    "rvsec_build_log": "outputs/rvsec_misuse3_20261016/build.log",
+    "build_task": ":app:assembleFossDebug",
+    "apk_glob": "AMARadio_1.42_foss.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.ounben.amaradio.Utils",
+     "md5"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.ounben.amaradio.Utils",
+     "getCacheFile"
+    ],
+    [
+     "com.ounben.amaradio.Utils",
+     "writeFileCache"
+    ]
+   ],
+   "site_check": "the diff removes 1 declaration line(s) of 'md5' and adds none (method renamed or removed); declarations added in that file: none",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "df24911bbf11981236ae17f5abab8fb316921d77",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/ounben__AMARadio__122.diff",
+   "problems": [
+    "patched_sites need reading the diff: the diff removes 1 declaration line(s) of 'md5' and adds none (method renamed or removed); declarations added in that file: none"
+   ],
+   "notes": [],
+   "complete": false,
+   "build_order": 9,
+   "inclusion": "one value fixed by rule (pre-registration)",
+   "problems_in_pr_cases": [
+    "patched_sites need reading the diff: the diff removes 1 declaration line(s) of 'md5' and adds none (method renamed or removed); declarations added in that file: none"
+   ],
+   "filled": {
+    "patched_sites": {
+     "value": [
+      [
+       "com.ounben.amaradio.Utils",
+       "getCacheFile"
+      ],
+      [
+       "com.ounben.amaradio.Utils",
+       "writeFileCache"
+      ]
+     ],
+     "how": "PR diff ounben__AMARadio__122.diff, app/src/main/kotlin/com/ounben/amaradio/Utils.kt: the private extension `String.md5()` is removed and its governed call is inlined as `MessageDigest.getInstance(\"SHA-256\")` into the two suspend functions that called it, getCacheFile and writeFileCache (object Utils; their bodies run in withContext lambdas, Utils$getCacheFile$N / Utils$writeFileCache$N, which classify.site_matches accepts). The governed call is moved, not removed, so the sites are the methods holding it after the patch.",
+     "rule": "pre-registration: method renamed or removed by the patch -> the method(s) holding the governed call after the patch, read from the diff; if the call is removed, the method that held it"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/jimvixx/ShortMessageSecure/pull/83",
+   "status": "accepted",
+   "case": "smsecure_10400_pr83",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Explicitly initialize generated HmacSHA1 keys to 160 bits",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-10-19T08:56:07Z",
+    "base_repo": "jimvixx/ShortMessageSecure",
+    "base_ref": "main",
+    "base_sha": "d05529947a010d850b18058e54b3d864a2fce74d",
+    "head_repo": "jpantonow/ShortMessageSecure",
+    "head_ref": "fix/generatemacsecret-keygeneratorspec-ab0763bb2ecc-c666163f1a",
+    "head_sha": "d64f5609981ec63d01f69a9ee675d5bf05184e4e",
+    "commits": 2,
+    "changed_files": 1,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/jimvixx__ShortMessageSecure__83.diff",
+   "metadata": "outputs/rvsec_misuse_20261016/run/pull_requests/org.jimvixx.smsecure.debug_10400.apk_generateMacSecret_KeyGeneratorSpec_pr.json",
+   "run_dir": "outputs/rvsec_misuse_20261016/run",
+   "apk": "org.jimvixx.smsecure.debug_10400.apk",
+   "spec": "KeyGeneratorSpec",
+   "class": "org.jimvixx.smsecure.crypto.MasterSecretUtil",
+   "method": "generateMacSecret",
+   "finding_id_sources": {
+    "outcome_record": "ab0763bb2ecc",
+    "pr_metadata": "ab0763bb2ecc",
+    "inventory_findings": null
+   },
+   "finding_id": "ab0763bb2ecc",
+   "spec_active": true,
+   "repo_url": "https://github.com/jimvixx/ShortMessageSecure",
+   "sources_csv": [
+    "outputs/rvsec_misuse_20261016/sources.csv"
+   ],
+   "analysed_commit": "0c17457b3f262840158ccca400746cc6f296e41d",
+   "app_packages": [
+    "org.jimvixx.smsecure",
+    "org.whispersystems.libsignal"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "d05529947a010d850b18058e54b3d864a2fce74d",
+   "pipeline_patch_commit": "a4e7f2271937c3c1a82e82d031814174efbbe677",
+   "head_sha_is_pipeline_commit": false,
+   "pr_diff_matches_pipeline_diff": false,
+   "pr_message": "expecting one of AES,HmacSHA256,HmacSHA384,HmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1",
+   "detector_code": "KEYGENERATOR-ALG-00",
+   "message": "expecting one of AES,HmacSHA256,HmacSHA384,HmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1",
+   "detector_source": [
+    "outputs/rvsec_misuse_20261016/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "KEYGENERATOR-ALG-00",
+     "expecting one of AES,HmacSHA256,HmacSHA384,HmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "0c17457b3f26",
+    "rvsec_build_log": "outputs/rvsec_misuse_20261016/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "org.jimvixx.smsecure.crypto.MasterSecretUtil",
+     "generateMacSecret"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "org.jimvixx.smsecure.crypto.MasterSecretUtil",
+     "generateMacSecret"
+    ]
+   ],
+   "site_check": "declaration of 'generateMacSecret' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "d05529947a010d850b18058e54b3d864a2fce74d",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/jimvixx__ShortMessageSecure__83.diff",
+   "pr_merge_base": "d05529947a010d850b18058e54b3d864a2fce74d",
+   "problems": [],
+   "notes": [
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": true,
+   "build_order": 10,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/thatSFguy/meshcore-mobile-app/pull/10",
+   "status": "open",
+   "case": "native_1",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use a separate key generator for each Keystore tier",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "thatSFguy/meshcore-mobile-app",
+    "base_ref": "main",
+    "base_sha": "8f226db77a067f5de614514fe755695209868037",
+    "head_repo": "jpantonow/meshcore-mobile-app",
+    "head_ref": "fix/seal-cipherspec-7d98a07e751d-b89743bda2",
+    "head_sha": "f98498a5a489a87814f4e7794cec9c0da47219cc",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/thatSFguy__meshcore-mobile-app__10.diff",
+   "metadata": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run/pull_requests/io.github.thatsfguy.meshcore.native.debug_1.apk_seal_CipherSpec_pr.json",
+   "run_dir": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run",
+   "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+   "spec": "CipherSpec",
+   "class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+   "method": "seal",
+   "finding_id_sources": {
+    "outcome_record": "7d98a07e751d",
+    "pr_metadata": "7d98a07e751d",
+    "inventory_findings": null
+   },
+   "finding_id": "7d98a07e751d",
+   "spec_active": true,
+   "repo_url": "https://github.com/thatSFguy/meshcore-mobile-app",
+   "sources_csv": [
+    "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/sources.csv"
+   ],
+   "analysed_commit": "8f226db77a067f5de614514fe755695209868037",
+   "app_packages": [
+    "io.github.thatsfguy.meshcore.android",
+    "io.github.thatsfguy.meshcore.native",
+    "io.github.thatsfguy.meshcore.shared",
+    "io.github.thatsfguy"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "8f226db77a067f5de614514fe755695209868037",
+   "pipeline_patch_commit": "f98498a5a489a87814f4e7794cec9c0da47219cc",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "no generator of the key given to Cipher.init was observed",
+   "detector_code": "CIPHER-NOBS-00",
+   "message": "no generator of the key given to Cipher.init was observed",
+   "detector_source": [
+    "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "CIPHER-NOBS-00",
+     "no generator of the key given to Cipher.init was observed"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "androidApp-debug.apk"
+    ],
+    "rvsec_build_task": ":androidApp:assembleDebug",
+    "rvsec_build_commit_prefix": "8f226db77a06",
+    "rvsec_build_log": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "androidApp-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+     "seal"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+     "seal"
+    ]
+   ],
+   "site_check": "declaration of 'seal' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "8f226db77a067f5de614514fe755695209868037",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/thatSFguy__meshcore-mobile-app__10.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 11,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/wolpi/prim-ftpd/pull/453",
+   "status": "open",
+   "case": "primftpd_71",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Retire RC4 cipher support in SSH",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "wolpi/prim-ftpd",
+    "base_ref": "master",
+    "base_sha": "fc83f19a2f3f3bec912eaa606fe77b8ff464fb4d",
+    "head_repo": "jpantonow/prim-ftpd",
+    "head_ref": "fix/init-secretkeyspecspec-2c46d89daf31-c5cd84fe18",
+    "head_sha": "559bde3b677e8c3cac6c468a5cd4a03193fec939",
+    "commits": 1,
+    "changed_files": 2,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/wolpi__prim-ftpd__453.diff",
+   "metadata": "outputs/rvsec_primftpd_20261031/run_v3/pull_requests/org.primftpd.debug_71.apk_init_SecretKeySpecSpec_pr.json",
+   "run_dir": "outputs/rvsec_primftpd_20261031/run_v3",
+   "apk": "org.primftpd.debug_71.apk",
+   "spec": "SecretKeySpecSpec",
+   "class": "org.apache.sshd.common.cipher.BaseRC4Cipher",
+   "method": "init",
+   "finding_id_sources": {
+    "outcome_record": "2c46d89daf31",
+    "pr_metadata": "2c46d89daf31",
+    "inventory_findings": null
+   },
+   "finding_id": "2c46d89daf31",
+   "spec_active": true,
+   "repo_url": "https://github.com/wolpi/prim-ftpd",
+   "sources_csv": [
+    "outputs/rvsec_primftpd_20261031/sources.csv"
+   ],
+   "analysed_commit": "f8f8f5fe393226a82fa1e2d8939d203028681313",
+   "app_packages": [
+    "org.primftpd",
+    "org.apache.sshd"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "fc83f19a2f3f3bec912eaa606fe77b8ff464fb4d",
+   "pipeline_patch_commit": "559bde3b677e8c3cac6c468a5cd4a03193fec939",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found ARCFOUR",
+   "detector_code": "SECRETKEYSPEC-ALG-00",
+   "message": "expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found ARCFOUR",
+   "detector_source": [
+    "outputs/rvsec_primftpd_20261031/findings_v3.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "SECRETKEYSPEC-ALG-00",
+     "expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found ARCFOUR"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "primitiveFTPd-debug.apk"
+    ],
+    "rvsec_build_task": ":primitiveFTPd:assembleDebug",
+    "rvsec_build_commit_prefix": "f8f8f5fe3932",
+    "rvsec_build_log": "outputs/rvsec_primftpd_20261031/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "primitiveFTPd-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "org.apache.sshd.common.cipher.BaseRC4Cipher",
+     "init"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "org.apache.sshd.common.cipher.BaseRC4Cipher",
+     "init"
+    ]
+   ],
+   "site_check": "declaration of 'init' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "fc83f19a2f3f3bec912eaa606fe77b8ff464fb4d",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/wolpi__prim-ftpd__453.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 12,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/thuryn/your-local-weather/pull/209",
+   "status": "open",
+   "case": "yourlocalweather_213",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Select key derivation by Android API level",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "thuryn/your-local-weather",
+    "base_ref": "master",
+    "base_sha": "1c8cff5baa411dc96571e5f3b9f20b0613ee0664",
+    "head_repo": "jpantonow/your-local-weather",
+    "head_ref": "fix/encryptkey-secretkeyfactoryspec-e2654a54d12a-ba080eac3f",
+    "head_sha": "ac323db5924999870792a7972b257f319a8b5fa0",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/thuryn__your-local-weather__209.diff",
+   "metadata": "outputs/rvsec_org_thosp_yourlocalweather_20261101/run_v5/pull_requests/org.thosp.yourlocalweather.debug_213.apk_encryptKey_SecretKeyFactorySpec_pr.json",
+   "run_dir": "outputs/rvsec_org_thosp_yourlocalweather_20261101/run_v5",
+   "apk": "org.thosp.yourlocalweather.debug_213.apk",
+   "spec": "SecretKeyFactorySpec",
+   "class": "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment",
+   "method": "encryptKey",
+   "finding_id_sources": {
+    "outcome_record": "e2654a54d12a",
+    "pr_metadata": "e2654a54d12a",
+    "inventory_findings": null
+   },
+   "finding_id": "e2654a54d12a",
+   "spec_active": true,
+   "repo_url": "https://github.com/thuryn/your-local-weather",
+   "sources_csv": [
+    "outputs/rvsec_org_thosp_yourlocalweather_20261101/sources.csv"
+   ],
+   "analysed_commit": "482069a182d06d66c25fe931ecf6df3562a336a0",
+   "app_packages": [
+    "org.thosp.yourlocalweather",
+    "org.thosp.shared_resources"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "1c8cff5baa411dc96571e5f3b9f20b0613ee0664",
+   "pipeline_patch_commit": "ac323db5924999870792a7972b257f319a8b5fa0",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of PBKDF2WithHmacSHA512,PBKDF2WithHmacSHA384,PBKDF2WithHmacSHA256,PBKDF2WithHmacSHA224,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256 but found PBKDF2WithHmacSHA1",
+   "detector_code": "SECRETKEYFACTORY-ALG-00",
+   "message": "expecting one of PBKDF2WithHmacSHA512,PBKDF2WithHmacSHA384,PBKDF2WithHmacSHA256,PBKDF2WithHmacSHA224,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256 but found PBKDF2WithHmacSHA1",
+   "detector_source": [
+    "outputs/rvsec_org_thosp_yourlocalweather_20261101/findings_v5.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "SECRETKEYFACTORY-ALG-00",
+     "expecting one of PBKDF2WithHmacSHA512,PBKDF2WithHmacSHA384,PBKDF2WithHmacSHA256,PBKDF2WithHmacSHA224,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256 but found PBKDF2WithHmacSHA1"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "YourLocalWeather-fossDebug.apk",
+     "YourLocalWeather-playDebug.apk",
+     "wearos-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleFossDebug",
+    "rvsec_build_commit_prefix": "482069a182d0",
+    "rvsec_build_log": "outputs/rvsec_org_thosp_yourlocalweather_20261101/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "YourLocalWeather-fossDebug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment",
+     "encryptKey"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment",
+     "encryptKey"
+    ]
+   ],
+   "site_check": "declaration of 'encryptKey' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "1c8cff5baa411dc96571e5f3b9f20b0613ee0664",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/thuryn__your-local-weather__209.diff",
+   "problems": [],
+   "notes": [
+    "apk_glob YourLocalWeather-fossDebug.apk chosen among ['YourLocalWeather-fossDebug.apk', 'YourLocalWeather-playDebug.apk', 'wearos-debug.apk'] by flavour 'foss' of the queue's task :app:assembleFossDebug"
+   ],
+   "complete": true,
+   "build_order": 13,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/PrivacyDragon/Bookwyrm_Android/pull/29",
+   "status": "open",
+   "case": "bookwyrm_16",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use SecureRandom for stored AES-GCM IVs",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "PrivacyDragon/Bookwyrm_Android",
+    "base_ref": "main",
+    "base_sha": "ce427cec1b6a9f69366e146ffcc1de0d94d886e9",
+    "head_repo": "jpantonow/Bookwyrm_Android",
+    "head_ref": "fix/login-gcmparameterspecspec-84d27d2c74e7-d90e460036",
+    "head_sha": "bf52cf6eafa3099bb3dd118635ae5b9dbccb1c90",
+    "commits": 1,
+    "changed_files": 2,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/PrivacyDragon__Bookwyrm_Android__29.diff",
+   "metadata": "outputs/rvsec_bookwyrm_20261031/run/pull_requests/nl.privacydragon.bookwyrm.debug_16.apk_LogIn_GCMParameterSpecSpec_pr.json",
+   "run_dir": "outputs/rvsec_bookwyrm_20261031/run",
+   "apk": "nl.privacydragon.bookwyrm.debug_16.apk",
+   "spec": "GCMParameterSpecSpec",
+   "class": "nl.privacydragon.bookwyrm.MainActivity",
+   "method": "LogIn",
+   "finding_id_sources": {
+    "outcome_record": "84d27d2c74e7",
+    "pr_metadata": "84d27d2c74e7",
+    "inventory_findings": null
+   },
+   "finding_id": "84d27d2c74e7",
+   "spec_active": true,
+   "repo_url": "https://github.com/PrivacyDragon/Bookwyrm_Android",
+   "sources_csv": [
+    "outputs/rvsec_bookwyrm_20261031/sources.csv"
+   ],
+   "analysed_commit": "c578870f8c13ec1ea823ae92b44019825c86a956",
+   "app_packages": [
+    "nl.privacydragon.bookwyrm"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "ce427cec1b6a9f69366e146ffcc1de0d94d886e9",
+   "pipeline_patch_commit": "bf52cf6eafa3099bb3dd118635ae5b9dbccb1c90",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the IV material was not observed to come from a randomized source",
+   "detector_code": "GCMPARAMETERSPEC-NOBS-00",
+   "message": "the IV material was not observed to come from a randomized source",
+   "detector_source": [
+    "outputs/rvsec_bookwyrm_20261031/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "GCMPARAMETERSPEC-NOBS-00",
+     "the IV material was not observed to come from a randomized source"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "c578870f8c13",
+    "rvsec_build_log": "outputs/rvsec_bookwyrm_20261031/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "nl.privacydragon.bookwyrm.MainActivity",
+     "LogIn"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "nl.privacydragon.bookwyrm.MainActivity",
+     "LogIn"
+    ]
+   ],
+   "site_check": "declaration of 'LogIn' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "ce427cec1b6a9f69366e146ffcc1de0d94d886e9",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/PrivacyDragon__Bookwyrm_Android__29.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 14,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/Vauth/salty-app/pull/6",
+   "status": "open",
+   "case": "salty_2",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Generate PBKDF2 salts for new encrypted values",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "Vauth/salty-app",
+    "base_ref": "main",
+    "base_sha": "7045ba2e1b0a272ad1f46e4b842642859dc792c9",
+    "head_repo": "jpantonow/salty-app",
+    "head_ref": "fix/encode-cipherspec-2b8cb7f6653b-4b0aa8823c",
+    "head_sha": "1803f27d14f2ac7c0fb4ca2ec19491d806d9a9db",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/Vauth__salty-app__6.diff",
+   "metadata": "outputs/rvsec_salty_20261022/run_v3/pull_requests/com.vauth.salty.debug_2.apk_encode_CipherSpec_pr.json",
+   "run_dir": "outputs/rvsec_salty_20261022/run_v3",
+   "apk": "com.vauth.salty.debug_2.apk",
+   "spec": "CipherSpec",
+   "class": "com.vauth.salty.utils.HashUtils",
+   "method": "encode",
+   "finding_id_sources": {
+    "outcome_record": "2b8cb7f6653b",
+    "pr_metadata": "2b8cb7f6653b",
+    "inventory_findings": null
+   },
+   "finding_id": "2b8cb7f6653b",
+   "spec_active": true,
+   "repo_url": "https://github.com/Vauth/salty-app",
+   "sources_csv": [
+    "outputs/rvsec_salty_20261022/sources.csv"
+   ],
+   "analysed_commit": "ef78cac61a4c28fa2df1b4a2bc23a7ae2c2a40b8",
+   "app_packages": [
+    "com.vauth.salty"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "7045ba2e1b0a272ad1f46e4b842642859dc792c9",
+   "pipeline_patch_commit": "1803f27d14f2ac7c0fb4ca2ec19491d806d9a9db",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the key given to Cipher.init was already reported by the specification that produced it",
+   "detector_code": "CIPHER-NOBS-01",
+   "message": "the key given to Cipher.init was already reported by the specification that produced it",
+   "detector_source": [
+    "outputs/rvsec_salty_20261022/findings_v3.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "CIPHER-NOBS-01",
+     "the key given to Cipher.init was already reported by the specification that produced it"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "ef78cac61a4c",
+    "rvsec_build_log": "outputs/rvsec_salty_20261022/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.vauth.salty.utils.HashUtils",
+     "encode"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.vauth.salty.utils.HashUtils",
+     "encode"
+    ]
+   ],
+   "site_check": "declaration of 'encode' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "7045ba2e1b0a272ad1f46e4b842642859dc792c9",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/Vauth__salty-app__6.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 15,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/0xZhangKe/Fread/pull/168",
+   "status": "open",
+   "case": "fread_109000",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use TLS for the HTTP client's SSL context",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "0xZhangKe/Fread",
+    "base_ref": "main",
+    "base_sha": "32fa0cb13d4dd681052b13539bda21efffa2d3f3",
+    "head_repo": "jpantonow/Fread",
+    "head_ref": "fix/buildsslfactory-sslcontextspec-bd1f7e158735-c0123caa2f",
+    "head_sha": "f605d8857e1b16e68b3d6048f533dad04671308a",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/0xZhangKe__Fread__168.diff",
+   "metadata": "outputs/rvsec_tls_20261015/rerun_20261015/run_v3/pull_requests/com.zhangke.fread.debug_109000.apk_buildSSLFactory_SSLContextSpec_pr.json",
+   "run_dir": "outputs/rvsec_tls_20261015/rerun_20261015/run_v3",
+   "apk": "com.zhangke.fread.debug_109000.apk",
+   "spec": "SSLContextSpec",
+   "class": "com.zhangke.framework.architect.http.GlobalOkHttpClient",
+   "method": "buildSSLFactory",
+   "finding_id_sources": {
+    "outcome_record": "bd1f7e158735",
+    "pr_metadata": "bd1f7e158735",
+    "inventory_findings": null
+   },
+   "finding_id": "bd1f7e158735",
+   "spec_active": true,
+   "repo_url": "https://github.com/0xZhangKe/Fread",
+   "sources_csv": [
+    "outputs/rvsec_tls_20261015/fread/sources.csv"
+   ],
+   "analysed_commit": "16e037cadff750bc39bdfc612563063a887c3780",
+   "app_packages": [
+    "com.zhangke.fread",
+    "com.zhangke.framework"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "32fa0cb13d4dd681052b13539bda21efffa2d3f3",
+   "pipeline_patch_commit": "f605d8857e1b16e68b3d6048f533dad04671308a",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+   "detector_code": "SSLCONTEXT-PROTO-00",
+   "message": "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+   "detector_source": [
+    "outputs/rvsec_tls_20261015/rerun_20261015/findings_v3.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "SSLCONTEXT-PROTO-00",
+     "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "fread-109015-fdroid.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "fread-109015-fdroid.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.zhangke.framework.architect.http.GlobalOkHttpClient",
+     "buildSSLFactory"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.zhangke.framework.architect.http.GlobalOkHttpClient",
+     "buildSSLFactory"
+    ]
+   ],
+   "site_check": "declaration of 'buildSSLFactory' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "32fa0cb13d4dd681052b13539bda21efffa2d3f3",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/0xZhangKe__Fread__168.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 16,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121",
+   "status": "open",
+   "case": "orgzlyrevived_292",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Replace SHA-1 note hashes with SHA-256",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "orgzly-revived/orgzly-android-revived",
+    "base_ref": "master",
+    "base_sha": "747dbb272b385f8b9f12cbffbba2bc3b91b416cd",
+    "head_repo": "jpantonow/orgzly-android-revived",
+    "head_ref": "fix/sha1-messagedigestspec-83f22cfa5b18-d51f03ea8a",
+    "head_sha": "b9ea1b516bb3474f69bdaae196b7e9853953e1a9",
+    "commits": 1,
+    "changed_files": 2,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/orgzly-revived__orgzly-android-revived__1121.diff",
+   "metadata": "outputs/rvsec_orgzlyrevived_20261025/run_v2/pull_requests/com.orgzlyrevived.debug_292.apk_sha1_MessageDigestSpec_pr.json",
+   "run_dir": "outputs/rvsec_orgzlyrevived_20261025/run_v2",
+   "apk": "com.orgzlyrevived.debug_292.apk",
+   "spec": "MessageDigestSpec",
+   "class": "com.orgzly.android.util.MiscUtils",
+   "method": "sha1",
+   "finding_id_sources": {
+    "outcome_record": "83f22cfa5b18",
+    "pr_metadata": "83f22cfa5b18",
+    "inventory_findings": null
+   },
+   "finding_id": "83f22cfa5b18",
+   "spec_active": true,
+   "repo_url": "https://github.com/orgzly-revived/orgzly-android-revived",
+   "sources_csv": [
+    "outputs/rvsec_orgzlyrevived_20261025/sources.csv"
+   ],
+   "analysed_commit": "2b56fe4c1a0c9426a1bb1313b4c757a8e66a48d0",
+   "app_packages": [
+    "com.orgzly",
+    "com.orgzlyrevived"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "747dbb272b385f8b9f12cbffbba2bc3b91b416cd",
+   "pipeline_patch_commit": "b9ea1b516bb3474f69bdaae196b7e9853953e1a9",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "detector_code": "MESSAGEDIGEST-ALG-02",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "detector_source": [
+    "outputs/rvsec_orgzlyrevived_20261025/findings_v2.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ALG-02",
+     "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:assembleFdroidDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": ":app:assembleFdroidDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-fdroid-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleFdroidDebug",
+    "rvsec_build_commit_prefix": "2b56fe4c1a0c",
+    "rvsec_build_log": "outputs/rvsec_orgzlyrevived_20261025/build.log",
+    "build_task": ":app:assembleFdroidDebug",
+    "apk_glob": "app-fdroid-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.orgzly.android.util.MiscUtils",
+     "sha1"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.orgzly.android.util.MiscUtils",
+     "sha256"
+    ]
+   ],
+   "site_check": "the diff removes 1 declaration line(s) of 'sha1' and adds none (method renamed or removed); declarations added in that file: ['sha256']",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "747dbb272b385f8b9f12cbffbba2bc3b91b416cd",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/orgzly-revived__orgzly-android-revived__1121.diff",
+   "problems": [
+    "patched_sites need reading the diff: the diff removes 1 declaration line(s) of 'sha1' and adds none (method renamed or removed); declarations added in that file: ['sha256']"
+   ],
+   "notes": [],
+   "complete": false,
+   "build_order": 17,
+   "inclusion": "one value fixed by rule (pre-registration)",
+   "problems_in_pr_cases": [
+    "patched_sites need reading the diff: the diff removes 1 declaration line(s) of 'sha1' and adds none (method renamed or removed); declarations added in that file: ['sha256']"
+   ],
+   "filled": {
+    "patched_sites": {
+     "value": [
+      [
+       "com.orgzly.android.util.MiscUtils",
+       "sha256"
+      ]
+     ],
+     "how": "PR diff orgzly-revived__orgzly-android-revived__1121.diff, app/src/main/java/com/orgzly/android/util/MiscUtils.java: `public static long sha1(String s)` is renamed `sha256`; the governed call `MessageDigest.getInstance(\"SHA-256\")` (was \"SHA-1\") stays in it.",
+     "rule": "pre-registration: method renamed or removed by the patch -> the method(s) holding the governed call after the patch, read from the diff; if the call is removed, the method that held it"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/yogeshpaliyal/KeyPass/pull/1252",
+   "status": "open",
+   "case": "keypass_1442",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use AndroidKeyStore explicitly for AES key generation",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "yogeshpaliyal/KeyPass",
+    "base_ref": "master",
+    "base_sha": "ca9adca05c5a73bd854e4dec52cf46415602514f",
+    "head_repo": "jpantonow/KeyPass",
+    "head_ref": "fix/encrypt-cipherspec-013d2748f3f8-32d15813c1",
+    "head_sha": "92f2723a4d962d0c4f423450086a969b0b34b951",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/yogeshpaliyal__KeyPass__1252.diff",
+   "metadata": "outputs/rvsec_keypass_20261025/run/pull_requests/com.yogeshpaliyal.keypass.debug_1442.apk_encrypt_CipherSpec_pr.json",
+   "run_dir": "outputs/rvsec_keypass_20261025/run",
+   "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+   "spec": "CipherSpec",
+   "class": "com.yogeshpaliyal.common.utils.CryptoManager",
+   "method": "encrypt",
+   "finding_id_sources": {
+    "outcome_record": "013d2748f3f8",
+    "pr_metadata": "013d2748f3f8",
+    "inventory_findings": null
+   },
+   "finding_id": "013d2748f3f8",
+   "spec_active": true,
+   "repo_url": "https://github.com/yogeshpaliyal/KeyPass",
+   "sources_csv": [
+    "outputs/rvsec_keypass_20261025/sources.csv"
+   ],
+   "analysed_commit": "f0ef4cd98349ddc7320c164e3d8173f334407bd2",
+   "app_packages": [
+    "com.yogeshpaliyal.keypass",
+    "com.yogeshpaliyal.common"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "ca9adca05c5a73bd854e4dec52cf46415602514f",
+   "pipeline_patch_commit": "92f2723a4d962d0c4f423450086a969b0b34b951",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "no generator of the key given to Cipher.init was observed",
+   "detector_code": "CIPHER-NOBS-00",
+   "message": "no generator of the key given to Cipher.init was observed",
+   "detector_source": [
+    "outputs/rvsec_keypass_20261025/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "CIPHER-NOBS-00",
+     "no generator of the key given to Cipher.init was observed"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-free-debug.apk",
+     "app-pro-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleFreeDebug",
+    "rvsec_build_commit_prefix": "f0ef4cd98349",
+    "rvsec_build_log": "outputs/rvsec_keypass_20261025/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-free-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.yogeshpaliyal.common.utils.CryptoManager",
+     "encrypt"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.yogeshpaliyal.common.utils.CryptoManager",
+     "encrypt"
+    ]
+   ],
+   "site_check": "declaration of 'encrypt' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "ca9adca05c5a73bd854e4dec52cf46415602514f",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/yogeshpaliyal__KeyPass__1252.diff",
+   "problems": [],
+   "notes": [
+    "apk_glob app-free-debug.apk chosen among ['app-free-debug.apk', 'app-pro-debug.apk'] by flavour 'free' of the queue's task :app:assembleFreeDebug"
+   ],
+   "complete": true,
+   "build_order": 18,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/patzly/grocy-android/pull/1013",
+   "status": "open",
+   "case": "grocy_64_pr1013",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Initialize missing keystores before storing key entries",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "patzly/grocy-android",
+    "base_ref": "master",
+    "base_sha": "8921b9f8b6e72fa1df9963594dd8843451c4e46a",
+    "head_repo": "jpantonow/grocy-android",
+    "head_ref": "fix/load-keystorespec-efa4a0003ff0-e4c3d870da",
+    "head_sha": "8b5784ad6f6fee28fdcf52ea0b8fe30c9dfa64fe",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/patzly__grocy-android__1013.diff",
+   "metadata": "outputs/rvsec_grocy_20261022/run_v6/pull_requests/xyz.zedler.patrick.grocy.debug_64.apk_load_KeyStoreSpec_pr.json",
+   "run_dir": "outputs/rvsec_grocy_20261022/run_v6",
+   "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+   "spec": "KeyStoreSpec",
+   "class": "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile",
+   "method": "load",
+   "finding_id_sources": {
+    "outcome_record": "efa4a0003ff0",
+    "pr_metadata": "efa4a0003ff0",
+    "inventory_findings": null
+   },
+   "finding_id": "efa4a0003ff0",
+   "spec_active": true,
+   "repo_url": "https://github.com/patzly/grocy-android",
+   "sources_csv": [
+    "outputs/rvsec_grocy_20261022/sources.csv"
+   ],
+   "analysed_commit": "7d4636508af24322f451b95555e1b13b4c634645",
+   "app_packages": [
+    "xyz.zedler.patrick.grocy",
+    "xyz.zedler.patrick"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "8921b9f8b6e72fa1df9963594dd8843451c4e46a",
+   "pipeline_patch_commit": "8b5784ad6f6fee28fdcf52ea0b8fe30c9dfa64fe",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the observed call sequence is not one KeyStoreSpec accepts",
+   "detector_code": "KEYSTORE-ORDER-00",
+   "message": "the observed call sequence is not one KeyStoreSpec accepts",
+   "detector_source": [
+    "outputs/rvsec_grocy_20261022/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "KEYSTORE-ORDER-00",
+     "the observed call sequence is not one KeyStoreSpec accepts"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "7d4636508af2",
+    "rvsec_build_log": "outputs/rvsec_grocy_20261022/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile",
+     "load"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile",
+     "load"
+    ]
+   ],
+   "site_check": "declaration of 'load' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "8921b9f8b6e72fa1df9963594dd8843451c4e46a",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/patzly__grocy-android__1013.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 19,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/patzly/grocy-android/pull/1012",
+   "status": "open",
+   "case": "grocy_64_pr1012",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Initialize the TLS SSLContext only once",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "patzly/grocy-android",
+    "base_ref": "master",
+    "base_sha": "8921b9f8b6e72fa1df9963594dd8843451c4e46a",
+    "head_repo": "jpantonow/grocy-android",
+    "head_ref": "fix/init-sslcontextspec-71775001bd73-7995dbac75-2",
+    "head_sha": "4e473a1eb21ed75496242670e0a070f5147b801c",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/patzly__grocy-android__1012.diff",
+   "metadata": "outputs/rvsec_grocy_20261022/run_v2/pull_requests/xyz.zedler.patrick.grocy.debug_64.apk_init_SSLContextSpec_pr.json",
+   "run_dir": "outputs/rvsec_grocy_20261022/run_v2",
+   "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+   "spec": "SSLContextSpec",
+   "class": "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory",
+   "method": "<init>",
+   "finding_id_sources": {
+    "outcome_record": "71775001bd73",
+    "pr_metadata": "71775001bd73",
+    "inventory_findings": null
+   },
+   "finding_id": "71775001bd73",
+   "spec_active": true,
+   "repo_url": "https://github.com/patzly/grocy-android",
+   "sources_csv": [
+    "outputs/rvsec_grocy_20261022/sources.csv"
+   ],
+   "analysed_commit": "7d4636508af24322f451b95555e1b13b4c634645",
+   "app_packages": [
+    "xyz.zedler.patrick.grocy",
+    "xyz.zedler.patrick"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "8921b9f8b6e72fa1df9963594dd8843451c4e46a",
+   "pipeline_patch_commit": "4e473a1eb21ed75496242670e0a070f5147b801c",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the observed call sequence is not one SSLContextSpec accepts",
+   "detector_code": "SSLCONTEXT-ORDER-00",
+   "message": "the observed call sequence is not one SSLContextSpec accepts",
+   "detector_source": [
+    "outputs/rvsec_grocy_20261022/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "SSLCONTEXT-ORDER-00",
+     "the observed call sequence is not one SSLContextSpec accepts"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "7d4636508af2",
+    "rvsec_build_log": "outputs/rvsec_grocy_20261022/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory",
+     "<init>"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory",
+     "<init>"
+    ]
+   ],
+   "site_check": "synthetic or special method name '<init>': not checked against the diff",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "8921b9f8b6e72fa1df9963594dd8843451c4e46a",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/patzly__grocy-android__1012.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 20,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/schorschii/Droid_SCEP/pull/2",
+   "status": "open",
+   "case": "droidscep_7",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Validate RSA key sizes before enrollment",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "schorschii/Droid_SCEP",
+    "base_ref": "master",
+    "base_sha": "d8e13b746f1028116f847f36afc249011ac93498",
+    "head_repo": "jpantonow/Droid_SCEP",
+    "head_ref": "fix/certreq-keypairgeneratorspec-9215f97597a6-1ff20f6ba2",
+    "head_sha": "553c56c81e8d13a2f768ef5bbc195c5d5fa6fdc7",
+    "commits": 2,
+    "changed_files": 3,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/schorschii__Droid_SCEP__2.diff",
+   "metadata": "outputs/rerun_correcoes_20261022/run/pull_requests/systems.sieber.droid_scep_7.apk_CertReq_KeyPairGeneratorSpec_pr.json",
+   "run_dir": "outputs/rerun_correcoes_20261022/run",
+   "apk": "systems.sieber.droid_scep_7.apk",
+   "spec": "KeyPairGeneratorSpec",
+   "class": "systems.sieber.droid_scep.ScepClient",
+   "method": "CertReq",
+   "finding_id_sources": {
+    "outcome_record": "9215f97597a6",
+    "pr_metadata": "9215f97597a6",
+    "inventory_findings": null
+   },
+   "finding_id": "9215f97597a6",
+   "spec_active": true,
+   "repo_url": "https://github.com/schorschii/Droid_SCEP",
+   "sources_csv": null,
+   "analysed_commit": "d8e13b746f1028116f847f36afc249011ac93498",
+   "app_packages": [
+    "systems.sieber.droid_scep"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "d8e13b746f1028116f847f36afc249011ac93498",
+   "pipeline_patch_commit": "553c56c81e8d13a2f768ef5bbc195c5d5fa6fdc7",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "invalid key size for algorithm RSA",
+   "detector_code": "KEYPAIRGENERATOR-KEYSIZE-00",
+   "message": "invalid key size for algorithm RSA",
+   "detector_source": [
+    "outputs/rerun_correcoes_20261022/run/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "KEYPAIRGENERATOR-KEYSIZE-00",
+     "invalid key size for algorithm RSA"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:assembleGoogleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": ":app:assembleGoogleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "droid_scep.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": ":app:assembleGoogleDebug",
+    "apk_glob": "droid_scep.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "systems.sieber.droid_scep.ScepClient",
+     "CertReq"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "systems.sieber.droid_scep.ScepClient",
+     "CertReq"
+    ]
+   ],
+   "site_check": "declaration of 'CertReq' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "d8e13b746f1028116f847f36afc249011ac93498",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/schorschii__Droid_SCEP__2.diff",
+   "problems": [
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: systems.sieber.droid_scep"
+   ],
+   "notes": [],
+   "complete": false,
+   "build_order": 21,
+   "inclusion": "one value fixed by rule (pre-registration)",
+   "problems_in_pr_cases": [
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: systems.sieber.droid_scep"
+   ],
+   "filled": {
+    "app_packages": {
+     "value": [
+      "systems.sieber.droid_scep"
+     ],
+     "how": "manifest package of the built base APK, `aapt2 dump badging` (build/droidscep_7/base.badging: package: name='systems.sieber.droid_scep' versionCode='7' versionName='1.5' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' c)",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK"
+    }
+   },
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/ReadYouApp/ReadYou/pull/1334",
+   "status": "open",
+   "case": "reader_47",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Restore certificate validation for cached HTTP clients",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "ReadYouApp/ReadYou",
+    "base_ref": "main",
+    "base_sha": "d2b979ccad9a3e54b9499929a9dc2824578b0fd9",
+    "head_repo": "jpantonow/ReadYou",
+    "head_ref": "fix/setupssl-sslcontextspec-6d0a3cf73013-e70fe9141c",
+    "head_sha": "cc0f5b2294674ab27611a908ffb0b1df1de542ef",
+    "commits": 1,
+    "changed_files": 3,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/ReadYouApp__ReadYou__1334.diff",
+   "metadata": "outputs/rvsec_readyou_20261018/run3/pull_requests/me.ash.reader.debug_47.apk_setupSsl_SSLContextSpec_pr.json",
+   "run_dir": "outputs/rvsec_readyou_20261018/run3",
+   "apk": "me.ash.reader.debug_47.apk",
+   "spec": "SSLContextSpec",
+   "class": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+   "method": "setupSsl",
+   "finding_id_sources": {
+    "outcome_record": "6d0a3cf73013",
+    "pr_metadata": "6d0a3cf73013",
+    "inventory_findings": null
+   },
+   "finding_id": "6d0a3cf73013",
+   "spec_active": true,
+   "repo_url": "https://github.com/ReadYouApp/ReadYou",
+   "sources_csv": [
+    "outputs/rvsec_readyou_20261018/sources.csv"
+   ],
+   "analysed_commit": "091c9207527a10a135b307c9f7747306da36f686",
+   "app_packages": [
+    "me.ash.reader"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "d2b979ccad9a3e54b9499929a9dc2824578b0fd9",
+   "pipeline_patch_commit": "cc0f5b2294674ab27611a908ffb0b1df1de542ef",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+   "detector_code": "SSLCONTEXT-NOBS-05",
+   "message": "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+   "detector_source": [
+    "outputs/rvsec_readyou_20261018/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "SSLCONTEXT-NOBS-05",
+     "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:assembleFdroidDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": ":app:assembleFdroidDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "ReadYou-0.16.2-d2b979c.apk"
+    ],
+    "rvsec_build_task": ":app:assembleFdroidDebug",
+    "rvsec_build_commit_prefix": "091c9207527a",
+    "rvsec_build_log": "outputs/rvsec_readyou_20261018/build.log",
+    "build_task": ":app:assembleFdroidDebug",
+    "apk_glob": "ReadYou-0.16.2-d2b979c.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+     "setupSsl"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+     "setupSsl"
+    ]
+   ],
+   "site_check": "declaration of 'setupSsl' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "d2b979ccad9a3e54b9499929a9dc2824578b0fd9",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/ReadYouApp__ReadYou__1334.diff",
+   "problems": [],
+   "notes": [
+    "pipeline remote https://github.com/Ashinch/ReadYou differs from the PR's repository (renamed or moved)"
+   ],
+   "complete": true,
+   "build_order": 22,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/zfdang/zSMTH-Android/pull/66",
+   "status": "open",
+   "case": "zsmthandroid_1031",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use TLS and restore HTTPS certificate validation",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "zfdang/zSMTH-Android",
+    "base_ref": "master",
+    "base_sha": "e696dcb1615a7e9269c26fe73d21c89883877a52",
+    "head_repo": "jpantonow/zSMTH-Android",
+    "head_ref": "fix/getunsafeokhttpclient-sslcontextspec-b1a40c2fc69e-472cd051b9",
+    "head_sha": "536b98a90d0cd97fbe328f6c1aa55b2d26d1a673",
+    "commits": 1,
+    "changed_files": 2,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/zfdang__zSMTH-Android__66.diff",
+   "metadata": "outputs/rvsec_sslctx_20261017/run8/pull_requests/com.zfdang.zsmth_android.debug_1031.apk_getUnsafeOkHttpClient_SSLContextSpec_pr.json",
+   "run_dir": "outputs/rvsec_sslctx_20261017/run8",
+   "apk": "com.zfdang.zsmth_android.debug_1031.apk",
+   "spec": "SSLContextSpec",
+   "class": "com.zfdang.zsmth_android.newsmth.SMTHHelper",
+   "method": "getUnsafeOkHttpClient",
+   "finding_id_sources": {
+    "outcome_record": "b1a40c2fc69e",
+    "pr_metadata": "b1a40c2fc69e",
+    "inventory_findings": null
+   },
+   "finding_id": "b1a40c2fc69e",
+   "spec_active": true,
+   "repo_url": "https://github.com/zfdang/zSMTH-Android",
+   "sources_csv": [
+    "outputs/rvsec_sslctx_20261017/sources.csv"
+   ],
+   "analysed_commit": "e696dcb1615a7e9269c26fe73d21c89883877a52",
+   "app_packages": [
+    "com.zfdang.zsmth_android",
+    "com.zfdang.multiple_images_selector",
+    "com.jude.swipbackhelper"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "e696dcb1615a7e9269c26fe73d21c89883877a52",
+   "pipeline_patch_commit": "536b98a90d0cd97fbe328f6c1aa55b2d26d1a673",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+   "detector_code": "SSLCONTEXT-PROTO-00",
+   "message": "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+   "detector_source": [
+    "outputs/rvsec_sslctx_20261017/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "SSLCONTEXT-PROTO-00",
+     "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "zSMTH-debug-v26.10.17.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "e696dcb1615a",
+    "rvsec_build_log": "outputs/rvsec_sslctx_20261017/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "zSMTH-debug-v26.10.17.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.zfdang.zsmth_android.newsmth.SMTHHelper",
+     "getUnsafeOkHttpClient"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.zfdang.zsmth_android.newsmth.SMTHHelper",
+     "getUnsafeOkHttpClient"
+    ]
+   ],
+   "site_check": "declaration of 'getUnsafeOkHttpClient' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "e696dcb1615a7e9269c26fe73d21c89883877a52",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/zfdang__zSMTH-Android__66.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 23,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/ItzSkyeYT/InterTune/pull/52",
+   "status": "closed_by_maintainer",
+   "case": "intertune_96",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Migrate widget artwork hashes to SHA-256",
+    "state": "closed",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "ItzSkyeYT/InterTune",
+    "base_ref": "visionos-fix",
+    "base_sha": "524f1cd7582f5795d42cb5a9c79f7c32a517af62",
+    "head_repo": "jpantonow/InterTune",
+    "head_ref": "fix/hash-messagedigestspec-2526b837d70c-7869216dab",
+    "head_sha": "57f961193d92a805cc97129b3bb7ec14c474233d",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/ItzSkyeYT__InterTune__52.diff",
+   "metadata": "outputs/rvsec_intertune_20261027/run_v5/pull_requests/dev.skye.intertune.debug_96.apk_hash_MessageDigestSpec_pr.json",
+   "run_dir": "outputs/rvsec_intertune_20261027/run_v5",
+   "apk": "dev.skye.intertune.debug_96.apk",
+   "spec": "MessageDigestSpec",
+   "class": "com.dd3boh.outertune.widget.WidgetStore",
+   "method": "hash",
+   "finding_id_sources": {
+    "outcome_record": "2526b837d70c",
+    "pr_metadata": "2526b837d70c",
+    "inventory_findings": null
+   },
+   "finding_id": "2526b837d70c",
+   "spec_active": true,
+   "repo_url": "https://github.com/ItzSkyeYT/InterTune",
+   "sources_csv": [
+    "outputs/rvsec_intertune_20261027/sources.csv"
+   ],
+   "analysed_commit": "3ebc686a5fdce667d094f9e63f1beb19c4cd07d0",
+   "app_packages": [
+    "com.dd3boh.outertune",
+    "dev.skye.intertune",
+    "wah.mikooomich.ffMetadataEx",
+    "com.kyant.taglib",
+    "com.zionhuang.innertube",
+    "com.google.material"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "visionos-fix",
+   "pipeline_base_commit": "524f1cd7582f5795d42cb5a9c79f7c32a517af62",
+   "pipeline_patch_commit": "57f961193d92a805cc97129b3bb7ec14c474233d",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "detector_code": "MESSAGEDIGEST-ALG-02",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "detector_source": [
+    "outputs/rvsec_intertune_20261027/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ALG-02",
+     "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:assembleCoreDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": ":app:assembleCoreDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "InterTune-0.12.5-core-debug-97.apk"
+    ],
+    "rvsec_build_task": ":app:assembleCoreDebug",
+    "rvsec_build_commit_prefix": "3ebc686a5fdc",
+    "rvsec_build_log": "outputs/rvsec_intertune_20261027/build.log",
+    "build_task": ":app:assembleCoreDebug",
+    "apk_glob": "InterTune-0.12.5-core-debug-97.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.dd3boh.outertune.widget.WidgetStore",
+     "hash"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.dd3boh.outertune.widget.WidgetStore",
+     "hash"
+    ]
+   ],
+   "site_check": "declaration of 'hash' in 1 removed / 1 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "524f1cd7582f5795d42cb5a9c79f7c32a517af62",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/ItzSkyeYT__InterTune__52.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 24,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/vitorpamplona/amethyst/pull/4642",
+   "status": "closed_by_maintainer",
+   "case": "amethyst_464",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Generate random IVs for AES-GCM encryption",
+    "state": "closed",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "vitorpamplona/amethyst",
+    "base_ref": "main",
+    "base_sha": "b7848db26fc3b8d76d16ec87839c1b8218c4a46d",
+    "head_repo": "jpantonow/amethyst",
+    "head_ref": "fix/decrypt-gcmparameterspecspec-39bba5f1270f-8fbfb7e47f",
+    "head_sha": "024ea1f576d11022035e74271f2fa040b3ed6357",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/vitorpamplona__amethyst__4642.diff",
+   "metadata": "outputs/rvsec_amethyst_20261024/run/pull_requests/com.vitorpamplona.amethyst.debug_464.apk_decrypt_GCMParameterSpecSpec_pr.json",
+   "run_dir": "outputs/rvsec_amethyst_20261024/run",
+   "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+   "spec": "GCMParameterSpecSpec",
+   "class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+   "method": "decrypt",
+   "finding_id_sources": {
+    "outcome_record": "39bba5f1270f",
+    "pr_metadata": "39bba5f1270f",
+    "inventory_findings": null
+   },
+   "finding_id": "39bba5f1270f",
+   "spec_active": true,
+   "repo_url": "https://github.com/vitorpamplona/amethyst",
+   "sources_csv": [
+    "outputs/rvsec_amethyst_20261024/sources.csv"
+   ],
+   "analysed_commit": "60b29df3f03775819f57992e5ccafddf32498ede",
+   "app_packages": [
+    "com.vitorpamplona.amethyst",
+    "com.vitorpamplona.quartz"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "b7848db26fc3b8d76d16ec87839c1b8218c4a46d",
+   "pipeline_patch_commit": "024ea1f576d11022035e74271f2fa040b3ed6357",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the IV material was not observed to come from a randomized source",
+   "detector_code": "GCMPARAMETERSPEC-NOBS-00",
+   "message": "the IV material was not observed to come from a randomized source",
+   "detector_source": [
+    "outputs/rvsec_amethyst_20261024/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "GCMPARAMETERSPEC-NOBS-00",
+     "the IV material was not observed to come from a randomized source"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":amethyst:assembleFdroidDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": ":amethyst:assembleFdroidDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "amethyst-fdroid-arm64-v8a-debug.apk",
+     "amethyst-fdroid-armeabi-v7a-debug.apk",
+     "amethyst-fdroid-universal-debug.apk",
+     "amethyst-fdroid-x86-debug.apk",
+     "amethyst-fdroid-x86_64-debug.apk"
+    ],
+    "rvsec_build_task": ":amethyst:assembleFdroidDebug",
+    "rvsec_build_commit_prefix": "60b29df3f037",
+    "rvsec_build_log": "outputs/rvsec_amethyst_20261024/build.log",
+    "build_task": ":amethyst:assembleFdroidDebug",
+    "apk_glob": "amethyst-fdroid-x86_64-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+     "decrypt"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+     "decrypt"
+    ]
+   ],
+   "site_check": "declaration of 'decrypt' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "b7848db26fc3b8d76d16ec87839c1b8218c4a46d",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/vitorpamplona__amethyst__4642.diff",
+   "problems": [],
+   "notes": [
+    "apk_glob amethyst-fdroid-x86_64-debug.apk chosen among ['amethyst-fdroid-arm64-v8a-debug.apk', 'amethyst-fdroid-armeabi-v7a-debug.apk', 'amethyst-fdroid-universal-debug.apk', 'amethyst-fdroid-x86-debug.apk', 'amethyst-fdroid-x86_64-debug.apk'] by flavour 'fdroid' of the queue's task :amethyst:assembleFdroidDebug and ABI x86_64 (the emulator's)"
+   ],
+   "complete": true,
+   "build_order": 25,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/woheller69/whoBIRD/pull/144",
+   "status": "closed_by_maintainer",
+   "case": "whobird_54",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Verify downloaded models with SHA-256",
+    "state": "closed",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "woheller69/whoBIRD",
+    "base_ref": "master",
+    "base_sha": "1724b45c785f79d428b4fe6e7a3cf6d31050dc31",
+    "head_repo": "jpantonow/whoBIRD",
+    "head_ref": "fix/lambda-downloadmodels-4-messagedigestspec-668194d05f07-c328bfdd1c",
+    "head_sha": "0be20571beda379ac99aa2110bcba763d3024686",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/woheller69__whoBIRD__144.diff",
+   "metadata": "outputs/rvsec_whobird_20261018/run9/pull_requests/org.woheller69.whobird.debug_54.apk_lambda_downloadModels_4_MessageDigestSpec_pr.json",
+   "run_dir": "outputs/rvsec_whobird_20261018/run9",
+   "apk": "org.woheller69.whobird.debug_54.apk",
+   "spec": "MessageDigestSpec",
+   "class": "org.tensorflow.lite.examples.soundclassifier.Downloader",
+   "method": "lambda$downloadModels$4",
+   "finding_id_sources": {
+    "outcome_record": "668194d05f07",
+    "pr_metadata": "668194d05f07",
+    "inventory_findings": null
+   },
+   "finding_id": "668194d05f07",
+   "spec_active": true,
+   "repo_url": "https://github.com/woheller69/whoBIRD",
+   "sources_csv": [
+    "outputs/rvsec_whobird_20261018/sources.csv"
+   ],
+   "analysed_commit": "f1132d844c7ad2c7a07b8621c42e1decf05663f1",
+   "app_packages": [
+    "org.woheller69.whobird",
+    "org.tensorflow.lite.examples.soundclassifier",
+    "org.tensorflow.lite"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "1724b45c785f79d428b4fe6e7a3cf6d31050dc31",
+   "pipeline_patch_commit": "0be20571beda379ac99aa2110bcba763d3024686",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "detector_code": "MESSAGEDIGEST-ALG-02",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "detector_source": [
+    "outputs/rvsec_whobird_20261018/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ALG-02",
+     "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "f1132d844c7a",
+    "rvsec_build_log": "outputs/rvsec_whobird_20261018/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "org.tensorflow.lite.examples.soundclassifier.Downloader",
+     "lambda$downloadModels$4"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "org.tensorflow.lite.examples.soundclassifier.Downloader",
+     "lambda$downloadModels$4"
+    ]
+   ],
+   "site_check": "synthetic or special method name 'lambda$downloadModels$4': not checked against the diff",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "1724b45c785f79d428b4fe6e7a3cf6d31050dc31",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/woheller69__whoBIRD__144.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 26,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/javalc6/rssreader/pull/4",
+   "status": "closed_by_maintainer",
+   "case": "rssreader_120",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Write file checksums with SHA-256",
+    "state": "closed",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "javalc6/rssreader",
+    "base_ref": "main",
+    "base_sha": "2ab2e69dd82eb55c87fb8f6181e8725ba50d3744",
+    "head_repo": "jpantonow/rssreader",
+    "head_ref": "fix/writefile-messagedigestspec-e6413a8ebbe9-1d5680e100",
+    "head_sha": "aa790a6458e188576ce36729eb850e0617691d32",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/javalc6__rssreader__4.diff",
+   "metadata": "outputs/rvsec_misuse_20261016/rssreader/rerun2/pull_requests/livio.rssreader.debug_120.apk_writeFile_MessageDigestSpec_pr.json",
+   "run_dir": "outputs/rvsec_misuse_20261016/rssreader/rerun2",
+   "apk": "livio.rssreader.debug_120.apk",
+   "spec": "MessageDigestSpec",
+   "class": "tools.FileManager",
+   "method": "writeFile",
+   "finding_id_sources": {
+    "outcome_record": "e6413a8ebbe9",
+    "pr_metadata": "e6413a8ebbe9",
+    "inventory_findings": null
+   },
+   "finding_id": "e6413a8ebbe9",
+   "spec_active": true,
+   "repo_url": "https://github.com/javalc6/rssreader",
+   "sources_csv": [
+    "outputs/rvsec_misuse_20261016/rssreader/sources.csv"
+   ],
+   "analysed_commit": "5a61a6406a60507b3b798ee2312de47802d52b63",
+   "app_packages": [
+    "livio.rssreader",
+    "tools"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "2ab2e69dd82eb55c87fb8f6181e8725ba50d3744",
+   "pipeline_patch_commit": "aa790a6458e188576ce36729eb850e0617691d32",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused",
+   "detector_code": "MESSAGEDIGEST-ORDER-02",
+   "message": "the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused",
+   "detector_source": [
+    "outputs/rvsec_misuse_20261016/rssreader/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ORDER-02",
+     "the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "success",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "app-debug.apk"
+    ],
+    "rvsec_build_task": ":app:assembleDebug",
+    "rvsec_build_commit_prefix": "5a61a6406a60",
+    "rvsec_build_log": "outputs/rvsec_misuse_20261016/rssreader/build.log",
+    "build_task": "assembleDebug",
+    "apk_glob": "app-debug.apk",
+    "basis": "pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "tools.FileManager",
+     "writeFile"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "tools.FileManager",
+     "writeFile"
+    ]
+   ],
+   "site_check": "declaration of 'writeFile' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "2ab2e69dd82eb55c87fb8f6181e8725ba50d3744",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/javalc6__rssreader__4.diff",
+   "problems": [],
+   "notes": [],
+   "complete": true,
+   "build_order": 27,
+   "inclusion": "no problems in pr_cases.json",
+   "problems_in_pr_cases": [],
+   "filled": {},
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/QuantumBadger/RedReader/pull/1373",
+   "status": "closed_by_maintainer",
+   "case": "redreader_117",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Fix sha1",
+    "state": "closed",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "QuantumBadger/RedReader",
+    "base_ref": "master",
+    "base_sha": "c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+    "head_repo": "jpantonow/RedReader",
+    "head_ref": "fix/sha1-messagedigestspec-20260811031357-c567f468",
+    "head_sha": "e0e443b0194c2d138a7139309bfea71949a3eb6f",
+    "commits": 2,
+    "changed_files": 1,
+    "repo_language": "Java"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/QuantumBadger__RedReader__1373.diff",
+   "metadata": null,
+   "run_dir": null,
+   "apk": "org.quantumbadger.redreader_117.apk",
+   "spec": "MessageDigestSpec",
+   "class": "org.quantumbadger.redreader.common.General",
+   "method": "sha1",
+   "finding_id_sources": {
+    "outcome_record": null,
+    "pr_metadata": "d2b58eae2982",
+    "inventory_findings": null
+   },
+   "finding_id": "d2b58eae2982",
+   "spec_active": true,
+   "repo_url": "https://github.com/QuantumBadger/RedReader",
+   "sources_csv": null,
+   "analysed_commit": "ac08f90d23301c8fde095246825a413092003763",
+   "app_packages": [
+    "org.quantumbadger.redreader"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": null,
+   "pipeline_base_commit": null,
+   "pipeline_patch_commit": null,
+   "head_sha_is_pipeline_commit": null,
+   "pr_diff_matches_pipeline_diff": null,
+   "pr_message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "detector_code": "MESSAGEDIGEST-ALG-02",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "detector_source": [
+    "data/processed/exp_final/findings_exp_final.csv",
+    "data/processed/exp_final/findings_nativos.csv",
+    "data/processed/exp_final/findings_redreader_sha1.csv",
+    "data/processed/exp_final/findings_subset_newpr.csv",
+    "data/processed/exp_final/findings_subset_revisao.csv",
+    "data/processed/rv_import_findings.csv"
+   ],
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ALG-02",
+     "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "failed",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "success",
+    "pipeline_apks": [
+     "186c0ff9de-debug.apk"
+    ],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "*-debug.apk",
+    "basis": "all metadata candidates agree: pipeline's production build (status success, APKs copied)"
+   },
+   "base_sites": [
+    [
+     "org.quantumbadger.redreader.common.General",
+     "sha1"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "org.quantumbadger.redreader.common.General",
+     "sha1"
+    ]
+   ],
+   "site_check": "declaration of 'sha1' in 0 removed / 0 added diff lines",
+   "language": "Java",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/QuantumBadger__RedReader__1373.diff",
+   "pr_merge_base": "c250817d4eba13f5ed2b26d33fbc9044095ff8aa",
+   "problems": [
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: org.quantumbadger.redreader"
+   ],
+   "notes": [
+    "several pipeline metadata records and none is the PR's own run (no _created.json, head ref, commit_hash or diff match): ['outputs/exp_final_20261019/subset_newpr/pull_requests/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_pr.json', 'outputs/exp_final_20261019/subset_newpr3/pull_requests/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_pr.json', 'outputs/exp_final_20261019/subset_newpr4/pull_requests/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_pr.json', 'outputs/exp_final_20261019/subset_redreader_sha1_v2/pull_requests/org.quantumbadger.redreader_117.apk_sha1_MessageDigestSpec_pr.json']; only fields they all agree on are used",
+    "build task/apk glob from 4 later runs of this finding, which agree",
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": false,
+   "build_order": 28,
+   "inclusion": "one value fixed by rule (pre-registration)",
+   "problems_in_pr_cases": [
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: org.quantumbadger.redreader"
+   ],
+   "filled": {
+    "app_packages": {
+     "value": [
+      "org.quantumbadger.redreader"
+     ],
+     "how": "manifest package of the built base APK, `aapt2 dump badging` (build/redreader_117/base.badging: package: name='org.quantumbadger.redreader' versionCode='118' versionName='1.26' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion=')",
+     "rule": "pre-registration: app packages missing -> manifest package read from the built base APK"
+    }
+   },
+   "unresolved": []
+  }
+ ]
+}

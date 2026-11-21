@@ -1,0 +1,156 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule names read() and read(byte[], int, int), but not read(byte[]) or convenience methods. Other methods may delegate to a named read at runtime; whether the detector observes that delegation is implementation-dependent.",
+      "The rule does not specify how the detector handles aliases, exceptions, implicit try-with-resources closes, subclasses, or interprocedural calls.",
+      "A read event does not establish that a byte was returned, and the rule does not require reading to end-of-stream.",
+      "The message alone does not identify the missing or unexpected event."
+    ],
+    "predicates": [
+      "REQUIRES generatedMessageDigest[digest] for the constructor's digest argument.",
+      "ENSURES digestedInputStream[stream, digest] as a CrySL predicate for compliant usage; this is not an independently measured digest result.",
+      "The related MessageDigest rule declares generatedMessageDigest[this] after its Get event; its constraints and analysis are separate."
+    ],
+    "claim": "The rule accepts the specified event order subject to its constraints and required predicate. A finding reports that the detector did not accept an observed sequence."
+  },
+  "unknowns": [
+    "Which event or transition caused the representative message, and whether it reflects a feasible execution.",
+    "Which detector implementation and configuration produced the finding, and how it models inherited calls, implicit closes, exceptions, and aliases.",
+    "Whether a particular finding involves an API-valid zero-length read or an actual rule-compliant trace.",
+    "The rule was consulted as reproduced in the supplied material; independent web retrieval was not available in this session."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "DigestInputStream wraps an input stream and associates it with a MessageDigest. Its reads update the digest with data actually read when digesting is on, which is the default. Finalizing the computation requires a digest method on the associated MessageDigest.",
+      "Bytes bypassed by skip are not added to the digest; bytes read again after reset are added again. setMessageDigest can change the associated digest.",
+      "The inherited FilterInputStream close closes the wrapped stream. Its read(byte[]) delegates to read(byte[], 0, byte[].length)."
+    ],
+    "preconditions": [
+      "For the three-argument read, the rule requires len > 0, offset >= 0, and length[data] >= offset + len.",
+      "The Java InputStream contract permits len == 0 with valid array bounds and returns zero without reading bytes; the CrySL rule is stricter."
+    ],
+    "unknowns": [
+      "The sources do not establish the actual input, read results, digest algorithm, provider, or consumer for a reported finding.",
+      "The particular detector's treatment of integer overflow in offset + len has not been established."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/DigestInputStream.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/MessageDigest.crysl",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/security/DigestInputStream.html",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/security/MessageDigest.html",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/InputStream.html",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/FilterInputStream.html",
+    "https://www.eclipse.org/cognicrypt/resources/publications/ksa%2B18crysl.pdf"
+  ],
+  "schema_version": 2,
+  "non_security_violation_shapes": [
+    "Calling on(true) on a concrete DigestInputStream still in its default-on state violates the blanket prohibition but need not affect security. If the rest of the rule is satisfied, removing the redundant call preserves the same stream and digest state."
+  ],
+  "source_verified": true,
+  "important_note": "This rule specifies a call protocol and CrySL predicates, not proof that the intended bytes were hashed, that a digest was finalized or verified, or that a security failure occurred. The rule text was supplied as a fetched source; independent retrieval was unavailable in this session.",
+  "events": [
+    {
+      "condition": "Observes the DigestInputStream(InputStream stream, MessageDigest digest) constructor. Separately, the digest argument must satisfy generatedMessageDigest[digest].",
+      "name": "c1 / Con",
+      "api_patterns": [
+        "DigestInputStream("
+      ]
+    },
+    {
+      "condition": "Observes the zero-argument read overload. It is a Read event regardless of whether the call returns a byte or end-of-stream.",
+      "name": "r1 / Read",
+      "api_patterns": [
+        ".read()"
+      ]
+    },
+    {
+      "condition": "Observes read(byte[] data, int offset, int len), not every overload matched by the text fragment. Observing the call is distinct from satisfying length[data] >= offset + len, offset >= 0, and len > 0.",
+      "name": "r2 / Read",
+      "api_patterns": [
+        ".read("
+      ]
+    },
+    {
+      "condition": "Observes close() on the governed stream. The order accepts Close after at least one Read; observing an earlier close does not satisfy that order. Whether an implicit try-with-resources close is observed depends on the detector.",
+      "name": "cl1 / Close",
+      "api_patterns": [
+        ".close()"
+      ]
+    },
+    {
+      "condition": "A call to on(boolean) is forbidden for either boolean value, independently of the ordered events.",
+      "name": "forbidden on",
+      "api_patterns": [
+        ".on("
+      ]
+    }
+  ],
+  "security_semantics": {
+    "runtime_claim": "Whether the computed digest protects anything depends on the bytes actually read, the digest and its use, and how any expected value is authenticated or compared.",
+    "equivalent": false,
+    "detector_claim": "The rule checks a prescribed usage protocol and predicates, including a blanket prohibition on on(boolean)."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Check the actual Java or Android runtime and detector version, including modeling of inherited methods, library delegation, and implicit close calls.",
+      "Check whether an API-valid zero-length read is the source of a constraint report."
+    ],
+    "runtime": [
+      "Where needed, establish feasible call order, argument values, read results, and whether data was skipped, reread, or bypassed.",
+      "Establish how the digest result and any expected value are obtained and used before making a security claim."
+    ],
+    "source_level": [
+      "Inspect the complete construction-to-close path, including overload resolution, aliases, branches, exception handling, and implicit resource management.",
+      "Trace the MessageDigest argument to evidence for the required CrySL predicate and inspect any changes to the associated digest."
+    ]
+  },
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a reported sequence actually occurred or violates the rule on a feasible execution path.",
+    "Do not infer that a digest mismatch, untrusted download, exploitable vulnerability, or failed integrity check exists.",
+    "Do not infer that the entire input was read, that any bytes were read, or that the digest was finalized or compared.",
+    "Do not infer that an inherited read overload or an implicit close is necessarily invisible to the particular detector implementation."
+  ],
+  "name": "DigestInputStreamSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/DigestInputStream.crysl",
+  "applies_to_types": [
+    "java.security.DigestInputStream"
+  ],
+  "source_title": "DigestInputStream CrySL rule",
+  "semantic_scope": "For each governed DigestInputStream object, the rule describes construction with an input stream and message digest, one or more specified read events, and close, along with array-slice constraints, a required digest predicate, an ensured stream/digest predicate, and a prohibition on on(boolean). It does not identify an application purpose or particular input.",
+  "spec_id": "DigestInputStreamSpec",
+  "known_false_positive_shapes": [
+    "A valid read(data, offset, 0) with otherwise valid bounds: Java permits the zero-length read, but the rule's len > 0 constraint rejects it.",
+    "A report caused by missing a feasible execution's implicit try-with-resources close or by inventing an infeasible path, when the actual governed trace otherwise satisfies the rule."
+  ],
+  "protocol": "Con, Read+, Close; on(boolean) forbidden",
+  "generation_evidence": {
+    "false_positive_shape_review": {
+      "version": 1,
+      "moved": []
+    },
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.cryptomator.data.repository.UpdateCheckRepositoryImpl",
+        "method": "calculateSha256",
+        "message": "the observed call sequence is not one DigestInputStreamSpec accepts"
+      }
+    ],
+    "expected_api_simple_name": "DigestInputStream",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/DigestInputStream.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:java.security.DigestInputStream"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:java.security.DigestInputStream",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/DigestInputStream.crysl"
+  }
+}

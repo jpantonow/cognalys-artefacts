@@ -1,0 +1,44 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T221026_987921_2595_0002_external_research.synthesis",
+  "parent_call_id": "group-20261103T221026_898364-2595-1",
+  "finding_id": "app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+  "stage": "external_research.synthesis",
+  "status": "cache_hit",
+  "delivery": "cache_hit",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 21335,
+  "input_tokens": 0,
+  "cached_input_tokens": 0,
+  "output_tokens": 0,
+  "latency_ms": 0,
+  "retry_count": 0,
+  "request_id": "",
+  "section_telemetry": {
+    "question_scope": {
+      "characters": 331,
+      "approx_tokens": 83,
+      "sha256": "b757e0a3f6658b694e3cf83951622819b2add3eac6475a22144fb5a36f2ae975"
+    },
+    "questions": {
+      "characters": 1304,
+      "approx_tokens": 326,
+      "sha256": "819f1b9fd9173ba00b17668caa4098db35ae8f0afdd8e6e3233a732fc91be34e"
+    },
+    "spec_policy": {
+      "characters": 222,
+      "approx_tokens": 56,
+      "sha256": "6a751e92d3eb3c8a3a8ecfc7a1a171d607d90c2c0c07dc1662f6740a2d9f208d"
+    },
+    "reported_by_rule": {
+      "characters": 4944,
+      "approx_tokens": 1236,
+      "sha256": "263434261f987557993ec301619a23a29eec5bb5297748119f6aee00f7d66fac"
+    }
+  },
+  "completed_at": "2026-11-03T22:10:27"
+}

@@ -1,0 +1,461 @@
+{
+ "rule": [
+  "(runs/<unit>/<arm>_r<k>/port/result.json).",
+  "",
+  "Acceptability per run (final per card: both judges agree, else the principal judge opus, as tabulate.final_a):",
+  "  FALHA 0; ISSUE / NO_ACTION 1.",
+  "  C and the first block (S, O, T): as retabulate_author_rule.py (rule 4 for C's \"correção não aplicável\").",
+  "  TP, SP2 PR: port \"ported\": author r2>=2, r4>=1 and the kit/agent build at the tip succeeded; patch r2>=2 and built",
+  "    at the tip. Port \"already_fixed\" or \"abstain\" (an ALREADY_FIXED without deterministic confirmation, or a merge",
+  "    that left nothing to port, is recorded as abstain): rule 4, r2>=2. Port \"failure\": 0.",
+  "A per arm = mean over units of the per-unit share of acceptable runs. Also: PRs proposed, PRs acceptable, units",
+  "with a PR, classes, port outcomes, per-judge A, Cohen's kappa (acceptability, author reading, cards both judges"
+ ],
+ "arms": {
+  "S": {
+   "runs": 80,
+   "classes": {
+    "PR": 16,
+    "NENHUMA AÇÃO": 51,
+    "ISSUE": 13
+   },
+   "units_with_pr": 6,
+   "units_same_class_all_replicas": 13,
+   "units": 20,
+   "cost_list_phase1_per_run": 0.1173,
+   "cost_list_port_per_run": 0.0,
+   "cost_list_total_per_run": 0.1173
+  },
+  "O": {
+   "runs": 80,
+   "classes": {
+    "NENHUMA AÇÃO": 63,
+    "PR": 15,
+    "ISSUE": 2
+   },
+   "units_with_pr": 5,
+   "units_same_class_all_replicas": 17,
+   "units": 20,
+   "cost_list_phase1_per_run": 0.1254,
+   "cost_list_port_per_run": 0.0,
+   "cost_list_total_per_run": 0.1254
+  },
+  "T": {
+   "runs": 80,
+   "classes": {
+    "PR": 23,
+    "NENHUMA AÇÃO": 49,
+    "ISSUE": 8
+   },
+   "units_with_pr": 8,
+   "units_same_class_all_replicas": 12,
+   "units": 20,
+   "cost_list_phase1_per_run": 0.0436,
+   "cost_list_port_per_run": 0.0,
+   "cost_list_total_per_run": 0.0436
+  },
+  "TP": {
+   "runs": 80,
+   "classes": {
+    "PR": 38,
+    "NENHUMA AÇÃO": 24,
+    "ISSUE": 16,
+    "FALHA": 2
+   },
+   "units_with_pr": 10,
+   "units_same_class_all_replicas": 17,
+   "units": 20,
+   "port": {
+    "clean": 24,
+    "after_conflict": 4,
+    "abstain": 8,
+    "already_fixed": 2
+   },
+   "port_build_failed": [
+    "co_bdc0d1804c88/TP_r1",
+    "co_bdc0d1804c88/TP_r2",
+    "co_bdc0d1804c88/TP_r3",
+    "co_bdc0d1804c88/TP_r4"
+   ],
+   "cost_list_phase1_per_run": 0.1991,
+   "cost_list_port_per_run": 0.009,
+   "cost_list_total_per_run": 0.208
+  },
+  "SP2": {
+   "runs": 80,
+   "classes": {
+    "PR": 46,
+    "NENHUMA AÇÃO": 27,
+    "FALHA": 2,
+    "ISSUE": 5
+   },
+   "units_with_pr": 15,
+   "units_same_class_all_replicas": 14,
+   "units": 20,
+   "port": {
+    "clean": 33,
+    "after_conflict": 1,
+    "abstain": 11,
+    "already_fixed": 1
+   },
+   "port_build_failed": [],
+   "cost_list_phase1_per_run": 0.3531,
+   "cost_list_port_per_run": 0.0218,
+   "cost_list_total_per_run": 0.3749
+  },
+  "C": {
+   "runs": 80,
+   "classes": {
+    "PR": 31,
+    "NENHUMA AÇÃO": 39,
+    "ISSUE": 10
+   },
+   "units_with_pr": 9,
+   "units_same_class_all_replicas": 16,
+   "units": 20
+  }
+ },
+ "A_author": {
+  "S": {
+   "A": 0.975,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 16,
+   "prs_acceptable": 14,
+   "units_with_acceptable_pr": 5,
+   "prs_unscored": 0
+  },
+  "O": {
+   "A": 0.9,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 15,
+   "prs_acceptable": 7,
+   "units_with_acceptable_pr": 3,
+   "prs_unscored": 0
+  },
+  "T": {
+   "A": 0.938,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 23,
+   "prs_acceptable": 18,
+   "units_with_acceptable_pr": 6,
+   "prs_unscored": 0
+  },
+  "TP": {
+   "A": 0.85,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 38,
+   "prs_acceptable": 28,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  },
+  "SP2": {
+   "A": 0.8,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 46,
+   "prs_acceptable": 32,
+   "units_with_acceptable_pr": 11,
+   "prs_unscored": 0
+  },
+  "C": {
+   "A": 0.963,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 31,
+   "prs_acceptable": 28,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  }
+ },
+ "A_author_opus": {
+  "S": {
+   "A": 0.975,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 16,
+   "prs_acceptable": 14,
+   "units_with_acceptable_pr": 5,
+   "prs_unscored": 0
+  },
+  "O": {
+   "A": 0.9,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 15,
+   "prs_acceptable": 7,
+   "units_with_acceptable_pr": 3,
+   "prs_unscored": 0
+  },
+  "T": {
+   "A": 0.938,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 23,
+   "prs_acceptable": 18,
+   "units_with_acceptable_pr": 6,
+   "prs_unscored": 0
+  },
+  "TP": {
+   "A": 0.85,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 38,
+   "prs_acceptable": 28,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  },
+  "SP2": {
+   "A": 0.8,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 46,
+   "prs_acceptable": 32,
+   "units_with_acceptable_pr": 11,
+   "prs_unscored": 0
+  },
+  "C": {
+   "A": 0.963,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 31,
+   "prs_acceptable": 28,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  }
+ },
+ "A_author_sol": {
+  "S": {
+   "A": 0.925,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 16,
+   "prs_acceptable": 10,
+   "units_with_acceptable_pr": 4,
+   "prs_unscored": 0
+  },
+  "O": {
+   "A": 0.9,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 15,
+   "prs_acceptable": 7,
+   "units_with_acceptable_pr": 3,
+   "prs_unscored": 0
+  },
+  "T": {
+   "A": 0.938,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 23,
+   "prs_acceptable": 18,
+   "units_with_acceptable_pr": 6,
+   "prs_unscored": 0
+  },
+  "TP": {
+   "A": 0.85,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 38,
+   "prs_acceptable": 28,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  },
+  "SP2": {
+   "A": 0.7,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 46,
+   "prs_acceptable": 24,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  },
+  "C": {
+   "A": 0.9,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 31,
+   "prs_acceptable": 23,
+   "units_with_acceptable_pr": 7,
+   "prs_unscored": 0
+  }
+ },
+ "A_patch": {
+  "S": {
+   "A": 0.975,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 16,
+   "prs_acceptable": 14,
+   "units_with_acceptable_pr": 5,
+   "prs_unscored": 0
+  },
+  "O": {
+   "A": 1.0,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 15,
+   "prs_acceptable": 15,
+   "units_with_acceptable_pr": 5,
+   "prs_unscored": 0
+  },
+  "T": {
+   "A": 0.988,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 23,
+   "prs_acceptable": 22,
+   "units_with_acceptable_pr": 7,
+   "prs_unscored": 0
+  },
+  "TP": {
+   "A": 0.85,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 38,
+   "prs_acceptable": 28,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  },
+  "SP2": {
+   "A": 0.7,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 46,
+   "prs_acceptable": 24,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  },
+  "C": {
+   "A": 0.925,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 31,
+   "prs_acceptable": 25,
+   "units_with_acceptable_pr": 7,
+   "prs_unscored": 0
+  }
+ },
+ "A_patch_opus": {
+  "S": {
+   "A": 0.975,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 16,
+   "prs_acceptable": 14,
+   "units_with_acceptable_pr": 5,
+   "prs_unscored": 0
+  },
+  "O": {
+   "A": 1.0,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 15,
+   "prs_acceptable": 15,
+   "units_with_acceptable_pr": 5,
+   "prs_unscored": 0
+  },
+  "T": {
+   "A": 0.988,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 23,
+   "prs_acceptable": 22,
+   "units_with_acceptable_pr": 7,
+   "prs_unscored": 0
+  },
+  "TP": {
+   "A": 0.85,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 38,
+   "prs_acceptable": 28,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  },
+  "SP2": {
+   "A": 0.7,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 46,
+   "prs_acceptable": 24,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  },
+  "C": {
+   "A": 0.925,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 31,
+   "prs_acceptable": 25,
+   "units_with_acceptable_pr": 7,
+   "prs_unscored": 0
+  }
+ },
+ "A_patch_sol": {
+  "S": {
+   "A": 0.975,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 16,
+   "prs_acceptable": 14,
+   "units_with_acceptable_pr": 5,
+   "prs_unscored": 0
+  },
+  "O": {
+   "A": 1.0,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 15,
+   "prs_acceptable": 15,
+   "units_with_acceptable_pr": 5,
+   "prs_unscored": 0
+  },
+  "T": {
+   "A": 0.988,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 23,
+   "prs_acceptable": 22,
+   "units_with_acceptable_pr": 7,
+   "prs_unscored": 0
+  },
+  "TP": {
+   "A": 0.9,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 38,
+   "prs_acceptable": 32,
+   "units_with_acceptable_pr": 9,
+   "prs_unscored": 0
+  },
+  "SP2": {
+   "A": 0.75,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 46,
+   "prs_acceptable": 28,
+   "units_with_acceptable_pr": 9,
+   "prs_unscored": 0
+  },
+  "C": {
+   "A": 0.975,
+   "units": 20,
+   "runs": 80,
+   "prs_scored": 31,
+   "prs_acceptable": 29,
+   "units_with_acceptable_pr": 8,
+   "prs_unscored": 0
+  }
+ },
+ "agreement_author": {
+  "cohen_kappa_acceptability": 0.81,
+  "cards": 491,
+  "quadratic_kappa_r2": 0.823,
+  "pr_cards": 174,
+  "raw_agreement_acceptability": 0.963
+ }
+}

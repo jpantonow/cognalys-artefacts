@@ -1,0 +1,31 @@
+{
+ "card_id": "Kffc88fc4",
+ "card_sha256": "3eb68e5128b7344a",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 9,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2768,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 455
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.031481800000000004,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "9c0b69ca906752a2",
+ "finished_at": "2026-11-17T18:57:34-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.45,
+  "reason": "The issue is short and has no headings. Its structure looks templated: a paragraph stating the finding, then an explanation of why there is no pull request, then a question to the maintainers, a line saying the issue can simply be closed, and an offer to help. That closing pattern reads like a pipeline's standardized output rather than a free-running agent. Sonnet in Claude Code usually writes longer issues with more markdown. Codex is plausible, but the closing lines look more like Cognalys, so my confidence is moderate."
+ }
+}

@@ -1,0 +1,2947 @@
+{
+  "built_at_commit": "955da7eb4e64b667f430e5213cfcaedd3095027e",
+  "ceiling_usd": 30.0,
+  "counts": {
+    "prs": 49,
+    "included_prs": 37,
+    "included_by_group": {
+      "incorporado": 12,
+      "aberto": 17,
+      "fechado": 8
+    },
+    "excluded_by_group": {
+      "incorporado": 5,
+      "aberto": 5,
+      "fechado": 2
+    },
+    "units": 36,
+    "findings": 43,
+    "runs": 34,
+    "closed_classes": {
+      "covered_by_current_rule": 2,
+      "maintainer_preference": 5,
+      "other": 1
+    }
+  },
+  "runs": [
+    {
+      "slug": "com_craxiom_networksurvey",
+      "apk": "com.craxiom.networksurvey_114.apk",
+      "pinned_commit": "6352b7030268784d623162d7c5f0047215c8c3f2",
+      "repository": "https://github.com/christianrowlands/android-network-survey",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_com_craxiom_networksurvey",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_craxiom_networksurvey.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_craxiom_networksurvey.csv",
+      "finding_ids": [
+        "ac1a8dd4d680"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/exp_final_20261019/run2"
+      ],
+      "prs": [
+        "https://github.com/christianrowlands/android-network-survey/pull/154"
+      ],
+      "groups": [
+        "fechado"
+      ]
+    },
+    {
+      "slug": "com_gigabytedevelopersinc_app_cometotp",
+      "apk": "com.gigabytedevelopersinc.app.CometOTP.debug_1.apk",
+      "pinned_commit": "b903ee6ffdd692c9f575bf9d624e762d9117350e",
+      "repository": "https://github.com/gigabytedevelopers/CometOTP",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_gigabytedevelopersinc_app_cometotp.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_gigabytedevelopersinc_app_cometotp.jsonl",
+      "finding_ids": [
+        "689272974dc1"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/run"
+      ],
+      "prs": [
+        "https://github.com/gigabytedevelopers/CometOTP/pull/114"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "com_idunnololz_summit_fdroid",
+      "apk": "com.idunnololz.summit.fdroid.debug_355.apk",
+      "pinned_commit": "b00f4f809cd28fd469f7f7bfe48c2e2466f55ed1",
+      "repository": "https://github.com/idunnololz/summit",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_misuse5_20261017/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_idunnololz_summit_fdroid.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_idunnololz_summit_fdroid.jsonl",
+      "finding_ids": [
+        "554ed6e23b16"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_misuse5_20261017/run"
+      ],
+      "prs": [
+        "https://github.com/idunnololz/summit/pull/54"
+      ],
+      "groups": [
+        "fechado"
+      ]
+    },
+    {
+      "slug": "com_leekleak_trafficlight",
+      "apk": "com.leekleak.trafficlight_38.apk",
+      "pinned_commit": "810679a54efb3641f1469bb085a82eb65ab69eb4",
+      "repository": "https://github.com/leekleak/traffic-light",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_com_leekleak_trafficlight",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_leekleak_trafficlight.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_leekleak_trafficlight.csv",
+      "finding_ids": [
+        "32249b3e5e5d"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/exp_final_20261019/run2"
+      ],
+      "prs": [
+        "https://github.com/leekleak/traffic-light/pull/238"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "com_ounben_amaradio",
+      "apk": "com.ounben.amaradio.debug_159.apk",
+      "pinned_commit": "e01537f78694fdee5ad9ac6c216a5e3bedb47b9a",
+      "repository": "https://github.com/ounben/AMARadio",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_misuse3_20261016/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_ounben_amaradio.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_ounben_amaradio.jsonl",
+      "finding_ids": [
+        "06ff0c1fc96c"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_misuse3_20261016/run6"
+      ],
+      "prs": [
+        "https://github.com/ounben/AMARadio/pull/122"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "com_philkes_notallyx",
+      "apk": "com.philkes.notallyx.debug_71134.apk",
+      "pinned_commit": "f8c9cea0fdc35be7f495bb323ddab50632bdc373",
+      "repository": "https://github.com/Crustack/NotallyX",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_notallyx_20261028/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_philkes_notallyx.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_philkes_notallyx.jsonl",
+      "finding_ids": [
+        "fff072cb8953"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_notallyx_20261028/run_v7"
+      ],
+      "prs": [
+        "https://github.com/Crustack/NotallyX/pull/1167"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "com_sapuseven_untis",
+      "apk": "com.sapuseven.untis_29198884.apk",
+      "pinned_commit": "250d629ba531fd0fea34928503f02684d66692c9",
+      "repository": "https://github.com/SapuSeven/BetterUntis",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_com_sapuseven_untis",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_sapuseven_untis.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_sapuseven_untis.csv",
+      "finding_ids": [
+        "21b3aced6bcf"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/exp_final_20261019/run2"
+      ],
+      "prs": [
+        "https://github.com/SapuSeven/BetterUntis/pull/515"
+      ],
+      "groups": [
+        "fechado"
+      ]
+    },
+    {
+      "slug": "com_vitorpamplona_amethyst",
+      "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+      "pinned_commit": "60b29df3f03775819f57992e5ccafddf32498ede",
+      "repository": "https://github.com/vitorpamplona/amethyst",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_amethyst_20261024/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_vitorpamplona_amethyst.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_vitorpamplona_amethyst.jsonl",
+      "finding_ids": [
+        "39bba5f1270f"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_amethyst_20261024/run"
+      ],
+      "prs": [
+        "https://github.com/vitorpamplona/amethyst/pull/4642"
+      ],
+      "groups": [
+        "fechado"
+      ]
+    },
+    {
+      "slug": "de_jepfa_yapm",
+      "apk": "de.jepfa.yapm.debug_202006.apk",
+      "pinned_commit": "89b0b68ce403b1fd199255990bf026f02d317eb9",
+      "repository": "https://github.com/jenspfahl/anotherpass",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rerun_correcoes_20261022/run_frozen_de_jepfa_yapm",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/de_jepfa_yapm.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/de_jepfa_yapm.jsonl",
+      "finding_ids": [
+        "1381cd4ddb3f"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rerun_correcoes_20261022/run"
+      ],
+      "prs": [
+        "https://github.com/jenspfahl/ANOTHERpass/pull/103"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "de_lukasneugebauer_nextcloudcookbook",
+      "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+      "pinned_commit": "cf063f9be44143013ff44ee3ce4fdd768aca113e",
+      "repository": "https://github.com/lneugebauer/nextcloud-cookbook",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_de_lukasneugebauer_nextcloudcookbook",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/de_lukasneugebauer_nextcloudcookbook.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/de_lukasneugebauer_nextcloudcookbook.csv",
+      "finding_ids": [
+        "4c1c74bcbc8f"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/exp_final_20261019/run2"
+      ],
+      "prs": [
+        "https://github.com/lneugebauer/nextcloud-cookbook/pull/204"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "dev_skye_intertune",
+      "apk": "dev.skye.intertune.debug_96.apk",
+      "pinned_commit": "3ebc686a5fdce667d094f9e63f1beb19c4cd07d0",
+      "repository": "https://github.com/ItzSkyeYT/InterTune",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_intertune_20261027/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/dev_skye_intertune.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/dev_skye_intertune.jsonl",
+      "finding_ids": [
+        "2526b837d70c"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_intertune_20261027/run_v5"
+      ],
+      "prs": [
+        "https://github.com/ItzSkyeYT/InterTune/pull/52"
+      ],
+      "groups": [
+        "fechado"
+      ]
+    },
+    {
+      "slug": "eu_fliegendewurst_triliumdroid",
+      "apk": "eu.fliegendewurst.triliumdroid.debug_24.apk",
+      "pinned_commit": "e0390a996b7439fa0ef65ac9a3bb90f7cffd7e64",
+      "repository": "https://github.com/FliegendeWurst/TriliumDroid",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_eu_fliegendewurst_triliumdroid_20261105/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/eu_fliegendewurst_triliumdroid.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/eu_fliegendewurst_triliumdroid.jsonl",
+      "finding_ids": [
+        "75875e2caca6",
+        "fa0637fc9e1c"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/run"
+      ],
+      "prs": [
+        "https://github.com/FliegendeWurst/TriliumDroid/pull/177"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "livio_rssreader",
+      "apk": "livio.rssreader.debug_120.apk",
+      "pinned_commit": "5a61a6406a60507b3b798ee2312de47802d52b63",
+      "repository": "https://github.com/javalc6/rssreader",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_misuse_20261016/rssreader/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/livio_rssreader.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/livio_rssreader.jsonl",
+      "finding_ids": [
+        "e6413a8ebbe9"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_misuse_20261016/rssreader/rerun2"
+      ],
+      "prs": [
+        "https://github.com/javalc6/rssreader/pull/4"
+      ],
+      "groups": [
+        "fechado"
+      ]
+    },
+    {
+      "slug": "me_diamondforge_tokn",
+      "apk": "me.diamondforge.tokn_19.apk",
+      "pinned_commit": "f7cd9237d0cc2201d39cdb22fda41cf798dfbae0",
+      "repository": "https://github.com/fthomys/tokn",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_me_diamondforge_tokn",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/me_diamondforge_tokn.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/me_diamondforge_tokn.csv",
+      "finding_ids": [
+        "0aeb52bd220d"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/exp_final_20261019/run2"
+      ],
+      "prs": [
+        "https://github.com/tokn-authenticator/tokn/pull/138"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "org_fedorahosted_freeotp",
+      "apk": "org.fedorahosted.freeotp_48.apk",
+      "pinned_commit": "bcecd3761a565cdc17a9dd710fcf35dd03d29622",
+      "repository": "https://github.com/freeotp/freeotp-android",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_org_fedorahosted_freeotp",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/org_fedorahosted_freeotp.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/org_fedorahosted_freeotp.csv",
+      "finding_ids": [
+        "4b81532bb668"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/exp_final_20261019/subset_revisao_lacunas",
+        "outputs/exp_final_20261019/subset_revisao_lacunas_v7"
+      ],
+      "prs": [
+        "https://github.com/freeotp/freeotp-android/pull/524",
+        "https://github.com/freeotp/freeotp-android/pull/521"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "org_jimvixx_smsecure",
+      "apk": "org.jimvixx.smsecure.debug_10400.apk",
+      "pinned_commit": "0c17457b3f262840158ccca400746cc6f296e41d",
+      "repository": "https://github.com/jimvixx/ShortMessageSecure",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_misuse_20261016/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/org_jimvixx_smsecure.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/org_jimvixx_smsecure.jsonl",
+      "finding_ids": [
+        "ab0763bb2ecc",
+        "bb98bd300a0c"
+      ],
+      "units": 2,
+      "max_cost": 4.0,
+      "original_runs": [
+        "outputs/rvsec_misuse_20261016/run",
+        "outputs/rvsec_misuse_20261016/run_v3"
+      ],
+      "prs": [
+        "https://github.com/jimvixx/ShortMessageSecure/pull/89",
+        "https://github.com/jimvixx/ShortMessageSecure/pull/83"
+      ],
+      "groups": [
+        "incorporado"
+      ]
+    },
+    {
+      "slug": "org_quantumbadger_redreader",
+      "apk": "org.quantumbadger.redreader_117.apk",
+      "pinned_commit": "ac08f90d23301c8fde095246825a413092003763",
+      "repository": "https://github.com/QuantumBadger/RedReader",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_org_quantumbadger_redreader",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/org_quantumbadger_redreader.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/org_quantumbadger_redreader.csv",
+      "finding_ids": [
+        "d2b58eae2982"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/exp_final_20261019/subset_redreader_sha1_v2"
+      ],
+      "prs": [
+        "https://github.com/QuantumBadger/RedReader/pull/1373"
+      ],
+      "groups": [
+        "fechado"
+      ]
+    },
+    {
+      "slug": "org_woheller69_whobird",
+      "apk": "org.woheller69.whobird.debug_54.apk",
+      "pinned_commit": "f1132d844c7ad2c7a07b8621c42e1decf05663f1",
+      "repository": "https://github.com/woheller69/whoBIRD",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_whobird_20261018/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/org_woheller69_whobird.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/org_woheller69_whobird.jsonl",
+      "finding_ids": [
+        "668194d05f07"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_whobird_20261018/run9"
+      ],
+      "prs": [
+        "https://github.com/woheller69/whoBIRD/pull/144"
+      ],
+      "groups": [
+        "fechado"
+      ]
+    },
+    {
+      "slug": "app_michaelwuensch_bitbanana",
+      "apk": "app.michaelwuensch.bitbanana_79.apk",
+      "pinned_commit": "14a4bb5606aef2a06cbf70aab422f5815ec1f844",
+      "repository": "https://github.com/michaelWuensch/BitBanana",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_app_michaelwuensch_bitbanana",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/app_michaelwuensch_bitbanana.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/app_michaelwuensch_bitbanana.csv",
+      "finding_ids": [
+        "53c35a191a23"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/exp_final_20261019/subset_bitbanana_scope6"
+      ],
+      "prs": [
+        "https://github.com/michaelWuensch/BitBanana/pull/184"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "com_orgzlyrevived",
+      "apk": "com.orgzlyrevived.debug_292.apk",
+      "pinned_commit": "2b56fe4c1a0c9426a1bb1313b4c757a8e66a48d0",
+      "repository": "https://github.com/orgzly-revived/orgzly-android-revived",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_orgzlyrevived_20261025/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_orgzlyrevived.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_orgzlyrevived.jsonl",
+      "finding_ids": [
+        "83f22cfa5b18"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_orgzlyrevived_20261025/run_v2"
+      ],
+      "prs": [
+        "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "com_vauth_salty",
+      "apk": "com.vauth.salty.debug_2.apk",
+      "pinned_commit": "ef78cac61a4c28fa2df1b4a2bc23a7ae2c2a40b8",
+      "repository": "https://github.com/vauth/salty-app",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_salty_20261022/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_vauth_salty.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_vauth_salty.jsonl",
+      "finding_ids": [
+        "2b8cb7f6653b",
+        "f581e4272a46"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_salty_20261022/run_v3"
+      ],
+      "prs": [
+        "https://github.com/Vauth/salty-app/pull/6"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "com_yogeshpaliyal_keypass",
+      "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+      "pinned_commit": "f0ef4cd98349ddc7320c164e3d8173f334407bd2",
+      "repository": "https://github.com/yogeshpaliyal/KeyPass",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_keypass_20261025/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_yogeshpaliyal_keypass.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_yogeshpaliyal_keypass.jsonl",
+      "finding_ids": [
+        "013d2748f3f8"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_keypass_20261025/run"
+      ],
+      "prs": [
+        "https://github.com/yogeshpaliyal/KeyPass/pull/1252"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "com_zfdang_zsmth_android",
+      "apk": "com.zfdang.zsmth_android.debug_1031.apk",
+      "pinned_commit": "e696dcb1615a7e9269c26fe73d21c89883877a52",
+      "repository": "https://github.com/zfdang/zSMTH-Android",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_sslctx_20261017/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_zfdang_zsmth_android.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_zfdang_zsmth_android.jsonl",
+      "finding_ids": [
+        "b1a40c2fc69e"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_sslctx_20261017/run8"
+      ],
+      "prs": [
+        "https://github.com/zfdang/zSMTH-Android/pull/66"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "com_zhangke_fread",
+      "apk": "com.zhangke.fread.debug_109000.apk",
+      "pinned_commit": "16e037cadff750bc39bdfc612563063a887c3780",
+      "repository": "https://github.com/0xZhangKe/Fread",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_tls_20261015/rerun_20261015/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/com_zhangke_fread.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/com_zhangke_fread.jsonl",
+      "finding_ids": [
+        "8afabaab2f47",
+        "bd1f7e158735"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_tls_20261015/rerun_20261015/run_v3"
+      ],
+      "prs": [
+        "https://github.com/0xZhangKe/Fread/pull/168"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "io_github_mouse233_localsendkotlin",
+      "apk": "io.github.mouse233.localsendkotlin.debug_23.apk",
+      "pinned_commit": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+      "repository": "https://github.com/mouse233/localsend-kotlin",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_localsendkotlin_20261029/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/io_github_mouse233_localsendkotlin.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/io_github_mouse233_localsendkotlin.jsonl",
+      "finding_ids": [
+        "9023761e8c55",
+        "97b5f3b80d25"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_localsendkotlin_20261029/run_v5"
+      ],
+      "prs": [
+        "https://github.com/mouse233/localsend-kotlin/pull/58"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "io_github_thatsfguy_meshcore_native",
+      "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+      "pinned_commit": "8f226db77a067f5de614514fe755695209868037",
+      "repository": "https://github.com/thatSFguy/meshcore-mobile-app",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_io_github_thatsfguy_meshcore_native_20261105/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/io_github_thatsfguy_meshcore_native.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/io_github_thatsfguy_meshcore_native.jsonl",
+      "finding_ids": [
+        "7030778fa5d0",
+        "7d98a07e751d"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run"
+      ],
+      "prs": [
+        "https://github.com/thatSFguy/meshcore-mobile-app/pull/10"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "me_ash_reader",
+      "apk": "me.ash.reader.debug_47.apk",
+      "pinned_commit": "091c9207527a10a135b307c9f7747306da36f686",
+      "repository": "https://github.com/Ashinch/ReadYou",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_readyou_20261018/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/me_ash_reader.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/me_ash_reader.jsonl",
+      "finding_ids": [
+        "6d0a3cf73013"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_readyou_20261018/run3"
+      ],
+      "prs": [
+        "https://github.com/ReadYouApp/ReadYou/pull/1334"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "network_loki_messenger_fdroid",
+      "apk": "network.loki.messenger.fdroid.debug_4545.apk",
+      "pinned_commit": "dd6c41a0c6df8ac39cb568653df2c6ae5aec0d17",
+      "repository": "https://github.com/session-foundation/session-android",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_tls_20261015/session_20261015/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/network_loki_messenger_fdroid.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/network_loki_messenger_fdroid.jsonl",
+      "finding_ids": [
+        "63bfe4a50889"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_tls_20261015/session_20261015/run"
+      ],
+      "prs": [
+        "https://github.com/session-foundation/session-android/pull/2241"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "nl_privacydragon_bookwyrm",
+      "apk": "nl.privacydragon.bookwyrm.debug_16.apk",
+      "pinned_commit": "c578870f8c13ec1ea823ae92b44019825c86a956",
+      "repository": "https://github.com/PrivacyDragon/Bookwyrm_Android",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_bookwyrm_20261031/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/nl_privacydragon_bookwyrm.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/nl_privacydragon_bookwyrm.jsonl",
+      "finding_ids": [
+        "84d27d2c74e7"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_bookwyrm_20261031/run"
+      ],
+      "prs": [
+        "https://github.com/PrivacyDragon/Bookwyrm_Android/pull/29"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "org_primftpd",
+      "apk": "org.primftpd.debug_71.apk",
+      "pinned_commit": "f8f8f5fe393226a82fa1e2d8939d203028681313",
+      "repository": "https://github.com/wolpi/prim-ftpd",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_primftpd_20261031/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/org_primftpd.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/org_primftpd.jsonl",
+      "finding_ids": [
+        "2c46d89daf31",
+        "890852e5e9f9"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_primftpd_20261031/run_v3"
+      ],
+      "prs": [
+        "https://github.com/wolpi/prim-ftpd/pull/453"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "org_thosp_yourlocalweather",
+      "apk": "org.thosp.yourlocalweather.debug_213.apk",
+      "pinned_commit": "482069a182d06d66c25fe931ecf6df3562a336a0",
+      "repository": "https://github.com/thuryn/your-local-weather",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_org_thosp_yourlocalweather_20261101/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/org_thosp_yourlocalweather.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/org_thosp_yourlocalweather.jsonl",
+      "finding_ids": [
+        "e2654a54d12a"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rvsec_org_thosp_yourlocalweather_20261101/run_v5"
+      ],
+      "prs": [
+        "https://github.com/thuryn/your-local-weather/pull/209"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "rocks_poopjournal_metadataremover",
+      "apk": "rocks.poopjournal.metadataremover_20020.apk",
+      "pinned_commit": "b09bc5a97c922c25c9c56d3c97a4d343712ce808",
+      "repository": "https://github.com/Crazy-Marvin/MetadataRemover",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/rocks_poopjournal_metadataremover.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/rocks_poopjournal_metadataremover.csv",
+      "finding_ids": [
+        "40d39da41dec"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/run_20261010_200449"
+      ],
+      "prs": [
+        "https://github.com/Crazy-Marvin/MetadataRemover/pull/264"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "systems_sieber_droid_scep",
+      "apk": "systems.sieber.droid_scep_7.apk",
+      "pinned_commit": "d8e13b746f1028116f847f36afc249011ac93498",
+      "repository": "https://github.com/schorschii/Droid_SCEP",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rerun_correcoes_20261022/run_frozen_systems_sieber_droid_scep",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/systems_sieber_droid_scep.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/systems_sieber_droid_scep.jsonl",
+      "finding_ids": [
+        "9215f97597a6"
+      ],
+      "units": 1,
+      "max_cost": 2.0,
+      "original_runs": [
+        "outputs/rerun_correcoes_20261022/run"
+      ],
+      "prs": [
+        "https://github.com/schorschii/Droid_SCEP/pull/2"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    },
+    {
+      "slug": "xyz_zedler_patrick_grocy",
+      "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+      "pinned_commit": "7d4636508af24322f451b95555e1b13b4c634645",
+      "repository": "https://github.com/patzly/grocy-android",
+      "run_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_grocy_20261022/run_frozen",
+      "toml": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/tomls/xyz_zedler_patrick_grocy.toml",
+      "findings_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/findings/xyz_zedler_patrick_grocy.jsonl",
+      "finding_ids": [
+        "71775001bd73",
+        "ed9c7d525627",
+        "efa4a0003ff0"
+      ],
+      "units": 2,
+      "max_cost": 4.0,
+      "original_runs": [
+        "outputs/rvsec_grocy_20261022/run_v2",
+        "outputs/rvsec_grocy_20261022/run_v6"
+      ],
+      "prs": [
+        "https://github.com/patzly/grocy-android/pull/1013",
+        "https://github.com/patzly/grocy-android/pull/1012"
+      ],
+      "groups": [
+        "aberto"
+      ]
+    }
+  ],
+  "prs": [
+    {
+      "pr_url": "https://github.com/gigabytedevelopers/CometOTP/pull/114",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/run",
+      "finding_id": "689272974dc1",
+      "apk": "com.gigabytedevelopersinc.app.CometOTP.debug_1.apk",
+      "repository": "https://github.com/gigabytedevelopers/CometOTP",
+      "spec": "CipherSpec",
+      "csv_class": "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper",
+      "method": "unwrap",
+      "unique_error_id": "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper:::unwrap:::CipherSpec:::InvalidSequenceOfMethodCalls:::the Cipher was initialised again after it completed an operation, which the rule does not accept",
+      "extraction_record": "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/run/error_methods/com.gigabytedevelopersinc.app.CometOTP.debug_1.apk/3_unwrap.json",
+      "pinned_commit": "b903ee6ffdd692c9f575bf9d624e762d9117350e",
+      "pr_base_commit": "b903ee6ffdd692c9f575bf9d624e762d9117350e",
+      "pr_metadata": "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/run/pull_requests/com.gigabytedevelopersinc.app.CometOTP.debug_1.apk_unwrap_CipherSpec_pr.json",
+      "findings_file": "outputs/rvsec_com_gigabytedevelopersinc_app_CometOTP_20261107/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "732b791b22107bbfbb39367e7b366bb9e6deee13cc67a97cea6dc19093796bce",
+      "findings_file_sha256_now": "732b791b22107bbfbb39367e7b366bb9e6deee13cc67a97cea6dc19093796bce",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "689272974dc1",
+          "unique_error_id": "com.gigabytedevelopersinc.app.cometOTP.Utilities.SecretKeyWrapper:::unwrap:::CipherSpec:::InvalidSequenceOfMethodCalls:::the Cipher was initialised again after it completed an operation, which the rule does not accept"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "b903ee6ffdd692c9f575bf9d624e762d9117350e"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 10,
+        "input_tokens": 142196,
+        "cached_input_tokens": 4597,
+        "cache_write_input_tokens": 82781,
+        "output_tokens": 17705,
+        "web_search_calls": 2,
+        "cost_usd": 0.267,
+        "models": [
+          "gpt-6.1-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1435
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/thatSFguy/meshcore-mobile-app/pull/10",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run",
+      "finding_id": "7d98a07e751d",
+      "apk": "io.github.thatsfguy.meshcore.native.debug_1.apk",
+      "repository": "https://github.com/thatSFguy/meshcore-mobile-app",
+      "spec": "CipherSpec",
+      "csv_class": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault",
+      "method": "seal",
+      "unique_error_id": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault:::seal:::CipherSpec:::UnsatisfiedConstraint:::no generator of the key given to Cipher.init was observed",
+      "extraction_record": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run/error_methods/io.github.thatsfguy.meshcore.native.debug_1.apk/1_seal.json",
+      "pinned_commit": "8f226db77a067f5de614514fe755695209868037",
+      "pr_base_commit": "8f226db77a067f5de614514fe755695209868037",
+      "pr_metadata": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/run/pull_requests/io.github.thatsfguy.meshcore.native.debug_1.apk_seal_CipherSpec_pr.json",
+      "findings_file": "outputs/rvsec_io_github_thatsfguy_meshcore_native_20261105/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "9c5df4f22669f5996c7ae6df57c92f74a68bd2e43d18a8a81b8159646f694c9f",
+      "findings_file_sha256_now": "9c5df4f22669f5996c7ae6df57c92f74a68bd2e43d18a8a81b8159646f694c9f",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "7d98a07e751d",
+          "unique_error_id": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault:::seal:::CipherSpec:::UnsatisfiedConstraint:::no generator of the key given to Cipher.init was observed"
+        },
+        {
+          "finding_id": "7030778fa5d0",
+          "unique_error_id": "io.github.thatsfguy.meshcore.android.storage.KeystoreSecretVault:::getOrCreateKey:::KeyGeneratorSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyGeneratorSpec accepts"
+        }
+      ],
+      "joint": true,
+      "rows_commit": [
+        "8f226db77a067f5de614514fe755695209868037"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 9,
+        "input_tokens": 145294,
+        "cached_input_tokens": 1406,
+        "cache_write_input_tokens": 135254,
+        "output_tokens": 24603,
+        "web_search_calls": 1,
+        "cost_usd": 0.3108,
+        "models": [
+          "gpt-6.1-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1604
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/FliegendeWurst/TriliumDroid/pull/177",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/run",
+      "finding_id": "75875e2caca6",
+      "apk": "eu.fliegendewurst.triliumdroid.debug_24.apk",
+      "repository": "https://github.com/FliegendeWurst/TriliumDroid",
+      "spec": "KeyManagerFactorySpec",
+      "csv_class": "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2",
+      "method": "invokeSuspend",
+      "unique_error_id": "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2:::invokeSuspend:::KeyManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to KeyManagerFactory.init requests the platform default key source, whose loading was not observed",
+      "extraction_record": "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/run/error_methods/eu.fliegendewurst.triliumdroid.debug_24.apk/1_invokeSuspend.json",
+      "pinned_commit": "e0390a996b7439fa0ef65ac9a3bb90f7cffd7e64",
+      "pr_base_commit": "e0390a996b7439fa0ef65ac9a3bb90f7cffd7e64",
+      "pr_metadata": "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/run/pull_requests/eu.fliegendewurst.triliumdroid.debug_24.apk_invokeSuspend_KeyManagerFactorySpec_pr.json",
+      "findings_file": "outputs/rvsec_eu_fliegendewurst_triliumdroid_20261105/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "d317dff005c1e74b8b097d51baa6a3422f19b262ccae22024203907b13139306",
+      "findings_file_sha256_now": "d317dff005c1e74b8b097d51baa6a3422f19b262ccae22024203907b13139306",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "75875e2caca6",
+          "unique_error_id": "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2:::invokeSuspend:::KeyManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to KeyManagerFactory.init requests the platform default key source, whose loading was not observed"
+        },
+        {
+          "finding_id": "fa0637fc9e1c",
+          "unique_error_id": "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2:::invokeSuspend:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory"
+        }
+      ],
+      "joint": true,
+      "rows_commit": [
+        "e0390a996b7439fa0ef65ac9a3bb90f7cffd7e64"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 10,
+        "input_tokens": 191936,
+        "cached_input_tokens": 4597,
+        "cache_write_input_tokens": 107274,
+        "output_tokens": 21625,
+        "web_search_calls": 5,
+        "cost_usd": 0.3725,
+        "models": [
+          "gpt-6.1-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.2113
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/wolpi/prim-ftpd/pull/453",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_primftpd_20261031/run_v3",
+      "finding_id": "2c46d89daf31",
+      "apk": "org.primftpd.debug_71.apk",
+      "repository": "https://github.com/wolpi/prim-ftpd",
+      "spec": "SecretKeySpecSpec",
+      "csv_class": "org.apache.sshd.common.cipher.BaseRC4Cipher",
+      "method": "init",
+      "unique_error_id": "org.apache.sshd.common.cipher.BaseRC4Cipher:::init:::SecretKeySpecSpec:::UnsafeAlgorithm:::expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found ARCFOUR",
+      "extraction_record": "outputs/rvsec_primftpd_20261031/run_v3/error_methods/org.primftpd.debug_71.apk/3_init.json",
+      "pinned_commit": "f8f8f5fe393226a82fa1e2d8939d203028681313",
+      "pr_base_commit": "fc83f19a2f3f3bec912eaa606fe77b8ff464fb4d",
+      "pr_metadata": "outputs/rvsec_primftpd_20261031/run_v3/pull_requests/org.primftpd.debug_71.apk_init_SecretKeySpecSpec_pr.json",
+      "findings_file": "outputs/rvsec_primftpd_20261031/findings_v3.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "3921cb07ffb48b461623fe088bbe608bcc621c05006173fd9c7aa77bf51ab6f8",
+      "findings_file_sha256_now": "3921cb07ffb48b461623fe088bbe608bcc621c05006173fd9c7aa77bf51ab6f8",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "2c46d89daf31",
+          "unique_error_id": "org.apache.sshd.common.cipher.BaseRC4Cipher:::init:::SecretKeySpecSpec:::UnsafeAlgorithm:::expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found ARCFOUR"
+        },
+        {
+          "finding_id": "890852e5e9f9",
+          "unique_error_id": "org.apache.sshd.common.cipher.BaseRC4Cipher:::init:::CipherSpec:::UnsafeAlgorithm:::expecting a transformation admitted by CipherTransformationUtil (expert Cipher.crysl) but found RC4"
+        }
+      ],
+      "joint": true,
+      "rows_commit": [
+        "f8f8f5fe393226a82fa1e2d8939d203028681313"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 6,
+        "input_tokens": 49082,
+        "cached_input_tokens": 15587,
+        "cache_write_input_tokens": 33477,
+        "output_tokens": 9949,
+        "web_search_calls": 0,
+        "cost_usd": 0.0924,
+        "models": [
+          "gpt-6.1-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0462
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/thuryn/your-local-weather/pull/209",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_org_thosp_yourlocalweather_20261101/run_v5",
+      "finding_id": "e2654a54d12a",
+      "apk": "org.thosp.yourlocalweather.debug_213.apk",
+      "repository": "https://github.com/thuryn/your-local-weather",
+      "spec": "SecretKeyFactorySpec",
+      "csv_class": "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment",
+      "method": "encryptKey",
+      "unique_error_id": "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment:::encryptKey:::SecretKeyFactorySpec:::UnsafeAlgorithm:::expecting one of PBKDF2WithHmacSHA512,PBKDF2WithHmacSHA384,PBKDF2WithHmacSHA256,PBKDF2WithHmacSHA224,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256 but found PBKDF2WithHmacSHA1",
+      "extraction_record": "outputs/rvsec_org_thosp_yourlocalweather_20261101/run_v5/error_methods/org.thosp.yourlocalweather.debug_213.apk/0_encryptKey.json",
+      "pinned_commit": "482069a182d06d66c25fe931ecf6df3562a336a0",
+      "pr_base_commit": "1c8cff5baa411dc96571e5f3b9f20b0613ee0664",
+      "pr_metadata": "outputs/rvsec_org_thosp_yourlocalweather_20261101/run_v5/pull_requests/org.thosp.yourlocalweather.debug_213.apk_encryptKey_SecretKeyFactorySpec_pr.json",
+      "findings_file": "outputs/rvsec_org_thosp_yourlocalweather_20261101/findings_v5.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "2453e4fd81d3d0dbf9ec41de148ce76bfc86611cae002b508448a3432038bdff",
+      "findings_file_sha256_now": "2453e4fd81d3d0dbf9ec41de148ce76bfc86611cae002b508448a3432038bdff",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "e2654a54d12a",
+          "unique_error_id": "org.thosp.yourlocalweather.settings.fragments.GeneralPreferenceFragment:::encryptKey:::SecretKeyFactorySpec:::UnsafeAlgorithm:::expecting one of PBKDF2WithHmacSHA512,PBKDF2WithHmacSHA384,PBKDF2WithHmacSHA256,PBKDF2WithHmacSHA224,PBEWithHmacSHA512AndAES_128,PBEWithHmacSHA384AndAES_128,PBEWithHmacSHA224AndAES_128,PBEWithHmacSHA256AndAES_128,PBEWithHmacSHA224AndAES_256,PBEWithHmacSHA256AndAES_256,PBEWithHmacSHA384AndAES_256,PBEWithHmacSHA512AndAES_256 but found PBKDF2WithHmacSHA1"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "482069a182d06d66c25fe931ecf6df3562a336a0"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 6,
+        "input_tokens": 43768,
+        "cached_input_tokens": 5344,
+        "cache_write_input_tokens": 38406,
+        "output_tokens": 8277,
+        "web_search_calls": 0,
+        "cost_usd": 0.0897,
+        "models": [
+          "gpt-6.1-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0448
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/mouse233/localsend-kotlin/pull/58",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_localsendkotlin_20261029/run_v5",
+      "finding_id": "97b5f3b80d25",
+      "apk": "io.github.mouse233.localsendkotlin.debug_23.apk",
+      "repository": "https://github.com/mouse233/localsend-kotlin",
+      "spec": "KeyPairSpec",
+      "csv_class": "io.github.mouse233.localsendkotlin.security.TlsIdentity",
+      "method": "loadOrCreateKeyStore",
+      "unique_error_id": "io.github.mouse233.localsendkotlin.security.TlsIdentity:::loadOrCreateKeyStore:::KeyPairSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyPairSpec accepts and no construction of the key pair was observed",
+      "extraction_record": "outputs/rvsec_localsendkotlin_20261029/run_v5/error_methods/io.github.mouse233.localsendkotlin.debug_23.apk/0_loadOrCreateKeyStore.json",
+      "pinned_commit": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+      "pr_base_commit": "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16",
+      "pr_metadata": "outputs/rvsec_localsendkotlin_20261029/run_v5/pull_requests/io.github.mouse233.localsendkotlin.debug_23.apk_loadOrCreateKeyStore_KeyPairSpec_pr.json",
+      "findings_file": "outputs/rvsec_localsendkotlin_20261029/findings_v5.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "864405c44606ddb21c4747cdccc4c47230b23e589dac9ca6b7565408ed25ce8d",
+      "findings_file_sha256_now": "864405c44606ddb21c4747cdccc4c47230b23e589dac9ca6b7565408ed25ce8d",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "97b5f3b80d25",
+          "unique_error_id": "io.github.mouse233.localsendkotlin.security.TlsIdentity:::loadOrCreateKeyStore:::KeyPairSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyPairSpec accepts and no construction of the key pair was observed"
+        },
+        {
+          "finding_id": "9023761e8c55",
+          "unique_error_id": "io.github.mouse233.localsendkotlin.security.TlsIdentity:::loadOrCreateKeyStore:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts"
+        }
+      ],
+      "joint": true,
+      "rows_commit": [
+        "53fbdad7e3e123ded9eb1e0ef5fc2b6b34d59e16"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 6,
+        "input_tokens": 38032,
+        "cached_input_tokens": 4564,
+        "cache_write_input_tokens": 33450,
+        "output_tokens": 12603,
+        "web_search_calls": 0,
+        "cost_usd": 0.2273,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0525
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/PrivacyDragon/Bookwyrm_Android/pull/29",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_bookwyrm_20261031/run",
+      "finding_id": "84d27d2c74e7",
+      "apk": "nl.privacydragon.bookwyrm.debug_16.apk",
+      "repository": "https://github.com/PrivacyDragon/Bookwyrm_Android",
+      "spec": "GCMParameterSpecSpec",
+      "csv_class": "nl.privacydragon.bookwyrm.MainActivity",
+      "method": "LogIn",
+      "unique_error_id": "nl.privacydragon.bookwyrm.MainActivity:::LogIn:::GCMParameterSpecSpec:::UnsatisfiedConstraint:::the IV material was not observed to come from a randomized source",
+      "extraction_record": "outputs/rvsec_bookwyrm_20261031/run/error_methods/nl.privacydragon.bookwyrm.debug_16.apk/0_LogIn.json",
+      "pinned_commit": "c578870f8c13ec1ea823ae92b44019825c86a956",
+      "pr_base_commit": "ce427cec1b6a9f69366e146ffcc1de0d94d886e9",
+      "pr_metadata": "outputs/rvsec_bookwyrm_20261031/run/pull_requests/nl.privacydragon.bookwyrm.debug_16.apk_LogIn_GCMParameterSpecSpec_pr.json",
+      "findings_file": "outputs/rvsec_bookwyrm_20261031/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "c0a0870d018dea8742cf48c59713fea1b40ad1a7379cb148f5399aba7407c80d",
+      "findings_file_sha256_now": "c0a0870d018dea8742cf48c59713fea1b40ad1a7379cb148f5399aba7407c80d",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "84d27d2c74e7",
+          "unique_error_id": "nl.privacydragon.bookwyrm.MainActivity:::LogIn:::GCMParameterSpecSpec:::UnsatisfiedConstraint:::the IV material was not observed to come from a randomized source"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "c578870f8c13ec1ea823ae92b44019825c86a956"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 11,
+        "input_tokens": 153589,
+        "cached_input_tokens": 15486,
+        "cache_write_input_tokens": 116824,
+        "output_tokens": 31030,
+        "web_search_calls": 2,
+        "cost_usd": 0.6795,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1816
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/Crustack/NotallyX/pull/1167",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/rvsec_notallyx_20261028/run_v7",
+      "finding_id": "fff072cb8953",
+      "apk": "com.philkes.notallyx.debug_71134.apk",
+      "repository": "https://github.com/Crustack/NotallyX",
+      "spec": "MessageDigestSpec",
+      "csv_class": "com.philkes.notallyx.utils.IOExtensionsKt",
+      "method": "md5Hash",
+      "unique_error_id": "com.philkes.notallyx.utils.IOExtensionsKt:::md5Hash:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+      "extraction_record": "outputs/rvsec_notallyx_20261028/run_v7/error_methods/com.philkes.notallyx.debug_71134.apk/0_md5Hash.json",
+      "pinned_commit": "f8c9cea0fdc35be7f495bb323ddab50632bdc373",
+      "pr_base_commit": "549707d367ac925f7f5a34ce20d2e87236ebe705",
+      "pr_metadata": "outputs/rvsec_notallyx_20261028/run_v7/pull_requests/com.philkes.notallyx.debug_71134.apk_md5Hash_MessageDigestSpec_pr.json",
+      "findings_file": "outputs/rvsec_notallyx_20261028/findings_v7.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "2f1adbcc3868796e7dbe12a3c5f1008816d407e4e72b998b4048e6bdda9dffcf",
+      "findings_file_sha256_now": "2f1adbcc3868796e7dbe12a3c5f1008816d407e4e72b998b4048e6bdda9dffcf",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "fff072cb8953",
+          "unique_error_id": "com.philkes.notallyx.utils.IOExtensionsKt:::md5Hash:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "f8c9cea0fdc35be7f495bb323ddab50632bdc373"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 8,
+        "input_tokens": 113453,
+        "cached_input_tokens": 8600,
+        "cache_write_input_tokens": 104829,
+        "output_tokens": 10600,
+        "web_search_calls": 0,
+        "cost_usd": 0.3541,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0922
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/jimvixx/ShortMessageSecure/pull/89",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/rvsec_misuse_20261016/run_v3",
+      "finding_id": "bb98bd300a0c",
+      "apk": "org.jimvixx.smsecure.debug_10400.apk",
+      "repository": "https://github.com/jimvixx/ShortMessageSecure",
+      "spec": "MessageDigestSpec",
+      "csv_class": "org.jimvixx.smsecure.ConversationListAdapter",
+      "method": "<init>",
+      "unique_error_id": "org.jimvixx.smsecure.ConversationListAdapter:::<init>:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA1",
+      "extraction_record": "outputs/rvsec_misuse_20261016/run_v3/error_methods/org.jimvixx.smsecure.debug_10400.apk/2__init_.json",
+      "pinned_commit": "0c17457b3f262840158ccca400746cc6f296e41d",
+      "pr_base_commit": "3cfb03e840562262924b30b937340d09f8bf2085",
+      "pr_metadata": "outputs/rvsec_misuse_20261016/run_v3/pull_requests/org.jimvixx.smsecure.debug_10400.apk_init_MessageDigestSpec_pr.json",
+      "findings_file": "outputs/rvsec_misuse_20261016/findings_v3.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "def5923e3555c1fc176e081ce914cf0d1b02c65a8c89871f742da2a502dd46b8",
+      "findings_file_sha256_now": "def5923e3555c1fc176e081ce914cf0d1b02c65a8c89871f742da2a502dd46b8",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "bb98bd300a0c",
+          "unique_error_id": "org.jimvixx.smsecure.ConversationListAdapter:::<init>:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA1"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "0c17457b3f262840158ccca400746cc6f296e41d"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 9,
+        "input_tokens": 146264,
+        "cached_input_tokens": 9631,
+        "cache_write_input_tokens": 90828,
+        "output_tokens": 22742,
+        "web_search_calls": 2,
+        "cost_usd": 0.5654,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1568
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/Vauth/salty-app/pull/6",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_salty_20261022/run_v3",
+      "finding_id": "2b8cb7f6653b",
+      "apk": "com.vauth.salty.debug_2.apk",
+      "repository": "https://github.com/vauth/salty-app",
+      "spec": "CipherSpec",
+      "csv_class": "com.vauth.salty.utils.HashUtils",
+      "method": "encode",
+      "unique_error_id": "com.vauth.salty.utils.HashUtils:::encode:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init was already reported by the specification that produced it",
+      "extraction_record": "outputs/rvsec_salty_20261022/run_v3/error_methods/com.vauth.salty.debug_2.apk/1_encode.json",
+      "pinned_commit": "ef78cac61a4c28fa2df1b4a2bc23a7ae2c2a40b8",
+      "pr_base_commit": "7045ba2e1b0a272ad1f46e4b842642859dc792c9",
+      "pr_metadata": "outputs/rvsec_salty_20261022/run_v3/pull_requests/com.vauth.salty.debug_2.apk_encode_CipherSpec_pr.json",
+      "findings_file": "outputs/rvsec_salty_20261022/findings_v3.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "19f9a0307709802e6fac92b06afa36eb1e0c9cda3512060a6f1c6b4207bb9604",
+      "findings_file_sha256_now": "19f9a0307709802e6fac92b06afa36eb1e0c9cda3512060a6f1c6b4207bb9604",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "2b8cb7f6653b",
+          "unique_error_id": "com.vauth.salty.utils.HashUtils:::encode:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init was already reported by the specification that produced it"
+        },
+        {
+          "finding_id": "f581e4272a46",
+          "unique_error_id": "com.vauth.salty.utils.HashUtils:::deriveKey:::PBEKeySpecSpec:::UnsatisfiedConstraint:::the second argument was not observed to come from a randomized source"
+        }
+      ],
+      "joint": true,
+      "rows_commit": [
+        "ef78cac61a4c28fa2df1b4a2bc23a7ae2c2a40b8"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 15,
+        "input_tokens": 200619,
+        "cached_input_tokens": 27738,
+        "cache_write_input_tokens": 118400,
+        "output_tokens": 64297,
+        "web_search_calls": 4,
+        "cost_usd": 1.1728,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.3027
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/0xZhangKe/Fread/pull/168",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_tls_20261015/rerun_20261015/run_v3",
+      "finding_id": "bd1f7e158735",
+      "apk": "com.zhangke.fread.debug_109000.apk",
+      "repository": "https://github.com/0xZhangKe/Fread",
+      "spec": "SSLContextSpec",
+      "csv_class": "com.zhangke.framework.architect.http.GlobalOkHttpClient",
+      "method": "buildSSLFactory",
+      "unique_error_id": "com.zhangke.framework.architect.http.GlobalOkHttpClient:::buildSSLFactory:::SSLContextSpec:::UnsafeProtocol:::expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+      "extraction_record": "outputs/rvsec_tls_20261015/rerun_20261015/run_v3/error_methods/com.zhangke.fread.debug_109000.apk/0_buildSSLFactory.json",
+      "pinned_commit": "16e037cadff750bc39bdfc612563063a887c3780",
+      "pr_base_commit": "32fa0cb13d4dd681052b13539bda21efffa2d3f3",
+      "pr_metadata": "outputs/rvsec_tls_20261015/rerun_20261015/run_v3/pull_requests/com.zhangke.fread.debug_109000.apk_buildSSLFactory_SSLContextSpec_pr.json",
+      "findings_file": "outputs/rvsec_tls_20261015/rerun_20261015/findings_v3.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "006d0470e7d14747f351f5be81b103b497e288453145683ce62e479bffdc52fa",
+      "findings_file_sha256_now": "006d0470e7d14747f351f5be81b103b497e288453145683ce62e479bffdc52fa",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "bd1f7e158735",
+          "unique_error_id": "com.zhangke.framework.architect.http.GlobalOkHttpClient:::buildSSLFactory:::SSLContextSpec:::UnsafeProtocol:::expecting one of TLSV1.2,TLSV1.3,TLS but found SSL"
+        },
+        {
+          "finding_id": "8afabaab2f47",
+          "unique_error_id": "com.zhangke.framework.architect.http.GlobalOkHttpClient:::buildSSLFactory:::SSLParametersSpec:::UnsafeProtocol:::expecting one of TLSv1.2,TLSv1.3 but found SSLv3"
+        }
+      ],
+      "joint": true,
+      "rows_commit": [
+        "16e037cadff750bc39bdfc612563063a887c3780"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 6,
+        "input_tokens": 133516,
+        "cached_input_tokens": 6318,
+        "cache_write_input_tokens": 60333,
+        "output_tokens": 20314,
+        "web_search_calls": 1,
+        "cost_usd": 0.5108,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1321
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_orgzlyrevived_20261025/run_v2",
+      "finding_id": "83f22cfa5b18",
+      "apk": "com.orgzlyrevived.debug_292.apk",
+      "repository": "https://github.com/orgzly-revived/orgzly-android-revived",
+      "spec": "MessageDigestSpec",
+      "csv_class": "com.orgzly.android.util.MiscUtils",
+      "method": "sha1",
+      "unique_error_id": "com.orgzly.android.util.MiscUtils:::sha1:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+      "extraction_record": "outputs/rvsec_orgzlyrevived_20261025/run_v2/error_methods/com.orgzlyrevived.debug_292.apk/0_sha1.json",
+      "pinned_commit": "2b56fe4c1a0c9426a1bb1313b4c757a8e66a48d0",
+      "pr_base_commit": "747dbb272b385f8b9f12cbffbba2bc3b91b416cd",
+      "pr_metadata": "outputs/rvsec_orgzlyrevived_20261025/run_v2/pull_requests/com.orgzlyrevived.debug_292.apk_sha1_MessageDigestSpec_pr.json",
+      "findings_file": "outputs/rvsec_orgzlyrevived_20261025/findings_v2.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "d1ec314708ffc3b247b847e145af27754d324fe1e004645a91185af4036f31bb",
+      "findings_file_sha256_now": "d1ec314708ffc3b247b847e145af27754d324fe1e004645a91185af4036f31bb",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "83f22cfa5b18",
+          "unique_error_id": "com.orgzly.android.util.MiscUtils:::sha1:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "2b56fe4c1a0c9426a1bb1313b4c757a8e66a48d0"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 8,
+        "input_tokens": 94921,
+        "cached_input_tokens": 12945,
+        "cache_write_input_tokens": 81952,
+        "output_tokens": 14079,
+        "web_search_calls": 0,
+        "cost_usd": 0.3588,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0868
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/freeotp/freeotp-android/pull/524",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/exp_final_20261019/subset_revisao_lacunas_v7",
+      "finding_id": "4b81532bb668",
+      "apk": "org.fedorahosted.freeotp_48.apk",
+      "repository": "https://github.com/freeotp/freeotp-android",
+      "spec": "CipherSpec",
+      "csv_class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+      "method": "encrypt",
+      "unique_error_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+      "extraction_record": "outputs/exp_final_20261019/subset_revisao_lacunas_v7/error_methods/org.fedorahosted.freeotp_48.apk/0_encrypt.json",
+      "pinned_commit": "bcecd3761a565cdc17a9dd710fcf35dd03d29622",
+      "pr_base_commit": "7f7f68351a80c9ea175256f339ee6f7428b3d128",
+      "pr_metadata": "outputs/exp_final_20261019/subset_revisao_lacunas_v7/pull_requests/org.fedorahosted.freeotp_48.apk_encrypt_CipherSpec_pr.json",
+      "findings_file": "data/processed/exp_final/findings_freeotp_v2.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "06d5291ae379541aea44dea5a64fe1273eeaee50533d6515a39640a045980ebc",
+      "findings_file_sha256_now": "06d5291ae379541aea44dea5a64fe1273eeaee50533d6515a39640a045980ebc",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "4b81532bb668",
+          "unique_error_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "bcecd3761a565cdc17a9dd710fcf35dd03d29622"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 23,
+        "input_tokens": 132046,
+        "cached_input_tokens": 29111,
+        "cache_write_input_tokens": 102866,
+        "output_tokens": 96503,
+        "web_search_calls": 0,
+        "cost_usd": 1.4221,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.3063
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/ItzSkyeYT/InterTune/pull/52",
+      "group": "fechado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "closed",
+      "closure": {
+        "class": "maintainer_preference",
+        "reason": "hash only names cached cover files; migrating files for no gain",
+        "note": "non-security violation still becomes a PR by the user's rule"
+      },
+      "original_run": "outputs/rvsec_intertune_20261027/run_v5",
+      "finding_id": "2526b837d70c",
+      "apk": "dev.skye.intertune.debug_96.apk",
+      "repository": "https://github.com/ItzSkyeYT/InterTune",
+      "spec": "MessageDigestSpec",
+      "csv_class": "com.dd3boh.outertune.widget.WidgetStore",
+      "method": "hash",
+      "unique_error_id": "com.dd3boh.outertune.widget.WidgetStore:::hash:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+      "extraction_record": "outputs/rvsec_intertune_20261027/run_v5/error_methods/dev.skye.intertune.debug_96.apk/0_hash.json",
+      "pinned_commit": "3ebc686a5fdce667d094f9e63f1beb19c4cd07d0",
+      "pr_base_commit": "524f1cd7582f5795d42cb5a9c79f7c32a517af62",
+      "pr_metadata": "outputs/rvsec_intertune_20261027/run_v5/pull_requests/dev.skye.intertune.debug_96.apk_hash_MessageDigestSpec_pr.json",
+      "findings_file": "outputs/rvsec_intertune_20261027/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "66ca66d0e9749958a032fbd7b2a1b9cecd99371c7d33dfb8b91ffbe7ce75fcf3",
+      "findings_file_sha256_now": "66ca66d0e9749958a032fbd7b2a1b9cecd99371c7d33dfb8b91ffbe7ce75fcf3",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "2526b837d70c",
+          "unique_error_id": "com.dd3boh.outertune.widget.WidgetStore:::hash:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "3ebc686a5fdce667d094f9e63f1beb19c4cd07d0"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 15,
+        "input_tokens": 170047,
+        "cached_input_tokens": 6384,
+        "cache_write_input_tokens": 163618,
+        "output_tokens": 83845,
+        "web_search_calls": 0,
+        "cost_usd": 1.3462,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.3121
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/yogeshpaliyal/KeyPass/pull/1252",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_keypass_20261025/run",
+      "finding_id": "013d2748f3f8",
+      "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+      "repository": "https://github.com/yogeshpaliyal/KeyPass",
+      "spec": "CipherSpec",
+      "csv_class": "com.yogeshpaliyal.common.utils.CryptoManager",
+      "method": "encrypt",
+      "unique_error_id": "com.yogeshpaliyal.common.utils.CryptoManager:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::no generator of the key given to Cipher.init was observed",
+      "extraction_record": "outputs/rvsec_keypass_20261025/run/error_methods/com.yogeshpaliyal.keypass.debug_1442.apk/3_encrypt.json",
+      "pinned_commit": "f0ef4cd98349ddc7320c164e3d8173f334407bd2",
+      "pr_base_commit": "ca9adca05c5a73bd854e4dec52cf46415602514f",
+      "pr_metadata": "outputs/rvsec_keypass_20261025/run/pull_requests/com.yogeshpaliyal.keypass.debug_1442.apk_encrypt_CipherSpec_pr.json",
+      "findings_file": "outputs/rvsec_keypass_20261025/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "4322614fc32d00c7ce0fdac8f3476818969c499155e6b37ee15557ad5aa2d264",
+      "findings_file_sha256_now": "4322614fc32d00c7ce0fdac8f3476818969c499155e6b37ee15557ad5aa2d264",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "013d2748f3f8",
+          "unique_error_id": "com.yogeshpaliyal.common.utils.CryptoManager:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::no generator of the key given to Cipher.init was observed"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "f0ef4cd98349ddc7320c164e3d8173f334407bd2"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 13,
+        "input_tokens": 112353,
+        "cached_input_tokens": 19609,
+        "cache_write_input_tokens": 86213,
+        "output_tokens": 42566,
+        "web_search_calls": 1,
+        "cost_usd": 0.7355,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1741
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/vitorpamplona/amethyst/pull/4642",
+      "group": "fechado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "closed",
+      "closure": {
+        "class": "covered_by_current_rule",
+        "rules": [
+          "A provider-generated IV/nonce (init without parameters) is random; RVSec cannot trace it (CLAUDE.md)",
+          "Kotlin Multiplatform: resolve to the androidMain actual; a patch in a source set the APK does not compile is not published (CLAUDE.md, Amethyst#4642)"
+        ],
+        "reason": "provider already generates a fresh random IV (false positive); patch changed the desktop jvmMain actual, not the Android one",
+        "avoided_if": "no PR pronto/correção gerada that adds a caller IV, and no change in a jvmMain/desktop file"
+      },
+      "original_run": "outputs/rvsec_amethyst_20261024/run",
+      "finding_id": "39bba5f1270f",
+      "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+      "repository": "https://github.com/vitorpamplona/amethyst",
+      "spec": "GCMParameterSpecSpec",
+      "csv_class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+      "method": "decrypt",
+      "unique_error_id": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption:::decrypt:::GCMParameterSpecSpec:::UnsatisfiedConstraint:::the IV material was not observed to come from a randomized source",
+      "extraction_record": "outputs/rvsec_amethyst_20261024/run/error_methods/com.vitorpamplona.amethyst.debug_464.apk/0_decrypt.json",
+      "pinned_commit": "60b29df3f03775819f57992e5ccafddf32498ede",
+      "pr_base_commit": "b7848db26fc3b8d76d16ec87839c1b8218c4a46d",
+      "pr_metadata": "outputs/rvsec_amethyst_20261024/run/pull_requests/com.vitorpamplona.amethyst.debug_464.apk_decrypt_GCMParameterSpecSpec_pr.json",
+      "findings_file": "outputs/rvsec_amethyst_20261024/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "3a34bd6e5b289b4a0dacf2a7a2ecd0d05d8df19c4bdb8d4071da95185946a13c",
+      "findings_file_sha256_now": "3a34bd6e5b289b4a0dacf2a7a2ecd0d05d8df19c4bdb8d4071da95185946a13c",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "39bba5f1270f",
+          "unique_error_id": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption:::decrypt:::GCMParameterSpecSpec:::UnsatisfiedConstraint:::the IV material was not observed to come from a randomized source"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "60b29df3f03775819f57992e5ccafddf32498ede"
+      ],
+      "same_method_other_rules_not_included": [
+        "CipherSpec"
+      ],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 11,
+        "input_tokens": 209551,
+        "cached_input_tokens": 4009,
+        "cache_write_input_tokens": 198983,
+        "output_tokens": 32688,
+        "web_search_calls": 1,
+        "cost_usd": 0.8114,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.2195
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/patzly/grocy-android/pull/1013",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_grocy_20261022/run_v6",
+      "finding_id": "efa4a0003ff0",
+      "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+      "repository": "https://github.com/patzly/grocy-android",
+      "spec": "KeyStoreSpec",
+      "csv_class": "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile",
+      "method": "load",
+      "unique_error_id": "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile:::load:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts",
+      "extraction_record": "outputs/rvsec_grocy_20261022/run_v6/error_methods/xyz.zedler.patrick.grocy.debug_64.apk/3_load.json",
+      "pinned_commit": "7d4636508af24322f451b95555e1b13b4c634645",
+      "pr_base_commit": "8921b9f8b6e72fa1df9963594dd8843451c4e46a",
+      "pr_metadata": "outputs/rvsec_grocy_20261022/run_v6/pull_requests/xyz.zedler.patrick.grocy.debug_64.apk_load_KeyStoreSpec_pr.json",
+      "findings_file": "outputs/rvsec_grocy_20261022/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "d814375b8ed84956dedfc46a643e73cd99d5733e41bb3daf3787a0f4ba48b241",
+      "findings_file_sha256_now": "d814375b8ed84956dedfc46a643e73cd99d5733e41bb3daf3787a0f4ba48b241",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "efa4a0003ff0",
+          "unique_error_id": "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile:::load:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts"
+        },
+        {
+          "finding_id": "ed9c7d525627",
+          "unique_error_id": "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile:::save:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts"
+        }
+      ],
+      "joint": true,
+      "rows_commit": [
+        "7d4636508af24322f451b95555e1b13b4c634645"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 13,
+        "input_tokens": 153399,
+        "cached_input_tokens": 4479,
+        "cache_write_input_tokens": 147886,
+        "output_tokens": 38327,
+        "web_search_calls": 0,
+        "cost_usd": 0.7667,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1889
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/patzly/grocy-android/pull/1012",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_grocy_20261022/run_v2",
+      "finding_id": "71775001bd73",
+      "apk": "xyz.zedler.patrick.grocy.debug_64.apk",
+      "repository": "https://github.com/patzly/grocy-android",
+      "spec": "SSLContextSpec",
+      "csv_class": "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory",
+      "method": "<init>",
+      "unique_error_id": "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory:::<init>:::SSLContextSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one SSLContextSpec accepts",
+      "extraction_record": "outputs/rvsec_grocy_20261022/run_v2/error_methods/xyz.zedler.patrick.grocy.debug_64.apk/1__init_.json",
+      "pinned_commit": "7d4636508af24322f451b95555e1b13b4c634645",
+      "pr_base_commit": "8921b9f8b6e72fa1df9963594dd8843451c4e46a",
+      "pr_metadata": "outputs/rvsec_grocy_20261022/run_v2/pull_requests/xyz.zedler.patrick.grocy.debug_64.apk_init_SSLContextSpec_pr.json",
+      "findings_file": "outputs/rvsec_grocy_20261022/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "d814375b8ed84956dedfc46a643e73cd99d5733e41bb3daf3787a0f4ba48b241",
+      "findings_file_sha256_now": "d814375b8ed84956dedfc46a643e73cd99d5733e41bb3daf3787a0f4ba48b241",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "71775001bd73",
+          "unique_error_id": "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory:::<init>:::SSLContextSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one SSLContextSpec accepts"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "7d4636508af24322f451b95555e1b13b4c634645"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 3,
+        "input_tokens": 10142,
+        "cached_input_tokens": 1596,
+        "cache_write_input_tokens": 8537,
+        "output_tokens": 2666,
+        "web_search_calls": 0,
+        "cost_usd": 0.0523,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.012
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/freeotp/freeotp-android/pull/521",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/exp_final_20261019/subset_revisao_lacunas",
+      "finding_id": "4b81532bb668",
+      "apk": "org.fedorahosted.freeotp_48.apk",
+      "repository": "https://github.com/freeotp/freeotp-android",
+      "spec": "CipherSpec",
+      "csv_class": "org.fedorahosted.freeotp.encryptor.EncryptedKey",
+      "method": "encrypt",
+      "unique_error_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+      "extraction_record": "outputs/exp_final_20261019/subset_revisao_lacunas/error_methods/org.fedorahosted.freeotp_48.apk/5_encrypt.json",
+      "pinned_commit": "bcecd3761a565cdc17a9dd710fcf35dd03d29622",
+      "pr_base_commit": "1275d7808969f18f05e917bee19424f37ca89eb5",
+      "pr_metadata": "outputs/exp_final_20261019/subset_revisao_lacunas/pull_requests/org.fedorahosted.freeotp_48.apk_encrypt_CipherSpec_pr.json",
+      "findings_file": "data/processed/exp_final/findings_subset_revisao_lacunas.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "91c6313424356db77617cb83cae731c673e727db478847f6637531c66b95e859",
+      "findings_file_sha256_now": "91c6313424356db77617cb83cae731c673e727db478847f6637531c66b95e859",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "4b81532bb668",
+          "unique_error_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "bcecd3761a565cdc17a9dd710fcf35dd03d29622"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 9,
+        "input_tokens": 44488,
+        "cached_input_tokens": 7980,
+        "cache_write_input_tokens": 36481,
+        "output_tokens": 16391,
+        "web_search_calls": 0,
+        "cost_usd": 0.2857,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.064
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/schorschii/Droid_SCEP/pull/2",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rerun_correcoes_20261022/run",
+      "finding_id": "9215f97597a6",
+      "apk": "systems.sieber.droid_scep_7.apk",
+      "repository": "https://github.com/schorschii/Droid_SCEP",
+      "spec": "KeyPairGeneratorSpec",
+      "csv_class": "systems.sieber.droid_scep.ScepClient",
+      "method": "CertReq",
+      "unique_error_id": "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec:::InvalidKeySize:::invalid key size for algorithm RSA",
+      "extraction_record": "outputs/rerun_correcoes_20261022/run/error_methods/systems.sieber.droid_scep_7.apk/2_CertReq.json",
+      "pinned_commit": "d8e13b746f1028116f847f36afc249011ac93498",
+      "pr_base_commit": "d8e13b746f1028116f847f36afc249011ac93498",
+      "pr_metadata": "outputs/rerun_correcoes_20261022/run/pull_requests/systems.sieber.droid_scep_7.apk_CertReq_KeyPairGeneratorSpec_pr.json",
+      "findings_file": "outputs/rerun_correcoes_20261022/run/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "53456532e196e2a5594efb8819c8b5b147d1fe35c85dcd0aabe15b55eb5fa835",
+      "findings_file_sha256_now": "53456532e196e2a5594efb8819c8b5b147d1fe35c85dcd0aabe15b55eb5fa835",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "9215f97597a6",
+          "unique_error_id": "systems.sieber.droid_scep.ScepClient:::CertReq:::KeyPairGeneratorSpec:::InvalidKeySize:::invalid key size for algorithm RSA"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "d8e13b746f1028116f847f36afc249011ac93498"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 11,
+        "input_tokens": 100355,
+        "cached_input_tokens": 13329,
+        "cache_write_input_tokens": 86993,
+        "output_tokens": 36084,
+        "web_search_calls": 0,
+        "cost_usd": 0.6337,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1449
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/jenspfahl/ANOTHERpass/pull/103",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/rerun_correcoes_20261022/run",
+      "finding_id": "1381cd4ddb3f",
+      "apk": "de.jepfa.yapm.debug_202006.apk",
+      "repository": "https://github.com/jenspfahl/anotherpass",
+      "spec": "KeyStoreSpec",
+      "csv_class": "de.jepfa.yapm.service.secret.SecretService",
+      "method": "getAndroidSecretKey",
+      "unique_error_id": "de.jepfa.yapm.service.secret.SecretService:::getAndroidSecretKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts",
+      "extraction_record": "outputs/rerun_correcoes_20261022/run/error_methods/de.jepfa.yapm.debug_202006.apk/5_getAndroidSecretKey.json",
+      "pinned_commit": "89b0b68ce403b1fd199255990bf026f02d317eb9",
+      "pr_base_commit": "c12d9b5a6044355da668413cfaee738c212c7815",
+      "pr_metadata": "outputs/rerun_correcoes_20261022/run/pull_requests/de.jepfa.yapm.debug_202006.apk_getAndroidSecretKey_KeyStoreSpec_pr.json",
+      "findings_file": "outputs/rerun_correcoes_20261022/run/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "53456532e196e2a5594efb8819c8b5b147d1fe35c85dcd0aabe15b55eb5fa835",
+      "findings_file_sha256_now": "53456532e196e2a5594efb8819c8b5b147d1fe35c85dcd0aabe15b55eb5fa835",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "1381cd4ddb3f",
+          "unique_error_id": "de.jepfa.yapm.service.secret.SecretService:::getAndroidSecretKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "89b0b68ce403b1fd199255990bf026f02d317eb9"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 7,
+        "input_tokens": 109327,
+        "cached_input_tokens": 12828,
+        "cache_write_input_tokens": 67676,
+        "output_tokens": 12271,
+        "web_search_calls": 4,
+        "cost_usd": 0.3659,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1277
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/leekleak/traffic-light/pull/238",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/exp_final_20261019/run2",
+      "finding_id": "32249b3e5e5d",
+      "apk": "com.leekleak.trafficlight_38.apk",
+      "repository": "https://github.com/leekleak/traffic-light",
+      "spec": "KeyStoreSpec",
+      "csv_class": "com.leekleak.trafficlight.database.CryptoManager",
+      "method": "getSecretKey",
+      "unique_error_id": "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts",
+      "extraction_record": "outputs/exp_final_20261019/run2/error_methods/com.leekleak.trafficlight_38.apk/4_getSecretKey.json",
+      "pinned_commit": "810679a54efb3641f1469bb085a82eb65ab69eb4",
+      "pr_base_commit": "e40dd7a77e24290345b0f99f4990467758d9acbd",
+      "pr_metadata": "outputs/exp_final_20261019/run2/pull_requests/com.leekleak.trafficlight_38.apk_getSecretKey_KeyStoreSpec_pr.json",
+      "findings_file": "data/processed/exp_final/findings_exp_final.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_sha256_now": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "32249b3e5e5d",
+          "unique_error_id": "com.leekleak.trafficlight.database.CryptoManager:::getSecretKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "810679a54efb3641f1469bb085a82eb65ab69eb4"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 7,
+        "input_tokens": 64932,
+        "cached_input_tokens": 12828,
+        "cache_write_input_tokens": 44817,
+        "output_tokens": 13196,
+        "web_search_calls": 1,
+        "cost_usd": 0.2882,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.075
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/tokn-authenticator/tokn/pull/138",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/exp_final_20261019/run2",
+      "finding_id": "0aeb52bd220d",
+      "apk": "me.diamondforge.tokn_19.apk",
+      "repository": "https://github.com/fthomys/tokn",
+      "spec": "KeyStoreSpec",
+      "csv_class": "me.diamondforge.tokn.security.KeystoreManager",
+      "method": "getOrCreateKey",
+      "unique_error_id": "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts",
+      "extraction_record": "outputs/exp_final_20261019/run2/error_methods/me.diamondforge.tokn_19.apk/14_getOrCreateKey.json",
+      "pinned_commit": "f7cd9237d0cc2201d39cdb22fda41cf798dfbae0",
+      "pr_base_commit": "19d4bdf53e1a641e36d47ecd5239a23d5202ef19",
+      "pr_metadata": "outputs/exp_final_20261019/run2/pull_requests/me.diamondforge.tokn_19.apk_getOrCreateKey_KeyStoreSpec_pr.json",
+      "findings_file": "data/processed/exp_final/findings_exp_final.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_sha256_now": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "0aeb52bd220d",
+          "unique_error_id": "me.diamondforge.tokn.security.KeystoreManager:::getOrCreateKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "f7cd9237d0cc2201d39cdb22fda41cf798dfbae0"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 7,
+        "input_tokens": 98143,
+        "cached_input_tokens": 12828,
+        "cache_write_input_tokens": 58462,
+        "output_tokens": 12887,
+        "web_search_calls": 2,
+        "cost_usd": 0.3509,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1025
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/christianrowlands/android-network-survey/pull/154",
+      "group": "fechado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "closed",
+      "closure": {
+        "class": "maintainer_preference",
+        "reason": "getEntry and getKey return the same AndroidKeyStore key: a change that only satisfies the rule; a second copy in NsAnalyticsCryptoManager would be left different",
+        "note": "rule-only changes still become PRs (CLAUDE.md: cosmetic fixes and confirmed violations without security impact still become PRs); the second-copy remark is not a current rule"
+      },
+      "original_run": "outputs/exp_final_20261019/run2",
+      "finding_id": "ac1a8dd4d680",
+      "apk": "com.craxiom.networksurvey_114.apk",
+      "repository": "https://github.com/christianrowlands/android-network-survey",
+      "spec": "KeyStoreSpec",
+      "csv_class": "com.craxiom.networksurvey.util.CryptoManager",
+      "method": "getOrCreateKey",
+      "unique_error_id": "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts",
+      "extraction_record": "outputs/exp_final_20261019/run2/error_methods/com.craxiom.networksurvey_114.apk/3_getOrCreateKey.json",
+      "pinned_commit": "6352b7030268784d623162d7c5f0047215c8c3f2",
+      "pr_base_commit": "fa9259c6c9586b306f634650ea7e588005e7ad4d",
+      "pr_metadata": "outputs/exp_final_20261019/run2/pull_requests/com.craxiom.networksurvey_114.apk_getOrCreateKey_KeyStoreSpec_pr.json",
+      "findings_file": "data/processed/exp_final/findings_exp_final.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_sha256_now": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "ac1a8dd4d680",
+          "unique_error_id": "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "6352b7030268784d623162d7c5f0047215c8c3f2"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 11,
+        "input_tokens": 225157,
+        "cached_input_tokens": 18712,
+        "cache_write_input_tokens": 94099,
+        "output_tokens": 29558,
+        "web_search_calls": 4,
+        "cost_usd": 0.805,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.2293
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/michaelWuensch/BitBanana/pull/184",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/exp_final_20261019/subset_bitbanana_scope6",
+      "finding_id": "53c35a191a23",
+      "apk": "app.michaelwuensch.bitbanana_79.apk",
+      "repository": "https://github.com/michaelWuensch/BitBanana",
+      "spec": "PBEKeySpecSpec",
+      "csv_class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+      "method": "encodePbkdf2",
+      "unique_error_id": "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec:::UnsatisfiedConstraint:::the third argument should be >= 10000",
+      "extraction_record": "outputs/exp_final_20261019/subset_bitbanana_scope6/error_methods/app.michaelwuensch.bitbanana_79.apk/0_encodePbkdf2.json",
+      "pinned_commit": "14a4bb5606aef2a06cbf70aab422f5815ec1f844",
+      "pr_base_commit": "e813eb374cb6bc23d2436b38ecada9c47d7cda38",
+      "pr_metadata": "outputs/exp_final_20261019/subset_bitbanana_scope6/pull_requests/app.michaelwuensch.bitbanana_79.apk_encodePbkdf2_PBEKeySpecSpec_pr.json",
+      "findings_file": "data/processed/exp_final/findings_subset_bitbanana_pbekeyspec.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "5acf8557271eff2ac2943d77bbaf936ad8a8810c24664fba3286a105d17647eb",
+      "findings_file_sha256_now": "5acf8557271eff2ac2943d77bbaf936ad8a8810c24664fba3286a105d17647eb",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "53c35a191a23",
+          "unique_error_id": "app.michaelwuensch.bitbanana.util.UtilFunctions:::encodePbkdf2:::PBEKeySpecSpec:::UnsatisfiedConstraint:::the third argument should be >= 10000"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "14a4bb5606aef2a06cbf70aab422f5815ec1f844"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 0,
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 0,
+        "web_search_calls": 0,
+        "cost_usd": 0.0,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/woheller69/whoBIRD/pull/144",
+      "group": "fechado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "closed",
+      "closure": {
+        "class": "maintainer_preference",
+        "reason": "MD5 is sufficient here",
+        "note": "non-security violation still becomes a PR by the user's rule"
+      },
+      "original_run": "outputs/rvsec_whobird_20261018/run9",
+      "finding_id": "668194d05f07",
+      "apk": "org.woheller69.whobird.debug_54.apk",
+      "repository": "https://github.com/woheller69/whoBIRD",
+      "spec": "MessageDigestSpec",
+      "csv_class": "org.tensorflow.lite.examples.soundclassifier.Downloader",
+      "method": "lambda$downloadModels$4",
+      "unique_error_id": "org.tensorflow.lite.examples.soundclassifier.Downloader:::lambda$downloadModels$4:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+      "extraction_record": "outputs/rvsec_whobird_20261018/run9/error_methods/org.woheller69.whobird.debug_54.apk/2_lambda_downloadModels_4.json",
+      "pinned_commit": "f1132d844c7ad2c7a07b8621c42e1decf05663f1",
+      "pr_base_commit": "1724b45c785f79d428b4fe6e7a3cf6d31050dc31",
+      "pr_metadata": "outputs/rvsec_whobird_20261018/run9/pull_requests/org.woheller69.whobird.debug_54.apk_lambda_downloadModels_4_MessageDigestSpec_pr.json",
+      "findings_file": "outputs/rvsec_whobird_20261018/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "3173e18aea936fd04bbbe05d727e0b6773a86aa6030e61f9b38de367682eb2d4",
+      "findings_file_sha256_now": "3173e18aea936fd04bbbe05d727e0b6773a86aa6030e61f9b38de367682eb2d4",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "668194d05f07",
+          "unique_error_id": "org.tensorflow.lite.examples.soundclassifier.Downloader:::lambda$downloadModels$4:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "f1132d844c7ad2c7a07b8621c42e1decf05663f1"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 6,
+        "input_tokens": 101465,
+        "cached_input_tokens": 9490,
+        "cache_write_input_tokens": 91957,
+        "output_tokens": 17500,
+        "web_search_calls": 0,
+        "cost_usd": 0.4129,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1015
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/ReadYouApp/ReadYou/pull/1334",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_readyou_20261018/run3",
+      "finding_id": "6d0a3cf73013",
+      "apk": "me.ash.reader.debug_47.apk",
+      "repository": "https://github.com/Ashinch/ReadYou",
+      "spec": "SSLContextSpec",
+      "csv_class": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+      "method": "setupSsl",
+      "unique_error_id": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt:::setupSsl:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+      "extraction_record": "outputs/rvsec_readyou_20261018/run3/error_methods/me.ash.reader.debug_47.apk/3_setupSsl.json",
+      "pinned_commit": "091c9207527a10a135b307c9f7747306da36f686",
+      "pr_base_commit": "d2b979ccad9a3e54b9499929a9dc2824578b0fd9",
+      "pr_metadata": "outputs/rvsec_readyou_20261018/run3/pull_requests/me.ash.reader.debug_47.apk_setupSsl_SSLContextSpec_pr.json",
+      "findings_file": "outputs/rvsec_readyou_20261018/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "5b44602d7a777bdcc6842c5e90ab2d6856bcb3d20ea0cb62852d3c429b17ba67",
+      "findings_file_sha256_now": "5b44602d7a777bdcc6842c5e90ab2d6856bcb3d20ea0cb62852d3c429b17ba67",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "6d0a3cf73013",
+          "unique_error_id": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt:::setupSsl:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "091c9207527a10a135b307c9f7747306da36f686"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 5,
+        "input_tokens": 71965,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 71950,
+        "output_tokens": 16077,
+        "web_search_calls": 0,
+        "cost_usd": 0.3369,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0852
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/zfdang/zSMTH-Android/pull/66",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_sslctx_20261017/run8",
+      "finding_id": "b1a40c2fc69e",
+      "apk": "com.zfdang.zsmth_android.debug_1031.apk",
+      "repository": "https://github.com/zfdang/zSMTH-Android",
+      "spec": "SSLContextSpec",
+      "csv_class": "com.zfdang.zsmth_android.newsmth.SMTHHelper",
+      "method": "getUnsafeOkHttpClient",
+      "unique_error_id": "com.zfdang.zsmth_android.newsmth.SMTHHelper:::getUnsafeOkHttpClient:::SSLContextSpec:::UnsafeProtocol:::expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+      "extraction_record": "outputs/rvsec_sslctx_20261017/run8/error_methods/com.zfdang.zsmth_android.debug_1031.apk/0_getUnsafeOkHttpClient.json",
+      "pinned_commit": "e696dcb1615a7e9269c26fe73d21c89883877a52",
+      "pr_base_commit": "e696dcb1615a7e9269c26fe73d21c89883877a52",
+      "pr_metadata": "outputs/rvsec_sslctx_20261017/run8/pull_requests/com.zfdang.zsmth_android.debug_1031.apk_getUnsafeOkHttpClient_SSLContextSpec_pr.json",
+      "findings_file": "outputs/rvsec_sslctx_20261017/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "9bd35103eab206d7ca7ebdbf071acb20e2536eca42ecd7f7388595c061e8c90f",
+      "findings_file_sha256_now": "9bd35103eab206d7ca7ebdbf071acb20e2536eca42ecd7f7388595c061e8c90f",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "b1a40c2fc69e",
+          "unique_error_id": "com.zfdang.zsmth_android.newsmth.SMTHHelper:::getUnsafeOkHttpClient:::SSLContextSpec:::UnsafeProtocol:::expecting one of TLSV1.2,TLSV1.3,TLS but found SSL"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "e696dcb1615a7e9269c26fe73d21c89883877a52"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 5,
+        "input_tokens": 95680,
+        "cached_input_tokens": 7772,
+        "cache_write_input_tokens": 87893,
+        "output_tokens": 11847,
+        "web_search_calls": 0,
+        "cost_usd": 0.3335,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0848
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/idunnololz/summit/pull/54",
+      "group": "fechado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "closed",
+      "closure": {
+        "class": "other",
+        "reason": "maintainer not accepting pull requests (repository policy, not about the patch)",
+        "note": "queue selection (pr_viability.py) now skips such repositories; the pipeline itself does not read it for a finding"
+      },
+      "original_run": "outputs/rvsec_misuse5_20261017/run",
+      "finding_id": "554ed6e23b16",
+      "apk": "com.idunnololz.summit.fdroid.debug_355.apk",
+      "repository": "https://github.com/idunnololz/summit",
+      "spec": "MessageDigestSpec",
+      "csv_class": "com.idunnololz.summit.cache.SimpleDiskCache",
+      "method": "md5",
+      "unique_error_id": "com.idunnololz.summit.cache.SimpleDiskCache:::md5:::MessageDigestSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused",
+      "extraction_record": "outputs/rvsec_misuse5_20261017/run/error_methods/com.idunnololz.summit.fdroid.debug_355.apk/3_md5.json",
+      "pinned_commit": "b00f4f809cd28fd469f7f7bfe48c2e2466f55ed1",
+      "pr_base_commit": "701fe7b5510ad5c1a2457af81ae944681069ef67",
+      "pr_metadata": "outputs/rvsec_misuse5_20261017/run/pull_requests/com.idunnololz.summit.fdroid.debug_355.apk_md5_MessageDigestSpec_pr.json",
+      "findings_file": "outputs/rvsec_misuse5_20261017/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "76eb14b5f16b02f100b659aae0bfa88faa2f5ce21538af958434142a63f0c12c",
+      "findings_file_sha256_now": "76eb14b5f16b02f100b659aae0bfa88faa2f5ce21538af958434142a63f0c12c",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "554ed6e23b16",
+          "unique_error_id": "com.idunnololz.summit.cache.SimpleDiskCache:::md5:::MessageDigestSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "b00f4f809cd28fd469f7f7bfe48c2e2466f55ed1"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 7,
+        "input_tokens": 104098,
+        "cached_input_tokens": 9714,
+        "cache_write_input_tokens": 55684,
+        "output_tokens": 18975,
+        "web_search_calls": 1,
+        "cost_usd": 0.4359,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1118
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/ounben/AMARadio/pull/122",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/rvsec_misuse3_20261016/run6",
+      "finding_id": "06ff0c1fc96c",
+      "apk": "com.ounben.amaradio.debug_159.apk",
+      "repository": "https://github.com/ounben/AMARadio",
+      "spec": "MessageDigestSpec",
+      "csv_class": "com.ounben.amaradio.Utils",
+      "method": "md5",
+      "unique_error_id": "com.ounben.amaradio.Utils:::md5:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+      "extraction_record": "outputs/rvsec_misuse3_20261016/run6/error_methods/com.ounben.amaradio.debug_159.apk/2_md5.json",
+      "pinned_commit": "e01537f78694fdee5ad9ac6c216a5e3bedb47b9a",
+      "pr_base_commit": "df24911bbf11981236ae17f5abab8fb316921d77",
+      "pr_metadata": "outputs/rvsec_misuse3_20261016/run6/pull_requests/com.ounben.amaradio.debug_159.apk_md5_MessageDigestSpec_pr.json",
+      "findings_file": "outputs/rvsec_misuse3_20261016/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "2bfe8fb2e4b0ea687370ac3d5a6c4aba1a764170ffbdb4fb0490cd67858601c8",
+      "findings_file_sha256_now": "2bfe8fb2e4b0ea687370ac3d5a6c4aba1a764170ffbdb4fb0490cd67858601c8",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "06ff0c1fc96c",
+          "unique_error_id": "com.ounben.amaradio.Utils:::md5:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "e01537f78694fdee5ad9ac6c216a5e3bedb47b9a"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 4,
+        "input_tokens": 26310,
+        "cached_input_tokens": 3192,
+        "cache_write_input_tokens": 23106,
+        "output_tokens": 5683,
+        "web_search_calls": 0,
+        "cost_usd": 0.1208,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0287
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/jimvixx/ShortMessageSecure/pull/83",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/rvsec_misuse_20261016/run",
+      "finding_id": "ab0763bb2ecc",
+      "apk": "org.jimvixx.smsecure.debug_10400.apk",
+      "repository": "https://github.com/jimvixx/ShortMessageSecure",
+      "spec": "KeyGeneratorSpec",
+      "csv_class": "org.jimvixx.smsecure.crypto.MasterSecretUtil",
+      "method": "generateMacSecret",
+      "unique_error_id": "org.jimvixx.smsecure.crypto.MasterSecretUtil:::generateMacSecret:::KeyGeneratorSpec:::UnsafeAlgorithm:::expecting one of AES,HmacSHA256,HmacSHA384,HmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1",
+      "extraction_record": "outputs/rvsec_misuse_20261016/run/error_methods/org.jimvixx.smsecure.debug_10400.apk/0_generateMacSecret.json",
+      "pinned_commit": "0c17457b3f262840158ccca400746cc6f296e41d",
+      "pr_base_commit": "d05529947a010d850b18058e54b3d864a2fce74d",
+      "pr_metadata": "outputs/rvsec_misuse_20261016/run/pull_requests/org.jimvixx.smsecure.debug_10400.apk_generateMacSecret_KeyGeneratorSpec_pr.json",
+      "findings_file": "outputs/rvsec_misuse_20261016/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "e466e0cea5190b5f82bbda7fde5e6a1980dcf9e94481f164c36d1b5accf70981",
+      "findings_file_sha256_now": "e466e0cea5190b5f82bbda7fde5e6a1980dcf9e94481f164c36d1b5accf70981",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "ab0763bb2ecc",
+          "unique_error_id": "org.jimvixx.smsecure.crypto.MasterSecretUtil:::generateMacSecret:::KeyGeneratorSpec:::UnsafeAlgorithm:::expecting one of AES,HmacSHA256,HmacSHA384,HmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "0c17457b3f262840158ccca400746cc6f296e41d"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 7,
+        "input_tokens": 110574,
+        "cached_input_tokens": 4597,
+        "cache_write_input_tokens": 75129,
+        "output_tokens": 18057,
+        "web_search_calls": 0,
+        "cost_usd": 0.4378,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1076
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/javalc6/rssreader/pull/4",
+      "group": "fechado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "closed",
+      "closure": {
+        "class": "maintainer_preference",
+        "reason": "MD5 used only as a corruption checksum, no security role",
+        "note": "non-security violation still becomes a PR by the user's rule"
+      },
+      "original_run": "outputs/rvsec_misuse_20261016/rssreader/rerun2",
+      "finding_id": "e6413a8ebbe9",
+      "apk": "livio.rssreader.debug_120.apk",
+      "repository": "https://github.com/javalc6/rssreader",
+      "spec": "MessageDigestSpec",
+      "csv_class": "tools.FileManager",
+      "method": "writeFile",
+      "unique_error_id": "tools.FileManager:::writeFile:::MessageDigestSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused",
+      "extraction_record": "outputs/rvsec_misuse_20261016/rssreader/rerun2/error_methods/livio.rssreader.debug_120.apk/2_writeFile.json",
+      "pinned_commit": "5a61a6406a60507b3b798ee2312de47802d52b63",
+      "pr_base_commit": "2ab2e69dd82eb55c87fb8f6181e8725ba50d3744",
+      "pr_metadata": "outputs/rvsec_misuse_20261016/rssreader/rerun2/pull_requests/livio.rssreader.debug_120.apk_writeFile_MessageDigestSpec_pr.json",
+      "findings_file": "outputs/rvsec_misuse_20261016/rssreader/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "6650d1ed290a8678ebcdad91b5e133809a5115aaffe2d772c06b5553f7fcd448",
+      "findings_file_sha256_now": "6650d1ed290a8678ebcdad91b5e133809a5115aaffe2d772c06b5553f7fcd448",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "e6413a8ebbe9",
+          "unique_error_id": "tools.FileManager:::writeFile:::MessageDigestSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "5a61a6406a60507b3b798ee2312de47802d52b63"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 6,
+        "input_tokens": 78393,
+        "cached_input_tokens": 13011,
+        "cache_write_input_tokens": 65364,
+        "output_tokens": 15751,
+        "web_search_calls": 0,
+        "cost_usd": 0.3458,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0806
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/session-foundation/session-android/pull/2241",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/rvsec_tls_20261015/session_20261015/run",
+      "finding_id": "63bfe4a50889",
+      "apk": "network.loki.messenger.fdroid.debug_4545.apk",
+      "repository": "https://github.com/session-foundation/session-android",
+      "spec": "SSLContextSpec",
+      "csv_class": "org.thoughtcrime.securesms.api.http.HttpClientsKt",
+      "method": "createRegularNodeOkHttpClient",
+      "unique_error_id": "org.thoughtcrime.securesms.api.http.HttpClientsKt:::createRegularNodeOkHttpClient:::SSLContextSpec:::UnsafeProtocol:::expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+      "extraction_record": "outputs/rvsec_tls_20261015/session_20261015/run/error_methods/network.loki.messenger.fdroid.debug_4545.apk/0_createRegularNodeOkHttpClient.json",
+      "pinned_commit": "dd6c41a0c6df8ac39cb568653df2c6ae5aec0d17",
+      "pr_base_commit": "a8011acb1abebb783cd93b9e6976a77c9c5d36b3",
+      "pr_metadata": "outputs/rvsec_tls_20261015/session_20261015/run/pull_requests/network.loki.messenger.fdroid.debug_4545.apk_createRegularNodeOkHttpClient_SSLContextSpec_pr.json",
+      "findings_file": "outputs/rvsec_tls_20261015/session_20261015/findings.jsonl",
+      "findings_format": "jsonl",
+      "findings_file_sha256_recorded": "673da6842f1f0121dc3d8852daab50453ed636cfbc2e39da6a5f08db602ee88c",
+      "findings_file_sha256_now": "673da6842f1f0121dc3d8852daab50453ed636cfbc2e39da6a5f08db602ee88c",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "63bfe4a50889",
+          "unique_error_id": "org.thoughtcrime.securesms.api.http.HttpClientsKt:::createRegularNodeOkHttpClient:::SSLContextSpec:::UnsafeProtocol:::expecting one of TLSV1.2,TLSV1.3,TLS but found SSL"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "dd6c41a0c6df8ac39cb568653df2c6ae5aec0d17"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 3,
+        "input_tokens": 10937,
+        "cached_input_tokens": 1596,
+        "cache_write_input_tokens": 9332,
+        "output_tokens": 2421,
+        "web_search_calls": 0,
+        "cost_usd": 0.0509,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0119
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/Crazy-Marvin/MetadataRemover/pull/264",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/run_20261010_200449",
+      "finding_id": "40d39da41dec",
+      "apk": "rocks.poopjournal.metadataremover_20020.apk",
+      "repository": "https://github.com/Crazy-Marvin/MetadataRemover",
+      "spec": "SecureRandomSpec",
+      "csv_class": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+      "method": "<clinit>",
+      "unique_error_id": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec:::UnsatisfiedConstraint:::the constructor expects a byte array observed to come from a randomized source",
+      "extraction_record": "outputs/run_20261010_200449/error_methods/rocks.poopjournal.metadataremover_20020.apk/100__clinit_.json",
+      "pinned_commit": "b09bc5a97c922c25c9c56d3c97a4d343712ce808",
+      "pr_base_commit": "1a48772b3713711add80eedcf8207cddcaeb6fd3",
+      "pr_metadata": "outputs/run_20261010_200449/pull_requests/rocks.poopjournal.metadataremover_20020.apk_clinit_SecureRandomSpec_pr.json",
+      "findings_file": "data/processed/rv_import_findings.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "35d64378e3e8a5417990b49ff1a15029e305c3293cc8a303cc6bc1f2a3aae3b6",
+      "findings_file_sha256_now": "35d64378e3e8a5417990b49ff1a15029e305c3293cc8a303cc6bc1f2a3aae3b6",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "40d39da41dec",
+          "unique_error_id": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel:::<clinit>:::SecureRandomSpec:::UnsatisfiedConstraint:::the constructor expects a byte array observed to come from a randomized source"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "b09bc5a97c922c25c9c56d3c97a4d343712ce808"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 6,
+        "input_tokens": 94353,
+        "cached_input_tokens": 11963,
+        "cache_write_input_tokens": 56000,
+        "output_tokens": 17285,
+        "web_search_calls": 0,
+        "cost_usd": 0.3961,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.0917
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/BombusMod/BombusMod/pull/316",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/run_20260915_202333",
+      "finding_id": "3451a9747f93",
+      "apk": "org.bombusmod_1422.apk",
+      "repository": "https://github.com/BombusMod/BombusMod",
+      "spec": "Closeable_MeaninglessClose",
+      "csv_class": "util.Strconv",
+      "method": "baosFromBase64",
+      "unique_error_id": "util.Strconv:::baosFromBase64:::Closeable_MeaninglessClose:::Closeable_MeaninglessClose:::Closeable_MeaninglessClose close() has no effect.",
+      "extraction_record": "outputs/run_20260915_202333/error_methods/org.bombusmod_1422.apk/2_baosFromBase64.json",
+      "pinned_commit": "",
+      "pr_base_commit": "8b2925c9f68aa5070fbf7b6f4800656253521b49",
+      "pr_metadata": "outputs/run_20260915_202333/pull_requests/org.bombusmod_1422.apk_baosFromBase64_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/nelenkov/wwwjdic/pull/115",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/run_20260915_202333",
+      "finding_id": "4e3c203d8253",
+      "apk": "org.nick.wwwjdic_2370.apk",
+      "repository": "https://github.com/nelenkov/wwwjdic",
+      "spec": "Closeable_MeaninglessClose",
+      "csv_class": "org.nick.wwwjdic.ocr.OcrFormEntity",
+      "method": "<init>",
+      "unique_error_id": "org.nick.wwwjdic.ocr.OcrFormEntity:::<init>:::Closeable_MeaninglessClose:::Closeable_MeaninglessClose:::Closeable_MeaninglessClose close() has no effect.",
+      "extraction_record": "outputs/run_20260915_202333/error_methods/org.nick.wwwjdic_2370.apk/4__init_.json",
+      "pinned_commit": "",
+      "pr_base_commit": "41ecda9018078b294b559ecde44d36232091e4e2",
+      "pr_metadata": "outputs/run_20260915_202333/pull_requests/org.nick.wwwjdic_2370.apk_init_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/aivanovski/keepassvault/pull/347",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/run_20260915_124127",
+      "finding_id": "ecccf29c6686",
+      "apk": "com.ivanovsky.passnotes_11700.apk",
+      "repository": "https://github.com/aivanovski/kpassnotes",
+      "spec": "SSLContextSpec",
+      "csv_class": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+      "method": "createHttpClient",
+      "unique_error_id": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory:::createHttpClient:::SSLContextSpec:::UnsafeProtocol:::expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+      "extraction_record": "outputs/run_20260915_124127/error_methods/com.ivanovsky.passnotes_11700.apk/0_createHttpClient.json",
+      "pinned_commit": "",
+      "pr_base_commit": "77b70f8a30586252b278cf0c0d0ff142e8096008",
+      "pr_metadata": "outputs/run_20260915_124127/pull_requests/com.ivanovsky.passnotes_11700.apk_createHttpClient_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/nextcloud/news-android/pull/1716",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/run_20260911_142753",
+      "finding_id": "3a742828d54a",
+      "apk": "de.luhmer.owncloudnewsreader_196.apk",
+      "repository": "https://github.com/nextcloud/news-android",
+      "spec": "KeyStoreSpec",
+      "csv_class": "de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager",
+      "method": "loadAppKeyStore",
+      "unique_error_id": "de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager:::loadAppKeyStore:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::unknown",
+      "extraction_record": "outputs/run_20260911_142753/error_methods/de.luhmer.owncloudnewsreader_196.apk/15_loadAppKeyStore.json",
+      "pinned_commit": "",
+      "pr_base_commit": "400ef1d93c1e46557788914949dc08ed9d9b7a39",
+      "pr_metadata": "outputs/run_20260911_142753/pull_requests/de.luhmer.owncloudnewsreader_196.apk_loadAppKeyStore_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/Wilm0r/giggity/pull/543",
+      "group": "fechado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "closed",
+      "closure": {
+        "class": "other",
+        "reason": "maintainer made the same change independently"
+      },
+      "original_run": "outputs/run_20260906_080507",
+      "finding_id": "0638946f7e4a",
+      "apk": "net.gaast.giggity_769.apk",
+      "repository": "https://github.com/Wilm0r/giggity",
+      "spec": "MessageDigestSpec",
+      "csv_class": "net.gaast.giggity.Schedule$Item",
+      "method": "hashCode",
+      "unique_error_id": "net.gaast.giggity.Schedule$Item:::hashCode:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of {SHA-256, SHA-384, SHA-512} but found MD5.",
+      "extraction_record": "outputs/run_20260906_080507/error_methods/net.gaast.giggity_769.apk/109_hashCode.json",
+      "pinned_commit": "",
+      "pr_base_commit": "d310621c6f622364348c3208dcb081f41caa20cf",
+      "pr_metadata": "outputs/run_20260906_080507/pull_requests/net.gaast.giggity_769.apk_hashCode_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/bitcraze/crazyflie-android-client/pull/103",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/run_20260902_134852",
+      "finding_id": "73c0f0471033",
+      "apk": "se.bitcraze.crazyfliecontrol2_22.apk",
+      "repository": "https://github.com/bitcraze/crazyflie-android-client",
+      "spec": "SSLContextSpec",
+      "csv_class": "se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory",
+      "method": "<init>",
+      "unique_error_id": "se.bitcraze.crazyfliecontrol.bootloader.TLSSocketFactory:::<init>:::SSLContextSpec:::UnsafeProtocol:::expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+      "extraction_record": "outputs/run_20260902_134852/error_methods/se.bitcraze.crazyfliecontrol2_22.apk/129__init_.json",
+      "pinned_commit": "",
+      "pr_base_commit": "d629c7931e699cac8b7a500fafad71c57dd97d1e",
+      "pr_metadata": "outputs/run_20260902_134852/pull_requests/se.bitcraze.crazyfliecontrol2_22.apk_init_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/spacecowboy/Feeder/pull/1210",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/run_20260902_002440",
+      "finding_id": "f35c9589f426",
+      "apk": "com.nononsenseapps.feeder.play_4025.apk",
+      "repository": "https://github.com/spacecowboy/Feeder",
+      "spec": "SSLContextSpec",
+      "csv_class": "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+      "method": "trustAllCerts",
+      "unique_error_id": "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt:::trustAllCerts:::SSLContextSpec:::UnsafeProtocol:::expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+      "extraction_record": "outputs/run_20260902_002440/error_methods/com.nononsenseapps.feeder.play_4025.apk/47_trustAllCerts.json",
+      "pinned_commit": "",
+      "pr_base_commit": "328ffdee33903cbe39e00ca677f900f179f305e5",
+      "pr_metadata": "outputs/run_20260902_002440/pull_requests/com.nononsenseapps.feeder.play_4025.apk_trustAllCerts_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/paroj/DSub2000/pull/160",
+      "group": "incorporado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "merged",
+      "original_run": "outputs/run_20260830_145404",
+      "finding_id": "42e63cf76e71",
+      "apk": "github.paroj.dsub2000_217.apk",
+      "repository": "https://github.com/paroj/DSub2000",
+      "spec": "SSLContextSpec",
+      "csv_class": "github.paroj.dsub2000.service.RESTMusicService",
+      "method": "<init>",
+      "unique_error_id": "github.paroj.dsub2000.service.RESTMusicService:::<init>:::SSLContextSpec:::UnsafeProtocol:::expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+      "extraction_record": "outputs/run_20260830_145404/error_methods/github.paroj.dsub2000_217.apk/26__init_.json",
+      "pinned_commit": "",
+      "pr_base_commit": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+      "pr_metadata": "outputs/run_20260830_145404/pull_requests/github.paroj.dsub2000_217.apk_init_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/etesync/android/pull/301",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "original_run": "outputs/run_20260829_224334",
+      "finding_id": "d28032440293",
+      "apk": "com.etesync.syncadapter_20700.apk",
+      "repository": "https://github.com/etesync/android",
+      "spec": "SSLContextSpec",
+      "csv_class": "com.etesync.syncadapter.HttpClient$Builder",
+      "method": "build",
+      "unique_error_id": "com.etesync.syncadapter.HttpClient$Builder:::build:::SSLContextSpec:::UnsafeProtocol:::expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+      "extraction_record": "outputs/run_20260829_224334/error_methods/com.etesync.syncadapter_20700.apk/0_build.json",
+      "pinned_commit": "",
+      "pr_base_commit": "e1de5c281729e656ec755ee41f140ffe6411ade0",
+      "pr_metadata": "outputs/run_20260829_224334/pull_requests/com.etesync.syncadapter_20700.apk_build_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer/pull/618",
+      "group": "fechado",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "closed",
+      "closure": {
+        "class": "maintainer_preference",
+        "reason": "MD5 used as a checksum, not a security control"
+      },
+      "original_run": "outputs/run_20260824_112933",
+      "finding_id": "9564e018f0f4",
+      "apk": "com.vrem.wifianalyzer_71.apk",
+      "repository": "https://github.com/VREMSoftwareDevelopment/WifiAnalyzer",
+      "spec": "MessageDigestSpec",
+      "csv_class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+      "method": "calculateChildType",
+      "unique_error_id": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData:::calculateChildType:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of {SHA-256, SHA-384, SHA-512} but found MD5.",
+      "extraction_record": "outputs/run_20260824_112933/error_methods/com.vrem.wifianalyzer_71.apk/11_calculateChildType.json",
+      "pinned_commit": "",
+      "pr_base_commit": "725d527cb4d47f90f5b1f5e7a4d3ecad33453c2c",
+      "pr_metadata": "outputs/run_20260824_112933/pull_requests/com.vrem.wifianalyzer_71.apk_calculateChildType_pr.json",
+      "included": false,
+      "exclusion": "no recorded pinned commit: every recorded extraction of this finding has an empty pinned_revision (pre-October run; the findings CSV it came from has no commit column), so A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/binwiederhier/ntfy-android/pull/184",
+      "group": "aberto",
+      "state_source": "data/pr_outcomes (refreshed 2026-11-12)",
+      "state": "open",
+      "included": false,
+      "original_run": "outputs/run_20260811_172718",
+      "pr_metadata": "outputs/run_20260811_172718/pull_requests/io.heckel.ntfy_32.apk_scrub_pr.json",
+      "exclusion": "the pull-request metadata records no finding id (August run) and the run's only extraction of the finding has an empty pinned_revision: A4 cannot pin the analysed code (PLANO_FABLE 2026-11-12 §3, item 3)"
+    },
+    {
+      "pr_url": "https://github.com/QuantumBadger/RedReader/pull/1373",
+      "group": "fechado",
+      "state_source": "inventario.json recorded_status (not tracked by pr_outcomes)",
+      "state": "closed_by_maintainer",
+      "closure": {
+        "class": "covered_by_current_rule",
+        "rules": [
+          "Renames are generated correctly: a name embedding the old value left unchanged fails the rename check and is regenerated (CLAUDE.md)"
+        ],
+        "reason": "premise wrong (sha1 not used where collisions matter) and the fix made sha1() return a SHA-256 without renaming it",
+        "preference_part": "no security issue (a non-security violation still becomes a PR by the user's rule)",
+        "avoided_if": "no patch that keeps a function named sha1 returning another digest"
+      },
+      "identity_note": "pull request opened from an unpinned August/September run; identity matched by consolidar.py (method+spec); analysis taken from outputs/exp_final_20261019/subset_redreader_sha1_v2, the latest recorded run of finding d2b58eae2982 with a pinned commit",
+      "original_run": "outputs/exp_final_20261019/subset_redreader_sha1_v2",
+      "finding_id": "d2b58eae2982",
+      "apk": "org.quantumbadger.redreader_117.apk",
+      "repository": "https://github.com/QuantumBadger/RedReader",
+      "spec": "MessageDigestSpec",
+      "csv_class": "org.quantumbadger.redreader.common.General",
+      "method": "sha1",
+      "unique_error_id": "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+      "extraction_record": "outputs/exp_final_20261019/subset_redreader_sha1_v2/error_methods/org.quantumbadger.redreader_117.apk/0_sha1.json",
+      "pinned_commit": "ac08f90d23301c8fde095246825a413092003763",
+      "pr_base_commit": "",
+      "pr_metadata": "",
+      "findings_file": "data/processed/exp_final/findings_redreader_sha1.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "4bec32f507334f8170f9fabecd6273b338cc62184f439adf941a5630b1a84c77",
+      "findings_file_sha256_now": "4bec32f507334f8170f9fabecd6273b338cc62184f439adf941a5630b1a84c77",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "d2b58eae2982",
+          "unique_error_id": "org.quantumbadger.redreader.common.General:::sha1:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "ac08f90d23301c8fde095246825a413092003763"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 13,
+        "input_tokens": 215230,
+        "cached_input_tokens": 18473,
+        "cache_write_input_tokens": 196718,
+        "output_tokens": 80702,
+        "web_search_calls": 0,
+        "cost_usd": 0.6504,
+        "models": [
+          "gpt-6.1-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.3252
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/SapuSeven/BetterUntis/pull/515",
+      "group": "fechado",
+      "state_source": "inventario.json recorded_status (not tracked by pr_outcomes)",
+      "state": "closed_by_maintainer",
+      "closure": {
+        "class": "maintainer_preference",
+        "reason": "MD5 only names cache files (no security or stability implication); maintainer does not accept AI-generated PRs",
+        "note": "non-security violation still becomes a PR; a repository AI policy is a note, never a blocker (CLAUDE.md)"
+      },
+      "identity_note": "pull request opened from an unpinned August/September run; identity matched by consolidar.py (method+spec); analysis taken from outputs/exp_final_20261019/run2, the latest recorded run of finding 21b3aced6bcf with a pinned commit",
+      "original_run": "outputs/exp_final_20261019/run2",
+      "finding_id": "21b3aced6bcf",
+      "apk": "com.sapuseven.untis_29198884.apk",
+      "repository": "https://github.com/SapuSeven/BetterUntis",
+      "spec": "MessageDigestSpec",
+      "csv_class": "com.sapuseven.untis.data.cache.DiskCache",
+      "method": "getCacheFile",
+      "unique_error_id": "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+      "extraction_record": "outputs/exp_final_20261019/run2/error_methods/com.sapuseven.untis_29198884.apk/7_getCacheFile.json",
+      "pinned_commit": "250d629ba531fd0fea34928503f02684d66692c9",
+      "pr_base_commit": "",
+      "pr_metadata": "",
+      "findings_file": "data/processed/exp_final/findings_exp_final.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_sha256_now": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "21b3aced6bcf",
+          "unique_error_id": "com.sapuseven.untis.data.cache.DiskCache:::getCacheFile:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "250d629ba531fd0fea34928503f02684d66692c9"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 12,
+        "input_tokens": 185777,
+        "cached_input_tokens": 29713,
+        "cache_write_input_tokens": 94621,
+        "output_tokens": 31637,
+        "web_search_calls": 2,
+        "cost_usd": 0.7512,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1897
+      },
+      "included": true
+    },
+    {
+      "pr_url": "https://github.com/Waboodoo/HTTP-Shortcuts/pull/576",
+      "group": "incorporado",
+      "state_source": "inventario.json recorded_status (not tracked by pr_outcomes)",
+      "state": "accepted",
+      "included": false,
+      "exclusion": "no local finding identity (inventario identity_status missing; no run or pull-request metadata records the finding)"
+    },
+    {
+      "pr_url": "https://github.com/lneugebauer/nextcloud-cookbook/pull/204",
+      "group": "incorporado",
+      "state_source": "inventario.json recorded_status (not tracked by pr_outcomes)",
+      "state": "accepted",
+      "identity_note": "pull request opened from an unpinned August/September run; identity matched by consolidar.py (method+spec); analysis taken from outputs/exp_final_20261019/run2, the latest recorded run of finding 4c1c74bcbc8f with a pinned commit",
+      "original_run": "outputs/exp_final_20261019/run2",
+      "finding_id": "4c1c74bcbc8f",
+      "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+      "repository": "https://github.com/lneugebauer/nextcloud-cookbook",
+      "spec": "SSLContextSpec",
+      "csv_class": "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider",
+      "method": "configureTrustAllCertificates",
+      "unique_error_id": "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider:::configureTrustAllCertificates:::SSLContextSpec:::UnsafeProtocol:::expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+      "extraction_record": "outputs/exp_final_20261019/run2/error_methods/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates.json",
+      "pinned_commit": "cf063f9be44143013ff44ee3ce4fdd768aca113e",
+      "pr_base_commit": "",
+      "pr_metadata": "",
+      "findings_file": "data/processed/exp_final/findings_exp_final.csv",
+      "findings_format": "csv",
+      "findings_file_sha256_recorded": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_sha256_now": "15c41b354dbc3c1b097940c0bae41cfa66b79f9c6f660b21ace0f5b57f359ff2",
+      "findings_file_unchanged": true,
+      "members": [
+        {
+          "finding_id": "4c1c74bcbc8f",
+          "unique_error_id": "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider:::configureTrustAllCertificates:::SSLContextSpec:::UnsafeProtocol:::expecting one of TLSV1.2,TLSV1.3,TLS but found SSL"
+        }
+      ],
+      "joint": false,
+      "rows_commit": [
+        "cf063f9be44143013ff44ee3ce4fdd768aca113e"
+      ],
+      "same_method_other_rules_not_included": [],
+      "case_migration_policy": [],
+      "original_cost": {
+        "calls": 10,
+        "input_tokens": 163872,
+        "cached_input_tokens": 19029,
+        "cache_write_input_tokens": 50392,
+        "output_tokens": 23583,
+        "web_search_calls": 4,
+        "cost_usd": 0.6107,
+        "models": [
+          "gpt-5.6-terra"
+        ],
+        "tokens_at_gpt61_flex_usd": 0.1782
+      },
+      "included": true
+    }
+  ]
+}

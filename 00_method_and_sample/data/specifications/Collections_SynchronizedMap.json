@@ -1,0 +1,76 @@
+{
+  "name": "Collections_SynchronizedMap",
+  "applies_to_types": [
+    "java.util.Collections_SynchronizedMap"
+  ],
+  "source_title": "Collections (Java SE 25 & JDK 25): Collections.synchronizedMap(Map) API documentation",
+  "source_url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#synchronizedMap(java.util.Map)",
+  "source_verified": false,
+  "protocol": "synchronizedMap(m) → view(m) → [holdsLock(m)] traversal(view); creation and use of an Iterator, Spliterator, or Stream over a view require holding m's monitor throughout traversal.",
+  "important_note": "The public JDK documentation requires synchronization on the map returned by Collections.synchronizedMap, rather than on its keySet(), values(), or entrySet() view, when traversing a view. The exact CrySL/JavaMOP source named Collections_SynchronizedMap was not found and consulted; therefore this is a conservative API-documentation summary, not a verified transcription of that specification. The reported io.heckel.ntfy.util.Log.scrub finding is relevant only if the traversed view can be shown to originate from a Collections.synchronizedMap wrapper.",
+  "events": [
+    {
+      "name": "synchronizedMap",
+      "api_patterns": [
+        "Collections.synchronizedMap("
+      ],
+      "condition": "Observing this call identifies a possible synchronized-map wrapper. The predicate is satisfied only when the returned map, or a proven alias, is the map m used for the later view and traversal."
+    },
+    {
+      "name": "collectionView",
+      "api_patterns": [
+        ".keySet()",
+        ".values()",
+        ".entrySet()"
+      ],
+      "condition": "Observing a view call alone is not a violation and does not prove that the receiver is a synchronized-map wrapper. The relevant predicate is satisfied only when the receiver is proven to alias m."
+    },
+    {
+      "name": "iteratorTraversal",
+      "api_patterns": [
+        ".iterator()",
+        ".hasNext()",
+        ".next()",
+        ".remove()",
+        ".forEachRemaining("
+      ],
+      "condition": "Observing these calls indicates possible Iterator creation or use. The synchronization predicate is satisfied only if the Iterator is derived from a view of m and the executing thread holds m's monitor for creation and traversal; locking the view object does not satisfy the documented rule."
+    },
+    {
+      "name": "spliteratorOrStreamTraversal",
+      "api_patterns": [
+        ".spliterator()",
+        ".stream()",
+        ".parallelStream()"
+      ],
+      "condition": "These calls are documented traversal routes requiring synchronization on m when used over a view of m. A substring match does not prove view provenance, actual traversal, or ownership of m's monitor."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that io.heckel.ntfy.util.Log.scrub has an actual data race, concurrent mutation, or nondeterministic runtime behavior.",
+    "Do not infer that every Map iterator or collection view is governed by this specification; the map must be shown to originate from Collections.synchronizedMap(Map), directly or through an alias.",
+    "Do not infer that locking keySet(), values(), or entrySet() satisfies the documented requirement; the required lock is the synchronized map wrapper.",
+    "Do not infer that obtaining a collection view outside a synchronized block is itself a violation; the documented requirement concerns traversal.",
+    "Do not infer that replacing the map with ConcurrentHashMap is required; synchronization on the wrapper map for the complete traversal is a documented compliant approach.",
+    "Do not infer that all compound Map operations are atomic merely because individual wrapper methods are synchronized; this context concerns collection-view traversal.",
+    "Do not infer that the named CrySL/JavaMOP detector itself covers Spliterator or Stream without the unavailable specification source."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "io.heckel.ntfy.util.Log",
+        "method": "scrub",
+        "message": "Collections_SynchronizedMap A collection view of a synchronized map was accessed in a thread-unsafe manner."
+      }
+    ],
+    "expected_api_simple_name": "Collections_SynchronizedMap",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "source_does_not_contain_rule",
+    "detail": "document does not mention the governed type",
+    "checked_url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#synchronizedMap(java.util.Map)"
+  }
+}

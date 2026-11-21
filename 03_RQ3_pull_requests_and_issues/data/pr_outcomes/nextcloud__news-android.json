@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/nextcloud/news-android/pull/1716",
+    "state": "merged",
+    "finding_id": "3a742828d54a",
+    "spec": "KeyStoreSpec",
+    "csv_class": "de.luhmer.owncloudnewsreader.ssl.MemorizingTrustManager",
+    "method_name": "loadAppKeyStore",
+    "title": "Fix loadAppKeyStore",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:10.848377+00:00",
+    "maintainer_feedback": []
+  }
+]

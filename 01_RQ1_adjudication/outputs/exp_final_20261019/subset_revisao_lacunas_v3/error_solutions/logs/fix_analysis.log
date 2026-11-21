@@ -1,0 +1,29 @@
+2026-10-27 22:07:10,329 - INFO - Testing OpenAI connection...
+2026-10-27 22:07:11,311 - INFO - OpenAI connection successful
+2026-10-27 22:07:11,853 - INFO - ✓ Model 'gpt-5.6-terra' available
+2026-10-27 22:07:11,905 - INFO - Discovered 1 errors to process
+2026-10-27 22:07:11,911 - INFO - Processing 1 new errors (0 already complete)
+2026-10-27 22:07:11,911 - INFO - Processing: org.fedorahosted.freeotp_48.apk/encrypt
+2026-10-27 22:07:12,959 - DEBUG - Running the isolated evidence pipeline for encrypt...
+2026-10-27 22:07:17,771 - INFO - LLM cache hit: c6dfdb150558
+2026-10-27 22:07:17,952 - INFO - LLM cache hit: 4151f07ba432
+2026-10-27 22:07:18,108 - INFO - LLM cache hit: cba8c9d8f626
+2026-10-27 22:07:18,251 - INFO - LLM cache hit: 4e5ba0d3d802
+2026-10-27 22:09:54,270 - WARNING - Adjudication rejected for encrypt (attempt 1/2): supported decision has generation blockers; retrying with the deterministic validation errors as feedback
+2026-10-27 22:11:21,712 - DEBUG - Calling persisted per-file coordinated generation for encrypt...
+2026-10-27 22:14:17,035 - WARNING - Semantic validation failed for encrypt (attempt 1/3): CHECKED_EXCEPTION_NOT_PROPAGATED; TEST_PLACED_IN_UNRELATED_FILE; retrying coordinated generation for mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java, mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java, mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java
+2026-10-27 22:15:24,412 - WARNING - Semantic validation failed for encrypt (attempt 2/3): CHECKED_EXCEPTION_NOT_PROPAGATED; TEST_PLACED_IN_UNRELATED_FILE; retrying coordinated generation for mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java, mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java, mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java
+2026-10-27 22:17:03,267 - INFO - Issue candidate prepared for manual review: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v3/error_solutions/issue_candidates/org.fedorahosted.freeotp_48.apk/0_encrypt_issue.json
+2026-10-27 22:17:03,268 - WARNING - Persisted coordinated generation failed for encrypt: TEST_PLACED_IN_UNRELATED_FILE; TEST_PLACED_IN_UNRELATED_FILE; CHECKED_EXCEPTION_NOT_PROPAGATED; manifest=/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v3/error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/manifest.json
+2026-10-27 22:17:03,268 - INFO - [1/1] encrypt
+2026-10-27 22:17:03,270 - WARNING - No safe fix generated
+2026-10-27 22:17:03,283 - INFO - Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v3/error_solutions/solutions_tracking.json
+2026-10-27 22:17:03,289 - INFO - Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v3/error_solutions/analysis_summary.txt
+2026-10-27 22:17:03,289 - INFO - ======================================================================
+2026-10-27 22:17:03,290 - INFO - ANALYSIS COMPLETE
+2026-10-27 22:17:03,290 - INFO - Analyzed: 1/1
+2026-10-27 22:17:03,291 - INFO - Fixes generated: 0
+2026-10-27 22:17:03,291 - INFO - Confirmed external-contract findings: 0
+2026-10-27 22:17:03,292 - INFO - Issue candidates: 1
+2026-10-27 22:17:03,292 - INFO - Time: 00h 09m 51s
+2026-10-27 22:17:03,293 - INFO - LLM cache: 4 hit(s), 15 miss(es)

@@ -1,0 +1,103 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T221334_697251_2595_0008_patch_planning",
+  "parent_call_id": "",
+  "finding_id": "app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+  "stage": "patch_planning",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 32502,
+  "input_tokens": 8036,
+  "cached_input_tokens": 2816,
+  "output_tokens": 1663,
+  "latency_ms": 22170,
+  "retry_count": 0,
+  "request_id": "req_32aecfaa3b434f3fa8bd92101f9bba0a",
+  "section_telemetry": {
+    "finding": {
+      "characters": 571,
+      "approx_tokens": 143,
+      "sha256": "6f595ecb4d52cfc98791c04701ea6b9ffd9d2486a1f7b1880769a0eccbf8e500"
+    },
+    "validated_claims": {
+      "characters": 1667,
+      "approx_tokens": 417,
+      "sha256": "74a3dde18109098dbe3fc828fbe8a3f30f319b3edc951f4effa92114e381aa96"
+    },
+    "adjudication": {
+      "characters": 5645,
+      "approx_tokens": 1411,
+      "sha256": "f4f5654ff6419375f6390c80aff2f615c145b3d26ff4a6076bfd23c52af6e200"
+    },
+    "exact_source_manifest": {
+      "characters": 5529,
+      "approx_tokens": 1382,
+      "sha256": "cd7617fbc4555c1a84954f4e60926d9268ba61f4b54c1bd4f3f08ad052287646"
+    },
+    "established_test_source_roots": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "repository_has_test_source_set": {
+      "characters": 5,
+      "approx_tokens": 1,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    "test_classpath": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "case_policy": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "stored_value_contract": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "previous_attempts_of_this_finding": {
+      "characters": 813,
+      "approx_tokens": 203,
+      "sha256": "2c639c60c93bc4b0dbdb0f45f1192f7d1f4f515179b91cd8e10ae9e49ef2a880"
+    },
+    "detector": {
+      "characters": 41,
+      "approx_tokens": 10,
+      "sha256": "1b2c89ea7d809fad077c55065d421c2d6b97a0415b9359e4965fab7e8ef978e2"
+    },
+    "app_purpose": {
+      "characters": 413,
+      "approx_tokens": 103,
+      "sha256": "5bf2c75c56fdb40cdd2eb3407d75c995c716b7653be33462b1e60c0444ff9928"
+    },
+    "persisted_object_formats": {
+      "characters": 587,
+      "approx_tokens": 147,
+      "sha256": "b72ecf5484c0a5ca3c98b74f839411e6968eb5f6ca7579f15982615c3749af45"
+    },
+    "rename_safety": {
+      "characters": 3953,
+      "approx_tokens": 988,
+      "sha256": "5c68e23ba3264614b6b3f6901074dbb72f35352bf9e551f56ad04002448a67a3"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 268,
+  "openai_response_id": "resp_0302a41263b5b679006aea86bf382487d2908186247ad43f56",
+  "response_status": "completed",
+  "background_polls": 4,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T22:13:57"
+}

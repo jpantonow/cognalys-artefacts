@@ -1,0 +1,25 @@
+[
+  {
+    "pull_request": "https://github.com/ounben/AMARadio/pull/122",
+    "state": "merged",
+    "finding_id": "06ff0c1fc96c",
+    "spec": "MessageDigestSpec",
+    "csv_class": "com.ounben.amaradio.Utils",
+    "method_name": "md5",
+    "title": "Use SHA-256 for cache file names",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:57.753595+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "ounben",
+        "kind": "comment",
+        "body": "Thank you for your help. Ignored MD5 from RadioDroid in July and now it's finally fixed. And have fun with your study. Ben"
+      },
+      {
+        "author": "ounben",
+        "kind": "review",
+        "body": "MD5 was from old RadioDroid and wasn't changed to SHA 256. "
+      }
+    ]
+  }
+]

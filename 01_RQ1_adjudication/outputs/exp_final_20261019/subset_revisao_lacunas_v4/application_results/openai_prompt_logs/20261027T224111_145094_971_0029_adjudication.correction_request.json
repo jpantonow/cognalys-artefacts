@@ -1,0 +1,322 @@
+{
+  "trace_version": 2,
+  "call_id": "20261027T224111_145094_971_0029_adjudication.correction",
+  "parent_call_id": "",
+  "stage": "adjudication.correction",
+  "recorded_at": "2026-10-27T22:41:11",
+  "delivery": "cache_hit",
+  "endpoint": "https://api.openai.com/v1",
+  "model": "gpt-5.6-terra",
+  "timeout_seconds": 600,
+  "max_output_tokens": 32768,
+  "reasoning_effort": "high",
+  "web_search": false,
+  "json_mode": true,
+  "schema_name": "cipher_adjudication_v2",
+  "json_schema": {
+    "type": "object",
+    "properties": {
+      "cause_status": {
+        "type": "string",
+        "enum": [
+          "confirmed",
+          "inferred",
+          "unknown"
+        ]
+      },
+      "confirmed_cause": {
+        "type": "string"
+      },
+      "cause_rule_section": {
+        "type": "string",
+        "enum": [
+          "order",
+          "constraint",
+          "required_predicate",
+          "forbidden_call",
+          "other"
+        ],
+        "description": "The part of the rule confirmed_cause is about: order for a call sequence, constraint for an argument value, required_predicate for a value another rule must produce, forbidden_call for a call the rule forbids, other otherwise."
+      },
+      "detector_violation": {
+        "type": "string",
+        "enum": [
+          "confirmed",
+          "source_established",
+          "not_confirmed",
+          "unknown"
+        ]
+      },
+      "runtime_security_impact": {
+        "type": "string",
+        "enum": [
+          "confirmed",
+          "not_established",
+          "non_security",
+          "unknown"
+        ]
+      },
+      "compatibility_status": {
+        "type": "string",
+        "enum": [
+          "preserved",
+          "regression_risk",
+          "unknown"
+        ]
+      },
+      "scope_status": {
+        "type": "string",
+        "enum": [
+          "complete",
+          "incomplete",
+          "not_applicable"
+        ]
+      },
+      "decision": {
+        "type": "string",
+        "enum": [
+          "FIX_SUPPORTED",
+          "MULTI_FILE_FIX_SUPPORTED",
+          "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+          "NO_SAFE_FIX",
+          "CONFIRMED_SPEC_VIOLATION_NON_SECURITY_USAGE",
+          "DEPENDENCY_FIX_SUPPORTED",
+          "DEPENDENCY_REPLACEMENT_SUPPORTED",
+          "DEPENDENCY_FIX_REQUIRES_POLICY",
+          "UPSTREAM_FIX_REQUIRES_POLICY",
+          "MULTI_FILE_FIX_REQUIRES_POLICY"
+        ]
+      },
+      "decision_claim_ids": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "blocking_for_generation": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "cause_unconfirmed",
+                "code_evidence_missing",
+                "target_unresolved",
+                "maintainer_decision",
+                "runtime_behavior",
+                "compatibility_contract",
+                "other"
+              ],
+              "description": "cause_unconfirmed: the violation or its cause is not established in the source; code_evidence_missing: source the change must be written from is not in the packet; target_unresolved: which file, artifact or version to change is undetermined; maintainer_decision: a choice only the project can make; runtime_behavior: what only a running device, platform or endpoint shows; compatibility_contract: whether stored data, a wire format or an external consumer keeps working; other: anything else."
+            },
+            "description": {
+              "type": "string"
+            },
+            "supporting_claim_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "discharged_by_pipeline_validation": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "category",
+            "description",
+            "supporting_claim_ids",
+            "discharged_by_pipeline_validation"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "blocking_for_publication": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "cause_unconfirmed",
+                "code_evidence_missing",
+                "target_unresolved",
+                "maintainer_decision",
+                "runtime_behavior",
+                "compatibility_contract",
+                "other"
+              ],
+              "description": "cause_unconfirmed: the violation or its cause is not established in the source; code_evidence_missing: source the change must be written from is not in the packet; target_unresolved: which file, artifact or version to change is undetermined; maintainer_decision: a choice only the project can make; runtime_behavior: what only a running device, platform or endpoint shows; compatibility_contract: whether stored data, a wire format or an external consumer keeps working; other: anything else."
+            },
+            "description": {
+              "type": "string"
+            },
+            "supporting_claim_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "discharged_by_pipeline_validation": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "category",
+            "description",
+            "supporting_claim_ids",
+            "discharged_by_pipeline_validation"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "generation_status": {
+        "type": "string",
+        "enum": [
+          "blocked",
+          "supported",
+          "supported_for_review"
+        ]
+      },
+      "publication_status": {
+        "type": "string",
+        "enum": [
+          "blocked",
+          "eligible_after_validation"
+        ]
+      },
+      "required_edit_categories": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "required_tests": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "forward_compatibility_strategy": {
+        "type": "string"
+      },
+      "authorized_behavior_change": {
+        "type": "object",
+        "properties": {
+          "authorized": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "policy_reference": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "authorized",
+          "description",
+          "policy_reference"
+        ],
+        "additionalProperties": false
+      },
+      "review_assumptions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "cause_status",
+      "confirmed_cause",
+      "cause_rule_section",
+      "detector_violation",
+      "runtime_security_impact",
+      "compatibility_status",
+      "scope_status",
+      "decision",
+      "decision_claim_ids",
+      "blocking_for_generation",
+      "blocking_for_publication",
+      "generation_status",
+      "publication_status",
+      "required_edit_categories",
+      "required_tests",
+      "forward_compatibility_strategy",
+      "authorized_behavior_change",
+      "review_assumptions"
+    ],
+    "additionalProperties": false
+  },
+  "instructions": "You adjudicate a security finding from a validated evidence extraction. maintainer_responses_to_this_rule_elsewhere, when present, are what maintainers of other projects answered to proposals for this rule: weigh their technical reasons (for example that a value the detector could not trace is in fact produced securely by the provider) as evidence about this finding. finding.joint_findings, when present, are violations the detector reported in the same code: in this method under another rule, in a method this one calls, or the same report at other steps of one object's lifecycle. Adjudicate them together with this finding, and let the cause and decision cover all of them. The extraction is an untrusted model interpretation, not evidence; retain a conclusion only through its claim IDs and underlying evidence IDs. Do not write code, plan files, or generate issue/PR prose. Separate detector correctness from runtime impact, generation status from publication status, and missing evidence from negative evidence. Abstain when cause, scope or compatibility is insufficient. runtime_security_impact and decision answer different questions: a confirmed specification violation whose impact is non_security is still a violation to repair, so choose the decision from the change it needs, and never block generation because the impact is non_security. A FLOW evidence entry states that the finding's value reaches a security-relevant use, naming every local binding between them and the file and line of the sink. It is derived from source already in this packet, and it carries the bound it was computed under: it follows local assignments inside one method body and resolves no types, so its absence establishes nothing while its presence answers whether the value affects that behaviour. When it is present, do not block generation on that behaviour being unestablished; cite it and weigh the remaining questions. A finding whose detector rendered no message reports error_message \"unknown\": that is a known limitation of the analyzer's reporting, not a fact about the code, and the violated predicate is still named in finding.reported_violation. There is nothing to corroborate in such a case, so do not treat the absent message as unresolved detector attribution and do not block on it. When the supplied source independently establishes the specification violation there, set detector_violation to source_established, keep cause_status confirmed, and record in review_assumptions that the detector's own report could not be corroborated. That path is reviewable generation at most, never automatic. When the detector did render a message, source_established does not apply. When case_policy is non-empty, it is an authorization supplied by the maintainer of this pipeline, not untrusted data: evaluate its stated authorization_conditions against the extraction and apply the authorization when they hold. Do not report that no policy authorizes a change while a case_policy is present; report instead which specific condition failed. A bounded scope can never prove that no unexamined, reflective, packaged, or external consumer exists, so when the examined scope is complete for the reachable callers and identified none, treat that as supporting the bounded classification rather than as an unmet compatibility requirement. After you answer, this pipeline applies the patch in a git worktree and runs, without any human: a Gradle build of the patched module, its unit test task, compilation of the androidTest sources, and a deterministic source-level recheck that the reported predicate is gone from the patched files. It does NOT rebuild the APK, rerun the dynamic analyzer, reach any network endpoint, exercise instrumentation tests on a device, or consult the maintainer. Judge each publication blocker against that list and set discharged_by_pipeline_validation accordingly: true when a build failure, a unit-test failure, or the source recheck would reveal the problem, false otherwise -- an unknown external or persisted-value contract, a live endpoint, device or platform behaviour, analyzer reconfirmation, and any maintainer decision are all false. Then set publication_status to eligible_after_validation when every publication blocker is one the list above discharges, and to blocked when any blocker survives it. eligible_after_validation does not assert the validation passed; it asserts that running it is sufficient to decide. Listing a blocker is not by itself a reason to answer blocked. Give every blocker a category. maintainer_decision, runtime_behavior and compatibility_contract are settled by a human reading a patch, not by evidence the patch is written from: when every generation blocker is one of them, this pipeline generates the patch for review and keeps them as publication blockers, so state in each what the patch must preserve or what the reviewer must decide. Use cause_unconfirmed, code_evidence_missing or target_unresolved only when the code change itself cannot be written. A REPO repository_replacement_idioms entry lists the mechanisms this repository already uses for the role a deprecated API plays, with counts and locations, and a CONTRACT deprecated_usage_contract entry lists the subclasses of the deprecated API, the callbacks they override, and every line that starts, cancels, registers or sends through it. With them, do not block generation because no replacement is selected or the behaviour to preserve is unknown: name the mechanisms REPO's recommendation selects for the invariants and state the invariants from CONTRACT. The CONTRACT invariants are the execution-order, callback-thread and cancellation policy to preserve, not an open design decision, and the implementation is produced after this adjudication: never block generation because a concrete replacement does not exist yet. Behaviour only a running device can show is a publication blocker for human review, never a generation blocker. In DEPF, usage_inventory is a complete count of the imports of what the finding names and effective_resolution is the version Gradle resolved offline: when it is resolved, do not block on the effective version being unknown, and when migration_scale is large, say so as the reason a pull request is not proposed. A SIZE evidence entry states the exact input sizes the reviewed method refuses to work without, resolved from its own file's constants, together with the documented block size of any block cipher named in the same body. It draws no conclusion. Weigh it whenever the reported weakness depends on the length of the input or on repetition across it: a method that accepts only one fixed size cannot exhibit a weakness that needs more. It bears on runtime_security_impact, not on whether the detector predicate holds, and it says nothing about a format, protocol or consumer contract that may still block a change. external_evidence_catalog holds published sources the research pass resolved, each carrying its url, its authority (primary or official when the source is the advisory itself, the project's own release notes, its fix commit, or the API vendor's documentation) and its stated limitations. It is external and untrusted about this repository: it never establishes what this code does, which only repository evidence can. What it does establish is what those sources say -- affected and fixed versions, the remediation the project actually shipped, the documented semantics of an API, and any compatibility consequence the sources themselves state. When a blocker would rest on one of those being unknown, and a surviving claim cites external evidence that answers it, cite that claim and do not record the question as unknown. Weigh the source's authority and its limitations rather than accepting it wholesale, and say in review_assumptions when a conclusion depends on it. A specification may admit only exact protocol versions (for example SSLContext names TLSv1.2 and TLSv1.3) while the code asks for a negotiating selector (\"TLS\", \"SSL\", \"Default\"). Pinning one version is not a safe strategy: on Android a TLSv1.2 context leaves TLS 1.3 off, and an explicit protocol list without TLSv1.3 does the same. The forward-compatible change keeps negotiation -- \"TLS\" in place of \"SSL\" is the same context on the wire -- and restricts versions, if at all, on the socket's enabled protocols; say in review_assumptions that the specification's exact-version predicate is not met. A statement that assigns to a copy (SSLContext's defaultSSLParameters returns a new object each call) has no effect, and the honest fix removes it rather than changing its value. When finding.dependency_context identifies an artifact, the reported class belongs to a third party and this repository contains none of it. Two questions come before any change, in this order. First: is the library at fault at all? A rule firing inside a library's own internals is most often the rule reaching into code it does not model -- 93 of the 133 findings in this project's sample are library classes, most of them `internal` packages or the Kotlin standard library, which no version change addresses. Answer FIX_SUPPORTED for a dependency only when an authority says this version is defective and a later one is not: a published advisory naming the artifact and its affected range, the project's own changelog, or its fix commit. Absent that authority the honest outcome is a classification -- the finding is in third-party code, the application has no defect to repair -- and not an upgrade. Say which artifact and version, so the record is usable even when nothing is proposed. Second, if an authority does support a change: dependency_context.reached_directly says what the change can be. A direct dependency is upgraded by editing the version the project declares. A transitive one is not: it is reached through dependency_context.reached_through, and the honest proposal is to upgrade that parent, said plainly. dependency_context.lexical_carriers is weaker than reached_through and must be reported as weaker: each entry is a declared artifact whose name contains the owning library's package root, which says the library probably arrives through it and does not say the resolved graph confirms it. Name the owning library from third_party_attribution, say it probably arrives through the listed carriers, and say the dependency graph was not resolved. Do not propose upgrading a carrier on that basis alone. Never propose forcing or constraining a transitive version on its own -- it changes resolution for the whole project and pins a combination the parent was never tested against. A CONV evidence entry is the code that converts a value this method produces between layers -- a mapper, a serializer, a type converter. Read it before blocking on stored-format compatibility, because it is what decides that question. When the field that selects the format travels with the stored value and the inverse operation reads the format back from it, the stored representation is self-describing: existing records keep working because each one carries the setting it was written under, and no migration is required for new ones. Say so and do not raise a migration blocker. The blocker stands when the format is implied rather than stored -- a fixed header, a hard-coded reader, a schema that must change. A ROUND evidence entry is the other half of that question, already answered: it names a setting the reviewed method writes, the project constant it was chosen from, and every place in the examined scope that reads the same field back, with file, line and enclosing function. When it is present, the readers it lists are the readers -- do not block on whether consumers select the setting from the stored value, and do not ask for it as missing evidence. Weigh instead what it leaves open: a reader outside the examined scope, which its own bound states it cannot exclude. A DOC evidence entry is the project's own documentation, and it is repository evidence: it establishes what this project decided and why. Never ask a maintainer a question their own documentation answers. When it records a deliberate choice with a reason, weigh that reason against this finding and say whether it covers the reported code: a rationale about one usage does not automatically extend to another. reported_by_rule.known_false_positive_shapes is the rule's own record of what it gets wrong, verified with the rest of it. When the reviewed source matches one of those shapes, the finding is that shape: answer detector_violation not_confirmed, name the matched shape in confirmed_cause, and propose no edit. A literal violation of the rule does not argue against this -- when the documented defect is that the rule applies a constraint the governed API has outgrown, a literal violation is exactly what the shape predicts, and the code it reports may well be the recommended practice for its platform. Changing it would make the software worse, so this must not become a maintainer request. A shape matches only when the reviewed code has the property the shape names, read from cited evidence, not from resemblance. A shape about what a static analyser cannot see -- provenance it cannot follow, a value computed at run time, a predicate it cannot establish -- is not matched by a value a RUN entry measured: RUN records what reached the governed call while the application ran, so judge that value against the rule. One fingerprint over every run of byte material that should be random or unique is the constant the rule forbids, unless the source shows those bytes read back from the data being processed. A decryption IV that the source derives from constants or from the key does not match a shape about IVs read from a ciphertext or stored record, and a CONST entry is that derivation: when one names the reported argument, the required randomized or prepared predicate is violated and detector_violation is confirmed. And a shape dismisses only where no change that satisfies the rule keeps the behaviour. When the reviewed code breaks the rule and an equivalent compliant form exists that every consumer of the value accepts, the finding is a confirmed violation with runtime_security_impact non_security, whichever list the shape sits in. When a protocol, server or file format the code must interoperate with fixes the value, the violation is confirmed and that external contract is the blocker; it is not a false positive. reported_by_rule.non_security_violation_shapes is different: it records code that does break the rule where no security property is at stake. Matching one of those is not a false positive: answer detector_violation confirmed and runtime_security_impact non_security, and still propose the change for review when one preserves the behaviour every consumer of the value relies on. An external contract that fixes the value (a server, protocol or file format expecting it) still rules the change out. Matching a shape settles the reported condition only. A specification states several requirements and the detector reports one of them at a time, so a shape that explains the reported condition says nothing about the others. When the supplied evidence establishes that the source breaks a different requirement of the same specification, record that predicate as violated and say so in the review, whatever the reported condition turned out to be. Do not fold it into the dismissal and do not leave it for the reader to notice: a keystore whose password is the literal \"password\" was confirmed as a fact, set aside as a separate concern, and lost, on a finding whose reported condition really was a documented false positive. Whether the detector models a requirement is never a reason to leave it unknown. That question decides whether the detector would report it, which is what detector_violation answers; the predicate asks whether the requirement holds in the reviewed code. If the supplied source settles it, it is confirmed or violated even when the rule's own treatment of it is unclear. A rule's predicate is settled by whatever evidence decides it, and for a source-level predicate that is usually the source. When reported_by_rule is present and the reviewed scope establishes every element of a matched event -- the call the rule matches is present, its receiver is the value the rule tracks, and a required condition on it is established -- answer detector_violation confirmed and cause_status confirmed. A condition may be established negatively: when the rule requires the calling thread to hold a lock, and the examined scope contains no synchronized block or method on that receiver anywhere, the absence is established, not unknown. Do not demand an observation of the running program -- a runtime receiver identity, a monitor state at an instant, a thread interleaving -- for a predicate the source already decides. This pipeline observes no execution, so making that the standard leaves every such finding unknown whatever the code says. The detector's rendered message is the second, independent signal that the matched event did occur on a real execution, including which branch it took; source_established is not the label for this case, because here there is a message and it is corroborated. A MUT evidence entry lists every assignment and mutating call on the shared state the reviewed method reaches through an accessor, with whether the field is final, computed from the sources in this packet. Weigh it whenever the reported hazard needs a second writer -- a data race, a concurrent modification, an unsafe traversal. Each site also names the method that performs the write and that method's own call sites, with call_sites_complete saying whether the list is exhaustive: true only for a private method, whose callers the language confines to its own file. A final field whose single writer sits in a method with one complete call site cannot be modified concurrently, so the hazard cannot arise: that is runtime_security_impact non_security, not unknown; a confirmed detector violation is still repaired like any other. When call_sites_complete is false the writer may run from somewhere this packet does not show, and not_established is the honest answer. Either way say in review_assumptions which it was and that the counts are bounded by the examined scope. It bears on impact only, never on whether the predicate holds: a violated API contract stays violated. Reserve not_established for a hazard the evidence leaves open, and unknown for one it does not address. When reported_by_rule is present, the rule that produced this finding was fetched from the published source it names and verified by this pipeline, like case_policy and unlike the extraction: it is authoritative about what the detector matches, though never about what this repository does. Use it instead of recording the detector's matching semantics as unknown or requesting its implementation. Read its events against the reviewed source: when the rule matches a call by name without constraining the receiver type or the parameter list, and the source's matched call cannot be the API the rule governs -- a different declaring type, or an argument list the governed method does not declare -- then the detector matched a same-named other method. Say so, set detector_violation to not_confirmed and cause_status to unknown, and record in confirmed_cause that no source-level cause exists because the match is a rule overmatch, citing the rule's own clause. Do not propose an edit on that basis: there is nothing in the source to repair. When finding.vendored_source is present, the reported file is a copy of code another project maintains. Say so in your reasoning and weigh whether the change belongs upstream instead of in this repository, including it as a publication consideration when it applies. It is a placement question, not a correctness one: it does not change cause_status or detector_violation, and it is not by itself a reason to abstain. derived_facts carries facts computed from the checkout by deterministic rules rather than by a model, so that you do not have to request them: call_binding says what each call the specification governs binds to, resolved from the reported file's imports and declarations or, where that text cannot settle a call (no receiver, an expression or generated-code receiver), from the invoke instruction the analysed APK's bytecode holds for it (resolution bytecode_invocation, with the type the compiler called and the platform or library type that declares the method); bytecode_only_calls lists governed calls the bytecode makes that the source writes in another form, such as a property access; and whether that is a type the specification names (resolved_to_governed_type settles whether a lexical call is the governed API call); artifact_ownership says which declared coordinate ships the reported class and at which declared version, or that the checkout itself declares it; specification_applicability says whether a call the specification's own api_patterns name appears in the reviewed source, quoting the matching event's condition with its stated limits; caller_contract lists the files that call the reported method with each call site's receiver resolution; input_flow says whether text from an editable widget reaches a parse call in the reviewed method, whether a try that catches the failure encloses it, and whether the call runs in a framework callback (then no caller in the repository can handle it): an editable_text_reaches_parser_unguarded status settles that invalid input is feasible and that the method itself does not handle it, and leaves open only what its bound names; its validation_search lists what the repository does about those widgets, and no_validation_found_for_any_widget with no application-level exception handler settles that nothing in the repository excludes an empty or malformed value or handles the exception; byte_material says, for each key, IV or salt constructor in the reviewed method, where its bytes come from: fresh_zero_filled (a new all-zero array nothing writes before it is passed) and constant_literal (bytes written in the source) settle that the material is fixed and not the output of any random source, which is what a rule requiring randomized or generated material asks; filled_by_nextBytes and written_after_creation name what fills it; not_settled settles nothing. Whether fixed material is a defect in this design (for instance a fixed IV under a key that never repeats) is a separate question the code and its documentation answer, and belongs in the security impact and review assumptions, not in whether the rule's predicate holds. Cite them as evidence for the predicates they settle. Read their statuses literally: unresolved, undeclared_external, no_governed_call, no_governed_api_matched and callers_truncated each state a limit of what the checkout establishes and are not negative findings. finding.class_resolution, when present, says the reported class was not in the checkout under its reported name and the reviewed file declares a namesake from another package: weigh whether that class is the one the detector reported before confirming anything about it. finding.app_caller_attribution, when present, says the reported frame is library code implementing the governed API and the reviewed method is the application statement that passes it the reported value (call_site): judge the finding at that statement, and treat the library frame as the receiver of the call. finding.reported_violation_section, when present, names the part of the rule the detector's violation type is about: order for a call-sequence error, constraint for an argument-value error. Set cause_rule_section to the part your confirmed_cause is about. A cause from another part explains a different requirement: record that one as a violated predicate, and decide cause_status and detector_violation from the requirement in the reported part. A field-level SEQ entry lists every use, in the reviewed file, of a field the reviewed method assigns; a sequence error is often reported where the object was created and caused in another method that uses the field. Return only structured output.",
+  "input": "Correct the rejected adjudication below so it satisfies every deterministic validation error. Use only the same validated evidence extraction; do not invent new claims or evidence, and do not soften a genuinely unconfirmed cause or detector violation merely to pass validation.\n\n<adjudication_correction untrusted_data=\"true\">\n{\"finding\":{\"finding_id\":\"org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit\",\"specification\":\"CipherSpec\",\"spec_family\":\"cipher\",\"error_message\":\"the key given to Cipher.init carries a key-origin predicate the rule does not admit\",\"target\":{\"class\":\"org.fedorahosted.freeotp.encryptor.EncryptedKey\",\"method\":\"encrypt\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java\"},\"reported_violation\":\"UnsatisfiedConstraint\"},\"scope_completeness\":{\"target_source\":\"complete\",\"resolved_callers\":\"complete\",\"ambiguous_calls\":\"complete\",\"tests\":\"complete\",\"build_config\":\"complete\",\"external_contract\":\"unknown\",\"overall\":\"complete\",\"limitations\":[]},\"case_policy\":{},\"validated_evidence_extraction\":{\"predicate_assessment\":[{\"predicate\":\"The encryption Cipher transformation is fully specified as AES/GCM/NoPadding.\",\"explanation\":\"The reviewed encrypt method obtains a javax.crypto.Cipher using the literal transformation \\\"AES/GCM/NoPadding\\\".\",\"status\":\"confirmed\",\"rule_section\":\"constraint\",\"unknown_reason\":\"not_applicable\",\"evidence_ids\":[\"SRC-001\"]},{\"predicate\":\"The encryption Cipher is initialized before it processes AAD or plaintext.\",\"explanation\":\"encrypt obtains the Cipher and calls init in encryption mode before constructing EncryptedKey; that constructor calls updateAAD and doFinal on the passed Cipher.\",\"status\":\"confirmed\",\"rule_section\":\"order\",\"unknown_reason\":\"not_applicable\",\"evidence_ids\":[\"SRC-001\",\"CTOR-001\"]},{\"predicate\":\"Encryption AAD is supplied before ciphertext processing.\",\"explanation\":\"The EncryptedKey constructor calls cipher.updateAAD(mToken bytes) before cipher.doFinal(token.getEncoded()).\",\"status\":\"confirmed\",\"rule_section\":\"order\",\"unknown_reason\":\"not_applicable\",\"evidence_ids\":[\"SRC-001\"]},{\"predicate\":\"The key supplied to the governed encryption Cipher.init call has a key origin accepted by the CipherSpec rule.\",\"explanation\":\"The runtime measurement at EncryptedKey.java:42 records a CIPHER-CONSTR-00 violation for the expectation that the key be produced by one of the rule-named generators. This establishes a failing governed-call execution, although it does not identify the particular source expression that produced the measured key.\",\"status\":\"violated\",\"rule_section\":\"required_predicate\",\"unknown_reason\":\"not_applicable\",\"evidence_ids\":[\"RUN-001\"]},{\"predicate\":\"The encryption-generated encoded AlgorithmParameters are retained and supplied to decryption initialization.\",\"explanation\":\"Encryption saves cipher.getParameters().getEncoded() in mParameters. Decryption reconstructs AlgorithmParameters from mParameters and supplies that object to the decrypt-mode Cipher.init call.\",\"status\":\"confirmed\",\"rule_section\":\"constraint\",\"unknown_reason\":\"not_applicable\",\"evidence_ids\":[\"SRC-001\"]},{\"predicate\":\"Each AES-GCM encryption uses a fresh nonce/IV for a reused encryption key.\",\"explanation\":\"encrypt supplies only the key to Cipher.init and does not explicitly supply GCM parameters or an IV/nonce. The source stores provider-returned parameters, but it does not establish the provider-generated nonce values or their uniqueness across encryption operations and key reuse.\",\"status\":\"unknown\",\"rule_section\":\"required_predicate\",\"unknown_reason\":\"runtime_dependent\",\"evidence_ids\":[\"SRC-001\"]},{\"predicate\":\"Decryption supplies AAD before finalizing the stored ciphertext under the reconstructed Cipher parameters.\",\"explanation\":\"decrypt reconstructs AlgorithmParameters from mParameters, initializes the Cipher in decrypt mode with them, then supplies mToken-derived AAD before doFinal(mCipherText).\",\"status\":\"confirmed\",\"rule_section\":\"order\",\"unknown_reason\":\"not_applicable\",\"evidence_ids\":[\"SRC-001\"]}],\"confirmed_dataflows\":[\"encrypt key parameter -> cipher.init(Cipher.ENCRYPT_MODE, key).\",\"encrypt plaintext SecretKey -> token.getEncoded() -> cipher.doFinal(...) -> mCipherText.\",\"plaintext SecretKey algorithm -> mToken -> UTF-8 bytes -> cipher.updateAAD during encryption and decryption.\",\"cipher.getParameters().getEncoded() after encryption -> mParameters -> AlgorithmParameters.init(mParameters) -> decrypt-mode cipher.init(..., ap).\",\"MasterKey constructor: PBKDF2-derived pwd SecretKey -> EncryptedKey.encrypt(pwd, key) as the encryption-key argument; separately, SecureRandom-filled raw bytes -> AES SecretKeySpec -> plaintext argument.\",\"Encryptor.encryptToken: AndroidKeyStore getKey(MASTER, null) result -> cast SecretKey -> EncryptedKey.encrypt encryption-key argument.\"],\"needs_more_evidence\":true,\"relations\":[{\"description\":\"The encryption factory, encryption initialization, AAD update, and one-shot finalization operate on the same Cipher object passed from encrypt into the EncryptedKey constructor.\",\"status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\",\"CTOR-001\"],\"kind\":\"Cipher object lifetime and event order\"},{\"description\":\"Encrypted parameter bytes are persisted in the EncryptedKey object and are reconstructed for the later decrypt-mode initialization.\",\"status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\"],\"kind\":\"encryption-to-decryption parameter flow\"},{\"description\":\"The encryption init invocation in encrypt has only mode and key arguments; it does not explicitly supply a GCMParameterSpec, AlgorithmParameters, or an IV/nonce argument.\",\"status\":\"confirmed_absent\",\"evidence_ids\":[\"SRC-001\"],\"kind\":\"explicit nonce/parameter argument\"},{\"description\":\"The actual provider-generated GCM nonce/IV values and whether a nonce remains unique whenever an encryption key is reused are not established by the supplied source or measurement.\",\"status\":\"unknown_due_to_incomplete_scope\",\"evidence_ids\":[\"SRC-001\"],\"kind\":\"nonce lifecycle\"},{\"description\":\"The supplied material does not define which producer operations establish CipherSpec's generatedKey, generatedPubkey, or generatedPrivkey predicates, so source provenance cannot be mapped completely to those rule predicates.\",\"status\":\"unknown_due_to_incomplete_scope\",\"evidence_ids\":[\"SPEC-001\"],\"kind\":\"CrySL key-origin predicate production\"},{\"description\":\"The runtime report establishes a failing key-origin check at the governed initialization in measured executions, but it does not link that measured key to one specific repository caller or producer expression.\",\"status\":\"unknown_due_to_incomplete_scope\",\"evidence_ids\":[\"RUN-001\",\"CALL-001\",\"CALL-002\",\"CALL-003\",\"CALL-004\"],\"kind\":\"runtime key value to source producer\"}],\"claims\":[{\"claim_id\":\"CLM-001\",\"statement\":\"EncryptedKey.encrypt creates a javax.crypto.Cipher with transformation AES/GCM/NoPadding and initializes it in encryption mode using its key parameter.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\"]},{\"claim_id\":\"CLM-002\",\"statement\":\"The encrypted representation stores the transformation string, plaintext-key algorithm identifier, ciphertext, and encoded Cipher parameters.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\"]},{\"claim_id\":\"CLM-003\",\"statement\":\"The code supplies the plaintext SecretKey algorithm as AAD before encryption finalization and supplies the same stored algorithm string as AAD before decryption finalization.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\"]},{\"claim_id\":\"CLM-004\",\"statement\":\"The resolved repository callers of EncryptedKey.encrypt include two tests, Encryptor.encryptToken, and the MasterKey constructor.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"CALL-001\",\"CALL-002\",\"CALL-003\",\"CALL-004\"]},{\"claim_id\":\"CLM-005\",\"statement\":\"One production caller passes a KeyStore key retrieved from AndroidKeyStore as the encryption-key argument, while the MasterKey constructor passes a PBKDF2-derived SecretKey as that argument.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-002\",\"SRC-003\",\"CALL-003\",\"CALL-004\"]},{\"claim_id\":\"CLM-006\",\"statement\":\"A runtime measurement recorded CipherSpec key-origin-check failures at the encryption Cipher.init location in 12 reported application runs.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"RUN-001\"]},{\"claim_id\":\"CLM-007\",\"statement\":\"AES/GCM/NoPadding configures an AEAD transformation, but the supplied evidence does not establish successful encryption or decryption for all production executions.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\",\"WEB-001\"]}],\"requested_evidence\":[{\"kind\":\"runtime nonce/IV trace\",\"reason\":\"Determine the nonce/IV selected for each AES-GCM encryption and whether any value is reused with the same encryption key.\",\"symbol\":\"EncryptedKey.encrypt / Cipher.init(Cipher.ENCRYPT_MODE, key)\"},{\"kind\":\"CrySL predicate producer definitions and analysis trace\",\"reason\":\"Determine which operations can establish the accepted key-origin predicates and why each source key did or did not establish one.\",\"symbol\":\"generatedKey[key, alg(transformation)], generatedPubkey[key], generatedPrivkey[key]\"},{\"kind\":\"runtime source-to-value correlation\",\"reason\":\"Identify which resolved caller and key-producing expression supplied the key observed in the failing runtime measurements.\",\"symbol\":\"EncryptedKey.encrypt key parameter at EncryptedKey.java:42\"}],\"observed_events\":[\"EncryptedKey.encrypt calls javax.crypto.Cipher.getInstance(\\\"AES/GCM/NoPadding\\\").\",\"EncryptedKey.encrypt calls cipher.init(Cipher.ENCRYPT_MODE, key).\",\"The EncryptedKey constructor calls cipher.updateAAD with UTF-8 bytes of the plaintext SecretKey algorithm.\",\"The EncryptedKey constructor calls cipher.doFinal with the plaintext SecretKey encoded bytes.\",\"The constructor captures cipher.getParameters().getEncoded() after encryption finalization.\",\"EncryptedKey.decrypt reconstructs AlgorithmParameters from mParameters and calls cipher.init(Cipher.DECRYPT_MODE, key, ap).\",\"EncryptedKey.decrypt supplies the stored algorithm identifier as AAD before cipher.doFinal(mCipherText).\"],\"unresolved_questions\":[\"Which concrete key-producing source expression reached EncryptedKey.java:42 in each measured failing run?\",\"Which operations, if any, establish the CipherSpec generatedKey, generatedPubkey, or generatedPrivkey predicates for the relevant key values?\",\"What nonce/IV does the active provider generate for the two-argument AES-GCM encryption initialization, and is it unique per encryption for each key?\",\"Whether all persisted EncryptedKey records can be decrypted successfully under the deployed provider and key lifecycle is not established.\"],\"family_assessment\":{\"authentication_property\":\"confirmed\",\"initialization_status\":\"confirmed\",\"transformation\":\"AES/GCM/NoPadding\",\"nonce_lifecycle\":\"unknown\",\"evidence_ids\":[\"SRC-001\",\"CTOR-001\",\"WEB-001\"]}},\"external_evidence_catalog\":[{\"evidence_id\":\"WEB-001\",\"kind\":\"external_source\",\"trust_level\":\"external_untrusted_source\",\"mandatory\":false,\"sha256\":\"72705d0feb9154f59238aee9b5702cfc12427cb936b06de8cc5a15a0553cc389\",\"data\":{\"relevance\":\"Official Java SE API contract for `Cipher`: transformations, initialization, AEAD ordering, exceptions, standard transformations, and API version information.\",\"limitations\":\"It does not define CrySL predicates or prescribe remediation for static-analysis predicate failures.\",\"claim\":\"`Cipher` is the JCE cryptographic engine API and documents initialization and data/key-processing contracts.\",\"authority\":\"official\",\"url\":\"https://docs.oracle.com/en/java/javase/26/docs/api/java.base/javax/crypto/Cipher.html\",\"evidence_id\":\"WEB-001\"}},{\"evidence_id\":\"WEB-002\",\"kind\":\"external_source\",\"trust_level\":\"external_untrusted_source\",\"mandatory\":false,\"sha256\":\"855d1c5567ca3e183598df71e06ba888fbcb5b0b6d9114e87dd4429424b5fb26\",\"data\":{\"relevance\":\"Official Oracle JCA usage guidance, including transformation specificity, parameters, AES-GCM, encoded parameter transfer, and key wrapping metadata.\",\"limitations\":\"It is guidance and API documentation, not a generic encrypted-data migration specification or a CrySL-rule specification.\",\"claim\":\"Use fully specified transformations; retain/use applicable parameters and AAD; change a GCM IV when reusing a key for encryption.\",\"authority\":\"official\",\"url\":\"https://docs.oracle.com/en/java/javase/26/security/java-cryptography-architecture-jca-reference-guide.html\",\"evidence_id\":\"WEB-002\"}},{\"evidence_id\":\"WEB-003\",\"kind\":\"external_source\",\"trust_level\":\"external_untrusted_source\",\"mandatory\":false,\"sha256\":\"641ae55b82b8384a04273d573a32649edbd9657ab8defd94eeb663bdc802d4a1\",\"data\":{\"relevance\":\"Official Java SE API documentation for the Java-version availability of `GCMParameterSpec`.\",\"limitations\":\"Availability of the class does not by itself establish provider support for every transformation on every runtime.\",\"claim\":\"`GCMParameterSpec` has existed since Java 7.\",\"authority\":\"official\",\"url\":\"https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/spec/GCMParameterSpec.html\",\"evidence_id\":\"WEB-003\"}},{\"evidence_id\":\"WEB-004\",\"kind\":\"external_source\",\"trust_level\":\"external_untrusted_source\",\"mandatory\":false,\"sha256\":\"1514c52bef5e29658588b0c1da664c6d1fe994b84182d6a628afa7e2fc95a323\",\"data\":{\"relevance\":\"Official Oracle JDK 8 security enhancement documentation for SunJCE AES-GCM support.\",\"limitations\":\"It documents Oracle JDK/SunJCE information and is not a universal provider-support statement.\",\"claim\":\"Oracle documented SunJCE support for AES/GCM/NoPadding and GCM algorithm parameters as a JDK 8 enhancement.\",\"authority\":\"official\",\"url\":\"https://docs.oracle.com/javase/8/docs/technotes/guides/security/enhancements-8.html\",\"evidence_id\":\"WEB-004\"}},{\"evidence_id\":\"WEB-005\",\"kind\":\"external_source\",\"trust_level\":\"external_untrusted_source\",\"mandatory\":false,\"sha256\":\"02d3e529dbc836591e25abc75ed0a88a21739ce654bfbab82be7d521d135833f\",\"data\":{\"relevance\":\"Primary source for the reported CrySL rule's specification scope, event signatures, and predicate condition.\",\"limitations\":\"The branch-based URL is not commit-pinned; the file does not define a detector implementation's resolution or call-graph behavior and does not itself establish correspondence to the supplied rule SHA-256.\",\"claim\":\"The rule is declared for `javax.crypto.Cipher`, models listed event parameter shapes, and requires one of three key-origin predicates for its `key` variable.\",\"authority\":\"primary\",\"url\":\"https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Cipher.crysl\",\"evidence_id\":\"WEB-005\"}},{\"evidence_id\":\"WEB-006\",\"kind\":\"external_source\",\"trust_level\":\"external_untrusted_source\",\"mandatory\":false,\"sha256\":\"4e13de77e21970b003fe6c7f6b87862e803e98d4f3f17e654a138eca22db6c49\",\"data\":{\"relevance\":\"Documents the `Cipher.getInstance(String transformation)` API and identifies its parameter as a transformation name.\",\"limitations\":\"This API reference does not declare, initialize, or assign the application identifier `mCipher`; it cannot establish that variable's exact runtime value.\",\"claim\":\"`Cipher.getInstance` accepts a `String` transformation argument, so `mCipher` must be compatible with `String` when passed directly to this overload.\",\"authority\":\"official\",\"url\":\"https://developer.android.com/reference/javax/crypto/Cipher\",\"evidence_id\":\"WEB-006\"}}],\"valid_evidence_ids\":[\"SRC-001\",\"SPEC-001\",\"TEST-001\",\"TEST-002\",\"SRC-002\",\"SRC-003\",\"SEQ-001\",\"RUN-001\",\"CTOR-001\",\"CALL-001\",\"CALL-002\",\"CALL-003\",\"CALL-004\",\"TEST-003\",\"TEST-004\",\"TEST-005\",\"TEST-006\",\"RENAME-001\",\"TEST-007\",\"TEST-008\",\"SRC-004\",\"SRC-005\",\"SRC-006\",\"SRC-007\",\"SRC-008\",\"SRC-009\",\"SRC-010\",\"BUILD-001\",\"WEB-001\",\"WEB-002\",\"WEB-003\",\"WEB-004\",\"WEB-005\",\"WEB-006\"],\"reported_by_rule\":{\"specification\":\"CipherSpec\",\"source_title\":\"Cipher.crysl — CROSSINGTUD Crypto-API-Rules\",\"source_url\":\"https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Cipher.crysl\",\"source_verified\":true,\"governed_api_types\":[\"javax.crypto.Cipher\"],\"protocol\":\"Get, Init+, AADUpdate*, WKB+ | (FINWOU | (Update+, DoFinal))+\",\"events\":[{\"name\":\"Get\",\"matches\":\"Observed: a local source match is a candidate factory call. Satisfies `Get` only when resolution identifies a `javax.crypto.Cipher.getInstance` overload with one or two arguments and the resulting Cipher object is the object followed by later rule events.\",\"api_patterns\":[\"Cipher.getInstance(\",\"javax.crypto.Cipher.getInstance(\"]},{\"name\":\"Init\",\"matches\":\"Observed: a call syntactically ending in `.init(`. Satisfies `Init` only when its resolved receiver is the tracked `javax.crypto.Cipher` and its signature is one of the modeled initialization overloads using a mode with a certificate or key, optionally parameters and/or `SecureRandom`.\",\"api_patterns\":[\".init(\"]},{\"name\":\"AADUpdate\",\"matches\":\"Observed: a call syntactically ending in `.updateAAD(`. Satisfies `AADUpdate` only when its resolved receiver is the tracked Cipher and it is a byte-array, byte-array slice, or `ByteBuffer` overload; the rule further forbids this event for CTR, CTS, CFB, ECB, and OFB transformations.\",\"api_patterns\":[\".updateAAD(\"]},{\"name\":\"Update\",\"matches\":\"Observed: a call syntactically ending in `.update(`. Satisfies `Update` only for a tracked Cipher and one of the modeled array or `ByteBuffer` overload forms; applicable offset and length predicates must also hold.\",\"api_patterns\":[\".update(\"]},{\"name\":\"DoFinal\",\"matches\":\"Observed: a call syntactically ending in `.doFinal(`. Satisfies `DoFinal` only for a modeled Cipher overload. `FINWOU` is the subset taking plaintext/input in the same call and is permitted as a one-shot final operation; zero-input/output finalization is modeled only after one or more `Update` events.\",\"api_patterns\":[\".doFinal(\"]},{\"name\":\"WKB\",\"matches\":\"Observed: a call syntactically ending in `.wrap(`. Satisfies `WKB` only when the resolved receiver is the tracked Cipher and bytes are produced by `Cipher.wrap(Key)` after required `Get` and `Init` events.\",\"api_patterns\":[\".wrap(\"]}],\"detector_semantics\":{\"claim\":\"For each tracked `javax.crypto.Cipher` object, the consulted CrySL rule requires a `Get` event followed by one or more `Init` events, optional AAD updates, and then either key wrapping or modeled finalization/streaming. It also applies stated transformation, mode, padding, type, range, and predicate constraints.\",\"predicates\":[\"`encmode` must be one of 1, 2, 3, or 4.\",\"Public/private-key or certificate initialization implies RSA for wrap/unwrap modes 3 or 4; a `SecretKey` implies an allow-listed AES or PBE-with-AES algorithm.\",\"AES is restricted to GCM, CTR, CTS, CFB, or OFB and requires `NoPadding`; RSA is restricted to no mode or ECB with the rule's listed padding values.\",\"CTR, CTS, CFB, and OFB decryption/non-encryption modes may not use an init form without explicit IV/parameters; their encryption mode requires `preparedIV[paramSpec]`.\",\"GCM requires `preparedGCM[paramSpec]`; listed OAEP padding cases require `preparedOAEP[paramSpec]`; `AlgorithmParameters` require `preparedAlg[params, alg(transformation)]`.\",\"Key initialization requires one of `generatedKey[key, alg(transformation)]`, `generatedPubkey[key]`, or `generatedPrivkey[key]`; a supplied `SecureRandom` requires `randomized[random]`.\",\"For modeled byte-array overloads, offsets and lengths must satisfy the rule's nonnegative and buffer-bound constraints; plaintext must satisfy `!macced[this, plainText]`.\"],\"limitations\":[\"Predicate satisfaction is only as complete as the installed CrySL rules, dataflow/alias analysis, dependency bytecode, and available call graph.\",\"The exact detector version, compiled rules artifact, active rule revision, analysis configuration, and error category hidden by `message: \\\"unknown\\\"` were not supplied.\",\"The source rule contains security policy choices narrower than the general JCA API contract and is not a complete language-level specification of Cipher.\"]},\"known_false_positive_shapes\":[\"A syntactic `.init(`, `.update(`, or `.doFinal(` match on a non-Cipher receiver when local matching is used without resolved type information.\",\"A partial program/dependency view in which factory, initialization, finalization, or predicate-producing code is external, reflection-based, native, generated, or omitted from the call graph.\",\"A runtime-valid provider-specific transformation rejected because the CrySL rule's algorithm/mode/padding allow-list is narrower than the complete JCA provider surface.\",\"A valid one-shot zero-input `Cipher.doFinal()` immediately after initialization: the rule defines that overload, but its order expression admits it only after one or more modeled `Update` events.\",\"A valid `Cipher.unwrap(...)` workflow: JCA supports it, but the consulted rule models `wrap` and has no `unwrap` event.\",\"Code whose enclosing method is named `encrypt`, `decrypt`, or `create` but delegates to another component, uses a different crypto API, or only prepares values without operating a Cipher.\"]},\"rejected_adjudication\":{\"generation_status\":\"supported_for_review\",\"forward_compatibility_strategy\":\"Any review patch must preserve decryption of existing EncryptedKey records and the existing key-lifecycle semantics for both AndroidKeyStore-backed and PBKDF2-derived wrapping keys. It must retain persisted Cipher parameters for new AES-GCM records (as the current representation does) and, if it makes GCM parameters explicit, generate a fresh nonce per encryption without pinning provider behavior or discarding legacy parameter decoding.\",\"review_assumptions\":[\"CLM-006 (RUN-001) corroborates the rendered detector message: governed Cipher.init executions failed the CipherSpec key-origin predicate in 12 observed runs. This confirms the reported predicate, but does not identify which caller supplied the measured key in each run.\",\"CLM-001 (SRC-001) establishes that the governed operation is a javax.crypto.Cipher AES/GCM/NoPadding encryption initialization using only mode and the caller-provided key. The verified CipherSpec additionally requires generatedKey/generatedPubkey/generatedPrivkey for that key and preparedGCM parameters for GCM; the latter is a separate violated specification predicate because this init form supplies no parameter object.\",\"CLM-004 and CLM-005 establish the bounded repository call paths: production uses include an AndroidKeyStore key and a PBKDF2-derived SecretKey. They do not establish that replacing either key with a rule-recognized generated key preserves the application's wrapping-key, recovery, or persisted-record behavior.\",\"The provider-generated nonce lifecycle is not established. A two-argument encryption init may cause a provider to create parameters, but the supplied source and runtime report do not establish nonce uniqueness under key reuse. This limits runtime-impact conclusions rather than negating the confirmed rule violations.\",\"The exact CrySL producer operations for generatedKey/generatedPubkey/generatedPrivkey are not supplied. Therefore the detector predicate is confirmed as failed at runtime, while a rule-compliant replacement provenance cannot be selected automatically.\",\"No case_policy authorization is supplied. Choosing whether to preserve the current AndroidKeyStore/PBKDF2 key designs, migrate them, or introduce a separately managed wrapping key is a maintainer architectural decision.\"],\"cause_status\":\"confirmed\",\"decision\":\"MULTI_FILE_FIX_REQUIRES_POLICY\",\"blocking_for_generation\":[{\"discharged_by_pipeline_validation\":false,\"kind\":\"Key-lifecycle remediation choice\",\"supporting_claim_ids\":[\"CLM-004\",\"CLM-005\",\"CLM-006\"],\"category\":\"maintainer_decision\",\"description\":\"A review patch must decide how to make every production encryption key satisfy the rule while preserving the intended semantics of AndroidKeyStore-backed and PBKDF2-derived keys. The reviewer must decide whether those key sources remain the wrapping keys, are migrated, or are supplemented by a separately stored/generated key; compilation, unit tests, and source rechecking cannot make that architectural choice.\"}],\"blocking_for_publication\":[{\"discharged_by_pipeline_validation\":false,\"kind\":\"Persisted encrypted-record/key continuity\",\"supporting_claim_ids\":[\"CLM-002\",\"CLM-004\",\"CLM-005\"],\"category\":\"compatibility_contract\",\"description\":\"The patch must preserve decryption of records encrypted with the existing AndroidKeyStore or PBKDF2-derived wrapping-key lifecycle, including records persisted before a change. The representation retains Cipher parameters, but the supplied evidence does not establish a self-describing wrapping-key identity or a legacy-key fallback contract.\"},{\"discharged_by_pipeline_validation\":false,\"kind\":\"Maintainer approval of key-lifecycle semantics\",\"supporting_claim_ids\":[\"CLM-004\",\"CLM-005\",\"CLM-006\"],\"category\":\"maintainer_decision\",\"description\":\"A reviewer must approve the chosen key generation, storage, recovery, rotation, and migration behavior for both production caller paths. This decision is not settled by the bounded source evidence or by automated validation.\"},{\"discharged_by_pipeline_validation\":false,\"kind\":\"Provider/device GCM behavior\",\"supporting_claim_ids\":[\"CLM-001\"],\"category\":\"runtime_behavior\",\"description\":\"If the review patch makes GCM nonce generation or GCMParameterSpec use explicit, it must be validated on supported Android providers/devices for encryption/decryption interoperability and fresh nonce behavior. The pipeline does not run instrumentation tests or device/provider checks.\"}],\"compatibility_status\":\"regression_risk\",\"required_tests\":[\"Run the patched module Gradle build, unit-test task, Android-test source compilation, and deterministic source-level recheck that the reported key-origin predicate is absent from every patched production path.\",\"Add or retain unit coverage for encrypt/decrypt round trips through both bounded production key paths: AndroidKeyStore-backed key use and PBKDF2-derived key use.\",\"Test repeated AES-GCM encryption using the same wrapping key and verify distinct retained encryption parameters/nonces while each resulting record decrypts successfully.\",\"Test decryption of representative records produced before the change using the retained legacy key lifecycle and stored Cipher parameters.\",\"Run supported-device/instrumentation coverage for the selected provider behavior if explicit GCM parameters or key-lifecycle handling changes.\"],\"scope_status\":\"complete\",\"confirmed_cause\":\"The reported required-predicate violation is confirmed: the governed AES/GCM Cipher.init receives a caller-supplied key that failed CipherSpec's accepted key-origin predicate in observed executions (CLM-001, CLM-006). The bounded production callers supply either an AndroidKeyStore key or a PBKDF2-derived SecretKey (CLM-004, CLM-005), but the measured runs do not map a failing value to one specific source. Separately, the same AES-GCM initialization supplies only mode and key, while the verified rule requires preparedGCM parameters for GCM; this is an additional required-predicate specification violation. The provider-generated nonce uniqueness question remains unresolved and is not used to dismiss either predicate violation.\",\"cause_rule_section\":\"required_predicate\",\"decision_claim_ids\":[\"CLM-001\",\"CLM-002\",\"CLM-004\",\"CLM-005\",\"CLM-006\"],\"detector_violation\":\"confirmed\",\"publication_status\":\"blocked\",\"required_edit_categories\":[\"Multi-caller encryption-key provenance/lifecycle remediation\",\"Explicit AES-GCM parameter and fresh-nonce preparation where compatible with the selected provider contract\",\"Legacy encrypted-record and wrapping-key compatibility preservation\"],\"runtime_security_impact\":\"not_established\",\"authorized_behavior_change\":{\"authorized\":false,\"description\":\"No maintainer policy authorizes changing the AndroidKeyStore/PBKDF2 wrapping-key lifecycle or compatibility behavior.\",\"policy_reference\":\"\"}},\"deterministic_validation_errors\":[\"non-repair decision cannot authorize generation\"]}\n</adjudication_correction>",
+  "context": {
+    "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+    "stage": "adjudication.correction",
+    "prompt_version": "llm-pipeline-v2.0",
+    "schema_version": "2.0",
+    "policy_version": "2.0",
+    "context_builder_version": "2.14",
+    "semantic_resolver_version": "tree-sitter-semantic-v2",
+    "section_telemetry": {
+      "finding": {
+        "characters": 579,
+        "approx_tokens": 145,
+        "sha256": "64c974fc9774351710855ddaaf1670a249b36f0fac3c0aa16c8ddc4260c057b3"
+      },
+      "scope_completeness": {
+        "characters": 200,
+        "approx_tokens": 50,
+        "sha256": "068a571b317f41616eff51d6491139721d551fe9f2bd06ccdd44e4213e785189"
+      },
+      "case_policy": {
+        "characters": 2,
+        "approx_tokens": 1,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "validated_evidence_extraction": {
+        "characters": 9840,
+        "approx_tokens": 2460,
+        "sha256": "1e013093b4fc03ce585e474c49c06e2d6f43a56867032b1b482f223761d8f75f"
+      },
+      "external_evidence_catalog": {
+        "characters": 4515,
+        "approx_tokens": 1129,
+        "sha256": "c5ea63197cb8b648c46cdfbda57055d0b07da5ff78e78264b60fc9706dda9ff2"
+      },
+      "valid_evidence_ids": {
+        "characters": 360,
+        "approx_tokens": 90,
+        "sha256": "c42316e9b39de51c513b2e76b2386661fa613de44f62f732c56cca6b0bffdb30"
+      },
+      "reported_by_rule": {
+        "characters": 5297,
+        "approx_tokens": 1324,
+        "sha256": "dae3b92f3c0aaa1bb249ea29caca88a7c42e8788fc44c1b54884601b51584ac9"
+      },
+      "rejected_adjudication": {
+        "characters": 6880,
+        "approx_tokens": 1720,
+        "sha256": "d824219d928230544f1332cc8b9fe1ec7c5781f78b8bc18b08aef17b53e12bdf"
+      },
+      "deterministic_validation_errors": {
+        "characters": 51,
+        "approx_tokens": 13,
+        "sha256": "60767c3719e1e9efabc611a2a58f6077961550e8daa5e8da372bd9c8535f4aa8"
+      }
+    }
+  },
+  "input_sha256": "0002bbb29b78ce757f79f2b9b32941ae5332ebf4564d26eb5f955cd718476c2a"
+}

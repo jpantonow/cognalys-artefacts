@@ -1,0 +1,91 @@
+{
+ "unit": "co_3c8e59dbbfb4",
+ "phase": "phase2",
+ "order": [
+  "K90e44142",
+  "K90bd1c51"
+ ],
+ "card_sha256": {
+  "K90bd1c51": "893ff8c862f8a43f",
+  "K90e44142": "92c8fd978b30546d"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "AeSimpleSHA1.SHA1 (app/src/main/java/de/stephanlindauer/criticalmaps/utils/AeSimpleSHA1.java:14) has two callers, and neither uses SHA-1 for anything security-relevant. (1) UserModel:33 builds the rotating pseudonymous \"device\" token as SHA1(ANDROID_ID + date). PutLocationHandler:88 and ChatModel:66 send this token to the shared Critical Maps backend (api-gw.criticalmaps.net/locations and /messages; iOS clients use the same backend). OtherUsersLocationModel:30 then compares it with the \"device\" values the server sends back, so the app can skip its own location. (2) ChatModel:65 builds a chat message \"identifier\" as SHA1(message + Math.random()), which is only a unique ID. Neither is a signature, MAC, password hash or integrity check, so SHA-1 collision attacks don't apply. Preimage resistance is the only property that matters for the token, and SHA-1 still has it. The token's real weakness is that ANDROID_ID has only 64 bits of entropy and the date is guessable. SHA-256 is just as fast to brute-force, so switching hashes fixes nothing. Switching does carry costs. The device ID is part of the wire format (40 lowercase hex chars, as in test/resources/server_response_*.json). The server or other clients may check or store that format, and a 64-char ID could be rejected or break assumptions. The token would also change for every user on update. The unit test AeSimpleSHA1Test pins the SHA-1 output too. This is a false positive for the rule's intent (non-cryptographic identifier hashing).\n\nSecond judge: AeSimpleSHA1.SHA1 hashes ISO-8859-1 input into 40 lowercase hexadecimal characters. Its only production callers generate identifiers: UserModel hashes ANDROID_ID plus a date calculated six hours ahead, and ChatModel hashes message text plus Math.random(). Neither use verifies integrity, authenticates users, or checks signatures or passwords. SHA-1 collision weaknesses therefore do not establish an exploitable vulnerability here. A blind SHA-256 substitution is insufficient: the device token is exported in location and chat requests, compared against returned locations to exclude the user's own marker, and used as a map key. Chat identifiers are also exported. Response fixtures contain 40-character hashes, but the repository contains no server implementation or schema proving that longer values are accepted or forbidden. A stronger digest alone also does not make Math.random cryptographically secure or establish anonymity for the device token.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For a digest-upgrade PR, replace SHA-1 with a supported stronger digest such as SHA-256, update the helper's naming and both callers consistently, and update AeSimpleSHA1Test to verify the new digest rather than the old SHA-1 vector.",
+   "Address the exported identifier transition explicitly. Establish compatibility with the location and chat APIs, including the longer hexadecimal output, or provide a coordinated migration; do not assume opaque strings on the Android side prove server compatibility.",
+   "Verify that outgoing location and chat requests use the same device token and that returned own locations are still excluded. Keep coverage for receiving existing server responses."
+  ],
+  "must_not_break": [
+   "Wire format of the \"device\" field sent to api-gw.criticalmaps.net /locations (PutLocationHandler) and /messages (ChatModel): a 40-char lowercase hex string that the shared backend and the iOS/other clients expect",
+   "Self-filtering in OtherUsersLocationModel.setFromJson, which compares the token the server echoes back with UserModel.getChangingDeviceToken()",
+   "The format of the chat \"identifier\" field the backend accepts on POST /messages",
+   "The deterministic daily rotation of the device token (ANDROID_ID + date offset by 6 hours)",
+   "Support for the app's minSdk (the code avoids StandardCharsets for old API levels) and the existing AeSimpleSHA1Test / ChatModelTest unit tests",
+   "Location PUT and chat POST interoperability with the deployed API and existing clients. The repository does not establish whether the server validates hash length, truncates values, or otherwise depends on SHA-1 formatting.",
+   "The device token's deterministic derivation and reuse within the existing lifecycle, including the date calculation six hours ahead, unless deliberately migrated. Replacing it with a fresh value per request would break identity continuity and own-location filtering.",
+   "Chat message identifier uniqueness and the existing request fields, message encoding, and response parsing. Existing 40-character identifiers and device values must remain readable.",
+   "Privacy behavior: do not transmit the raw ANDROID_ID or replace the changing token with a permanent identifier merely to remove hashing.",
+   "Supported Android versions: the current build has minSdk 26; the helper's API16 comment does not define current support. No SDK increase or special cryptographic provider is needed for SHA-256.",
+   "Existing digest input encoding and hexadecimal representation must not change accidentally alongside an algorithm migration. No locally persisted digest-dependent data is evident; the concrete compatibility concern is exported identifiers and server-held state."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 47,
+ "tokens": {
+  "input_tokens": 82471,
+  "cached_input_tokens": 58880,
+  "output_tokens": 1351,
+  "reasoning_output_tokens": 643
+ },
+ "turns": 1,
+ "tool_calls": 5,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "4f07e7bb79a7dc8a",
+ "finished_at": "2026-11-17T19:05:09-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K90e44142",
+    "r2": 1,
+    "regression_scenario": "Normal location PUTs and chat POSTs now send 64-character identifiers. If the deployed API enforces the existing 40-character format, submissions fail; the PR establishes no compatibility or migration path.",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Both production callers switch to SHA-256, but API compatibility and shared-token/self-filtering verification are missing. Contrary to the description, the diff adds a helper and test while retaining AeSimpleSHA1 and its unchanged SHA-1 test."
+   },
+   {
+    "card_id": "K90bd1c51",
+    "r2": 1,
+    "regression_scenario": "Normal location PUTs and chat POSTs now send 64-character identifiers. If the deployed API enforces the existing 40-character format, submissions fail; the PR establishes no compatibility or migration path.",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The SHA-256 substitution preserves encoding and token derivation, but requesting compatibility confirmation leaves substantial migration work unresolved. The claimed rename and existing-test update are absent: the original helper and test remain alongside the added files."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

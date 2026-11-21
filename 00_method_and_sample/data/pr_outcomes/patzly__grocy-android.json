@@ -1,0 +1,26 @@
+[
+  {
+    "pull_request": "https://github.com/patzly/grocy-android/pull/1012",
+    "state": "open",
+    "finding_id": "71775001bd73",
+    "spec": "SSLContextSpec",
+    "csv_class": "xyz.zedler.patrick.grocy.web.RequestQueueSingleton$TLSSocketFactory",
+    "method_name": "<init>",
+    "title": "Initialize the TLS SSLContext only once",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:43.464685+00:00",
+    "maintainer_feedback": []
+  },
+  {
+    "pull_request": "https://github.com/patzly/grocy-android/pull/1013",
+    "state": "open",
+    "finding_id": "efa4a0003ff0",
+    "spec": "KeyStoreSpec",
+    "csv_class": "xyz.zedler.patrick.grocy.ssl.ikm.X509KeyStoreFile",
+    "method_name": "load",
+    "title": "Initialize missing keystores before storing key entries",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:45.735885+00:00",
+    "maintainer_feedback": []
+  }
+]

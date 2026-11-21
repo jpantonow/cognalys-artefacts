@@ -1,0 +1,168 @@
+{
+  "schema_version": 2,
+  "spec_id": "IntentReflectionSpec",
+  "name": "IntentReflectionSpec",
+  "applies_to_types": [
+    "android.content.IntentReflection"
+  ],
+  "source_title": "Requested IntentReflection CrySL primary source unavailable; Android Activity result-Intent semantics consulted as supporting API context",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IntentReflection.crysl",
+  "source_verified": false,
+  "protocol": "getIntent() -> reflect/preserve incoming Intent state -> setResult(...); risk predicate additionally requires an externally reachable caller and effective grant-bearing result state.",
+  "important_note": "The requested canonical IntentReflection.crysl URL was attempted but returned HTTP 404, and no formal rule establishing the package, events, constraints, or exact ORDER for IntentReflection was found. The required type android.content.IntentReflection is therefore an unverified formal target selected solely to satisfy the CrySL simple-name convention, not a corroborated Android SDK API class. The reported finding instead describes use of android.app.Activity.setResult(int, android.content.Intent).",
+  "events": [
+    {
+      "name": "receiveIncomingIntent",
+      "api_patterns": [
+        "getIntent()"
+      ],
+      "condition": "Observed: an Activity invokes getIntent(). Predicate: its returned Intent, or state preserved from it, reaches the result-data argument of setResult and the Activity is reachable by an untrusted caller; the call alone proves neither attacker control nor export status."
+    },
+    {
+      "name": "constructFreshResult",
+      "api_patterns": [
+        "new Intent()",
+        "new Intent(",
+        "Intent()",
+        "Intent("
+      ],
+      "condition": "Observed: source constructs an Intent. Predicate: the eventual result is independently constructed and does not preserve attacker-controlled URI, ClipData, URI-grant flags, extras, or other relevant state; allocation alone does not establish that predicate."
+    },
+    {
+      "name": "returnResult",
+      "api_patterns": [
+        "setResult("
+      ],
+      "condition": "Observed: an Activity invokes setResult. Predicate: the supplied Intent argument aliases, copies, or preserves relevant state from the incoming Intent and remains the effective result delivered to the caller; observing setResult alone does not prove reflection, completion, or a grant."
+    },
+    {
+      "name": "uriGrantCapability",
+      "api_patterns": [
+        "FLAG_GRANT_READ_URI_PERMISSION",
+        "FLAG_GRANT_WRITE_URI_PERMISSION",
+        "FLAG_GRANT_PERSISTABLE_URI_PERMISSION",
+        "FLAG_GRANT_PREFIX_URI_PERMISSION"
+      ],
+      "condition": "Observed: source references a URI-grant-related Intent flag. Predicate: the effective result contains an applicable read or write grant and a grantable URI in Intent data or ClipData. Persistable and prefix flags modify a read/write grant and are not independently documented as read/write grants."
+    },
+    {
+      "name": "completeResultFlow",
+      "api_patterns": [
+        "finish()"
+      ],
+      "condition": "Observed: the Activity invokes finish(). Predicate: the selected result remains effective when the result flow completes; a later setResult call can replace an earlier result."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That the Activity is exported, externally reachable, or launched by an attacker.",
+    "That getIntent() returns attacker-controlled data rather than an Intent from a trusted in-app caller.",
+    "That the Intent passed to setResult aliases the incoming Intent merely because both variables have similar names.",
+    "That a reflected Intent contains a content URI, ClipData URI, or applicable URI-grant flags.",
+    "That the referenced URI is grantable by its ContentProvider configuration or accessible to the returning Activity.",
+    "That setResult delivers a result unless the activity-result flow actually completes.",
+    "That the caller is untrusted or lacks pre-existing access to the URI.",
+    "That constructing a new Intent makes it safe; construction, copying, setData, setClipData, putExtra, or addFlags can preserve or recreate relevant state.",
+    "That android.content.IntentReflection exists as an Android SDK type or as a corroborated formal type."
+  ],
+  "semantic_scope": "The representative finding observes a possible reflection/dataflow shape in org.wordpress.android.ui.posts.EditPostActivity.saveResult: an incoming Activity Intent is passed back through Activity.setResult. Its stated security concern is propagation of URI permission grants to the caller. Export status, caller identity, exact alias behavior, effective result delivery, actual URI and flag contents, provider grantability, and the detector's interprocedural/path model are not established by the available rule source.",
+  "detector_semantics": {
+    "claim": "An exported Activity should return a newly constructed safe result Intent rather than reflect an attacker-controlled incoming Intent through setResult, because reflection can propagate URI permission grants to the caller.",
+    "predicates": [
+      "An Activity receives an incoming Intent.",
+      "The incoming Intent, or an alias or copy preserving relevant state, is supplied to Activity.setResult(int, Intent).",
+      "The component is exported or otherwise reachable by an attacker.",
+      "The effective returned Intent can carry applicable URI-grant state."
+    ],
+    "limitations": [
+      "The actual IntentReflection CrySL text is unavailable, so its exact event names, alias model, constraints, and ORDER expression cannot be verified.",
+      "The representative message does not establish whether the detector proves URI-grant flags and URIs or reports their propagation as a general risk.",
+      "The message does not establish whether manifest analysis, caller-trust analysis, later result replacement, or path feasibility is modeled.",
+      "No primary source corroborates android.content.IntentReflection as the exact formal type package."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "android.app.Activity.setResult(int, Intent) stores the result code and data that an Activity returns to its caller.",
+      "Android documents that, since Android 2.3 (API level 9), a result Intent supplied to setResult with FLAG_GRANT_READ_URI_PERMISSION and/or FLAG_GRANT_WRITE_URI_PERMISSION grants the Activity receiving the result access to the specific URIs in that Intent.",
+      "Intent documentation states that URI-grant flags apply to the Intent data URI and URIs in ClipData."
+    ],
+    "preconditions": [
+      "A caller must participate in an activity-result interaction for it to receive a result.",
+      "The Activity must finish or otherwise complete a result-returning flow with the selected result still effective.",
+      "For the stated access consequence, the effective result must contain applicable read and/or write URI-grant flags and applicable URI-bearing data or ClipData.",
+      "The URI and its ContentProvider must support a runtime grant under the platform's provider and permission rules.",
+      "The documented setResult URI-grant behavior applies from Android 2.3 / API level 9 onward."
+    ],
+    "unknowns": [
+      "Whether the candidate specification treats only direct object identity as reflection or also Intent copy constructors, parceling, helpers, field storage, and interprocedural aliases.",
+      "Whether it considers ClipData, nested Intents, extras, selector Intents, or only Intent data and flags.",
+      "Whether it models later removeFlags, replacement by a subsequent setResult call, or URI sanitization.",
+      "Whether the intended formal target is a project-local synthetic type in a package other than android.content."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "Returning an incoming untrusted Intent directly through setResult is unsafe when it can return URI permission grants to the caller.",
+    "runtime_claim": "At runtime, a grant-bearing result Intent can grant the receiving Activity access to the specific URI or URIs covered by the Intent, subject to the result-flow, flag, URI, and provider-grant preconditions.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A reachable formal IntentReflection.crysl file or authoritative project rule registry defining its SPEC, EVENTS, ORDER, and constraints.",
+      "The exact qualified formal type declaration whose simple name is IntentReflection.",
+      "Source or documentation for the detector's export/reachability, dataflow, alias, and URI-grant predicates."
+    ],
+    "runtime": [
+      "Manifest evidence that the Activity is exported or otherwise reachable by an untrusted app.",
+      "A reproducible activity-result launch by an untrusted caller.",
+      "Evidence that the effective setResult data aliases or preserves the inbound Intent's URI, ClipData, and relevant flags.",
+      "Evidence that the returned Intent has applicable read/write grant flags and a grantable provider URI.",
+      "Evidence that the caller receives and can use the resulting URI access."
+    ],
+    "compatibility": [
+      "Device/API-level evidence, including Android 2.3 / API level 9 or newer for documented setResult URI-grant behavior.",
+      "Provider grantUriPermissions or equivalent URI-grant eligibility evidence.",
+      "Coverage for URI placement in Intent data versus ClipData and for applicable flag combinations."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "The Activity is not exported, requires a signature-level permission, or is otherwise reachable only by trusted callers.",
+    "The inbound Intent originates from a trusted in-app result flow rather than an attacker.",
+    "The Intent passed to setResult is not the inbound Intent and does not preserve its URI, ClipData, or grant state.",
+    "The incoming or result Intent has no applicable read or write URI-grant flags or contains no relevant URI.",
+    "The referenced URI cannot be granted by the provider or is already accessible to the caller.",
+    "A later setResult call overwrites the reflected result before the Activity finishes.",
+    "The result-return flow never completes, so no result Intent is delivered.",
+    "Execution is confined to platform versions before the documented Android 2.3 / API level 9 result-grant behavior."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IntentReflection.crysl",
+    "https://developer.android.com/reference/android/app/Activity#setResult(int,%20android.content.Intent)",
+    "https://developer.android.com/reference/android/content/Intent",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/tree/master/JavaCryptographicArchitecture/src"
+  ],
+  "unknowns": [
+    "The requested canonical primary URL https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IntentReflection.crysl was attempted and returned HTTP 404.",
+    "The reachable CROSSINGTUD JavaCryptographicArchitecture/src directory does not list IntentReflection.crysl.",
+    "No primary formal specification source was found that establishes the exact package or existence of android.content.IntentReflection.",
+    "Consequently, the exact CrySL protocol, event labels, constraints, and predicates of IntentReflectionSpec remain unverified.",
+    "The representative detector message supports the described Android Activity/Intent security concern, but does not identify a canonical formal-rule implementation."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.wordpress.android.ui.posts.EditPostActivity",
+        "method": "saveResult",
+        "message": "expecting exported activities to return a newly constructed safe result Intent, but saveResult reflects the attacker-controlled incoming Intent through setResult, propagating URI permission grants to the caller."
+      }
+    ],
+    "expected_api_simple_name": "IntentReflection",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IntentReflection.crysl"
+  }
+}

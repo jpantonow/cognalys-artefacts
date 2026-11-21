@@ -1,0 +1,124 @@
+<!-- LOCAL LLM ANALYSIS PREVIEW: not intended for publication. -->
+
+# LLM analysis: `from`
+
+**Project:** `org.cryptomator.lite.debug_3157.apk`  
+**Class:** `org.cryptomator.data.cloud.webdav.network.SSLSocketFactories`  
+**Specification:** `SSLContextSpec`  
+**Decision:** `MULTI_FILE_FIX_PROPOSED_FOR_REVIEW`  
+**Review status:** `PROPOSED_FIX_REQUIRES_REVIEW`
+
+## Interpretation
+
+A complete candidate patch was generated from confirmed evidence, but residual assumptions require human review. It is explicitly blocked from automatic application and publication.
+
+## Evidence status
+
+- **Cause:** `confirmed`
+- **Detector violation:** `confirmed`
+- **Runtime security impact:** `non_security`
+- **Scope:** `complete`
+- **Generation:** `supported_for_review`
+- **Publication:** `blocked`
+- **Diagnostic evidence:** `DET-001`
+- **Diagnostic authority:** `informational_only`
+
+## Reported finding
+
+the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory
+
+## Confirmed cause
+
+The `trustManager` parameter reaches `SSLContext.init` as `arrayOf<TrustManager>(trustManager)`. Its resolved WebDAV callers supply application-defined `DefaultTrustManager` or `PinningTrustManager`, not a TrustManagerFactory-produced manager array. Although DefaultTrustManager internally delegates to a factory-produced manager, the object passed to `init` is the wrapper; PinningTrustManager is directly constructed and enforces certificate-pin and hostname checks. Therefore `generatedTrustManagers[tm]` is violated for the reported TrustManager[] argument (CLM-001, CLM-003, CLM-004).
+
+## Confirmed facts
+
+- The reviewed calls resolve to javax.net.ssl.SSLContext.getInstance and javax.net.ssl.SSLContext.init(KeyManager[], TrustManager[], SecureRandom).
+- The requested SSLContext protocol name is TLSv1.3 on Android Q and later and TLSv1.2 on earlier Android versions.
+- DefaultTrustManager delegates client and server certificate trust checks to an X509TrustManager obtained from a TrustManagerFactory initialized with a null KeyStore, while translating CertificateException to NotTrustableCertificateException.
+- PinningTrustManager rejects client and server chains unless the first certificate has the configured pin, and its associated hostname verifier accepts a host only when the peer certificate has that pin.
+- The SSLContext protocol selector does not itself establish the protocols enabled on derived connections or the protocol negotiated in a handshake.
+- The supplied runtime exploration observed execution of SSLSocketFactories.from with a DefaultTrustManager at the governed init call, but did not execute the WebDAV, OkHttp, or TLS paths.
+
+## Unsupported hypotheses
+
+None reported.
+
+## Missing evidence
+
+- Which TLS protocol versions are enabled on connections created by the WebDAV OkHttpClient.
+- Which TLS protocol version, cipher suite, peer identity, and certificate-validation outcome occur during an actual WebDAV handshake.
+- Which provider and Android runtime implementation supply the SSLContext and its derived socket factory at runtime.
+
+## Predicate assessment
+
+### `The SSLContext.getInstance protocol argument is exactly "TLSv1.2" or "TLSv1.3".` — confirmed (the requirement holds)
+
+Evidence IDs: SRC-001, SPEC-001. The source assigns "TLSv1.3" on Android Q and later and "TLSv1.2" otherwise, then passes that local value to SSLContext.getInstance. Both values satisfy the specification's protocol constraint.
+
+### `SSLContext initialization occurs after SSLContext.getInstance on the same local SSLContext value.` — confirmed (the requirement holds)
+
+Evidence IDs: SRC-001, SPEC-001. The source obtains sslContext with SSLContext.getInstance(tlsVersion) and subsequently invokes sslContext.init(...) before requesting sslContext.socketFactory, matching the required Get → Init order in this method.
+
+### `The KeyManager[] argument supplied to SSLContext.init satisfies generatedKeyManagers[km].` — violated (the requirement does not hold)
+
+Evidence IDs: SRC-001, SPEC-001. The init call supplies null as its KeyManager[] argument. The CrySL rule requires generatedKeyManagers[km] for Init; the specification explicitly distinguishes API-valid null arguments from satisfying its non-null provenance predicates.
+
+### `The TrustManager[] argument supplied to SSLContext.init satisfies generatedTrustManagers[tm].` — violated (the requirement does not hold)
+
+Evidence IDs: SRC-001, SRC-013, SUP-001, SUP-002, SPEC-001. The method constructs the array with arrayOf<TrustManager>(trustManager). Its resolved WebDAV caller supplies either a DefaultTrustManager wrapper or a PinningTrustManager. DefaultTrustManager obtains a factory-created manager only as an internal delegate, while the array passed to init contains the wrapper; PinningTrustManager is directly constructed. Thus the supplied array is not generated by a TrustManagerFactory.
+
+### `The SecureRandom argument supplied to SSLContext.init satisfies randomized[random].` — violated (the requirement does not hold)
+
+Evidence IDs: SRC-001, SPEC-001. The init call supplies null as its SecureRandom argument. The CrySL rule requires randomized[random] for Init and explicitly states that an API-valid null argument does not satisfy that declared provenance predicate.
+
+### `The SSLContext construction trace does not invoke SSLContext.getDefault().` — confirmed (the requirement holds)
+
+Evidence IDs: SRC-001, SPEC-001. The complete reviewed from method invokes SSLContext.getInstance and init, and contains no SSLContext.getDefault invocation. The specification identifies getDefault as a forbidden event.
+
+## Other requirements this source appears to break
+
+These are requirements of the same specification that the reported finding is not about. The decision above answers for the reported condition only.
+
+- **The KeyManager[] argument supplied to SSLContext.init satisfies generatedKeyManagers[km].**
+  The init call supplies null as its KeyManager[] argument. The CrySL rule requires generatedKeyManagers[km] for Init; the specification explicitly distinguishes API-valid null arguments from satisfying its non-null provenance predicates.
+
+- **The TrustManager[] argument supplied to SSLContext.init satisfies generatedTrustManagers[tm].**
+  The method constructs the array with arrayOf<TrustManager>(trustManager). Its resolved WebDAV caller supplies either a DefaultTrustManager wrapper or a PinningTrustManager. DefaultTrustManager obtains a factory-created manager only as an internal delegate, while the array passed to init contains the wrapper; PinningTrustManager is directly constructed. Thus the supplied array is not generated by a TrustManagerFactory.
+
+- **The SecureRandom argument supplied to SSLContext.init satisfies randomized[random].**
+  The init call supplies null as its SecureRandom argument. The CrySL rule requires randomized[random] for Init and explicitly states that an API-valid null argument does not satisfy that declared provenance predicate.
+
+## Migration assessment
+
+**Usage kind:** `protocol`  
+**Legacy compatibility required:** `True`  
+**Policy authorized:** `True`
+
+**Safe strategy:** Make no protocol or trust-policy change. The existing TLSv1.2/TLSv1.3 selector already meets the rule's exact protocol-literal constraint; do not pin a different protocol version or weaken the application-defined certificate checks merely to satisfy TrustManagerFactory provenance.
+
+- The reviewed calls resolve to javax.net.ssl.SSLContext.getInstance and javax.net.ssl.SSLContext.init(KeyManager[], TrustManager[], SecureRandom).
+- DefaultTrustManager delegates client and server certificate trust checks to an X509TrustManager obtained from a TrustManagerFactory initialized with a null KeyStore, while translating CertificateException to NotTrustableCertificateException.
+- PinningTrustManager rejects client and server chains unless the first certificate has the configured pin, and its associated hostname verifier accepts a host only when the peer certificate has that pin.
+
+## Forward compatibility
+
+**Status:** `preserved`
+
+Claim IDs: CLM-001, CLM-003, CLM-004
+
+**Strategy:** Make no protocol or trust-policy change. The existing TLSv1.2/TLSv1.3 selector already meets the rule's exact protocol-literal constraint; do not pin a different protocol version or weaken the application-defined certificate checks merely to satisfy TrustManagerFactory provenance.
+
+## External sources
+
+- [official](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/SSLContext.html) — SSLContext is a secure-socket protocol implementation; `init` accepts key managers, trust managers, and a SecureRandom, and null manager arrays invoke provider-selection behavior.
+- [official](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/TrustManagerFactory.html) — TrustManagerFactory is the provider-based API for creating trust managers after initialization with a KeyStore or provider-specific manager-factory parameters.
+- [official](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/X509TrustManager.html) — X509TrustManager trust methods are specified to validate certification paths to trusted roots for the relevant authentication type.
+- [official](https://docs.oracle.com/en/java/javase/25/security/java-secure-socket-extension-jsse-reference-guide.html) — Trust managers may be obtained from a TrustManagerFactory or provided as concrete implementations; endpoint identification and trust validation are separate controls.
+- [official](https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html) — SSLContext protocol algorithm names, including TLS, TLSv1.2, and TLSv1.3, are specified separately from runtime enabled and negotiated protocol configuration.
+- [official](https://www.oracle.com/java/technologies/javase/11-relnote-issues.html) — Oracle documents TLS 1.3 support and the TLSv1.3 SSLContext algorithm in JDK 11.
+- [primary](https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLContext.crysl) — The rule is scoped by `SPEC javax.net.ssl.SSLContext`; it declares getInstance, init, createSSLEngine, and forbidden getDefault patterns, and requires the stated protocol and provenance predicates.
+- [official](https://docs.oracle.com/en/java/javase/26/docs/api/java.base/javax/net/ssl/SSLContext.html) — The `getInstance` argument is the standard name of the requested secure-socket protocol; a non-null trust-manager array provides peer-authentication trust decisions.
+- [official](https://docs.oracle.com/en/java/javase/17/docs/specs/security/standard-names.html) — Standard `SSLContext` names include `TLS`, `TLSv1`, `TLSv1.1`, `TLSv1.2`, `TLSv1.3`, `DTLS`, `DTLSv1.0`, and `DTLSv1.2`.
+- [official](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/net/ssl/TrustManager.html) — A `TrustManager` can be produced by a `TrustManagerFactory` or implemented directly through a `TrustManager` subtype.
+- [official](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/net/ssl/X509TrustManager.html) — `checkServerTrusted` builds a certification path to a trusted root and throws `CertificateException` when the server chain is not trusted.

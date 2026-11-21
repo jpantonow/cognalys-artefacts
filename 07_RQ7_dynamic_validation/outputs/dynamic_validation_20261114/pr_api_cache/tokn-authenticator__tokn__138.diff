@@ -1,0 +1,13 @@
+diff --git a/core/security/src/main/java/me/diamondforge/tokn/security/KeystoreManager.kt b/core/security/src/main/java/me/diamondforge/tokn/security/KeystoreManager.kt
+index 65692989..0f25e902 100644
+--- a/core/security/src/main/java/me/diamondforge/tokn/security/KeystoreManager.kt
++++ b/core/security/src/main/java/me/diamondforge/tokn/security/KeystoreManager.kt
+@@ -85,7 +85,7 @@ open class KeystoreManager @Inject constructor(
+             )
+             keyGen.generateKey()
+         }
+-        return (keystore.getEntry(KEY_ALIAS, null) as KeyStore.SecretKeyEntry).secretKey
++        return keystore.getKey(KEY_ALIAS, null) as SecretKey
+     }
+ 
+     open fun hasBiometricKey(): Boolean = keystore.containsAlias(BIOMETRIC_KEY_ALIAS)

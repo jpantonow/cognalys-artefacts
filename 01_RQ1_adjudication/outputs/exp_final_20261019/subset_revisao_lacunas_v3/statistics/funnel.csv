@@ -1,0 +1,9 @@
+group,value,stage,count,total
+all,,imported,1,1
+all,,analysed,1,1
+all,,violation_confirmed,1,1
+all,,fix_proposed,1,1
+all,,solution,0,1
+all,,applied,0,1
+all,,built,0,1
+all,,pr_ready,0,1

@@ -1,0 +1,31 @@
+{
+ "card_id": "Kc8757f17",
+ "card_sha256": "193b7005f157f8a0",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3561,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 427
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0372664,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "5d9b7b59eb2208fb",
+ "finished_at": "2026-11-16T11:42:03-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.3,
+  "reason": "The description follows a fixed template: what changed, the RVSec sequence, what stays the same, \"found while running under RVSec\", a build note, and \"happy to adjust\". That looks like the Cognalys pipeline (C or D) rather than a free-form agent. The wording is clean and careful about compatibility, with an explanatory code comment, which leans toward Claude Sonnet rather than GPT Terra. This is a weak guess."
+ }
+}

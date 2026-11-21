@@ -1,0 +1,27 @@
+2026-10-27 21:52:34,457 - INFO - Testing OpenAI connection...
+2026-10-27 21:52:35,468 - INFO - OpenAI connection successful
+2026-10-27 21:52:36,206 - INFO - ✓ Model 'gpt-5.6-terra' available
+2026-10-27 21:52:36,254 - INFO - Discovered 1 errors to process
+2026-10-27 21:52:36,259 - INFO - Processing 1 new errors (0 already complete)
+2026-10-27 21:52:36,260 - INFO - Processing: org.fedorahosted.freeotp_48.apk/encrypt
+2026-10-27 21:52:37,642 - DEBUG - Running the isolated evidence pipeline for encrypt...
+2026-10-27 21:52:42,027 - INFO - LLM cache entry c6dfdb150558 is older than 604800s; refetching
+2026-10-27 21:54:52,281 - INFO - LLM cache entry cba8c9d8f626 is older than 604800s; refetching
+2026-10-27 21:57:13,862 - INFO - encrypt: blocked only on missing evidence (cause_unconfirmed, maintainer_decision); generated for review, decision is now MULTI_FILE_FIX_PROPOSED_FOR_REVIEW
+2026-10-27 21:58:30,212 - DEBUG - Calling persisted per-file coordinated generation for encrypt...
+2026-10-27 22:00:11,914 - WARNING - Semantic validation failed for encrypt (attempt 1/3): CHECKED_EXCEPTION_NOT_PROPAGATED; PUBLIC_API_CONTRACT_CHANGED; retrying coordinated generation for mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java
+2026-10-27 22:00:55,266 - WARNING - Semantic validation failed for encrypt (attempt 2/3): CHECKED_EXCEPTION_NOT_PROPAGATED; retrying coordinated generation for mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java
+2026-10-27 22:01:49,348 - INFO - Issue candidate prepared for manual review: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/issue_candidates/org.fedorahosted.freeotp_48.apk/0_encrypt_issue.json
+2026-10-27 22:01:49,350 - WARNING - Persisted coordinated generation failed for encrypt: EXISTING_TEST_EXPECTATIONS_REWRITTEN; PUBLIC_API_CONTRACT_CHANGED; CHECKED_EXCEPTION_NOT_PROPAGATED; manifest=/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/manifest.json
+2026-10-27 22:01:49,351 - INFO - [1/1] encrypt
+2026-10-27 22:01:49,352 - WARNING - No safe fix generated
+2026-10-27 22:01:49,384 - INFO - Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/solutions_tracking.json
+2026-10-27 22:01:49,391 - INFO - Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/analysis_summary.txt
+2026-10-27 22:01:49,392 - INFO - ======================================================================
+2026-10-27 22:01:49,393 - INFO - ANALYSIS COMPLETE
+2026-10-27 22:01:49,393 - INFO - Analyzed: 1/1
+2026-10-27 22:01:49,401 - INFO - Fixes generated: 0
+2026-10-27 22:01:49,403 - INFO - Confirmed external-contract findings: 0
+2026-10-27 22:01:49,403 - INFO - Issue candidates: 1
+2026-10-27 22:01:49,404 - INFO - Time: 00h 09m 13s
+2026-10-27 22:01:49,405 - INFO - LLM cache: 0 hit(s), 14 miss(es)

@@ -1,0 +1,31 @@
+{
+ "card_id": "K936bcb3a",
+ "card_sha256": "ca1f7b47727fad31",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3317,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 425
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0352738,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "aef5a37f2fb2b737",
+ "finished_at": "2026-11-17T18:54:31-0300",
+ "output": {
+  "guess": "TP",
+  "confidence": 0.38,
+  "reason": "The description is short, written in the first person and hedged. It names a specific build variant (\"CDR debug app\") and has none of the headers or long lists Sonnet often produces. The diff is a minimal one-line swap, which fits a Codex agent working in the repository. Its tone could also come from the Cognalys pipeline, so my confidence is low."
+ }
+}

@@ -1,0 +1,58 @@
+The published rule behind each report
+
+Report on OkHttpClientModuleKt.setupSsl (SSLContext), rule SSLContextSpec
+RVSec's record classifies this report as UnsatisfiedConstraint.
+Rule source: Verified primary CrySL rule: SSLContext.crysl from CogniCrypt Crypto-API-Rules, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLContext.crysl
+Types it governs: javax.net.ssl.SSLContext
+Call order it requires: Get(getInstance with protocol ∈ {TLSv1.2, TLSv1.3}) → Init(km, tm, random) → Engine?; getDefault() is forbidden.
+Events it matches:
+- Get: Observed when the invoked static method resolves to javax.net.ssl.SSLContext.getInstance with one or two arguments. It satisfies Get only when the first argument is evidenced as exactly "TLSv1.2" or "TLSv1.3"; a second provider argument, if present, is unconstrained by this rule. Call shapes: `SSLContext.getInstance(`, `javax.net.ssl.SSLContext.getInstance(`.
+- Init: Observed when the receiver resolves to javax.net.ssl.SSLContext and the invocation is init(KeyManager[], TrustManager[], SecureRandom). It satisfies Init only after Get on the same SSLContext trace and only when analysis establishes generatedKeyManagers[km], generatedTrustManagers[tm], and randomized[random]. Observing an API-valid init call, including init(null, null, null), does not satisfy those CrySL predicates. Call shapes: `.init(`.
+- Engine: Observed when a javax.net.ssl.SSLContext receiver invokes createSSLEngine() or createSSLEngine(String, int). It is optional in the order expression and can establish generatedSSLEngine[eng] only after Init. Call shapes: `.createSSLEngine()`, `.createSSLEngine(`.
+- ForbiddenDefault: Observed when the call resolves to javax.net.ssl.SSLContext.getDefault(). The CrySL source declares this event forbidden and maps it to Get using '=> Get'; that mapping does not make the full rule satisfied because the forbidden event independently violates the rule. Call shapes: `SSLContext.getDefault()`, `javax.net.ssl.SSLContext.getDefault()`.
+What RVSec checks under this rule: A trace is compliant with SSLContextSpec only if it avoids the forbidden getDefault() event, follows Get → Init → optional Engine, uses a getInstance protocol evidenced as TLSv1.2 or TLSv1.3, and satisfies the three declared init-argument predicates.
+Requirements the rule states:
+- protocol in {"TLSv1.2", "TLSv1.3"}
+- generatedKeyManagers[km]
+- generatedTrustManagers[tm]
+- randomized[random]
+- generatedSSLContext[this] after Init
+- generatedSSLEngine[eng] after Engine
+Limits of the check, recorded with the rule:
+- The protocol predicate is a whitelist over the requested getInstance string, not a check of enabled or negotiated TLS protocol versions.
+- The rule has no event for getSocketFactory(), getServerSocketFactory(), SSLSocket.setEnabledProtocols(), SSLParameters.setProtocols(), or the TLS handshake.
+- The rule source does not explain the detector presentation-level label "unknown". Raw diagnostics, the exact compiled rule artifact, and the detector version are needed to classify those findings.
+- The source rule's predicate names encode analysis facts/provenance; they are not runtime proof that a manager implementation correctly validates every certificate or host.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- SSLContext.getInstance("TLS") followed by downstream SSLEngine, SSLSocket, or SSLParameters configuration that restricts enabled protocols to TLSv1.2 and TLSv1.3. The rule still rejects the factory argument because it is not one of its two exact literals.
+- SSLContext.getDefault() in an environment whose runtime default context is securely configured. The API documents that this context is immediately usable, but the CrySL rule explicitly forbids the call.
+- ctx.init(null, null, null), or another documented null-argument initialization that deliberately relies on provider defaults. It is API-valid, but cannot directly satisfy the rule's three non-null provenance predicates.
+- A protocol value computed, injected, wrapped, or returned interprocedurally that is TLSv1.2 or TLSv1.3 at runtime but is not statically evidenced as one of those literals; this can surface as an unresolved or "unknown" diagnostic depending on detector implementation.
+
+
+Earlier proposals, in other repositories, for the rule of the report on OkHttpClientModuleKt.setupSsl (SSLContext), and what their maintainers answered:
+
+1. Repository: openhab/openhab-android
+   Outcome: closed
+   Proposal: Fix updateHttpClientForClientCert
+   Maintainer said: Thanks for the contribution and for the detailed write-up! As far as I can tell, this finding is a false positive for the OkHttp path. OkHttp already rejects TLS 1.1 and older by default, so filtering the protocols on the socket ourselves doesn't change anything. In OkHttp 5.5.0 (the version we use): - OkHttpClient uses DEFAULT_CONNECTION_SPECS = listOf(ConnectionSpec.MODERN_TLS, ConnectionSpec.CLEARTEXT) (OkHttpClient.kt). - MODERN_TLS only allows TlsVersion.TLS_1_3 and TlsVersion.TLS_1_2. TLS 1.0 and 1.1 are only in COMPATIBLE_TLS, which you have to opt into explicitly (ConnectionSpec.kt). - Before every handshake, ConnectionSpec.apply() intersects sslSocket.enabledProtocols with those versions and sets the result on the socket. That's the same filtering this PR adds by hand. We don't override connectionSpecs anywhere, so the default applies. The generic "TLS" argument to SSLContext.getInstance() is fine here: it picks the provider, and the protocol versions are then restricted per socket.
+
+2. Repository: paroj/DSub2000
+   Outcome: closed
+   Proposal: Use platform trust managers for HTTPS connections
+   Maintainer said: skipping certificate checks is the whole point here. When that setting is off the default path should also be good already, no?
+
+3. Repository: bitcraze/crazyflie-android-client
+   Outcome: merged
+   Proposal: Fix <init>
+   Maintainer said: Hi, thanks for the contribution! Could you please clean up the PR title and description to make it clearer what is being fixed and why? “Fix `<init>`” does not really explain the change, and it is difficult to understand the practical impact from the description. A short explanation of the problem and how it affects firmware downloads would help. Looking at the code, I would prefer removing `TLSSocketFactory` and its usage rather than patching it. This helper was added to support TLS 1.2 on Android versions older than 5.0, but we now require Android 8.0. Its original purpose is no longer relevant, so relying on the platform HTTPS defaults seems simpler. This would not explicitly enforce TLS 1.2 as a minimum on every supported device. If there is a concrete reason we need that additional restriction, please explain it in the description. Otherwise, could you update the PR to remove the helper and verify that fetching the release list and downloading firmware still work? | Thanks! Looks good, merged.
+
+4. Repository: paroj/DSub2000
+   Outcome: merged
+   Proposal: Fix <init>
+   Maintainer said: (no comment)
+   Automated review comments (not from the maintainer):
+   - Copilot (bot): Wrapping the global HttpsURLConnection default SSLSocketFactory unconditionally in the constructor can lead to wrapper stacking if RESTMusicService is instantiated more than once, and it makes the global TLS behavior dependent on object construction order. Guard against double-wrapping so subsequent instances don’t keep nesting factories.
+   - Copilot (bot): If legacy-protocol filtering removes all enabled protocols, filterLegacyTlsProtocols throws IllegalStateException, which currently bubbles out of SSLSocketFactory.createSocket(...) as an unchecked exception. That’s surprising for callers expecting an IOException/SSLException from socket creation and can make failures harder to handle consistently; convert this to an SSLException (and still close the socket) when it occurs during socket configuration.
+   - Copilot (bot): This test file’s declared package (`github.paroj.dsub2000.service`) no longer matches its directory (`.../androidTest/java/github/paroj/dsub2000/ApplicationTest.java`). While it may still compile, it makes the test harder to locate/maintain and is inconsistent with the other androidTest files (which mirror package-to-directory). Consider moving this file under `app/src/androidTest/java/github/paroj/dsub2000/service/` to match its package declaration.
+   - Copilot (bot): X509TrustManager.getAcceptedIssuers() should not return null; some TLS stacks assume a non-null array and may NPE. Even for a permissive trust manager, return an empty certificate array instead.

@@ -1,0 +1,152 @@
+{
+  "schema_version": 2,
+  "spec_id": "NativeLinkErrorSpec",
+  "name": "NativeLinkErrorSpec",
+  "applies_to_types": [
+    "unresolved.NativeLinkError"
+  ],
+  "source_title": "No consultable NativeLinkError CrySL primary source retrieved",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/NativeLinkError.crysl",
+  "source_verified": false,
+  "protocol": "loadLibraries-entry -> native-load-attempt? -> (native-link-failure | success); unverified because no NativeLinkError CrySL rule content was retrieved.",
+  "important_note": "The required NativeLinkError target could not be resolved to an actual Java/Android API type. \"unresolved.NativeLinkError\" is an explicit schema placeholder, not a claim that such a loadable type exists. The supplied finding instead names org.xbmc.kodi.NativeLoader.loadLibraries and java.lang.UnsatisfiedLinkError. The canonical CROSSINGTUD raw URL was attempted but did not return consultable rule content, so no CrySL events, order, constraints, or security property have been inferred.",
+  "events": [
+    {
+      "name": "load_libraries_entry",
+      "api_patterns": [
+        "loadLibraries("
+      ],
+      "condition": "Observed when local Java/Kotlin source contains an invocation or declaration substring matching \"loadLibraries(\". This alone does not establish that the method executed or attempted to load a native library."
+    },
+    {
+      "name": "native_load_attempt",
+      "api_patterns": [
+        "System.loadLibrary(",
+        "System.load(",
+        "Runtime.getRuntime().loadLibrary(",
+        "Runtime.getRuntime().load("
+      ],
+      "condition": "Observed when a matching Java/Kotlin native-library loading call appears on a feasible path. Its success predicate is not satisfied merely by observing the call; success requires runtime evidence that the requested library was found and mapped."
+    },
+    {
+      "name": "native_link_failure_reported",
+      "api_patterns": [
+        "UnsatisfiedLinkError",
+        "catch (UnsatisfiedLinkError",
+        "throws UnsatisfiedLinkError"
+      ],
+      "condition": "Observed when source references java.lang.UnsatisfiedLinkError. The finding predicate is satisfied only if the detector or runtime report associates an UnsatisfiedLinkError with org.xbmc.kodi.NativeLoader.loadLibraries and the reported missing-library detail; a source reference or catch block alone does not satisfy that predicate."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a Java or Android API class named NativeLinkError exists.",
+    "Do not substitute a namesake NativeLinkError from another language, framework, or package as this finding's governed API.",
+    "Do not infer a CrySL ORDER, CONSTRAINTS, REQUIRES, ENSURES, or forbidden method sequence without the actual NativeLinkError.crysl content.",
+    "Do not infer that org.xbmc.kodi.NativeLoader.loadLibraries directly calls System.loadLibrary, System.load, Runtime.loadLibrary, or Runtime.load without its source or bytecode.",
+    "Do not infer that libkodi.so is absent from every APK split, ABI directory, class-loader namespace, or runtime search path from this one reported message.",
+    "Do not infer a cryptographic weakness, privilege escalation, code-execution vulnerability, or confidentiality/integrity impact from a native-link failure alone.",
+    "Do not infer the exact Android version, device ABI, packaging format, linker namespace, or install state from the representative finding."
+  ],
+  "semantic_scope": "The available evidence is limited to a detector-reported association between org.xbmc.kodi.NativeLoader.loadLibraries and an UnsatisfiedLinkError whose detail says that libkodi.so was not found. It observes a native-library linking/loading failure symptom, not a verified NativeLinkError API protocol.",
+  "detector_semantics": {
+    "claim": "A native-link/load failure was reported in the context of org.xbmc.kodi.NativeLoader.loadLibraries, with the representative detail \"dlopen failed: library 'libkodi.so' not found.\"",
+    "predicates": [
+      "Reported class equals org.xbmc.kodi.NativeLoader.",
+      "Reported method equals loadLibraries.",
+      "Reported throwable is java.lang.UnsatisfiedLinkError.",
+      "Reported detail identifies libkodi.so as not found."
+    ],
+    "limitations": [
+      "No detector-rule implementation or NativeLinkError CrySL source was available to establish whether these predicates are exact matching conditions, normalized fields, or presentation-only text.",
+      "The report does not identify the actual native-loading call site, library-name argument, class loader, APK split, ABI, linker namespace, or execution path.",
+      "The report demonstrates neither a general typestate violation nor a security property."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "For the actual API evidenced by the finding, Android documents java.lang.UnsatisfiedLinkError as occurring when the VM cannot find an appropriate native-language definition for a native method.",
+      "Android documents System.loadLibrary(String) as loading a library by logical name from a system library location and as capable of throwing UnsatisfiedLinkError when the name contains a path, the library is not statically linked with the VM, or the host cannot map it to a native library image.",
+      "The JDK documentation describes the same general loading model and exception category."
+    ],
+    "preconditions": [
+      "For System.loadLibrary(String), the logical library name must not include a platform-specific prefix, filename extension, or path.",
+      "A successful runtime load additionally depends on implementation-specific native-library lookup and host mapping behavior.",
+      "The reported libkodi.so message requires runtime evidence; it cannot be established solely from a source-level load call."
+    ],
+    "unknowns": [
+      "No documented behavior was found for an API type named NativeLinkError in the stated CrySL corpus.",
+      "It is unknown whether the named specification is a local synthetic detector label, a missing corpus rule, or an incorrectly named rule.",
+      "It is unknown which Java/Android loading API, if any, is called by NativeLoader.loadLibraries."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "Native library resolution/linking failed for the reported execution context.",
+    "runtime_claim": "At most, the supplied message indicates that the Android dynamic linker could not find libkodi.so in the relevant runtime loading context.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Retrieve and inspect the canonical NativeLinkError.crysl file, or a repository commit/tree response conclusively showing that it is absent.",
+      "Retrieve the exact source or bytecode for org.xbmc.kodi.NativeLoader.loadLibraries.",
+      "Establish the fully qualified declaration of a real NativeLinkError type before replacing the unresolved placeholder."
+    ],
+    "runtime": [
+      "Capture the complete exception stack trace, including cause chain and the concrete native-load call site.",
+      "Record device ABI, Android release, package version, installed split APKs, and the process class-loader/native-library search context.",
+      "Inspect the installed artifact for the expected ABI-specific libkodi.so and, where applicable, its transitive native dependencies."
+    ],
+    "compatibility": [
+      "Verify that the APK includes a libkodi.so matching the device ABI.",
+      "Verify split-APK delivery and installation state for the native-library-bearing split.",
+      "Verify that the library and its dependencies are compatible with the target Android linker, namespace policy, and packaging arrangement."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A source-only match on \"loadLibraries(\" where the method is never reached at runtime.",
+    "A source-only match on System.loadLibrary/System.load where the relevant native library is correctly packaged and loads successfully on the deployed ABI.",
+    "An UnsatisfiedLinkError catch, declaration, or logging statement mistaken for proof that an exception was thrown.",
+    "A stale, truncated, or recontextualized error message attributed to NativeLoader.loadLibraries without a complete stack trace.",
+    "A device-specific ABI, split-installation, or dependency-resolution failure generalized as a universal missing-libkodi.so defect.",
+    "A similarly named non-Java NativeLinkError type incorrectly selected as the API target."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/NativeLinkError.crysl",
+    "https://developer.android.com/reference/java/lang/UnsatisfiedLinkError",
+    "https://developer.android.com/reference/java/lang/System#loadLibrary(java.lang.String)",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/UnsatisfiedLinkError.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#loadLibrary(java.lang.String)"
+  ],
+  "unknowns": [
+    "Whether NativeLinkError.crysl exists at the requested canonical repository path; the direct raw fetch was attempted but did not yield consultable content.",
+    "The real fully qualified API type, if any, whose simple name is exactly NativeLinkError.",
+    "Whether NativeLinkErrorSpec is intended as a CrySL-derived rule, a local detector-specific rule, or a misnamed alias for java.lang.UnsatisfiedLinkError.",
+    "The exact native-load operation and library argument executed by org.xbmc.kodi.NativeLoader.loadLibraries.",
+    "Whether the message was produced by an absent APK artifact, ABI mismatch, missing transitive dependency, Android linker namespace restriction, package-split issue, or another runtime-resolution condition.",
+    "Any verified event order, misuse predicate, remediation condition, or security impact for NativeLinkErrorSpec."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/NativeLinkError.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.xbmc.kodi.NativeLoader",
+        "method": "loadLibraries",
+        "message": "UnsatisfiedLinkError: dlopen failed: library 'libkodi.so' not found."
+      }
+    ],
+    "expected_api_simple_name": "NativeLinkError",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/NativeLinkError.crysl"
+  }
+}

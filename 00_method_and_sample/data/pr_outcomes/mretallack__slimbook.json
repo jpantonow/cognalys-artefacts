@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/mretallack/SlimBook/pull/3",
+    "state": "merged",
+    "finding_id": "052ff476494e",
+    "spec": "WebViewDebuggingSpec",
+    "csv_class": "uk.org.retallack.slimbook.MainActivity",
+    "method_name": "setupWebView",
+    "title": "Fix setupWebView",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:41.951102+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "mretallack",
+        "kind": "comment",
+        "body": "Thanks for the pull request, will review next week"
+      }
+    ]
+  }
+]

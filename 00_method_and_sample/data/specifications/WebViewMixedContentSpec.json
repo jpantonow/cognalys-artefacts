@@ -1,0 +1,188 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The finding is explicitly static and not executed.",
+      "Receiver aliasing, call ordering, conditional execution, and later resetting of settings can invalidate a source-level co-occurrence conclusion.",
+      "The Android API documents a permission policy for mixed content, not the presence of a particular HTTP URL or a successful malicious substitution.",
+      "CWE-319 requires sensitive or security-critical data in a sniffable cleartext channel; permissive mixed-content configuration alone does not prove that condition."
+    ],
+    "predicates": [
+      "A receiver is an android.webkit.WebSettings instance obtained for, or otherwise associated with, an android.webkit.WebView.",
+      "An effective configuration write resolves to android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW.",
+      "For the complete reported configuration, JavaScript enablement, a true CookieManager.setAcceptThirdPartyCookies call for the same WebView, and a true setJavaScriptCanOpenWindowsAutomatically write must be correlated by receiver and feasible control flow.",
+      "For the runtime mixed-content scenario, the configured WebView must load a secure-origin document that requests an insecure-origin resource."
+    ],
+    "claim": "The payment-screen construction path is statically reported as configuring a WebView with MIXED_CONTENT_ALWAYS_ALLOW. If that WebView renders an HTTPS page that requests HTTP content, the configuration can permit cleartext-network confidentiality and integrity risks. JavaScript, third-party cookies, and automatic window opening are co-occurring amplifiers, not prerequisites for mixed-content permission."
+  },
+  "unknowns": [
+    "Whether the supplied source-level settings configure one concrete WebView instance through all relevant control-flow paths.",
+    "Whether createPayCoreWebView is invoked in production and whether its result is used for an HTTPS cryptocurrency-payment flow.",
+    "Whether the payment page has HTTP subresources, and their origins, MIME types, and execution behavior.",
+    "Whether app manifest or Network Security Configuration settings permit cleartext HTTP for the applicable WebView and target SDK.",
+    "Whether any network attacker is positioned to observe or modify traffic in the relevant deployment.",
+    "Whether any cleartext request carries sensitive or security-critical data, as required to confirm CWE-319.",
+    "Whether third-party-cookie policy or automatic window opening has any realized impact in this flow.",
+    "Whether additional WebView controls, including URL allowlisting, WebViewClient interception, Safe Browsing, redirects, or page-side CSP, alter practical exposure."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "android.webkit.WebView.getSettings() returns the WebSettings object used to control that WebView.",
+      "android.webkit.WebSettings.setMixedContentMode(int), added in API level 21, configures behavior when a secure origin attempts to load a resource from an insecure origin. MIXED_CONTENT_ALWAYS_ALLOW is the least-secure mode and allows a secure origin to load content from an insecure origin.",
+      "android.webkit.WebSettings.setJavaScriptEnabled(true) enables JavaScript execution; its documented default is false.",
+      "android.webkit.CookieManager.setAcceptThirdPartyCookies(WebView, boolean), added in API level 21, sets a per-WebView policy for allowing third-party cookies to be set.",
+      "android.webkit.WebSettings.setJavaScriptCanOpenWindowsAutomatically(true) allows JavaScript window.open calls without a user gesture; its documented default is false.",
+      "When multiple-window support is disabled, window.open and target=_blank requests are treated as top-level navigations in the same WebView. When enabled, application handling of WebChromeClient.onCreateWindow is required."
+    ],
+    "preconditions": [
+      "The mixed-content setting is available beginning with Android API level 21.",
+      "A secure-origin document must attempt to load an insecure-origin resource for the documented mixed-content behavior to be implicated.",
+      "For JavaScript execution as an amplifier, JavaScript must be enabled and the relevant script must actually load and execute.",
+      "For third-party-cookie behavior, the true setting must apply to the particular WebView receiving third-party-cookie attempts.",
+      "For apps targeting API level 26 or higher, WebView honors the platform cleartext-traffic policy; an effective Network Security Configuration or manifest cleartext restriction can prevent the assumed HTTP fetch."
+    ],
+    "unknowns": [
+      "The report does not identify the Android API level, targetSdkVersion, device WebView implementation, or effective Network Security Configuration.",
+      "The report does not establish whether a later code path changes mixedContentMode, disables JavaScript, changes cookie policy, destroys the WebView, or uses another WebView for payment content.",
+      "The report does not identify a top-level HTTPS URL, an HTTP subresource URL, the resource MIME type, or whether a request completed.",
+      "The report does not establish whether setSupportMultipleWindows or a WebChromeClient.onCreateWindow implementation exists."
+    ]
+  },
+  "authoritative_sources": [
+    "https://developer.android.com/reference/android/webkit/WebSettings",
+    "https://developer.android.com/reference/android/webkit/WebView",
+    "https://developer.android.com/reference/android/webkit/CookieManager",
+    "https://developer.android.com/reference/android/webkit/WebChromeClient",
+    "https://developer.android.com/reference/android/security/NetworkSecurityPolicy",
+    "https://developer.android.com/guide/topics/manifest/application-element",
+    "https://developer.android.com/privacy-and-security/risks/cleartext-communications",
+    "https://cwe.mitre.org/data/definitions/319",
+    "https://mas.owasp.org/MASWE/MASVS-NETWORK/MASWE-0026/"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observed: a source-level call or Kotlin property assignment names MIXED_CONTENT_ALWAYS_ALLOW. Predicate satisfied: the assigned value resolves to android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW, configures the WebSettings instance belonging to the WebView that later renders content, and is not superseded by a later effective mixed-content-mode write before the relevant load.",
+      "name": "configure_mixed_content_always_allow",
+      "api_patterns": [
+        ".setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW)",
+        ".setMixedContentMode(MIXED_CONTENT_ALWAYS_ALLOW)",
+        "mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW",
+        "mixedContentMode = MIXED_CONTENT_ALWAYS_ALLOW"
+      ]
+    },
+    {
+      "condition": "Observed: JavaScript is enabled in source. Predicate satisfied: true reaches the WebSettings instance for the same rendered WebView at load time. This setting is not a prerequisite for permissive mixed-content loading itself, but is relevant to execution of a loaded script resource.",
+      "name": "enable_javascript",
+      "api_patterns": [
+        ".setJavaScriptEnabled(true)",
+        "javaScriptEnabled = true"
+      ]
+    },
+    {
+      "condition": "Observed: setAcceptThirdPartyCookies is called. Predicate satisfied: its second argument resolves to true and its WebView argument aliases the WebView whose settings permit mixed content. This per-WebView setting does not prove that any third-party cookie was set, sent, readable by an attacker, or relevant to the payment flow.",
+      "name": "allow_third_party_cookies",
+      "api_patterns": [
+        "CookieManager.getInstance().setAcceptThirdPartyCookies(",
+        ".setAcceptThirdPartyCookies(webView, true)",
+        ".setAcceptThirdPartyCookies(this, true)"
+      ]
+    },
+    {
+      "condition": "Observed: the automatic-window setting is assigned true. Predicate satisfied: true reaches the same WebView's WebSettings at the relevant time and JavaScript executes a window.open request without a user gesture. The setting alone does not prove creation of a separate window; that depends on multiple-window support and application WebChromeClient handling.",
+      "name": "allow_javascript_automatic_window_opening",
+      "api_patterns": [
+        ".setJavaScriptCanOpenWindowsAutomatically(true)",
+        "javaScriptCanOpenWindowsAutomatically = true"
+      ]
+    },
+    {
+      "condition": "Observed: source contains a possible WebView content-load call. Predicate satisfied only at runtime: the same configured WebView loads a secure-origin document and that document actually requests an insecure HTTP resource while the permissive setting remains effective. A loadUrl call alone establishes neither the top-level scheme nor the existence, type, or successful retrieval of an HTTP subresource.",
+      "name": "load_secure_document_with_insecure_subresource",
+      "api_patterns": [
+        ".loadUrl(\"https://",
+        ".loadUrl(",
+        ".loadDataWithBaseURL(\"https://"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "WebViewMixedContentSpec is a detector concern name, not a governed API type, CrySL rule, or Android/Java class. This context governs the actual Android APIs implicated by the finding. A static configuration match does not prove that createPayCoreWebView executed, that the configured WebView rendered a payment page, that an HTTPS page requested HTTP content, or that CWE-319 occurred at runtime.",
+  "forbidden_inferences_without_evidence": [
+    "That cash.p.terminal.modules.paycore.webview.PayCoreWebViewScreenKt.createPayCoreWebView executed in a released build or payment transaction.",
+    "That the configured WebView loaded an HTTPS payment page rather than local, HTTP, test, or no content.",
+    "That an HTTPS page requested an HTTP subresource or that WebView successfully fetched it.",
+    "That an HTTP subresource was JavaScript, that it executed, or that it was security-sensitive.",
+    "That a network attacker intercepted, modified, or replaced an HTTP response.",
+    "That secrets, credentials, wallet material, payment data, cookies, or other security-critical data traversed cleartext; such evidence is necessary for CWE-319.",
+    "That enabled third-party-cookie acceptance resulted in a third-party cookie being set, sent, or usable in the affected flow.",
+    "That gestureless window opening created a new WebView or window; honoring a separate window depends on multiple-window support and application WebChromeClient handling.",
+    "That JavaScript acquired native application privileges; this requires separate evidence such as an exposed JavaScript interface or another privileged bridge."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A runtime CWE-319 finding requires evidence that sensitive or security-critical information was transmitted through a cleartext channel that an unauthorized actor could sniff. For the reported script-replacement scenario, runtime evidence must additionally show an HTTP subresource request, that the request was permitted and received, and an attacker-capable network path or an observed modified response. Cleartext traffic can be read and manipulated by network observers.",
+    "equivalent": false,
+    "detector_claim": "The observed configuration is a potential mixed-content weakness: an HTTPS-origin page rendered by the affected WebView may be allowed to request HTTP content, which lacks transport confidentiality and integrity protections."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Identify the device API level and targetSdkVersion because setMixedContentMode was added in API level 21 and historical default behavior varies by target SDK.",
+      "Identify the effective manifest and Network Security Configuration cleartext policy because WebView honors the cleartext-traffic flag for apps targeting API level 26 and higher.",
+      "Identify the installed WebView provider and version when behavioral reproduction is required.",
+      "Identify whether multiple-window support and WebChromeClient.onCreateWindow handling are present before characterizing automatic window opening as creation of a separate window."
+    ],
+    "runtime": [
+      "Record the effective mixed-content mode on the WebView at navigation time.",
+      "Record a secure HTTPS top-level document rendered in that WebView and an attempted HTTP subresource request.",
+      "Determine whether the HTTP request was actually allowed, completed, blocked by policy, redirected, or intercepted.",
+      "If asserting script impact, identify the fetched resource as executable script and show that it executed in the page context.",
+      "If asserting CWE-319, identify security-critical or sensitive data carried over the cleartext channel, or narrowly state an integrity-only mixed-content result rather than CWE-319."
+    ],
+    "source_level": [
+      "Resolve the receiver of getSettings()/WebSettings writes to the same android.webkit.WebView instance used by the payment flow.",
+      "Resolve the mixed-content argument to WebSettings.MIXED_CONTENT_ALWAYS_ALLOW rather than an unknown integer or guarded alternative.",
+      "Establish feasible ordering: the permissive setting is effective before the relevant navigation and is not later overwritten.",
+      "For auxiliary settings, establish that JavaScript, third-party cookies, and automatic window opening are enabled on the same WebView rather than merely elsewhere in the process."
+    ]
+  },
+  "name": "WebViewMixedContentSpec",
+  "source_url": "https://developer.android.com/reference/android/webkit/WebSettings",
+  "applies_to_types": [
+    "android.webkit.WebView",
+    "android.webkit.WebSettings",
+    "android.webkit.CookieManager"
+  ],
+  "source_title": "Android Developers: android.webkit.WebSettings",
+  "semantic_scope": "The detector finding is a static candidate centered on permissive android.webkit.WebSettings mixed-content configuration in createPayCoreWebView, with JavaScript enabled, third-party cookies allowed, and gestureless JavaScript window opening reported as co-occurring settings. Its direct observation is configuration that can permit insecure-origin content to be loaded from a secure-origin document. It does not, from the supplied finding alone, observe network traffic, response contents, page origin, subresource type, execution, attacker control, or sensitive-data transmission.",
+  "spec_id": "WebViewMixedContentSpec",
+  "known_false_positive_shapes": [
+    "The configuration occurs in dead, test-only, preview-only, or otherwise unreachable code.",
+    "The configured WebView is never navigated to content, is destroyed before navigation, or is not the WebView used for payment content.",
+    "A later feasible write changes the effective mixed-content mode to MIXED_CONTENT_NEVER_ALLOW before the relevant page load.",
+    "The WebView renders only HTTP, local, data:, or other non-secure-origin content; this may present other concerns but does not satisfy the documented secure-origin-to-insecure-origin mixed-content condition.",
+    "All rendered HTTPS content has no HTTP subresources.",
+    "The platform cleartext policy blocks HTTP traffic in the WebView, including for an app targeting API level 26 or higher where WebView honors that policy.",
+    "JavaScript is enabled but no mixed HTTP script loads or executes.",
+    "Third-party cookies are permitted but no third-party cookie is requested, accepted, or relevant to the page session.",
+    "Automatic window opening is enabled but no window.open call occurs, or requests are not honored as separate windows by the application's multiple-window/WebChromeClient handling."
+  ],
+  "protocol": "WebView.getSettings() -> WebSettings.setMixedContentMode(MIXED_CONTENT_ALWAYS_ALLOW) -> WebView loads an HTTPS-origin document -> that document requests an HTTP subresource -> WebView permits the insecure subresource; JavaScript, third-party-cookie, and automatic-window settings are separate amplifiers when enabled on the same WebView.",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "cash.p.terminal.modules.paycore.webview.PayCoreWebViewScreenKt",
+        "method": "createPayCoreWebView",
+        "message": "Static candidate (not executed): the payment WebView of a cryptocurrency wallet sets mixedContentMode = MIXED_CONTENT_ALWAYS_ALLOW with JavaScript, third-party cookies and automatic window opening enabled, so plain-HTTP subresources -- including scripts -- load inside HTTPS payment pages and can be replaced by a network attacker (CWE-319)."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:android.webkit.WebView",
+    "checked_url": "https://developer.android.com/reference/android/webkit/WebSettings"
+  }
+}

@@ -1,0 +1,66 @@
+Started: 2026-11-17T17:47:56
+Project: /home/antonow/comparison_20261113/port_work/co_bdc0d1804c88/TP_r4/build/call2/projects/app
+Gradle root: /home/antonow/comparison_20261113/port_work/co_bdc0d1804c88/TP_r4/build/call2/projects/app
+Android SDK: /home/antonow/Android/Sdk
+JAVA_HOME: /usr/lib/jvm/java-21-openjdk-amd64
+Command: /home/antonow/comparison_20261113/port_work/co_bdc0d1804c88/TP_r4/build/call2/projects/app/gradlew assembleDebug -I /home/antonow/comparison_20261113/port_work/co_bdc0d1804c88/TP_r4/build/call2/out/disable_proguard.init.gradle -Pkotlin.compiler.execution.strategy=in-process --no-daemon --stacktrace
+
+Waiting for build lock: /tmp/tcc-pipeline-build-locks/ad654e001d72a4696b49.lock
+Acquired build lock: /tmp/tcc-pipeline-build-locks/ad654e001d72a4696b49.lock
+Temporarily disabled minification in: /home/antonow/comparison_20261113/port_work/co_bdc0d1804c88/TP_r4/build/call2/projects/app/app/build.gradle.kts
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Calculating task graph as configuration cache cannot be reused because environment variable 'ANDROID_USER_HOME' has changed.
+
+> Configure project :app
+>>> WiFiAnalyzer 3.3.1.13 (72) com.vrem.wifianalyzer.BETA
+
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:generateDebugGlobalSynthetics UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:validateSigningDebug
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:compressDebugAssets
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:mergeLibDexDebug
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:compileDebugKotlin UP-TO-DATE
+> Task :app:compressDebugJavaRes UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:mergeDebugJavaResource
+> Task :app:dexBuilderDebug
+> Task :app:mergeProjectDexDebug
+> Task :app:mergeExtDexDebug
+> Task :app:packageDebug
+> Task :app:assembleDebug
+> Task :app:createDebugApkListingFileRedirect
+
+BUILD SUCCESSFUL in 27s
+37 actionable tasks: 10 executed, 27 up-to-date
+Configuration cache entry stored.
+Restored 1 Gradle build file(s) after build.

@@ -1,0 +1,186 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The detector observes program structure, not runtime execution.",
+      "It does not independently prove archive provenance, adversarial control, reachability, filesystem permissions, target existence, or successful overwrite.",
+      "It does not prove that every apparent canonicalization or validation is ineffective; helper methods, control flow, aliasing, and sanitizer recognition may be incomplete.",
+      "It does not establish the exact ZIP reader implementation at every reported location beyond the archive-entry/path-construction behavior represented by the finding."
+    ],
+    "predicates": [
+      "A ZIP entry name is read from an archive-entry object.",
+      "The entry name, or a value derived from it, contributes to an output pathname.",
+      "That pathname is associated with an extraction root or application-managed destination directory.",
+      "A filesystem-writing operation is present or statically associated with the candidate destination.",
+      "No recognized, write-gating containment proof establishes that the resolved destination is a child of the intended root."
+    ],
+    "claim": "Static candidate for ZIP Slip / CWE-22: an archive entry name is used to derive an output pathname under an intended extraction root and the reported flow lacks a recognized proof that the resolved destination remains within that root before data is written."
+  },
+  "unknowns": [
+    "No primary detector-rule catalog source was supplied or found that defines ZipSlipSpec as a formal rule, governed API type, CrySL rule, or repository artifact; the name is therefore treated only as a concern label.",
+    "The exact static-analysis implementation is unknown, including its taint propagation, sanitizer recognition, path-normalization model, output-sink list, and interprocedural coverage.",
+    "The representative findings alone do not establish the exact archive-reader and output-writer types at each location.",
+    "The representative findings alone do not establish whether a malicious archive can reach the affected code under the application's actual import, restore, backup, permission, and storage workflows.",
+    "The representative findings alone do not establish overwrite impact, application-private-storage layout, target-file permissions, or whether a write outside the intended extraction directory would succeed."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "java.util.zip.ZipEntry.getName() returns the ZIP entry name.",
+      "java.io.File represents abstract filesystem pathnames; File(File parent, String child) constructs a pathname from parent and child components.",
+      "java.io.InputStream is an abstract input-byte-stream API used as an archive-input boundary in the reported flow.",
+      "android.content.Context.getFilesDir() returns the application files directory path.",
+      "Android's ZIP path-traversal guidance states that java.util.zip does not itself check archive entry names for ../ traversal components when application code combines an entry name with a target directory."
+    ],
+    "preconditions": [
+      "A runtime vulnerability requires an archive parser to process an entry whose name reaches the output-path construction.",
+      "The resulting path must be used by a filesystem operation that writes or otherwise modifies the filesystem.",
+      "For the intended-root property to be meaningful, the extraction root must be identified and the containment decision must execute before the write.",
+      "Android's documented canonical-path containment example assumes the destination directory itself is safe and not attacker-writable; otherwise separate link-race or symlink concerns may remain."
+    ],
+    "unknowns": [
+      "The reported messages do not identify every concrete output-stream class or file-writing overload used by each candidate.",
+      "The reported messages do not establish whether each archive reader is ZipInputStream, ZipFile, or another ZIP-reading abstraction.",
+      "The reported messages do not establish whether the relevant destination roots contain pre-existing symbolic links, are attacker-writable, or are subject to races.",
+      "The reported messages do not establish deployed Java versions, Android API levels, filesystem implementations, or archive-name encoding behavior."
+    ]
+  },
+  "authoritative_sources": [
+    "https://cwe.mitre.org/data/definitions/22",
+    "https://developer.android.com/privacy-and-security/risks/zip-path-traversal",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/util/zip/ZipEntry.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/io/File.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/io/InputStream.html",
+    "https://developer.android.com/reference/android/content/Context"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observing getName() establishes only retrieval of an archive entry name. The traversal predicate requires that this value, or an equivalently derived value, reaches destination-path construction without a validation result that rules out destinations outside the intended root.",
+      "name": "archive_entry_name_read",
+      "api_patterns": [
+        "zipEntry.getName()",
+        "entry.getName()",
+        ".getName()"
+      ]
+    },
+    {
+      "condition": "Observing parent-and-child path construction establishes only a candidate destination. The traversal predicate is satisfied only if normalization or canonical resolution can place the candidate outside the intended extraction root, such as through parent-directory components or an absolute-path interpretation.",
+      "name": "destination_derived_from_entry_name",
+      "api_patterns": [
+        "new File(targetDir, zipEntry.getName())",
+        "new File(context.getFilesDir(), entry.getName())",
+        "new File(outputFolder, entry.getName())",
+        "outputFolder.getAbsolutePath() + \"/\" + entry.getName()",
+        "new File("
+      ]
+    },
+    {
+      "condition": "Observing an output operation establishes only an attempted write. The runtime predicate additionally requires that the constructed candidate is the output target, the operation is reachable, filesystem permissions permit it, and the write succeeds.",
+      "name": "entry_data_written_to_destination",
+      "api_patterns": [
+        "new FileOutputStream(",
+        ".write(",
+        "copyTo(",
+        "transferTo("
+      ]
+    },
+    {
+      "condition": "Observing canonicalization, normalization, or a prefix comparison is not sufficient. A containment predicate requires comparison of the resolved candidate against the resolved intended root with a path-boundary check, and the rejecting result must control the subsequent write.",
+      "name": "containment_guard",
+      "api_patterns": [
+        "getCanonicalPath()",
+        "getCanonicalFile()",
+        ".startsWith(",
+        "File.separator",
+        "toRealPath()",
+        "normalize()"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "ZipSlipSpec is a weakness concern, not a governed API type, CrySL rule, or detector-catalog rule identifier. It describes a static archive-extraction path-construction shape. A match does not by itself prove reachability, attacker control of the archive, successful extraction, or a runtime write outside the intended directory.",
+  "forbidden_inferences_without_evidence": [
+    "That a static candidate was executed or is reachable from an import, restore, backup, or other archive-selection path.",
+    "That an attacker can supply or modify the archive bytes or ZIP entry names.",
+    "That a parent-directory entry name resolves outside the extraction root on the deployed filesystem and Android or Java runtime.",
+    "That the process has permission to overwrite the alleged external target.",
+    "That the output operation overwrites an existing file rather than failing, creating a new file, or writing to a different resolved target.",
+    "That no effective validation exists in an interprocedural helper, wrapper, archive pre-parser, or caller not represented by the local matching patterns.",
+    "That a path-traversal finding also proves a symbolic-link, hard-link, archive-bomb, code-execution, or arbitrary-file-read condition.",
+    "That a type, API, repository rule, or CrySL specification named ZipSlipSpec exists."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A ZIP Slip / CWE-22 condition exists only if a reachable extraction operation processes a suitably controlled entry name, resolves the resulting destination outside the intended root, and successfully performs the relevant filesystem operation.",
+    "equivalent": false,
+    "detector_claim": "A static archive-extraction code shape can derive a write destination from a ZIP entry name without a recognized containment check."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Target Java and Android API versions used by the application.",
+      "Device or host filesystem behavior relevant to separators, canonicalization, case sensitivity, and absolute-path handling.",
+      "The actual ZIP implementation and archive-entry name decoding behavior used in the deployed build.",
+      "Any application-specific path-validation, import-format, or backup-format compatibility constraints."
+    ],
+    "runtime": [
+      "A controlled test archive containing a traversal-shaped entry name, executed only in an authorized isolated test environment.",
+      "Tracing or assertions demonstrating the intended extraction root, the resolved candidate destination, and whether the write attempt occurs.",
+      "Evidence of the archive-input trust boundary, reachability of the extraction path, effective process permissions, and actual write result.",
+      "Separate testing for symlink and race behavior if the extraction directory or its ancestors can be modified by an attacker."
+    ],
+    "source_level": [
+      "Source showing ZIP-entry enumeration or retrieval and use of the entry name.",
+      "Source showing the entry name reaches a destination-path construction rooted at the intended extraction directory.",
+      "Source showing the constructed destination reaches the actual file-creation or output-writing sink.",
+      "Source showing whether a canonical or normalized containment decision exists, what paths it compares, and that rejection prevents the write."
+    ]
+  },
+  "name": "ZipSlipSpec",
+  "source_url": "https://cwe.mitre.org/data/definitions/22",
+  "applies_to_types": [
+    "java.util.zip.ZipEntry",
+    "java.io.File",
+    "java.io.InputStream",
+    "android.content.Context"
+  ],
+  "source_title": "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+  "semantic_scope": "For every finding of this rule, the detector observes a static ZIP-archive extraction flow in which an entry name contributes to a filesystem output path rooted at an intended destination directory and is then used in an attempted write, while an effective destination-containment check is absent, unrecognized, or not proven to gate that write. The scope is archive-entry pathname traversal, not generic file handling or every archive-related risk.",
+  "spec_id": "ZipSlipSpec",
+  "known_false_positive_shapes": [
+    "The archive is demonstrably trusted and cannot be replaced or influenced by a lower-trust principal.",
+    "A validation helper rejects absolute paths, parent-directory traversal, and other escaping names before output-path construction or before any write, but the detector does not model that helper.",
+    "The path is canonicalized or normalized and compared against the canonical extraction root with a separator-boundary check, and a failed comparison prevents the write.",
+    "The entry name is reduced to a validated basename or mapped through a fixed allowlist before it reaches the output destination.",
+    "The apparent output operation is unreachable for archive entries, writes only to an in-memory or non-filesystem sink, or cannot use the candidate path.",
+    "The candidate is a directory-only metadata operation that does not create or modify a filesystem object outside the intended root, although directory traversal handling may still require review.",
+    "A local syntactic match spans unrelated variables and does not preserve data flow from the archive entry name to the output pathname."
+  ],
+  "protocol": "archive-entry name retrieval -> destination derived from (extraction root, entry name) -> filesystem write; containment of the resolved destination under the extraction root must be established before the write",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.woheller69.weather.database.Backup",
+        "method": "zipExtract",
+        "message": "Static candidate (not executed): zipExtract restores a user-selected backup archive and writes each entry to new File(targetDir, zipEntry.getName()) with no containment check, so an entry named ../../shared_prefs/x.xml escapes targetDir and overwrites files in the app's private storage (Zip Slip, CWE-22)."
+      },
+      {
+        "class": "ryey.easer.core.data.Helper",
+        "method": "import_data",
+        "message": "Static candidate (not executed): import_data(Context, InputStream) writes every file entry of an imported archive to new File(context.getFilesDir(), entry.getName()) without a canonical-path check; the caller's validation regex accepts names such as event/../../shared_prefs/x.xml, so an imported archive can overwrite files outside the data directory (Zip Slip, CWE-22)."
+      },
+      {
+        "class": "de.hauke_stieler.geonotes.export.Zip",
+        "method": "unzipFlatZip",
+        "message": "Static candidate (not executed): unzipFlatZip builds each output path as outputFolder.getAbsolutePath() + \"/\" + entry.getName() when importing a backup, so an entry name containing ../ is written outside outputFolder (Zip Slip, CWE-22)."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:File",
+    "checked_url": "https://cwe.mitre.org/data/definitions/22"
+  }
+}

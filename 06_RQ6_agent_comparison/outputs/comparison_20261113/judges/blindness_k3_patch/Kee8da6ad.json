@@ -1,0 +1,32 @@
+{
+ "card_id": "Kee8da6ad",
+ "card_sha256": "8eeee158845912d8",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3854,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 365
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0383704,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "fa7a444da86c7388",
+ "finished_at": "2026-11-16T11:48:34-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.25,
+  "reason": "The diff is a tidy, minimal refactor that replaces the shared KeyStore field with a helper documented in KDoc. It was built and passed, which fits a pipeline that drafts, reviews and builds its patches. The explanatory doc comment reads like Claude's style, but the evidence is weak."
+ }
+}

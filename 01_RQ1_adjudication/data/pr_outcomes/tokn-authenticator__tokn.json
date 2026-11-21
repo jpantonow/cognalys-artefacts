@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/tokn-authenticator/tokn/pull/138",
+    "state": "merged",
+    "finding_id": "0aeb52bd220d",
+    "spec": "KeyStoreSpec",
+    "csv_class": "me.diamondforge.tokn.security.KeystoreManager",
+    "method_name": "getOrCreateKey",
+    "title": "Read Android keystore keys with getKey",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:39:15.370380+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "fthomys",
+        "kind": "comment",
+        "body": "thanks\r\n"
+      }
+    ]
+  }
+]

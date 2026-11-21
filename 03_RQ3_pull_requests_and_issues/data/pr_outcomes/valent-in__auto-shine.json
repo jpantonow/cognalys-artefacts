@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/Valent-in/Auto-Shine/pull/12",
+    "state": "merged",
+    "finding_id": "69e4debc0b3a",
+    "spec": "NumberFormatCrashSpec",
+    "csv_class": "com.mine.autoshine.MainActivity",
+    "method_name": "onCreate",
+    "title": "Fix onCreate",
+    "impact_class": "not_recorded",
+    "recorded_at": "2026-11-19T20:37:38.208764+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "Valent-in",
+        "kind": "comment",
+        "body": "Hi\r\nThanks for attention to my project\r\n\r\nI think it should show some message toast, like \"Wrong numeric value\". Silent ignoring of user input is not good solution."
+      }
+    ]
+  }
+]

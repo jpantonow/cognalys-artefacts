@@ -1,0 +1,25 @@
+{
+  "status": "complete",
+  "boot_id": "8cd7f8f4-d1ed-4626-ad90-3cfa7ee9e5c7",
+  "start_ticks": "198347",
+  "passes": [
+    {
+      "started_at": "2026-11-03T22:09:26-0300",
+      "commit": "80bfc75c101df70f27654523f48a5c8c9a936700",
+      "dirty": false,
+      "src_tree_sha256": "2a6f169dc29783154df9504c3f4b2d447cfa35a7944db7bfc205a92a5f25f77d"
+    }
+  ],
+  "library": {
+    "started_at": "2026-11-03T22:09:26-0300",
+    "commit": "80bfc75c101df70f27654523f48a5c8c9a936700",
+    "dirty": false,
+    "src_tree_sha256": "2a6f169dc29783154df9504c3f4b2d447cfa35a7944db7bfc205a92a5f25f77d"
+  },
+  "finished_at": "2026-11-03T22:16:08-0300",
+  "reasons": [],
+  "crashed_findings": [],
+  "unfinished_findings": [],
+  "failed_steps": [],
+  "mixed_pipeline": false
+}

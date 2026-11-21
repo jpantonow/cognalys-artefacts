@@ -1,0 +1,53 @@
+[
+  {
+    "pull_request": "https://github.com/jimvixx/ShortMessageSecure/pull/83",
+    "state": "merged",
+    "finding_id": "ab0763bb2ecc",
+    "spec": "KeyGeneratorSpec",
+    "csv_class": "org.jimvixx.smsecure.crypto.MasterSecretUtil",
+    "method_name": "generateMacSecret",
+    "title": "Use HmacSHA256 for generated MAC secrets",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:40:02.915249+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "jimvixx",
+        "kind": "comment",
+        "body": "Thank you for the contribution and for testing SMSecure with RVSec!\r\n\r\nI reviewed the proposed change. According to the Android documentation, `HmacSHA1` is a supported `KeyGenerator` algorithm, so the reported violation may be related to the CrySL rule rather than an actual Android API issue.\r\n\r\nAlso, the generated key material is subsequently used with `HmacSHA1` throughout the existing MasterSecret implementation. Switching only the key generator to `HmacSHA256` does not change the MAC algorithm or provide a direct security improvement.\r\n\r\nCould you share the exact CrySL rule violation and explain why `HmacSHA1` is considered invalid in this context?\r\n\r\nI'd prefer to preserve the existing cryptographic behavior unless there is a demonstrated issue. Adding an explicit 160-bit initialization to the current `HmacSHA1` generator might be a simpler alternative.\r\n\r\nThanks again for investigating this!"
+      },
+      {
+        "author": "jimvixx",
+        "kind": "comment",
+        "body": "Thank you for the clarification and for updating the PR!\r\n\r\nThe revised approach looks good to me. Explicitly initializing the key size to 160 bits preserves the existing behavior and compatibility without introducing unnecessary cryptographic changes.\r\n\r\nI appreciate your contribution and the effort you put into analyzing SMSecure with RVSec."
+      },
+      {
+        "author": "jimvixx",
+        "kind": "comment",
+        "body": "Thanks again for your contribution!"
+      }
+    ]
+  },
+  {
+    "pull_request": "https://github.com/jimvixx/ShortMessageSecure/pull/89",
+    "state": "merged",
+    "finding_id": "bb98bd300a0c",
+    "spec": "MessageDigestSpec",
+    "csv_class": "org.jimvixx.smsecure.ConversationListAdapter",
+    "method_name": "<init>",
+    "title": "Use SHA-256 for conversation stable IDs",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:40:05.114968+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "jimvixx",
+        "kind": "comment",
+        "body": "Thanks for the contribution and for checking SMSecure with RVSec!\r\n\r\nThe change looks good. Although SHA-1 is only used here to generate stable RecyclerView item IDs and does not affect cryptographic security, switching to SHA-256 is a reasonable improvement.\r\n\r\nOne small request before merging: could you also update the `AssertionError` message from `\"SHA-1 missing\"` to `\"SHA-256 missing\"` to match the new algorithm?\r\n\r\nThanks again for your work!"
+      },
+      {
+        "author": "jimvixx",
+        "kind": "comment",
+        "body": "Thanks for the quick update! Everything looks good now. I'll go ahead and merge the PR.\r\n\r\nThanks again for your contribution to SMSecure!"
+      }
+    ]
+  }
+]

@@ -1,0 +1,31 @@
+{
+ "card_id": "Ke3aff027",
+ "card_sha256": "8b7cec72bbfe4c41",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2981,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 446
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.033006400000000005,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "3b87fd3e3e25bc49",
+ "finished_at": "2026-11-16T11:42:54-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.3,
+  "reason": "The text reads like it was filled into a template: an evidence sentence pieced together from fixed parts (\"receives the literal MD5, outside the reported algorithm allow-list; the runtime measurement also recorded MD5\"), a stock reason for not opening a PR, and a stock closing. That points to the Cognalys pipeline rather than a free-form coding agent. Choosing between the pipeline's two models (C on Terra, D on Sonnet) is close to a coin flip. I picked C because the wording is terse and mechanical."
+ }
+}

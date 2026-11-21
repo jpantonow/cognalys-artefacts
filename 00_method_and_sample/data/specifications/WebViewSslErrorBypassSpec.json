@@ -1,0 +1,169 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The supplied result is explicitly static and not executed.",
+      "The representative message does not provide the source body, call graph, registration site, target SDK, Android version, or WebView provider version.",
+      "A local matcher can observe a textual proceed call but cannot establish receiver type, control-flow reachability, or callback registration without semantic analysis.",
+      "The detector observation cannot by itself establish credential exposure, an attacker-controlled network path, or successful man-in-the-middle interception."
+    ],
+    "predicates": [
+      "A method is resolved as an override of android.webkit.WebViewClient.onReceivedSslError(WebView, SslErrorHandler, SslError).",
+      "A call is resolved or data-flow linked to android.webkit.SslErrorHandler.proceed().",
+      "The proceed call is reachable from the callback entry and is not guarded by a certificate-error-specific acceptance predicate, according to the detector's local/control-flow analysis.",
+      "For an end-to-end candidate, the overriding client must be associated with a live android.webkit.WebView; this association is separate evidence from the callback body."
+    ],
+    "claim": "The representative finding claims that the WebViewClient used by the server-login screen overrides onReceivedSslError and calls handler.proceed() unconditionally."
+  },
+  "unknowns": [
+    "The actual source code and bytecode for BrowserAuthScreen were not supplied, so the reported static candidate cannot be independently reconstructed here.",
+    "Whether BrowserAuthScreen is a Kotlin top-level function compiled into BrowserAuthScreenKt, and the precise anonymous, nested, or delegated WebViewClient class that contains the override.",
+    "Whether the server-login WebView is reachable in shipped builds and which URLs it loads.",
+    "Whether the handler response is unconditional for every callback path or only appears so under the detector's analysis model.",
+    "Which recoverable SslError categories occur in practice for the relevant server endpoints.",
+    "Whether a practical man-in-the-middle path exists for affected users and networks.",
+    "Whether credentials, session cookies, authorization codes, or other sensitive values are entered or exposed in the affected WebView flow."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "Android documents that WebViewClient.onReceivedSslError is called when a resource load encounters a recoverable SSL certificate error.",
+      "The host application must respond through SslErrorHandler.cancel() or SslErrorHandler.proceed().",
+      "SslErrorHandler.proceed() instructs WebView to ignore the certificate error and continue communicating with the server; Android warns applications to call cancel() rather than proceed().",
+      "SslError can represent, among other conditions, an untrusted certificate authority, hostname mismatch, expired certificate, not-yet-valid certificate, invalid certificate date, or generic SSL error.",
+      "WebView.setWebViewClient installs the client that receives WebView notifications and requests."
+    ],
+    "preconditions": [
+      "An android.webkit.WebView must use the relevant android.webkit.WebViewClient implementation.",
+      "The WebView must encounter a recoverable SSL certificate error while loading a resource.",
+      "The overriding onReceivedSslError callback must execute.",
+      "The call receiver must be the SslErrorHandler provided for that callback.",
+      "handler.proceed() must actually execute."
+    ],
+    "unknowns": [
+      "Whether the reported BrowserAuthScreen installs this exact client on the WebView instance that loads the server-login content.",
+      "Whether the proceed call is truly unconditional after Kotlin compilation, inlining, delegation, or surrounding control flow.",
+      "Which resource URL and certificate-error category trigger the callback in the relevant deployment.",
+      "Whether the decision-retention behavior documented for proceed/cancel affects later loads in the application's tested Android/WebView versions."
+    ]
+  },
+  "authoritative_sources": [
+    "https://developer.android.com/reference/android/webkit/SslErrorHandler",
+    "https://developer.android.com/reference/android/webkit/WebViewClient",
+    "https://developer.android.com/reference/android/net/http/SslError",
+    "https://developer.android.com/reference/android/webkit/WebView",
+    "https://cwe.mitre.org/data/definitions/295.html",
+    "https://mas.owasp.org/MASTG/demos/android/MASVS-NETWORK/MASTG-DEMO-0056/MASTG-DEMO-0056/"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observed when source contains a WebView client-assignment call. The predicate is satisfied only when the assigned or reachable client is the android.webkit.WebViewClient implementation whose onReceivedSslError override contains the relevant handler response.",
+      "name": "webview_client_association",
+      "api_patterns": [
+        "setWebViewClient(",
+        ".setWebViewClient("
+      ]
+    },
+    {
+      "condition": "Observed when source declares or references an SSL-error callback. The predicate is satisfied only when method resolution identifies an override of android.webkit.WebViewClient.onReceivedSslError(WebView, SslErrorHandler, SslError), rather than a same-named method in another type.",
+      "name": "ssl_error_callback_override",
+      "api_patterns": [
+        "onReceivedSslError(",
+        "override fun onReceivedSslError(",
+        "@Override",
+        "public void onReceivedSslError("
+      ]
+    },
+    {
+      "condition": "Observed when a proceed invocation appears. The predicate is satisfied only when the invocation receiver resolves or data-flows to the android.webkit.SslErrorHandler parameter supplied to onReceivedSslError, and the call is reachable on the callback path.",
+      "name": "ssl_error_proceed",
+      "api_patterns": [
+        "handler.proceed()",
+        ".proceed()"
+      ]
+    },
+    {
+      "condition": "Observed when a cancel invocation appears. The predicate is satisfied only when its receiver resolves or data-flows to the callback's android.webkit.SslErrorHandler. Its presence elsewhere does not establish that the SSL-error path is cancelled.",
+      "name": "ssl_error_cancel",
+      "api_patterns": [
+        "handler.cancel()",
+        ".cancel()"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "WebViewSslErrorBypassSpec is a concern label, not a published detector rule, CrySL rule, or governed API type. It is anchored to Android's WebView SSL-error callback and handler APIs. A static match for handler.proceed() in an onReceivedSslError override is evidence of a potentially unsafe source shape; it does not alone prove that the callback is registered, reachable, executed, associated with a credential-entry flow, or exploitable in a particular build.",
+  "forbidden_inferences_without_evidence": [
+    "That a type, API, detector catalog entry, CrySL rule, or class named WebViewSslErrorBypassSpec exists.",
+    "That sh.hnet.comfychair.ui.screens.BrowserAuthScreenKt.BrowserAuthScreen installs the reported WebViewClient into a live android.webkit.WebView.",
+    "That the reported callback is executed in a production build rather than being dead, preview-only, test-only, or conditionally excluded code.",
+    "That the affected resource is the main authentication document rather than a subresource.",
+    "That users enter server credentials, or that any entered credentials are transmitted after the TLS error, solely from the static callback pattern.",
+    "That every TLS failure reaches onReceivedSslError; Android documents this callback for recoverable SSL certificate errors, while non-recoverable failures are reported through onReceivedError with ERROR_FAILED_SSL_HANDSHAKE.",
+    "That a specific attacker, network position, certificate, hostname, or trust-store configuration can exploit the application without runtime evidence."
+  ],
+  "security_semantics": {
+    "runtime_claim": "If the callback is invoked and the supplied SslErrorHandler.proceed() call executes, Android documents that WebView ignores the SSL certificate error and continues communicating with the server. This undermines certificate validation for that load and is consistent with CWE-295, Improper Certificate Validation.",
+    "equivalent": false,
+    "detector_claim": "An unconditional SslErrorHandler.proceed() call in an onReceivedSslError override accepts the callback's recoverable certificate error instead of terminating the affected resource load."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "The application's minSdkVersion, targetSdkVersion, and tested Android API levels.",
+      "The Android System WebView or Chromium WebView provider versions used by affected devices.",
+      "Confirmation that the observed TLS failure is recoverable and reaches onReceivedSslError rather than the non-recoverable handshake-error callback path.",
+      "Confirmation of any cached or retained proceed/cancel decision behavior on the tested platform."
+    ],
+    "runtime": [
+      "A runtime trace showing that the identified WebViewClient is installed and onReceivedSslError is invoked.",
+      "A controlled recoverable-certificate-error test showing whether the handler proceeds or cancels.",
+      "Evidence of the loaded resource role, such as whether it is the authentication document, a login submission target, or an unrelated subresource.",
+      "If impact includes credential exposure, evidence that credentials can be entered and transmitted through the affected WebView session after the error is bypassed."
+    ],
+    "source_level": [
+      "The complete Kotlin or Java body for sh.hnet.comfychair.ui.screens.BrowserAuthScreenKt.BrowserAuthScreen and any generated or decompiled WebViewClient implementation.",
+      "Type resolution showing that the callback is android.webkit.WebViewClient.onReceivedSslError and that the receiver of proceed() is android.webkit.SslErrorHandler.",
+      "Control-flow evidence showing whether proceed() is unconditional, conditionally reachable, delegated, or paired with cancellation on all relevant paths.",
+      "The WebView construction and setWebViewClient call path linking the candidate client to the login-related WebView."
+    ]
+  },
+  "name": "WebViewSslErrorBypassSpec",
+  "source_url": "https://developer.android.com/reference/android/webkit/SslErrorHandler",
+  "applies_to_types": [
+    "android.webkit.WebViewClient",
+    "android.webkit.SslErrorHandler",
+    "android.net.http.SslError",
+    "android.webkit.WebView"
+  ],
+  "source_title": "SslErrorHandler | API reference | Android Developers",
+  "semantic_scope": "The concern covers Android WebView source paths where an implementation of android.webkit.WebViewClient.onReceivedSslError responds through android.webkit.SslErrorHandler.proceed(), particularly where the response is unconditional or is not constrained by validation of the android.net.http.SslError. The representative detector finding identifies BrowserAuthScreen in sh.hnet.comfychair.ui.screens.BrowserAuthScreenKt as a static candidate.",
+  "spec_id": "WebViewSslErrorBypassSpec",
+  "known_false_positive_shapes": [
+    "The override exists in unreachable, obsolete, debug-only, preview-only, test-only, or excluded source.",
+    "The WebViewClient implementation is never passed to WebView.setWebViewClient on a live WebView.",
+    "A syntactically similar proceed() call targets another handler type rather than android.webkit.SslErrorHandler.",
+    "The apparent callback is a same-named method that does not override android.webkit.WebViewClient.onReceivedSslError.",
+    "The proceed call is on a branch that cannot execute for SSL errors in the deployed configuration.",
+    "The analyzed artifact is stale or differs from the production artifact.",
+    "The affected WebView only loads content for which the alleged authentication or credential-entry context is not present; this does not negate the unsafe API pattern, but it weakens an unverified credential-exposure claim."
+  ],
+  "protocol": "WebView.setWebViewClient(WebViewClient) -> WebViewClient.onReceivedSslError(WebView, SslErrorHandler, SslError) -> handler.cancel() | handler.proceed()",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "sh.hnet.comfychair.ui.screens.BrowserAuthScreenKt",
+        "method": "BrowserAuthScreen",
+        "message": "Static candidate (not executed): the WebViewClient of the server login screen overrides onReceivedSslError and calls handler.proceed() unconditionally, so any certificate error -- untrusted CA, hostname mismatch, expired -- is accepted while the user types server credentials (CWE-295)."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:WebViewClient",
+    "checked_url": "https://developer.android.com/reference/android/webkit/SslErrorHandler"
+  }
+}

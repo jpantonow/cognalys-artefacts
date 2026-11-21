@@ -1,0 +1,173 @@
+{
+  "schema_version": 2,
+  "spec_id": "IntentRedirectionSpec",
+  "name": "IntentRedirectionSpec",
+  "applies_to_types": [
+    "android.content.IntentRedirection"
+  ],
+  "source_title": "IntentRedirection.crysl — requested canonical CrySL source could not be retrieved",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IntentRedirection.crysl",
+  "source_verified": false,
+  "protocol": "receiveOuterIntent -> extractNestedIntent -> (resolveTarget && sameApplicationId && targetInAllowlist) -> launch; report shape: extractNestedIntent -> launch where validation is not evidenced",
+  "important_note": "android.content.IntentRedirection is a nominal, unverified CrySL-style target included to meet the required XSpec naming convention; it is not evidence of an Android SDK runtime class. The requested canonical raw CrySL URL was reported as fetched but unavailable (HTTP 404), so this context reconstructs the reported Android intent-redirection detector shape rather than establishing a verified CrySL rule.",
+  "events": [
+    {
+      "name": "receive_outer_intent",
+      "api_patterns": [
+        "getIntent()",
+        "EXTRA_NEXT_INTENT",
+        "hasExtra(EXTRA_NEXT_INTENT)"
+      ],
+      "condition": "Observation: code accesses an Activity-delivered Intent or the nested-intent extra. Predicate satisfaction: the outer Intent is externally reachable or attacker-influenced; this requires version-matched manifest, permission, caller, and routing evidence."
+    },
+    {
+      "name": "extract_nested_intent",
+      "api_patterns": [
+        "getParcelableExtraCompat",
+        "getParcelableExtra(EXTRA_NEXT_INTENT)",
+        "intent.getParcelableExtra"
+      ],
+      "condition": "Observation: a Parcelable Intent is read from an extra. Predicate satisfaction: the extracted value is data/control-flow derived from an attacker-influenced outer Intent and is the value that reaches the launch sink."
+    },
+    {
+      "name": "resolve_and_validate_target",
+      "api_patterns": [
+        "resolveActivity(packageManager)",
+        "componentName.packageName",
+        "buildMeta.applicationId",
+        "className in allowList",
+        "IntentSanitizer.Builder()"
+      ],
+      "condition": "Observation: target resolution, package comparison, allowlist comparison, or sanitizer construction appears. Predicate satisfaction: the exact nested Intent passed to the sink is rejected unless its resolved target and relevant mutable properties satisfy the application's security policy; unrelated or unconnected checks do not satisfy this predicate."
+    },
+    {
+      "name": "launch_nested_intent",
+      "api_patterns": [
+        "startIntentAndFinish",
+        "startActivity(",
+        "startService(",
+        "bindService("
+      ],
+      "condition": "Observation: a component-launch API or local wrapper is called. Predicate satisfaction: the argument reaching that sink is the extracted nested Intent; observing a launch call alone does not establish intent redirection or exploitability."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that android.content.IntentRedirection is a real Android SDK class; its nominal type is unverified because the canonical CrySL source was unavailable.",
+    "Do not infer exploitability merely from nested-Intent extraction and a launch call.",
+    "Do not infer that MainActivity was exported, permissionless, or reachable by an arbitrary third-party app without inspecting the version-matched manifest and runtime entry conditions.",
+    "Do not infer that every nested-Intent launch is unsafe; safety depends on provenance and complete validation or sanitization before launch.",
+    "Do not infer that a package-name check alone is sufficient for every policy; component targeting and URI-grant flags can also be relevant.",
+    "Do not infer that the detector recognizes all equivalent validation helpers, launch sinks, Kotlin extensions, reflection, or framework-mediated launches.",
+    "Do not infer a runtime compromise, affected-device population, or impact beyond the normalized advisory record without version-matched reproduction evidence."
+  ],
+  "semantic_scope": "The rule concept concerns Android intent redirection: an application component receives an outer Intent, extracts a nested Intent from extras, and launches that nested Intent. The representative finding concerns im.vector.app.features.MainActivity.handleAppStarted in Element Android tag v1.6.10, identifies EXTRA_NEXT_INTENT as the source, and reports launch through startIntentAndFinish without the application-ID and activity-allowlist validation stated to be present in the fix.",
+  "detector_semantics": {
+    "claim": "The normalized finding claims that handleAppStarted reads a nested Intent from EXTRA_NEXT_INTENT on an externally reachable Intent and starts it without recognized target validation; the selected v1.6.10 source is stated to predate the application-ID and activity-allowlist check introduced by the fix.",
+    "predicates": [
+      "A delivered outer Intent is modeled as externally reachable or attacker-influenced.",
+      "A nested Intent is obtained from the EXTRA_NEXT_INTENT extra.",
+      "The nested Intent flows to an activity-launch operation, directly or through startIntentAndFinish.",
+      "No recognized target-validation predicate protects that launch on the reported path.",
+      "The analyzed source corresponds to the vulnerable version line represented by tag v1.6.10."
+    ],
+    "limitations": [
+      "The actual IntentRedirection.crysl source and its exact CrySL EVENTS, ORDER, CONSTRAINTS, and predicates could not be verified.",
+      "The normalized advisory record is not a runtime trace, exploit reproduction, manifest analysis, or proof that an untrusted caller can reach the path in a particular build.",
+      "The record does not disclose the detector's precise data-flow, call-graph, aliasing, nullability, reflection, lifecycle, or validation-recognition behavior.",
+      "Historical v1.6.10 source is reported to extract the nested Intent and call a wrapper, while v1.6.12 is reported to resolve the activity and require the resolved package to equal buildMeta.applicationId and the class name to be in an explicit allowlist."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Android documents intent redirection as an attacker partly or fully controlling an Intent that a vulnerable app uses to launch another component; a nested Intent in extras is a common source.",
+      "Android's documented mitigation is to validate the redirected target, including expected package and class, or sanitize the Intent before launching it."
+    ],
+    "preconditions": [
+      "An outer Intent must be delivered to the application component.",
+      "A nested Intent must be extracted from extras or reconstructed from attacker-influenced data.",
+      "A component-launch operation must be reached with that nested Intent.",
+      "For the reported Element Android case, the relevant historical source is tag v1.6.10; v1.6.12 is reported to resolve the activity and require both application-ID equality and an explicit activity allowlist."
+    ],
+    "unknowns": [
+      "Whether the unavailable intended CrySL rule models only startActivity or also startService, bindService, pending-intent dispatch, and other component launches.",
+      "Whether the intended rule requires a specific extra key such as EXTRA_NEXT_INTENT or treats any nested-Intent extra as a source.",
+      "Whether validation is limited to package and class allowlisting or also includes action, data URI, categories, flags, permissions, exported state, and URI-grant handling.",
+      "Whether android.content.IntentRedirection is a project-defined pseudo-type, a detector-internal nominal API type, or an intended source declaration absent from the public corpus."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "A potentially attacker-supplied nested Intent reaches a launch sink without a recognized target-validation step.",
+    "runtime_claim": "A vulnerability exists only if an untrusted party can cause the component to receive a chosen or sufficiently controlled nested Intent, the application launches it on the relevant path, and Android and component configuration permit a security-relevant result.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Retrieve the exact IntentRedirection.crysl file, including its SPEC declaration, EVENTS, ORDER, CONSTRAINTS, and predicate definitions.",
+      "Inspect the exact application source at the selected tag and resolve helpers such as startIntentAndFinish.",
+      "Inspect the version-matched AndroidManifest.xml or merged manifest, intent filters, exported attributes, and component permissions for MainActivity.",
+      "Confirm source-to-artifact version mapping rather than relying solely on a repository tag or advisory normalization."
+    ],
+    "runtime": [
+      "Demonstrate that an untrusted application or other untrusted origin can deliver the required outer Intent under the tested installation configuration.",
+      "Demonstrate that EXTRA_NEXT_INTENT accepts a nested Intent controlled by that origin.",
+      "Demonstrate that the same nested Intent reaches the launch operation and resolves to a security-relevant target.",
+      "Record Android version, target SDK, installed application ID, component-export configuration, launch result, and applicable system hardening behavior."
+    ],
+    "compatibility": [
+      "Test the affected Element Android range identified by CVE-2024-26131, reported as versions 1.4.3 through 1.6.10, with 1.6.12 reported as fixed.",
+      "Account for Android-version behavior, including documented default intent-redirection hardening in Android 16 and StrictMode detection conditions for certain nested-Intent unparcel-and-launch patterns on apps targeting Android 12 or later.",
+      "Verify build flavors and application IDs, because the reported fix compares the resolved package with buildMeta.applicationId."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "The reported activity is not externally reachable in the analyzed artifact because it is unexported, protected by a non-bypassable permission, or lacks a reachable intent route.",
+    "The EXTRA_NEXT_INTENT value is always internally constructed on feasible paths despite a coarse attacker-source model.",
+    "Complete validation or sanitization occurs in a helper, superclass, lifecycle callback, library wrapper, or interprocedural path that the detector does not recognize.",
+    "The launch wrapper receives null or a separately constructed safe Intent rather than the extracted nested Intent.",
+    "The nested Intent can resolve only to an intended public component and cannot convey security-relevant URI grants, extras, actions, or flags in the deployed configuration.",
+    "The scanned revision, flavor, fork, or generated artifact differs from tag v1.6.10.",
+    "Platform-level protections prevent observed redirection behavior on a tested device, without proving the source-level pattern safe on all supported platforms."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IntentRedirection.crysl",
+    "https://raw.githubusercontent.com/element-hq/element-android/v1.6.10/vector/src/main/java/im/vector/app/features/MainActivity.kt",
+    "https://raw.githubusercontent.com/element-hq/element-android/v1.6.12/vector/src/main/java/im/vector/app/features/MainActivity.kt",
+    "https://developer.android.com/privacy-and-security/risks/intent-redirection?hl=en",
+    "https://developer.android.com/reference/android/content/Intent",
+    "https://developer.android.com/reference/androidx/core/content/IntentSanitizer",
+    "https://cve.mitre.org/cgi-bin/cvename.cgi?name=2024-26131"
+  ],
+  "unknowns": [
+    "What exact fully qualified type is declared by the intended IntentRedirection.crysl rule, if such a rule exists; android.content.IntentRedirection is included only as the required nominal CrySL-style target and remains unverified.",
+    "The canonical CrySL source content, including exact event names, accepted method signatures, order expression, constraints, and error condition.",
+    "Whether the canonical source was moved, renamed, generated, private, or never present in the referenced CROSSINGTUD repository path.",
+    "The exact detector implementation behind IntentRedirectionSpec and whether the normalized finding is generated from CrySL, a separate Android security rule, or a hybrid rule.",
+    "The version-matched merged-manifest reachability and permission configuration for im.vector.app.features.MainActivity.",
+    "Whether a concrete v1.6.10 build permits a third-party app to supply the required nested Intent on the tested Android version and deployment configuration."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IntentRedirection.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "im.vector.app.features.MainActivity",
+        "method": "handleAppStarted",
+        "message": "External finding (CVE-2024-26131): handleAppStarted reads an Intent from the EXTRA_NEXT_INTENT extra of an externally reachable Intent and starts it without validating its target. The selected version lacks the application-id and activity allowlist check introduced by the fix. Source tag: v1.6.10. This is a normalized advisory record, not a runtime log."
+      }
+    ],
+    "expected_api_simple_name": "IntentRedirection",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/IntentRedirection.crysl"
+  }
+}

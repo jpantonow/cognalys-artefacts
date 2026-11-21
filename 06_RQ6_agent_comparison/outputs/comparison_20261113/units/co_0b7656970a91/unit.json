@@ -1,0 +1,37 @@
+{
+ "unit": "co_0b7656970a91",
+ "source": "spec_cohort",
+ "group": "no_pr",
+ "finding_ids": [
+  "0b7656970a91"
+ ],
+ "apk": "com.password.monitor_102.apk",
+ "repo_url": "https://github.com/StellarSand/Password-Monitor",
+ "pinned_commit": "3ef9c433cba6a0d91006eedc7acd07152ca5cde5",
+ "spec": [
+  "MessageDigestSpec"
+ ],
+ "class": "com.password.monitor.koin_di.AppModuleKt",
+ "method": "appModule$lambda$0$3",
+ "latest_outcome": [
+  "issue para o mantenedor do app"
+ ],
+ "bench_id": [],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "0b7656970a91",
+   "unique_error_id": "com.password.monitor.koin_di.AppModuleKt:::appModule$lambda$0$3:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "spec": "MessageDigestSpec",
+   "class": "com.password.monitor.koin_di.AppModuleKt",
+   "method": "appModule$lambda$0$3",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "apk": "com.password.monitor_102.apk",
+   "repo_url": "https://github.com/StellarSand/Password-Monitor",
+   "commit": "3ef9c433cba6a0d91006eedc7acd07152ca5cde5",
+   "detector_source_location": "AppModule.kt:32"
+  }
+ ]
+}

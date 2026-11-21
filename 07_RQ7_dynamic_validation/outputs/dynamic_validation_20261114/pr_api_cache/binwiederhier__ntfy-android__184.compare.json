@@ -1,0 +1,277 @@
+{
+ "url": "https://api.github.com/repos/binwiederhier/ntfy-android/compare/51730a0f06cebfad59f1b7bc0cb6d5c47082b032...7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e",
+ "fetched_at": "2026-11-15T16:18:11.204085+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/binwiederhier/ntfy-android/compare/51730a0f06cebfad59f1b7bc0cb6d5c47082b032...7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e",
+  "html_url": "https://github.com/binwiederhier/ntfy-android/compare/51730a0f06cebfad59f1b7bc0cb6d5c47082b032...7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e",
+  "permalink_url": "https://github.com/binwiederhier/ntfy-android/compare/binwiederhier:51730a0...binwiederhier:7b2ae7b",
+  "diff_url": "https://github.com/binwiederhier/ntfy-android/compare/51730a0f06cebfad59f1b7bc0cb6d5c47082b032...7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e.diff",
+  "patch_url": "https://github.com/binwiederhier/ntfy-android/compare/51730a0f06cebfad59f1b7bc0cb6d5c47082b032...7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e.patch",
+  "base_commit": {
+   "sha": "51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+   "node_id": "C_kwDOGRuUFNoAKDUxNzMwYTBmMDZjZWJmYWQ1OWYxYjdiYzBjYjZkNWM0NzA4MmIwMzI",
+   "commit": {
+    "author": {
+     "name": "Philipp Heckel",
+     "email": "phil@heckel.io",
+     "date": "2026-07-09T20:45:41Z"
+    },
+    "committer": {
+     "name": "Philipp Heckel",
+     "email": "phil@heckel.io",
+     "date": "2026-07-09T20:45:41Z"
+    },
+    "message": "Fix remaining bug on connection lost alert",
+    "tree": {
+     "sha": "660fba91db5e35371b5253179fa5ecfae6177581",
+     "url": "https://api.github.com/repos/binwiederhier/ntfy-android/git/trees/660fba91db5e35371b5253179fa5ecfae6177581"
+    },
+    "url": "https://api.github.com/repos/binwiederhier/ntfy-android/git/commits/51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/binwiederhier/ntfy-android/commits/51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+   "html_url": "https://github.com/binwiederhier/ntfy-android/commit/51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+   "comments_url": "https://api.github.com/repos/binwiederhier/ntfy-android/commits/51730a0f06cebfad59f1b7bc0cb6d5c47082b032/comments",
+   "author": {
+    "login": "binwiederhier",
+    "id": 664597,
+    "node_id": "MDQ6VXNlcjY2NDU5Nw==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/664597?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/binwiederhier",
+    "html_url": "https://github.com/binwiederhier",
+    "followers_url": "https://api.github.com/users/binwiederhier/followers",
+    "following_url": "https://api.github.com/users/binwiederhier/following{/other_user}",
+    "gists_url": "https://api.github.com/users/binwiederhier/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/binwiederhier/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/binwiederhier/subscriptions",
+    "organizations_url": "https://api.github.com/users/binwiederhier/orgs",
+    "repos_url": "https://api.github.com/users/binwiederhier/repos",
+    "events_url": "https://api.github.com/users/binwiederhier/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/binwiederhier/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "binwiederhier",
+    "id": 664597,
+    "node_id": "MDQ6VXNlcjY2NDU5Nw==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/664597?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/binwiederhier",
+    "html_url": "https://github.com/binwiederhier",
+    "followers_url": "https://api.github.com/users/binwiederhier/followers",
+    "following_url": "https://api.github.com/users/binwiederhier/following{/other_user}",
+    "gists_url": "https://api.github.com/users/binwiederhier/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/binwiederhier/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/binwiederhier/subscriptions",
+    "organizations_url": "https://api.github.com/users/binwiederhier/orgs",
+    "repos_url": "https://api.github.com/users/binwiederhier/repos",
+    "events_url": "https://api.github.com/users/binwiederhier/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/binwiederhier/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "5f3a500beb7fb6ff372bc31089c33cbe3fb172fb",
+     "url": "https://api.github.com/repos/binwiederhier/ntfy-android/commits/5f3a500beb7fb6ff372bc31089c33cbe3fb172fb",
+     "html_url": "https://github.com/binwiederhier/ntfy-android/commit/5f3a500beb7fb6ff372bc31089c33cbe3fb172fb"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+   "node_id": "C_kwDOGRuUFNoAKDUxNzMwYTBmMDZjZWJmYWQ1OWYxYjdiYzBjYjZkNWM0NzA4MmIwMzI",
+   "commit": {
+    "author": {
+     "name": "Philipp Heckel",
+     "email": "phil@heckel.io",
+     "date": "2026-07-09T20:45:41Z"
+    },
+    "committer": {
+     "name": "Philipp Heckel",
+     "email": "phil@heckel.io",
+     "date": "2026-07-09T20:45:41Z"
+    },
+    "message": "Fix remaining bug on connection lost alert",
+    "tree": {
+     "sha": "660fba91db5e35371b5253179fa5ecfae6177581",
+     "url": "https://api.github.com/repos/binwiederhier/ntfy-android/git/trees/660fba91db5e35371b5253179fa5ecfae6177581"
+    },
+    "url": "https://api.github.com/repos/binwiederhier/ntfy-android/git/commits/51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/binwiederhier/ntfy-android/commits/51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+   "html_url": "https://github.com/binwiederhier/ntfy-android/commit/51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+   "comments_url": "https://api.github.com/repos/binwiederhier/ntfy-android/commits/51730a0f06cebfad59f1b7bc0cb6d5c47082b032/comments",
+   "author": {
+    "login": "binwiederhier",
+    "id": 664597,
+    "node_id": "MDQ6VXNlcjY2NDU5Nw==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/664597?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/binwiederhier",
+    "html_url": "https://github.com/binwiederhier",
+    "followers_url": "https://api.github.com/users/binwiederhier/followers",
+    "following_url": "https://api.github.com/users/binwiederhier/following{/other_user}",
+    "gists_url": "https://api.github.com/users/binwiederhier/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/binwiederhier/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/binwiederhier/subscriptions",
+    "organizations_url": "https://api.github.com/users/binwiederhier/orgs",
+    "repos_url": "https://api.github.com/users/binwiederhier/repos",
+    "events_url": "https://api.github.com/users/binwiederhier/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/binwiederhier/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "binwiederhier",
+    "id": 664597,
+    "node_id": "MDQ6VXNlcjY2NDU5Nw==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/664597?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/binwiederhier",
+    "html_url": "https://github.com/binwiederhier",
+    "followers_url": "https://api.github.com/users/binwiederhier/followers",
+    "following_url": "https://api.github.com/users/binwiederhier/following{/other_user}",
+    "gists_url": "https://api.github.com/users/binwiederhier/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/binwiederhier/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/binwiederhier/subscriptions",
+    "organizations_url": "https://api.github.com/users/binwiederhier/orgs",
+    "repos_url": "https://api.github.com/users/binwiederhier/repos",
+    "events_url": "https://api.github.com/users/binwiederhier/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/binwiederhier/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "5f3a500beb7fb6ff372bc31089c33cbe3fb172fb",
+     "url": "https://api.github.com/repos/binwiederhier/ntfy-android/commits/5f3a500beb7fb6ff372bc31089c33cbe3fb172fb",
+     "html_url": "https://github.com/binwiederhier/ntfy-android/commit/5f3a500beb7fb6ff372bc31089c33cbe3fb172fb"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 1,
+  "behind_by": 0,
+  "total_commits": 1,
+  "commits": [
+   {
+    "sha": "7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e",
+    "node_id": "C_kwDOGRuUFNoAKDdiMmFlN2IxOWNjYjMwMTljMmNlZGM1OWVjZmI4ZTA2YmNlZjM3MmU",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-11T20:32:12Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-11T20:32:12Z"
+     },
+     "message": "Fix scrub",
+     "tree": {
+      "sha": "a7c3b6c4759ce0bea2194072ce768e29806b1d32",
+      "url": "https://api.github.com/repos/binwiederhier/ntfy-android/git/trees/a7c3b6c4759ce0bea2194072ce768e29806b1d32"
+     },
+     "url": "https://api.github.com/repos/binwiederhier/ntfy-android/git/commits/7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/binwiederhier/ntfy-android/commits/7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e",
+    "html_url": "https://github.com/binwiederhier/ntfy-android/commit/7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e",
+    "comments_url": "https://api.github.com/repos/binwiederhier/ntfy-android/commits/7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+      "url": "https://api.github.com/repos/binwiederhier/ntfy-android/commits/51730a0f06cebfad59f1b7bc0cb6d5c47082b032",
+      "html_url": "https://github.com/binwiederhier/ntfy-android/commit/51730a0f06cebfad59f1b7bc0cb6d5c47082b032"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "55a136376f91a71ed7f99b738d8427f3e53e4f7b",
+    "filename": "app/src/main/java/io/heckel/ntfy/util/Log.kt",
+    "status": "modified",
+    "additions": 4,
+    "deletions": 2,
+    "changes": 6,
+    "blob_url": "https://github.com/binwiederhier/ntfy-android/blob/7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e/app%2Fsrc%2Fmain%2Fjava%2Fio%2Fheckel%2Fntfy%2Futil%2FLog.kt",
+    "raw_url": "https://github.com/binwiederhier/ntfy-android/raw/7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e/app%2Fsrc%2Fmain%2Fjava%2Fio%2Fheckel%2Fntfy%2Futil%2FLog.kt",
+    "contents_url": "https://api.github.com/repos/binwiederhier/ntfy-android/contents/app%2Fsrc%2Fmain%2Fjava%2Fio%2Fheckel%2Fntfy%2Futil%2FLog.kt?ref=7b2ae7b19ccb3019c2cedc59ecfb8e06bcef372e",
+    "patch": "@@ -93,8 +93,10 @@ class Log(private val logsDao: LogDao) {\n \n     private fun scrub(line: String?): String? {\n         var newLine = line ?: return null\n-        scrubTerms.forEach { (scrubTerm, replaceTerm) ->\n-            newLine = newLine.replace(scrubTerm, replaceTerm.replaceTerm)\n+        synchronized(scrubTerms) {\n+            scrubTerms.forEach { (scrubTerm, replaceTerm) ->\n+                newLine = newLine.replace(scrubTerm, replaceTerm.replaceTerm)\n+            }\n         }\n         return newLine\n     }"
+   }
+  ]
+ }
+}

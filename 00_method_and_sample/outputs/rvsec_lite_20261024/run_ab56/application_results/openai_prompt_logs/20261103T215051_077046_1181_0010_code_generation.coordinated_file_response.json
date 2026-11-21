@@ -1,0 +1,224 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T215051_077046_1181_0010_code_generation.coordinated_file",
+  "recorded_at": "2026-11-03T21:51:13",
+  "response": {
+    "id": "resp_0d527237e81a0db1006aea816ba94087d280863e835414600d",
+    "object": "response",
+    "created_at": 1793753451,
+    "status": "completed",
+    "access_programs": null,
+    "background": true,
+    "billing": {
+      "payer": "openai"
+    },
+    "completed_at": 1793753463,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "incomplete_details": null,
+    "instructions": "Generate edits for exactly one file in an atomic coordinated Java/Kotlin fix. Return JSON only. If this file needs no change because its code already fits the contracts the other files provide (for example a caller whose entry point is kept), return edits [] with no_change_required true and say why in explanation; never change a file only to have an edit to return. When test_classpath is present, this file is a test and may import only the repository's own packages, the listed always_available_prefixes, and the libraries in declared_dependencies: a test runner or helper the module does not declare does not compile, and adding it to the build file is outside this change. Write the test the declared libraries support. The reported target file always needs edits, and no_change_required must be false whenever edits is non-empty.For an existing file, copy every original_code verbatim from the supplied target source. For new_file=true, emit exactly one edit_kind=create with an empty original_code and the complete file in corrected_code. Do not edit another path. When the target file is a build file -- a Gradle script, a version catalog or versions.properties -- change only the declaration lines the plan names, copying each original_code line verbatim, and keep the file's own declaration style (catalog alias, constant or literal). Compatibility uncertainty must be recorded in review_assumptions and must not cause abstention for a review-only decision. Preserve every existing public or protected method signature unless the policy explicitly authorizes an API break. Never keep a function name that states a behaviour the patch removes (an algorithm, an encoding, a version). Take the first of these that applies: (1) switch every caller of the reported method to an existing correctly named declaration; (2) otherwise rename the declaration, or its whole overload family, when rename_safety.hard_blockers is empty, updating every one of rename_safety.references (each call, each import line, each ::name) in this batch; (3) otherwise switch every caller of the reported method to a correctly named declaration this batch adds beside it, and keep the weak-named one only if callers outside the patch remain. Never add a helper no production caller uses. rename_safety is a repository check this pipeline ran, not a maintainer approval; a maintainer's preference about a name is at most a note. Local variables and parameters need no rename_safety: rename one whose name embeds the value the patch removes. A function added beside an existing one keeps that function's visibility (internal, private), never a wider one. When replacing a deprecated API, keep every entry of deprecated_api_invariants (execution order, callback thread, cancellation, exception propagation) unless the plan names the deviation; never let a background task's exception disappear into an unread Future. detector, when present, says a runtime monitor reported the finding while the app ran: it observes each call, the object it is made on and the values passed, never the source text. A restructuring it would observe as the same calls on the same objects with the same values -- a helper inlined or extracted, an object's parts passed one by one instead of the object, statements split or merged, locals renamed or retyped -- cannot satisfy its rule; change the call, the object or the value the rule governs. Never replace the object or value the rule governs with a type of the app's own -- a new data class, record or class, a Pair, Triple, Map, list or array -- that carries the same parts from the same sources only so the governed API is no longer called: the app holds, trusts and does what it did, and the change has no effect. Using an object the platform already returns instead of rebuilding one (a key store entry through its own getters), or changing what the parts are or where they come from, is a change. Keep every existing comment and commented-out line the change does not make false, verbatim and where it was, also inside a block you rewrite: a commented-out alternative, a TODO the change does not resolve, a license line or an explanation of code the change leaves as it was is the maintainer's and stays. Only a comment that describes code this change removes or changes, or a TODO it resolves, may be removed or updated with that code. Resolve each joint finding (joint_findings, when present: violations reported in the same code that this change resolves too) with a change its checker observes at its own reported call (another call, object, value or order). A joint finding no such change resolves is left exactly as its code was: never restructure its code for it (a value moved into a local, statements split or merged, a helper extracted or inlined), which only adds lines the maintainer reads for nothing. verified_repository_imports are import lines a passing build of this repository contained: use exactly those for their symbols. previous_attempts_of_this_finding says how earlier runs of this finding ended; do not repeat what stopped them. maintainer_responses_to_this_rule_elsewhere are what other projects' maintainers did with a change for the same rule: shape this change so the objection they raised does not apply (keep a deliberate behaviour behind a setting or a debug-only condition, do not change a checksum persisted or compared across processes or releases -- one recomputed in-process on both sides may change); they say nothing about whether this finding is real. maintainer_responses_in_this_repository are what this repository's maintainers did with our changes for other rules: do not repeat what they objected to. Implement it with recommended_mechanisms; never build a queue, executor or cancellation scheme by hand on top of a mechanism listed under not_recommended. Keep the existing entry-point names so callers need no edit, unless the name states the behaviour the patch removes, and do not add a method that only delegates to a renamed one. Keep checked throws/catch contracts compilable across changed callers and callees. Kotlin helpers that are not an intended external API must be declared internal or private; never rely on Kotlin's implicit public visibility for a migration seam. A new declaration's callable scope is fixed by the brace nesting of its original_code anchor, not by how corrected_code is indented. If a new function or property will be called unqualified from another file or from a different class in this same edit batch (including a coordinated test file), the chosen anchor must already sit at file top-level -- outside every class/object/interface body. A helper written with no leading indentation does not become a top-level declaration merely because it looks like one; it inherits the nesting of whatever original_code it replaces. A sibling nested class that is not declared inner has no implicit access to another nested class's or the outer class's instance members. Do not retain a whole owner object merely to replace a retained crypto primitive unless lifecycle evidence and dispose tests require it. Dispose or wipe replaced sensitive wrappers before assignment. Prefer a package-private test seam over reflection. Use edit_kind=delete and corrected_code exactly empty for an intentional deletion such as an obsolete import. Never emit an empty corrected_code for another edit kind. Tamper tests must assert the concrete authentication-failure cause, and lifecycle-changing edits must test dispose behavior. Write a known expected value in the most readable form the test file or the project already uses for such values: a digest, key or ciphertext as the hex (or Base64) string its specification publishes, compared with the result encoded the same way through a helper the project or the test file already has, or a short local one; never as a long list of byte literals. Before adding tests to an existing test source, inspect the entire supplied file for calls to APIs that are absent from the supplied production sources. Never assume a historically stale test container compiles. Prefer another demonstrably compilable test source when the plan permits it; otherwise include only the minimal evidence-backed API migrations required for that edited test source to compile, and describe them explicitly in the edit reasons. When previous_validation_feedback marks verified or preexisting test debt and target_file is one of the diagnosed sources, repair each cited compiler error using only current APIs proven by supplied production declarations. Preserve test intent. Delete a diagnosed test file only if exact source proves it is wholly obsolete or duplicated and it contains no unique valid test behavior; otherwise migrate the failing lines. Do not perform unrelated cleanup. In production code, change only the values the reported violation and the plan name; keep every other argument of the reported call and write a new value where the old one was written, without a new constant unless the plan names one, unless parameter_policies requires a different value or a named constant: every entry there is checked on the draft, so meet it. For a runtime discriminator, remove MessageDigest rather than changing its algorithm; preserve every known application-ID to configuration mapping, keep unknown legacy mappings explicit as review assumptions, and add non-reflective tests for known variants and the fallback behavior. Never assert equality between two separately constructed values of a type that does not declare equals(Object): Java compares references, so such an assertion can only fail. Assert on the fields or on the same instance instead.  sibling_files_api_surface lists the declarations of the other files in this batch: their type headers, constructors and member signatures as they exist after the supplied sources. Call only what it shows, or what shared_plan or previous_file_contracts declare as added by another file in this batch, with the exact argument count each constructor and method declares. A created test file has no source of its own, so this outline is the only proof of the API it exercises; never assume a constructor, an overload or a nested-class accessor that is absent from it, and never assume a type is an inner class unless its declaration says so. If the API you need is genuinely not there, record that in review_assumptions instead of inventing a signature. Every file in shared_plan is generated separately. Do not claim that another planned file is excluded, omitted, or left as follow-up merely because this call may edit only target_file; use previous_file_contracts and required_contracts to coordinate it. When previous_validation_feedback.semantic_validation_retry is present, this exact target_file was already generated once for this fix and the assembled result failed the listed automated cross-file contract checks; treat every 'code' and its 'details' as a mandatory requirement this new draft must satisfy, not merely a suggestion.",
+    "max_output_tokens": 32768,
+    "max_tool_calls": null,
+    "model": "gpt-5.6-terra",
+    "moderation": null,
+    "output": [
+      {
+        "id": "rs_0d527237e81a0db1006aea816db7f887d2a50d2b116e4ed147",
+        "type": "reasoning",
+        "content": [],
+        "summary": []
+      },
+      {
+        "id": "msg_0d527237e81a0db1006aea8172b78887d28ce3b8be317aa478",
+        "type": "message",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "{\"explanation\":\"Updates the socket-factory API to obtain platform trust managers from a TrustManagerFactory initialized with the default algorithm and a null KeyStore. The coordinated caller update must invoke the resulting no-argument factory method.\",\"review_assumptions\":[\"TrustManagerFactory.init has overloaded nullable Java signatures in Kotlin; the explicit KeyStore? cast disambiguates initialization with a null KeyStore without changing the configured trust-store source.\",\"The coordinated edit to WebDavCompatibleHttpClient.kt updates the sole resolved SSLSocketFactories.from(trustManager) call to SSLSocketFactories.from().\"],\"no_change_required\":false,\"decision\":\"MULTI_FILE_FIX_PROPOSED_FOR_REVIEW\",\"confidence\":\"high\",\"edits\":[{\"source_file_path\":\"data/src/main/java/org/cryptomator/data/cloud/webdav/network/SSLSocketFactories.kt\",\"original_code\":\"import java.security.GeneralSecurityException\\nimport javax.net.ssl.SSLContext\\nimport javax.net.ssl.SSLSocketFactory\\nimport javax.net.ssl.TrustManager\\nimport javax.net.ssl.X509TrustManager\",\"edit_kind\":\"declaration\",\"corrected_code\":\"import java.security.GeneralSecurityException\\nimport java.security.KeyStore\\nimport javax.net.ssl.SSLContext\\nimport javax.net.ssl.SSLSocketFactory\\nimport javax.net.ssl.TrustManagerFactory\",\"reason\":\"Remove imports for the eliminated application-defined trust-manager parameter and import the platform trust-manager factory and KeyStore type used to initialize it.\",\"symbol\":\"imports\"},{\"source_file_path\":\"data/src/main/java/org/cryptomator/data/cloud/webdav/network/SSLSocketFactories.kt\",\"original_code\":\"\\tfun from(trustManager: X509TrustManager): SSLSocketFactory {\\n\\t\\treturn try {\\n\\t\\t\\tval tlsVersion = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {\\n\\t\\t\\t\\t\\\"TLSv1.3\\\"\\n\\t\\t\\t} else {\\n\\t\\t\\t\\t\\\"TLSv1.2\\\"\\n\\t\\t\\t}\\n\\t\\t\\tval sslContext = SSLContext.getInstance(tlsVersion)\\n\\t\\t\\tsslContext.init(null, arrayOf<TrustManager>(trustManager), null)\\n\\t\\t\\tsslContext.socketFactory\\n\\t\\t} catch (e: GeneralSecurityException) {\\n\\t\\t\\tthrow FatalBackendException(e)\\n\\t\\t}\\n\\t}\",\"edit_kind\":\"method\",\"corrected_code\":\"\\tfun from(): SSLSocketFactory {\\n\\t\\treturn try {\\n\\t\\t\\tval tlsVersion = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {\\n\\t\\t\\t\\t\\\"TLSv1.3\\\"\\n\\t\\t\\t} else {\\n\\t\\t\\t\\t\\\"TLSv1.2\\\"\\n\\t\\t\\t}\\n\\t\\t\\tval trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())\\n\\t\\t\\ttrustManagerFactory.init(null as KeyStore?)\\n\\t\\t\\tval sslContext = SSLContext.getInstance(tlsVersion)\\n\\t\\t\\tsslContext.init(null, trustManagerFactory.trustManagers, null)\\n\\t\\t\\tsslContext.socketFactory\\n\\t\\t} catch (e: GeneralSecurityException) {\\n\\t\\t\\tthrow FatalBackendException(e)\\n\\t\\t}\\n\\t}\",\"reason\":\"Remove the application-defined TrustManager parameter and initialize SSLContext with the default TrustManagerFactory's trustManagers, while retaining the existing TLS version selection and null KeyManager[] and SecureRandom arguments.\",\"symbol\":\"SSLSocketFactories.from\"}],\"manual_review_required\":true,\"provided_contracts\":[\"SSLSocketFactories.from is now an internal no-argument function returning an SSLSocketFactory backed by TrustManagerFactory default trust managers.\"],\"required_contracts\":[\"WebDavCompatibleHttpClient.kt must replace SSLSocketFactories.from(trustManager) with SSLSocketFactories.from().\"],\"source_file_path\":\"data/src/main/java/org/cryptomator/data/cloud/webdav/network/SSLSocketFactories.kt\",\"required_tests\":[]}"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_retention": "24h",
+    "reasoning": {
+      "context": "all_turns",
+      "effort": "high",
+      "mode": "standard",
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": true,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "json_schema",
+        "description": null,
+        "name": "coordinated_file_draft",
+        "schema": {
+          "required": [
+            "decision",
+            "source_file_path",
+            "explanation",
+            "edits",
+            "no_change_required",
+            "provided_contracts",
+            "required_contracts",
+            "required_tests",
+            "manual_review_required",
+            "review_assumptions",
+            "confidence"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "explanation": {
+              "type": "string"
+            },
+            "review_assumptions": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "no_change_required": {
+              "type": "boolean"
+            },
+            "decision": {
+              "enum": [
+                "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW"
+              ],
+              "type": "string"
+            },
+            "confidence": {
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ],
+              "type": "string"
+            },
+            "edits": {
+              "items": {
+                "required": [
+                  "source_file_path",
+                  "symbol",
+                  "edit_kind",
+                  "original_code",
+                  "corrected_code",
+                  "reason"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "source_file_path": {
+                    "description": "The requested repository-relative path.",
+                    "type": "string"
+                  },
+                  "original_code": {
+                    "description": "Exact existing source block.",
+                    "type": "string"
+                  },
+                  "edit_kind": {
+                    "enum": [
+                      "method",
+                      "declaration",
+                      "constant",
+                      "test",
+                      "create",
+                      "delete"
+                    ],
+                    "type": "string"
+                  },
+                  "corrected_code": {
+                    "description": "Complete replacement source block; empty only for edit_kind=delete.",
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  },
+                  "symbol": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "manual_review_required": {
+              "type": "boolean"
+            },
+            "provided_contracts": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "required_contracts": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "source_file_path": {
+              "type": "string"
+            },
+            "required_tests": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "strict": true
+      },
+      "verbosity": "medium"
+    },
+    "tool_choice": "auto",
+    "tool_usage": {
+      "image_gen": {
+        "input_tokens": 0,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "output_tokens": 0,
+        "output_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "total_tokens": 0
+      },
+      "web_search": {
+        "num_requests": 0
+      }
+    },
+    "tools": [],
+    "top_logprobs": 0,
+    "top_p": 0.98,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 5835,
+      "input_tokens_details": {
+        "cache_write_tokens": 3450,
+        "cached_tokens": 2382
+      },
+      "output_tokens": 1316,
+      "output_tokens_details": {
+        "reasoning_tokens": 474
+      },
+      "total_tokens": 7151
+    },
+    "user": null,
+    "metadata": {}
+  }
+}

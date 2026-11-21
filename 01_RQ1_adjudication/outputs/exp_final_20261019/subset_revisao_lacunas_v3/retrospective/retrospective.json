@@ -1,0 +1,291 @@
+{
+  "run_id": "subset_revisao_lacunas_v3",
+  "pipeline": {
+    "commit": "d80ae2c",
+    "uncommitted_changes": true
+  },
+  "funnel": {
+    "analysed": 1,
+    "cause_confirmed": 1,
+    "generation_supported": 1,
+    "plan_valid": 1,
+    "generated": 0,
+    "build_passed": 0,
+    "published": 0
+  },
+  "coverage": {
+    "findings_attributed": 1,
+    "actions": {
+      "repair_unattended": 0,
+      "repair_for_review": 1,
+      "await_policy": 0,
+      "classify_no_change": 0,
+      "abstain": 0,
+      "invalid": 0
+    },
+    "proposal_coverage": 1.0,
+    "proposals": 1,
+    "abstentions": 0,
+    "abstention_rate": 0.0,
+    "undecided_or_invalid": 0,
+    "published": 0,
+    "publication_rate": 0.0,
+    "avoidable_abstention": {
+      "status": "no_labels",
+      "detail": "evals/ground_truth.csv carries no reviewer labels, so whether an abstention was avoidable is unmeasured. This is not a count of zero."
+    },
+    "known_positive_abstention": {
+      "status": "none_in_run"
+    }
+  },
+  "findings": [
+    {
+      "finding_key": "4b81532bb668",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.fedorahosted.freeotp_48.apk/0_encrypt_evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.fedorahosted.freeotp_48.apk/0_encrypt/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.fedorahosted.freeotp_48.apk/0_encrypt_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/manifest.json"
+      },
+      "unique_error_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+      "apk": "org.fedorahosted.freeotp_48.apk",
+      "method": "encrypt",
+      "spec": "CipherSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "evidence_fingerprint": "c1baddbb0a70155e79a7fde8c3a4e3ee640b532fa64cfcf0ed390e613b9c7761",
+      "terminal_stage": "generation",
+      "reached": {
+        "analysed": true,
+        "cause_confirmed": true,
+        "generation_supported": true,
+        "plan_valid": true,
+        "generated": false,
+        "build_passed": false,
+        "published": false
+      },
+      "signals": [
+        {
+          "signature": "generation:semantic:test_placed_in_unrelated_file",
+          "detail": "mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java does not cover EncryptedKey; Create a dedicated test file named after the target (for example EncryptedKeyTest) in the target's package 'org/fedorahosted/freeotp/encryptor' with edit_kind=create, instead of appending these asser",
+          "artifact": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/semantic_validation.json"
+        },
+        {
+          "signature": "generation:semantic:test_placed_in_unrelated_file",
+          "detail": "mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java does not cover EncryptedKey; Create a dedicated test file named after the target (for example EncryptedKeyTest) in the target's package 'org/fedorahosted/freeotp/encryptor' with edit_kind=create, instead of appending these ",
+          "artifact": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/semantic_validation.json"
+        },
+        {
+          "signature": "generation:semantic:checked_exception_not_propagated",
+          "detail": "BadPaddingException; IllegalBlockSizeException; InvalidKeyException; NoSuchAlgorithmException; NoSuchPaddingException",
+          "artifact": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/semantic_validation.json"
+        }
+      ],
+      "signatures": [
+        "generation:semantic:checked_exception_not_propagated",
+        "generation:semantic:test_placed_in_unrelated_file"
+      ],
+      "pull_request": "",
+      "known_positive": {}
+    }
+  ],
+  "llm_performance": {
+    "per_stage": {
+      "external_research.research": {
+        "calls": 2,
+        "cache_hits": 2,
+        "latency_ms": 0,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "external_research.synthesis": {
+        "calls": 2,
+        "cache_hits": 2,
+        "latency_ms": 0,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "evidence_extraction": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 68046,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "adjudication": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 84615,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "adjudication.correction": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 22209,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "patch_planning": {
+        "calls": 1,
+        "cache_hits": 0,
+        "latency_ms": 63229,
+        "hung_connections": 0,
+        "failed": 0
+      },
+      "code_generation.coordinated_file": {
+        "calls": 11,
+        "cache_hits": 0,
+        "latency_ms": 332157,
+        "hung_connections": 0,
+        "failed": 0
+      }
+    },
+    "signals": []
+  },
+  "comparison": {
+    "new": [],
+    "recurring": [
+      "generation:semantic:checked_exception_not_propagated",
+      "generation:semantic:test_placed_in_unrelated_file"
+    ],
+    "reappeared": [
+      "generation:semantic:test_placed_in_unrelated_file"
+    ],
+    "resolved_for_rerun_findings": [
+      {
+        "finding": "org.fedorahosted.freeotp_48.apk/encrypt",
+        "signature": "generation:semantic:existing_test_expectations_rewritten",
+        "previous_run": "subset_revisao_lacunas_v2",
+        "now_ends_at": "generation"
+      },
+      {
+        "finding": "org.fedorahosted.freeotp_48.apk/encrypt",
+        "signature": "generation:semantic:public_api_contract_changed",
+        "previous_run": "subset_revisao_lacunas_v2",
+        "now_ends_at": "generation"
+      }
+    ],
+    "finding_progress": [
+      {
+        "finding": "org.fedorahosted.freeotp_48.apk/encrypt",
+        "stages": [
+          "adjudication",
+          "adjudication",
+          "adjudication",
+          "validated",
+          "generation",
+          "generation"
+        ]
+      }
+    ],
+    "verdict_changes": []
+  },
+  "ledger_signatures": {
+    "generation:semantic:test_placed_in_unrelated_file": {
+      "stage": "generation",
+      "occurrences": 4,
+      "runs": [
+        "run_20261009_012517",
+        "run_cryptoapp_2",
+        "subset_revisao_lacunas_v3"
+      ],
+      "first_seen": "run_20261009_012517",
+      "last_seen": "subset_revisao_lacunas_v3",
+      "examples": [
+        {
+          "run": "run_20261009_012517",
+          "finding_key": "4c1c74bcbc8f",
+          "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+          "method": "configureTrustAllCertificates",
+          "detail": "app/src/androidTest/java/de/lukasneugebauer/nextcloudcookbook/ExampleInstrumentedTest.kt does not cover OkHttpClientProvider; Create a dedicated test file named after the target (for example OkHttpClientProviderTest) in the target's package 'de/lukasneugebauer/nextcloudcookbook/core/util' with edit_",
+          "artifact": "error_solutions/coordinated_drafts/de.lukasneugebauer.nextcloudcookbook_62.apk/2_configureTrustAllCertificates/semantic_validation.json"
+        },
+        {
+          "run": "run_cryptoapp_2",
+          "finding_key": "09656f30fd08",
+          "apk": "cryptoapp.apk",
+          "method": "encryptWithSecretKey",
+          "detail": "app/src/androidTest/java/br/unb/cic/cryptoapp/ExampleInstrumentedTest.java does not cover CryptographyActivity; Create a dedicated test file named after the target (for example CryptographyActivityTest) in the target's package 'br/unb/cic/cryptoapp/generated' with edit_kind=create, instead of append",
+          "artifact": "error_solutions/coordinated_drafts/cryptoapp.apk/1_encryptWithSecretKey/semantic_validation.json"
+        },
+        {
+          "run": "subset_revisao_lacunas_v3",
+          "finding_key": "4b81532bb668",
+          "apk": "org.fedorahosted.freeotp_48.apk",
+          "method": "encrypt",
+          "detail": "mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java does not cover EncryptedKey; Create a dedicated test file named after the target (for example EncryptedKeyTest) in the target's package 'org/fedorahosted/freeotp/encryptor' with edit_kind=create, instead of appending these asser",
+          "artifact": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/semantic_validation.json"
+        },
+        {
+          "run": "subset_revisao_lacunas_v3",
+          "finding_key": "4b81532bb668",
+          "apk": "org.fedorahosted.freeotp_48.apk",
+          "method": "encrypt",
+          "detail": "mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java does not cover EncryptedKey; Create a dedicated test file named after the target (for example EncryptedKeyTest) in the target's package 'org/fedorahosted/freeotp/encryptor' with edit_kind=create, instead of appending these ",
+          "artifact": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/semantic_validation.json"
+        }
+      ]
+    },
+    "generation:semantic:checked_exception_not_propagated": {
+      "stage": "generation",
+      "occurrences": 6,
+      "runs": [
+        "run_20260922_134405",
+        "run_20261006_223750",
+        "run_20261010_200449",
+        "subset_policy",
+        "subset_revisao_lacunas_v2",
+        "subset_revisao_lacunas_v3"
+      ],
+      "first_seen": "run_20260922_134405",
+      "last_seen": "subset_revisao_lacunas_v3",
+      "examples": [
+        {
+          "run": "run_20261006_223750",
+          "finding_key": "f167efd80107",
+          "apk": "github.paroj.dsub2000_217.apk",
+          "method": "<init>",
+          "detail": "GeneralSecurityException; IOException",
+          "artifact": "error_solutions/coordinated_drafts/github.paroj.dsub2000_217.apk/96__init_/semantic_validation.json"
+        },
+        {
+          "run": "run_20261010_200449",
+          "finding_key": "dd6f8f3fe908",
+          "apk": "org.totschnig.myexpenses_858.apk",
+          "method": "<init>",
+          "detail": "GeneralSecurityException; ValidationException",
+          "artifact": "error_solutions/coordinated_drafts/org.totschnig.myexpenses_858.apk/83__init_/semantic_validation.json"
+        },
+        {
+          "run": "subset_policy",
+          "finding_key": "60c8a60d700f",
+          "apk": "com.gelakinetic.mtgfam_99.apk",
+          "method": "fetch",
+          "detail": "IOException",
+          "artifact": "error_solutions/coordinated_drafts/com.gelakinetic.mtgfam_99.apk/3_fetch/semantic_validation.json"
+        },
+        {
+          "run": "subset_revisao_lacunas_v2",
+          "finding_key": "4b81532bb668",
+          "apk": "org.fedorahosted.freeotp_48.apk",
+          "method": "encrypt",
+          "detail": "BadPaddingException; IllegalBlockSizeException; InvalidKeyException; NoSuchPaddingException",
+          "artifact": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/semantic_validation.json"
+        },
+        {
+          "run": "subset_revisao_lacunas_v3",
+          "finding_key": "4b81532bb668",
+          "apk": "org.fedorahosted.freeotp_48.apk",
+          "method": "encrypt",
+          "detail": "BadPaddingException; IllegalBlockSizeException; InvalidKeyException; NoSuchAlgorithmException; NoSuchPaddingException",
+          "artifact": "error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/semantic_validation.json"
+        }
+      ]
+    }
+  },
+  "knowledge_added": [],
+  "learning_store_written": true
+}

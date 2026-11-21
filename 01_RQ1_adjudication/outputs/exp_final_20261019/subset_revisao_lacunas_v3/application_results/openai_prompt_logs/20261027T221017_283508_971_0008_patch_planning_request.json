@@ -1,0 +1,190 @@
+{
+  "trace_version": 2,
+  "call_id": "20261027T221017_283508_971_0008_patch_planning",
+  "parent_call_id": "",
+  "stage": "patch_planning",
+  "recorded_at": "2026-10-27T22:10:17",
+  "delivery": "sent_to_openai",
+  "endpoint": "https://api.openai.com/v1",
+  "model": "gpt-5.6-terra",
+  "timeout_seconds": 600,
+  "max_output_tokens": 32768,
+  "reasoning_effort": "high",
+  "web_search": false,
+  "json_mode": true,
+  "schema_name": "patch_plan_v2",
+  "json_schema": {
+    "type": "object",
+    "properties": {
+      "decision": {
+        "type": "string",
+        "enum": [
+          "FIX_SUPPORTED",
+          "MULTI_FILE_FIX_SUPPORTED",
+          "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+          "NO_SAFE_FIX",
+          "SAFE_INTERNAL_DIGEST_MIGRATION",
+          "NON_SECURITY_HASH_USAGE",
+          "CONFIRMED_SPEC_VIOLATION_NON_SECURITY_USAGE",
+          "BACKEND_MIGRATION_REQUIRED_REVIEW_ONLY",
+          "MULTI_REPOSITORY_MIGRATION_SUPPORTED",
+          "EXTERNAL_DIGEST_CONTRACT_NO_CLIENT_ONLY_FIX",
+          "DEPENDENCY_FIX_SUPPORTED",
+          "DEPENDENCY_REPLACEMENT_SUPPORTED",
+          "DEPENDENCY_FIX_REQUIRES_POLICY",
+          "UPSTREAM_FIX_REQUIRES_POLICY",
+          "MULTI_FILE_FIX_REQUIRES_POLICY"
+        ]
+      },
+      "required_edits": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "source_file_path": {
+              "type": "string"
+            },
+            "symbol": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "create_new_file": {
+              "type": "boolean"
+            },
+            "edit_category": {
+              "type": "string"
+            },
+            "supporting_claim_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "source_file_path",
+            "symbol",
+            "reason",
+            "create_new_file",
+            "edit_category",
+            "supporting_claim_ids"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required_tests": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "behavioral_invariants": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "allowed_apis": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "forbidden_changes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "generation_blockers": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "publication_blockers": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "decision",
+      "required_edits",
+      "required_tests",
+      "behavioral_invariants",
+      "allowed_apis",
+      "forbidden_changes",
+      "generation_blockers",
+      "publication_blockers"
+    ],
+    "additionalProperties": false
+  },
+  "instructions": "You create an exact patch plan after adjudication. Do not write code or reopen the finding decision. finding.joint_findings, when present, are violations reported in the same code (this method under another rule, a method it calls, or the same object's lifecycle): the plan must resolve this violation and every joint finding in one change, keeping every path through those methods working (first use and existing data alike). previous_patch_regressions, when present, are scenarios that an earlier patch for this plan broke: plan a change in which none of them changes behaviour. finding.co_reported_findings, when present, lists other violations reported in the same class in this run. When one of them is in the method you change, or its fix has to change the same code, plan the single change that resolves this finding and that one together, as the plan for that finding will: the two would otherwise be incompatible rewrites of one method, each leaving the other violation in place, and only one identical change is proposed. Never plan around them as if they were not there. Plan only repository files present in the manifest with exact_source_available=true. A new test file is allowed only below an established_test_source_root and must use create_new_file=true. A test is optional: list one in required_tests only when the change adds or alters logic whose behaviour a unit test can observe through the code's own interface (a branch, a parsed value, an error path). A change that only replaces a value (an algorithm, protocol or mode name, a constant), removes dead or no-op code, or is observable only through the platform, the network or a provider needs none: plan no test and say so in review_assumptions. Never plan an edit to an existing test the finding does not concern (a generated example test is not a place for new assertions). Every required test must have a concrete test file edit, except when repository_has_test_source_set is false: then plan no test edit and list each required test among the publication_blockers as a reviewer checklist, never as a generation blocker. A planned test may rely only on the libraries in test_classpath.declared_dependencies and on its always_available_prefixes; when the test you would need requires anything else, plan the test this module can actually compile, or none plus a reviewer checklist entry. Never plan a build-file edit to make a test compile. MULTI_FILE_FIX_SUPPORTED must plan at least two distinct paths; a review-only decision may plan one. Every edit must cite claim IDs. Plan an edit only for a file whose code must change; never plan an edit that only adds comments or documentation. Never make an edit conditional on evidence the packet does not hold (\"after a trace shows...\", \"do not make this edit if...\"): decide from the packet and plan the edit, or leave the file out (FreeOTP: both production edits were conditional, the generator changed neither, and only a test shipped). Every production edit must change what the reported constraint checks -- the value, origin or call the detector names -- and not another constraint of the same rule. When migration_grounding is present, replace the deprecated API with the mechanisms in repository_replacement_idioms.recommendation: they are chosen because they guarantee the invariants, and the repository's own idiom is used only where it does. A mechanism listed under not_recommended cannot carry the invariants it is missing, however often the repository uses it. Plan edits for the files in deprecated_usage_contract only where their code must change. List every entry of its invariants as a behavioral invariant and keep it, or state the deviation explicitly. Keep existing entry-point names so callers need no edit; plan a caller edit only when its code must change. Preserve security and compatibility constraints and separate generation from publication blockers. previous_attempts_of_this_finding, when present, says how earlier runs of this same finding ended and why; do not plan the same thing that stopped them again. maintainer_responses_to_this_rule_elsewhere, when present, are what other projects' maintainers did with a change for the same rule: plan a change their objection would not apply to; they say nothing about whether this finding is real. Return only structured output.",
+  "input": "Plan the minimum atomic edit set. When stored_value_contract is present and the policy migrates a stored verifier, account for every required_path in required_edits. All readers and writers must agree on both legacy and current formats, including emergency values. A file already compatible may produce a justified no_change_required draft; do not invent cosmetic edits. Use a common verifier API across the affected screens, preserve all emergency actions, and migrate only after successful authentication. \n\n<planning_data untrusted_data=\"true\">\n{\"finding\":{\"finding_id\":\"org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit\",\"specification\":\"CipherSpec\",\"spec_family\":\"cipher\",\"error_message\":\"the key given to Cipher.init carries a key-origin predicate the rule does not admit\",\"target\":{\"class\":\"org.fedorahosted.freeotp.encryptor.EncryptedKey\",\"method\":\"encrypt\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java\"},\"reported_violation\":\"UnsatisfiedConstraint\"},\"validated_claims\":[{\"claim_id\":\"CLM-001\",\"statement\":\"EncryptedKey.encrypt creates a resolved javax.crypto.Cipher for the literal transformation AES/GCM/NoPadding and initializes it in ENCRYPT_MODE with its key argument.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\",\"SPEC-001\"]},{\"claim_id\":\"CLM-002\",\"statement\":\"The EncryptedKey encryption flow supplies the protected key algorithm name as AAD, finalizes the protected key encoding, and retains the Cipher's encoded parameters.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\"]},{\"claim_id\":\"CLM-003\",\"statement\":\"The EncryptedKey decryption flow reconstructs retained AlgorithmParameters, initializes a Cipher in DECRYPT_MODE with those parameters, supplies the retained algorithm name as AAD, and finalizes the retained ciphertext.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\"]},{\"claim_id\":\"CLM-004\",\"statement\":\"The MasterKey constructor passes a PBKDF2 SecretKeyFactory result as the encryption key to EncryptedKey.encrypt, which forwards it to AES/GCM Cipher.init.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\",\"SRC-003\",\"CALL-004\"]},{\"claim_id\":\"CLM-005\",\"statement\":\"CipherSpec requires a key initialization to carry generatedKey for the transformation algorithm, generatedPubkey, or generatedPrivkey; the PBKDF2-derived MasterKey path does not meet that requirement for the AES transformation.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\",\"SRC-003\",\"CALL-004\",\"SPEC-001\"]},{\"claim_id\":\"CLM-006\",\"statement\":\"The source selects an authenticated AES/GCM mode and supplies AAD before final processing on both the encryption and decryption flows; this establishes use of an authenticated-mode construction, not the success of any particular runtime operation.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"SRC-001\",\"WEB-001\",\"WEB-002\"]},{\"claim_id\":\"CLM-007\",\"statement\":\"The runtime detector measurement records a value-constraint observation at EncryptedKey.java:42 in 12 application runs, but it does not identify the source expression that produced the observed key value.\",\"epistemic_status\":\"confirmed\",\"evidence_ids\":[\"RUN-001\"]}],\"adjudication\":{\"generation_status\":\"supported_for_review\",\"forward_compatibility_strategy\":\"Use a CipherSpec-recognized key-production and lifecycle design for each key source that reaches EncryptedKey.encrypt, rather than using PBKDF2 output directly as the AES/GCM Cipher key. Prepare compliant fresh GCM parameters for encryption while retaining the resulting parameters and algorithm AAD for decryption. Preserve existing decryptability unless a reviewer approves a versioned legacy-data migration.\",\"review_assumptions\":[\"The detector rendered a message. The reviewed source and verified CipherSpec rule corroborate the reported required-predicate failure, so source_established is inapplicable.\",\"The PBKDF2-derived MasterKey caller path alone establishes the reported violation. The AndroidKeyStore caller path is not classified under CipherSpec's generated-key predicates by the supplied evidence; this is not negative evidence about that path.\",\"CipherSpec separately requires preparedGCM[paramSpec] for GCM. EncryptedKey.encrypt uses the two-argument GCM init form with no explicit parameter object. This is a separate source-level predicate concern and does not establish provider nonce reuse.\",\"The source establishes parameter and AAD round-tripping within EncryptedKey, but does not establish whether EncryptedKey records are persisted, exchanged, or consumed outside the examined repository scope.\",\"The supplied evidence does not establish PBKDF2 parameters, password entropy, salt lifecycle, or an actual GCM nonce-reuse event. The unknown nonce lifecycle is not treated as resolved.\",\"Master-key lifecycle selection and legacy-record handling require human review before publication, but do not prevent generation of a review-only multi-file change.\"],\"cause_status\":\"confirmed\",\"decision\":\"MULTI_FILE_FIX_PROPOSED_FOR_REVIEW\",\"blocking_for_generation\":[],\"blocking_for_publication\":[{\"discharged_by_pipeline_validation\":false,\"kind\":\"Master-key lifecycle selection\",\"supporting_claim_ids\":[\"CLM-004\",\"CLM-005\"],\"category\":\"maintainer_decision\",\"description\":\"A reviewer must approve the replacement key lifecycle and the intended role, if any, of password-derived material. Compilation, unit tests, and source rechecking cannot decide this product and security-design choice.\"},{\"discharged_by_pipeline_validation\":false,\"kind\":\"Legacy encrypted-data compatibility\",\"supporting_claim_ids\":[\"CLM-002\",\"CLM-003\",\"CLM-004\"],\"category\":\"compatibility_contract\",\"description\":\"A reviewer must verify that previously created or externally supplied encrypted records remain decryptable, or approve a versioned migration. The pipeline cannot discover unknown persisted or external consumers.\"},{\"discharged_by_pipeline_validation\":false,\"kind\":\"Android/provider execution of the replacement lifecycle\",\"supporting_claim_ids\":[\"CLM-001\",\"CLM-002\",\"CLM-003\"],\"category\":\"runtime_behavior\",\"description\":\"The replacement must be exercised on supported Android/provider configurations to verify generated-key access, explicit GCM parameter handling, and encrypt/decrypt interoperability. The pipeline compiles androidTest sources but does not run instrumentation tests or execute on a device.\"}],\"compatibility_status\":\"regression_risk\",\"required_tests\":[\"Run the patched module Gradle build and unit-test task.\",\"Compile the patched module's androidTest sources.\",\"Run the deterministic source-level recheck confirming that the reported PBKDF2-to-Cipher.init key-origin predicate is absent from patched files and that explicit GCM parameter preparation satisfies the applicable source predicate.\",\"Add or run round-trip tests for the PBKDF2-origin and AndroidKeyStore-origin caller paths, covering encryption, retained parameters/AAD, and decryption.\",\"Add or run compatibility fixtures that decrypt records created by the pre-change implementation if persisted records are supported.\",\"Run supported-device instrumentation coverage for the selected provider/key-lifecycle design and explicit AES/GCM parameter handling.\"],\"scope_status\":\"complete\",\"confirmed_cause\":\"On the confirmed MasterKey caller path, a PBKDF2 SecretKeyFactory result is passed as EncryptedKey.encrypt's key argument and then directly to AES/GCM Cipher.init. CipherSpec requires that initialization key to carry generatedKey for the transformation algorithm, generatedPubkey, or generatedPrivkey; this PBKDF2-derived value carries none of those admitted origins.\",\"cause_rule_section\":\"required_predicate\",\"decision_claim_ids\":[\"CLM-001\",\"CLM-002\",\"CLM-003\",\"CLM-004\",\"CLM-005\",\"CLM-006\"],\"detector_violation\":\"confirmed\",\"publication_status\":\"blocked\",\"required_edit_categories\":[\"master-key/key-origin lifecycle remediation across callers\",\"explicit fresh GCM parameter preparation for encryption\",\"preservation of retained GCM parameters and AAD during decryption\",\"legacy encrypted-record compatibility or versioned migration coverage\",\"Android/provider interoperability testing\"],\"runtime_security_impact\":\"not_established\",\"authorized_behavior_change\":{\"authorized\":false,\"description\":\"No case_policy authorization was supplied. The source confirms a CipherSpec violation, but publication of a master-key lifecycle or legacy-data behavior change requires reviewer approval.\",\"policy_reference\":\"\"}},\"exact_source_manifest\":[{\"evidence_id\":\"SRC-001\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java\",\"kind\":\"target_source\",\"sha256\":\"aee29873bd16b40d3e046a8d211bcf53846536f39a41dfbe3156373e32527efe\",\"exact_source_available\":true},{\"evidence_id\":\"TEST-001\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java\",\"kind\":\"test_source\",\"sha256\":\"819549d2933d11f98d5f023ce9e5fc984a86c0f5571e9fec0ede10c2999751f9\",\"exact_source_available\":true},{\"evidence_id\":\"TEST-002\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java\",\"kind\":\"test_source\",\"sha256\":\"2b34c94ec364f7707b56cbb2d6fbbfa16b611c9d74de0fc6ec5cc5614f14c735\",\"exact_source_available\":true},{\"evidence_id\":\"SRC-002\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java\",\"kind\":\"related_source\",\"sha256\":\"234533511e31e4ccb0e263b557f12cc8bd671054579ba51b38c48fa92108adbb\",\"exact_source_available\":true},{\"evidence_id\":\"SRC-003\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java\",\"kind\":\"related_source\",\"sha256\":\"a792eaa13ca952f1cc167b39d38f5daa1d51821b6e659d491ad7a39790433efc\",\"exact_source_available\":true},{\"evidence_id\":\"CTOR-001\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java\",\"kind\":\"class_construction_site\",\"sha256\":\"322a0c709a8ee69ae746cb56815674a719861da5ff6a9c1e4ea81384461b8fdf\",\"exact_source_available\":true},{\"evidence_id\":\"CALL-001\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java\",\"kind\":\"resolved_caller\",\"sha256\":\"763df9d9192cd9b5c9e355ca447937cc3831252bd61bbfa1c706ab0deb755df5\",\"exact_source_available\":false},{\"evidence_id\":\"CALL-002\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java\",\"kind\":\"resolved_caller\",\"sha256\":\"be50d6b902b125acf0258d00e837499989ef19e09117d8bb9892605c516762d6\",\"exact_source_available\":false},{\"evidence_id\":\"CALL-003\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java\",\"kind\":\"resolved_caller\",\"sha256\":\"3c48ffb506f92f4b0401c4a69a1b303e404e0d5c73937f79cd00ebfc6cdf497d\",\"exact_source_available\":false},{\"evidence_id\":\"CALL-004\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java\",\"kind\":\"resolved_caller\",\"sha256\":\"ca81cb5104935caf380096728b94401bc487c01d72dafa9ff27144ca4142772c\",\"exact_source_available\":false},{\"evidence_id\":\"TEST-003\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/Context.java\",\"kind\":\"test_source\",\"sha256\":\"98c6d29de998de6a369a9e7efbf08c2c003f000320d016d6d1f162601b16bae2\",\"exact_source_available\":true},{\"evidence_id\":\"TEST-004\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java\",\"kind\":\"test_source\",\"sha256\":\"11ff53f136ff10f5a4bdd21f6712245153f344c7bf40dc87dcb8b92d94a166e7\",\"exact_source_available\":true},{\"evidence_id\":\"TEST-005\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/MemorySharedPreferences.java\",\"kind\":\"test_source\",\"sha256\":\"826f9514aa98e105194c9c3d120a3086054e749283514630943dcc2189fbebc1\",\"exact_source_available\":true},{\"evidence_id\":\"TEST-006\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/TokenCompatTest.java\",\"kind\":\"test_source\",\"sha256\":\"02701ce86861ed0fa884e750131981b5c554f664137604413c90666f894750d9\",\"exact_source_available\":true},{\"evidence_id\":\"TEST-007\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java\",\"kind\":\"test_context\",\"sha256\":\"23cb6a80362d6bfc08e1b76c98e59005cb1a5a707a165c7d4768a19113720da6\",\"exact_source_available\":false},{\"evidence_id\":\"TEST-008\",\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java\",\"kind\":\"test_context\",\"sha256\":\"99a8536a97b5f4da03fd9eaf207195c8fa80e50bbaeb7ba6e40606481b6ee3ac\",\"exact_source_available\":false},{\"evidence_id\":\"SRC-004\",\"source_file_path\":\"build.gradle\",\"kind\":\"related_source\",\"sha256\":\"5b2aed205b2e6ce4a4189cf0450ea50997261b9cad3b1c8fb4a500546cb0a93c\",\"exact_source_available\":true},{\"evidence_id\":\"SRC-005\",\"source_file_path\":\"gradle.properties\",\"kind\":\"related_source\",\"sha256\":\"46e2a5ba697257f6a9a7067443f363988c20c5625da58c893080f83e8386af5a\",\"exact_source_available\":true},{\"evidence_id\":\"SRC-006\",\"source_file_path\":\"mobile/build.gradle\",\"kind\":\"related_source\",\"sha256\":\"35720fd3fa6d044ed4251168cdd40734deb5c7cfb19df95111c1fa1d02d0c40f\",\"exact_source_available\":true},{\"evidence_id\":\"SRC-007\",\"source_file_path\":\"mobile/proguard-rules.pro\",\"kind\":\"related_source\",\"sha256\":\"4162b40cd400246b13af296c2c9a43a322eeebab1594f790597725e1160332f2\",\"exact_source_available\":true},{\"evidence_id\":\"SRC-008\",\"source_file_path\":\"mobile/src/main/AndroidManifest.xml\",\"kind\":\"related_source\",\"sha256\":\"fee09f6314122700e8703a2c112af2ad1670e60b070563e3c6d9e52f82cd204e\",\"exact_source_available\":true},{\"evidence_id\":\"SRC-009\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/TokenPersistence.java\",\"kind\":\"related_source\",\"sha256\":\"251ddb6193146b680c6e12bcb9246c04fc538b8d62ebe8b097129e5a083d2ef1\",\"exact_source_available\":true},{\"evidence_id\":\"SRC-010\",\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/main/Adapter.java\",\"kind\":\"related_source\",\"sha256\":\"5403f90bfffa7cf4503537f449b3a9d79d7b3f778f80e4d59c1cd956b85cd0fe\",\"exact_source_available\":true}],\"established_test_source_roots\":[\"mobile/src/androidTest/java\"],\"repository_has_test_source_set\":true,\"test_classpath\":{\"module_build_file\":\"mobile/build.gradle\",\"declared_dependencies\":[\"androidx.appcompat:appcompat\",\"androidx.camera:camera-camera2\",\"androidx.camera:camera-core\",\"androidx.camera:camera-lifecycle\",\"androidx.camera:camera-view\",\"androidx.constraintlayout:constraintlayout\",\"androidx.test.ext:junit\",\"com.android.support.constraint:constraint-layout\",\"com.android.support.test.espresso:espresso-core\",\"com.android.support.test:runner\",\"com.android.tools:desugar_jdk_libs\",\"com.google.android.material:material\",\"com.google.code.gson:gson\",\"com.google.zxing:core\",\"com.squareup.picasso:picasso\",\"commons-codec:commons-codec\",\"junit:junit\",\"me.gosimple:nbvcxz\",\"net.bytebuddy:byte-buddy\",\"org.mockito:mockito-android\",\"org.mockito:mockito-core\"],\"always_available_prefixes\":[\"java.\",\"javax.\",\"jakarta.\",\"kotlin.\",\"android.\",\"dalvik.\",\"org.w3c.\",\"org.xml.\",\"org.json.\"],\"rule\":\"A generated test may import the repository's own packages, the always-available prefixes, and the libraries among declared_dependencies. kotlin.test is not always available: it needs a declared org.jetbrains.kotlin:kotlin-test* artifact. Anything else does not compile in this module, and adding it would mean editing the build file, which the finding does not authorise.\"},\"case_policy\":{},\"stored_value_contract\":{},\"previous_attempts_of_this_finding\":[{\"run\":\"run\",\"ended_at\":\"adjudication\",\"failure_signatures\":[\"adjudication:cause_inferred\",\"adjudication:the actual provenance failure and the appropriate remediation location are not established: the generic encrypt method o\"],\"details\":[{\"signature\":\"adjudication:cause_inferred\",\"detail\":\"The resolved Cipher.init(Cipher.ENCRYPT_MODE, key) receives EncryptedKey.encrypt's caller-supplied key parameter. The detector reported that this value lacks a CipherSpec-admitted key-origin predicate, but the supplied source does not establish the predicate-producing provenance of every reachable k\"},{\"signature\":\"adjudication:the actual provenance failure and the appropriate remediation location are not established: the generic encrypt method o\",\"detail\":\"Obtain the applicable CrySL predicate-producer definitions and inter-rule trace for every reachable key-input path before selecting a source change. A source-level predicate recheck after an arbitrary patch cannot determine whether an external or omitted producer was the actual cause.\"}]},{\"run\":\"subset_revisao_lacunas\",\"ended_at\":\"validated\",\"failure_signatures\":[],\"details\":[]},{\"run\":\"subset_revisao_lacunas_v2\",\"ended_at\":\"generation\",\"failure_signatures\":[\"generation:semantic:checked_exception_not_propagated\",\"generation:semantic:existing_test_expectations_rewritten\",\"generation:semantic:public_api_contract_changed\"],\"details\":[{\"signature\":\"generation:semantic:existing_test_expectations_rewritten\",\"detail\":\"the patch removes or changes what an existing test expects (3 line(s), e.g. 'Assert.assertArrayEquals(tok.getEncoded(), res.getEncoded());'); those values are a contract the project already pins, so the change alters behaviour others depend on. Keep the existing expectations, or report the finding t\"},{\"signature\":\"generation:semantic:public_api_contract_changed\",\"detail\":\"('public', False, 'void', 'test', ()); ('public', False, 'void', 'testUTF8', ())\"},{\"signature\":\"generation:semantic:checked_exception_not_propagated\",\"detail\":\"BadPaddingException; IllegalBlockSizeException; InvalidKeyException; NoSuchPaddingException\"}]}]}\n</planning_data>",
+  "context": {
+    "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+    "stage": "patch_planning",
+    "prompt_version": "llm-pipeline-v2.0",
+    "schema_version": "2.0",
+    "policy_version": "2.0",
+    "context_builder_version": "2.14",
+    "semantic_resolver_version": "tree-sitter-semantic-v2",
+    "section_telemetry": {
+      "finding": {
+        "characters": 579,
+        "approx_tokens": 145,
+        "sha256": "64c974fc9774351710855ddaaf1670a249b36f0fac3c0aa16c8ddc4260c057b3"
+      },
+      "validated_claims": {
+        "characters": 2139,
+        "approx_tokens": 535,
+        "sha256": "b3b4110b233d0bd146d2f046091dc7c3fddb63b7acb7eefa10a7ecbcab3a9fcc"
+      },
+      "adjudication": {
+        "characters": 5272,
+        "approx_tokens": 1318,
+        "sha256": "8690d4443503f2aef4a1fdb994a01e9d49c4f8220ba8c7ce07ba9fdd028d51b7"
+      },
+      "exact_source_manifest": {
+        "characters": 5501,
+        "approx_tokens": 1375,
+        "sha256": "46e94c8e7af52442e4f0cfca712538f9da52c73e394893f5c982756e473858a3"
+      },
+      "established_test_source_roots": {
+        "characters": 31,
+        "approx_tokens": 8,
+        "sha256": "cb97118f0957aae4117ce4ae71bb1d5bfe6f2a943d23e66fdf81a1fe89272c45"
+      },
+      "repository_has_test_source_set": {
+        "characters": 4,
+        "approx_tokens": 1,
+        "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "test_classpath": {
+        "characters": 1246,
+        "approx_tokens": 312,
+        "sha256": "c3f8fc54f6b307f77f855804f67a0962e846aa297376165f70efbc0ba0f4491e"
+      },
+      "case_policy": {
+        "characters": 2,
+        "approx_tokens": 1,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "stored_value_contract": {
+        "characters": 2,
+        "approx_tokens": 1,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "previous_attempts_of_this_finding": {
+        "characters": 2110,
+        "approx_tokens": 528,
+        "sha256": "2dd353d97b58467011ad28da4d8829a43a67ea55200ca14c6fc1dd9098652a21"
+      }
+    }
+  },
+  "input_sha256": "f35549ad749379e9ab4260fa12b3973bb702ed53e8b7236a2aa396f5bc70ee9b"
+}

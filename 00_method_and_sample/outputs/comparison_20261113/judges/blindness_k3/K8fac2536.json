@@ -1,0 +1,31 @@
+{
+ "card_id": "K8fac2536",
+ "card_sha256": "1ed4fe1c711c7929",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3131,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 504
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0353664,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "8bdf560501501d40",
+ "finished_at": "2026-11-16T11:42:10-0300",
+ "output": {
+  "guess": "O",
+  "confidence": 0.25,
+  "reason": "The card is written in the first person by someone who worked through the code directly (\"I found nothing to change\"). That points to an agent working in a checkout rather than a multi-step pipeline. It is plain prose with no headers or bold text, which fits Codex better than Claude. Its short sentences and precise technical detail (the AndroidKeyStore default, the `iv + encrypted` layout, the desktop version in `SecretEncryption.jvm.kt`) suggest the stronger Codex model, Sol, over Terra. Confidence is low: these are style cues only, and any of the five sources could have written this."
+ }
+}

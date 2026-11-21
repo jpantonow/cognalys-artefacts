@@ -1,0 +1,218 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule does not define the operational semantics of `encrypted`, `preparedHMAC`, `generatedKey`, or `macced`.",
+      "The rule names only the listed overloads; it does not model `reset`, `clone`, `getMacLength`, `getProvider`, `getAlgorithm`, or other surrounding program behavior.",
+      "The rule's `length[output1] > outOffset` condition is not equivalent to the Java API's requirement that the output buffer be large enough for the entire MAC result.",
+      "The rule file does not state how a particular detector resolves aliases, constants, interprocedural flows, reflection, dynamically loaded providers, or the wildcard `_` beyond its syntactic use in `getInstance(algorithm, _)`."
+    ],
+    "predicates": [
+      "REQUIRES `!encrypted[output1, _]`.",
+      "REQUIRES `!encrypted[output2,_]`.",
+      "REQUIRES `preparedHMAC[params]`.",
+      "REQUIRES `generatedKey[key,_]`.",
+      "ENSURES `macced[output1, inputByte]`.",
+      "ENSURES `macced[output1, preInput]`.",
+      "ENSURES `macced[output2, input]`.",
+      "CONSTRAINT `algorithm in {\"HmacSHA256\", \"HmacSHA384\", \"HmacSHA512\", \"HmacPBESHA1\", \"PBEWithHmacSHA1\", \"PBEWithHmacSHA224\", \"PBEWithHmacSHA256\", \"PBEWithHmacSHA384\", \"PBEWithHmacSHA512\"}`.",
+      "CONSTRAINT `length[output1] > outOffset`.",
+      "CONSTRAINT `length[preInput] >= offset + len`.",
+      "CONSTRAINT `offset >= 0`.",
+      "CONSTRAINT `len > 0`."
+    ],
+    "claim": "The authoritative rule declares `SPEC javax.crypto.Mac`, requires `Get, Init, (FinalWU | (Update+, Final))+`, constrains `algorithm` to nine listed strings, and attaches the stated abstract predicates and numeric constraints."
+  },
+  "unknowns": [
+    "Whether the detector implementation normalizes algorithm aliases or alternate spellings. The representative diagnostic may display spellings beyond the exact rule list, but the supplied Mac.crysl text is the matching authority and does not define such normalization.",
+    "The formal meaning and propagation rules for the abstract predicates `generatedKey`, `preparedHMAC`, `encrypted`, and `macced`.",
+    "Whether the two-argument wildcard event `getInstance(algorithm, _)` is implemented uniformly for both JCA overloads taking `String` and `Provider`.",
+    "How the detector handles implicit receiver aliases, inheritance/proxying, Kotlin call forms, reflection, and interprocedural lifecycles.",
+    "Why `length[output1] > outOffset` is used for the output-buffer finalization event rather than a condition based on the required full MAC output length."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "`javax.crypto.Mac` provides a message-authentication-code algorithm; the JDK documentation describes MACs as integrity checks based on a shared secret key.",
+      "`Mac.getInstance(String)` searches registered security providers and returns a Mac implementation from the first provider supporting the requested algorithm; the two-argument overloads select a named provider or a Provider object.",
+      "`init(Key)` and `init(Key, AlgorithmParameterSpec)` initialize the object. The update overloads process byte, byte-array, range, or ByteBuffer input.",
+      "`doFinal()` finishes the operation and returns a MAC; `doFinal(byte[])` processes that input and finishes; `doFinal(byte[], int)` writes the result beginning at the supplied offset.",
+      "The documented API resets the Mac after a successful `doFinal` to the initialized state, allowing another MAC with the same key; changing keys requires reinitialization."
+    ],
+    "preconditions": [
+      "The API documents `IllegalStateException` for update and doFinal operations when the Mac has not been initialized.",
+      "The API documents `InvalidKeyException` when the supplied key is inappropriate for initialization, and `InvalidAlgorithmParameterException` when parameters are inappropriate.",
+      "The API documents `ShortBufferException` for `doFinal(byte[], int)` when the output buffer cannot hold the result.",
+      "`getInstance` can fail when no supporting provider is available; provider-specific overloads can also fail when the provider is missing or unsuitable."
+    ],
+    "unknowns": [
+      "The rule does not identify a required Java release, security provider, or provider configuration.",
+      "The rule does not establish which Key implementation, key size, parameter object, or key-provenance mechanism satisfies its abstract predicates.",
+      "The rule does not establish whether a detector treats JCA's case-insensitive standard names, provider aliases, or alternate spellings as equivalent to the exact strings in the rule."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Mac.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/Mac.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Rule clause `g1: getInstance(algorithm)`: observe the one-argument factory overload on `javax.crypto.Mac`. Its `algorithm` value must satisfy `algorithm in {\"HmacSHA256\", \"HmacSHA384\", \"HmacSHA512\", \"HmacPBESHA1\", \"PBEWithHmacSHA1\", \"PBEWithHmacSHA224\", \"PBEWithHmacSHA256\", \"PBEWithHmacSHA384\", \"PBEWithHmacSHA512\"}`.",
+      "name": "g1",
+      "api_patterns": [
+        "Mac.getInstance(",
+        "javax.crypto.Mac.getInstance("
+      ]
+    },
+    {
+      "condition": "Rule clause `g2: getInstance(algorithm, _)`: observe a two-argument factory overload on `javax.crypto.Mac`; `_` is the rule wildcard. The same declared algorithm-list constraint applies to the runtime algorithm value.",
+      "name": "g2",
+      "api_patterns": [
+        "Mac.getInstance(",
+        "javax.crypto.Mac.getInstance("
+      ]
+    },
+    {
+      "condition": "Rule clause `i1: init(key)`: observe the one-argument `init` overload on a resolved `javax.crypto.Mac` receiver. The rule additionally requires abstract predicate `generatedKey[key,_]`; observing the call alone does not establish it.",
+      "name": "i1",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Rule clause `i2: init(key, params)`: observe the two-argument `init` overload on a resolved `javax.crypto.Mac` receiver. The rule additionally requires `generatedKey[key,_]` and `preparedHMAC[params]`; these are abstract predicates, not Java runtime checks defined by `Mac`.",
+      "name": "i2",
+      "api_patterns": [
+        ".init("
+      ]
+    },
+    {
+      "condition": "Rule clause `u1: update(inputByte)`: observe the `byte` overload on a resolved `javax.crypto.Mac` receiver.",
+      "name": "u1",
+      "api_patterns": [
+        ".update("
+      ]
+    },
+    {
+      "condition": "Rule clause `u2: update(preInput)`: observe the `byte[]` overload on a resolved `javax.crypto.Mac` receiver.",
+      "name": "u2",
+      "api_patterns": [
+        ".update("
+      ]
+    },
+    {
+      "condition": "Rule clause `u3: update(preInput, offset, len)`: observe the `byte[], int, int` overload on a resolved `javax.crypto.Mac` receiver. The rule constrains runtime values as `length[preInput] >= offset + len`, `offset >= 0`, and `len > 0`; these are not source-spelling conditions.",
+      "name": "u3",
+      "api_patterns": [
+        ".update("
+      ]
+    },
+    {
+      "condition": "Rule clause `u4: update(preInputByteBuffer)`: observe the `java.nio.ByteBuffer` overload on a resolved `javax.crypto.Mac` receiver.",
+      "name": "u4",
+      "api_patterns": [
+        ".update("
+      ]
+    },
+    {
+      "condition": "Rule clause `f1: output1 = doFinal()`: observe no-argument finalization and its returned output binding. It is `FinalWOU`; the rule applies `!encrypted[output1, _]`, `length[output1] > outOffset`, `macced[output1, inputByte]`, and `macced[output1, preInput]` as abstract/value conditions.",
+      "name": "f1",
+      "api_patterns": [
+        ".doFinal()"
+      ]
+    },
+    {
+      "condition": "Rule clause `f2: output2 = doFinal(input)`: observe one-argument `byte[]` finalization and its returned output binding. It is `FinalWU`, may directly follow Init under ORDER, requires `!encrypted[output2,_]`, and ensures `macced[output2, input]` as abstract predicates.",
+      "name": "f2",
+      "api_patterns": [
+        ".doFinal("
+      ]
+    },
+    {
+      "condition": "Rule clause `f3: doFinal(output1, outOffset)`: observe output-buffer finalization on a resolved `javax.crypto.Mac` receiver. It is `FinalWOU`; the rule's runtime value constraint is `length[output1] > outOffset`, not the stronger documented requirement for capacity for the complete MAC output.",
+      "name": "f3",
+      "api_patterns": [
+        ".doFinal("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "This is a detector protocol and abstract-predicate specification for `javax.crypto.Mac`. It checks selected call signatures, a declared order, listed algorithm values, selected bounds constraints, and tool-defined predicates. It does not by itself prove that a MAC is verified by a peer, that the input is the intended message, that a key has sufficient entropy or secrecy, that the selected provider implements the intended algorithm correctly, or that the application is secure.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a type named `MacSpec`, or any namesake `Spec` type from another library, is governed by this rule; the rule explicitly specifies `javax.crypto.Mac`.",
+    "Do not infer that every JCA-supported MAC algorithm is permitted by this detector rule. The rule permits only its explicit algorithm list.",
+    "Do not infer that the rule's acceptance list is a complete list of algorithms supported by a specific JDK or provider.",
+    "Do not infer that an observed algorithm expression evaluates to a permitted value at execution without value-flow or runtime evidence.",
+    "Do not infer that `generatedKey[key,_]`, `preparedHMAC[params]`, `encrypted[...]`, or `macced[...]` has a particular concrete meaning from this rule file alone.",
+    "Do not infer that a successfully created Mac object has been initialized, that its key is suitable, or that its output is used for authentication verification.",
+    "Do not infer provider selection or provider capability from a one-argument `Mac.getInstance` call without runtime provider configuration evidence.",
+    "Do not infer that a rule violation proves an exploitable vulnerability, or that rule compliance proves cryptographic security."
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, `Mac.getInstance` requests a MAC implementation from a provider and the subsequent initialized Mac processes data and produces a MAC. Java SE documentation lists `HmacSHA1` and `HmacSHA256` as required supported Mac algorithms, but the detector rule's whitelist excludes `HmacSHA1`.",
+    "equivalent": false,
+    "detector_claim": "A `javax.crypto.Mac` protocol instance is acceptable to this rule only if its observed lifecycle satisfies the stated ORDER expression and its `algorithm` value satisfies the rule's explicit whitelist, together with the declared constraints and abstract predicates."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Identify the Java version and installed security providers because support beyond the Java SE baseline is provider-dependent.",
+      "Compare the detector's exact whitelist against the JDK's standard-name documentation and any provider-specific aliases.",
+      "Treat the rule file as the authority for detector matching, not as a complete JCA compatibility matrix."
+    ],
+    "runtime": [
+      "Record the actual algorithm value passed to `Mac.getInstance`, including values obtained through configuration, indirection, or environment-dependent code.",
+      "Record the selected provider and whether it supports the requested algorithm.",
+      "Confirm that init succeeds with the actual key and parameters and that the actual call sequence reaches update/doFinal without an API exception.",
+      "For `update(byte[], int, int)` and `doFinal(byte[], int)`, confirm actual buffer lengths, offsets, and MAC output length."
+    ],
+    "source_level": [
+      "Resolve the factory and instance-call receiver to `javax.crypto.Mac`, rather than matching only a method name such as `getInstance`, `init`, `update`, or `doFinal`.",
+      "Establish the selected overload and argument-to-rule-variable binding.",
+      "Establish value flow for `algorithm`, `key`, `params`, input arrays, offsets, lengths, and output arrays where a condition depends on those values.",
+      "Establish event order on the same logical Mac object, including whether finalization is followed by another permitted sequence."
+    ]
+  },
+  "name": "MacSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Mac.crysl",
+  "applies_to_types": [
+    "javax.crypto.Mac"
+  ],
+  "source_title": "Crypto-API-Rules: JavaCryptographicArchitecture/src/Mac.crysl",
+  "semantic_scope": "For every finding of this rule, the detector is scoped to resolved calls on `javax.crypto.Mac`: factory acquisition through `getInstance`, initialization through `init`, message processing through the listed `update` overloads, and finalization through the listed `doFinal` overloads. It observes the rule's stated object/value bindings, event order, algorithm whitelist, selected array-offset constraints, and abstract REQUIRES/ENSURES predicates.",
+  "spec_id": "MacSpec",
+  "known_false_positive_shapes": [
+    "A report where the source expression is not statically resolved but evaluates at runtime to a whitelisted algorithm value.",
+    "A report where valid key-generation or parameter-preparation provenance exists but the analyzer cannot establish the rule-specific `generatedKey` or `preparedHMAC` predicate.",
+    "A protocol report where wrappers, callbacks, interprocedural object flow, reflection, or dependency-injected provider selection obscure the lifecycle from static analysis.",
+    "A report for an initialized empty-message MAC finalized with `doFinal()` without prior update: the Java API permits finalization after initialization, whereas this rule's ORDER expression requires either `doFinal(input)` directly or at least one Update before a Final event."
+  ],
+  "protocol": "Get, Init, (FinalWU | (Update+, Final))+",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Mac.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:javax.crypto.Mac"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.cry.otp.TOTP",
+        "method": "hmac_sha",
+        "message": "expecting one of HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1"
+      }
+    ],
+    "expected_api_simple_name": "Mac",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.crypto.Mac",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Mac.crysl"
+  },
+  "non_security_violation_shapes": [
+    "A policy-only report for `HmacSHA1`: Java SE documents it as a required supported Mac algorithm, while this particular rule intentionally excludes it. Whether that is a false positive depends on the governing security policy, not on API availability."
+  ]
+}

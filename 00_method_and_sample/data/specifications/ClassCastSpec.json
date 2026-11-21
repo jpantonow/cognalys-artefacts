@@ -1,0 +1,150 @@
+{
+  "schema_version": 2,
+  "spec_id": "ClassCastSpec",
+  "name": "ClassCastSpec",
+  "applies_to_types": [
+    "unresolved.ClassCast"
+  ],
+  "source_title": "Requested canonical CrySL source for ClassCastSpec / ClassCast (attempted; HTTP 404, so no rule text was available to consult)",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/ClassCast.crysl",
+  "source_verified": false,
+  "protocol": "type_guard? → cast_attempt → (cast_succeeds | ClassCastException)",
+  "important_note": "The required ClassCast simple-name mapping is represented as unresolved.ClassCast solely because no primary source established a real package-qualified API type named ClassCast. This is not a claim that such a Java, Android, or CrySL API type exists. The reported ItemAdapter.onClick message instead concerns Java reference-cast failure; Java documents java.lang.ClassCastException, not a java.lang.ClassCast API type.",
+  "events": [
+    {
+      "name": "cast_attempt",
+      "api_patterns": [
+        "(StoryViewHolder)",
+        "as StoryViewHolder",
+        ".cast("
+      ],
+      "condition": "Observed when one of these cast-form source substrings occurs in the relevant method or expression. Its compatibility predicate is not satisfied merely by observing the cast: the run-time value must actually be null or assignment-compatible with StoryViewHolder."
+    },
+    {
+      "name": "type_guard",
+      "api_patterns": [
+        "instanceof StoryViewHolder",
+        "is StoryViewHolder",
+        "Class.isInstance("
+      ],
+      "condition": "Observed when source contains a candidate run-time type test. It satisfies a safety predicate only when evidence shows that the test's successful branch dominates the particular cast and refers to the same run-time value."
+    },
+    {
+      "name": "cast_failure_observed",
+      "api_patterns": [
+        "ClassCastException",
+        "throw new ClassCastException(",
+        "catch (ClassCastException"
+      ],
+      "condition": "Observed when source names, throws, or catches ClassCastException. The incompatible-type predicate is satisfied only by run-time exception evidence or equivalent trustworthy dynamic-type evidence; naming or catching the exception alone does not prove a failed cast."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That unresolved.ClassCast is an actual package-qualified Java, Android, or CrySL API type.",
+    "That ClassCastSpec is a canonical CROSSINGTUD Crypto-API-Rules CrySL rule.",
+    "That the reported ItemAdapter.onClick path executed in production.",
+    "That every HeaderViewHolder reaching onClick is invalidly cast to StoryViewHolder.",
+    "That a nearby instanceof or Kotlin is check protects the specific reported cast.",
+    "That this finding is a cryptographic misuse or establishes a confidentiality, integrity, authentication, or authorization vulnerability.",
+    "That the detector's displayed message was emitted by the JVM rather than synthesized by the detector."
+  ],
+  "semantic_scope": "A source-level or analysis-result-level observation of a reference cast associated with io.github.hidroh.materialistic.ItemAdapter.onClick and the stated HeaderViewHolder-to-StoryViewHolder incompatibility message. The scope is deliberately limited to cast compatibility; it does not select an unrelated framework API merely because a namesake ends in Spec.",
+  "detector_semantics": {
+    "claim": "The representative result claims a possible or observed invalid reference cast in io.github.hidroh.materialistic.ItemAdapter.onClick: HeaderViewHolder cannot be cast to StoryViewHolder.",
+    "predicates": [
+      "A cast target corresponding to StoryViewHolder is associated with the reported program point.",
+      "The analyzed or observed value is represented as HeaderViewHolder.",
+      "HeaderViewHolder is not assignment-compatible with StoryViewHolder for the relevant run-time class-loader identities."
+    ],
+    "limitations": [
+      "No detector implementation, rule source, analysis configuration, call path, bytecode, or execution trace was supplied.",
+      "The finding text alone does not distinguish a statically inferred risk from an exception actually thrown at run time.",
+      "The attempted canonical CrySL file was unavailable (HTTP 404), so no event automaton, constraints, or predicates may be attributed to a ClassCast.crysl rule."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Java documents java.lang.ClassCastException as a RuntimeException thrown when code attempts to cast an object to a subclass of which that object is not an instance.",
+      "The Java Language Specification states that a fully or partially checked narrowing reference conversion throws ClassCastException when its run-time test fails."
+    ],
+    "preconditions": [
+      "For a cast to complete normally, the reference value must be null or compatible with the cast target under the applicable Java run-time type rules.",
+      "A class-loader distinction can affect type identity, but no evidence establishes that factor for this finding.",
+      "For the reported pair, evidence is needed that the concrete object is HeaderViewHolder and that HeaderViewHolder is incompatible with StoryViewHolder at the actual cast."
+    ],
+    "unknowns": [
+      "The source expression and exact cast mechanism in ItemAdapter.onClick.",
+      "Whether the cast is a Java cast operator, Class.cast invocation, Kotlin as expression, compiler-generated checkcast, or detector abstraction.",
+      "Whether HeaderViewHolder and StoryViewHolder are nested classes, siblings, subclasses, or types from separate class loaders.",
+      "Whether a real API type named ClassCast exists in the detector's local specification namespace."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "Potential or reported type-safety failure during a UI click-handling path.",
+    "runtime_claim": "If the incompatible cast is executed, Java can throw java.lang.ClassCastException.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "The actual ClassCast.crysl source, or an authoritative detector repository/specification that maps ClassCastSpec to a fully qualified ClassCast type.",
+      "The version-pinned ItemAdapter source containing the reported onClick implementation.",
+      "Class declarations or bytecode establishing the relation between HeaderViewHolder and StoryViewHolder."
+    ],
+    "runtime": [
+      "A stack trace or reproducible execution showing ItemAdapter.onClick throwing ClassCastException.",
+      "Run-time class names and class loaders for the cast operand and target.",
+      "Evidence that the exception message corresponds to the same program point rather than an independently synthesized detector diagnostic."
+    ],
+    "compatibility": [
+      "The concrete dynamic type of the cast operand.",
+      "The exact target type used by the compiled cast.",
+      "Inheritance/interface metadata and, where relevant, class-loader identity for both types."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A detector reports a feasible HeaderViewHolder flow although application control flow prevents that value from reaching the StoryViewHolder cast.",
+    "A dominating type guard exists but is not recognized because of aliasing, callbacks, lambdas, generated code, or insufficient path sensitivity.",
+    "The reported Holder names refer to different revisions, variants, flavors, or nested classes than those used in the analyzed build.",
+    "The detector renders an abstract incompatibility diagnostic even though the compiled code uses a different target type at the relevant program point.",
+    "A message-only match confuses a caught, logged, test-only, or intentionally handled ClassCastException with an uncaught production failure.",
+    "Class-loader-sensitive type identity produces a failure not visible from source names alone."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/ClassCast.crysl",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/blob/master/JavaCryptographicArchitecture/src/Cipher.crysl",
+    "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html",
+    "https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html#jls-5.5"
+  ],
+  "unknowns": [
+    "No primary source for ClassCastSpec or ClassCast.crysl was found at the requested canonical raw URL; the fetch returned HTTP 404.",
+    "The precise fully qualified API type governed by ClassCastSpec cannot be verified. The unresolved.ClassCast entry satisfies the requested simple-name convention but is explicitly a non-authoritative placeholder.",
+    "The Crypto-API-Rules corpus demonstrably uses CrySL files that declare concrete fully qualified SPEC types, such as javax.crypto.Cipher; that verified corpus structure does not establish a ClassCast rule.",
+    "It is unresolved whether ClassCastSpec is a proprietary detector specification, a missing or renamed CrySL file, or a label for Java ClassCastException diagnostics.",
+    "It is unresolved whether the representative finding denotes a guaranteed execution-time exception, a statically feasible exception, or a detector-generated textual classification."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/ClassCast.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "io.github.hidroh.materialistic.ItemAdapter",
+        "method": "onClick",
+        "message": "ClassCastException: Cannot cast 'HeaderViewHolder' to 'StoryViewHolder'."
+      }
+    ],
+    "expected_api_simple_name": "ClassCast",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/ClassCast.crysl"
+  }
+}

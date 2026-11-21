@@ -1,0 +1,32 @@
+{
+ "card_id": "K8f2bf906",
+ "card_sha256": "5127cab82feedbd9",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1519,
+  "cache_read_input_tokens": 2756,
+  "output_tokens": 469
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0220912,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "3c383a7230b5d54b",
+ "finished_at": "2026-11-16T11:50:45-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.25,
+  "reason": "The diff is a minimal, targeted two-line Kotlin change: it swaps KeyStore.getEntry(alias, null) for getKey(alias, null), which is the null-protection-parameter call that RVSec would flag. The author built this exact diff and it passed. Every run of the Cognalys pipeline (C or D) builds its patch, which points toward a pipeline over the agents. The idiomatic Kotlin cleanup (`as? SecretKey`, simplified elvis) leans slightly toward the Sonnet-based pipeline (D), but that is a weak signal."
+ }
+}

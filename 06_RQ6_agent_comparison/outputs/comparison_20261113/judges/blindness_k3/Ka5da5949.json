@@ -1,0 +1,31 @@
+{
+ "card_id": "Ka5da5949",
+ "card_sha256": "a72f7a19bdac3da6",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2755,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 395
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0301784,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "ed171ac59e111650",
+ "finished_at": "2026-11-16T11:45:37-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.27,
+  "reason": "The card is polished and generic. It cites no file paths or code locations, which coding agents working in a checkout usually include, so it reads like output from the Cognalys pipeline. It closes with a terse formal line (\"No source change or issue is warranted for this finding\") and includes a documentation link, which fits the GPT-based pipeline variant a little better than the Sonnet one. This is a weak guess."
+ }
+}

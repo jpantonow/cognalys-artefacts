@@ -1,0 +1,140 @@
+{
+  "schema_version": 2,
+  "spec_id": "SecuritySpec",
+  "name": "SecuritySpec",
+  "applies_to_types": [
+    "java.security.Security"
+  ],
+  "source_title": "CROSSINGTUD Crypto-API-Rules requested canonical Security.crysl source — unavailable (HTTP 404 when fetched)",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Security.crysl",
+  "source_verified": false,
+  "protocol": "Unverified: no CrySL ORDER expression can be recovered because the requested Security.crysl source was unavailable.",
+  "important_note": "The CrySL naming convention identifies java.security.Security as the target type because its simple name is exactly Security. This does not establish that the reported external-storage SecurityException is governed by SecuritySpec, nor does it establish an event order, constraint, or violation.",
+  "events": [
+    {
+      "name": "qualified_security_type_reference",
+      "api_patterns": [
+        "import java.security.Security;",
+        "import java.security.Security",
+        "java.security.Security."
+      ],
+      "condition": "Observation: source text contains an import or fully qualified reference identifying java.security.Security. Predicate: this observation alone satisfies no SecuritySpec predicate, because no primary CrySL event definition was available."
+    },
+    {
+      "name": "documented_security_static_api_call",
+      "api_patterns": [
+        "java.security.Security.addProvider(",
+        "java.security.Security.insertProviderAt(",
+        "java.security.Security.removeProvider(",
+        "java.security.Security.getProvider(",
+        "java.security.Security.getProviders(",
+        "java.security.Security.getProperty(",
+        "java.security.Security.setProperty(",
+        "java.security.Security.getAlgorithms("
+      ],
+      "condition": "Observation: a fully qualified call targets a documented static method of java.security.Security. Predicate: Java documentation describes method-specific behavior, but the unavailable SecuritySpec source does not establish that this call is a CrySL event or satisfies a rule predicate."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that org.kiwix.kiwixmobile.zim_manager.ZIMFileReader.openFile invokes java.security.Security.",
+    "Do not infer that a runtime java.lang.SecurityException is an event on, instance of, or violation of java.security.Security.",
+    "Do not infer an Android external-storage permission requirement, manifest declaration, runtime-permission state, URI grant, or storage-scoping result from SecuritySpec.",
+    "Do not infer a CrySL ORDER clause, CONSTRAINTS clause, REQUIRES clause, ENSURES clause, or forbidden method while Security.crysl is unavailable.",
+    "Do not substitute another framework's Security or SecuritySpec-like API merely because its name resembles SecuritySpec."
+  ],
+  "semantic_scope": "Available evidence permits only naming-convention disambiguation to java.security.Security and syntactic identification of qualified references to that JCA class. The representative finding is in ZIMFileReader.openFile and reports an external-storage permission denial; it supplies neither a java.security.Security call nor a fetched SecuritySpec rule.",
+  "detector_semantics": {
+    "claim": "No source-verified detector claim is available for SecuritySpec.",
+    "predicates": [
+      "A possible target-type reference is observable only when source resolution identifies java.security.Security, preferably through a qualified reference or matching import.",
+      "No rule predicate may be treated as satisfied merely because the token Security, the exception type SecurityException, or external-storage permission wording appears."
+    ],
+    "limitations": [
+      "The specified canonical raw CrySL URL was fetched and returned HTTP 404.",
+      "The rule content, including its declared target, event aliases, call signatures, ordering, constraints, predicates, and error semantics, is unavailable.",
+      "Textual matching cannot resolve simple-name collisions without import, package, bytecode, or compiler-resolution evidence."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "java.security.Security is a final JCA utility class that centralizes security properties and common security methods, principally provider management.",
+      "Its documented public API consists of static provider, property, and algorithm operations; it does not document an openFile method."
+    ],
+    "preconditions": [
+      "Documented provider insertion methods reject a null Provider with NullPointerException.",
+      "getProperty and setProperty reject null keys; setProperty also rejects a null value.",
+      "getProviders(String) and getProviders(Map) require correctly formatted selection criteria and can reject null or invalid criteria."
+    ],
+    "unknowns": [
+      "Whether the detector's unavailable SecuritySpec actually targets this JDK class despite the naming convention and requested corpus path.",
+      "Which Java/Android platform library version and API model the detector resolves for this application.",
+      "Whether a relevant resolved java.security.Security call exists elsewhere in the analyzed program."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "Unverified: no primary SecuritySpec text was found from which to derive a detector security property.",
+    "runtime_claim": "The supplied representative message reports a SecurityException described as permission denial while reading external storage from ZIMFileReader.openFile.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Retrieve the exact Security.crysl file or an immutable commit-pinned equivalent from the detector's configured rule bundle.",
+      "Confirm that the CrySL SPEC declaration names java.security.Security and extract its EVENTS, ORDER, CONSTRAINTS, REQUIRES, ENSURES, and any forbidden-call declarations.",
+      "Record the detector/ruleset version and content hash, because a corpus branch or local rule override may differ from the requested URL."
+    ],
+    "runtime": [
+      "Obtain a full stack trace identifying the operation that attempted external-storage access.",
+      "Obtain resolved Android permission and storage-access state at the time of the exception, including URI-grant state where applicable.",
+      "Provide runtime evidence connecting the failing code path to a resolved java.security.Security invocation if such a connection is claimed."
+    ],
+    "compatibility": [
+      "Establish the application's compile SDK, target SDK, device Android version, and storage-access mechanism.",
+      "Establish the JDK/Android library signature used by analysis for java.security.Security.",
+      "Provide import, package, or bytecode-resolution evidence for every simple Security reference."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "Matching java.lang.SecurityException as though it were java.security.Security.",
+    "Matching ZIMFileReader.openFile because its diagnostic text contains SecurityException or permission-denial wording.",
+    "Matching an unqualified Security identifier resolved to another package or framework.",
+    "Treating a documented java.security.Security provider/property call as proof of an unavailable CrySL protocol predicate.",
+    "Treating the presence of an Android permission declaration as proof that a storage read succeeds at runtime."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Security.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/Security.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/Security.html"
+  ],
+  "unknowns": [
+    "Why SecuritySpec is present in the detector's specification inventory when the requested upstream canonical Security.crysl path is unavailable.",
+    "Whether SecuritySpec is a local, generated, renamed, deleted, or version-specific rule.",
+    "The exact CrySL event-order protocol and predicates, if any.",
+    "Whether the representative finding is a rule finding, a runtime crash signature, or merely contextual evidence associated with a separate detector result.",
+    "Whether the analyzed ZIMFileReader.openFile implementation contains any resolved java.security.Security reference."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Security.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.kiwix.kiwixmobile.zim_manager.ZIMFileReader",
+        "method": "openFile",
+        "message": "SecurityException: Permission denial reading external storage."
+      }
+    ],
+    "expected_api_simple_name": "Security",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Security.crysl"
+  }
+}

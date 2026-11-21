@@ -1,0 +1,160 @@
+{
+  "trace_version": 2,
+  "call_id": "20261027T224425_727928_971_0035_code_generation.coordinated_file",
+  "parent_call_id": "",
+  "stage": "code_generation.coordinated_file",
+  "recorded_at": "2026-10-27T22:44:25",
+  "delivery": "sent_to_openai",
+  "endpoint": "https://api.openai.com/v1",
+  "model": "gpt-5.6-terra",
+  "timeout_seconds": 600,
+  "max_output_tokens": 32768,
+  "reasoning_effort": "high",
+  "web_search": false,
+  "json_mode": true,
+  "schema_name": "coordinated_file_draft",
+  "json_schema": {
+    "type": "object",
+    "properties": {
+      "decision": {
+        "type": "string",
+        "enum": [
+          "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW"
+        ]
+      },
+      "source_file_path": {
+        "type": "string"
+      },
+      "explanation": {
+        "type": "string"
+      },
+      "edits": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "source_file_path": {
+              "type": "string",
+              "description": "The requested repository-relative path."
+            },
+            "symbol": {
+              "type": "string"
+            },
+            "edit_kind": {
+              "type": "string",
+              "enum": [
+                "method",
+                "declaration",
+                "constant",
+                "test",
+                "create",
+                "delete"
+              ]
+            },
+            "original_code": {
+              "type": "string",
+              "description": "Exact existing source block."
+            },
+            "corrected_code": {
+              "type": "string",
+              "description": "Complete replacement source block; empty only for edit_kind=delete."
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_file_path",
+            "symbol",
+            "edit_kind",
+            "original_code",
+            "corrected_code",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "no_change_required": {
+        "type": "boolean"
+      },
+      "provided_contracts": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "required_contracts": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "required_tests": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "manual_review_required": {
+        "type": "boolean"
+      },
+      "review_assumptions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "confidence": {
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ]
+      }
+    },
+    "required": [
+      "decision",
+      "source_file_path",
+      "explanation",
+      "edits",
+      "no_change_required",
+      "provided_contracts",
+      "required_contracts",
+      "required_tests",
+      "manual_review_required",
+      "review_assumptions",
+      "confidence"
+    ],
+    "additionalProperties": false
+  },
+  "instructions": "Generate edits for exactly one file in an atomic coordinated Java/Kotlin fix. Return JSON only. If this file needs no change because its code already fits the contracts the other files provide (for example a caller whose entry point is kept), return edits [] with no_change_required true and say why in explanation; never change a file only to have an edit to return. When test_classpath is present, this file is a test and may import only the repository's own packages, the listed always_available_prefixes, and the libraries in declared_dependencies: a test runner or helper the module does not declare does not compile, and adding it to the build file is outside this change. Write the test the declared libraries support. The reported target file always needs edits, and no_change_required must be false whenever edits is non-empty.For an existing file, copy every original_code verbatim from the supplied target source. For new_file=true, emit exactly one edit_kind=create with an empty original_code and the complete file in corrected_code. Do not edit another path. When the target file is a build file -- a Gradle script, a version catalog or versions.properties -- change only the declaration lines the plan names, copying each original_code line verbatim, and keep the file's own declaration style (catalog alias, constant or literal). Compatibility uncertainty must be recorded in review_assumptions and must not cause abstention for a review-only decision. Preserve every existing public or protected method signature unless the policy explicitly authorizes an API break. Never keep a function name that states a behaviour the patch removes (an algorithm, an encoding, a version): call an existing correctly named declaration instead, or rename the reported method only when rename_safety.allowed is true, updating every one of rename_safety.references in this batch. When replacing a deprecated API, keep every entry of deprecated_api_invariants (execution order, callback thread, cancellation, exception propagation) unless the plan names the deviation; never let a background task's exception disappear into an unread Future. verified_repository_imports are import lines a passing build of this repository contained: use exactly those for their symbols. previous_attempts_of_this_finding says how earlier runs of this finding ended; do not repeat what stopped them. maintainer_responses_to_this_rule_elsewhere are what other projects' maintainers did with a change for the same rule: shape this change so the objection they raised does not apply (keep a deliberate behaviour behind a setting or a debug-only condition, do not change a value used as a checksum); they say nothing about whether this finding is real. Implement it with recommended_mechanisms; never build a queue, executor or cancellation scheme by hand on top of a mechanism listed under not_recommended. Keep the existing entry-point names so callers need no edit, and do not add a method that only delegates to a renamed one. Keep checked throws/catch contracts compilable across changed callers and callees. Kotlin helpers that are not an intended external API must be declared internal or private; never rely on Kotlin's implicit public visibility for a migration seam. A new declaration's callable scope is fixed by the brace nesting of its original_code anchor, not by how corrected_code is indented. If a new function or property will be called unqualified from another file or from a different class in this same edit batch (including a coordinated test file), the chosen anchor must already sit at file top-level -- outside every class/object/interface body. A helper written with no leading indentation does not become a top-level declaration merely because it looks like one; it inherits the nesting of whatever original_code it replaces. A sibling nested class that is not declared inner has no implicit access to another nested class's or the outer class's instance members. Do not retain a whole owner object merely to replace a retained crypto primitive unless lifecycle evidence and dispose tests require it. Dispose or wipe replaced sensitive wrappers before assignment. Prefer a package-private test seam over reflection. Use edit_kind=delete and corrected_code exactly empty for an intentional deletion such as an obsolete import. Never emit an empty corrected_code for another edit kind. Tamper tests must assert the concrete authentication-failure cause, and lifecycle-changing edits must test dispose behavior. Before adding tests to an existing test source, inspect the entire supplied file for calls to APIs that are absent from the supplied production sources. Never assume a historically stale test container compiles. Prefer another demonstrably compilable test source when the plan permits it; otherwise include only the minimal evidence-backed API migrations required for that edited test source to compile, and describe them explicitly in the edit reasons. When previous_validation_feedback marks verified or preexisting test debt and target_file is one of the diagnosed sources, repair each cited compiler error using only current APIs proven by supplied production declarations. Preserve test intent. Delete a diagnosed test file only if exact source proves it is wholly obsolete or duplicated and it contains no unique valid test behavior; otherwise migrate the failing lines. Do not perform unrelated cleanup. For a runtime discriminator, remove MessageDigest rather than changing its algorithm; preserve every known application-ID to configuration mapping, keep unknown legacy mappings explicit as review assumptions, and add non-reflective tests for known variants and the fallback behavior. Never assert equality between two separately constructed values of a type that does not declare equals(Object): Java compares references, so such an assertion can only fail. Assert on the fields or on the same instance instead.  sibling_files_api_surface lists the declarations of the other files in this batch: their type headers, constructors and member signatures as they exist after the supplied sources. Call only what it shows, with the exact argument count each constructor and method declares. A created test file has no source of its own, so this outline is the only proof of the API it exercises; never assume a constructor, an overload or a nested-class accessor that is absent from it, and never assume a type is an inner class unless its declaration says so. If the API you need is genuinely not there, record that in review_assumptions instead of inventing a signature. Every file in shared_plan is generated separately. Do not claim that another planned file is excluded, omitted, or left as follow-up merely because this call may edit only target_file; use previous_file_contracts and required_contracts to coordinate it. When previous_validation_feedback.semantic_validation_retry is present, this exact target_file was already generated once for this fix and the assembled result failed the listed automated cross-file contract checks; treat every 'code' and its 'details' as a mandatory requirement this new draft must satisfy, not merely a suggestion.",
+  "input": "Generate all edits required for target_file by target_plan. Use previous_file_contracts to keep cross-file APIs consistent. Persisted file-format behavior is outside the authorized change.\n\n{\"decision\":\"MULTI_FILE_FIX_PROPOSED_FOR_REVIEW\",\"target_file\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java\",\"target_plan\":[{\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java\",\"symbol\":\"MasterKey constructor and MasterKey.generate wrapping-key/encrypted-key paths\",\"reason\":\"Make the PBKDF2-backed production caller participate in the same approved, versioned wrapping-key lifecycle so new governed Cipher.init calls receive the rule-admitted key origin and prepared GCM parameters, while retaining the PBKDF2-derived legacy-key path required to decrypt previously generated MasterKey records and preserving MasterKey.generate behavior.\",\"create_new_file\":false,\"edit_category\":\"PBKDF2-derived wrapping-key lifecycle migration\",\"supporting_claim_ids\":[\"CLM-001\",\"CLM-004\",\"CLM-005\",\"CLM-006\"]}],\"source\":\"package org.fedorahosted.freeotp.encryptor;\\n\\nimport java.io.IOException;\\nimport java.security.InvalidAlgorithmParameterException;\\nimport java.security.InvalidKeyException;\\nimport java.security.NoSuchAlgorithmException;\\nimport java.security.SecureRandom;\\nimport java.security.spec.InvalidKeySpecException;\\n\\nimport javax.crypto.BadPaddingException;\\nimport javax.crypto.IllegalBlockSizeException;\\nimport javax.crypto.NoSuchPaddingException;\\nimport javax.crypto.SecretKey;\\nimport javax.crypto.SecretKeyFactory;\\nimport javax.crypto.spec.PBEKeySpec;\\nimport javax.crypto.spec.SecretKeySpec;\\n\\npublic final class MasterKey {\\n    private static final int ITERATIONS = 100000;\\n    private static final int BYTES = 32;\\n\\n    private final EncryptedKey mEncryptedKey;\\n    private final String mAlgorithm;\\n    private final int mIterations;\\n    private final byte[] mSalt;\\n\\n    private static SecretKeyFactory getSecretKeyFactory() throws NoSuchAlgorithmException {\\n        try {\\n            return SecretKeyFactory.getInstance(\\\"PBKDF2withHmacSHA512\\\");\\n        } catch (NoSuchAlgorithmException e) {\\n            return SecretKeyFactory.getInstance(\\\"PBKDF2withHmacSHA1\\\");\\n        }\\n    }\\n\\n    private MasterKey(PBEKeySpec spec) throws NoSuchAlgorithmException,\\n            IllegalBlockSizeException, InvalidKeyException, BadPaddingException,\\n            NoSuchPaddingException, InvalidKeySpecException, IOException {\\n        SecretKeyFactory skf = getSecretKeyFactory();\\n        SecretKey pwd = skf.generateSecret(spec);\\n\\n        byte[] raw = new byte[pwd.getEncoded().length];\\n        new SecureRandom().nextBytes(raw);\\n        SecretKey key = new SecretKeySpec(raw, \\\"AES\\\");\\n\\n        mEncryptedKey = EncryptedKey.encrypt(pwd, key);\\n        mIterations = spec.getIterationCount();\\n        mAlgorithm = skf.getAlgorithm();\\n        mSalt = spec.getSalt();\\n    }\\n\\n    public static MasterKey generate(String pwd) throws BadPaddingException,\\n            NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException,\\n            InvalidKeyException, InvalidKeySpecException, IOException {\\n        byte[] salt = new byte[BYTES];\\n        new SecureRandom().nextBytes(salt);\\n        return new MasterKey(new PBEKeySpec(pwd.toCharArray(), salt, ITERATIONS, BYTES * 8));\\n    }\\n\\n    private SecretKey decrypt(PBEKeySpec spec) throws NoSuchAlgorithmException,\\n            InvalidKeySpecException, IllegalBlockSizeException, InvalidKeyException,\\n            BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException,\\n            IOException {\\n        SecretKeyFactory skf = SecretKeyFactory.getInstance(mAlgorithm);\\n        SecretKey pwd = skf.generateSecret(spec);\\n        return mEncryptedKey.decrypt(pwd);\\n    }\\n\\n    public SecretKey decrypt(String pwd) throws BadPaddingException,\\n            InvalidAlgorithmParameterException, NoSuchAlgorithmException,\\n            IllegalBlockSizeException, NoSuchPaddingException, InvalidKeyException,\\n            InvalidKeySpecException, IOException {\\n        return decrypt(new PBEKeySpec(pwd.toCharArray(), mSalt, mIterations, mSalt.length * 8));\\n    }\\n}\",\"new_file\":false,\"rename_safety\":{\"allowed\":true,\"symbol\":\"encrypt\",\"declaration\":{\"path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java\",\"line\":35},\"references\":[{\"path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java\",\"line\":33},{\"path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java\",\"line\":48},{\"path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java\",\"line\":56},{\"path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java\",\"line\":45}],\"blocked_by\":[],\"bound\":\"Lexical and deliberately conservative: any condition it cannot verify blocks the rename. Build validation still compiles every reference after the patch is applied.\",\"module_build_file\":\"mobile/build.gradle\"},\"deprecated_api_invariants\":[],\"recommended_mechanisms\":[],\"previous_attempts_of_this_finding\":[{\"run\":\"subset_revisao_lacunas\",\"ended_at\":\"validated\",\"failure_signatures\":[],\"details\":[]},{\"run\":\"subset_revisao_lacunas_v2\",\"ended_at\":\"generation\",\"failure_signatures\":[\"generation:semantic:checked_exception_not_propagated\",\"generation:semantic:existing_test_expectations_rewritten\",\"generation:semantic:public_api_contract_changed\"],\"details\":[{\"signature\":\"generation:semantic:existing_test_expectations_rewritten\",\"detail\":\"the patch removes or changes what an existing test expects (3 line(s), e.g. 'Assert.assertArrayEquals(tok.getEncoded(), res.getEncoded());'); those values are a contract the project already pins, so the change alters behaviour others depend on. Keep the existing expectations, or report the finding t\"},{\"signature\":\"generation:semantic:public_api_contract_changed\",\"detail\":\"('public', False, 'void', 'test', ()); ('public', False, 'void', 'testUTF8', ())\"},{\"signature\":\"generation:semantic:checked_exception_not_propagated\",\"detail\":\"BadPaddingException; IllegalBlockSizeException; InvalidKeyException; NoSuchPaddingException\"}]},{\"run\":\"subset_revisao_lacunas_v3\",\"ended_at\":\"generation\",\"failure_signatures\":[\"generation:semantic:checked_exception_not_propagated\",\"generation:semantic:test_placed_in_unrelated_file\"],\"details\":[{\"signature\":\"generation:semantic:test_placed_in_unrelated_file\",\"detail\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/MasterKeyTest.java does not cover EncryptedKey; Create a dedicated test file named after the target (for example EncryptedKeyTest) in the target's package 'org/fedorahosted/freeotp/encryptor' with edit_kind=create, instead of appending these asser\"},{\"signature\":\"generation:semantic:test_placed_in_unrelated_file\",\"detail\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/KeyStoreAccessTest.java does not cover EncryptedKey; Create a dedicated test file named after the target (for example EncryptedKeyTest) in the target's package 'org/fedorahosted/freeotp/encryptor' with edit_kind=create, instead of appending these \"},{\"signature\":\"generation:semantic:checked_exception_not_propagated\",\"detail\":\"BadPaddingException; IllegalBlockSizeException; InvalidKeyException; NoSuchAlgorithmException; NoSuchPaddingException\"}]}],\"sibling_files_api_surface\":{\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java\":[\"public final class EncryptedKey\",\"public static EncryptedKey encrypt(SecretKey key, SecretKey plaintext)\",\"public SecretKey decrypt(SecretKey key)\"],\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java\":[\"public class Encryptor\"]},\"shared_plan\":{\"affected_symbols\":[\"EncryptedKey.encrypt and EncryptedKey decryption/record-construction paths\",\"EncryptedKeyTest\",\"Encryptor.encryptToken and its wrapping-key resolution path\",\"MasterKey constructor and MasterKey.generate wrapping-key/encrypted-key paths\"],\"required_edits\":[{\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java\",\"symbol\":\"EncryptedKey.encrypt and EncryptedKey decryption/record-construction paths\",\"reason\":\"Replace the governed AES/GCM initialization with the approved wrapping-key lifecycle's rule-admitted key origin and prepared-GCM initialization path, while retaining the generated Cipher parameters in new records. Extend record interpretation only as needed to distinguish the approved current lifecycle from legacy records, retaining legacy parameter decoding and the existing transformation and AAD fields so existing records continue to decrypt.\",\"create_new_file\":false,\"edit_category\":\"CipherSpec-compliant AES-GCM encryption and versioned record compatibility\",\"supporting_claim_ids\":[\"CLM-001\",\"CLM-002\",\"CLM-003\",\"CLM-006\"]},{\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java\",\"symbol\":\"Encryptor.encryptToken and its wrapping-key resolution path\",\"reason\":\"Make the AndroidKeyStore-backed production caller obtain the approved rule-admitted wrapping key and compatible prepared-GCM encryption configuration before calling EncryptedKey.encrypt. Preserve resolution of the legacy AndroidKeyStore key path for records created before the migration and preserve encryptToken's successful return behavior.\",\"create_new_file\":false,\"edit_category\":\"AndroidKeyStore wrapping-key lifecycle migration\",\"supporting_claim_ids\":[\"CLM-001\",\"CLM-004\",\"CLM-005\",\"CLM-006\"]},{\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java\",\"symbol\":\"MasterKey constructor and MasterKey.generate wrapping-key/encrypted-key paths\",\"reason\":\"Make the PBKDF2-backed production caller participate in the same approved, versioned wrapping-key lifecycle so new governed Cipher.init calls receive the rule-admitted key origin and prepared GCM parameters, while retaining the PBKDF2-derived legacy-key path required to decrypt previously generated MasterKey records and preserving MasterKey.generate behavior.\",\"create_new_file\":false,\"edit_category\":\"PBKDF2-derived wrapping-key lifecycle migration\",\"supporting_claim_ids\":[\"CLM-001\",\"CLM-004\",\"CLM-005\",\"CLM-006\"]},{\"source_file_path\":\"mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java\",\"symbol\":\"EncryptedKeyTest\",\"reason\":\"Add target-focused tests, without rewriting existing expectations, that exercise EncryptedKey through the AndroidKeyStore-backed and PBKDF2-derived production lifecycles; verify round trips, distinct retained GCM parameters/nonces across repeated encryption with one wrapping key, and decryption of representative legacy records using their retained parameters and legacy lifecycle.\",\"create_new_file\":true,\"edit_category\":\"Dedicated Android instrumentation regression coverage\",\"supporting_claim_ids\":[\"CLM-001\",\"CLM-002\",\"CLM-003\",\"CLM-004\",\"CLM-005\"]}],\"required_tests\":[\"In mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java, test encrypt/decrypt round trips through the AndroidKeyStore-backed Encryptor lifecycle and the PBKDF2-derived MasterKey lifecycle.\",\"In mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java, encrypt repeatedly with one approved wrapping key; assert that retained AES-GCM parameters/nonces differ and that each produced record decrypts successfully.\",\"In mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyTest.java, decrypt representative pre-migration records using their stored transformation, AAD algorithm identifier, encoded Cipher parameters, and legacy AndroidKeyStore/PBKDF2 wrapping-key path.\"],\"compatibility_policy_required\":true,\"scope_evidence\":[\"Claim IDs: CLM-001, CLM-002, CLM-004, CLM-005, CLM-006\"]},\"test_classpath\":{},\"case_migration_policy\":{},\"previous_validation_feedback\":{},\"previous_file_contracts\":[{\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java\",\"provided_contracts\":[\"Package-private Cipher prepareEncryptionCipher(SecretKey) prepares AES/GCM/NoPadding with a fresh 96-bit nonce and 128-bit tag for a caller-provided approved wrapping key.\",\"Package-private EncryptedKey encrypt(Cipher, SecretKey) accepts a caller-prepared current-lifecycle cipher; public encrypt(SecretKey, SecretKey) remains available and uses the same current preparation path.\",\"Package-private boolean usesCurrentWrappingKey() returns false for persisted legacy records whose added version field is absent/default zero and true for newly created version-1 records.\",\"Package-private byte[] getEncodedParameters() returns a defensive copy of retained parameters for non-reflective package-level regression tests.\",\"decrypt(SecretKey) retains the existing public signature and decrypts stored AES-GCM records using their retained transformation, AAD algorithm identifier, and encoded parameters.\"],\"required_contracts\":[\"Encryptor and MasterKey must resolve current versus legacy wrapping keys before decryption using EncryptedKey.usesCurrentWrappingKey().\",\"Encryptor and MasterKey must create current records by obtaining their approved wrapping key, calling EncryptedKey.prepareEncryptionCipher(key), and passing that cipher to EncryptedKey.encrypt(cipher, plaintext).\",\"The dedicated EncryptedKey instrumentation test must decode getEncodedParameters() as GCM AlgorithmParameters/GCMParameterSpec and compare nonce bytes rather than comparing separately constructed parameter objects.\"]},{\"source_file_path\":\"mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java\",\"provided_contracts\":[\"encryptToken retains its public signature, AndroidKeyStore MASTER alias resolution, and successful Map<String, EncryptedKey> return behavior.\",\"encryptToken creates new records by calling EncryptedKey.prepareEncryptionCipher with the resolved AndroidKeyStore wrapping key and passing the prepared Cipher to EncryptedKey.encrypt.\"],\"required_contracts\":[\"EncryptedKey provides package-private prepareEncryptionCipher(SecretKey) and encrypt(Cipher, SecretKey) implementations compatible with encryptToken's existing checked-exception contract.\",\"EncryptedKey retains legacy-record decryption based on each record's stored transformation, AAD algorithm identifier, encoded parameters, and lifecycle version.\"]}],\"digest_contract_assessment\":{\"security_relevance\":\"false\",\"contract_kind\":\"unknown\",\"expected_digest_source\":\"\",\"backend_repository_available\":false,\"backend_change_required\":false,\"client_only_change_safe\":false,\"rollout_strategy\":\"\",\"pull_request_note\":\"\"},\"review_only\":true}\n\nREQUIRED JSON SCHEMA:\n{\"type\":\"object\",\"properties\":{\"decision\":{\"type\":\"string\",\"enum\":[\"MULTI_FILE_FIX_PROPOSED_FOR_REVIEW\"]},\"source_file_path\":{\"type\":\"string\"},\"explanation\":{\"type\":\"string\"},\"edits\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"source_file_path\":{\"type\":\"string\",\"description\":\"The requested repository-relative path.\"},\"symbol\":{\"type\":\"string\"},\"edit_kind\":{\"type\":\"string\",\"enum\":[\"method\",\"declaration\",\"constant\",\"test\",\"create\",\"delete\"]},\"original_code\":{\"type\":\"string\",\"description\":\"Exact existing source block.\"},\"corrected_code\":{\"type\":\"string\",\"description\":\"Complete replacement source block; empty only for edit_kind=delete.\"},\"reason\":{\"type\":\"string\"}},\"required\":[\"source_file_path\",\"symbol\",\"edit_kind\",\"original_code\",\"corrected_code\",\"reason\"],\"additionalProperties\":false}},\"no_change_required\":{\"type\":\"boolean\"},\"provided_contracts\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"required_contracts\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"required_tests\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"manual_review_required\":{\"type\":\"boolean\"},\"review_assumptions\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"confidence\":{\"type\":\"string\",\"enum\":[\"high\",\"medium\",\"low\"]}},\"required\":[\"decision\",\"source_file_path\",\"explanation\",\"edits\",\"no_change_required\",\"provided_contracts\",\"required_contracts\",\"required_tests\",\"manual_review_required\",\"review_assumptions\",\"confidence\"],\"additionalProperties\":false}",
+  "context": {
+    "finding_id": "org.fedorahosted.freeotp.encryptor.EncryptedKey:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::the key given to Cipher.init carries a key-origin predicate the rule does not admit",
+    "stage": "code_generation.coordinated_file",
+    "prompt_version": "llm-pipeline-v2.0",
+    "schema_version": "2.0",
+    "policy_version": "2.0",
+    "context_builder_version": "2.14",
+    "semantic_resolver_version": "tree-sitter-semantic-v2",
+    "section_telemetry": {
+      "patch_plan": {
+        "characters": 4071,
+        "approx_tokens": 1018,
+        "sha256": "eaf7384543cc25b44bbd9e51e3ba5e7f852149935922a3698424d93f151f8dc9"
+      },
+      "target_file": {
+        "characters": 70,
+        "approx_tokens": 18,
+        "sha256": "68adca84af609ea62b87cab44df19ded0cd5372aa6dee068ba0dccf4cab31962"
+      },
+      "previous_file_contracts": {
+        "characters": 2439,
+        "approx_tokens": 610,
+        "sha256": "09e30659d786f049d24ac7a01435984b784edabeeadb764d3cf6b6106a76f515"
+      }
+    }
+  },
+  "input_sha256": "c9d8d3a8f05efd0084d2585b14a460410c5d2c2bb6cc91a4bc23e5b5ee4301f2"
+}

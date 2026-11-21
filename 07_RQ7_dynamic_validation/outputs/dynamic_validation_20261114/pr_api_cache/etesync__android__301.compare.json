@@ -1,0 +1,383 @@
+{
+ "url": "https://api.github.com/repos/etesync/android/compare/e1de5c281729e656ec755ee41f140ffe6411ade0...d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+ "fetched_at": "2026-11-15T16:18:04.925483+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/etesync/android/compare/e1de5c281729e656ec755ee41f140ffe6411ade0...d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+  "html_url": "https://github.com/etesync/android/compare/e1de5c281729e656ec755ee41f140ffe6411ade0...d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+  "permalink_url": "https://github.com/etesync/android/compare/etesync:e1de5c2...etesync:d3c45d6",
+  "diff_url": "https://github.com/etesync/android/compare/e1de5c281729e656ec755ee41f140ffe6411ade0...d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5.diff",
+  "patch_url": "https://github.com/etesync/android/compare/e1de5c281729e656ec755ee41f140ffe6411ade0...d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5.patch",
+  "base_commit": {
+   "sha": "e1de5c281729e656ec755ee41f140ffe6411ade0",
+   "node_id": "C_kwDOBO2UHNoAKGUxZGU1YzI4MTcyOWU2NTZlYzc1NWVlNDFmMTQwZmZlNjQxMWFkZTA",
+   "commit": {
+    "author": {
+     "name": "Tom Hacohen",
+     "email": "tom@stosb.com",
+     "date": "2026-02-27T02:17:28Z"
+    },
+    "committer": {
+     "name": "Tom Hacohen",
+     "email": "tom@stosb.com",
+     "date": "2026-02-27T02:17:28Z"
+    },
+    "message": "Update cert4android dep.",
+    "tree": {
+     "sha": "0c32fa6ad51b077b13c1ae903c85b73964234a16",
+     "url": "https://api.github.com/repos/etesync/android/git/trees/0c32fa6ad51b077b13c1ae903c85b73964234a16"
+    },
+    "url": "https://api.github.com/repos/etesync/android/git/commits/e1de5c281729e656ec755ee41f140ffe6411ade0",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/etesync/android/commits/e1de5c281729e656ec755ee41f140ffe6411ade0",
+   "html_url": "https://github.com/etesync/android/commit/e1de5c281729e656ec755ee41f140ffe6411ade0",
+   "comments_url": "https://api.github.com/repos/etesync/android/commits/e1de5c281729e656ec755ee41f140ffe6411ade0/comments",
+   "author": {
+    "login": "tasn",
+    "id": 108670,
+    "node_id": "MDQ6VXNlcjEwODY3MA==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/108670?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/tasn",
+    "html_url": "https://github.com/tasn",
+    "followers_url": "https://api.github.com/users/tasn/followers",
+    "following_url": "https://api.github.com/users/tasn/following{/other_user}",
+    "gists_url": "https://api.github.com/users/tasn/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/tasn/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/tasn/subscriptions",
+    "organizations_url": "https://api.github.com/users/tasn/orgs",
+    "repos_url": "https://api.github.com/users/tasn/repos",
+    "events_url": "https://api.github.com/users/tasn/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/tasn/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "tasn",
+    "id": 108670,
+    "node_id": "MDQ6VXNlcjEwODY3MA==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/108670?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/tasn",
+    "html_url": "https://github.com/tasn",
+    "followers_url": "https://api.github.com/users/tasn/followers",
+    "following_url": "https://api.github.com/users/tasn/following{/other_user}",
+    "gists_url": "https://api.github.com/users/tasn/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/tasn/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/tasn/subscriptions",
+    "organizations_url": "https://api.github.com/users/tasn/orgs",
+    "repos_url": "https://api.github.com/users/tasn/repos",
+    "events_url": "https://api.github.com/users/tasn/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/tasn/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "54c4959b6fb918091422bebbd6eb12ce6bdceb5a",
+     "url": "https://api.github.com/repos/etesync/android/commits/54c4959b6fb918091422bebbd6eb12ce6bdceb5a",
+     "html_url": "https://github.com/etesync/android/commit/54c4959b6fb918091422bebbd6eb12ce6bdceb5a"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "e1de5c281729e656ec755ee41f140ffe6411ade0",
+   "node_id": "C_kwDOBO2UHNoAKGUxZGU1YzI4MTcyOWU2NTZlYzc1NWVlNDFmMTQwZmZlNjQxMWFkZTA",
+   "commit": {
+    "author": {
+     "name": "Tom Hacohen",
+     "email": "tom@stosb.com",
+     "date": "2026-02-27T02:17:28Z"
+    },
+    "committer": {
+     "name": "Tom Hacohen",
+     "email": "tom@stosb.com",
+     "date": "2026-02-27T02:17:28Z"
+    },
+    "message": "Update cert4android dep.",
+    "tree": {
+     "sha": "0c32fa6ad51b077b13c1ae903c85b73964234a16",
+     "url": "https://api.github.com/repos/etesync/android/git/trees/0c32fa6ad51b077b13c1ae903c85b73964234a16"
+    },
+    "url": "https://api.github.com/repos/etesync/android/git/commits/e1de5c281729e656ec755ee41f140ffe6411ade0",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/etesync/android/commits/e1de5c281729e656ec755ee41f140ffe6411ade0",
+   "html_url": "https://github.com/etesync/android/commit/e1de5c281729e656ec755ee41f140ffe6411ade0",
+   "comments_url": "https://api.github.com/repos/etesync/android/commits/e1de5c281729e656ec755ee41f140ffe6411ade0/comments",
+   "author": {
+    "login": "tasn",
+    "id": 108670,
+    "node_id": "MDQ6VXNlcjEwODY3MA==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/108670?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/tasn",
+    "html_url": "https://github.com/tasn",
+    "followers_url": "https://api.github.com/users/tasn/followers",
+    "following_url": "https://api.github.com/users/tasn/following{/other_user}",
+    "gists_url": "https://api.github.com/users/tasn/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/tasn/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/tasn/subscriptions",
+    "organizations_url": "https://api.github.com/users/tasn/orgs",
+    "repos_url": "https://api.github.com/users/tasn/repos",
+    "events_url": "https://api.github.com/users/tasn/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/tasn/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "tasn",
+    "id": 108670,
+    "node_id": "MDQ6VXNlcjEwODY3MA==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/108670?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/tasn",
+    "html_url": "https://github.com/tasn",
+    "followers_url": "https://api.github.com/users/tasn/followers",
+    "following_url": "https://api.github.com/users/tasn/following{/other_user}",
+    "gists_url": "https://api.github.com/users/tasn/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/tasn/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/tasn/subscriptions",
+    "organizations_url": "https://api.github.com/users/tasn/orgs",
+    "repos_url": "https://api.github.com/users/tasn/repos",
+    "events_url": "https://api.github.com/users/tasn/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/tasn/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "54c4959b6fb918091422bebbd6eb12ce6bdceb5a",
+     "url": "https://api.github.com/repos/etesync/android/commits/54c4959b6fb918091422bebbd6eb12ce6bdceb5a",
+     "html_url": "https://github.com/etesync/android/commit/54c4959b6fb918091422bebbd6eb12ce6bdceb5a"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 2,
+  "behind_by": 0,
+  "total_commits": 2,
+  "commits": [
+   {
+    "sha": "d0dda255b946fd00fdb7bc3038a2bd84d31d67f3",
+    "node_id": "C_kwDOBO2UHNoAKGQwZGRhMjU1Yjk0NmZkMDBmZGI3YmMzMDM4YTJiZDg0ZDMxZDY3ZjM",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-30T02:19:10Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-30T02:19:10Z"
+     },
+     "message": "Repair validation compilation for d28032440293",
+     "tree": {
+      "sha": "59df9748902289cf5b35aa69f88d430e07a5ed45",
+      "url": "https://api.github.com/repos/etesync/android/git/trees/59df9748902289cf5b35aa69f88d430e07a5ed45"
+     },
+     "url": "https://api.github.com/repos/etesync/android/git/commits/d0dda255b946fd00fdb7bc3038a2bd84d31d67f3",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/etesync/android/commits/d0dda255b946fd00fdb7bc3038a2bd84d31d67f3",
+    "html_url": "https://github.com/etesync/android/commit/d0dda255b946fd00fdb7bc3038a2bd84d31d67f3",
+    "comments_url": "https://api.github.com/repos/etesync/android/commits/d0dda255b946fd00fdb7bc3038a2bd84d31d67f3/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "e1de5c281729e656ec755ee41f140ffe6411ade0",
+      "url": "https://api.github.com/repos/etesync/android/commits/e1de5c281729e656ec755ee41f140ffe6411ade0",
+      "html_url": "https://github.com/etesync/android/commit/e1de5c281729e656ec755ee41f140ffe6411ade0"
+     }
+    ]
+   },
+   {
+    "sha": "d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+    "node_id": "C_kwDOBO2UHNoAKGQzYzQ1ZDZkY2Y5ZmVhNjlmM2E2ZTk4ZjQ2YjgzOTEwZTQyY2Y4YjU",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-30T04:32:37Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-30T04:32:37Z"
+     },
+     "message": "Fix build",
+     "tree": {
+      "sha": "ced2296983fb297982fcc2d49a555111ad622dc6",
+      "url": "https://api.github.com/repos/etesync/android/git/trees/ced2296983fb297982fcc2d49a555111ad622dc6"
+     },
+     "url": "https://api.github.com/repos/etesync/android/git/commits/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/etesync/android/commits/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+    "html_url": "https://github.com/etesync/android/commit/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+    "comments_url": "https://api.github.com/repos/etesync/android/commits/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "d0dda255b946fd00fdb7bc3038a2bd84d31d67f3",
+      "url": "https://api.github.com/repos/etesync/android/commits/d0dda255b946fd00fdb7bc3038a2bd84d31d67f3",
+      "html_url": "https://github.com/etesync/android/commit/d0dda255b946fd00fdb7bc3038a2bd84d31d67f3"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "aa50c355a109f843199d7339764bcb2e97b57632",
+    "filename": "app/src/androidTest/java/com/etesync/syncadapter/HttpClientProtocolFilterTest.kt",
+    "status": "added",
+    "additions": 53,
+    "deletions": 0,
+    "changes": 53,
+    "blob_url": "https://github.com/etesync/android/blob/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5/app%2Fsrc%2FandroidTest%2Fjava%2Fcom%2Fetesync%2Fsyncadapter%2FHttpClientProtocolFilterTest.kt",
+    "raw_url": "https://github.com/etesync/android/raw/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5/app%2Fsrc%2FandroidTest%2Fjava%2Fcom%2Fetesync%2Fsyncadapter%2FHttpClientProtocolFilterTest.kt",
+    "contents_url": "https://api.github.com/repos/etesync/android/contents/app%2Fsrc%2FandroidTest%2Fjava%2Fcom%2Fetesync%2Fsyncadapter%2FHttpClientProtocolFilterTest.kt?ref=d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+    "patch": "@@ -0,0 +1,53 @@\n+package com.etesync.syncadapter\n+\n+import java.util.Arrays\n+import javax.net.ssl.SSLException\n+import org.junit.Assert.assertEquals\n+import org.junit.Assert.assertFalse\n+import org.junit.Assert.assertTrue\n+import org.junit.Assert.fail\n+import org.junit.Test\n+\n+class HttpClientProtocolFilterTest {\n+    @Test\n+    fun filterEnabledTlsProtocols_removesLegacyProtocolsWithoutAddingOrReorderingProtocols() {\n+        val providerEnabledProtocols = arrayOf(\n+            \"SSL\",\n+            \"SSLv2Hello\",\n+            \"SSLv3\",\n+            \"TLSv1\",\n+            \"TLSv1.0\",\n+            \"TLSv1.1\",\n+            \"TLSv1.2\",\n+            \"TLSv1.3\",\n+            \"TLSv1.4\"\n+        )\n+\n+        val filteredProtocols = filterEnabledTlsProtocols(providerEnabledProtocols)\n+\n+        assertEquals(\n+            Arrays.asList(\"TLSv1.2\", \"TLSv1.3\", \"TLSv1.4\"),\n+            filteredProtocols.toList()\n+        )\n+        assertTrue(filteredProtocols.size < providerEnabledProtocols.size)\n+        for (protocol in filteredProtocols) {\n+            assertTrue(\n+                \"Filtered protocol $protocol was not enabled by the provider\",\n+                providerEnabledProtocols.contains(protocol)\n+            )\n+        }\n+        assertFalse(filteredProtocols.contains(\"TLSv1.5\"))\n+    }\n+\n+    @Test\n+    fun filterEnabledTlsProtocols_failsClosedWhenOnlyLegacyProtocolsAreEnabled() {\n+        try {\n+            filterEnabledTlsProtocols(\n+                arrayOf(\"SSL\", \"SSLv2Hello\", \"SSLv3\", \"TLSv1\", \"TLSv1.0\", \"TLSv1.1\")\n+            )\n+            fail(\"Filtering an all-legacy provider protocol list must fail closed\")\n+        } catch (_: SSLException) {\n+            // Expected: assigning an empty or broadened protocol list is forbidden.\n+        }\n+    }\n+}"
+   },
+   {
+    "sha": "2f12f81f82eb3edc293ff410a6b88cd4a80718a4",
+    "filename": "app/src/androidTest/java/com/etesync/syncadapter/ui/setup/DavResourceFinderTest.java",
+    "status": "modified",
+    "additions": 2,
+    "deletions": 2,
+    "changes": 4,
+    "blob_url": "https://github.com/etesync/android/blob/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5/app%2Fsrc%2FandroidTest%2Fjava%2Fcom%2Fetesync%2Fsyncadapter%2Fui%2Fsetup%2FDavResourceFinderTest.java",
+    "raw_url": "https://github.com/etesync/android/raw/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5/app%2Fsrc%2FandroidTest%2Fjava%2Fcom%2Fetesync%2Fsyncadapter%2Fui%2Fsetup%2FDavResourceFinderTest.java",
+    "contents_url": "https://api.github.com/repos/etesync/android/contents/app%2Fsrc%2FandroidTest%2Fjava%2Fcom%2Fetesync%2Fsyncadapter%2Fui%2Fsetup%2FDavResourceFinderTest.java?ref=d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+    "patch": "@@ -51,7 +51,7 @@ public void initServerAndClient() throws Exception {\n         credentials = new LoginCredentials(URI.create(\"/\"), \"mock\", \"12345\");\n         finder = new BaseConfigurationFinder(getTargetContext(), credentials);\n \n-        client = HttpClient.create(null);\n+        client = new HttpClient.Builder(null, null, java.util.logging.Logger.getLogger(HttpClient.class.getName())).build().getOkHttpClient();\n     }\n \n     @After\n@@ -106,7 +106,7 @@ else if (path.startsWith(PATH_CALDAV_AND_CARDDAV))\n                                 \"</resourcetype>\";\n                         break;\n                 }\n-                App.Companion.getLog().info(\"Sending props: \" + props);\n+                java.util.logging.Logger.getLogger(DavResourceFinderTest.class.getName()).info(\"Sending props: \" + props);\n                 return new MockResponse()\n                         .setResponseCode(207)\n                         .setBody(\"<multistatus xmlns='DAV:' xmlns:CARD='urn:ietf:params:xml:ns:carddav'>\" +"
+   },
+   {
+    "sha": "b32e8f0f8e9d9ab363a9660a8324e9eabb6b92ce",
+    "filename": "app/src/main/java/com/etesync/syncadapter/HttpClient.kt",
+    "status": "modified",
+    "additions": 48,
+    "deletions": 1,
+    "changes": 49,
+    "blob_url": "https://github.com/etesync/android/blob/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fetesync%2Fsyncadapter%2FHttpClient.kt",
+    "raw_url": "https://github.com/etesync/android/raw/d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fetesync%2Fsyncadapter%2FHttpClient.kt",
+    "contents_url": "https://api.github.com/repos/etesync/android/contents/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fetesync%2Fsyncadapter%2FHttpClient.kt?ref=d3c45d6dcf9fea69f3a6e98f46b83910e42cf8b5",
+    "patch": "@@ -30,6 +30,53 @@ import java.util.concurrent.TimeUnit\n import java.util.logging.Level\n import javax.net.ssl.*\n \n+internal fun filterEnabledTlsProtocols(enabledProtocols: Array<String>): Array<String> {\n+    val filteredProtocols = enabledProtocols.filterNot { protocol ->\n+        protocol.startsWith(\"SSL\") ||\n+                protocol == \"TLSv1\" ||\n+                protocol == \"TLSv1.0\" ||\n+                protocol == \"TLSv1.1\"\n+    }\n+\n+    if (filteredProtocols.isEmpty())\n+        throw SSLException(\"No supported TLS protocols remain after filtering legacy protocols\")\n+\n+    return filteredProtocols.toTypedArray()\n+}\n+\n+internal class TlsProtocolFilteringSocketFactory internal constructor(\n+        private val delegate: SSLSocketFactory\n+) : SSLSocketFactory() {\n+\n+    override fun getDefaultCipherSuites(): Array<String> = delegate.defaultCipherSuites\n+\n+    override fun getSupportedCipherSuites(): Array<String> = delegate.supportedCipherSuites\n+\n+    override fun createSocket(): Socket = configure(delegate.createSocket())\n+\n+    override fun createSocket(host: String?, port: Int): Socket =\n+            configure(delegate.createSocket(host, port))\n+\n+    override fun createSocket(host: String?, port: Int, localHost: java.net.InetAddress?, localPort: Int): Socket =\n+            configure(delegate.createSocket(host, port, localHost, localPort))\n+\n+    override fun createSocket(host: java.net.InetAddress?, port: Int): Socket =\n+            configure(delegate.createSocket(host, port))\n+\n+    override fun createSocket(host: java.net.InetAddress?, port: Int, localHost: java.net.InetAddress?, localPort: Int): Socket =\n+            configure(delegate.createSocket(host, port, localHost, localPort))\n+\n+    override fun createSocket(socket: Socket?, host: String?, port: Int, autoClose: Boolean): Socket =\n+            configure(delegate.createSocket(socket, host, port, autoClose))\n+\n+    private fun configure(socket: Socket): Socket {\n+        val sslSocket = socket as? SSLSocket\n+                ?: throw SSLException(\"TLS socket factory created a non-SSL socket\")\n+        sslSocket.enabledProtocols = filterEnabledTlsProtocols(sslSocket.enabledProtocols)\n+        return sslSocket\n+    }\n+}\n+\n class HttpClient private constructor(\n         val okHttpClient: OkHttpClient,\n         private val certManager: CustomCertManager?\n@@ -234,7 +281,7 @@ class HttpClient private constructor(\n                     if (keyManager != null) arrayOf(keyManager) else null,\n                     arrayOf(trustManager),\n                     null)\n-            orig.sslSocketFactory(sslContext.socketFactory, trustManager)\n+            orig.sslSocketFactory(TlsProtocolFilteringSocketFactory(sslContext.socketFactory), trustManager)\n             orig.hostnameVerifier(hostnameVerifier)\n \n             return HttpClient(orig.build(), certManager)"
+   }
+  ]
+ }
+}

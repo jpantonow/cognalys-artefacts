@@ -1,0 +1,318 @@
+{
+ "unit": "co_2aaa72c51c14",
+ "phase": "phase2",
+ "order": [
+  "K17d798a7",
+  "K3d11e189",
+  "Kf9f3de87",
+  "Kf5ccf6f4",
+  "K6463994e",
+  "K914ad3b2",
+  "K205a716f",
+  "K47e8687c",
+  "Ke483302b",
+  "Kaf4808d2",
+  "K9cb66e9e",
+  "K4d20fb7a",
+  "Keaa1c2fe",
+  "Ka24f9016",
+  "Kaa245219",
+  "K13d8bd9a",
+  "Kecb3afa9",
+  "Kb1c040de",
+  "K9dd008ba",
+  "K03223454",
+  "K74f01c61",
+  "K4c44f610",
+  "Ke2bfd8b8"
+ ],
+ "card_sha256": {
+  "K03223454": "933cf1ce74501101",
+  "K13d8bd9a": "9fbb83ccc1ee0c07",
+  "K17d798a7": "49b252a8008ed94f",
+  "K205a716f": "161d8cb8333ca0b1",
+  "K3d11e189": "b50c61a18b9e133d",
+  "K47e8687c": "2b5bdf2600f42428",
+  "K4c44f610": "625b763be565fa85",
+  "K4d20fb7a": "9df6fa607044e2ed",
+  "K6463994e": "4ea1457a8a392389",
+  "K74f01c61": "a3d40cc9e5a87b1a",
+  "K914ad3b2": "0c35246c4f78c361",
+  "K9cb66e9e": "9823294a29172156",
+  "K9dd008ba": "b0cbecc3196e2437",
+  "Ka24f9016": "ce6471a0277085ad",
+  "Kaa245219": "9f0ca14d3cc70980",
+  "Kaf4808d2": "2cb77cc9f90f7b86",
+  "Kb1c040de": "94312738acf5e9df",
+  "Ke2bfd8b8": "9ff39aad6e9630da",
+  "Ke483302b": "8cef6e67676a4ac5",
+  "Keaa1c2fe": "f7d6eb6779ab27be",
+  "Kecb3afa9": "72f59cc4391b9c8b",
+  "Kf5ccf6f4": "596953a8ff2d4faf",
+  "Kf9f3de87": "de5eacdc9c1f4952"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "Helper.getFingerprint(Context) (Helper.java:3297-3317) uses SHA1 to hash the app's own APK signing certificate (PackageManager GET_SIGNATURES, signatures[0]) and returns it as uppercase hex. This is not a security check. It only tells the app which channel built the copy that is running. hasValidFingerprint() and isSignedByFDroid() compare the result for an exact match against three hard-coded SHA-1 hex constants in res/values/strings.xml:3047-3049 (fingerprint, fingerprint_fdroid, fingerprint_amazon). The result decides which channel the app reports to (GitHub/Play, F-Droid or Amazon), which crash reporting, update checks and donate/pro links apply, and some UI paths in Log, FragmentSetup, FragmentMessages, ActivityView and AdapterMessage. FragmentOptionsMisc:2722 also shows it to the user as the 'signature fingerprint'. Collision attacks on SHA-1 do not matter here. Passing the check would need a second preimage against a fixed certificate, and anyone who can repackage the APK can simply patch the check out, so a stronger hash adds no protection. The value is also a well-known identifier in SHA-1 form (it is the format F-Droid, Play and keytool list). Changing it to SHA-256 would make every stored constant fail to match unless all three were replaced with correct SHA-256 values of the real signing certificates. Those values cannot be worked out from this repository, and a wrong value would quietly misclassify official builds. So the RVSec MessageDigestSpec finding is a false positive in context. The two-argument getFingerprint(context, hash) already lets callers ask for a stronger hash if they ever need one.\n\nSecond judge: Helper.getFingerprint hashes the installed app's signing certificate (info.signatures[0]), returning uppercase hexadecimal. This is not message signing, password hashing, or TLS certificate validation. hasValidFingerprint compares it against fixed SHA-1 resources for the official and Amazon signers; isSignedByFDroid compares a separate F-Droid pin. These results control update checks, Gmail/OAuth setup access, support UI, third-party warnings, and release classification. The fingerprint is also displayed in miscellaneous settings. SHA-256 hardening is reasonable, but changing only the algorithm would make every existing pin comparison fail. Matching an already fixed certificate fingerprint requires a second-preimage attack, which known SHA-1 collision attacks do not provide, and Android verifies APK signatures separately. The report alone does not establish an exploitable vulnerability. No stored account data or network protocol was found to depend on this helper's digest.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For a hardening PR, migrate signing-certificate identification to SHA-256 or an equally sound certificate comparison, updating both hasValidFingerprint and isSignedByFDroid consistently.",
+   "Replace all three SHA-1 fingerprint resources with verified values for the same signing certificates. Compute new fingerprints from the original certificate bytes, not from the old SHA-1 strings. README.md supplies the official signer's SHA-256 value; equivalent verified values are needed for Amazon and F-Droid.",
+   "Keep digest encoding and comparisons consistent, and keep the displayed fingerprint understandable if its algorithm changes. Verify official, Amazon, F-Droid, and unrelated signer outcomes."
+  ],
+  "must_not_break": [
+   "Correct detection of the official GitHub/Play build via hasValidFingerprint() against the stored SHA-1 constant R.string.fingerprint (17BA15C1...)",
+   "Detection of the Amazon build via R.string.fingerprint_amazon and the F-Droid build via isSignedByFDroid()/R.string.fingerprint_fdroid",
+   "Behaviour that depends on hasValidFingerprint (crash reporting in Log.java, update checks in ActivityView, pro/donate/support links in FragmentSetup/FragmentMessages/AdapterMessage/FragmentOptionsMisc, installer reporting in Helper/DebugHelper)",
+   "Format of the signature fingerprint shown in FragmentOptionsMisc (uppercase hex SHA-1, matching what keytool/F-Droid show)",
+   "Existing callers of the two-argument getFingerprint(context, hash) overload",
+   "Preserve the existing signer distinctions: official and Amazon certificates pass hasValidFingerprint; the separately pinned F-Droid certificate is recognized by isSignedByFDroid without automatically becoming an official signer.",
+   "Preserve update availability, Gmail/OAuth setup gating, support behavior, third-party warnings, and release classification for existing supported distributions, including existing debug exceptions.",
+   "Preserve compatibility with minSdkVersion 23. A digest migration must not unconditionally introduce signing-certificate APIs requiring a newer Android version.",
+   "Keep the installed signing certificates and Android package-signature verification unchanged; an internal fingerprint migration does not require re-signing releases or changing external OAuth registrations.",
+   "Do not change unrelated TLS certificate pins, S/MIME fingerprints, account or identity fingerprint fields, or backup formats merely because they also use the word fingerprint. They are separate from this helper.",
+   "Do not bypass signer checks, substitute guessed pins, or retain SHA-1 as an alternative acceptance path while claiming to eliminate reliance on it."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 41,
+ "tokens": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 27687,
+  "cache_read_input_tokens": 21428,
+  "output_tokens": 4395
+ },
+ "turns": 3,
+ "tool_calls": 2,
+ "claude_reported_cost_usd": 0.31369759999999997,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "1d6f647e2f1af71a",
+ "finished_at": "2026-11-16T17:05:17-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K17d798a7",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "It correctly says that switching only the digest breaks the comparisons and that trusted values are needed. Much of the reason, though, is about missing 'manifest' files, which is a tool limitation rather than a judgement about the code."
+   },
+   {
+    "card_id": "K3d11e189",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "It correctly says all three pins need verified SHA-256 values and that changing the digest alone breaks matching. It presents SHA-1 collisions as relevant without noting that a second preimage would be needed."
+   },
+   {
+    "card_id": "Kf9f3de87",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "The line numbers (3298, 3307, 3330, 3341) are accurate. The reason given ('fixed by a protocol or another component') is boilerplate and never names the hard-coded SHA-1 pins in strings.xml."
+   },
+   {
+    "card_id": "Kf5ccf6f4",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate: it explains the certificate-identification use, the second-preimage argument, and that changing only the digest would break the official/Amazon/F-Droid matching."
+   },
+   {
+    "card_id": "K6463994e",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific: three 40-char pins, update checks and third-party notices, and second preimage versus collision."
+   },
+   {
+    "card_id": "K914ad3b2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "It rightly notes that the replacement values and certificates are unavailable and that changing the wrapper alone breaks matching. The rest is tool and manifest jargon about missing source."
+   },
+   {
+    "card_id": "K205a716f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Thorough and accurate: it covers the keytool-format fingerprint, the three constants, the display, second preimage, repackaging, and the existing hash overload."
+   },
+   {
+    "card_id": "K47e8687c",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and reasonably specific: it covers distribution identification, update checks and the repackaging argument, and says all the fingerprints would need replacing."
+   },
+   {
+    "card_id": "Ke483302b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The reasoning is correct but brief and generic. It does not name the comparisons or what depends on them."
+   },
+   {
+    "card_id": "Kaf4808d2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate and specific: it names the constants, hasValidFingerprint/isSignedByFDroid and the display, and explains second preimage and why the values cannot be derived."
+   },
+   {
+    "card_id": "K9cb66e9e",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Correct, but short and generic about where and how the fingerprint is used."
+   },
+   {
+    "card_id": "K4d20fb7a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Specific and correct: it cites the Helper, strings.xml, ActivityView update check, FragmentSetup gating and README SHA-256 lines, and says the Amazon and F-Droid values are missing."
+   },
+   {
+    "card_id": "Keaa1c2fe",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "An accurate issue: it notes that the README gives the official SHA-256 and asks for the Amazon and F-Droid values. It gives a correct reason for not opening a PR."
+   },
+   {
+    "card_id": "Ka24f9016",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate and specific: it covers the three constants, the README SHA-256 for the main key only, and the risk of misclassification."
+   },
+   {
+    "card_id": "Kaa245219",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Detailed and accurate. It cites the correct lines, notes the README SHA-256, rejects a half migration, and gives a sound reason."
+   },
+   {
+    "card_id": "K13d8bd9a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: it covers the display versus the README/keytool, the missing F-Droid and Amazon SHA-256 values, and the effect on update prompts and gating."
+   },
+   {
+    "card_id": "Kecb3afa9",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific about the signer comparisons, support and update gating, and second preimage versus collision."
+   },
+   {
+    "card_id": "Kb1c040de",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The main reason (no verified Amazon SHA-256) is right. It falsely claims that no update check depends on the fingerprint, yet ActivityView.java:1690 gates update checks on hasValidFingerprint, and it leaves out the FragmentSetup gating."
+   },
+   {
+    "card_id": "K9dd008ba",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct reasoning about second preimage and broken comparisons, and specific enough to this code."
+   },
+   {
+    "card_id": "K03223454",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "It only restates the finding's cause and gives no reason why no safe change was possible."
+   },
+   {
+    "card_id": "K74f01c61",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: it says three bundled fingerprints are compared, the README gives only one SHA-256, and the other two values are missing."
+   },
+   {
+    "card_id": "K4c44f610",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct: all three comparisons would need updating, and only the README SHA-256 for one certificate is available."
+   },
+   {
+    "card_id": "Ke2bfd8b8",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "It only describes the cause and gives no reason why nothing could safely be changed."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

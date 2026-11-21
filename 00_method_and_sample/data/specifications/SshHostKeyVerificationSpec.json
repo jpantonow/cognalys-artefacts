@@ -1,0 +1,159 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The detector cannot establish network attacker capability, server-key provenance, or whether the path is reachable in a release build without additional evidence.",
+      "The detector cannot generally prove aliasing, dependency version, dynamic policy selection, reflection, dependency injection, or whether a wrapper installs a different verifier at runtime.",
+      "The detector observes host-key-verification posture, not whether an SSH authentication credential was sent or accepted."
+    ],
+    "predicates": [
+      "An SSHJ SSHClient, or a wrapper that configures one, is identified.",
+      "A permissive host-key policy or PromiscuousVerifier is selected or registered.",
+      "The configured client is connected on a path reachable from the configuration event.",
+      "No stronger application-level identity-binding check is evidenced before sensitive use of the resulting channel."
+    ],
+    "claim": "The finding claims that the observed connection flow can proceed without validating that the server-presented SSH host key belongs to the intended host."
+  },
+  "unknowns": [
+    "No detector-rule catalog was identified that publishes a rule named SshHostKeyVerificationSpec; this specification must not be treated as a named CrySL rule.",
+    "The exact fully qualified type and implementation of the reported acceptance-all policy are unresolved; it is not necessary to invent one to specify the SSHJ weakness.",
+    "The attempted raw-source fetches for the representative wrapper paths on both main and master returned HTTP 404, so their current source, policy default, and mapping to SSHJ were not independently confirmed.",
+    "The application's resolved SSHJ version, dependency substitutions, and whether the runtime includes a modified or shaded SSHJ implementation remain unresolved.",
+    "Whether connections using this flow are production reachable, which authentication methods follow key exchange, and whether an attacker can position on the relevant network path remain unresolved."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "SSHJ host-key verification is performed through HostKeyVerifier objects before a connection is accepted.",
+      "HostKeyVerifier.verify receives the remote hostname, port, and server public key, and returns a boolean decision.",
+      "In the consulted upstream SSHJ source, PromiscuousVerifier.verify returns true for every hostname, port, and presented public key.",
+      "In the consulted upstream SSHJ key-exchange implementation, a presented host key is accepted when any registered HostKeyVerifier returns true."
+    ],
+    "preconditions": [
+      "The running dependency exposes the SSHJ types and semantics represented by the consulted upstream sources.",
+      "The permissive verifier is registered before the relevant initial or subsequent SSH key exchange.",
+      "The verifier is attached to the SSHClient or transport that reaches the remote endpoint.",
+      "No separate identity-binding control outside SSHJ prevents use of the channel after SSHJ accepts the presented host key."
+    ],
+    "unknowns": [
+      "The exact SSHJ dependency version and packaged implementation used by the analyzed application are not established by the representative finding.",
+      "The representative finding's application-wrapper source was not independently verified from a raw upstream file at the attempted main and master paths.",
+      "Whether the application performs an independent authenticated endpoint binding, such as a separately authenticated tunnel or an out-of-band host-key comparison, is not established."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/hierynomus/sshj/master/src/main/java/net/schmizz/sshj/transport/verification/PromiscuousVerifier.java",
+    "https://raw.githubusercontent.com/hierynomus/sshj/master/src/main/java/net/schmizz/sshj/transport/verification/HostKeyVerifier.java",
+    "https://raw.githubusercontent.com/hierynomus/sshj/master/src/main/java/net/schmizz/sshj/SSHClient.java",
+    "https://raw.githubusercontent.com/hierynomus/sshj/master/src/main/java/net/schmizz/sshj/transport/KeyExchanger.java",
+    "https://cwe.mitre.org/data/definitions/322.html",
+    "https://datatracker.ietf.org/doc/html/rfc4251"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observing the policy token or a default-parameter expression alone is insufficient. This predicate is satisfied only when the selected or defaulted value data-flows to configuration of the SSHJ client used by a reachable connection attempt.",
+      "name": "select_accept_all_host_key_policy",
+      "api_patterns": [
+        "KnownHostsPolicy.AcceptAll",
+        "knownHosts: KnownHostsPolicy = KnownHostsPolicy.AcceptAll"
+      ]
+    },
+    {
+      "condition": "Observing construction of PromiscuousVerifier is insufficient. This predicate is satisfied when that instance is registered through SSHClient.addHostKeyVerifier, directly or through an equivalent receiver, on the same SSHJ client instance that later performs key exchange. In the consulted SSHJ source, PromiscuousVerifier.verify(hostname, port, key) returns true unconditionally.",
+      "name": "register_promiscuous_host_key_verifier",
+      "api_patterns": [
+        "addHostKeyVerifier(PromiscuousVerifier())",
+        "addHostKeyVerifier(new PromiscuousVerifier())",
+        "new PromiscuousVerifier()"
+      ]
+    },
+    {
+      "condition": "Observing a connect call is insufficient. This predicate is satisfied when its receiver aliases the SSHClient on which the promiscuous verifier was registered and the call can reach SSH transport key exchange. SSHJ invokes host-key verifiers during connection establishment and later key exchanges.",
+      "name": "initiate_ssh_connection_after_verifier_configuration",
+      "api_patterns": [
+        "client.connect(",
+        "sshClient.connect(",
+        "SSHClient().connect("
+      ]
+    },
+    {
+      "condition": "Observing one of these calls is not proof of secure verification. This predicate is satisfied only if the verifier rejects an unrecognized or mismatching host/key association. In SSHJ, adding a permissive verifier alongside a known-hosts verifier does not restore the requirement because the key-exchange implementation accepts the key if any configured verifier returns true.",
+      "name": "configure_identity_bound_host_key_verification",
+      "api_patterns": [
+        "loadKnownHosts(",
+        "addHostKeyVerifier(",
+        "addHostKeyVerifier(\""
+      ]
+    }
+  ],
+  "source_verified": false,
+  "important_note": "SshHostKeyVerificationSpec is a concern specification, not a published detector rule, CrySL rule, or governed API type. It is anchored in SSH host authentication and the SSHJ APIs implicated by the reported behavior. A static finding establishes a potentially unsafe verifier configuration and connection flow; it does not by itself prove a production-reachable man-in-the-middle attack, credential disclosure, or that a particular host key was accepted at runtime.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a type named SshHostKeyVerificationSpec exists in SSHJ, Java, Android, CrySL, or another framework.",
+    "Do not infer that KnownHostsPolicy is an SSHJ API type; it is not among the governed SSHJ types established by the consulted upstream sources.",
+    "Do not infer that a syntactically present AcceptAll value is used by a production-reachable connection.",
+    "Do not infer that a constructed PromiscuousVerifier is registered on the client instance that connects.",
+    "Do not infer that loading known_hosts, registering a fingerprint verifier, or having another strict verifier compensates for a PromiscuousVerifier on the same SSHJ client; the consulted SSHJ implementation uses any-verifier acceptance.",
+    "Do not infer that password authentication, public-key authentication, command execution, port forwarding, or application data transfer occurred merely because host-key verification was disabled.",
+    "Do not infer a specific SSHJ version's behavior from the current upstream source without resolving the application's dependency version and, where relevant, inspecting the packaged bytecode."
+  ],
+  "security_semantics": {
+    "runtime_claim": "In the consulted SSHJ source, PromiscuousVerifier returns true for every hostname, port, and presented public key. During key exchange, SSHJ accepts a host key when any registered HostKeyVerifier returns true. Therefore, a registered PromiscuousVerifier makes the SSHJ host-key decision accept any presented host key.",
+    "equivalent": false,
+    "detector_claim": "A connection path configured with SSHJ's unconditional host-key verifier lacks SSH server-host identity validation for that path. This is equivalent to the runtime claim only when the reported configuration reaches the same SSHJ client instance and that instance executes the consulted or behaviorally equivalent SSHJ implementation."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm the source language form in use: Kotlin commonly uses PromiscuousVerifier(), while Java commonly uses new PromiscuousVerifier().",
+      "Confirm dependency relocation, shading, or version changes do not alter the net.schmizz.sshj package names or verifier aggregation behavior.",
+      "Confirm whether an SSH certificate, known-hosts implementation, proxy, tunnel, or external trust mechanism provides identity binding independent of SSHJ host-key verification."
+    ],
+    "runtime": [
+      "Observe a controlled connection in which the intended endpoint identity is represented by one host key and the server presented to the client uses a different host key.",
+      "Establish that the client reaches SSH key exchange and accepts the alternate key rather than failing with a host-key-verification error.",
+      "If assessing impact, separately establish whether authentication or sensitive application traffic follows the accepted key exchange."
+    ],
+    "source_level": [
+      "Resolve the call path from the acceptance-all policy or PromiscuousVerifier construction to SSHClient.addHostKeyVerifier.",
+      "Establish receiver aliasing between verifier registration and the SSHClient.connect call.",
+      "Resolve the SSHJ artifact version and verify that its HostKeyVerifier and key-exchange behavior matches the consulted upstream semantics.",
+      "If a wrapper policy is involved, inspect its branch or mapping to determine which SSHJ verifier it installs."
+    ]
+  },
+  "name": "SshHostKeyVerificationSpec",
+  "source_url": "https://raw.githubusercontent.com/hierynomus/sshj/master/src/main/java/net/schmizz/sshj/transport/verification/PromiscuousVerifier.java",
+  "applies_to_types": [
+    "net.schmizz.sshj.SSHClient",
+    "net.schmizz.sshj.transport.verification.HostKeyVerifier",
+    "net.schmizz.sshj.transport.verification.PromiscuousVerifier"
+  ],
+  "source_title": "SSHJ PromiscuousVerifier upstream source",
+  "semantic_scope": "For every finding of this rule, the detector observes an SSH client connection flow in which host-key authentication is expected but the flow selects an acceptance-all policy or registers SSHJ's unconditional host-key verifier before connecting. The concern is server identity authentication during SSH key exchange, not user authentication, cipher selection, private-key storage, command execution, or generic TLS certificate validation.",
+  "spec_id": "SshHostKeyVerificationSpec",
+  "known_false_positive_shapes": [
+    "The acceptance-all policy or PromiscuousVerifier is confined to test, benchmark, disposable integration-fixture, or local development code and cannot reach a release connection path.",
+    "A PromiscuousVerifier is instantiated but never registered, or is registered on an SSHClient instance that never connects.",
+    "The policy branch is unreachable for the shipped configuration, or is overwritten before the client starts key exchange.",
+    "The connection is to an independently authenticated transport whose endpoint identity is cryptographically bound outside SSHJ, and that external binding is proven to cover the intended SSH endpoint.",
+    "The finding is matched against source text from a wrapper whose resolved artifact version uses materially different verifier aggregation semantics."
+  ],
+  "protocol": "SSHClient.addHostKeyVerifier(verifier) -> SSHClient.connect(host, port) -> SSH key exchange obtains server host key -> HostKeyVerifier.verify(host, port, key) -> proceed when any registered verifier returns true",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.pocketshell.core.ssh.SshConnection",
+        "method": "connect",
+        "message": "expecting SSH host-key verification but connect defaults to KnownHostsPolicy.AcceptAll and installs a promiscuous verifier."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "governs_unevidenced_library_type",
+    "detail": "none of the specification's findings mention net.schmizz.sshj.SSHClient, net.schmizz.sshj.transport.verification.HostKeyVerifier, net.schmizz.sshj.transport.verification.PromiscuousVerifier",
+    "checked_url": "https://raw.githubusercontent.com/hierynomus/sshj/master/src/main/java/net/schmizz/sshj/transport/verification/PromiscuousVerifier.java"
+  }
+}

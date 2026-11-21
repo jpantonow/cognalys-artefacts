@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/mouse233/localsend-kotlin/pull/58",
+    "state": "merged",
+    "finding_id": "97b5f3b80d25",
+    "spec": "KeyStoreSpec",
+    "csv_class": "io.github.mouse233.localsendkotlin.security.TlsIdentity",
+    "method_name": "loadOrCreateKeyStore",
+    "title": "Store TLS keys with a KeyStore entry",
+    "impact_class": "not_recorded",
+    "recorded_at": "2026-11-19T20:39:55.646690+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "mouse233",
+        "kind": "comment",
+        "body": "LGTM, thanks! Regression tests added and CI passed. Squashing and merging."
+      }
+    ]
+  }
+]

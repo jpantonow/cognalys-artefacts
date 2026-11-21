@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/stardomains3/oxproxion/pull/94",
+    "state": "open",
+    "finding_id": "a4a15d9fd6ab",
+    "spec": "TLSCertificateValidationSpec",
+    "csv_class": "io.github.stardomains3.oxproxion.ChatViewModel",
+    "method_name": "createLanHttpClient",
+    "title": "Fix createLanHttpClient",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:47.102764+00:00",
+    "maintainer_feedback": []
+  }
+]

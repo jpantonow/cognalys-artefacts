@@ -1,0 +1,32 @@
+{
+ "card_id": "Ka867721d",
+ "card_sha256": "6f8d8c362aca9ff7",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3183,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 354
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0327824,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "303c5e839b3a8f7e",
+ "finished_at": "2026-11-16T11:47:55-0300",
+ "output": {
+  "guess": "T",
+  "confidence": 0.25,
+  "reason": "This is a small, clean PR that swaps MD5 for SHA-256 in the cache-filename helper. The card says the author did not build this exact diff. Both pipelines (C and D) include a build step, so a source without one seems more likely, which points to the coding agents. The tight, low-effort rename looks most like Codex. I picked Terra over Sol only weakly."
+ }
+}

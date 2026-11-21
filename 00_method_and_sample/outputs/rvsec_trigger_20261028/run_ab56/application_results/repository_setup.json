@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-11-04T01:09:35.594558+00:00",
+  "repositories": [
+    {
+      "repository": "com.example.trigger.debug_408.apk",
+      "initial_branch": "",
+      "selected_branch": "",
+      "branch_policy": {},
+      "guidance_files": [
+        "README.md"
+      ],
+      "status": "unchanged"
+    }
+  ]
+}

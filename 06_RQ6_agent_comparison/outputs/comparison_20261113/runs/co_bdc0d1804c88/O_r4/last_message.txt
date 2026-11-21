@@ -1,0 +1,1 @@
+Created [NO_ACTION.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/O_r4/repo/NO_ACTION.md). The digest selects local cache behavior and has no cryptographic security role. No source changes, build, or tests were needed.

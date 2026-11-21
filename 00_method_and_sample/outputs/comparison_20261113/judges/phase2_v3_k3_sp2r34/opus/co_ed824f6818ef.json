@@ -1,0 +1,93 @@
+{
+ "unit": "co_ed824f6818ef",
+ "phase": "phase2",
+ "order": [
+  "Kd2785805",
+  "K6bcdd131"
+ ],
+ "card_sha256": {
+  "K6bcdd131": "b3c2bca2cad17dc0",
+  "Kd2785805": "7440f7e625641648"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "Encryptor.encrypt (app/src/main/kotlin/io/treehouses/remote/ssh/Encryptor.kt) is the password-based wrapper taken from ConnectBot/Zach Scrivena. It encrypts an SSH private key only when the user chose a passphrase. Its only caller is PubKeyUtils.encrypt, reached through getEncodedPrivate from BaseSSHKeyGen.generateKey and KeyUtils.generateSmartConnectKey. Each call first fills a new 8-byte salt from SecureRandom. It then runs 1000 rounds of SHA-256 over passphrase||salt and splits the 32-byte digest into a 16-byte AES key and a 16-byte CBC IV. The key and IV handed to SecretKeySpec and IvParameterSpec are therefore neither hardcoded nor constant, and neither repeats across encryptions: both are derived from the user's secret and a random per-message salt. The salt is stored as a prefix of the blob (salt||ciphertext), Base64 in the PubKeyBean JSON in SharedPreferences, so decrypt can derive the same key and IV again. RVSec's 'unknown' message only says it could not trace where the bytes came from. That is expected here, because they come from a KDF and not from KeyGenerator or a direct SecureRandom fill. The fix these rules imply (a random key from KeyGenerator, or an independent random IV) does not fit password-based encryption: the key has to be reproducible from the passphrase. As a statement about key or IV misuse, the finding is a false positive. Real but separate weaknesses exist: a home-made, low-cost KDF instead of PBKDF2 or another standard KDF, an 8-byte salt, SHA1PRNG named explicitly, and unauthenticated CBC. Any change to how the key or IV is derived changes the stored format. The blob has no version marker, and keys users have already saved with a passphrase would stop decrypting in SSH.kt (decodePrivate) unless the PR adds versioning and a legacy decrypt path.\n\nSecond judge: The 'unknown' reports do not establish invalid SecretKeySpec or IvParameterSpec use. Encryptor generates a fresh salt with SecureRandom, applies repeated SHA-256 to the UTF-8 password and salt, and splits the result into a valid 16-byte AES key and 16-byte CBC IV. These are not constants; clearing the source arrays after cipher.init does not erase the initialized cipher. Nevertheless, this is an aging password-encryption scheme: only 1000 rounds of a custom fast hash construction, with unauthenticated CBC. PubKeyUtils uses it to protect generated SSH private keys locally, storing eight salt bytes followed by ciphertext, without format or derivation metadata. KeyUtils serializes those bytes as Base64 in PubKeyBean JSON in SharedPreferences. Consequently, changing only Encryptor would risk making saved SSH identities unreadable.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For new password-protected records, replace the custom password hashing with a standard salted password KDF with an appropriately chosen work factor. Preserve password-based unlocking rather than substituting an unrecoverable random key.",
+   "If replacing the IV derivation or cipher, generate and persist the required fresh IV or nonce and update encryption and decryption together; authenticated encryption is preferable to the existing unauthenticated CBC.",
+   "Introduce distinguishable format or record metadata for changed encryption parameters, while retaining legacy decoding or safely migrating records after successful password-based decryption.",
+   "Verify legacy-record recovery, new-record round trips, and clean failure for incorrect passwords and malformed records."
+  ],
+  "must_not_break": [
+   "Decrypting passphrase-protected private keys that are already stored: the PubKeyBean.privateKey blob in SharedPreferences is salt(8 bytes)||AES-128-CBC/PKCS5 ciphertext, with the key and IV taken from 1000 rounds of SHA-256(passphrase||salt). PubKeyUtils.decodePrivate and Encryptor.decrypt must keep reading it.",
+   "Symmetry between encrypt and decrypt: the same passphrase, salt and iteration count must derive the same key and IV, and the salt must stay prepended to the ciphertext so decrypt can recover it.",
+   "Unencrypted keys (empty passphrase, including the SmartConnectKey) must keep being stored as plain PKCS#8 without going through Encryptor.",
+   "A new random salt on every encryption.",
+   "minSdkVersion 23: any algorithm used must exist in the platform providers on API 23 and later.",
+   "SSH public-key authentication in SSH.kt, which decrypts the private key with the user's passphrase before connecting.",
+   "Existing encrypted private keys: eight-byte salt followed by AES-128-CBC/PKCS5Padding ciphertext, with key and IV reconstructed by 1000 SHA-256 rounds over the UTF-8 password and salt. Do not silently reinterpret or overwrite them using new parameters.",
+   "Existing PubKeyBean persistence, key nicknames, public/private key correspondence, and SSH authentication using the recovered private key. Migration must preserve the SSH identity already authorized on servers.",
+   "Null or empty passwords deliberately produce unencrypted PKCS#8 private-key bytes. Preserve this supported path, including the passwordless SmartConnectKey.",
+   "Password prompting through isEncrypted, cancellation and incorrect-password handling, and the existing in-memory key-use behavior.",
+   "OpenSSH public-key copying and Bluetooth installation on the Raspberry Pi. The local encrypted private-key blob is not an SSH wire format, so hardening it must not alter the public-key output.",
+   "Android API 23 support. Any new KDF or cipher implementation must work there; do not assume platform PBKDF2WithHmacSHA256 availability on every supported version."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 35,
+ "tokens": {
+  "input_tokens": 8,
+  "cache_creation_input_tokens": 31270,
+  "cache_read_input_tokens": 70098,
+  "output_tokens": 3212
+ },
+ "turns": 6,
+ "tool_calls": 5,
+ "claude_reported_cost_usd": 0.32845160000000007,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "6d776db87fd3ba3c",
+ "finished_at": "2026-11-17T19:08:34-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Kd2785805",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "unclear",
+    "r4": 1,
+    "r5": null,
+    "notes": "The format works: new blobs are marker||salt||IV||ciphertext (9 mod 16 bytes), legacy blobs are 8 mod 16 and still go through the unchanged Encryptor.decrypt, and the cipher-generated CBC IV works on Android providers. It leaves the SecretKeySpec finding and the weak homemade KDF as they are and adds no test; the description treats the derived IV as a flaw, never says it was effectively unique per salt, and doesn't mention that the SecretKeySpec finding is unaddressed."
+   },
+   {
+    "card_id": "K6bcdd131",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "unclear",
+    "r4": 1,
+    "r5": null,
+    "notes": "It correctly adds a versioned blob (version||salt||IV||ciphertext), fills the IV from SecureRandom, and tells the legacy salt||ciphertext layout apart by length, so saved passphrase keys still decrypt; Encryptor.encrypt has only one caller, which it updates. It doesn't touch the KDF or the SecretKeySpec finding and adds no test; the description is accurate and says SecretKeySpec was not changed, but it uses internal jargon ('build_check') and doesn't say the derived IV was not actually reused."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

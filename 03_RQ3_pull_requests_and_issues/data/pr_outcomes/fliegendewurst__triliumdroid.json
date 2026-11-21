@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/FliegendeWurst/TriliumDroid/pull/177",
+    "state": "merged",
+    "finding_id": "75875e2caca6",
+    "spec": "KeyManagerFactorySpec",
+    "csv_class": "eu.fliegendewurst.triliumdroid.sync.ConnectionUtil$reset$2",
+    "method_name": "invokeSuspend",
+    "title": "Remove the unused key manager factory initialization",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:41.205662+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "FliegendeWurst",
+        "kind": "comment",
+        "body": "Thanks for the clean-up. I think it was used in a previous iteration of the logic here ..."
+      }
+    ]
+  }
+]

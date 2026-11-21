@@ -1,0 +1,37 @@
+{
+ "unit": "co_9da181fd6978",
+ "source": "spec_cohort",
+ "group": "no_pr",
+ "finding_ids": [
+  "9da181fd6978"
+ ],
+ "apk": "org.cry.otp_31.apk",
+ "repo_url": "https://github.com/chrismiceli/motp",
+ "pinned_commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+ "spec": [
+  "MessageDigestSpec"
+ ],
+ "class": "org.cry.otp.MD5",
+ "method": "<init>",
+ "latest_outcome": [
+  "issue para o mantenedor do app"
+ ],
+ "bench_id": [],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "9da181fd6978",
+   "unique_error_id": "org.cry.otp.MD5:::<init>:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "spec": "MessageDigestSpec",
+   "class": "org.cry.otp.MD5",
+   "method": "<init>",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "apk": "org.cry.otp_31.apk",
+   "repo_url": "https://github.com/chrismiceli/motp",
+   "commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+   "detector_source_location": "MD5.java:19"
+  }
+ ]
+}

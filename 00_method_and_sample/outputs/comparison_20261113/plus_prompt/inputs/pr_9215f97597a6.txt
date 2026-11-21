@@ -1,0 +1,37 @@
+The published rule behind each report
+
+Report on ScepClient.CertReq (KeyPairGenerator), rule KeyPairGeneratorSpec
+RVSec's record classifies this report as InvalidKeySize, in the rule's constraint section.
+Rule source: KeyPairGenerator.crysl — JavaCryptographicArchitecture CrySL rule in CROSSINGTUD/Crypto-API-Rules, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/KeyPairGenerator.crysl
+Types it governs: java.security.KeyPairGenerator
+Call order it requires: Get → Init → Gen
+Events it matches:
+- Get: Observation: a resolved call to `java.security.KeyPairGenerator.getInstance(String)` or its two-argument overload is seen, binding the first argument as `algorithm`. Satisfaction: the tracked path uses this event before Init and Gen, and `algorithm` satisfies the reported rule-level allowlist `{RSA, EC, DSA, DiffieHellman, DH}`; merely containing a similarly spelled call or an Android KeyStore call is insufficient. Call shapes: `KeyPairGenerator.getInstance(`, `java.security.KeyPairGenerator.getInstance(`.
+- Init: Observation: a resolved `java.security.KeyPairGenerator.initialize(...)` call matches `initialize(int)`, `initialize(int, SecureRandom)`, `initialize(AlgorithmParameterSpec)`, or `initialize(AlgorithmParameterSpec, SecureRandom)`. Satisfaction: it occurs after Get and before Gen. For integer overloads, the bound `keysize` satisfies the algorithm-dependent constraints. For parameter-spec overloads, the reported rule declares conditional `preparedRSA`, `preparedDSA`, `preparedDH`, or `preparedEC` predicates on `params`; observing the call alone does not establish such a predicate. Call shapes: `.initialize(`, `keyPairGenerator.initialize(`.
+- Gen: Observation: a resolved call to `generateKeyPair()` or `genKeyPair()` on the tracked `java.security.KeyPairGenerator` is seen, binding its result as `keyPair`. Satisfaction: it completes the declared Get, Init, Gen order. Only a usage that also meets applicable constraints and required predicates can establish the reported `generatedKeypair[keyPair, algorithm]` assurance. Call shapes: `.generateKeyPair(`, `.genKeyPair(`.
+What RVSec checks under this rule: For a tracked `java.security.KeyPairGenerator` usage, the reported CrySL rule requires Get, then Init, then Gen; allows RSA, EC, DSA, DiffieHellman, and DH algorithm strings; and declares algorithm-dependent size and parameter-preparation conditions. The representative finding is consistent with the reported DSA clause: where the detector has bound algorithm DSA and an integer `keysize` not equal to 3072, the DSA size predicate is unsatisfied.
+Requirements the rule states:
+- algorithm in {"RSA", "EC", "DSA", "DiffieHellman", "DH"}
+- algorithm in {"RSA"} => keysize in {4096, 3072}
+- algorithm in {"DSA"} => keysize in {3072}
+- algorithm in {"DiffieHellman", "DH"} => keysize in {3072}
+- algorithm in {"EC"} => keysize in {256}
+- algorithm in {"RSA"} => preparedRSA[params]
+- algorithm in {"DSA"} => preparedDSA[params]
+- algorithm in {"DiffieHellman", "DH"} => preparedDH[params]
+- algorithm in {"EC"} => preparedEC[params]
+- generatedKeypair[keyPair, algorithm] is ensured after compliant usage
+Limits of the check, recorded with the rule:
+- The supplied research does not identify the exact rule-pack commit or CryptoAnalysis version used for the reported finding.
+- The reported source text binds `keysize` only in integer initialization events while also permitting parameter-spec initialization events. Exact handling of a `keysize`-dependent constraint where only `params` is supplied requires the detector version and an analysis trace.
+- A CrySL constraint failure is a detector result, not proof of a Java exception or cryptographic compromise. CryptoAnalysis documents constraint, typestate, required-predicate, and imprecise-value-extraction outcomes as distinct analysis categories.
+- The primary rule source and API documentation URLs supplied in the research were not independently consulted in this response.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- A generator intentionally relies on a documented provider default and calls `generateKeyPair()` without explicit initialization. JCA permits provider defaults, while the reported CrySL rule requires Init before Gen.
+- A deployment uses a provider-supported non-3072 DSA size for a context whose governing policy accepts it; the reported rule still rejects that integer value because its DSA allowlist is exactly `{3072}`.
+- A parameter-spec initialization is valid at runtime but its `preparedDSA[params]` provenance is not established through rule-recognized predicates.
+- Algorithm, key-size, or object-flow facts are computed dynamically or passed through wrappers such that static extraction or correlation is incomplete; this may yield a constraint-related or imprecise-value result without proving runtime invalidity.
+- The report is attributed to a simplified intermediate-representation statement rather than the most recognizable original source expression.
+
+
+Earlier proposals, in other repositories, for the rule of the report on ScepClient.CertReq (KeyPairGenerator): none with a maintainer response.

@@ -1,0 +1,38 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T215121_804552_1181_0012_code_generation.behavior_review",
+  "parent_call_id": "",
+  "finding_id": "org.cryptomator.data.cloud.webdav.network.SSLSocketFactories:::from:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+  "stage": "code_generation.behavior_review",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 79744,
+  "input_tokens": 19542,
+  "cached_input_tokens": 5191,
+  "output_tokens": 2090,
+  "latency_ms": 32384,
+  "retry_count": 0,
+  "request_id": "req_211428ba71de45ecbf03b09ecbe9eeaf",
+  "section_telemetry": {
+    "edits": {
+      "characters": 2851,
+      "approx_tokens": 713,
+      "sha256": "28489252b3df0185471ad08c2fef22167b022c3d5bd2ac795806d6ed615c4134"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 129,
+  "openai_response_id": "resp_0aa2dc125300aada006aea818a641487d2a1c1c3f21c798e5a",
+  "response_status": "completed",
+  "background_polls": 5,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T21:51:54"
+}

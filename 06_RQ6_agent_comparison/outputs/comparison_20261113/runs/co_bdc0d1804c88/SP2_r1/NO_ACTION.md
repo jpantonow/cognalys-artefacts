@@ -1,0 +1,9 @@
+Reason: correction not generated
+
+RVSec's report is right about the call. `AccessPointsAdapterData.calculateChildType` (app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt:66-76) calls `MessageDigest.getInstance("MD5")` on the app's package name and returns `contentHashCode()` of the digest. The caller `update` (line 42) compares that number with `TYPE1`, `TYPE2` and `TYPE3` (graphutils/GraphConstants.kt:31-33) in `type()` and sets `Configuration.size` to `SIZE_MAX` or `SIZE_MIN`. `Cache.kt` (lines 87-91, 99) then uses `sizeAvailable` to decide whether the averaged signal level is lowered. `GraphWrapper.calculateGraphType` (GraphWrapper.kt:165-175) repeats the same pattern.
+
+The digest is therefore not used for integrity, authentication or stored data. It is a run-time switch on which package name the app is installed under, and nothing it produces is stored or sent. It still breaks the algorithm requirement, but there is no security impact I can establish.
+
+The only change that would remove the MD5 call is to replace it with an explicit comparison against the package names that currently map to the three constants, keeping every known mapping. The source gives me only the three hash values, not the names behind them. The build file defines `com.vrem.wifianalyzer` and the `.BETA` suffix (app/build.gradle:80, 100), but I could not run code in this session to check which names hash to which constant, and the constants may cover other names too, such as official store variants. Guessing the list could change what existing installs get, so I did not write a patch. Changing the hash algorithm instead would break every mapping and only change which constants must match, so that is not an option either.
+
+No source files were changed. A maintainer who knows which package names are meant to match could replace the digest with a direct list in a few lines.

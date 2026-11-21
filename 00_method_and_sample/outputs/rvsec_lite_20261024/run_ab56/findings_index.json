@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "run_id": "run_ab56",
+  "findings": [
+    {
+      "finding_key": "5c2165816401",
+      "apk": "org.cryptomator.lite.debug_3157.apk",
+      "method": "tryToFindDefaultTrustManager",
+      "spec": "TrustManagerFactorySpec",
+      "decision": "NO_SAFE_FIX",
+      "terminal_stage": "adjudication",
+      "signatures": [
+        "adjudication:no_safe_fix"
+      ],
+      "evidence_fingerprint": "5c7e3a0d3f89246f6c7eedb62c78e9d6073bc7c35f3c420ca399f800bd52cc01",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/0_tryToFindDefaultTrustManager_patch_plan.json"
+      }
+    },
+    {
+      "finding_key": "fdcdba8e5a66",
+      "apk": "org.cryptomator.lite.debug_3157.apk",
+      "method": "from",
+      "spec": "SSLContextSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "generation",
+      "signatures": [
+        "generation:semantic:unintended_behavior_change"
+      ],
+      "evidence_fingerprint": "496be3dd1da3da4af405a77fb8e304a72de28af0a1f2f6d98d3ecc0d46f4ee95",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.cryptomator.lite.debug_3157.apk/1_from_evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.cryptomator.lite.debug_3157.apk/1_from/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/1_from_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/1_from_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/1_from_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.cryptomator.lite.debug_3157.apk/1_from_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/org.cryptomator.lite.debug_3157.apk/1_from/manifest.json"
+      }
+    }
+  ]
+}

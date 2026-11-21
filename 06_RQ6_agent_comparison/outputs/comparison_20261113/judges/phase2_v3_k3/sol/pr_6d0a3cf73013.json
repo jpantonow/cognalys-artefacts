@@ -1,0 +1,325 @@
+{
+ "unit": "pr_6d0a3cf73013",
+ "phase": "phase2",
+ "order": [
+  "K9411e394",
+  "Kc1a34abf",
+  "K9a7ead0b",
+  "K284e1dd7",
+  "K8cd2e818",
+  "Kf03b5b99",
+  "Kf74d2d3c",
+  "Kce176f69",
+  "Kd3f1b330",
+  "Kf0278b49",
+  "K73abc977",
+  "Kfc54db20",
+  "K2c308eea",
+  "K33cec007",
+  "K9175f31b",
+  "K3556375d",
+  "Kb02c7002",
+  "K6d208e69",
+  "K1ea13604",
+  "K74ca2a44",
+  "Ked3a41f1",
+  "K2ef6ec5e",
+  "K82cfc0ec"
+ ],
+ "card_sha256": {
+  "K1ea13604": "a3440c74ccc0f55d",
+  "K284e1dd7": "aaf115463fabf3e8",
+  "K2c308eea": "f4f0193eb48dec50",
+  "K2ef6ec5e": "d72e667b0919f41e",
+  "K33cec007": "bac57a4509a3d8a0",
+  "K3556375d": "559fd539eded5f71",
+  "K6d208e69": "009b212b9ce705e6",
+  "K73abc977": "b6f384228f06a357",
+  "K74ca2a44": "19139cda23984949",
+  "K82cfc0ec": "5f0be98e0e507445",
+  "K8cd2e818": "7ba3a7f7b479d799",
+  "K9175f31b": "02dff381d24740a1",
+  "K9411e394": "eecedf7d82e8b48c",
+  "K9a7ead0b": "15d3198b7c3589bf",
+  "Kb02c7002": "3ce62cd17f72614d",
+  "Kc1a34abf": "3eab9f105f9dbe94",
+  "Kce176f69": "4fd1aeecfc7430ef",
+  "Kd3f1b330": "912dcb964cd91981",
+  "Ked3a41f1": "d68f070471620da3",
+  "Kf0278b49": "d02fd8588a3a0aef",
+  "Kf03b5b99": "63228192d77b0c91",
+  "Kf74d2d3c": "cf602c67e4cab772",
+  "Kfc54db20": "6d274062654d3e96"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "The finding is real and serious. In OkHttpClientModule.kt, cachingHttpClient() sets trustAllCerts = true by default (line 73). Neither caller changes that: OkHttpClientModule.provideOkHttpClient (the app-wide singleton) and ProviderAPI (the Fever, Google Reader and FreshRSS sync clients) both use the default. So setupSsl() always runs the trustAllCerts branch. That branch builds an anonymous X509TrustManager whose checkServerTrusted is empty and installs `hostnameVerifier { _, _ -> true }`. The resulting TrustManager[] goes to SSLContext.init and to OkHttp's sslSocketFactory(). The platform trust manager at line 150 is never reached in the shipped app. The app has no setting or per-account option for self-signed servers; trust-all is simply on everywhere. As a result, every HTTPS connection the app makes can be intercepted by anyone on the network path. That includes feed fetches, images and favicons, and logins to self-hosted servers, where the account username and password, HTTP basic credentials and API tokens are sent. The @SuppressLint(\"CustomX509TrustManager\") annotation hides the lint warning, but nothing in the code justifies the behaviour. Git history shows the trust-all call was first added commented out (f76abd98) and only enabled later. RVSec's message is therefore correct, not a false positive. A PR should drop the custom trust manager and the accept-all hostname verifier, and use the platform or TrustManagerFactory default, while keeping the mTLS client-certificate key manager. The secure fix will break users whose self-hosted FreshRSS, Fever or Google Reader server uses a self-signed or private-CA certificate. On minSdk 26 the app does not trust user-installed CAs unless it has a network security config, and it has none. Whether to add such a config or a per-account 'allow untrusted certificate' option is a product decision maintainers may reasonably want to make first.\n\nSecond judge: This is a real TLS authentication flaw, not merely an unrecognized custom trust manager. In OkHttpClientModule.kt, trustAllCerts selects an X509TrustManager whose checks do nothing and a hostname verifier that always returns true. cachingHttpClient defaults trustAllCerts to true, and both the injected shared client and ProviderAPI accept that default. This affects feed/article/image requests and Fever/Google Reader/FreshRSS account traffic, including credentials and tokens, allowing server impersonation. No user-facing server-trust opt-in or protocol requirement justifies this global bypass. The optional KeyChain certificate authenticates the client; it does not authenticate the server.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "Stop installing the accept-all X509TrustManager by default. The OkHttpClient used for feeds and images and the ProviderAPI clients for Fever, Google Reader and FreshRSS must check server certificates with the platform default trust manager (Platform.get().platformTrustManager() or one from TrustManagerFactory initialised with the default KeyStore), e.g. by making trustAllCerts default to false or removing the trust-all branch.",
+   "Remove the `hostnameVerifier { _, _ -> true }` override in that default path so OkHttp's normal hostname verification applies.",
+   "The TrustManager passed to SSLContext.init must be the same one passed to OkHttpClient.Builder.sslSocketFactory(factory, trustManager), so the two stay consistent.",
+   "If any trust-all or self-signed option is kept, it must be explicit and opt-in (e.g. a per-account setting the user turns on), never the silent default; ideally it also keeps hostname verification or pins the certificate the user accepted.",
+   "Make ordinary shared and provider clients validate server certificate chains using Android/OkHttp default trust or a properly initialized TrustManagerFactory-backed manager; eliminate the default trust-all path.",
+   "Restore normal hostname verification as well as chain validation. Changing only the trust manager leaves server identity checking incomplete.",
+   "When constructing an SSLContext for client-certificate authentication, retain the client key manager and supply a validating server trust manager, passing that same trust manager to OkHttp's sslSocketFactory overload. Do not fall back to permissive verification on failure.",
+   "If exceptional certificate support is retained, require explicit, narrowly scoped configuration rather than silently accepting arbitrary certificates and hostnames application-wide."
+  ],
+  "must_not_break": [
+   "mTLS client-certificate login: the X509KeyManager that reads the KeyChain alias (clientCertificateAlias stored in the Fever, FreshRSS and Google Reader security keys) must still be passed to SSLContext.init, so setupSsl (or an equivalent) must still run when an alias is set even if trust-all is gone.",
+   "Existing stored accounts and their serialized security keys (serverUrl, username, password, clientCertificateAlias): the change must not need a data migration or change their format.",
+   "Normal HTTPS feed fetching, image and favicon loading and sync against servers with publicly trusted certificates must keep working, through the same OkHttpClient with its HTTP cache, timeouts, redirect-following and User-Agent interceptor.",
+   "Plain-HTTP feeds and servers: the manifest's usesCleartextTraffic=true behaviour must not be removed as a side effect.",
+   "Self-hosted users with private CAs should still have a supported route, such as a network_security_config that trusts user-installed CAs or an opt-in setting, or the change should at least be documented; minSdk 26 and both the main and googlePlay flavours must keep building.",
+   "SSL setup failures must not crash client construction: keep the NoSuchAlgorithmException and KeyManagementException handling, or fall back to the default OkHttp configuration.",
+   "Optional Android KeyChain client-certificate authentication, including existing stored clientCertificateAlias values and operation without an alias. Preserve existing account credentials and their serialized representation.",
+   "Fever and Google Reader API authentication and synchronization, including FreshRSS usage, with correctly authenticated HTTPS servers.",
+   "Feed, article, favicon and image loading with valid HTTPS, existing HTTP support, and unrelated caching, redirects, timeouts and User-Agent behavior.",
+   "Android API 26 and later support. Rejecting previously accepted untrusted, expired or wrong-host certificates is the intended security correction; the repository provides no requirement to preserve their unconditional acceptance."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 176,
+ "tokens": {
+  "input_tokens": 236607,
+  "cached_input_tokens": 179072,
+  "output_tokens": 6226,
+  "reasoning_output_tokens": 2856
+ },
+ "turns": 1,
+ "tool_calls": 8,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [
+   "/home/antonow",
+   "/home/antonow/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3"
+  ],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "495ec3c31842a681",
+ "finished_at": "2026-11-16T17:54:01-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K9411e394",
+    "r2": 0,
+    "regression_scenario": "An existing account with a clientCertificateAlias constructs its ProviderAPI client and SSLContext initialization throws KeyManagementException. The exception now escapes client construction instead of falling back to default OkHttp configuration.",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Restores certificate and hostname verification and preserves the client key manager, but removes the explicitly required SSL setup exception handling. The description omits this failure-behavior change."
+   },
+   {
+    "card_id": "Kc1a34abf",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 2,
+    "notes": "Correctly identifies the vulnerability and the self-hosted compatibility decision. However, trusting user-installed CAs requires a network security config here, contrary to the 'no code needed' claim; trust-all also predates the mTLS commit."
+   },
+   {
+    "card_id": "K9a7ead0b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately identifies both authentication bypasses and credential exposure. The compatibility concern is a valid, code-specific reason to seek maintainer direction before patching."
+   },
+   {
+    "card_id": "K284e1dd7",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Correctly traces both callers to the insecure default and explains the credential risk. It reasonably defers the self-signed-server support decision and proposes scoped alternatives."
+   },
+   {
+    "card_id": "K8cd2e818",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The patch restores both checks, preserves mTLS and exception handling, and adds relevant regression tests. The claimed successful build contradicts the supplied exact-diff build status."
+   },
+   {
+    "card_id": "Kf03b5b99",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Makes both shipped client paths validate servers while preserving mTLS and error handling. The network security config supports user-installed CAs and explicitly preserves cleartext traffic."
+   },
+   {
+    "card_id": "Kf74d2d3c",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The implementation and regression tests correctly restore certificate and hostname validation without removing mTLS support. The successful exact-diff build claim conflicts with the supplied build status."
+   },
+   {
+    "card_id": "Kce176f69",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately explains the default, affected clients, server impersonation risk, and distinction between mTLS and server trust. Deferring the private-certificate support decision is justified."
+   },
+   {
+    "card_id": "Kd3f1b330",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 2,
+    "notes": "The vulnerability analysis and compatibility reason are sound. However, installing a CA on the device alone will not make this app trust it; the proposed route omits the required network security config."
+   },
+   {
+    "card_id": "Kf0278b49",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Correctly secures both default client paths and provides user-CA support without breaking HTTP or mTLS. The description repeats the private-CA compatibility explanation."
+   },
+   {
+    "card_id": "K73abc977",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Correctly identifies missing server identity verification. The stated concern about existing private-certificate connections reasonably motivates maintainer input."
+   },
+   {
+    "card_id": "Kfc54db20",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Correctly removes both bypasses while retaining alias-based client authentication and SSL exception handling. The claimed successful build contradicts the supplied exact-diff build status."
+   },
+   {
+    "card_id": "K2c308eea",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Removes the insecure option, retains KeyChain authentication and exception handling, and passes the same validating manager to SSLContext and OkHttp. The description accurately documents rejection of untrusted servers."
+   },
+   {
+    "card_id": "K33cec007",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Uses secure defaults and a properly initialized TrustManagerFactory for mTLS, keeping the manager consistent with OkHttp. User-CA support, cleartext behavior, stored credentials, and existing exception handling are preserved."
+   },
+   {
+    "card_id": "K9175f31b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "The code analysis and reason for deferring a patch are correct. Suggesting documentation alone as a possible disposition understates the need to correct this global authentication bypass."
+   },
+   {
+    "card_id": "K3556375d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Accurately identifies the accept-all trust manager, but omits the global hostname bypass and security impact. Its compatibility concern is plausible but does not distinguish private-CA support from the intended rejection of invalid certificates."
+   },
+   {
+    "card_id": "Kb02c7002",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Correctly restores server verification and adds useful local HTTPS tests while preserving production mTLS and exception handling. The successful build claim conflicts with the supplied exact-diff build status."
+   },
+   {
+    "card_id": "K6d208e69",
+    "r2": 0,
+    "regression_scenario": "A Fever, FreshRSS or Google Reader account with a stored clientCertificateAlias constructs its client and SSLContext initialization throws KeyManagementException. Client construction now fails rather than retaining the previous default-OkHttp fallback.",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correctly restores server authentication and retains the client key manager. Its deliberate removal of SSL setup exception handling violates the explicit compatibility requirement, although the description accurately discloses that change."
+   },
+   {
+    "card_id": "K1ea13604",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Secures both default client paths while retaining explicit opt-in trust-all and mTLS. The added network security config provides a private-CA route and preserves HTTP support."
+   },
+   {
+    "card_id": "K74ca2a44",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately identifies both bypasses and the account-credential risk. Seeking a decision on support for certificates Android does not trust is a valid reason to defer implementation."
+   },
+   {
+    "card_id": "Ked3a41f1",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Correctly traces the insecure default through shared and provider clients and identifies password exposure. The self-signed-server compatibility concern and proposed opt-in alternative are specific and appropriate."
+   },
+   {
+    "card_id": "K2ef6ec5e",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Removes both verification bypasses while preserving KeyChain client authentication, consistent trust-manager wiring, and SSL exception handling. The description accurately states the security correction and compatibility effect."
+   },
+   {
+    "card_id": "K82cfc0ec",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately describes the authentication flaw and absence of selective user configuration. Deferring the certificate-support policy to maintainers is a sound, code-specific reason for an issue."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

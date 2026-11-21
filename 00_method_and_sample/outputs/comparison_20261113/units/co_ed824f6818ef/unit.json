@@ -1,0 +1,52 @@
+{
+ "unit": "co_ed824f6818ef",
+ "source": "spec_cohort",
+ "group": "no_pr",
+ "finding_ids": [
+  "74f6bbf34074",
+  "e798daba25a1"
+ ],
+ "apk": "io.treehouses.remote_6098.apk",
+ "repo_url": "https://github.com/treehouses/remote",
+ "pinned_commit": "68e8e3e2be41a7a2026b3edee0bb98fb27f38afb",
+ "spec": [
+  "IvParameterSpecSpec",
+  "SecretKeySpecSpec"
+ ],
+ "class": "io.treehouses.remote.ssh.Encryptor",
+ "method": "encrypt",
+ "latest_outcome": [
+  "evidência insuficiente",
+  "evidência insuficiente"
+ ],
+ "bench_id": [],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "74f6bbf34074",
+   "unique_error_id": "io.treehouses.remote.ssh.Encryptor:::encrypt:::IvParameterSpecSpec:::UnsatisfiedConstraint:::unknown",
+   "spec": "IvParameterSpecSpec",
+   "class": "io.treehouses.remote.ssh.Encryptor",
+   "method": "encrypt",
+   "message": "unknown",
+   "apk": "io.treehouses.remote_6098.apk",
+   "repo_url": "https://github.com/treehouses/remote",
+   "commit": "68e8e3e2be41a7a2026b3edee0bb98fb27f38afb",
+   "detector_source_location": ""
+  },
+  {
+   "finding_id": "e798daba25a1",
+   "unique_error_id": "io.treehouses.remote.ssh.Encryptor:::encrypt:::SecretKeySpecSpec:::UnsatisfiedConstraint:::unknown",
+   "spec": "SecretKeySpecSpec",
+   "class": "io.treehouses.remote.ssh.Encryptor",
+   "method": "encrypt",
+   "message": "unknown",
+   "apk": "io.treehouses.remote_6098.apk",
+   "repo_url": "https://github.com/treehouses/remote",
+   "commit": "68e8e3e2be41a7a2026b3edee0bb98fb27f38afb",
+   "detector_source_location": ""
+  }
+ ]
+}

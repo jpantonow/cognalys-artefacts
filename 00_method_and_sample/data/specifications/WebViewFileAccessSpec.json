@@ -1,0 +1,164 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The finding is static and does not establish runtime reachability.",
+      "Without explicit interprocedural alias and ordering evidence, source matches do not prove that the settings affect the WebView that renders the data or remain enabled at render time.",
+      "The detector does not prove that the HTML is externally controlled, mutable, contains executable script, or executes JavaScript.",
+      "The detector does not prove that a readable sensitive resource exists, that access succeeds, or that information is disclosed.",
+      "CWE-200 describes a possible confidentiality impact category; it is not proof of an exploit or necessarily the most specific root-cause classification."
+    ],
+    "predicates": [
+      "A WebSettings configuration enables JavaScript.",
+      "A WebSettings configuration enables universal access from file URLs.",
+      "The relevant settings are associated with the WebView used for rendering.",
+      "A WebView.loadDataWithBaseURL call uses a base URL that evaluates to a file:// URL.",
+      "For an actual security issue, the rendered data must be less trusted or executable in a way that permits JavaScript to run; this provenance is not established solely by the configuration pattern."
+    ],
+    "claim": "A potentially dangerous static combination exists when a JavaScript-enabled WebView is configured with allowUniversalAccessFromFileURLs=true and renders data through loadDataWithBaseURL using a file:// base URL."
+  },
+  "unknowns": [
+    "No governed API type named WebViewFileAccessSpec is identified or assumed; the specification names a concern rather than an Android API type.",
+    "The supplied finding does not provide the detector implementation or a rule catalog, so its precise alias, data-flow, ordering, and trust-provenance analysis is unresolved.",
+    "The exact runtime origin classification and file-access behavior of HTML supplied to loadDataWithBaseURL with a file:// base URL require version-specific Android System WebView evidence.",
+    "Whether the rendered HTML is downloaded, externally modifiable, attacker-controlled, or script-capable requires application-specific data-flow evidence.",
+    "Whether any local or cross-origin readable resource is sensitive, and whether it reaches an unauthorized actor, is unresolved."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "android.webkit.WebSettings.setJavaScriptEnabled(true) enables JavaScript execution in a WebView; the documented default is false.",
+      "android.webkit.WebSettings.setAllowUniversalAccessFromFileURLs(true) allows cross-origin requests from a file-scheme URL context to access content from any origin, including other file URLs. Android documents this setting as insecure and deprecated beginning with API level 30.",
+      "android.webkit.WebView.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl) renders supplied data and uses baseUrl for relative-URL resolution and JavaScript same-origin-policy behavior.",
+      "Android documentation states that content supplied through loadDataWithBaseURL can access local device files through file-scheme URLs only when baseUrl uses a scheme other than http, https, ftp, ftps, about, or javascript."
+    ],
+    "preconditions": [
+      "setAllowUniversalAccessFromFileURLs is available from Android API level 16.",
+      "Universal access from file URLs applies to JavaScript running in a file-scheme URL context.",
+      "JavaScript must be enabled and actually execute for script-based reads to occur.",
+      "The setting writes and rendering operation must affect the same live WebView instance.",
+      "A requested resource must be reachable and readable under the application sandbox, WebView configuration, platform behavior, and resource-specific protections."
+    ],
+    "unknowns": [
+      "The API references do not resolve for every Android System WebView version whether data loaded with a file:// base URL satisfies the exact file-scheme execution-context predicate of setAllowUniversalAccessFromFileURLs.",
+      "The effect of other WebSettings, including setAllowFileAccess and later configuration changes, is not established by this finding.",
+      "The API documentation does not establish the trust provenance or mutability of the data argument.",
+      "Actual behavior can depend on the installed Android System WebView/Chromium implementation and device API level."
+    ]
+  },
+  "authoritative_sources": [
+    "https://developer.android.com/reference/android/webkit/WebSettings",
+    "https://developer.android.com/reference/android/webkit/WebView",
+    "https://developer.android.com/privacy-and-security/risks/webview-unsafe-file-inclusion",
+    "https://developer.android.com/develop/ui/views/layout/webapps/load-local-content",
+    "https://cwe.mitre.org/data/definitions/200.html",
+    "https://mas.owasp.org/MASTG/knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0018/"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observation: a WebSettings setter call or Kotlin property assignment enabling JavaScript is present. Predicate: the enabled value must be effective on the same WebView before the rendered document attempts to execute script.",
+      "name": "enable_javascript",
+      "api_patterns": [
+        "setJavaScriptEnabled(true)",
+        "javaScriptEnabled = true"
+      ]
+    },
+    {
+      "condition": "Observation: a WebSettings setter call or Kotlin property assignment with true is present. Predicate: it must be effective for the same WebView when JavaScript executes in a file-scheme URL context.",
+      "name": "enable_universal_access_from_file_urls",
+      "api_patterns": [
+        "setAllowUniversalAccessFromFileURLs(true)",
+        "allowUniversalAccessFromFileURLs = true"
+      ]
+    },
+    {
+      "condition": "Observation: a WebView.loadDataWithBaseURL call is present, optionally with a nearby file:// literal. Predicate: the baseUrl must evaluate to a file-scheme URL, the data must be script-capable rendered content, and the invocation must target the WebView whose effective settings satisfy the preceding predicates.",
+      "name": "render_data_with_file_base",
+      "api_patterns": [
+        "loadDataWithBaseURL(",
+        "file://",
+        "file:///android_asset/"
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "This specification describes a static configuration concern, not a demonstrated disclosure. The documented setting permits JavaScript in a file-scheme context to make cross-origin requests, including to other file URLs. A finding alone does not establish that the calls execute, affect one WebView, remain enabled, render attacker-controlled or script-bearing content, expose a sensitive readable resource, or disclose data. CWE-200 is a high-level resultant exposure category and MITRE marks it as discouraged for real-world vulnerability mapping.",
+  "forbidden_inferences_without_evidence": [
+    "That the configuration calls execute on a reachable runtime path.",
+    "That JavaScript and universal-access settings apply to the same WebView instance used by loadDataWithBaseURL.",
+    "That these settings remain enabled at rendering time; later writes can change the effective values.",
+    "That the data passed to loadDataWithBaseURL is downloaded, externally alterable, or attacker-controlled.",
+    "That rendered data contains script, has an injection point, or successfully executes JavaScript.",
+    "That a file-scheme base passed to loadDataWithBaseURL is treated as the required file-scheme JavaScript context on the deployed Android System WebView version.",
+    "That local file access is otherwise enabled or that a particular sensitive local resource is readable by the WebView or application sandbox.",
+    "That a network response, another origin's response, cookies, app-private data, credentials, or another particular secret can be read.",
+    "That data was exfiltrated, displayed to an unauthorized party, or otherwise disclosed.",
+    "That CWE-200 is the most specific or appropriate final CWE mapping for a confirmed issue."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A runtime confidentiality issue requires effective settings on the rendering WebView, JavaScript execution by less-trusted content in the necessary file-related context, successful reading of a resource that should not be available to that content, and an unauthorized observation or transfer of that resource.",
+    "equivalent": false,
+    "detector_claim": "The static combination is a candidate for file-based cross-origin access by JavaScript in rendered HTML and therefore a possible confidentiality exposure."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Device API level must be at least 16 for setAllowUniversalAccessFromFileURLs.",
+      "API level 30 or later marks the method deprecated; deprecation alone does not establish its runtime effect.",
+      "Application target SDK and Android version can affect defaults for related settings, especially setAllowFileAccess; explicit writes and final effective values remain material.",
+      "The installed Android System WebView/Chromium version should be recorded because file-origin and request behavior can vary by implementation."
+    ],
+    "runtime": [
+      "A reachable execution path configures and renders the same WebView in the required order.",
+      "Runtime values confirm JavaScript enabled, allowUniversalAccessFromFileURLs, and other relevant file-access settings.",
+      "Runtime testing confirms the resulting document URL/origin behavior for the deployed Android System WebView.",
+      "Controlled evidence shows that script in rendered content can read an in-scope resource that should not be exposed to that content.",
+      "Evidence establishes unauthorized observation, transmission, or another disclosure if asserting confidentiality impact."
+    ],
+    "source_level": [
+      "A source-level association connects the WebView used by loadDataWithBaseURL to its WebSettings instance.",
+      "Evidence shows that setJavaScriptEnabled(true) and setAllowUniversalAccessFromFileURLs(true) are effective rather than overwritten later.",
+      "Evidence shows that the loadDataWithBaseURL baseUrl argument evaluates to a file:// URL.",
+      "Evidence establishes the provenance, integrity, and mutability of the data argument.",
+      "Evidence shows that rendered data is HTML or another format capable of executing JavaScript."
+    ]
+  },
+  "name": "WebViewFileAccessSpec",
+  "source_url": "https://developer.android.com/reference/android/webkit/WebSettings",
+  "applies_to_types": [
+    "android.webkit.WebSettings",
+    "android.webkit.WebView"
+  ],
+  "source_title": "WebSettings | API reference | Android Developers — setAllowUniversalAccessFromFileURLs(boolean)",
+  "semantic_scope": "For every finding of this rule, the detector reports a static, non-executed candidate based on a WebView configuration-and-rendering relationship: JavaScript is enabled, universal cross-origin access from file URLs is enabled, and data is rendered through loadDataWithBaseURL using a file:// base URL. The concern is that script in externally sourced or otherwise less-trusted rendered HTML may execute with file-related privileges broad enough to read local or cross-origin content, creating a potential confidentiality impact. The rule observes source-level configuration and call-flow indicators; it does not establish runtime reachability, content trust, script execution, resource readability, or disclosure.",
+  "spec_id": "WebViewFileAccessSpec",
+  "known_false_positive_shapes": [
+    "The identified setters and loadDataWithBaseURL call operate on different WebView or WebSettings objects.",
+    "The code is unreachable, feature-gated, exception-terminated, or present only on a non-executed lifecycle path.",
+    "A later configuration call disables JavaScript or universal file-URL access before rendering.",
+    "The base URL is computed at runtime and does not resolve to file:// on the relevant path.",
+    "The rendered HTML is fixed application-controlled content, cannot be altered by an external actor, and has no script injection or executable untrusted-content path.",
+    "The rendered document has no executable script and no route by which external input becomes executable script.",
+    "A file-access restriction, platform restriction, sandbox boundary, or resource permission prevents reading the alleged target.",
+    "The deployed Android System WebView treats the loadDataWithBaseURL document differently from the assumed file-scheme JavaScript context.",
+    "No sensitive resource is readable within the application/WebView scope, or no unauthorized recipient can receive data."
+  ],
+  "protocol": "WebView.getSettings() -> setJavaScriptEnabled(true) AND setAllowUniversalAccessFromFileURLs(true) -> loadDataWithBaseURL(file://..., HTML, ...) -> [only if executable less-trusted HTML runs in an applicable file-scheme context and reads an accessible resource] potential disclosure",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "de.tap.easy_xkcd.whatIfArticleViewer.WhatIfActivity",
+        "method": "onCreate",
+        "message": "Static candidate (not executed): onCreate sets allowUniversalAccessFromFileURLs = true on a JavaScript-enabled WebView that renders downloaded What If article HTML with loadDataWithBaseURL(\"file:///android_asset/.\", ...), so script in that remote HTML runs with a file:// origin that may read local files and any other origin (CWE-200)."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:android.webkit.WebSettings",
+    "checked_url": "https://developer.android.com/reference/android/webkit/WebSettings"
+  }
+}

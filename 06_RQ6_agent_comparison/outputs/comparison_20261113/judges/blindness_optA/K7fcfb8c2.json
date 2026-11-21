@@ -1,0 +1,31 @@
+{
+ "card_id": "K7fcfb8c2",
+ "card_sha256": "f308c2c6236496e9",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 9,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 4293,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 817
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0509218,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "92de4cde95ddab64",
+ "finished_at": "2026-11-17T18:55:26-0300",
+ "output": {
+  "guess": "TP",
+  "confidence": 0.4,
+  "reason": "The description is short and plain, in GPT style ('I found that...', 'retains the existing stream handling, retry, and failure behavior'), with no headers or bullet lists. That makes Sonnet in Claude Code (SP2) unlikely and points to GPT-6.1 Terra, either the Codex agent (TP) or the Cognalys pipeline (C). The diff was not built, and the renamed import was left out of alphabetical order. Both fit a single-session agent that could not run an Android build better than a pipeline with a dedicated build step. This is a weak lean towards TP over C."
+ }
+}

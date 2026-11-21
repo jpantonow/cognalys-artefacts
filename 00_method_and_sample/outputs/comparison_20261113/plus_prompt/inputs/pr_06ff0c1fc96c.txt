@@ -1,0 +1,54 @@
+The published rule behind each report
+
+Report on Utils.md5 (MessageDigest), rule MessageDigestSpec
+RVSec's record classifies this report as UnsafeAlgorithm, in the rule's constraint section.
+Rule source: MessageDigest.crysl — CROSSINGTUD Crypto-API-Rules, Java Cryptographic Architecture rules, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/MessageDigest.crysl
+Types it governs: java.security.MessageDigest
+Call order it requires: Get · (digest(byte[]) | (update+ · (digest() | digest(byte[], int, int))))+
+Events it matches:
+- Get: Observed when a getInstance(String) or getInstance(String, provider) call is resolved to java.security.MessageDigest. It satisfies the rule's Get event only when the selected algorithm argument satisfies the rule predicate exactly: algorithm in {"SHA-256", "SHA-384", "SHA-512"}. Observing a factory call alone does not establish that predicate, especially when the argument is not statically known. Call shapes: `MessageDigest.getInstance(`, `java.security.MessageDigest.getInstance(`.
+- Update: Observed only when the receiver is resolved to java.security.MessageDigest and the overload is update(byte), update(byte[]), update(byte[], int, int), or update(ByteBuffer). It contributes to a conforming path only after Get and only when followed by a modeled Digest event. For update(byte[], offset, len), the rule predicate additionally requires length[input] >= offset + len, offset >= 0, and len > 0; merely calling update does not prove those conditions. Call shapes: `.update(`, `messageDigest.update(`.
+- DigestWithInput: Observed when digest(byte[]) is invoked on a java.security.MessageDigest receiver. It satisfies the digest-with-input branch only after Get; this branch is permitted without a prior explicit update because the JDK API documents digest(byte[]) as a final update followed by completion. Observing this call does not establish any property of the input's contents or the returned digest's later use. Call shapes: `.digest(`, `messageDigest.digest(`.
+- DigestAfterUpdate: Observed when digest() or digest(byte[], int, int) is invoked on a java.security.MessageDigest receiver. It satisfies the update-then-digest branch only after one or more modeled Update events following Get. For digest(output, offset, len), the rule additionally requires length[output] >= offset + len, offset >= 0, and len > 0; seeing the call does not itself establish these bounds. Call shapes: `.digest(`, `messageDigest.digest(`.
+What RVSec checks under this rule: For a modeled java.security.MessageDigest acquisition, an explicit message such as "expecting one of {SHA-256, SHA-384, SHA-512} but found SHA-1" indicates that the detector associated the factory algorithm argument with SHA-1 and that value violates this CrySL rule's algorithm-membership predicate.
+Requirements the rule states:
+- The relevant call target is java.security.MessageDigest.getInstance(String) or java.security.MessageDigest.getInstance(String, ...).
+- algorithm in {"SHA-256", "SHA-384", "SHA-512"}.
+- For update(byte[], preOffset, preLen): length[preInput] >= preOffset + preLen, preOffset >= 0, and preLen > 0.
+- For digest(output, offset, len): length[output] >= offset + len, offset >= 0, and len > 0.
+- The modeled event sequence conforms to Get followed by one or more permitted digest-computation branches.
+Limits of the check, recorded with the rule:
+- The supplied findings show constraint messages, not a complete event trace, receiver type-resolution trace, or proof of runtime reachability.
+- The rule itself does not define why this exact three-algorithm policy was chosen, nor does it classify the purpose of a digest.
+- The source rule does not state how a particular scanner reports unresolved values; therefore the meaning of a finding whose message is only "unknown" cannot be determined from the rule file alone.
+- This source was verified at the repository's master branch; the exact CrySL rule revision bundled with the detector was not supplied.
+Violations of this rule without a security stake, recorded with the rule (3.15):
+- MD5 or SHA-1 used only as a non-adversarial cache-file key, in-memory hashCode helper, checksum, or UI/display fingerprint. Such code still violates the rule's unconditional allow-list, but may not represent a security defect in context.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- Algorithm values selected dynamically where static analysis reports an unresolved or overly broad value set although production configuration restricts the value to an allowed algorithm.
+- A report tied to a source location that contains multiple digest-related calls, without enough supplied trace information to identify which java.security.MessageDigest factory invocation supplied the constrained algorithm.
+- A zero-length update(byte[], offset, len) or digest(byte[], offset, len) operation that is valid for the runtime API but violates the CrySL rule's explicit len > 0 predicate.
+- Code using digest(byte[]) directly after getInstance. This is permitted by the verified CrySL protocol and should not be inferred to be an incomplete-update violation merely because no separate update call appears.
+
+
+Earlier proposals, in other repositories, for the rule of the report on Utils.md5 (MessageDigest), and what their maintainers answered:
+
+1. Repository: ItzSkyeYT/InterTune
+   Outcome: closed
+   Proposal: Migrate widget artwork hashes to SHA-256
+   Maintainer said: Thanks for the PR! This hash only names the widget’s cached cover files, so it does no security work, and switching it means migrating files for no gain. I’ll leave it as it is and close this.
+
+2. Repository: javalc6/rssreader
+   Outcome: closed
+   Proposal: Write file checksums with SHA-256
+   Maintainer said: Thanks for taking the time to run the app under RVSec, but it will not be merged. In _FileManager_, MD5 is used only as a checksum to detect accidental corruption of a backup file. It isn’t used for authentication, signatures, or password hashing, so MD5’s known weaknesses (collision attacks) don’t apply here. Since there’s no secret key, switching to SHA-256 wouldn’t stop anyone from modifying a file and recomputing a valid checksum, so it wouldn’t improve security. The _MessageDigestSpec_ warning is a generic rule that flags MD5 regardless of how it’s used. Note that _MessageDigest.getInstance("MD5")_ isn’t rejected by the Java/Android API [MessageDigest](https://developer.android.com/reference/java/security/MessageDigest)
+
+3. Repository: VREMSoftwareDevelopment/WiFiAnalyzer
+   Outcome: closed
+   Proposal: Fix calculateChildType
+   Maintainer said: This is a false positive. MD5 is used here as a checksum, not as a security control — that's exactly what it's still appropriate for. There's no password, token, or integrity check involved. Closing this one, but thanks for the effort.
+
+4. Repository: Crustack/NotallyX
+   Outcome: merged
+   Proposal: Use SHA-256 for export hash verification
+   Maintainer said: Hi there, thanks for the improvement, LGTM 🙂

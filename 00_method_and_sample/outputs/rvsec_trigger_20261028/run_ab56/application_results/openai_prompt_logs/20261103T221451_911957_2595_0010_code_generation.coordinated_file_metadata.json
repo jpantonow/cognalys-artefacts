@@ -1,0 +1,48 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T221451_911957_2595_0010_code_generation.coordinated_file",
+  "parent_call_id": "",
+  "finding_id": "app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+  "stage": "code_generation.coordinated_file",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 24790,
+  "input_tokens": 5702,
+  "cached_input_tokens": 2382,
+  "output_tokens": 1267,
+  "latency_ms": 11841,
+  "retry_count": 0,
+  "request_id": "req_186c1fe043414b6e971f8ad025fc0b69",
+  "section_telemetry": {
+    "patch_plan": {
+      "characters": 1467,
+      "approx_tokens": 367,
+      "sha256": "7f266d8b83f7706c0fcbf74dec3639a891beea4d89dd2f6fe845e20bc2e41716"
+    },
+    "target_file": {
+      "characters": 59,
+      "approx_tokens": 15,
+      "sha256": "f596edfb5fec20c684a96a2df6213c3c0e031d6d58f911f6084fc5ea3c43d68d"
+    },
+    "previous_file_contracts": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 27,
+  "openai_response_id": "resp_0c7b5d6d7d2b75e8006aea870c90cc87d2b19d9912fb3f0ef0",
+  "response_status": "completed",
+  "background_polls": 3,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T22:15:04"
+}

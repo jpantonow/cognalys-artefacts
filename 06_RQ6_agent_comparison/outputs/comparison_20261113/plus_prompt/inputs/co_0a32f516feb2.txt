@@ -1,0 +1,74 @@
+The published rule behind each report
+
+Report on TOTP.hmac_sha (Mac), rule MacSpec
+RVSec's record classifies this report as UnsafeAlgorithm, in the rule's constraint section.
+Rule source: Crypto-API-Rules: JavaCryptographicArchitecture/src/Mac.crysl, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Mac.crysl
+Types it governs: javax.crypto.Mac
+Call order it requires: Get, Init, (FinalWU | (Update+, Final))+
+Events it matches:
+- g1: Rule clause `g1: getInstance(algorithm)`: observe the one-argument factory overload on `javax.crypto.Mac`. Its `algorithm` value must satisfy `algorithm in {"HmacSHA256", "HmacSHA384", "HmacSHA512", "HmacPBESHA1", "PBEWithHmacSHA1", "PBEWithHmacSHA224", "PBEWithHmacSHA256", "PBEWithHmacSHA384", "PBEWithHmacSHA512"}`. Call shapes: `Mac.getInstance(`, `javax.crypto.Mac.getInstance(`.
+- g2: Rule clause `g2: getInstance(algorithm, _)`: observe a two-argument factory overload on `javax.crypto.Mac`; `_` is the rule wildcard. The same declared algorithm-list constraint applies to the runtime algorithm value. Call shapes: `Mac.getInstance(`, `javax.crypto.Mac.getInstance(`.
+- i1: Rule clause `i1: init(key)`: observe the one-argument `init` overload on a resolved `javax.crypto.Mac` receiver. The rule additionally requires abstract predicate `generatedKey[key,_]`; observing the call alone does not establish it. Call shapes: `.init(`.
+- i2: Rule clause `i2: init(key, params)`: observe the two-argument `init` overload on a resolved `javax.crypto.Mac` receiver. The rule additionally requires `generatedKey[key,_]` and `preparedHMAC[params]`; these are abstract predicates, not Java runtime checks defined by `Mac`. Call shapes: `.init(`.
+- u1: Rule clause `u1: update(inputByte)`: observe the `byte` overload on a resolved `javax.crypto.Mac` receiver. Call shapes: `.update(`.
+- u2: Rule clause `u2: update(preInput)`: observe the `byte[]` overload on a resolved `javax.crypto.Mac` receiver. Call shapes: `.update(`.
+- u3: Rule clause `u3: update(preInput, offset, len)`: observe the `byte[], int, int` overload on a resolved `javax.crypto.Mac` receiver. The rule constrains runtime values as `length[preInput] >= offset + len`, `offset >= 0`, and `len > 0`; these are not source-spelling conditions. Call shapes: `.update(`.
+- u4: Rule clause `u4: update(preInputByteBuffer)`: observe the `java.nio.ByteBuffer` overload on a resolved `javax.crypto.Mac` receiver. Call shapes: `.update(`.
+- f1: Rule clause `f1: output1 = doFinal()`: observe no-argument finalization and its returned output binding. It is `FinalWOU`; the rule applies `!encrypted[output1, _]`, `length[output1] > outOffset`, `macced[output1, inputByte]`, and `macced[output1, preInput]` as abstract/value conditions. Call shapes: `.doFinal()`.
+- f2: Rule clause `f2: output2 = doFinal(input)`: observe one-argument `byte[]` finalization and its returned output binding. It is `FinalWU`, may directly follow Init under ORDER, requires `!encrypted[output2,_]`, and ensures `macced[output2, input]` as abstract predicates. Call shapes: `.doFinal(`.
+- f3: Rule clause `f3: doFinal(output1, outOffset)`: observe output-buffer finalization on a resolved `javax.crypto.Mac` receiver. It is `FinalWOU`; the rule's runtime value constraint is `length[output1] > outOffset`, not the stronger documented requirement for capacity for the complete MAC output. Call shapes: `.doFinal(`.
+What RVSec checks under this rule: The authoritative rule declares `SPEC javax.crypto.Mac`, requires `Get, Init, (FinalWU | (Update+, Final))+`, constrains `algorithm` to nine listed strings, and attaches the stated abstract predicates and numeric constraints.
+Requirements the rule states:
+- REQUIRES `!encrypted[output1, _]`.
+- REQUIRES `!encrypted[output2,_]`.
+- REQUIRES `preparedHMAC[params]`.
+- REQUIRES `generatedKey[key,_]`.
+- ENSURES `macced[output1, inputByte]`.
+- ENSURES `macced[output1, preInput]`.
+- ENSURES `macced[output2, input]`.
+- CONSTRAINT `algorithm in {"HmacSHA256", "HmacSHA384", "HmacSHA512", "HmacPBESHA1", "PBEWithHmacSHA1", "PBEWithHmacSHA224", "PBEWithHmacSHA256", "PBEWithHmacSHA384", "PBEWithHmacSHA512"}`.
+- CONSTRAINT `length[output1] > outOffset`.
+- CONSTRAINT `length[preInput] >= offset + len`.
+- CONSTRAINT `offset >= 0`.
+- CONSTRAINT `len > 0`.
+Limits of the check, recorded with the rule:
+- The rule does not define the operational semantics of `encrypted`, `preparedHMAC`, `generatedKey`, or `macced`.
+- The rule names only the listed overloads; it does not model `reset`, `clone`, `getMacLength`, `getProvider`, `getAlgorithm`, or other surrounding program behavior.
+- The rule's `length[output1] > outOffset` condition is not equivalent to the Java API's requirement that the output buffer be large enough for the entire MAC result.
+- The rule file does not state how a particular detector resolves aliases, constants, interprocedural flows, reflection, dynamically loaded providers, or the wildcard `_` beyond its syntactic use in `getInstance(algorithm, _)`.
+Violations of this rule without a security stake, recorded with the rule (3.15):
+- A policy-only report for `HmacSHA1`: Java SE documents it as a required supported Mac algorithm, while this particular rule intentionally excludes it. Whether that is a false positive depends on the governing security policy, not on API availability.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- A report where the source expression is not statically resolved but evaluates at runtime to a whitelisted algorithm value.
+- A report where valid key-generation or parameter-preparation provenance exists but the analyzer cannot establish the rule-specific `generatedKey` or `preparedHMAC` predicate.
+- A protocol report where wrappers, callbacks, interprocedural object flow, reflection, or dependency-injected provider selection obscure the lifecycle from static analysis.
+- A report for an initialized empty-message MAC finalized with `doFinal()` without prior update: the Java API permits finalization after initialization, whereas this rule's ORDER expression requires either `doFinal(input)` directly or at least one Update before a Final event.
+
+Report on TOTP.hmac_sha (SecretKeySpec), rule SecretKeySpecSpec
+Rule source: SecretKeySpec.crysl in CROSSINGTUD/Crypto-API-Rules, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SecretKeySpec.crysl
+Types it governs: javax.crypto.spec.SecretKeySpec
+Call order it requires: Con := c1 | c2; ORDER Con: exactly one governed SecretKeySpec construction event, using either constructor.
+Events it matches:
+- c1: Observation: SecretKeySpec(keyMaterial, keyAlgorithm). In addition to observing c1, the rule requires keyAlgorithm in {"AES", "HmacSHA256", "HmacSHA384", "HmacSHA512"}; length[keyMaterial] >= offset + len; neverTypeOf[keyMaterial, java.lang.String]; and preparedKeyMaterial[keyMaterial] || randomized[keyMaterial]. The rule declares offset and len but does not bind them in c1, so the standalone source does not resolve how its length predicate is evaluated for this event. Call shapes: `SecretKeySpec(keyMaterial, keyAlgorithm)`.
+- c2: Observation: SecretKeySpec(keyMaterial, offset, len, keyAlgorithm). In addition to observing c2, the rule requires keyAlgorithm in {"AES", "HmacSHA256", "HmacSHA384", "HmacSHA512"}; length[keyMaterial] >= offset + len; neverTypeOf[keyMaterial, java.lang.String]; and preparedKeyMaterial[keyMaterial] || randomized[keyMaterial]. Call shapes: `SecretKeySpec(keyMaterial, offset, len, keyAlgorithm)`.
+What RVSec checks under this rule: The rule permits either constructor event and requires the stated CONSTRAINTS and REQUIRES predicates. Its ENSURES section emits speccedKey[this, _] and generatedKey[this, keyAlgorithm] after the event.
+Requirements the rule states:
+- keyAlgorithm in {"AES", "HmacSHA256", "HmacSHA384", "HmacSHA512"}
+- length[keyMaterial] >= offset + len
+- neverTypeOf[keyMaterial, java.lang.String]
+- preparedKeyMaterial[keyMaterial] || randomized[keyMaterial]
+Limits of the check, recorded with the rule:
+- No runtime if-condition, condition(...) clause, AspectJ target(...), or AspectJ args(...) clause appears in this rule; no subtype-matching semantics can be inferred from this source.
+- preparedKeyMaterial, randomized, speccedKey, and generatedKey are predicate names only in this rule. Their definitions, producers, propagation behavior, and evidence thresholds are not present.
+- The source does not explain how offset and len are assigned when c1, the two-argument constructor event, is used.
+- The rule's algorithm allow-list is narrower than the general SecretKeySpec API contract and is not documentation of all Java or provider-supported secret-key algorithm names.
+- A diagnostic saying that material was not observed to have been prepared by Key.getEncoded() is not a clause of the supplied rule; its mapping to preparedKeyMaterial requires detector-implementation evidence.
+Possible false-positive shapes listed with the rule, never reviewed against it; they never support a dismissal (3.15):
+- Key material is securely derived, imported, or validated through a path that the detector does not mark as preparedKeyMaterial or randomized.
+- The algorithm value is computed or passed through an analysis path that prevents the detector from proving membership in the four-value list, although its runtime value is allowed by the rule.
+- A call is valid at the SecretKeySpec API boundary but uses an algorithm name outside the rule's narrow allow-list; whether this is a security-policy violation is not established by the constructor documentation.
+- A valid two-argument constructor call is affected by the rule's unbound offset and len variables if the detector applies the shared length predicate conservatively.
+- The array has suitable runtime provenance or entropy but there is no available rule or analysis summary that produces the required provenance predicate.
+
+
+Earlier proposals, in other repositories, for the rule of the report on TOTP.hmac_sha (Mac): none with a maintainer response.

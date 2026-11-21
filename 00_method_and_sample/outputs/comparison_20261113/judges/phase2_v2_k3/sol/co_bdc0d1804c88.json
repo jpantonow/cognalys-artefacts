@@ -1,0 +1,306 @@
+{
+ "unit": "co_bdc0d1804c88",
+ "phase": "phase2",
+ "order": [
+  "Ka07e6b0f",
+  "K97e6decd",
+  "K03efa06b",
+  "K8315ce84",
+  "Kc8550043",
+  "Kf4144d95",
+  "K9be16361",
+  "Kf097cf60",
+  "K2a273f4f",
+  "K599b3a3d",
+  "K384e8289",
+  "K07076238",
+  "Ke3aff027",
+  "Ka8175d17",
+  "K2c9edc44",
+  "Ke2a39f93",
+  "Kb50656ab",
+  "Kb45aaa15",
+  "K69a32893",
+  "Ka5b4a4cb",
+  "K9b3210a2",
+  "K70124f3a"
+ ],
+ "card_sha256": {
+  "K03efa06b": "40ccef8aa7b67ac8",
+  "K07076238": "6c32bd3c05e3989a",
+  "K2a273f4f": "988e5bc013d59905",
+  "K2c9edc44": "c66e908f1282c896",
+  "K384e8289": "a7744c23b4ae0d2f",
+  "K599b3a3d": "f68ff612ca6a52e0",
+  "K69a32893": "d6632f3d246ef2a1",
+  "K70124f3a": "4b845d583e844487",
+  "K8315ce84": "3129dd27c3407394",
+  "K97e6decd": "f8083bf0417435cd",
+  "K9b3210a2": "80d64d4291a959b6",
+  "K9be16361": "929d0d0cc93a9089",
+  "Ka07e6b0f": "8f8d92ff602840df",
+  "Ka5b4a4cb": "86c510a072e86dce",
+  "Ka8175d17": "e49c1284a456a198",
+  "Kb45aaa15": "e3b11005c9082d3a",
+  "Kb50656ab": "55edf57985ad9fd9",
+  "Kc8550043": "8da83cb0157714f4",
+  "Ke2a39f93": "94ba8375bd8c0e3c",
+  "Ke3aff027": "8b7cec72bbfe4c41",
+  "Kf097cf60": "24d0bfe92bd2e24b",
+  "Kf4144d95": "97c67ad11bd2288b"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive for cryptographic misuse. In AccessPointsAdapterData.calculateChildType (and the identical GraphWrapper.calculateGraphType), MD5 runs over the app's own public package name (mainActivity.packageName). The 16-byte digest is then reduced to a 32-bit Int with ByteArray.contentHashCode(). That Int is compared with the hard-coded constants TYPE1/TYPE2/TYPE3 in GraphConstants.kt (1147798476, 535509942, 1256180258). These are precomputed fingerprints of the official application IDs: com.vrem.wifianalyzer, plus the .BETA/debug suffix variants from app/build.gradle. The result sets Configuration.size to SIZE_MAX or SIZE_MIN. Configuration.sizeAvailable then quietly degrades Cache signal averaging (Cache.kt:64/88) and adds an \"S\" flag in AboutFragment. So this is an obfuscated anti-repackaging or clone-detection check. It is not a security control. No secret, password, signature, integrity check of untrusted data, stored data or protocol is involved. The input is a public string, the comparison has only 32 bits, and anyone who repackages the app can patch the comparison out. Collision resistance therefore protects nothing, and SHA-256 adds no security. Changing the algorithm would require recomputing all three magic constants. If any one is wrong, the official build silently drops to SIZE_MIN and shows degraded signal readings. That is a regression for real users that unit tests (which mock sizeAvailable or test size() only with the constants themselves) would not catch. The check is also deliberately opaque, so a public issue or PR spelling it out would mostly document the anti-clone mechanism for the people it is meant to stop. That helps neither users nor maintainers. A careful contributor should send nothing. An ISSUE would only be noise saying \"MD5 used as a non-security fingerprint\", and a PR is pointless churn with real regression risk.",
+  "must_change": [
+   "For a cleanup PR, replace the reported MD5 use with an equivalent package-classification mechanism, or change the digest together with its expected comparison values. Merely replacing the algorithm name is insufficient.",
+   "Keep GraphWrapper's equivalent check consistent. If shared TYPE constants change, update every affected producer and consumer together, including the TYPE1 exception fallback.",
+   "Add unit tests asserting actual configuration outcomes for the release and .BETA package names, other recognized cases, an unrecognized package, and any retained exception fallback. Existing adapter tests only verify that size is assigned."
+  ],
+  "must_not_break": [
+   "The official builds (applicationId com.vrem.wifianalyzer and its .BETA/debug suffix variants) must still compute a value equal to TYPE1/TYPE2/TYPE3, so Configuration.size stays SIZE_MAX and sizeAvailable stays true. Changing the digest without correctly recomputing all three constants would silently degrade Cache signal averaging and the About screen for every real user.",
+   "AccessPointsAdapterData.calculateChildType and GraphWrapper.calculateGraphType must stay consistent with each other and with the shared constants in GraphConstants.kt.",
+   "The fallback getOrDefault(TYPE1) on exception (official behaviour when the digest is unavailable) must be kept.",
+   "minSdk 24 support: any digest used must exist on all supported Android versions (MD5 and SHA-256 both do).",
+   "Existing unit tests (GraphWrapperTest size(TYPE1..TYPE4), ConfigurationTest, CacheTest, AboutFragmentTest) and the jacoco coverage gate.",
+   "Preserve recognized-package selection of SIZE_MAX (4096), unrecognized-package selection of SIZE_MIN (1024), and the existing SIZE_MAX outcome on calculation failure.",
+   "Preserve scan cache settings, averaging, signal-level adjustment and clamping behavior through Configuration.sizeAvailable; changing screens must not cause inconsistent package classification.",
+   "Preserve access-point filtering, sorting, grouping, and expansion behavior.",
+   "Preserve displayed and exported signal strength and derived distance for the same scan inputs. No digest storage migration or protocol change is needed; the hash itself is not stored, exported, or exchanged with a peer.",
+   "Retain Android API 24 support and both release and debug/.BETA builds without introducing a provider requirement or raising minSdk."
+  ],
+  "source": "phase1_v2 (no maintainer answer)",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 198,
+ "tokens": {
+  "input_tokens": 236047,
+  "cached_input_tokens": 150144,
+  "output_tokens": 6624,
+  "reasoning_output_tokens": 3441
+ },
+ "turns": 1,
+ "tool_calls": 9,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "b34b8f2e91494d56",
+ "finished_at": "2026-11-16T10:16:35-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Ka07e6b0f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies a non-security fingerprint and the compatibility risk. Calling the setting a UI size understates its effects on cache averaging and signal readings."
+   },
+   {
+    "card_id": "K97e6decd",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 1,
+    "notes": "Identifies the fixed-value compatibility constraint, but falsely limits the effect to a UI size. It does not establish why this non-security use warrants maintainer attention."
+   },
+   {
+    "card_id": "K03efa06b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct, code-specific explanation of the false positive and why an algorithm-only substitution would change behavior."
+   },
+   {
+    "card_id": "K8315ce84",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "The collision-resistance statement is qualified correctly, but the issue never determines whether this code needs that property. The fixed comparisons provide a limited compatibility reason for withholding a patch."
+   },
+   {
+    "card_id": "Kc8550043",
+    "r2": 0,
+    "regression_scenario": "An existing TYPE2-recognized build now receives SIZE_MIN during an access-point refresh, disabling normal cache averaging and changing signal readings. Opening a graph restores SIZE_MAX through the unchanged GraphWrapper check.",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The description candidly documents its limitations, but dropping TYPE2 recognition and leaving screen-dependent classification is a regression. Tests omit the third recognized case and graph consistency."
+   },
+   {
+    "card_id": "Kf4144d95",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 0,
+    "notes": "It implies that ordinary input discrimination makes this MD5 use unsafe, without identifying any security requirement. Inability to find a patch does not supply a sound code-specific justification."
+   },
+   {
+    "card_id": "K9be16361",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly connects the public package-name input to cache configuration and explains why no cryptographic security property is involved."
+   },
+   {
+    "card_id": "Kf097cf60",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately traces the fingerprint to cache and signal behavior and explains the regression risk of changing only the algorithm."
+   },
+   {
+    "card_id": "K2a273f4f",
+    "r2": 0,
+    "regression_scenario": "A TYPE2-recognized build loses SIZE_MAX on access-point updates while graph screens still select SIZE_MAX, changing cache and signal behavior across screens. Package-lookup failures also escape update instead of retaining the previous SIZE_MAX fallback.",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Drops a recognized case, leaves GraphWrapper inconsistent, and removes exception handling. The claimed successful debug build contradicts the supplied exact-diff build failure."
+   },
+   {
+    "card_id": "K599b3a3d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Accurately identifies the fixed comparison values, but leaves the actual non-security purpose and collision-resistance requirement unresolved. Its compatibility concern supports withholding a blind substitution, not a security issue."
+   },
+   {
+    "card_id": "K384e8289",
+    "r2": 0,
+    "regression_scenario": "On a TYPE2-recognized build, an access-point update selects SIZE_MIN and degrades cache averaging and signal readings; opening a graph selects SIZE_MAX again through the original fingerprint check.",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The text accurately discloses the omitted recognized case and untouched graph code. Those omissions make the patch behaviorally incompatible despite preserving the two explicitly tested names and exception fallback."
+   },
+   {
+    "card_id": "K07076238",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the configuration consumers and explains why stronger collision resistance provides no security benefit."
+   },
+   {
+    "card_id": "Ke3aff027",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 0,
+    "notes": "The reported MD5 call is described accurately, but the issue supplies no analysis of its purpose. Failure to find a change is not a substantive judgment about whether one is needed."
+   },
+   {
+    "card_id": "Ka8175d17",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The non-security assessment and synchronization risk are correct and specific. The configuration controls cache and signal behavior rather than merely display size."
+   },
+   {
+    "card_id": "K2c9edc44",
+    "r2": 0,
+    "regression_scenario": "A previously TYPE2-recognized build now selects SIZE_MIN when access points refresh, changing caching and signal readings. Graph construction still selects SIZE_MAX, making the outcome depend on the screen visited.",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Preserves exception fallback but drops TYPE2 recognition and leaves GraphWrapper inconsistent. The description acknowledges the missing mapping; its focused-test command also lacks a space after ./gradlew."
+   },
+   {
+    "card_id": "Ke2a39f93",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately explains the public fingerprint input, downstream scan behavior, and lack of a cryptographic security requirement."
+   },
+   {
+    "card_id": "Kb50656ab",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Gives a correct, code-specific reason for sending nothing and identifies the expected-value compatibility constraint."
+   },
+   {
+    "card_id": "Kb45aaa15",
+    "r2": 0,
+    "regression_scenario": "For an existing TYPE2-recognized build, access-point refreshes now set SIZE_MIN and alter cache averaging and signal readings. Visiting a graph restores SIZE_MAX through the unchanged MD5-based classification.",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "The patch preserves the lookup-error fallback but removes a recognized case and leaves graph classification inconsistent. The text discloses these limitations, although its focused-test command is malformed."
+   },
+   {
+    "card_id": "K69a32893",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains both the absence of a security vulnerability and the concrete configuration regression from an algorithm-only replacement."
+   },
+   {
+    "card_id": "Ka5b4a4cb",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The central no-action judgment and fingerprint-compatibility reasoning are correct. However, build.gradle also exposes the .BETA suffix, the setting affects scanning rather than layout, and a comment would not silence this runtime checker."
+   },
+   {
+    "card_id": "K9b3210a2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the package-derived configuration value as non-security use and rejects a change without security benefit."
+   },
+   {
+    "card_id": "K70124f3a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains the false positive and the need to regenerate synchronized fingerprints. Its reference to capping list size understates the actual cache-averaging and signal-adjustment effects."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

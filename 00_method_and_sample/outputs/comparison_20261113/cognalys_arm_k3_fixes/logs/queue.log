@@ -1,0 +1,76 @@
+== 2026-11-16T02:52:45-03:00 waiting for the agent comparison queue (arms S, O, T) to end
+== 2026-11-16T02:52:45-03:00 agent queue ended
+== 2026-11-16T02:52:46-03:00 Cognalys arm: 12 runs, ceiling US$ 5, spent so far US$ 0.0000, C: 19 GB free, uptime: up 3 hours, 57 minutes
+== 2026-11-16T02:52:47-03:00 co_0a32f516feb2_r1: cognalys run (max-cost 2.0; run spent 0.0000; left 5.0)
+   co_0a32f516feb2_r1: pipeline exit 0
+   co_0a32f516feb2_r1: complete
+   co_0a32f516feb2_r1 cost:   total                            9 calls      107,209 in (7,430 cached, 82,571 written)      21,859 out  US$ 0.13; 0 answered from the cache, 1 served by the research corpus; 1 web search calls billed; served tiers flex 9
+== cumulative Cognalys-arm cost: US$ 0.1250 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1 (local clones and worktrees)
+== 2026-11-16T02:59:44-03:00 co_f637c4b8467e_r1: cognalys run (max-cost 2.0; run spent 0.0000; left 4.875)
+   co_f637c4b8467e_r1: pipeline exit 0
+   co_f637c4b8467e_r1: complete
+   co_f637c4b8467e_r1 cost:   total                           12 calls      149,480 in (76,653 cached, 72,124 written)      21,352 out  US$ 0.10; 0 answered from the cache, 1 served by the research corpus; served tiers flex 12
+== cumulative Cognalys-arm cost: US$ 0.2258 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/co_f637c4b8467e_r1 (local clones and worktrees)
+== 2026-11-16T03:08:10-03:00 pr_fff072cb8953_r1: cognalys run (max-cost 2.0; run spent 0.0000; left 4.7742)
+   pr_fff072cb8953_r1: pipeline exit 0
+   pr_fff072cb8953_r1: complete
+   pr_fff072cb8953_r1 cost:   total                           10 calls      143,165 in (20,457 cached, 121,929 written)      11,473 out  US$ 0.11; 0 answered from the cache, 1 served by the research corpus; served tiers flex 10
+== cumulative Cognalys-arm cost: US$ 0.3316 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r1 (local clones and worktrees)
+== 2026-11-16T03:13:14-03:00 co_0a32f516feb2_r2: cognalys run (max-cost 2.0; run spent 0.0000; left 4.6684)
+   co_0a32f516feb2_r2: pipeline exit 0
+   co_0a32f516feb2_r2: complete
+   co_0a32f516feb2_r2 cost:   total                            5 calls       86,822 in (44,753 cached, 13,282 written)      14,136 out  US$ 0.08; 0 answered from the cache, 1 served by the research corpus; 2 web search calls billed; served tiers flex 5
+== cumulative Cognalys-arm cost: US$ 0.4107 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r2 (local clones and worktrees)
+== 2026-11-16T03:17:41-03:00 co_f637c4b8467e_r2: cognalys run (max-cost 2.0; run spent 0.0000; left 4.5893)
+   co_f637c4b8467e_r2: pipeline exit 0
+   co_f637c4b8467e_r2: complete
+   co_f637c4b8467e_r2 cost:   total                           11 calls      143,241 in (111,116 cached, 25,889 written)      22,886 out  US$ 0.09; 0 answered from the cache, 1 served by the research corpus; 1 web search calls billed; served tiers flex 11
+== cumulative Cognalys-arm cost: US$ 0.5000 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/co_f637c4b8467e_r2 (local clones and worktrees)
+== 2026-11-16T03:24:25-03:00 pr_fff072cb8953_r2: cognalys run (max-cost 2.0; run spent 0.0000; left 4.5)
+   pr_fff072cb8953_r2: pipeline exit 0
+   pr_fff072cb8953_r2: complete
+   pr_fff072cb8953_r2 cost:   total                           12 calls      198,460 in (112,257 cached, 85,421 written)      19,343 out  US$ 0.10; 0 answered from the cache, 1 served by the research corpus; served tiers flex 12
+== cumulative Cognalys-arm cost: US$ 0.6049 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r2 (local clones and worktrees)
+== 2026-11-16T03:37:18-03:00 co_0a32f516feb2_r3: cognalys run (max-cost 2.0; run spent 0.0000; left 4.3951)
+   co_0a32f516feb2_r3: pipeline exit 0
+   co_0a32f516feb2_r3: complete
+   co_0a32f516feb2_r3 cost:   total                            8 calls      116,716 in (58,099 cached, 24,730 written)      17,909 out  US$ 0.09; 0 answered from the cache, 1 served by the research corpus; 1 web search calls billed; served tiers flex 8
+== cumulative Cognalys-arm cost: US$ 0.6936 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r3 (local clones and worktrees)
+== 2026-11-16T03:43:38-03:00 co_f637c4b8467e_r3: cognalys run (max-cost 2.0; run spent 0.0000; left 4.3064)
+   co_f637c4b8467e_r3: pipeline exit 0
+   co_f637c4b8467e_r3: complete
+   co_f637c4b8467e_r3 cost:   total                           11 calls      136,666 in (105,956 cached, 30,016 written)      17,550 out  US$ 0.07; 0 answered from the cache, 1 served by the research corpus; served tiers flex 11
+== cumulative Cognalys-arm cost: US$ 0.7592 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/co_f637c4b8467e_r3 (local clones and worktrees)
+== 2026-11-16T03:51:19-03:00 pr_fff072cb8953_r3: cognalys run (max-cost 2.0; run spent 0.0000; left 4.2408)
+   pr_fff072cb8953_r3: pipeline exit 0
+   pr_fff072cb8953_r3: complete
+   pr_fff072cb8953_r3 cost:   total                           11 calls      184,191 in (104,466 cached, 78,926 written)      16,021 out  US$ 0.09; 0 answered from the cache, 1 served by the research corpus; served tiers flex 11
+== cumulative Cognalys-arm cost: US$ 0.8516 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r3 (local clones and worktrees)
+== 2026-11-16T03:57:17-03:00 co_0a32f516feb2_r4: cognalys run (max-cost 2.0; run spent 0.0000; left 4.1484)
+   co_0a32f516feb2_r4: pipeline exit 0
+   co_0a32f516feb2_r4: complete
+   co_0a32f516feb2_r4 cost:   total                            5 calls       76,111 in (44,753 cached, 12,907 written)      12,582 out  US$ 0.07; 0 answered from the cache, 1 served by the research corpus; 2 web search calls billed; served tiers flex 5
+== cumulative Cognalys-arm cost: US$ 0.9215 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4 (local clones and worktrees)
+== 2026-11-16T04:01:37-03:00 co_f637c4b8467e_r4: cognalys run (max-cost 2.0; run spent 0.0000; left 4.0785)
+   co_f637c4b8467e_r4: pipeline exit 0
+   co_f637c4b8467e_r4: complete
+   co_f637c4b8467e_r4 cost:   total                            9 calls      125,895 in (105,481 cached, 19,711 written)      19,923 out  US$ 0.07; 0 answered from the cache, 1 served by the research corpus; served tiers flex 9
+== cumulative Cognalys-arm cost: US$ 0.9866 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/co_f637c4b8467e_r4 (local clones and worktrees)
+== 2026-11-16T04:10:05-03:00 pr_fff072cb8953_r4: cognalys run (max-cost 2.0; run spent 0.0000; left 4.0134)
+   pr_fff072cb8953_r4: pipeline exit 0
+   pr_fff072cb8953_r4: complete
+   pr_fff072cb8953_r4 cost:   total                           13 calls      220,673 in (125,649 cached, 94,238 written)      20,400 out  US$ 0.11; 0 answered from the cache, 1 served by the research corpus; served tiers flex 13
+== cumulative Cognalys-arm cost: US$ 1.1000 of 5
+   removed /home/antonow/cognalys_work/c_arm_k3_fixes/pr_fff072cb8953_r4 (local clones and worktrees)
+== 2026-11-16T04:21:27-03:00 queue pass finished; cumulative US$ 1.1000 of 5

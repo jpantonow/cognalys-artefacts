@@ -1,0 +1,351 @@
+{
+ "url": "https://api.github.com/repos/BombusMod/BombusMod/compare/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4...b96f26543fd631ae93fd907bb368a9add5ea9f71",
+ "fetched_at": "2026-11-15T16:17:36.412033+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/BombusMod/BombusMod/compare/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4...b96f26543fd631ae93fd907bb368a9add5ea9f71",
+  "html_url": "https://github.com/BombusMod/BombusMod/compare/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4...b96f26543fd631ae93fd907bb368a9add5ea9f71",
+  "permalink_url": "https://github.com/BombusMod/BombusMod/compare/BombusMod:06e5fe7...BombusMod:b96f265",
+  "diff_url": "https://github.com/BombusMod/BombusMod/compare/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4...b96f26543fd631ae93fd907bb368a9add5ea9f71.diff",
+  "patch_url": "https://github.com/BombusMod/BombusMod/compare/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4...b96f26543fd631ae93fd907bb368a9add5ea9f71.patch",
+  "base_commit": {
+   "sha": "06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+   "node_id": "C_kwDOAJ8S9NoAKDA2ZTVmZTcwZThmMWMwNzU0MTU3M2ZjYWRmMWUyMWU5ZjA5YTA3ZjQ",
+   "commit": {
+    "author": {
+     "name": "jpantonow",
+     "email": "jpantonow@gmail.com",
+     "date": "2026-09-15T23:54:52Z"
+    },
+    "committer": {
+     "name": "Vitaly Takmazov",
+     "email": "vitalyster@gmail.com",
+     "date": "2026-09-16T05:31:11Z"
+    },
+    "message": "Fix meaningless close() in Strconv.baosFromBase64\n\nByteArrayOutputStream.close() is a documented no-op, so the\ntry/catch around it served no purpose. Remove both.\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+    "tree": {
+     "sha": "0594f67675b01ba04647501ea08b291b62d7ba3c",
+     "url": "https://api.github.com/repos/BombusMod/BombusMod/git/trees/0594f67675b01ba04647501ea08b291b62d7ba3c"
+    },
+    "url": "https://api.github.com/repos/BombusMod/BombusMod/git/commits/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/BombusMod/BombusMod/commits/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+   "html_url": "https://github.com/BombusMod/BombusMod/commit/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+   "comments_url": "https://api.github.com/repos/BombusMod/BombusMod/commits/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4/comments",
+   "author": {
+    "login": "jpantonow",
+    "id": 129221613,
+    "node_id": "U_kgDOB7PD7Q",
+    "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jpantonow",
+    "html_url": "https://github.com/jpantonow",
+    "followers_url": "https://api.github.com/users/jpantonow/followers",
+    "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+    "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+    "repos_url": "https://api.github.com/users/jpantonow/repos",
+    "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "vitalyster",
+    "id": 1052407,
+    "node_id": "MDQ6VXNlcjEwNTI0MDc=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/1052407?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/vitalyster",
+    "html_url": "https://github.com/vitalyster",
+    "followers_url": "https://api.github.com/users/vitalyster/followers",
+    "following_url": "https://api.github.com/users/vitalyster/following{/other_user}",
+    "gists_url": "https://api.github.com/users/vitalyster/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/vitalyster/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/vitalyster/subscriptions",
+    "organizations_url": "https://api.github.com/users/vitalyster/orgs",
+    "repos_url": "https://api.github.com/users/vitalyster/repos",
+    "events_url": "https://api.github.com/users/vitalyster/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/vitalyster/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "8b2925c9f68aa5070fbf7b6f4800656253521b49",
+     "url": "https://api.github.com/repos/BombusMod/BombusMod/commits/8b2925c9f68aa5070fbf7b6f4800656253521b49",
+     "html_url": "https://github.com/BombusMod/BombusMod/commit/8b2925c9f68aa5070fbf7b6f4800656253521b49"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+   "node_id": "C_kwDOAJ8S9NoAKDA2ZTVmZTcwZThmMWMwNzU0MTU3M2ZjYWRmMWUyMWU5ZjA5YTA3ZjQ",
+   "commit": {
+    "author": {
+     "name": "jpantonow",
+     "email": "jpantonow@gmail.com",
+     "date": "2026-09-15T23:54:52Z"
+    },
+    "committer": {
+     "name": "Vitaly Takmazov",
+     "email": "vitalyster@gmail.com",
+     "date": "2026-09-16T05:31:11Z"
+    },
+    "message": "Fix meaningless close() in Strconv.baosFromBase64\n\nByteArrayOutputStream.close() is a documented no-op, so the\ntry/catch around it served no purpose. Remove both.\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+    "tree": {
+     "sha": "0594f67675b01ba04647501ea08b291b62d7ba3c",
+     "url": "https://api.github.com/repos/BombusMod/BombusMod/git/trees/0594f67675b01ba04647501ea08b291b62d7ba3c"
+    },
+    "url": "https://api.github.com/repos/BombusMod/BombusMod/git/commits/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/BombusMod/BombusMod/commits/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+   "html_url": "https://github.com/BombusMod/BombusMod/commit/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+   "comments_url": "https://api.github.com/repos/BombusMod/BombusMod/commits/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4/comments",
+   "author": {
+    "login": "jpantonow",
+    "id": 129221613,
+    "node_id": "U_kgDOB7PD7Q",
+    "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jpantonow",
+    "html_url": "https://github.com/jpantonow",
+    "followers_url": "https://api.github.com/users/jpantonow/followers",
+    "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+    "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+    "repos_url": "https://api.github.com/users/jpantonow/repos",
+    "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "vitalyster",
+    "id": 1052407,
+    "node_id": "MDQ6VXNlcjEwNTI0MDc=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/1052407?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/vitalyster",
+    "html_url": "https://github.com/vitalyster",
+    "followers_url": "https://api.github.com/users/vitalyster/followers",
+    "following_url": "https://api.github.com/users/vitalyster/following{/other_user}",
+    "gists_url": "https://api.github.com/users/vitalyster/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/vitalyster/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/vitalyster/subscriptions",
+    "organizations_url": "https://api.github.com/users/vitalyster/orgs",
+    "repos_url": "https://api.github.com/users/vitalyster/repos",
+    "events_url": "https://api.github.com/users/vitalyster/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/vitalyster/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "8b2925c9f68aa5070fbf7b6f4800656253521b49",
+     "url": "https://api.github.com/repos/BombusMod/BombusMod/commits/8b2925c9f68aa5070fbf7b6f4800656253521b49",
+     "html_url": "https://github.com/BombusMod/BombusMod/commit/8b2925c9f68aa5070fbf7b6f4800656253521b49"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 2,
+  "behind_by": 0,
+  "total_commits": 2,
+  "commits": [
+   {
+    "sha": "494119bf7a6e76fe1b0ece763896f2c75580d294",
+    "node_id": "C_kwDOAJ8S9NoAKDQ5NDExOWJmN2E2ZTc2ZmUxYjBlY2U3NjM4OTZmMmM3NTU4MGQyOTQ",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-15T23:54:52Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-15T23:54:52Z"
+     },
+     "message": "Fix baosFromBase64\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+     "tree": {
+      "sha": "0594f67675b01ba04647501ea08b291b62d7ba3c",
+      "url": "https://api.github.com/repos/BombusMod/BombusMod/git/trees/0594f67675b01ba04647501ea08b291b62d7ba3c"
+     },
+     "url": "https://api.github.com/repos/BombusMod/BombusMod/git/commits/494119bf7a6e76fe1b0ece763896f2c75580d294",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/BombusMod/BombusMod/commits/494119bf7a6e76fe1b0ece763896f2c75580d294",
+    "html_url": "https://github.com/BombusMod/BombusMod/commit/494119bf7a6e76fe1b0ece763896f2c75580d294",
+    "comments_url": "https://api.github.com/repos/BombusMod/BombusMod/commits/494119bf7a6e76fe1b0ece763896f2c75580d294/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "8b2925c9f68aa5070fbf7b6f4800656253521b49",
+      "url": "https://api.github.com/repos/BombusMod/BombusMod/commits/8b2925c9f68aa5070fbf7b6f4800656253521b49",
+      "html_url": "https://github.com/BombusMod/BombusMod/commit/8b2925c9f68aa5070fbf7b6f4800656253521b49"
+     }
+    ]
+   },
+   {
+    "sha": "b96f26543fd631ae93fd907bb368a9add5ea9f71",
+    "node_id": "C_kwDOAJ8S9NoAKGI5NmYyNjU0M2ZkNjMxYWU5M2ZkOTA3YmIzNjhhOWFkZDVlYTlmNzE",
+    "commit": {
+     "author": {
+      "name": "kodiakhq[bot]",
+      "email": "49736102+kodiakhq[bot]@users.noreply.github.com",
+      "date": "2026-09-16T05:32:22Z"
+     },
+     "committer": {
+      "name": "GitHub",
+      "email": "noreply@github.com",
+      "date": "2026-09-16T05:32:22Z"
+     },
+     "message": "Merge branch 'master' into fix/baosfrombase64-closeable_meaninglessclose-3451a9747f93-363d02d08d",
+     "tree": {
+      "sha": "0594f67675b01ba04647501ea08b291b62d7ba3c",
+      "url": "https://api.github.com/repos/BombusMod/BombusMod/git/trees/0594f67675b01ba04647501ea08b291b62d7ba3c"
+     },
+     "url": "https://api.github.com/repos/BombusMod/BombusMod/git/commits/b96f26543fd631ae93fd907bb368a9add5ea9f71",
+     "comment_count": 0,
+     "verification": {
+      "verified": true,
+      "reason": "valid",
+      "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqqinmCRC1aQ7uu5UhlAAA2gEQAH8ZT3uE3wO9tNRFIFIQSyEZ\nkyj2wj/nBhxfVoMYw3p7hDiHV8r8dqYjbSho2+RgtT4Es3VXheuF23P2ReLfShZO\nbQa8y3h6A0TBrX75sm6hqDYaJOTfB959uK11/jl9SwP7CVfOP51utnJl6CRVoaVv\nQmokvPoDz5iIl7wDuk3jzqNt53UpcXqLVty4xiMiNhjNiEpC3exm9DwYrbYnxcl3\nPXISUxRlBrfuxIRbMb9mcqM/kQBYILMNCzrh2RUxQGoJROp0p6PlMesVgeZTiogF\nAyIJ9MhOHHxdIOYqMbYF86ymtQ4xVdjZd8STigdvfbnMC61k1qUcAjUCR1HAWnbm\nOhwfbNwm8kwGlmNoK1ezrrVYb3k7625o82fJhVwPXWa2WOq9l/l5raha16kKt5VJ\n/IN1IhyO8DExpJHOTcGAZ5OXMdX0siThoLRtUL3x97HYWzKYVAwHP3CczHm3Dykr\nwbgtpCOkj/WE0o/wnicQ389mT7kF+HQNVvcxwwDnRKX+KOpeN7ALR6kT3Q0c06pq\ndUVHbfrQcctPnHwZ0ZNx9Md3hd5dwk2zhnJEFdvnq7VyisDzQLPXonAHCqx2Fb/P\nBVGHoPnwWBm5OjnXcsgiwdXLl0bFedaZ7Nygcs1b+RwWZ4M4tH2qGHZtNqM2b630\nVAafV+lNXwX1KIut1CLk\n=TNWM\n-----END PGP SIGNATURE-----\n",
+      "payload": "tree 0594f67675b01ba04647501ea08b291b62d7ba3c\nparent 494119bf7a6e76fe1b0ece763896f2c75580d294\nparent 06e5fe70e8f1c07541573fcadf1e21e9f09a07f4\nauthor kodiakhq[bot] <49736102+kodiakhq[bot]@users.noreply.github.com> 1789536742 +0000\ncommitter GitHub <noreply@github.com> 1789536742 +0000\n\nMerge branch 'master' into fix/baosfrombase64-closeable_meaninglessclose-3451a9747f93-363d02d08d",
+      "verified_at": "2026-09-16T05:32:23Z"
+     }
+    },
+    "url": "https://api.github.com/repos/BombusMod/BombusMod/commits/b96f26543fd631ae93fd907bb368a9add5ea9f71",
+    "html_url": "https://github.com/BombusMod/BombusMod/commit/b96f26543fd631ae93fd907bb368a9add5ea9f71",
+    "comments_url": "https://api.github.com/repos/BombusMod/BombusMod/commits/b96f26543fd631ae93fd907bb368a9add5ea9f71/comments",
+    "author": {
+     "login": "kodiakhq[bot]",
+     "id": 49736102,
+     "node_id": "MDM6Qm90NDk3MzYxMDI=",
+     "avatar_url": "https://avatars.githubusercontent.com/in/29196?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/kodiakhq%5Bbot%5D",
+     "html_url": "https://github.com/apps/kodiakhq",
+     "followers_url": "https://api.github.com/users/kodiakhq%5Bbot%5D/followers",
+     "following_url": "https://api.github.com/users/kodiakhq%5Bbot%5D/following{/other_user}",
+     "gists_url": "https://api.github.com/users/kodiakhq%5Bbot%5D/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/kodiakhq%5Bbot%5D/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/kodiakhq%5Bbot%5D/subscriptions",
+     "organizations_url": "https://api.github.com/users/kodiakhq%5Bbot%5D/orgs",
+     "repos_url": "https://api.github.com/users/kodiakhq%5Bbot%5D/repos",
+     "events_url": "https://api.github.com/users/kodiakhq%5Bbot%5D/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/kodiakhq%5Bbot%5D/received_events",
+     "type": "Bot",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "web-flow",
+     "id": 19864447,
+     "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+     "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/web-flow",
+     "html_url": "https://github.com/web-flow",
+     "followers_url": "https://api.github.com/users/web-flow/followers",
+     "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+     "organizations_url": "https://api.github.com/users/web-flow/orgs",
+     "repos_url": "https://api.github.com/users/web-flow/repos",
+     "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/web-flow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "494119bf7a6e76fe1b0ece763896f2c75580d294",
+      "url": "https://api.github.com/repos/BombusMod/BombusMod/commits/494119bf7a6e76fe1b0ece763896f2c75580d294",
+      "html_url": "https://github.com/BombusMod/BombusMod/commit/494119bf7a6e76fe1b0ece763896f2c75580d294"
+     },
+     {
+      "sha": "06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+      "url": "https://api.github.com/repos/BombusMod/BombusMod/commits/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4",
+      "html_url": "https://github.com/BombusMod/BombusMod/commit/06e5fe70e8f1c07541573fcadf1e21e9f09a07f4"
+     }
+    ]
+   }
+  ],
+  "files": []
+ }
+}

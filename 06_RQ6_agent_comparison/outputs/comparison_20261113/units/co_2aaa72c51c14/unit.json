@@ -1,0 +1,37 @@
+{
+ "unit": "co_2aaa72c51c14",
+ "source": "spec_cohort",
+ "group": "no_pr",
+ "finding_ids": [
+  "2aaa72c51c14"
+ ],
+ "apk": "eu.faircode.email_2322.apk",
+ "repo_url": "https://github.com/M66B/FairEmail",
+ "pinned_commit": "4b1c9fa27a21d71fde5768fb151d4c0a5b579f16",
+ "spec": [
+  "MessageDigestSpec"
+ ],
+ "class": "eu.faircode.email.Helper",
+ "method": "getFingerprint",
+ "latest_outcome": [
+  "correção gerada, sem PR"
+ ],
+ "bench_id": [],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "2aaa72c51c14",
+   "unique_error_id": "eu.faircode.email.Helper:::getFingerprint:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA1",
+   "spec": "MessageDigestSpec",
+   "class": "eu.faircode.email.Helper",
+   "method": "getFingerprint",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA1",
+   "apk": "eu.faircode.email_2322.apk",
+   "repo_url": "https://github.com/M66B/FairEmail",
+   "commit": "4b1c9fa27a21d71fde5768fb151d4c0a5b579f16",
+   "detector_source_location": "Helper.java:3307"
+  }
+ ]
+}

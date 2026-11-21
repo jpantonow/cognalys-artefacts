@@ -1,0 +1,53 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T221133_396491_2595_0006_evidence_extraction",
+  "parent_call_id": "",
+  "finding_id": "app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+  "stage": "evidence_extraction",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 193232,
+  "input_tokens": 49152,
+  "cached_input_tokens": 1332,
+  "output_tokens": 3917,
+  "latency_ms": 53650,
+  "retry_count": 0,
+  "request_id": "req_4bf99240c74c4fe5ab2ce6265653f882",
+  "section_telemetry": {
+    "stable_policy": {
+      "characters": 1658,
+      "approx_tokens": 414,
+      "sha256": "a078b562d270df0b5eddf1230840702fe1c60926d1d50b213cae74c7ac97f396"
+    },
+    "finding_evidence_packet": {
+      "characters": 173034,
+      "approx_tokens": 43258,
+      "sha256": "842ab392268bcadd2428a0b9bdfe3200c1b20c753477e8e138e8b8cbeec645cd"
+    },
+    "external_research": {
+      "characters": 15261,
+      "approx_tokens": 3815,
+      "sha256": "f6722caf448a180de2a8acee50349f0936241a985464a2ebc95f05fd42e02b25"
+    },
+    "previously_requested_evidence": {
+      "characters": 135,
+      "approx_tokens": 34,
+      "sha256": "f0cd1a7cda36369e6768ac2173c86df241ec55fd085910344083df60e8d7e819"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 519,
+  "openai_response_id": "resp_03fc6583eb56ed66006aea8646904c87d2960763559ebdcbbb",
+  "response_status": "completed",
+  "background_polls": 7,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T22:12:27"
+}

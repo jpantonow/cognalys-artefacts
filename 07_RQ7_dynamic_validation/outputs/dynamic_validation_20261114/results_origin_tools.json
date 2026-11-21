@@ -1,0 +1,88 @@
+{
+ "freeotp_48_pr521": {
+  "reps": [
+   1,
+   2,
+   3
+  ],
+  "summary": {
+   "base_finished": 3,
+   "patched_finished": 3,
+   "base_reproduces": 3,
+   "base_covered": 3,
+   "patched_violation": 3,
+   "patched_same_message": 3,
+   "patched_covered": 3,
+   "incomplete": false,
+   "result": "não corrigido"
+  },
+  "cells": {
+   "base_r1": "V cov",
+   "patched_r1": "V cov",
+   "base_r2": "V cov",
+   "patched_r2": "V cov",
+   "base_r3": "V cov",
+   "patched_r3": "V cov"
+  },
+  "site_reports": {
+   "base_r1": [
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey.encrypt [CIPHER-CONSTR-00] v=1 code=CIPHER-CONSTR-00 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init carries a key-origin predicate the rule does not admit'"
+   ],
+   "patched_r1": [
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey.encrypt [CIPHER-CONSTR-00] v=1 code=CIPHER-CONSTR-00 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init carries a key-origin predicate the rule does not admit'"
+   ],
+   "base_r2": [
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey.encrypt [CIPHER-CONSTR-00] v=1 code=CIPHER-CONSTR-00 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init carries a key-origin predicate the rule does not admit'"
+   ],
+   "patched_r2": [
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey.encrypt [CIPHER-CONSTR-00] v=1 code=CIPHER-CONSTR-00 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init carries a key-origin predicate the rule does not admit'"
+   ],
+   "base_r3": [
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey.encrypt [CIPHER-CONSTR-00] v=1 code=CIPHER-CONSTR-00 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init carries a key-origin predicate the rule does not admit'"
+   ],
+   "patched_r3": [
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey.encrypt [CIPHER-CONSTR-00] v=1 code=CIPHER-CONSTR-00 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init carries a key-origin predicate the rule does not admit'"
+   ]
+  }
+ },
+ "freeotp_48_pr524": {
+  "reps": [
+   1,
+   2,
+   3
+  ],
+  "summary": {
+   "base_finished": 3,
+   "patched_finished": 3,
+   "base_reproduces": 3,
+   "base_covered": 3,
+   "patched_violation": 0,
+   "patched_same_message": 0,
+   "patched_covered": 3,
+   "incomplete": false,
+   "result": "corrigido"
+  },
+  "cells": {
+   "base_r1": "V cov",
+   "patched_r1": "- cov",
+   "base_r2": "V cov",
+   "patched_r2": "- cov",
+   "base_r3": "V cov",
+   "patched_r3": "- cov"
+  },
+  "site_reports": {
+   "base_r1": [
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey.encrypt [CIPHER-CONSTR-00] v=1 code=CIPHER-CONSTR-00 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init carries a key-origin predicate the rule does not admit'"
+   ],
+   "patched_r1": [],
+   "base_r2": [
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey.encrypt [CIPHER-CONSTR-00] v=1 code=CIPHER-CONSTR-00 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init carries a key-origin predicate the rule does not admit'"
+   ],
+   "patched_r2": [],
+   "base_r3": [
+    "org.fedorahosted.freeotp.encryptor.EncryptedKey.encrypt [CIPHER-CONSTR-00] v=1 code=CIPHER-CONSTR-00 ev=i2 obj=Cipher val='' exp='a key produced by one of the generators the rule names' msg='the key given to Cipher.init carries a key-origin predicate the rule does not admit'"
+   ],
+   "patched_r3": []
+  }
+ }
+}

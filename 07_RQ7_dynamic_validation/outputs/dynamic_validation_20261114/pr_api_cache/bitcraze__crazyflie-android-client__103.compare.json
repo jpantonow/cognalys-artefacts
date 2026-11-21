@@ -1,0 +1,393 @@
+{
+ "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/compare/d629c7931e699cac8b7a500fafad71c57dd97d1e...9c539eac131b8c47ebddf38617084e16f7093cf8",
+ "fetched_at": "2026-11-15T16:17:52.171963+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/compare/d629c7931e699cac8b7a500fafad71c57dd97d1e...9c539eac131b8c47ebddf38617084e16f7093cf8",
+  "html_url": "https://github.com/bitcraze/crazyflie-android-client/compare/d629c7931e699cac8b7a500fafad71c57dd97d1e...9c539eac131b8c47ebddf38617084e16f7093cf8",
+  "permalink_url": "https://github.com/bitcraze/crazyflie-android-client/compare/bitcraze:d629c79...bitcraze:9c539ea",
+  "diff_url": "https://github.com/bitcraze/crazyflie-android-client/compare/d629c7931e699cac8b7a500fafad71c57dd97d1e...9c539eac131b8c47ebddf38617084e16f7093cf8.diff",
+  "patch_url": "https://github.com/bitcraze/crazyflie-android-client/compare/d629c7931e699cac8b7a500fafad71c57dd97d1e...9c539eac131b8c47ebddf38617084e16f7093cf8.patch",
+  "base_commit": {
+   "sha": "d629c7931e699cac8b7a500fafad71c57dd97d1e",
+   "node_id": "C_kwDOAQfCD9oAKGQ2MjljNzkzMWU2OTljYWM4YjdhNTAwZmFmYWQ3MWM1N2RkOTdkMWU",
+   "commit": {
+    "author": {
+     "name": "Enya",
+     "email": "80038389+enyanil@users.noreply.github.com",
+     "date": "2026-04-07T11:05:35Z"
+    },
+    "committer": {
+     "name": "GitHub",
+     "email": "noreply@github.com",
+     "date": "2026-04-07T11:05:35Z"
+    },
+    "message": "Merge pull request #100 from Dharmesh-Makvana/patch-1\n\nFix link formatting for Google Play store",
+    "tree": {
+     "sha": "85cbb6c3625595a3dbd911fba83972cb0238f79a",
+     "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/git/trees/85cbb6c3625595a3dbd911fba83972cb0238f79a"
+    },
+    "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/git/commits/d629c7931e699cac8b7a500fafad71c57dd97d1e",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJp1OT/CRC1aQ7uu5UhlAAAyjYQAA2/XNagaDZImKZByF5Swqsj\n9aWA9qMpLhG1zmwWt/lmLOwSXQ6u8HR7OKSlrKq9apW7ee0GrpYQ9gasTLLRVNnO\nCq3VwA/rluERP6Lbrs2mFhdJ/apknyC6a8YJJEkIGyf9CsLV1vVZj9XgBFYGAMqf\nwg9A9DO56jVndWcw1+bFKKmgZV2dGkDRhI6Qw6cTrFY2N9A1KjsahcqmY4rep1Ns\ne8q7GBwoRqTLPL14jHepmSQqkSlYnWfTvoO18emg/V7cqEDWINBlqUvzHnnjbR4A\nLQCB0gvOxcIU6aABSeHNPJUsCts+ejgOQQNadZu7+BTlETWBuYKXR7wn0dNZhH6k\n/1ge3flJLf5BpcByGSdsZuf/XlNjymd/Y6Kl5vrKhvaH25l14ggEb6HbPyhur0kw\nccWJR1NP62aO2Y4MUXJ35WBdtOmYFgiP14TOpfJeEiUssDQVvbw9ULmo+CY5xhEI\nuG7a5FUUXusoyukF3TyXLLE2z+sA6zdeev3nW0LGKD9DvC+zxw2mlD5L8FnsEULM\nxeMMKzFFItVaGjzPGFNqJzTfpc4Pv9/Dgn4o/Q1aR8HTqWF7p6v09TCGPNPiu1Bu\nH0QkpnOkqF/afMeP0v0Nb22cxpqZez4+8FxbGsmO+rEfOysvhE+UA/PieoNkJybR\nesfCWVBQsDq1zRld7huy\n=bKLI\n-----END PGP SIGNATURE-----\n",
+     "payload": "tree 85cbb6c3625595a3dbd911fba83972cb0238f79a\nparent 82b71ae6e4312dd844ae83e81ec0f630ff52c323\nparent 80c483a03d9cc9a7dd7e0ab17d845a400e452219\nauthor Enya <80038389+enyanil@users.noreply.github.com> 1775559935 +0200\ncommitter GitHub <noreply@github.com> 1775559935 +0200\n\nMerge pull request #100 from Dharmesh-Makvana/patch-1\n\nFix link formatting for Google Play store",
+     "verified_at": "2026-04-07T11:05:36Z"
+    }
+   },
+   "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/d629c7931e699cac8b7a500fafad71c57dd97d1e",
+   "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/d629c7931e699cac8b7a500fafad71c57dd97d1e",
+   "comments_url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/d629c7931e699cac8b7a500fafad71c57dd97d1e/comments",
+   "author": {
+    "login": "enyanil",
+    "id": 80038389,
+    "node_id": "MDQ6VXNlcjgwMDM4Mzg5",
+    "avatar_url": "https://avatars.githubusercontent.com/u/80038389?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/enyanil",
+    "html_url": "https://github.com/enyanil",
+    "followers_url": "https://api.github.com/users/enyanil/followers",
+    "following_url": "https://api.github.com/users/enyanil/following{/other_user}",
+    "gists_url": "https://api.github.com/users/enyanil/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/enyanil/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/enyanil/subscriptions",
+    "organizations_url": "https://api.github.com/users/enyanil/orgs",
+    "repos_url": "https://api.github.com/users/enyanil/repos",
+    "events_url": "https://api.github.com/users/enyanil/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/enyanil/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "82b71ae6e4312dd844ae83e81ec0f630ff52c323",
+     "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/82b71ae6e4312dd844ae83e81ec0f630ff52c323",
+     "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/82b71ae6e4312dd844ae83e81ec0f630ff52c323"
+    },
+    {
+     "sha": "80c483a03d9cc9a7dd7e0ab17d845a400e452219",
+     "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/80c483a03d9cc9a7dd7e0ab17d845a400e452219",
+     "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/80c483a03d9cc9a7dd7e0ab17d845a400e452219"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "d629c7931e699cac8b7a500fafad71c57dd97d1e",
+   "node_id": "C_kwDOAQfCD9oAKGQ2MjljNzkzMWU2OTljYWM4YjdhNTAwZmFmYWQ3MWM1N2RkOTdkMWU",
+   "commit": {
+    "author": {
+     "name": "Enya",
+     "email": "80038389+enyanil@users.noreply.github.com",
+     "date": "2026-04-07T11:05:35Z"
+    },
+    "committer": {
+     "name": "GitHub",
+     "email": "noreply@github.com",
+     "date": "2026-04-07T11:05:35Z"
+    },
+    "message": "Merge pull request #100 from Dharmesh-Makvana/patch-1\n\nFix link formatting for Google Play store",
+    "tree": {
+     "sha": "85cbb6c3625595a3dbd911fba83972cb0238f79a",
+     "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/git/trees/85cbb6c3625595a3dbd911fba83972cb0238f79a"
+    },
+    "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/git/commits/d629c7931e699cac8b7a500fafad71c57dd97d1e",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJp1OT/CRC1aQ7uu5UhlAAAyjYQAA2/XNagaDZImKZByF5Swqsj\n9aWA9qMpLhG1zmwWt/lmLOwSXQ6u8HR7OKSlrKq9apW7ee0GrpYQ9gasTLLRVNnO\nCq3VwA/rluERP6Lbrs2mFhdJ/apknyC6a8YJJEkIGyf9CsLV1vVZj9XgBFYGAMqf\nwg9A9DO56jVndWcw1+bFKKmgZV2dGkDRhI6Qw6cTrFY2N9A1KjsahcqmY4rep1Ns\ne8q7GBwoRqTLPL14jHepmSQqkSlYnWfTvoO18emg/V7cqEDWINBlqUvzHnnjbR4A\nLQCB0gvOxcIU6aABSeHNPJUsCts+ejgOQQNadZu7+BTlETWBuYKXR7wn0dNZhH6k\n/1ge3flJLf5BpcByGSdsZuf/XlNjymd/Y6Kl5vrKhvaH25l14ggEb6HbPyhur0kw\nccWJR1NP62aO2Y4MUXJ35WBdtOmYFgiP14TOpfJeEiUssDQVvbw9ULmo+CY5xhEI\nuG7a5FUUXusoyukF3TyXLLE2z+sA6zdeev3nW0LGKD9DvC+zxw2mlD5L8FnsEULM\nxeMMKzFFItVaGjzPGFNqJzTfpc4Pv9/Dgn4o/Q1aR8HTqWF7p6v09TCGPNPiu1Bu\nH0QkpnOkqF/afMeP0v0Nb22cxpqZez4+8FxbGsmO+rEfOysvhE+UA/PieoNkJybR\nesfCWVBQsDq1zRld7huy\n=bKLI\n-----END PGP SIGNATURE-----\n",
+     "payload": "tree 85cbb6c3625595a3dbd911fba83972cb0238f79a\nparent 82b71ae6e4312dd844ae83e81ec0f630ff52c323\nparent 80c483a03d9cc9a7dd7e0ab17d845a400e452219\nauthor Enya <80038389+enyanil@users.noreply.github.com> 1775559935 +0200\ncommitter GitHub <noreply@github.com> 1775559935 +0200\n\nMerge pull request #100 from Dharmesh-Makvana/patch-1\n\nFix link formatting for Google Play store",
+     "verified_at": "2026-04-07T11:05:36Z"
+    }
+   },
+   "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/d629c7931e699cac8b7a500fafad71c57dd97d1e",
+   "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/d629c7931e699cac8b7a500fafad71c57dd97d1e",
+   "comments_url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/d629c7931e699cac8b7a500fafad71c57dd97d1e/comments",
+   "author": {
+    "login": "enyanil",
+    "id": 80038389,
+    "node_id": "MDQ6VXNlcjgwMDM4Mzg5",
+    "avatar_url": "https://avatars.githubusercontent.com/u/80038389?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/enyanil",
+    "html_url": "https://github.com/enyanil",
+    "followers_url": "https://api.github.com/users/enyanil/followers",
+    "following_url": "https://api.github.com/users/enyanil/following{/other_user}",
+    "gists_url": "https://api.github.com/users/enyanil/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/enyanil/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/enyanil/subscriptions",
+    "organizations_url": "https://api.github.com/users/enyanil/orgs",
+    "repos_url": "https://api.github.com/users/enyanil/repos",
+    "events_url": "https://api.github.com/users/enyanil/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/enyanil/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "82b71ae6e4312dd844ae83e81ec0f630ff52c323",
+     "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/82b71ae6e4312dd844ae83e81ec0f630ff52c323",
+     "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/82b71ae6e4312dd844ae83e81ec0f630ff52c323"
+    },
+    {
+     "sha": "80c483a03d9cc9a7dd7e0ab17d845a400e452219",
+     "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/80c483a03d9cc9a7dd7e0ab17d845a400e452219",
+     "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/80c483a03d9cc9a7dd7e0ab17d845a400e452219"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 2,
+  "behind_by": 0,
+  "total_commits": 2,
+  "commits": [
+   {
+    "sha": "941c2e2ee3c412ce4a93e38f50701af22261369b",
+    "node_id": "C_kwDOAQfCD9oAKDk0MWMyZTJlZTNjNDEyY2U0YTkzZTM4ZjUwNzAxYWYyMjI2MTM2OWI",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-02T17:00:57Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-02T17:00:57Z"
+     },
+     "message": "Fix <init>",
+     "tree": {
+      "sha": "5cb18b6f8245f7ba55fb97e9f290d664a827d930",
+      "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/git/trees/5cb18b6f8245f7ba55fb97e9f290d664a827d930"
+     },
+     "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/git/commits/941c2e2ee3c412ce4a93e38f50701af22261369b",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/941c2e2ee3c412ce4a93e38f50701af22261369b",
+    "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/941c2e2ee3c412ce4a93e38f50701af22261369b",
+    "comments_url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/941c2e2ee3c412ce4a93e38f50701af22261369b/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "d629c7931e699cac8b7a500fafad71c57dd97d1e",
+      "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/d629c7931e699cac8b7a500fafad71c57dd97d1e",
+      "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/d629c7931e699cac8b7a500fafad71c57dd97d1e"
+     }
+    ]
+   },
+   {
+    "sha": "9c539eac131b8c47ebddf38617084e16f7093cf8",
+    "node_id": "C_kwDOAQfCD9oAKDljNTM5ZWFjMTMxYjhjNDdlYmRkZjM4NjE3MDg0ZTE2ZjcwOTNjZjg",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-16T21:49:35Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-09-16T21:49:35Z"
+     },
+     "message": "Address pull request feedback for <init>\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+     "tree": {
+      "sha": "c3663d50384df335c4bd3d1688c16a92f2b7be36",
+      "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/git/trees/c3663d50384df335c4bd3d1688c16a92f2b7be36"
+     },
+     "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/git/commits/9c539eac131b8c47ebddf38617084e16f7093cf8",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/9c539eac131b8c47ebddf38617084e16f7093cf8",
+    "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/9c539eac131b8c47ebddf38617084e16f7093cf8",
+    "comments_url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/9c539eac131b8c47ebddf38617084e16f7093cf8/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "941c2e2ee3c412ce4a93e38f50701af22261369b",
+      "url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/commits/941c2e2ee3c412ce4a93e38f50701af22261369b",
+      "html_url": "https://github.com/bitcraze/crazyflie-android-client/commit/941c2e2ee3c412ce4a93e38f50701af22261369b"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "4ceda001d41145e213ec986a714d34e7518e48cf",
+    "filename": "src/se/bitcraze/crazyfliecontrol/bootloader/BootloaderActivity.java",
+    "status": "modified",
+    "additions": 0,
+    "deletions": 9,
+    "changes": 9,
+    "blob_url": "https://github.com/bitcraze/crazyflie-android-client/blob/9c539eac131b8c47ebddf38617084e16f7093cf8/src%2Fse%2Fbitcraze%2Fcrazyfliecontrol%2Fbootloader%2FBootloaderActivity.java",
+    "raw_url": "https://github.com/bitcraze/crazyflie-android-client/raw/9c539eac131b8c47ebddf38617084e16f7093cf8/src%2Fse%2Fbitcraze%2Fcrazyfliecontrol%2Fbootloader%2FBootloaderActivity.java",
+    "contents_url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/contents/src%2Fse%2Fbitcraze%2Fcrazyfliecontrol%2Fbootloader%2FBootloaderActivity.java?ref=9c539eac131b8c47ebddf38617084e16f7093cf8",
+    "patch": "@@ -33,8 +33,6 @@\n import java.io.InputStream;\n import java.io.OutputStream;\n import java.net.URL;\n-import java.security.KeyManagementException;\n-import java.security.NoSuchAlgorithmException;\n import java.util.ArrayList;\n import java.util.Collections;\n import java.util.List;\n@@ -262,13 +260,6 @@ private String downloadFile (String urlString, String fileName, String tagName)\n             OutputStream output = null;\n             HttpsURLConnection connection = null;\n \n-            // Retrofitting support for TLSv1.2, because GitHub only supports TLSv1.2\n-            try {\n-                HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());\n-            } catch (KeyManagementException | NoSuchAlgorithmException e) {\n-                e.printStackTrace();\n-            }\n-\n             try {\n                 URL url = new URL(urlString);\n                 connection = (HttpsURLConnection) url.openConnection();"
+   },
+   {
+    "sha": "318bfcecd2e02ca19123f78ea4297cc6f53350eb",
+    "filename": "src/se/bitcraze/crazyfliecontrol/bootloader/FirmwareDownloader.java",
+    "status": "modified",
+    "additions": 0,
+    "deletions": 12,
+    "changes": 12,
+    "blob_url": "https://github.com/bitcraze/crazyflie-android-client/blob/9c539eac131b8c47ebddf38617084e16f7093cf8/src%2Fse%2Fbitcraze%2Fcrazyfliecontrol%2Fbootloader%2FFirmwareDownloader.java",
+    "raw_url": "https://github.com/bitcraze/crazyflie-android-client/raw/9c539eac131b8c47ebddf38617084e16f7093cf8/src%2Fse%2Fbitcraze%2Fcrazyfliecontrol%2Fbootloader%2FFirmwareDownloader.java",
+    "contents_url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/contents/src%2Fse%2Fbitcraze%2Fcrazyfliecontrol%2Fbootloader%2FFirmwareDownloader.java?ref=9c539eac131b8c47ebddf38617084e16f7093cf8",
+    "patch": "@@ -33,8 +33,6 @@\n import java.io.InputStreamReader;\n import java.io.PrintWriter;\n import java.net.URL;\n-import java.security.KeyManagementException;\n-import java.security.NoSuchAlgorithmException;\n import java.util.ArrayList;\n import java.util.List;\n \n@@ -193,16 +191,6 @@ private String downloadUrl(String myUrl) throws IOException {\n         BufferedReader reader = null;\n         StringBuilder builder = new StringBuilder();\n         URL url = new URL(myUrl);\n-\n-        // Retrofitting support for TLSv1.2, because GitHub only supports TLSv1.2\n-        try {\n-            HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());\n-        } catch (KeyManagementException e) {\n-            e.printStackTrace();\n-        } catch (NoSuchAlgorithmException e) {\n-            e.printStackTrace();\n-        }\n-\n         HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();\n \n         try {"
+   },
+   {
+    "sha": "85a1128da584e95d6e8c3aa613afcad03a909a77",
+    "filename": "src/se/bitcraze/crazyfliecontrol/bootloader/TLSSocketFactory.java",
+    "status": "removed",
+    "additions": 0,
+    "deletions": 76,
+    "changes": 76,
+    "blob_url": "https://github.com/bitcraze/crazyflie-android-client/blob/d629c7931e699cac8b7a500fafad71c57dd97d1e/src%2Fse%2Fbitcraze%2Fcrazyfliecontrol%2Fbootloader%2FTLSSocketFactory.java",
+    "raw_url": "https://github.com/bitcraze/crazyflie-android-client/raw/d629c7931e699cac8b7a500fafad71c57dd97d1e/src%2Fse%2Fbitcraze%2Fcrazyfliecontrol%2Fbootloader%2FTLSSocketFactory.java",
+    "contents_url": "https://api.github.com/repos/bitcraze/crazyflie-android-client/contents/src%2Fse%2Fbitcraze%2Fcrazyfliecontrol%2Fbootloader%2FTLSSocketFactory.java?ref=d629c7931e699cac8b7a500fafad71c57dd97d1e",
+    "patch": "@@ -1,76 +0,0 @@\n-package se.bitcraze.crazyfliecontrol.bootloader;\n-\n-import java.io.IOException;\n-import java.net.InetAddress;\n-import java.net.Socket;\n-import java.net.UnknownHostException;\n-import java.security.KeyManagementException;\n-import java.security.NoSuchAlgorithmException;\n-\n-import javax.net.ssl.SSLContext;\n-import javax.net.ssl.SSLSocket;\n-import javax.net.ssl.SSLSocketFactory;\n-\n-/**\n- * @author fkrauthan\n- * \n- * https://gist.github.com/fkrauthan/ac8624466a4dee4fd02f#file-tlssocketfactory-java\n- * \n- */\n-public class TLSSocketFactory extends SSLSocketFactory {\n-\n-    private SSLSocketFactory internalSSLSocketFactory;\n-\n-    public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {\n-        SSLContext context = SSLContext.getInstance(\"TLS\");\n-        context.init(null, null, null);\n-        internalSSLSocketFactory = context.getSocketFactory();\n-    }\n-\n-    @Override\n-    public String[] getDefaultCipherSuites() {\n-        return internalSSLSocketFactory.getDefaultCipherSuites();\n-    }\n-\n-    @Override\n-    public String[] getSupportedCipherSuites() {\n-        return internalSSLSocketFactory.getSupportedCipherSuites();\n-    }\n-\n-    @Override\n-    public Socket createSocket() throws IOException {\n-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket());\n-    }\n-\n-    @Override\n-    public Socket createSocket(Socket s, String host, int port, boolean autoClose) throws IOException {\n-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(s, host, port, autoClose));\n-    }\n-\n-    @Override\n-    public Socket createSocket(String host, int port) throws IOException, UnknownHostException {\n-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(host, port));\n-    }\n-\n-    @Override\n-    public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException, UnknownHostException {\n-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(host, port, localHost, localPort));\n-    }\n-\n-    @Override\n-    public Socket createSocket(InetAddress host, int port) throws IOException {\n-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(host, port));\n-    }\n-\n-    @Override\n-    public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException {\n-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(address, port, localAddress, localPort));\n-    }\n-\n-    private Socket enableTLSOnSocket(Socket socket) {\n-        if(socket != null && (socket instanceof SSLSocket)) {\n-            ((SSLSocket) socket).setEnabledProtocols(new String[] {\"TLSv1.1\", \"TLSv1.2\"});\n-        }\n-        return socket;\n-    }\n-}\n\\ No newline at end of file"
+   }
+  ]
+ }
+}

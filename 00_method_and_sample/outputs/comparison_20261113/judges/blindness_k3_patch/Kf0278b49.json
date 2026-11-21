@@ -1,0 +1,32 @@
+{
+ "card_id": "Kf0278b49",
+ "card_sha256": "d02fd8588a3a0aef",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3544,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 434
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.037270399999999995,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "4c8f7612d182824f",
+ "finished_at": "2026-11-16T11:48:57-0300",
+ "output": {
+  "guess": "S",
+  "confidence": 0.25,
+  "reason": "The PR does more than flip the trustAllCerts default. It also adds a network security config that trusts user-installed CAs and allows cleartext traffic. That reads like an attempt to keep self-hosted RSS servers working, the kind of careful compatibility step a Claude agent working in the repo might take. A pipeline would more likely make only the one-line change. Placing the new attribute before android:name is a bit unusual, which hints at a hand edit rather than a templated one. Any of the five sources could have written this, so confidence is low."
+ }
+}

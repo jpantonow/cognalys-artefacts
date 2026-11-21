@@ -1,0 +1,43 @@
+{
+ "unit": "pr_ac1a8dd4d680",
+ "source": "pr_population",
+ "group": "fechado",
+ "finding_ids": [
+  "ac1a8dd4d680"
+ ],
+ "apk": "com.craxiom.networksurvey_114.apk",
+ "repo_url": "https://github.com/christianrowlands/android-network-survey",
+ "pinned_commit": "6352b7030268784d623162d7c5f0047215c8c3f2",
+ "spec": [
+  "KeyStoreSpec"
+ ],
+ "class": "com.craxiom.networksurvey.util.CryptoManager",
+ "method": "getOrCreateKey",
+ "prs": [
+  "https://github.com/christianrowlands/android-network-survey/pull/154"
+ ],
+ "original_run": "outputs/exp_final_20261019/run2",
+ "original_outcome": "PR pronto",
+ "frozen_outcome": "PR pronto",
+ "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/exp_final_20261019/run_frozen_com_craxiom_networksurvey",
+ "reference_pr_records": [
+  "outputs/exp_final_20261019/run2/pull_requests/com.craxiom.networksurvey_114.apk_getOrCreateKey_KeyStoreSpec_pr.json"
+ ],
+ "reference_diff_lines": 15,
+ "build_task": ":networksurvey:assembleCdrDebug",
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "ac1a8dd4d680",
+   "unique_error_id": "com.craxiom.networksurvey.util.CryptoManager:::getOrCreateKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts",
+   "spec": "KeyStoreSpec",
+   "class": "com.craxiom.networksurvey.util.CryptoManager",
+   "method": "getOrCreateKey",
+   "message": "the observed call sequence is not one KeyStoreSpec accepts",
+   "apk": "com.craxiom.networksurvey_114.apk",
+   "repo_url": "https://github.com/christianrowlands/android-network-survey",
+   "commit": "6352b7030268784d623162d7c5f0047215c8c3f2",
+   "detector_source_location": "CryptoManager.kt:39"
+  }
+ ]
+}

@@ -1,0 +1,192 @@
+{
+  "repository": "outputs/finding_worktrees/com.sapuseven.untis_29198884.apk/21b3aced6bcf/47b1165883",
+  "remote_name": "origin",
+  "remote_url": "https://github.com/SapuSeven/BetterUntis",
+  "repo_host": "github.com",
+  "repo_owner": "SapuSeven",
+  "repo_name": "BetterUntis",
+  "branch": "fix/getcachefile-messagedigestspec-21b3aced6bcf-47b1165883",
+  "base_branch": "develop",
+  "base_commit": "dbb978db73f9549869f9aa831ad619b6d4afbcd8",
+  "finding_id": "21b3aced6bcf",
+  "solution_revision": "47b1165883",
+  "commit_hash": "05a2e50813f9424abe92f81b044abfe38e36fc04",
+  "source_file": "core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt",
+  "spec": "MessageDigestSpec",
+  "method_name": "getCacheFile",
+  "csv_class": "com.sapuseven.untis.data.cache.DiskCache",
+  "error_message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+  "tool": "ape",
+  "build_validation": {
+    "status": "success",
+    "task": "assembleDebug",
+    "return_code": 0,
+    "reason": "",
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/logs/projects/47b1165883.log",
+    "finding_id": "21b3aced6bcf",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.sapuseven.untis_29198884.apk/21b3aced6bcf/47b1165883",
+    "failure_attribution": "",
+    "unselected_flavor": "",
+    "compiler_diagnostics": [],
+    "baseline_compiler_diagnostics": [],
+    "new_compiler_diagnostics": [],
+    "failing_tests": [],
+    "baseline_failing_tests": [],
+    "new_failing_tests": [],
+    "phases": {
+      "production": {
+        "project_name": "47b1165883",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.sapuseven.untis_29198884.apk/21b3aced6bcf/47b1165883",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.sapuseven.untis_29198884.apk/21b3aced6bcf/47b1165883",
+        "task": "assembleDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 1799.74,
+        "apk_count": 2,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/apks/47b1165883/app-foss-debug.apk",
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/apks/47b1165883/app-gms-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/logs/projects/47b1165883.log",
+        "reason": ""
+      }
+    },
+    "finding_revalidation": {
+      "status": "passed",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "specification": "MessageDigestSpec",
+      "factory_type": "MessageDigest",
+      "outcome": "substituted",
+      "forbidden_algorithm": "MD5",
+      "allowed_algorithms": [
+        "SHA-256",
+        "SHA-384",
+        "SHA-512",
+        "SHA256",
+        "SHA384",
+        "SHA512"
+      ],
+      "remaining_forbidden_occurrences": [],
+      "allowed_factory_occurrences": [
+        {
+          "source_file_path": "core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt",
+          "line": 62,
+          "algorithm": "SHA-256"
+        }
+      ],
+      "remaining_factory_calls": [
+        {
+          "source_file_path": "core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt",
+          "line": 62
+        }
+      ],
+      "removal_evidence": [
+        {
+          "source_file_path": "core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt",
+          "edit_kind": "method",
+          "removed_occurrences": 1
+        }
+      ],
+      "protocol_filter_evidence": [],
+      "reason": ""
+    },
+    "detector_replay": {
+      "outcome": "repaired",
+      "baseline": {
+        "seconds": 3.07,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "message-digest-non-allowlisted-literal-algorithm",
+            "beginline": "62",
+            "endline": "62",
+            "message": "MessageDigest algorithm literal is not SHA-256, SHA-384, or SHA-512",
+            "metadata": {}
+          }
+        ],
+        "rule": "MessageDigestSpec",
+        "method": "getCacheFile",
+        "match_scope": "method",
+        "method_lines": [
+          61,
+          64
+        ],
+        "matching_violations": [
+          {
+            "rule": "message-digest-non-allowlisted-literal-algorithm",
+            "beginline": "62",
+            "endline": "62",
+            "message": "MessageDigest algorithm literal is not SHA-256, SHA-384, or SHA-512",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the MessageDigestSpec rule fires in getCacheFile"
+      },
+      "patched": {
+        "seconds": 2.77,
+        "exit_code": 0,
+        "status": "alert_absent",
+        "violations": [],
+        "rule": "MessageDigestSpec",
+        "method": "getCacheFile",
+        "match_scope": "method",
+        "method_lines": [
+          61,
+          64
+        ],
+        "matching_violations": [],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 0,
+        "detail": "the MessageDigestSpec rule does not fire in getCacheFile"
+      },
+      "detail": "the reported rule fired before the patch and does not fire after it",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/MessageDigestSpec.yml",
+        "rules_sha256": "2da80d36f501a65cf0fa8800c2a0912be79108f3ddcddf0c376590a139090a74"
+      }
+    },
+    "patch_correctness": {
+      "verdict": "unverified",
+      "satisfied": [
+        "builds",
+        "violation_reproduced_and_eliminated"
+      ],
+      "missing": [
+        "regression_suite_not_run"
+      ],
+      "contradicted": []
+    }
+  },
+  "manual_review_required": true,
+  "auto_apply": false,
+  "publication_allowed": false,
+  "publishable": false,
+  "preview_status": "REVIEW_ONLY_NOT_PUBLISHABLE",
+  "original_method_body": "\t@OptIn(ExperimentalStdlibApi::class)\n\tprivate fun getCacheFile(key: CacheKey<KeyType>): File {\n\t\tval md = MessageDigest.getInstance(\"MD5\")\n\t\treturn File(cacheDir, md.digest(key.toString().toByteArray()).toHexString())\n\t}",
+  "corrected_method_body": "\t@OptIn(ExperimentalStdlibApi::class)\n\tprivate fun getCacheFile(key: CacheKey<KeyType>): File {\n\t\tval md = MessageDigest.getInstance(\"SHA-256\")\n\t\treturn File(cacheDir, md.digest(key.toString().toByteArray()).toHexString())\n\t}",
+  "coordinated_edits": [
+    {
+      "source_file": "core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt",
+      "symbol": "DiskCache.getCacheFile",
+      "edit_kind": "method",
+      "original_code": "\t@OptIn(ExperimentalStdlibApi::class)\n\tprivate fun getCacheFile(key: CacheKey<KeyType>): File {\n\t\tval md = MessageDigest.getInstance(\"MD5\")\n\t\treturn File(cacheDir, md.digest(key.toString().toByteArray()).toHexString())\n\t}",
+      "corrected_code": "\t@OptIn(ExperimentalStdlibApi::class)\n\tprivate fun getCacheFile(key: CacheKey<KeyType>): File {\n\t\tval md = MessageDigest.getInstance(\"SHA-256\")\n\t\treturn File(cacheDir, md.digest(key.toString().toByteArray()).toHexString())\n\t}",
+      "reason": "Replace the governed MD5 algorithm with SHA-256 without changing the method interface or digest-to-hex filename derivation."
+    }
+  ],
+  "changed_files": [
+    "core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt"
+  ],
+  "diff": "diff --git a/core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt b/core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt\nindex b550ed62..db575527 100644\n--- a/core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt\n+++ b/core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt\n@@ -59,7 +59,7 @@ class DiskCache<KeyType : Any, ValueType : Any>(\n \n \t@OptIn(ExperimentalStdlibApi::class)\n \tprivate fun getCacheFile(key: CacheKey<KeyType>): File {\n-\t\tval md = MessageDigest.getInstance(\"MD5\")\n+\t\tval md = MessageDigest.getInstance(\"SHA-256\")\n \t\treturn File(cacheDir, md.digest(key.toString().toByteArray()).toHexString())\n \t}\n }\n",
+  "title": "Use SHA-256 for disk-cache file names",
+  "body": "## Summary\n\nI found that `getCacheFile` creates disk-cache file names by hashing each cache key with MD5. The MessageDigestSpec tool rule accepts SHA-256, SHA-384, SHA-512, SHA256, SHA384, and SHA512, so MD5 does not meet that rule.\n\nI changed the digest algorithm to SHA-256 while preserving the method signature, `File` return type, and digest-to-hex filename derivation. The change is limited to the selected hashing algorithm.\n\nI found this while running the app under RVSec, a runtime-verification tool that watches the app's calls to the Java cryptography and TLS APIs and checks each sequence of calls against usage rules written in CrySL. `MessageDigestSpec` is the rule this code did not satisfy.\n\n## How was this tested?\n\n- No automated test was added in this change\n- [x] Project compiles successfully (`assembleDebug`)\n\n---\n\n*I'm an undergraduate Computer Engineering student at the University of Bras\u00edlia (UnB); this contribution is part of a research project on the analysis of Android apps, and I'm happy to adjust it to match the project's conventions.*",
+  "text_problems": [],
+  "dry_run": false,
+  "existing_open_pull_request": ""
+}

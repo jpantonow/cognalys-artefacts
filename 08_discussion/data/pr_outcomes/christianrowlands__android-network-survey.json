@@ -1,0 +1,43 @@
+[
+  {
+    "pull_request": "https://github.com/christianrowlands/android-network-survey/pull/149",
+    "state": "closed",
+    "finding_id": "19def42b0fba",
+    "spec": "DeprecatedLibrarySpec",
+    "csv_class": "com.craxiom.networksurvey.SimChangeReceiver",
+    "method_name": "onReceive",
+    "title": "Replace deprecated LocalBroadcastManager in SimChangeReceiver",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:38:25.541599+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "christianrowlands",
+        "kind": "comment",
+        "body": "Hey @jpantonow , thanks for taking the time to submit a PR. I am curious how you found this issue with Network Survey. Were you seeing an crash or other issue?\r\n\r\nI will review your submission and provide any feedback I might have."
+      },
+      {
+        "author": "christianrowlands",
+        "kind": "comment",
+        "body": "Thanks for taking the time on this. Since you opened it, the v2 rework of Network Survey (aba8bae6) removed LocalBroadcastManager entirely. SIM changes now go from SimChangeReceiver through a small in-process SimChanges signal. It runs the cellular controller before any screen, so the controller always refreshes its subscription list first. The fragments this PR changes are gone, so I'm closing it as superseded."
+      }
+    ]
+  },
+  {
+    "pull_request": "https://github.com/christianrowlands/android-network-survey/pull/154",
+    "state": "closed",
+    "finding_id": "ac1a8dd4d680",
+    "spec": "KeyStoreSpec",
+    "csv_class": "com.craxiom.networksurvey.util.CryptoManager",
+    "method_name": "getOrCreateKey",
+    "title": "Use KeyStore.getKey when reading the encryption key",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:39:09.754398+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "christianrowlands",
+        "kind": "comment",
+        "body": "Thanks for the PR. For an AndroidKeyStore AES key, getEntry and getKey return the same key, so this doesn't change how the app behaves. It only satisfies the CrySL rule. There's also a second copy of this code in NsAnalyticsCryptoManager that would be left different. I'm going to close this one rather than make a change that only satisfies the rule, but I appreciate you running the app through RVSec."
+      }
+    ]
+  }
+]

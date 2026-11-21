@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-11-04T00:39:15.684012+00:00",
+  "repositories": [
+    {
+      "repository": "org.cryptomator.lite.debug_3157.apk",
+      "initial_branch": "",
+      "selected_branch": "",
+      "branch_policy": {},
+      "guidance_files": [
+        ".github/CONTRIBUTING.md",
+        "README.md"
+      ],
+      "status": "unchanged"
+    }
+  ]
+}

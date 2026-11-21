@@ -1,0 +1,3 @@
+Created [PR.md](PR.md) and applied the selector change with four new tests.
+
+Debug build, all eight targeted tests, and ktlint passed. The PR notes the unresolved `TYPE2` package mapping and unverified device/RVSec behavior.

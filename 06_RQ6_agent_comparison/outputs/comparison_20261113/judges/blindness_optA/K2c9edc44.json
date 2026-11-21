@@ -1,0 +1,31 @@
+{
+ "card_id": "K2c9edc44",
+ "card_sha256": "c66e908f1282c896",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 5804,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 487
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0564098,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "087b375c8d515217",
+ "finished_at": "2026-11-17T18:56:28-0300",
+ "output": {
+  "guess": "TP",
+  "confidence": 0.42,
+  "reason": "The card is short, first-person and plain. It quotes the absolute path of the build_check script and mentions working around ANDROID_USER_HOME, both details an agent would carry over from its own session environment. It also has a small typo in a command (no space before `:app:testDebugUnitTest`). It lists honest caveats (the unidentified third hash value, no device test) and leaves unchecked the checklist items it didn't do. The diff is compact and idiomatic Kotlin, and the tests are dense. Sonnet's writing tends to be more padded, while a pipeline's output tends to be more uniform and templated. This one reads like a Codex/GPT session, but the evidence is weak."
+ }
+}

@@ -1,0 +1,136 @@
+{
+  "schema_version": 2,
+  "spec_id": "Object_MonitorOwner",
+  "name": "Object_MonitorOwner",
+  "applies_to_types": [
+    "mop.Object_MonitorOwner",
+    "java.lang.Object"
+  ],
+  "source_title": "Object_MonitorOwner.mop (JavaMOP monitor specification)",
+  "source_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Object_MonitorOwner.mop",
+  "source_verified": true,
+  "protocol": "For each independent before-call event CALL(o, notify|notifyAll|wait), require Thread.holdsLock(o); otherwise emit a violation. There is no cross-call state-machine ordering requirement.",
+  "important_note": "This is a JavaMOP runtime-monitor specification, not a verified CrySL rule. It checks the ownership precondition on the actual receiver immediately before a matched Object-method call. It does not establish correctness of a broader wait/notify protocol, thread safety, liveness, or application security.",
+  "events": [
+    {
+      "name": "bad_notify",
+      "api_patterns": [
+        ".notify()",
+        ".notifyAll()"
+      ],
+      "condition": "Observed event: a before-call join point matching `call(* Object+.notify(..)) || call(* Object+.notifyAll(..))` with receiver `o`. Violation predicate: `!Thread.holdsLock(o)` immediately before the call. Merely observing a call does not satisfy or disprove the predicate."
+    },
+    {
+      "name": "bad_wait",
+      "api_patterns": [
+        ".wait()",
+        ".wait("
+      ],
+      "condition": "Observed event: a before-call join point matching `call(* Object+.wait(..))` with receiver `o`, covering Object.wait overloads. Violation predicate: `!Thread.holdsLock(o)` immediately before the call. Merely observing a call does not satisfy or disprove the predicate."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that the reported method necessarily throws or propagates IllegalMonitorStateException; the canonical monitor logs before invocation, while exception behavior requires platform API or execution evidence.",
+    "Do not infer that a synchronized context is sufficient unless it locks the exact receiver of notify, notifyAll, or wait. Holding another object's monitor does not satisfy Thread.holdsLock(target).",
+    "Do not infer a broken producer-consumer, condition-variable, or notification protocol. The rule does not inspect predicates, wait loops, notification coverage, missed signals, deadlock, or starvation.",
+    "Do not infer a security vulnerability solely from this diagnostic. The documented issue is an API-usage and concurrency-correctness precondition violation.",
+    "Do not infer that the local detector executed Thread.holdsLock at runtime. The representative finding identifies a rule/message but does not establish whether the local detector is a faithful JavaMOP runtime execution or a static approximation.",
+    "Do not treat mop.Object_MonitorOwner as an Android or JDK platform class. It is the monitor-specification identity implied by the reported JavaMOP source package; the monitored platform API is java.lang.Object."
+  ],
+  "semantic_scope": "The matching JavaMOP rule observes AspectJ before-call events for notify(..), notifyAll(..), and wait(..) on java.lang.Object or an Object subtype. For each observed receiver o, it evaluates whether the invoking thread owns that same object's monitor with Thread.holdsLock(o).",
+  "detector_semantics": {
+    "claim": "A violation is logged when notify, notifyAll, or wait is about to be called on receiver o and the current thread does not hold o's monitor.",
+    "predicates": [
+      "The invocation matches the canonical AspectJ call pattern for Object+.",
+      "The event is evaluated before the target method invocation.",
+      "The receiver is bound as o using target(o).",
+      "Thread.holdsLock(o) is false at the event point."
+    ],
+    "limitations": [
+      "The source defines independent bad-call events rather than a stateful temporal automaton.",
+      "It does not determine whether another thread owns the monitor; only current-thread ownership is relevant.",
+      "It does not inspect synchronized source syntax directly; it queries runtime monitor ownership.",
+      "The canonical source comments and messages cover wait as well as notify/notifyAll, although the supplied finding contains only the notify/notifyAll message.",
+      "A static detector can over-approximate the Thread.holdsLock predicate. Equivalence to the canonical runtime monitor requires separate evidence."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Android java.lang.Object.notify() wakes one thread waiting on that object's monitor; notifyAll() wakes all waiting threads.",
+      "Object.wait() and its timed overloads wait on that object's monitor and release that object's synchronization claims while waiting.",
+      "Android documents these APIs as inherited Object methods available since API level 1.",
+      "Thread.holdsLock(obj) returns true if and only if the current thread holds obj's monitor lock."
+    ],
+    "preconditions": [
+      "The current thread must own the monitor of the exact Object receiver before notify().",
+      "The current thread must own the monitor of the exact Object receiver before notifyAll().",
+      "The current thread must own the monitor of the exact Object receiver before any wait() overload."
+    ],
+    "unknowns": [
+      "The local detector's target Android API level, instrumentation mode, and treatment of Android framework or library calls were not supplied.",
+      "No evidence identifies whether the detector reports executable runtime events or source-level potential calls.",
+      "The JavaMOP source does not specify handling or desired diagnostics for null receiver call expressions."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The detector claims that the Object monitor-ownership precondition is false immediately before a matched wait, notify, or notifyAll call.",
+    "runtime_claim": "Android documents that calling these Object monitor methods without ownership of the specified monitor results in IllegalMonitorStateException.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Confirm that the applicable rule text contains Object_MonitorOwner(), target(o), and if(!Thread.holdsLock(o)).",
+      "Confirm that the emitted diagnostic text matches the bad_notify or bad_wait logging branch.",
+      "For CrySL provenance, fetch the requested CROSSINGTUD raw source or repository history establishing derivation; the requested current raw URL was reported as HTTP 404 during the supplied research."
+    ],
+    "runtime": [
+      "Capture the actual receiver identity and evaluate Thread.holdsLock(receiver) in the invoking thread immediately before the call.",
+      "For an asserted runtime misuse, demonstrate that the calling thread does not own the receiver monitor and observe the platform result, including any IllegalMonitorStateException.",
+      "For a claimed non-violation, demonstrate ownership of the same receiver rather than merely an enclosing or different object's monitor."
+    ],
+    "compatibility": [
+      "Verify Android/JVM java.lang.Object monitor semantics and Thread.holdsLock(Object) semantics in the target environment.",
+      "Verify that instrumentation or the detector observes intended call sites, including Kotlin-generated JVM calls where applicable.",
+      "Verify whether framework or library code is included in instrumentation, because this changes which calls are observable."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "For a static approximation, `synchronized (lock) { target.notify(); }` where lock and target alias at runtime but aliasing is not proven.",
+    "For a static approximation, a helper invokes the method while its caller holds the receiver monitor, but lock state is not modeled across the call boundary.",
+    "For a static approximation, a synchronized instance method calls this.notify() or this.wait() but the analyzer does not associate the implicit this monitor with the receiver.",
+    "For a static approximation, a static synchronized method calls SomeClass.class.notifyAll() but the analyzer does not model ownership of the Class object's monitor.",
+    "No rule-level false-positive shape is established for faithful execution of the canonical runtime predicate under documented Android Object and Thread semantics, because it directly tests current-thread ownership."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Object_MonitorOwner.mop",
+    "https://developer.android.com/reference/java/lang/Object",
+    "https://developer.android.com/reference/java/lang/Thread",
+    "https://developer.android.com/reference/java/lang/IllegalMonitorStateException"
+  ],
+  "unknowns": [
+    "The requested CrySL source, https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Object_MonitorOwner.crysl, was reported as HTTP 404, and the current JavaCryptographicArchitecture source listing was reported not to contain Object_MonitorOwner.crysl.",
+    "No evidence establishes that this specification derives from the CROSSINGTUD CrySL corpus; the matching verified source is a JavaMOP .mop specification.",
+    "Whether mop.Object_MonitorOwner is materialized as a generated Java monitor class in the detector build is not established by the .mop source alone; it is included as the required qualified specification identity, while java.lang.Object is the monitored API.",
+    "The finding does not identify the local detector implementation, version, or whether it preserves JavaMOP's runtime Thread.holdsLock check.",
+    "The finding provides no source context from dnsfilter.android.DNSFilterService.updateNotification, so ownership of the actual notify receiver at that call site cannot be determined from the finding alone.",
+    "The detector's claim and documented Android runtime condition are conditionally aligned for a faithfully executed canonical runtime rule, but their equivalence is not established for the unspecified local static detector."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "dnsfilter.android.DNSFilterService",
+        "method": "updateNotification",
+        "message": "Object_MonitorOwner notify() and notifyAll() can be called only by the owner of this object's monitor."
+      }
+    ],
+    "expected_api_simple_name": "Object_MonitorOwner",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "mop_property_declaration:Object_MonitorOwner",
+    "checked_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Object_MonitorOwner.mop"
+  }
+}

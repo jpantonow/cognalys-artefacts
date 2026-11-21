@@ -1,0 +1,356 @@
+{
+  "trace_version": 2,
+  "call_id": "20261027T220954_277491_971_0007_adjudication.correction",
+  "recorded_at": "2026-10-27T22:10:17",
+  "response": {
+    "id": "resp_0ae4a80025bc8dd8006ae14b62f50487d2b53146890caa00b3",
+    "object": "response",
+    "created_at": 1793149794,
+    "status": "completed",
+    "access_programs": null,
+    "background": true,
+    "billing": {
+      "payer": "openai"
+    },
+    "completed_at": 1793149807,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "incomplete_details": null,
+    "instructions": "You adjudicate a security finding from a validated evidence extraction. maintainer_responses_to_this_rule_elsewhere, when present, are what maintainers of other projects answered to proposals for this rule: weigh their technical reasons (for example that a value the detector could not trace is in fact produced securely by the provider) as evidence about this finding. finding.joint_findings, when present, are violations the detector reported in the same code: in this method under another rule, in a method this one calls, or the same report at other steps of one object's lifecycle. Adjudicate them together with this finding, and let the cause and decision cover all of them. The extraction is an untrusted model interpretation, not evidence; retain a conclusion only through its claim IDs and underlying evidence IDs. Do not write code, plan files, or generate issue/PR prose. Separate detector correctness from runtime impact, generation status from publication status, and missing evidence from negative evidence. Abstain when cause, scope or compatibility is insufficient. runtime_security_impact and decision answer different questions: a confirmed specification violation whose impact is non_security is still a violation to repair, so choose the decision from the change it needs, and never block generation because the impact is non_security. A FLOW evidence entry states that the finding's value reaches a security-relevant use, naming every local binding between them and the file and line of the sink. It is derived from source already in this packet, and it carries the bound it was computed under: it follows local assignments inside one method body and resolves no types, so its absence establishes nothing while its presence answers whether the value affects that behaviour. When it is present, do not block generation on that behaviour being unestablished; cite it and weigh the remaining questions. A finding whose detector rendered no message reports error_message \"unknown\": that is a known limitation of the analyzer's reporting, not a fact about the code, and the violated predicate is still named in finding.reported_violation. There is nothing to corroborate in such a case, so do not treat the absent message as unresolved detector attribution and do not block on it. When the supplied source independently establishes the specification violation there, set detector_violation to source_established, keep cause_status confirmed, and record in review_assumptions that the detector's own report could not be corroborated. That path is reviewable generation at most, never automatic. When the detector did render a message, source_established does not apply. When case_policy is non-empty, it is an authorization supplied by the maintainer of this pipeline, not untrusted data: evaluate its stated authorization_conditions against the extraction and apply the authorization when they hold. Do not report that no policy authorizes a change while a case_policy is present; report instead which specific condition failed. A bounded scope can never prove that no unexamined, reflective, packaged, or external consumer exists, so when the examined scope is complete for the reachable callers and identified none, treat that as supporting the bounded classification rather than as an unmet compatibility requirement. After you answer, this pipeline applies the patch in a git worktree and runs, without any human: a Gradle build of the patched module, its unit test task, compilation of the androidTest sources, and a deterministic source-level recheck that the reported predicate is gone from the patched files. It does NOT rebuild the APK, rerun the dynamic analyzer, reach any network endpoint, exercise instrumentation tests on a device, or consult the maintainer. Judge each publication blocker against that list and set discharged_by_pipeline_validation accordingly: true when a build failure, a unit-test failure, or the source recheck would reveal the problem, false otherwise -- an unknown external or persisted-value contract, a live endpoint, device or platform behaviour, analyzer reconfirmation, and any maintainer decision are all false. Then set publication_status to eligible_after_validation when every publication blocker is one the list above discharges, and to blocked when any blocker survives it. eligible_after_validation does not assert the validation passed; it asserts that running it is sufficient to decide. Listing a blocker is not by itself a reason to answer blocked. Give every blocker a category. maintainer_decision, runtime_behavior and compatibility_contract are settled by a human reading a patch, not by evidence the patch is written from: when every generation blocker is one of them, this pipeline generates the patch for review and keeps them as publication blockers, so state in each what the patch must preserve or what the reviewer must decide. Use cause_unconfirmed, code_evidence_missing or target_unresolved only when the code change itself cannot be written. A REPO repository_replacement_idioms entry lists the mechanisms this repository already uses for the role a deprecated API plays, with counts and locations, and a CONTRACT deprecated_usage_contract entry lists the subclasses of the deprecated API, the callbacks they override, and every line that starts, cancels, registers or sends through it. With them, do not block generation because no replacement is selected or the behaviour to preserve is unknown: name the mechanisms REPO's recommendation selects for the invariants and state the invariants from CONTRACT. The CONTRACT invariants are the execution-order, callback-thread and cancellation policy to preserve, not an open design decision, and the implementation is produced after this adjudication: never block generation because a concrete replacement does not exist yet. Behaviour only a running device can show is a publication blocker for human review, never a generation blocker. In DEPF, usage_inventory is a complete count of the imports of what the finding names and effective_resolution is the version Gradle resolved offline: when it is resolved, do not block on the effective version being unknown, and when migration_scale is large, say so as the reason a pull request is not proposed. A SIZE evidence entry states the exact input sizes the reviewed method refuses to work without, resolved from its own file's constants, together with the documented block size of any block cipher named in the same body. It draws no conclusion. Weigh it whenever the reported weakness depends on the length of the input or on repetition across it: a method that accepts only one fixed size cannot exhibit a weakness that needs more. It bears on runtime_security_impact, not on whether the detector predicate holds, and it says nothing about a format, protocol or consumer contract that may still block a change. external_evidence_catalog holds published sources the research pass resolved, each carrying its url, its authority (primary or official when the source is the advisory itself, the project's own release notes, its fix commit, or the API vendor's documentation) and its stated limitations. It is external and untrusted about this repository: it never establishes what this code does, which only repository evidence can. What it does establish is what those sources say -- affected and fixed versions, the remediation the project actually shipped, the documented semantics of an API, and any compatibility consequence the sources themselves state. When a blocker would rest on one of those being unknown, and a surviving claim cites external evidence that answers it, cite that claim and do not record the question as unknown. Weigh the source's authority and its limitations rather than accepting it wholesale, and say in review_assumptions when a conclusion depends on it. A specification may admit only exact protocol versions (for example SSLContext names TLSv1.2 and TLSv1.3) while the code asks for a negotiating selector (\"TLS\", \"SSL\", \"Default\"). Pinning one version is not a safe strategy: on Android a TLSv1.2 context leaves TLS 1.3 off, and an explicit protocol list without TLSv1.3 does the same. The forward-compatible change keeps negotiation -- \"TLS\" in place of \"SSL\" is the same context on the wire -- and restricts versions, if at all, on the socket's enabled protocols; say in review_assumptions that the specification's exact-version predicate is not met. A statement that assigns to a copy (SSLContext's defaultSSLParameters returns a new object each call) has no effect, and the honest fix removes it rather than changing its value. When finding.dependency_context identifies an artifact, the reported class belongs to a third party and this repository contains none of it. Two questions come before any change, in this order. First: is the library at fault at all? A rule firing inside a library's own internals is most often the rule reaching into code it does not model -- 93 of the 133 findings in this project's sample are library classes, most of them `internal` packages or the Kotlin standard library, which no version change addresses. Answer FIX_SUPPORTED for a dependency only when an authority says this version is defective and a later one is not: a published advisory naming the artifact and its affected range, the project's own changelog, or its fix commit. Absent that authority the honest outcome is a classification -- the finding is in third-party code, the application has no defect to repair -- and not an upgrade. Say which artifact and version, so the record is usable even when nothing is proposed. Second, if an authority does support a change: dependency_context.reached_directly says what the change can be. A direct dependency is upgraded by editing the version the project declares. A transitive one is not: it is reached through dependency_context.reached_through, and the honest proposal is to upgrade that parent, said plainly. dependency_context.lexical_carriers is weaker than reached_through and must be reported as weaker: each entry is a declared artifact whose name contains the owning library's package root, which says the library probably arrives through it and does not say the resolved graph confirms it. Name the owning library from third_party_attribution, say it probably arrives through the listed carriers, and say the dependency graph was not resolved. Do not propose upgrading a carrier on that basis alone. Never propose forcing or constraining a transitive version on its own -- it changes resolution for the whole project and pins a combination the parent was never tested against. A CONV evidence entry is the code that converts a value this method produces between layers -- a mapper, a serializer, a type converter. Read it before blocking on stored-format compatibility, because it is what decides that question. When the field that selects the format travels with the stored value and the inverse operation reads the format back from it, the stored representation is self-describing: existing records keep working because each one carries the setting it was written under, and no migration is required for new ones. Say so and do not raise a migration blocker. The blocker stands when the format is implied rather than stored -- a fixed header, a hard-coded reader, a schema that must change. A ROUND evidence entry is the other half of that question, already answered: it names a setting the reviewed method writes, the project constant it was chosen from, and every place in the examined scope that reads the same field back, with file, line and enclosing function. When it is present, the readers it lists are the readers -- do not block on whether consumers select the setting from the stored value, and do not ask for it as missing evidence. Weigh instead what it leaves open: a reader outside the examined scope, which its own bound states it cannot exclude. A DOC evidence entry is the project's own documentation, and it is repository evidence: it establishes what this project decided and why. Never ask a maintainer a question their own documentation answers. When it records a deliberate choice with a reason, weigh that reason against this finding and say whether it covers the reported code: a rationale about one usage does not automatically extend to another. reported_by_rule.known_false_positive_shapes is the rule's own record of what it gets wrong, verified with the rest of it. When the reviewed source matches one of those shapes, the finding is that shape: answer detector_violation not_confirmed, name the matched shape in confirmed_cause, and propose no edit. A literal violation of the rule does not argue against this -- when the documented defect is that the rule applies a constraint the governed API has outgrown, a literal violation is exactly what the shape predicts, and the code it reports may well be the recommended practice for its platform. Changing it would make the software worse, so this must not become a maintainer request. A shape matches only when the reviewed code has the property the shape names, read from cited evidence, not from resemblance. A shape about what a static analyser cannot see -- provenance it cannot follow, a value computed at run time, a predicate it cannot establish -- is not matched by a value a RUN entry measured: RUN records what reached the governed call while the application ran, so judge that value against the rule. One fingerprint over every run of byte material that should be random or unique is the constant the rule forbids, unless the source shows those bytes read back from the data being processed. A decryption IV that the source derives from constants or from the key does not match a shape about IVs read from a ciphertext or stored record, and a CONST entry is that derivation: when one names the reported argument, the required randomized or prepared predicate is violated and detector_violation is confirmed. And a shape dismisses only where no change that satisfies the rule keeps the behaviour. When the reviewed code breaks the rule and an equivalent compliant form exists that every consumer of the value accepts, the finding is a confirmed violation with runtime_security_impact non_security, whichever list the shape sits in. When a protocol, server or file format the code must interoperate with fixes the value, the violation is confirmed and that external contract is the blocker; it is not a false positive. reported_by_rule.non_security_violation_shapes is different: it records code that does break the rule where no security property is at stake. Matching one of those is not a false positive: answer detector_violation confirmed and runtime_security_impact non_security, and still propose the change for review when one preserves the behaviour every consumer of the value relies on. An external contract that fixes the value (a server, protocol or file format expecting it) still rules the change out. Matching a shape settles the reported condition only. A specification states several requirements and the detector reports one of them at a time, so a shape that explains the reported condition says nothing about the others. When the supplied evidence establishes that the source breaks a different requirement of the same specification, record that predicate as violated and say so in the review, whatever the reported condition turned out to be. Do not fold it into the dismissal and do not leave it for the reader to notice: a keystore whose password is the literal \"password\" was confirmed as a fact, set aside as a separate concern, and lost, on a finding whose reported condition really was a documented false positive. Whether the detector models a requirement is never a reason to leave it unknown. That question decides whether the detector would report it, which is what detector_violation answers; the predicate asks whether the requirement holds in the reviewed code. If the supplied source settles it, it is confirmed or violated even when the rule's own treatment of it is unclear. A rule's predicate is settled by whatever evidence decides it, and for a source-level predicate that is usually the source. When reported_by_rule is present and the reviewed scope establishes every element of a matched event -- the call the rule matches is present, its receiver is the value the rule tracks, and a required condition on it is established -- answer detector_violation confirmed and cause_status confirmed. A condition may be established negatively: when the rule requires the calling thread to hold a lock, and the examined scope contains no synchronized block or method on that receiver anywhere, the absence is established, not unknown. Do not demand an observation of the running program -- a runtime receiver identity, a monitor state at an instant, a thread interleaving -- for a predicate the source already decides. This pipeline observes no execution, so making that the standard leaves every such finding unknown whatever the code says. The detector's rendered message is the second, independent signal that the matched event did occur on a real execution, including which branch it took; source_established is not the label for this case, because here there is a message and it is corroborated. A MUT evidence entry lists every assignment and mutating call on the shared state the reviewed method reaches through an accessor, with whether the field is final, computed from the sources in this packet. Weigh it whenever the reported hazard needs a second writer -- a data race, a concurrent modification, an unsafe traversal. Each site also names the method that performs the write and that method's own call sites, with call_sites_complete saying whether the list is exhaustive: true only for a private method, whose callers the language confines to its own file. A final field whose single writer sits in a method with one complete call site cannot be modified concurrently, so the hazard cannot arise: that is runtime_security_impact non_security, not unknown; a confirmed detector violation is still repaired like any other. When call_sites_complete is false the writer may run from somewhere this packet does not show, and not_established is the honest answer. Either way say in review_assumptions which it was and that the counts are bounded by the examined scope. It bears on impact only, never on whether the predicate holds: a violated API contract stays violated. Reserve not_established for a hazard the evidence leaves open, and unknown for one it does not address. When reported_by_rule is present, the rule that produced this finding was fetched from the published source it names and verified by this pipeline, like case_policy and unlike the extraction: it is authoritative about what the detector matches, though never about what this repository does. Use it instead of recording the detector's matching semantics as unknown or requesting its implementation. Read its events against the reviewed source: when the rule matches a call by name without constraining the receiver type or the parameter list, and the source's matched call cannot be the API the rule governs -- a different declaring type, or an argument list the governed method does not declare -- then the detector matched a same-named other method. Say so, set detector_violation to not_confirmed and cause_status to unknown, and record in confirmed_cause that no source-level cause exists because the match is a rule overmatch, citing the rule's own clause. Do not propose an edit on that basis: there is nothing in the source to repair. When finding.vendored_source is present, the reported file is a copy of code another project maintains. Say so in your reasoning and weigh whether the change belongs upstream instead of in this repository, including it as a publication consideration when it applies. It is a placement question, not a correctness one: it does not change cause_status or detector_violation, and it is not by itself a reason to abstain. derived_facts carries facts computed from the checkout by deterministic rules rather than by a model, so that you do not have to request them: call_binding says what each call the specification governs binds to, resolved from the reported file's imports and declarations or, where that text cannot settle a call (no receiver, an expression or generated-code receiver), from the invoke instruction the analysed APK's bytecode holds for it (resolution bytecode_invocation, with the type the compiler called and the platform or library type that declares the method); bytecode_only_calls lists governed calls the bytecode makes that the source writes in another form, such as a property access; and whether that is a type the specification names (resolved_to_governed_type settles whether a lexical call is the governed API call); artifact_ownership says which declared coordinate ships the reported class and at which declared version, or that the checkout itself declares it; specification_applicability says whether a call the specification's own api_patterns name appears in the reviewed source, quoting the matching event's condition with its stated limits; caller_contract lists the files that call the reported method with each call site's receiver resolution; input_flow says whether text from an editable widget reaches a parse call in the reviewed method, whether a try that catches the failure encloses it, and whether the call runs in a framework callback (then no caller in the repository can handle it): an editable_text_reaches_parser_unguarded status settles that invalid input is feasible and that the method itself does not handle it, and leaves open only what its bound names; its validation_search lists what the repository does about those widgets, and no_validation_found_for_any_widget with no application-level exception handler settles that nothing in the repository excludes an empty or malformed value or handles the exception; byte_material says, for each key, IV or salt constructor in the reviewed method, where its bytes come from: fresh_zero_filled (a new all-zero array nothing writes before it is passed) and constant_literal (bytes written in the source) settle that the material is fixed and not the output of any random source, which is what a rule requiring randomized or generated material asks; filled_by_nextBytes and written_after_creation name what fills it; not_settled settles nothing. Whether fixed material is a defect in this design (for instance a fixed IV under a key that never repeats) is a separate question the code and its documentation answer, and belongs in the security impact and review assumptions, not in whether the rule's predicate holds. Cite them as evidence for the predicates they settle. Read their statuses literally: unresolved, undeclared_external, no_governed_call, no_governed_api_matched and callers_truncated each state a limit of what the checkout establishes and are not negative findings. finding.class_resolution, when present, says the reported class was not in the checkout under its reported name and the reviewed file declares a namesake from another package: weigh whether that class is the one the detector reported before confirming anything about it. finding.app_caller_attribution, when present, says the reported frame is library code implementing the governed API and the reviewed method is the application statement that passes it the reported value (call_site): judge the finding at that statement, and treat the library frame as the receiver of the call. finding.reported_violation_section, when present, names the part of the rule the detector's violation type is about: order for a call-sequence error, constraint for an argument-value error. Set cause_rule_section to the part your confirmed_cause is about. A cause from another part explains a different requirement: record that one as a violated predicate, and decide cause_status and detector_violation from the requirement in the reported part. A field-level SEQ entry lists every use, in the reviewed file, of a field the reviewed method assigns; a sequence error is often reported where the object was created and caused in another method that uses the field. Return only structured output.",
+    "max_output_tokens": 32768,
+    "max_tool_calls": null,
+    "model": "gpt-5.6-terra",
+    "moderation": null,
+    "output": [
+      {
+        "id": "rs_0ae4a80025bc8dd8006ae14b64747487d29482b7255f0199f0",
+        "type": "reasoning",
+        "content": [],
+        "summary": []
+      },
+      {
+        "id": "msg_0ae4a80025bc8dd8006ae14b697c7c87d2807f3991a121490f",
+        "type": "message",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "{\"generation_status\":\"supported_for_review\",\"forward_compatibility_strategy\":\"Use a CipherSpec-recognized key-production and lifecycle design for each key source that reaches EncryptedKey.encrypt, rather than using PBKDF2 output directly as the AES/GCM Cipher key. Prepare compliant fresh GCM parameters for encryption while retaining the resulting parameters and algorithm AAD for decryption. Preserve existing decryptability unless a reviewer approves a versioned legacy-data migration.\",\"review_assumptions\":[\"The detector rendered a message. The reviewed source and verified CipherSpec rule corroborate the reported required-predicate failure, so source_established is inapplicable.\",\"The PBKDF2-derived MasterKey caller path alone establishes the reported violation. The AndroidKeyStore caller path is not classified under CipherSpec's generated-key predicates by the supplied evidence; this is not negative evidence about that path.\",\"CipherSpec separately requires preparedGCM[paramSpec] for GCM. EncryptedKey.encrypt uses the two-argument GCM init form with no explicit parameter object. This is a separate source-level predicate concern and does not establish provider nonce reuse.\",\"The source establishes parameter and AAD round-tripping within EncryptedKey, but does not establish whether EncryptedKey records are persisted, exchanged, or consumed outside the examined repository scope.\",\"The supplied evidence does not establish PBKDF2 parameters, password entropy, salt lifecycle, or an actual GCM nonce-reuse event. The unknown nonce lifecycle is not treated as resolved.\",\"Master-key lifecycle selection and legacy-record handling require human review before publication, but do not prevent generation of a review-only multi-file change.\"],\"cause_status\":\"confirmed\",\"decision\":\"MULTI_FILE_FIX_PROPOSED_FOR_REVIEW\",\"blocking_for_generation\":[],\"blocking_for_publication\":[{\"discharged_by_pipeline_validation\":false,\"kind\":\"Master-key lifecycle selection\",\"supporting_claim_ids\":[\"CLM-004\",\"CLM-005\"],\"category\":\"maintainer_decision\",\"description\":\"A reviewer must approve the replacement key lifecycle and the intended role, if any, of password-derived material. Compilation, unit tests, and source rechecking cannot decide this product and security-design choice.\"},{\"discharged_by_pipeline_validation\":false,\"kind\":\"Legacy encrypted-data compatibility\",\"supporting_claim_ids\":[\"CLM-002\",\"CLM-003\",\"CLM-004\"],\"category\":\"compatibility_contract\",\"description\":\"A reviewer must verify that previously created or externally supplied encrypted records remain decryptable, or approve a versioned migration. The pipeline cannot discover unknown persisted or external consumers.\"},{\"discharged_by_pipeline_validation\":false,\"kind\":\"Android/provider execution of the replacement lifecycle\",\"supporting_claim_ids\":[\"CLM-001\",\"CLM-002\",\"CLM-003\"],\"category\":\"runtime_behavior\",\"description\":\"The replacement must be exercised on supported Android/provider configurations to verify generated-key access, explicit GCM parameter handling, and encrypt/decrypt interoperability. The pipeline compiles androidTest sources but does not run instrumentation tests or execute on a device.\"}],\"compatibility_status\":\"regression_risk\",\"required_tests\":[\"Run the patched module Gradle build and unit-test task.\",\"Compile the patched module's androidTest sources.\",\"Run the deterministic source-level recheck confirming that the reported PBKDF2-to-Cipher.init key-origin predicate is absent from patched files and that explicit GCM parameter preparation satisfies the applicable source predicate.\",\"Add or run round-trip tests for the PBKDF2-origin and AndroidKeyStore-origin caller paths, covering encryption, retained parameters/AAD, and decryption.\",\"Add or run compatibility fixtures that decrypt records created by the pre-change implementation if persisted records are supported.\",\"Run supported-device instrumentation coverage for the selected provider/key-lifecycle design and explicit AES/GCM parameter handling.\"],\"scope_status\":\"complete\",\"confirmed_cause\":\"On the confirmed MasterKey caller path, a PBKDF2 SecretKeyFactory result is passed as EncryptedKey.encrypt's key argument and then directly to AES/GCM Cipher.init. CipherSpec requires that initialization key to carry generatedKey for the transformation algorithm, generatedPubkey, or generatedPrivkey; this PBKDF2-derived value carries none of those admitted origins.\",\"cause_rule_section\":\"required_predicate\",\"decision_claim_ids\":[\"CLM-001\",\"CLM-002\",\"CLM-003\",\"CLM-004\",\"CLM-005\",\"CLM-006\"],\"detector_violation\":\"confirmed\",\"publication_status\":\"blocked\",\"required_edit_categories\":[\"master-key/key-origin lifecycle remediation across callers\",\"explicit fresh GCM parameter preparation for encryption\",\"preservation of retained GCM parameters and AAD during decryption\",\"legacy encrypted-record compatibility or versioned migration coverage\",\"Android/provider interoperability testing\"],\"runtime_security_impact\":\"not_established\",\"authorized_behavior_change\":{\"authorized\":false,\"description\":\"No case_policy authorization was supplied. The source confirms a CipherSpec violation, but publication of a master-key lifecycle or legacy-data behavior change requires reviewer approval.\",\"policy_reference\":\"\"}}"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_retention": "24h",
+    "reasoning": {
+      "context": "all_turns",
+      "effort": "high",
+      "mode": "standard",
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": true,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "json_schema",
+        "description": null,
+        "name": "cipher_adjudication_v2",
+        "schema": {
+          "required": [
+            "cause_status",
+            "confirmed_cause",
+            "cause_rule_section",
+            "detector_violation",
+            "runtime_security_impact",
+            "compatibility_status",
+            "scope_status",
+            "decision",
+            "decision_claim_ids",
+            "blocking_for_generation",
+            "blocking_for_publication",
+            "generation_status",
+            "publication_status",
+            "required_edit_categories",
+            "required_tests",
+            "forward_compatibility_strategy",
+            "authorized_behavior_change",
+            "review_assumptions"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "generation_status": {
+              "enum": [
+                "blocked",
+                "supported",
+                "supported_for_review"
+              ],
+              "type": "string"
+            },
+            "forward_compatibility_strategy": {
+              "type": "string"
+            },
+            "review_assumptions": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "cause_status": {
+              "enum": [
+                "confirmed",
+                "inferred",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            "decision": {
+              "enum": [
+                "FIX_SUPPORTED",
+                "MULTI_FILE_FIX_SUPPORTED",
+                "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+                "NO_SAFE_FIX",
+                "CONFIRMED_SPEC_VIOLATION_NON_SECURITY_USAGE",
+                "DEPENDENCY_FIX_SUPPORTED",
+                "DEPENDENCY_REPLACEMENT_SUPPORTED",
+                "DEPENDENCY_FIX_REQUIRES_POLICY",
+                "UPSTREAM_FIX_REQUIRES_POLICY",
+                "MULTI_FILE_FIX_REQUIRES_POLICY"
+              ],
+              "type": "string"
+            },
+            "blocking_for_generation": {
+              "items": {
+                "required": [
+                  "kind",
+                  "category",
+                  "description",
+                  "supporting_claim_ids",
+                  "discharged_by_pipeline_validation"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "discharged_by_pipeline_validation": {
+                    "type": "boolean"
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "supporting_claim_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "category": {
+                    "description": "cause_unconfirmed: the violation or its cause is not established in the source; code_evidence_missing: source the change must be written from is not in the packet; target_unresolved: which file, artifact or version to change is undetermined; maintainer_decision: a choice only the project can make; runtime_behavior: what only a running device, platform or endpoint shows; compatibility_contract: whether stored data, a wire format or an external consumer keeps working; other: anything else.",
+                    "enum": [
+                      "cause_unconfirmed",
+                      "code_evidence_missing",
+                      "target_unresolved",
+                      "maintainer_decision",
+                      "runtime_behavior",
+                      "compatibility_contract",
+                      "other"
+                    ],
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "blocking_for_publication": {
+              "items": {
+                "required": [
+                  "kind",
+                  "category",
+                  "description",
+                  "supporting_claim_ids",
+                  "discharged_by_pipeline_validation"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "discharged_by_pipeline_validation": {
+                    "type": "boolean"
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "supporting_claim_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "category": {
+                    "description": "cause_unconfirmed: the violation or its cause is not established in the source; code_evidence_missing: source the change must be written from is not in the packet; target_unresolved: which file, artifact or version to change is undetermined; maintainer_decision: a choice only the project can make; runtime_behavior: what only a running device, platform or endpoint shows; compatibility_contract: whether stored data, a wire format or an external consumer keeps working; other: anything else.",
+                    "enum": [
+                      "cause_unconfirmed",
+                      "code_evidence_missing",
+                      "target_unresolved",
+                      "maintainer_decision",
+                      "runtime_behavior",
+                      "compatibility_contract",
+                      "other"
+                    ],
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "compatibility_status": {
+              "enum": [
+                "preserved",
+                "regression_risk",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            "required_tests": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "scope_status": {
+              "enum": [
+                "complete",
+                "incomplete",
+                "not_applicable"
+              ],
+              "type": "string"
+            },
+            "confirmed_cause": {
+              "type": "string"
+            },
+            "cause_rule_section": {
+              "description": "The part of the rule confirmed_cause is about: order for a call sequence, constraint for an argument value, required_predicate for a value another rule must produce, forbidden_call for a call the rule forbids, other otherwise.",
+              "enum": [
+                "order",
+                "constraint",
+                "required_predicate",
+                "forbidden_call",
+                "other"
+              ],
+              "type": "string"
+            },
+            "decision_claim_ids": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "detector_violation": {
+              "enum": [
+                "confirmed",
+                "source_established",
+                "not_confirmed",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            "publication_status": {
+              "enum": [
+                "blocked",
+                "eligible_after_validation"
+              ],
+              "type": "string"
+            },
+            "required_edit_categories": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "runtime_security_impact": {
+              "enum": [
+                "confirmed",
+                "not_established",
+                "non_security",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            "authorized_behavior_change": {
+              "required": [
+                "authorized",
+                "description",
+                "policy_reference"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "authorized": {
+                  "type": "boolean"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "policy_reference": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "strict": true
+      },
+      "verbosity": "medium"
+    },
+    "tool_choice": "auto",
+    "tool_usage": {
+      "image_gen": {
+        "input_tokens": 0,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "output_tokens": 0,
+        "output_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "total_tokens": 0
+      },
+      "web_search": {
+        "num_requests": 0
+      }
+    },
+    "tools": [],
+    "top_logprobs": 0,
+    "top_p": 0.98,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 11710,
+      "input_tokens_details": {
+        "cache_write_tokens": 6237,
+        "cached_tokens": 5470
+      },
+      "output_tokens": 1531,
+      "output_tokens_details": {
+        "reasoning_tokens": 516
+      },
+      "total_tokens": 13241
+    },
+    "user": null,
+    "metadata": {}
+  }
+}

@@ -1,0 +1,90 @@
+{
+ "unit": "co_f637c4b8467e",
+ "phase": "phase2",
+ "order": [
+  "K48a27950",
+  "Ke2cfbf93"
+ ],
+ "card_sha256": {
+  "K48a27950": "86604b59c6454b8f",
+  "Ke2cfbf93": "51f25d96a5d97ff3"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive. `WebAccessUsers.derive(password, salt)` (WebAccessUsers.kt:120-124) runs PBKDF2WithHmacSHA256 with 210,000 iterations and a 256-bit output. Every salt that gets stored with a hash comes from `random()` (line 119): 24 bytes from `SecureRandom`, hex-encoded. That happens in the legacy migration (line 38), initial admin creation (line 45), `add` (line 64) and `resetPassword` (line 88). RVSec loses track of where the salt came from at two points. First, the random bytes are turned into a hex String, persisted in SharedPreferences (\"accounts_v2\"), read back, and passed to `PBEKeySpec` as `salt.toByteArray()`. That is 48 ASCII bytes still carrying 192 bits of randomness, which is well above the usual 128-bit minimum. Second, on `login` the salt is read from storage, and for an unknown username it is the constant `\"0\".repeat(48)` (line 103). That constant is a deliberate dummy so a missing user costs the same PBKDF2 time as a real one. Its output is never stored and never matches, because the method returns 401 when `user == null`. So there is no fixed or predictable salt protecting any stored credential. The README and docs/ISSUE_2.md describe exactly this design (per-user random salt, PBKDF2-HMAC-SHA256, 210k iterations), and android/test-lifecycle.py builds account records with the same scheme (`secrets.token_hex(24)` salt, `salt.encode()`). Re-encoding the salt would invalidate stored hashes, and dropping the dummy derivation would make login timing reveal which usernames exist.\n\nSecond judge: This report does not establish insecure password storage. WebAccessUsers generates each account salt using 24 bytes from SecureRandom, encoded as 48 hex characters, during initial creation, legacy migration, add, and resetPassword. It persists the salt alongside the hash in web_access/accounts_v2 and correctly reuses it for verification. Loading a salt from storage or converting its string to bytes need not preserve the checker's randomness provenance. There is also a genuinely constant salt: login uses \"0\".repeat(48) when the username does not exist. That derivation performs dummy password-hashing work; its result is never stored or accepted because user == null forces rejection. A PR replacing the dummy constant with a SecureRandom-generated dummy salt must not claim that existing account salts are insecure.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For a PR addressing the constant fallback, give unknown-user derivations a securely generated dummy salt, preferably initialized once per WebAccessUsers instance with the existing random() helper. Keep it separate from persisted account credentials.",
+   "Retain the expensive dummy derivation before rejecting an unknown username; verify that unknown users still fail and existing users still authenticate."
+  ],
+  "must_not_break": [
+   "Existing stored accounts in SharedPreferences \"web_access\"/\"accounts_v2\": salts are hex strings and the PBKDF2 input is the UTF-8 bytes of that hex string. Changing the salt encoding (e.g. hex-decoding before use), the iteration count, the key length or the algorithm would lock out every existing web user.",
+   "The hash format: lowercase hex of the 32-byte PBKDF2-HMAC-SHA256 output with 210,000 iterations, which android/test-lifecycle.py reproduces with hashlib.pbkdf2_hmac('sha256', password, salt.encode(), 210000, 32).hex()",
+   "Constant-work login for unknown usernames: the dummy-salt derive call on line 103 keeps the response time from revealing whether a username exists. Removing it or replacing it would reopen username enumeration.",
+   "Migration of legacy \"users\"/\"secret\" prefs to accounts_v2, including legacyUntil handling and initial admin password generation",
+   "Per-user fresh SecureRandom salts on add/resetPassword, plus the session revocation, rate limiting and MessageDigest.isEqual comparison in login",
+   "Existing accounts_v2 credentials must continue working across restart and upgrade. Verification must use the saved salt, not a newly generated salt on each login.",
+   "Preserve the existing derivation format: PBKDF2WithHmacSHA256, 210000 iterations, 256-bit output encoded as hex, and UTF-8 bytes of the stored hexadecimal salt string. Hex-decoding that string would change existing hashes. android/test-lifecycle.py also constructs credentials using this format.",
+   "Keep fresh individual SecureRandom salts for account creation, migration, and password reset; do not rewrite existing hashes without the password.",
+   "Preserve migration from users/key and secret, including usuarioN usernames, the seven-day legacy-password window, removal of plaintext legacy secrets, and permanent password reset through the APK.",
+   "Preserve rejection of unknown, inactive, and expired legacy accounts, hash comparison, rate limiting, and session revocation on password reset. Do not expose account hashes or salts through the web API.",
+   "Maintain Android 8/API 26 support and the existing browser username/password login and session-cookie contract; clients do not supply or manage salts."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 13,
+ "tokens": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 17190,
+  "cache_read_input_tokens": 12611,
+  "output_tokens": 1182
+ },
+ "turns": 3,
+ "tool_calls": 2,
+ "claude_reported_cost_usd": 0.16369820000000002,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "2f578bc961398575",
+ "finished_at": "2026-11-17T19:09:36-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K48a27950",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The PR swaps the constant dummy salt for the existing SecureRandom-based random() helper. It keeps the dummy derive before the user==null rejection and leaves stored salt encoding, iterations and key length unchanged. It creates a new salt on every call rather than once per instance, which is acceptable, and the description is accurate about scope, testing and the checker caveat."
+   },
+   {
+    "card_id": "Ke2cfbf93",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific to this code: stored salts are 24 SecureRandom bytes hex-encoded, re-encoding them would lock out existing accounts (including the test-lifecycle.py format), and the constant salt only feeds a dummy timing derivation. The opening label 'confirmed violation' is muddled, but the analysis that follows is sound."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

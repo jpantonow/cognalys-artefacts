@@ -1,0 +1,2 @@
+{"call": 1, "caller": "agent", "time": "2026-11-17T15:49:46-0300", "task": "assembleDebug", "diff_sha": "4811937563659251", "diff_bytes": 20114, "status": "success", "reason": "", "used_task": "assembleDebug", "apks": 1, "seconds": 169, "tool_rc": 0}
+{"call": 2, "caller": "kit", "time": "2026-11-17T15:50:03-0300", "task": "assembleDebug", "diff_sha": "843daf39f0d1081c", "diff_bytes": 12048, "status": "success", "reason": "", "used_task": "assembleDebug", "apks": 1, "seconds": 10, "tool_rc": 0}

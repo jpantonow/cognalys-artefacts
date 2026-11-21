@@ -1,0 +1,129 @@
+{
+  "schema_version": 2,
+  "spec_id": "Comparable_CompareToNull",
+  "name": "Comparable_CompareToNull",
+  "applies_to_types": [
+    "java.lang.Comparable",
+    "java.lang.Object"
+  ],
+  "source_title": "Comparable_CompareToNull.mop — javamop-agent-bundle detector rule",
+  "source_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Comparable_CompareToNull.mop",
+  "source_verified": true,
+  "protocol": "before call(* java.lang.Comparable+.compareTo(..)) with args(o) ∧ (o == null) → emit CRITICAL diagnostic",
+  "important_note": "This is a runtime call-site rule, not a source-text rule: it reports only when the argument value bound as o is null at a matched invocation. It does not establish that the source literally wrote null, that compareTo executed successfully, that a NullPointerException was thrown, or that the reported application method contains a security vulnerability.",
+  "events": [
+    {
+      "name": "nullcompare",
+      "api_patterns": [
+        ".compareTo(",
+        "compareTo("
+      ],
+      "condition": "Observation clause: call(* Comparable+.compareTo(..)) && args(o). Reporting predicate: if(o == null), evaluated at the call join point immediately before the invocation. Comparable resolves to java.lang.Comparable because the rule imports java.lang.*, and Comparable+ denotes Comparable and its subtypes. args(o) binds the runtime argument value as java.lang.Object; satisfying the predicate depends on that runtime value being null, not on lexical use of the token null."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that name.gdr.acastus_photon.MainActivity.handleIntent contains the literal source expression compareTo(null); a variable, field read, return value, cast, or other expression may evaluate to null at runtime.",
+    "Do not infer that every method named compareTo is governed. The rule is scoped to the AspectJ signature pattern Comparable+.compareTo(..), not arbitrary namesake APIs or Comparator.compare methods.",
+    "Do not infer that the receiver's exact concrete class is java.lang.Comparable; Comparable+ includes java.lang.Comparable and its subtypes.",
+    "Do not infer that the called compareTo implementation ran to completion or threw NullPointerException; the advice runs before the call.",
+    "Do not infer exploitability, attacker control, confidentiality impact, integrity impact, availability impact, or any security vulnerability from this diagnostic alone.",
+    "Do not infer the exact text or origin of __DEFAULT_MESSAGE from this rule file; the rule explicitly supplies only the additional literal message \"null cannot be compared to any object\"."
+  ],
+  "semantic_scope": "The rule observes woven AspectJ method-call join points whose matched method signature is named compareTo and whose declaring-type pattern is java.lang.Comparable or a subtype. It binds the argument as Object and emits a critical log before the invocation only if the bound runtime reference is null. The representative finding's class and method identify a reported application location, but they do not change the governed API from java.lang.Comparable.compareTo.",
+  "detector_semantics": {
+    "claim": "A null argument was supplied at runtime to a call join point selected by call(* Comparable+.compareTo(..)) && args(o), so the monitor emitted a CRITICAL diagnostic before invocation.",
+    "predicates": [
+      "call(* Comparable+.compareTo(..))",
+      "args(o), where the advice parameter is java.lang.Object",
+      "if(o == null)"
+    ],
+    "limitations": [
+      "The rule has one event and no state machine or cross-event ordering requirement beyond the before advice timing.",
+      "The rule neither observes nor validates the return value, exception, comparison ordering, receiver state, or implementation of compareTo.",
+      "A source-level search for compareTo( is only a triage aid: it can miss formatting variations, generated/compiled code, inherited or bridge dispatch, and Kotlin operator syntax that may compile to a compareTo invocation.",
+      "The rule's signature pattern is not equivalent to matching every object that happens to be Comparable at runtime; it is a method-call signature pattern using Comparable+."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "java.lang.Comparable<T> defines int compareTo(T o) to compare the receiver with a specified object for order, returning a negative integer, zero, or a positive integer.",
+      "Oracle's current Java API documentation states that compareTo throws NullPointerException if the specified object is null.",
+      "The Java SE 6 documentation linked by the rule states that e.compareTo(null) should throw NullPointerException because null is not an instance of any class."
+    ],
+    "preconditions": [
+      "The receiver participates in the java.lang.Comparable natural-ordering contract.",
+      "The comparison argument should be non-null.",
+      "The argument must be of a type that can be compared with the receiver; otherwise the API permits ClassCastException."
+    ],
+    "unknowns": [
+      "The rule does not identify the concrete Comparable implementation at the reported call site.",
+      "The rule does not establish the target platform's precise Java or Android library version.",
+      "The rule does not establish whether a concrete implementation follows the Comparable contract when given null."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "A contract-violating or suspicious attempt to compare a Comparable value with a null argument was observed at a matched call site.",
+    "runtime_claim": "Immediately before the matched invocation, the argument value bound to o was null.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Resolve the invoked compareTo signature and confirm that its AspectJ declaring-type pattern matches java.lang.Comparable+.",
+      "Treat a lexical compareTo( match only as a candidate; verify the resolved call rather than selecting another framework's similarly named API.",
+      "Do not require a literal null argument in source, because the rule tests the evaluated runtime value."
+    ],
+    "runtime": [
+      "Confirm that the invocation was instrumented and that the bound argument o evaluated to null at the before-call join point.",
+      "To establish actual outcome, independently capture whether the invocation proceeded and whether it returned or threw an exception.",
+      "To establish impact, independently show how the null value arises and whether the resulting behavior is reachable in the relevant deployment."
+    ],
+    "compatibility": [
+      "Identify the Java/Android runtime API level used by the application.",
+      "Confirm the AspectJ/RV-Monitor weaving or agent configuration covers the relevant call site.",
+      "Account for compiler-generated bridge methods, desugaring, proxies, and Kotlin-to-JVM compilation where applicable."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A test intentionally invokes compareTo with null to verify the documented NullPointerException behavior.",
+    "A program deliberately invokes a nonconforming custom Comparable implementation that accepts null; the rule still reports the null call even if that implementation does not throw.",
+    "A report consumer classifies every monitor warning as a security issue even though this rule records an API-contract condition and has no security-impact predicate.",
+    "A report is attributed to a broad enclosing method such as handleIntent even though the actual matched invocation is in generated, synthetic, bridge, or nested code associated with that method."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Comparable_CompareToNull.mop",
+    "https://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Comparable.html",
+    "https://eclipse.dev/aspectj/doc/latest/progguide/semantics.html"
+  ],
+  "unknowns": [
+    "The rule file does not disclose the value of __DEFAULT_MESSAGE, so the representative combined message cannot be fully attributed to a literal in the rule.",
+    "The rule does not state which concrete compareTo declaration or receiver type produced the representative finding.",
+    "The rule alone cannot show whether name.gdr.acastus_photon.MainActivity.handleIntent was executed in production, test, or analysis instrumentation.",
+    "The rule does not prove whether the null value was expected, validated, attacker-controlled, or harmful.",
+    "The Java SE 6 document cited in the rule phrases null handling as compareTo(null) \"should\" throw NullPointerException, whereas current Oracle API documentation formally lists NullPointerException for a null argument; the rule itself does not select a target API version."
+  ],
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Comparable_CompareToNull.mop",
+    "format": "mop",
+    "catalog_entry": "javamop_property",
+    "detail": "mop_property_declaration:Comparable_CompareToNull"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "name.gdr.acastus_photon.MainActivity",
+        "method": "handleIntent",
+        "message": "Comparable_CompareToNull null cannot be compared to any object"
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "mop_property_declaration:Comparable_CompareToNull",
+    "checked_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Comparable_CompareToNull.mop"
+  }
+}

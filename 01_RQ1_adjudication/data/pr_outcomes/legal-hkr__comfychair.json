@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/legal-hkr/comfychair/pull/43",
+    "state": "closed",
+    "finding_id": "8267eb61836d",
+    "spec": "WebViewSslErrorBypassSpec",
+    "csv_class": "sh.hnet.comfychair.ui.screens.BrowserAuthScreenKt",
+    "method_name": "BrowserAuthScreen",
+    "title": "Fix BrowserAuthScreen",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:50.159322+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "legal-hkr",
+        "kind": "comment",
+        "body": "Thank you – you were right, accepting every SSL error in the sign-in WebView was a real problem. It's fixed in v0.8.13, released today, in a slightly different way: always cancelling would break SSO sign-in on servers with a self-signed or private-CA certificate, which are common for self-hosted ComfyUI. The app now asks the user to confirm the certificate's SHA-256 fingerprint on first connection, and the WebView accepts only that confirmed certificate and cancels any other error. Closing this one, but thanks for the report and good luck with your research."
+      }
+    ]
+  }
+]

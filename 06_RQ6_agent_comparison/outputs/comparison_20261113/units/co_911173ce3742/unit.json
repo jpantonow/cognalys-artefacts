@@ -1,0 +1,37 @@
+{
+ "unit": "co_911173ce3742",
+ "source": "spec_cohort",
+ "group": "no_pr",
+ "finding_ids": [
+  "911173ce3742"
+ ],
+ "apk": "github.paroj.dsub2000_217.apk",
+ "repo_url": "https://github.com/paroj/DSub2000",
+ "pinned_commit": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+ "spec": [
+  "MessageDigestSpec"
+ ],
+ "class": "github.paroj.dsub2000.util.Util",
+ "method": "md5Hex",
+ "latest_outcome": [
+  "issue para o mantenedor do app"
+ ],
+ "bench_id": [],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "911173ce3742",
+   "unique_error_id": "github.paroj.dsub2000.util.Util:::md5Hex:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "spec": "MessageDigestSpec",
+   "class": "github.paroj.dsub2000.util.Util",
+   "method": "md5Hex",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "apk": "github.paroj.dsub2000_217.apk",
+   "repo_url": "https://github.com/paroj/DSub2000",
+   "commit": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "detector_source_location": "Util.java:1006"
+  }
+ ]
+}

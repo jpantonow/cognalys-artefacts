@@ -1,0 +1,43 @@
+{
+ "unit": "pr_013d2748f3f8",
+ "source": "pr_population",
+ "group": "aberto",
+ "finding_ids": [
+  "013d2748f3f8"
+ ],
+ "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+ "repo_url": "https://github.com/yogeshpaliyal/KeyPass",
+ "pinned_commit": "f0ef4cd98349ddc7320c164e3d8173f334407bd2",
+ "spec": [
+  "CipherSpec"
+ ],
+ "class": "com.yogeshpaliyal.common.utils.CryptoManager",
+ "method": "encrypt",
+ "prs": [
+  "https://github.com/yogeshpaliyal/KeyPass/pull/1252"
+ ],
+ "original_run": "outputs/rvsec_keypass_20261025/run",
+ "original_outcome": "PR pronto",
+ "frozen_outcome": "issue para o mantenedor do app",
+ "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_keypass_20261025/run_frozen",
+ "reference_pr_records": [
+  "outputs/rvsec_keypass_20261025/run/pull_requests/com.yogeshpaliyal.keypass.debug_1442.apk_encrypt_CipherSpec_pr.json"
+ ],
+ "reference_diff_lines": 36,
+ "build_task": "assembleDebug",
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "013d2748f3f8",
+   "unique_error_id": "com.yogeshpaliyal.common.utils.CryptoManager:::encrypt:::CipherSpec:::UnsatisfiedConstraint:::no generator of the key given to Cipher.init was observed",
+   "spec": "CipherSpec",
+   "class": "com.yogeshpaliyal.common.utils.CryptoManager",
+   "method": "encrypt",
+   "message": "no generator of the key given to Cipher.init was observed",
+   "apk": "com.yogeshpaliyal.keypass.debug_1442.apk",
+   "repo_url": "https://github.com/yogeshpaliyal/KeyPass",
+   "commit": "f0ef4cd98349ddc7320c164e3d8173f334407bd2",
+   "detector_source_location": "CryptoManager.kt:42"
+  }
+ ]
+}

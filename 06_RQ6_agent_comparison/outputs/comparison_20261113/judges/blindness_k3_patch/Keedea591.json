@@ -1,0 +1,32 @@
+{
+ "card_id": "Keedea591",
+ "card_sha256": "2be7dd0577821560",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3185,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 423
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0341784,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "76cef2113ab96e44",
+ "finished_at": "2026-11-16T11:46:42-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.27,
+  "reason": "The diff is small and careful: it moves KeyGenerator.getInstance into the per-tier try block and adds a three-line comment explaining why. The comment's wording reads like Claude's style rather than Codex's, and Codex agents usually leave terser diffs with fewer comments. The card says the exact diff was built and passed, which fits the pipeline's build-and-review step. That points to a Claude-based source, and I lean slightly towards the Sonnet pipeline (D) over the Sonnet agent (S). Confidence is low."
+ }
+}

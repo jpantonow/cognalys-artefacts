@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/leekleak/traffic-light/pull/238",
+    "state": "merged",
+    "finding_id": "32249b3e5e5d",
+    "spec": "KeyStoreSpec",
+    "csv_class": "com.leekleak.trafficlight.database.CryptoManager",
+    "method_name": "getSecretKey",
+    "title": "Use KeyStore.getKey to read secret keys",
+    "impact_class": "no_security_impact",
+    "recorded_at": "2026-11-19T20:39:12.001062+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "leekleak",
+        "kind": "comment",
+        "body": "Thanks"
+      }
+    ]
+  }
+]

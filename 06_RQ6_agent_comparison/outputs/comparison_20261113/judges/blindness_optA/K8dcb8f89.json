@@ -1,0 +1,31 @@
+{
+ "card_id": "K8dcb8f89",
+ "card_sha256": "cd006a4c8bbdf1ea",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 5309,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 527
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0532498,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "ead5bb365795d47c",
+ "finished_at": "2026-11-17T18:57:10-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.45,
+  "reason": "The description is short and reads like a filled-in template: it restates the RVSec finding mechanically, then has stock lines about how it was found, that `assembleDebug` passes, and an offer to adjust. That points to a pipeline more than an agent writing freely. The diff is careful and defensive, with a versioned envelope, a legacy fallback and password clearing, which fits GPT-6.1 Terra and argues against Sonnet. The description also has no headers or long explanation, which Sonnet would usually add. The templated wording tips it toward Cognalys rather than Codex, but this is a weak call."
+ }
+}

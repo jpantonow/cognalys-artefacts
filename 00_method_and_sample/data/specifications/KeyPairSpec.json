@@ -1,0 +1,145 @@
+{
+  "schema_version": 2,
+  "spec_id": "KeyPairSpec",
+  "name": "KeyPairSpec",
+  "applies_to_types": [
+    "java.security.KeyPair"
+  ],
+  "source_title": "KeyPair.crysl — Java Cryptographic Architecture CrySL rule",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/KeyPair.crysl",
+  "source_verified": true,
+  "protocol": "Con, (GetPubl | GetPriv)*; Con = KeyPair(publicKey, privateKey), GetPubl = getPublic(), GetPriv = getPrivate(). Conditional provenance requirement: noCallTo[Con] => generatedKeypair[this, _].",
+  "important_note": "Under the supplied CrySL naming convention, KeyPairSpec governs exactly java.security.KeyPair, not an Android KeyPairGeneratorSpec/KeyGenParameterSpec or another namesake type. The reported systems.sieber.droid_scep.ScepClient.CertReq context and message \"unknown\" do not by themselves prove which KeyPair event occurred, whether a violation exists, or which rule-set revision the detector used. The linked primary rule source was not independently retrieved in this analysis.",
+  "events": [
+    {
+      "name": "Con",
+      "api_patterns": [
+        "new KeyPair(",
+        "new java.security.KeyPair(",
+        "KeyPair(",
+        "java.security.KeyPair("
+      ],
+      "condition": "Observation: a resolved call to the java.security.KeyPair(PublicKey, PrivateKey) constructor. Predicate satisfaction: the rule requires generatedPubkey[publicKey] and generatedPrivkey[privateKey] for the constructor arguments; only after Con does the rule declare generatedKeypair[this, _]. A textual match alone is insufficient because the constructor target and argument types must resolve to java.security.KeyPair, java.security.PublicKey, and java.security.PrivateKey."
+    },
+    {
+      "name": "GetPubl",
+      "api_patterns": [
+        ".getPublic()",
+        "getPublic()"
+      ],
+      "condition": "Observation: a resolved zero-argument getPublic() invocation on a java.security.KeyPair receiver. Predicate satisfaction: the rule declares generatedPubkey[retPublicKey] after this event, but that declaration is conditional on the KeyPair object's overall rule compliance; observing the call alone does not prove that the returned key was securely generated or that it matches the private key."
+    },
+    {
+      "name": "GetPriv",
+      "api_patterns": [
+        ".getPrivate()",
+        "getPrivate()"
+      ],
+      "condition": "Observation: a resolved zero-argument getPrivate() invocation on a java.security.KeyPair receiver. Predicate satisfaction: the rule declares generatedPrivkey[retPrivateKey] after this event, but that declaration is conditional on the KeyPair object's overall rule compliance; observing the call alone does not prove private-key secrecy, strength, or correspondence to the public key."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that KeyPairSpec applies to android.security.KeyPairGeneratorSpec, android.security.keystore.KeyGenParameterSpec, AWS KMS key-pair models, or any other type whose name merely contains KeyPair or ends in Spec.",
+    "Do not infer from the reported ScepClient.CertReq class/method and \"unknown\" message that the source contains new java.security.KeyPair(...), getPublic(), or getPrivate().",
+    "Do not infer that generatedKeypair, generatedPubkey, or generatedPrivkey establishes that the public and private keys mathematically form a matching cryptographic pair.",
+    "Do not infer a particular algorithm, key size, provider, curve, certificate binding, key-storage property, or key-lifetime property from this rule.",
+    "Do not infer runtime cryptographic security from rule compliance, or an exploitable defect from a detector finding without a trace, resolved call target, rule revision, and relevant data-flow evidence.",
+    "Do not infer that absence of a finding proves correct key generation, secure storage, or safe later use."
+  ],
+  "semantic_scope": "The rule is a typestate-and-predicate specification for resolved uses of java.security.KeyPair. It observes its two-argument constructor and its getPublic()/getPrivate() accessors, tracks their event order, requires CrySL provenance predicates for directly supplied component keys, and propagates provenance predicates to the KeyPair and extracted key objects.",
+  "detector_semantics": {
+    "claim": "For a java.security.KeyPair object, the allowed event language is construction followed by zero or more public/private accessor calls. Direct construction is acceptable only when the supplied public and private key objects carry the required CrySL predicates; the constructor then establishes a generatedKeypair predicate for the new pair.",
+    "predicates": [
+      "REQUIRES generatedPrivkey[privateKey]",
+      "REQUIRES generatedPubkey[publicKey]",
+      "REQUIRES noCallTo[Con] => generatedKeypair[this, _]",
+      "ENSURES generatedKeypair[this, _] after Con",
+      "ENSURES generatedPubkey[retPublicKey] after GetPubl",
+      "ENSURES generatedPrivkey[retPrivateKey] after GetPriv"
+    ],
+    "limitations": [
+      "The predicate names are CrySL analysis facts, not Java runtime checks or JCA API contracts.",
+      "The rule has no algorithm, key-size, provider, key-pair-correspondence, serialization, certificate, revocation, or storage constraints.",
+      "The source rule does not identify the detector's exact error category, trace, call site, analysis configuration, or revision used for the representative finding.",
+      "The exact handling of an object with no locally observed constructor call depends on the analyzer's interprocedural predicate propagation and its active rule set; the rule text alone does not provide a concrete finding trace."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "java.security.KeyPair is a final, serializable holder for one PublicKey and one PrivateKey.",
+      "Its constructor stores references to the supplied key objects, getPublic() returns the public-key reference, and getPrivate() returns the private-key reference.",
+      "The JDK documentation expressly states that the class does not enforce security and should be treated like a PrivateKey once initialized."
+    ],
+    "preconditions": [
+      "The documented constructor signature is KeyPair(PublicKey publicKey, PrivateKey privateKey).",
+      "The CrySL rule additionally requires analysis evidence of generatedPubkey for the public-key argument and generatedPrivkey for the private-key argument when its constructor event is observed.",
+      "For a KeyPair with no observed Con event, the CrySL rule conditionally requires generatedKeypair[this, _]."
+    ],
+    "unknowns": [
+      "The JDK KeyPair API documentation does not state that the constructor verifies that the supplied keys correspond to each other.",
+      "The JDK KeyPair API documentation does not make CrySL's generatedPubkey/generatedPrivkey/generatedKeypair predicates runtime-visible.",
+      "The representative detector output provides no source location or resolved invocation from which to establish whether construction, extraction, or predicate propagation is at issue."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The detector rule claims provenance and protocol compliance: a directly assembled KeyPair should be built from key objects carrying CrySL-generated-key predicates, while a pair without an observed constructor event should already carry a generatedKeypair predicate.",
+    "runtime_claim": "The Java API itself only stores and returns key references; it does not enforce cryptographic strength, provenance, pair correspondence, secure storage, or secure use.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Resolve the affected type to java.security.KeyPair and the relevant invocation to its constructor, getPublic(), or getPrivate().",
+      "Obtain the exact CrySL rule bundle, revision or artifact version, and analyzer configuration used for the finding; the identified repository URL may be a current master file rather than the detector's deployed revision.",
+      "For a constructor-related conclusion, establish data-flow evidence for the PublicKey and PrivateKey arguments and whether the analyzer can derive generatedPubkey/generatedPrivkey.",
+      "For a no-constructor-related conclusion, establish where generatedKeypair[this, _] should originate; the corresponding KeyPairGenerator rule declares generatedKeypair[keyPair, algorithm] after generateKeyPair() or genKeyPair()."
+    ],
+    "runtime": [
+      "Inspect the actual resolved key implementations, provider behavior, and values if the question concerns whether the keys form a valid matching pair.",
+      "Test the relevant cryptographic operation, such as signing and verification or encryption and decryption, if pair correspondence or practical usability is at issue.",
+      "Assess key algorithm, size, generation source, protection, serialization, transport, and lifecycle separately; none is established by KeyPairSpec alone."
+    ],
+    "compatibility": [
+      "Confirm the target JDK or Android runtime and the classpath used by analysis, because type resolution determines whether this is java.security.KeyPair rather than a namesake.",
+      "Confirm the active CrySL JCA rule set and any provider-specific or custom rules.",
+      "If the object comes from KeyPairGenerator, verify the applicable KeyPairGenerator rule version and whether its getInstance → initialize → generateKeyPair/genKeyPair event sequence was analyzable."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "Potential static-analysis false positive: a valid KeyPair is received through a method, field, framework callback, serialization path, or library boundary for which the analyzer lacks a propagated generatedKeypair predicate.",
+    "Potential static-analysis false positive: a public or private key is legitimately obtained from a key store, certificate, hardware-backed provider, or external component but no active CrySL rule establishes generatedPubkey/generatedPrivkey for that value.",
+    "Potential static-analysis false positive: a directly assembled pair contains valid component keys, but their provenance is unavailable because of incomplete interprocedural, alias, library, reflection, native-code, or dependency modeling.",
+    "Potential semantic overread: a compliant trace may still combine unrelated keys, because this rule contains no predicate or constraint that checks mathematical public/private-key correspondence.",
+    "Potential textual-match false positive in local triage: getPublic(), getPrivate(), or KeyPair( may belong to another type unless the receiver or constructor target is resolved specifically to java.security.KeyPair."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/KeyPair.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/KeyPairGenerator.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/KeyPair.html",
+    "https://eclipse.dev/cognicrypt/documentation/crysl/"
+  ],
+  "unknowns": [
+    "Which exact KeyPairSpec/CrySL rule revision, rule source, and analyzer version produced the representative finding.",
+    "Whether the detector message \"unknown\" denotes a typestate violation, an unsatisfied required predicate, an unresolved call, a report-serialization issue, or another category.",
+    "Whether systems.sieber.droid_scep.ScepClient.CertReq actually invokes java.security.KeyPair's constructor or accessors, rather than merely passing, receiving, or referencing a KeyPair.",
+    "Whether a missing generatedKeypair/generatedPubkey/generatedPrivkey fact is a real provenance failure or an analysis-modeling limitation.",
+    "Whether the public and private keys involved in the reported program are compatible, matching, cryptographically strong, securely generated, or securely stored."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "systems.sieber.droid_scep.ScepClient",
+        "method": "CertReq",
+        "message": "unknown"
+      }
+    ],
+    "expected_api_simple_name": "KeyPair",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:java.security.KeyPair",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/KeyPair.crysl"
+  }
+}

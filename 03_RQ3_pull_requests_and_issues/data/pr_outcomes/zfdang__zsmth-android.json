@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/zfdang/zSMTH-Android/pull/66",
+    "state": "open",
+    "finding_id": "b1a40c2fc69e",
+    "spec": "SSLContextSpec",
+    "csv_class": "com.zfdang.zsmth_android.newsmth.SMTHHelper",
+    "method_name": "getUnsafeOkHttpClient",
+    "title": "Use TLS and restore HTTPS certificate validation",
+    "impact_class": "security_impact",
+    "recorded_at": "2026-11-19T20:40:21.801145+00:00",
+    "maintainer_feedback": []
+  }
+]

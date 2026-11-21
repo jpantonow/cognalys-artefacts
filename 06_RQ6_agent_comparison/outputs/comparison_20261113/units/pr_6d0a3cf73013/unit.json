@@ -1,0 +1,43 @@
+{
+ "unit": "pr_6d0a3cf73013",
+ "source": "pr_population",
+ "group": "aberto",
+ "finding_ids": [
+  "6d0a3cf73013"
+ ],
+ "apk": "me.ash.reader.debug_47.apk",
+ "repo_url": "https://github.com/Ashinch/ReadYou",
+ "pinned_commit": "091c9207527a10a135b307c9f7747306da36f686",
+ "spec": [
+  "SSLContextSpec"
+ ],
+ "class": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+ "method": "setupSsl",
+ "prs": [
+  "https://github.com/ReadYouApp/ReadYou/pull/1334"
+ ],
+ "original_run": "outputs/rvsec_readyou_20261018/run3",
+ "original_outcome": "PR pronto",
+ "frozen_outcome": "PR pronto",
+ "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_readyou_20261018/run_frozen",
+ "reference_pr_records": [
+  "outputs/rvsec_readyou_20261018/run3/pull_requests/me.ash.reader.debug_47.apk_setupSsl_SSLContextSpec_pr.json"
+ ],
+ "reference_diff_lines": 40,
+ "build_task": ":app:assembleFdroidDebug",
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "6d0a3cf73013",
+   "unique_error_id": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt:::setupSsl:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+   "spec": "SSLContextSpec",
+   "class": "me.ash.reader.infrastructure.di.OkHttpClientModuleKt",
+   "method": "setupSsl",
+   "message": "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+   "apk": "me.ash.reader.debug_47.apk",
+   "repo_url": "https://github.com/Ashinch/ReadYou",
+   "commit": "091c9207527a10a135b307c9f7747306da36f686",
+   "detector_source_location": "OkHttpClientModule.kt:154"
+  }
+ ]
+}

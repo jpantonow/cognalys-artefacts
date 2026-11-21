@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/HiddenRamblings/TagMo/pull/765",
+    "state": "closed",
+    "finding_id": "1f136df321e0",
+    "spec": "WebViewDebuggingSpec",
+    "csv_class": "com.hiddenramblings.tagmo.wave9.DimensionActivity",
+    "method_name": "onCreate",
+    "title": "Fix onCreate",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:58.044871+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "AbandonedCart",
+        "kind": "comment",
+        "body": "The flag is enabled intentionally"
+      }
+    ]
+  }
+]

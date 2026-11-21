@@ -1,0 +1,15 @@
+pr,estado_18_11,aberto_em,titulo,origem_registrada
+https://github.com/Domi04151309/HomeApp/pull/114,incorporado,2026-09-29,Add an opt-in setting for untrusted WebView certificates,não registrada
+https://github.com/SilentCoderHere/aihub/pull/279,incorporado,2026-10-13,Disallow mixed content in the service and popup WebViews,não registrada
+https://github.com/Valent-in/Auto-Shine/pull/12,incorporado,2026-09-25,Fix onCreate,não registrada
+https://github.com/hanjoongcho/aaf-easydiary/pull/253,incorporado,2026-09-09,Fix decompress,static:manual
+https://github.com/mretallack/SlimBook/pull/3,incorporado,2026-09-18,Fix setupWebView,não registrada
+https://github.com/stardomains3/oxproxion/pull/94,aberto,2026-09-20,Fix createLanHttpClient,static:manual
+https://github.com/zamojski/TowerCollector/pull/284,aberto,2026-09-13,Fix doInBackground,não registrada
+https://github.com/Chiu-xaH/HFUT-Schedule/pull/109,fechado pelo mantenedor,2026-09-27,Fix getUpdate,não registrada
+https://github.com/HiddenRamblings/TagMo/pull/765,fechado pelo mantenedor,2026-09-28,Fix onCreate,não registrada
+https://github.com/anenasa/androidtv-news/pull/14,fechado pelo mantenedor,2026-09-29,Fix createWebView,static:manual
+https://github.com/christianrowlands/android-network-survey/pull/149,fechado pelo mantenedor,2026-09-15,Replace deprecated LocalBroadcastManager in SimChangeReceiver,web_research
+https://github.com/legal-hkr/comfychair/pull/43,fechado pelo mantenedor,2026-09-25,Fix BrowserAuthScreen,static:manual
+https://github.com/omaawr/tuisku/pull/11,fechado pelo mantenedor,2026-09-18,Fix importUnencryptedNotes,static:manual
+https://github.com/woheller69/omweather/pull/187,fechado pelo mantenedor,2026-10-22,Keep backup restore from writing outside the restore folder,não registrada

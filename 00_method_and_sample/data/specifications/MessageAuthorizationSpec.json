@@ -1,0 +1,190 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The provided record is an advisory-derived normalized finding, not a runtime log or a complete detector trace.",
+      "The finding does not disclose a general detector-rule implementation, its interprocedural depth, or whether it recognizes equivalent equality checks implemented in helpers.",
+      "Absence of a local syntactic equality check is not conclusive when a database API, protocol decoder, wrapper, or predecessor stage may enforce the same binding.",
+      "The reported source tag is v8.2.2; compatibility with other source revisions must be established separately."
+    ],
+    "predicates": [
+      "An administrative-delete request supplies identifiers used to resolve a target message.",
+      "Authorization context is resolved separately from inbound group or thread context.",
+      "Actor privilege is evaluated against that authorization context.",
+      "The target message is mutated as remotely deleted after validation.",
+      "No authoritative equality check is evidenced between the target message's stored thread/group identity and the authorization context used for privilege validation."
+    ],
+    "claim": "The normalized advisory finding claims incorrect authorization: a remote administrative deletion can authorize against a supplied group context without proving that the selected target message belongs to that group or thread."
+  },
+  "unknowns": [
+    "No published detector-rule catalog, CrySL rule, or governed API type named MessageAuthorizationSpec was identified from the available evidence; the name is therefore a concern label rather than an API identifier.",
+    "The detector's exact matching implementation, precision, dataflow model, and treatment of implicit or interprocedural context binding are not available.",
+    "The complete semantics of the target-message key, including whether timestamp-plus-author can resolve multiple records and how selection is performed, remain unresolved.",
+    "The exact protocol-level authenticity and binding guarantees for administrative-delete fields outside the consulted code path remain unresolved.",
+    "Whether an arbitrary analyzed deployment enables the relevant server-controlled feature, accepts crafted requests, or contains a vulnerable revision cannot be determined from the normalized finding alone.",
+    "The advisory reports a tested v8.2.2 tag and an affected range ending before v8.3.0, while also recording later release and store-distribution dates; artifact-to-release mapping should be verified for any concrete binary."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "The first-party advisory describes target lookup by target sent timestamp and target author, with no thread filter in the reported vulnerable path.",
+      "The first-party source for the authorization helper shows that its administrative-delete predicate checks whether the supplied group record recognizes the sender as an administrator and whether the target message is within the configured receive window.",
+      "The vendor follow-up commit resolves the target message's thread, compares its recipient with the inbound authorization-context recipient, and only then loads the group record for authorization.",
+      "The advisory identifies the weakness as CWE-863, Incorrect Authorization. MITRE describes this class as authorization behavior that is incorrect for the protected resource or action.",
+      "The applicable types are application-internal vendor-source types rather than Java SE or Android SDK API types; the authoritative API material for them is the vendor's published source, not a separate JavaDoc or Android reference page."
+    ],
+    "preconditions": [
+      "An administrative-delete request must be processed by the relevant message-handling path.",
+      "The target author identity and target timestamp must resolve to a stored target message.",
+      "A usable authorization context and group record must be available.",
+      "The actor must satisfy the authorization helper's actual privilege and timing conditions.",
+      "For the intended security property, the target message's persisted thread/group identity must equal the authorization context used to approve deletion."
+    ],
+    "unknowns": [
+      "The complete database-query semantics, indexes, uniqueness constraints, and collision behavior of the target-message lookup were not established solely from the consulted advisory and source excerpts.",
+      "The precise persistence and user-visible effects of markAsRemoteDelete were not independently documented beyond the advisory's description that it removes the target message on the recipient device.",
+      "No separate vendor API reference equivalent to JavaDoc or Android reference documentation was identified for every application-internal type; the authoritative API material is the vendor's published source.",
+      "The specification does not establish whether upstream protocol validation cryptographically binds the supplied authorization context to the selected target in an uninspected version or branch."
+    ]
+  },
+  "authoritative_sources": [
+    "https://securitylab.github.com/advisories/GHSL-2026-082_Android_SignalApp/",
+    "https://github.com/signalapp/Signal-Android/commit/7caccd341b19ce913f9638a19f66dffd3a1e39b6",
+    "https://github.com/signalapp/Signal-Android/blob/f8737995facf7f954b582efcf4e3c570613bbd40/app/src/main/java/org/thoughtcrime/securesms/messages/DataMessageProcessor.kt",
+    "https://github.com/signalapp/Signal-Android/blob/f8737995facf7f954b582efcf4e3c570613bbd40/app/src/main/java/org/thoughtcrime/securesms/util/MessageConstraintsUtil.kt",
+    "https://github.com/signalapp/Signal-Android/blob/f8737995facf7f954b582efcf4e3c570613bbd40/app/src/main/java/org/thoughtcrime/securesms/database/SignalDatabase.kt",
+    "https://github.com/signalapp/Signal-Android/blob/f8737995facf7f954b582efcf4e3c570613bbd40/app/src/main/java/org/thoughtcrime/securesms/database/model/GroupRecord.kt",
+    "https://github.com/signalapp/Signal-Android/blob/f8737995facf7f954b582efcf4e3c570613bbd40/app/src/main/java/org/thoughtcrime/securesms/recipients/Recipient.kt",
+    "https://cwe.mitre.org/data/definitions/863.html",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observing these substrings establishes only that code recognizes an administrative-delete request. The predicate is satisfied only if the request is accepted for processing after applicable configuration and protocol-validation checks.",
+      "name": "receive_admin_delete_request",
+      "api_patterns": [
+        "message.adminDelete",
+        "delete.targetSentTimestamp"
+      ]
+    },
+    {
+      "condition": "Observing the lookup establishes only a target-resolution attempt. The predicate is satisfied only when a non-null target message has been resolved and its authoritative stored thread or conversation identity is available for comparison.",
+      "name": "resolve_target_message",
+      "api_patterns": [
+        "SignalDatabase.messages.getMessageFor(",
+        "delete.targetSentTimestamp",
+        "targetAuthor.id"
+      ]
+    },
+    {
+      "condition": "Observing a group lookup from inbound context establishes only that an authorization context was loaded. The predicate is satisfied only when the resulting group is valid for the request and is also the target message's own thread/group context.",
+      "name": "resolve_authorization_context",
+      "api_patterns": [
+        "SignalDatabase.groups.getGroup(",
+        "threadRecipient.id",
+        "groupRecord.isV2Group"
+      ]
+    },
+    {
+      "condition": "Observing the validation call establishes only that an authorization helper was invoked. The consulted vulnerable-source predicate is administrator status in the supplied group plus a deletion-time threshold; that predicate is insufficient unless target-context equality was independently established.",
+      "name": "validate_actor_privilege",
+      "api_patterns": [
+        "MessageConstraintsUtil.isValidAdminDeleteReceive(",
+        "groupRecord.isAdmin("
+      ]
+    },
+    {
+      "condition": "Observing a target-thread lookup is not itself sufficient. The predicate is satisfied only when the target message's resolved thread recipient equals the inbound authorization-context recipient, and processing stops when they differ.",
+      "name": "verify_target_context_binding",
+      "api_patterns": [
+        "SignalDatabase.threads.getThreadRecord(",
+        "targetMessage.threadId",
+        "targetThread.recipient.id != threadRecipient.id"
+      ]
+    },
+    {
+      "condition": "Observing this call establishes only a destructive state-transition attempt. The predicate is satisfied only if the selected target, authorized actor, valid time window, and target-thread/context binding have all been established on the executed path.",
+      "name": "apply_remote_delete",
+      "api_patterns": [
+        "SignalDatabase.messages.markAsRemoteDelete("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "MessageAuthorizationSpec is a security-concern specification, not a CrySL rule or a governed API type. It models the required binding of a destructive message-state operation to the authorization context that owns the target. A match establishes evidence of a potentially incomplete authorization flow; it does not alone prove reachability, exploitability, deployment configuration, or that a particular source revision is vulnerable.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a type named MessageAuthorizationSpec exists in the analyzed program, a detector rule catalog, CrySL, Java, Android, or another framework.",
+    "Do not infer that a call to an authorization helper proves authorization for the target resource.",
+    "Do not infer that a timestamp-and-author message lookup is unique across all threads unless the lookup implementation and schema establish that property.",
+    "Do not infer that the inbound group or conversation context equals the target message's stored thread from matching variable names or control-flow proximity.",
+    "Do not infer active production reachability from source presence; feature flags, server configuration, protocol-version negotiation, and message pre-processing may prevent execution.",
+    "Do not infer attacker control, administrator status, target-message knowledge, or a cross-thread target collision without protocol and runtime evidence.",
+    "Do not infer that all releases, forks, or later revisions share the reported behavior from evidence tied to a particular source tag or version range.",
+    "Do not infer the semantics of uninspected wrappers, database methods, generated protocol fields, or interprocedural guards."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A runtime authorization failure exists only if an accepted request can select a target in a different stored thread or group than the context used to establish the sender's deletion privilege, and the mutation is then applied.",
+    "equivalent": false,
+    "detector_claim": "Potential CWE-863 incorrect authorization when a destructive message deletion is approved by a context that is not demonstrated to own the target message."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Map the analyzed artifact to the reported affected range, which the advisory states is versions at least 8.1.0 and earlier than 8.3.0, with v8.2.2 tested.",
+      "Account for vendor commit 7caccd341b19ce913f9638a19f66dffd3a1e39b6, which adds target-thread resolution and rejects differing thread recipients.",
+      "Do not equate source release availability with feature enablement; the advisory records a server-side receiveAdminDelete flag change during disclosure.",
+      "Confirm whether downstream forks, backports, minified artifacts, or generated protocol code preserve the same dataflow and equality check."
+    ],
+    "runtime": [
+      "Evidence that the administrative-delete feature is enabled and the handler can process the relevant request type in the deployed environment.",
+      "A request whose claimed authorization context differs from the target message's persisted thread or group context.",
+      "Evidence that the sender is authorized in the claimed context but lacks the required privilege in the target context.",
+      "Evidence that the target lookup resolves the intended cross-context message and that the deletion mutation completes."
+    ],
+    "source_level": [
+      "The complete request handler and all relevant predecessors, including request dispatch, feature/configuration gates, group/message preprocessing, and exception paths.",
+      "Definitions of the target lookup, authorization-context lookup, privilege helper, target-thread lookup, and remote-delete mutation for the analyzed revision.",
+      "Evidence of a target-thread/context equality check, or evidence that no such check occurs before mutation.",
+      "The exact source tag, commit, build variant, and dependency versions being analyzed."
+    ]
+  },
+  "name": "MessageAuthorizationSpec",
+  "source_url": "https://securitylab.github.com/advisories/GHSL-2026-082_Android_SignalApp/",
+  "applies_to_types": [
+    "org.thoughtcrime.securesms.messages.DataMessageProcessor",
+    "org.thoughtcrime.securesms.database.SignalDatabase",
+    "org.thoughtcrime.securesms.database.model.MessageRecord",
+    "org.thoughtcrime.securesms.database.model.GroupRecord",
+    "org.thoughtcrime.securesms.recipients.Recipient",
+    "org.thoughtcrime.securesms.util.MessageConstraintsUtil"
+  ],
+  "source_title": "GHSL-2026-082: Unauthorized message deletion in Signal for Android",
+  "semantic_scope": "For every finding of this rule, the detector observes an administrative message-deletion flow in which the target resource is resolved using request-supplied message identifiers while the actor's privilege is evaluated against a separately resolved inbound conversation or group context, followed by a deletion-state mutation, without evidence that the target resource belongs to that same authorization context.",
+  "spec_id": "MessageAuthorizationSpec",
+  "known_false_positive_shapes": [
+    "The target lookup API internally scopes results to the same authenticated conversation or group even though its locally visible call arguments do not include a thread identifier.",
+    "An upstream request decoder or group-preprocessing stage proves and preserves an immutable binding between the inbound authorization context and the target message.",
+    "A helper invoked before the observed mutation performs an equivalent target-thread/context equality check that the detector does not model.",
+    "The apparent authorization context is derived from the target message rather than from untrusted inbound request context, despite a misleading local variable name.",
+    "The matched path is dead, disabled, test-only, or unreachable for externally supplied administrative-delete requests.",
+    "The mutation is rolled back, rejected by a later transaction constraint, or applies only to a non-security-relevant local placeholder rather than the resolved target."
+  ],
+  "protocol": "receive admin-delete request -> resolve target message from supplied identifiers -> resolve authorization context -> validate actor privilege and time -> verify target-thread/context equality -> mark target remotely deleted",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.thoughtcrime.securesms.messages.DataMessageProcessor",
+        "method": "handleAdminRemoteDelete",
+        "message": "External finding (GHSL-2026-082): handleAdminRemoteDelete authorizes deletion using the supplied group context without verifying that the target message belongs to that same thread/group. Source tag: v8.2.2. This is a normalized advisory record, not a runtime log."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:DataMessageProcessor",
+    "checked_url": "https://securitylab.github.com/advisories/GHSL-2026-082_Android_SignalApp/"
+  }
+}

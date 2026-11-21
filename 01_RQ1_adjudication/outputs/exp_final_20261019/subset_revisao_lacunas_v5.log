@@ -1,0 +1,65 @@
+Preflight passed: declared dependencies, static analysis
+Pipeline steps: spec_generation -> cloning -> repository_setup -> extraction -> spec_context -> detector_rules -> llm -> solutions -> validation -> validation_fix -> revalidation -> prs -> preview -> fix_prs -> revalidation_fix_prs
+
+=== SPEC_GENERATION ===
+$ /home/antonow/venv/bin/python3 -m cognalys.specifications.generate_specifications --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-5.6-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/application_results/openai_prompt_logs
+Specification generation: all 1 required files already exist
+
+=== CLONING ===
+$ /home/antonow/venv/bin/python3 -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv --output-dir /home/antonow/cognalys_work/exp_final_v5/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/error_methods --clone-timeout 1800 --clone-retries 3 --clone-only
+2026-10-27 22:53:10 - INFO - Starting single CSV workflow
+2026-10-27 22:53:10 - INFO - Output dir: /home/antonow/cognalys_work/exp_final_v5/clones
+2026-10-27 22:53:10 - INFO - Clone dir: /home/antonow/cognalys_work/exp_final_v5/clones
+2026-10-27 22:53:10 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/error_methods
+2026-10-27 22:53:10 - INFO - 1 linhas válidas carregadas
+2026-10-27 22:53:10 - INFO - 1 repositórios únicos mapeados
+2026-10-27 22:53:10 - INFO - [1/1] Cloning org.fedorahosted.freeotp_48.apk from https://github.com/freeotp/freeotp-android
+2026-10-27 22:53:14 - INFO - org.fedorahosted.freeotp_48.apk checked out at the pinned revision bcecd3761a565cdc17a9dd710fcf35dd03d29622
+2026-10-27 22:53:14 - INFO - Successfully cloned org.fedorahosted.freeotp_48.apk
+2026-10-27 22:53:14 - INFO - Cloning results: 1 success, 0 failed, 0 timeout
+
+=== REPOSITORY_SETUP ===
+$ /home/antonow/venv/bin/python3 -m cognalys.extraction.prepare_repository_branches --projects-dir /home/antonow/cognalys_work/exp_final_v5/clones --report /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/application_results/repository_setup.json --project org.fedorahosted.freeotp_48.apk
+org.fedorahosted.freeotp_48.apk:  ->  (unchanged)
+
+=== EXTRACTION ===
+$ /home/antonow/venv/bin/python3 -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv --output-dir /home/antonow/cognalys_work/exp_final_v5/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/error_methods --clone-timeout 1800 --clone-retries 3 --skip-cloning
+2026-10-27 22:53:14 - INFO - Starting single CSV workflow
+2026-10-27 22:53:14 - INFO - Output dir: /home/antonow/cognalys_work/exp_final_v5/clones
+2026-10-27 22:53:14 - INFO - Clone dir: /home/antonow/cognalys_work/exp_final_v5/clones
+2026-10-27 22:53:14 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/error_methods
+2026-10-27 22:53:14 - INFO - 1 linhas válidas carregadas
+2026-10-27 22:53:14 - INFO - 1 repositórios únicos mapeados
+2026-10-27 22:53:14 - INFO - Reutilizando clones existentes em: /home/antonow/cognalys_work/exp_final_v5/clones
+2026-10-27 22:53:14 - INFO - org.fedorahosted.freeotp_48.apk is already at the pinned revision bcecd3761a565cdc17a9dd710fcf35dd03d29622
+2026-10-27 22:53:14 - INFO - Found clone for org.fedorahosted.freeotp_48.apk: /home/antonow/cognalys_work/exp_final_v5/clones/org.fedorahosted.freeotp_48.apk
+2026-10-27 22:53:14 - INFO - Building index for repository: /home/antonow/cognalys_work/exp_final_v5/clones/org.fedorahosted.freeotp_48.apk
+2026-10-27 22:53:14 - INFO - Indexed 99 classes from 99 unique class definitions
+2026-10-27 22:53:14 - INFO - Extraction complete: 1 success, 0 failed, 0 skipped
+2026-10-27 22:53:14 - INFO - Tracking JSON written to /home/antonow/cognalys_work/exp_final_v5/clones/extraction_tracking.json
+2026-10-27 22:53:14 - INFO - Summary written to /home/antonow/cognalys_work/exp_final_v5/clones/logs/summary_tracked.txt
+
+=== SPEC_CONTEXT ===
+$ /home/antonow/venv/bin/python3 -m cognalys.specifications.enrich_spec_context --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/error_methods --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv
+Specification registry coverage: 1/1 sample specs available
+Specification context: 1 enriched, 0 missing, 1 total
+
+=== DETECTOR_RULES ===
+$ /home/antonow/venv/bin/python3 -m cognalys.validation.propose_detector_rules --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-5.6-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/application_results/openai_prompt_logs
+CipherSpec: skipped, judged not local for this version of the specification
+Detector rules: nothing to propose
+
+=== LLM ===
+$ /home/antonow/venv/bin/python3 -m cognalys.llm.generate_error_fixes --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/error_methods --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/error_solutions --model gpt-5.6-terra --provider openai --endpoint https://api.openai.com/v1 --timeout 600 --ollama-context-length 16384 --repository-context-budget 140000 --pr-issue-style v3 --max-output-tokens 32768 --reasoning-effort high --validation-mode balanced --validation-feedback-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/application_results/build_validation --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v5/application_results/openai_prompt_logs --web-search-cache-ttl-hours 168.0 --web-search-retries 1 --retries 2 --workers 1 --cache-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/.llm_cache --web-search --migration-policies-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/migration_policies.json
+INFO: Testing OpenAI connection...
+INFO: OpenAI connection successful
+INFO: ✓ Model 'gpt-5.6-terra' available
+INFO: Discovered 1 errors to process
+INFO: Processing 1 new errors (0 already complete)
+INFO: Processing: org.fedorahosted.freeotp_48.apk/encrypt
+INFO: LLM cache hit: c6dfdb150558
+INFO: LLM cache hit: 4151f07ba432
+INFO: LLM cache hit: cba8c9d8f626
+INFO: LLM cache hit: 4e5ba0d3d802
+INFO: LLM cache hit: 4021559eb5ea
+WARNING: Adjudication rejected for encrypt (attempt 1/2): supported decision has generation blockers; retrying with the deterministic validation errors as feedback

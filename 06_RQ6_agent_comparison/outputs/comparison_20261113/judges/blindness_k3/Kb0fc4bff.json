@@ -1,0 +1,31 @@
+{
+ "card_id": "Kb0fc4bff",
+ "card_sha256": "d21cdb62da3a6748",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 11,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3940,
+  "cache_read_input_tokens": 0,
+  "output_tokens": 522
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.041968,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "b29512ca714ab435",
+ "finished_at": "2026-11-16T11:44:14-0300",
+ "output": {
+  "guess": "S",
+  "confidence": 0.27,
+  "reason": "This is a low-confidence guess. The card is written in the first person and talks like an agent (\"I found nothing\", \"I'm not sending a PR or an issue\"). It explains clearly, and in some detail, why the Keystore key has no observed generator: it is generated once, persisted, and reloaded on later runs. It also argues that changing the code would make things worse. That kind of explanation is typical of Claude. The prose is plainer and less templated than I'd expect from a multi-step pipeline's output, so I lean toward the Claude Code agent (S) over the Cognalys pipeline on Claude Sonnet 5.5 (D)."
+ }
+}

@@ -1,0 +1,16 @@
+findings = ["/mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_exp_final.csv"]
+run-dir = "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2"
+
+llm-provider = "openai"
+llm-model = "gpt-5.6-terra"
+llm-endpoint = "https://api.openai.com/v1"
+llm-reasoning-effort = "high"
+spec-model = "gpt-5.6-terra"
+llm-max-output-tokens = 32768
+llm-timeout = 600
+
+validate-build = true
+approve-review-only-for-validation = true
+generate-previews = true
+online-dependency-resolution = true
+cloned-projects-dir = "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/clones"

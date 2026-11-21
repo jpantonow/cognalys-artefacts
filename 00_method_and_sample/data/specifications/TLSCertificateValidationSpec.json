@@ -1,0 +1,182 @@
+{
+  "schema_version": 2,
+  "spec_id": "TLSCertificateValidationSpec",
+  "name": "TLSCertificateValidationSpec",
+  "applies_to_types": [
+    "unverified.TLSCertificateValidation"
+  ],
+  "source_title": "CROSSINGTUD Crypto-API-Rules canonical TLSCertificateValidation CrySL source path (not found)",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TLSCertificateValidation.crysl",
+  "source_verified": false,
+  "protocol": "define no-op X509TrustManager.checkServerTrusted -> SSLContext.init(..., trustAllCerts, ...) -> Builder.sslSocketFactory(factory, ...) -> Builder.hostnameVerifier(alwaysTrue) -> build/use client",
+  "important_note": "No canonical CrySL rule named TLSCertificateValidation was found in the consulted research. The requested raw primary URL reportedly returned HTTP 404, the JavaCryptographicArchitecture/src directory reportedly contained no such file, and repository file search reportedly found no match. Therefore this is an evidence-derived reconstruction from the reported v1.0.0 implementation and advisory record, not a verified TLSCertificateValidation CrySL contract. unverified.TLSCertificateValidation is a namespace sentinel included solely to satisfy the required qualified-type shape; it is not evidence that such a Java API type exists.",
+  "events": [
+    {
+      "name": "declare_no_op_server_trust_validation",
+      "api_patterns": [
+        "public void checkServerTrusted(",
+        "override fun checkServerTrusted(",
+        "checkServerTrusted("
+      ],
+      "condition": "Observing a checkServerTrusted declaration alone does not satisfy the predicate. The predicate requires evidence that the effective X509TrustManager permits arbitrary relevant server certificate chains by returning normally on all paths, without delegated validation or CertificateException. The reported v1.0.0 Java source reportedly has an empty checkServerTrusted body."
+    },
+    {
+      "name": "initialize_tls_context_with_custom_trust_manager",
+      "api_patterns": [
+        "SSLContext.getInstance(\"SSL\")",
+        "sslContext.init(null, trustAllCerts, new java.security.SecureRandom())",
+        "sslContext.init(null, trustAllCerts, SecureRandom())"
+      ],
+      "condition": "Observing SSLContext initialization alone does not satisfy the predicate. It requires source/data-flow evidence that the supplied TrustManager array contains the no-op X509TrustManager and that the resulting context socket factory is later installed on the relevant client."
+    },
+    {
+      "name": "install_custom_tls_socket_factory",
+      "api_patterns": [
+        "builder.sslSocketFactory(sslSocketFactory, trustManager)",
+        ".sslSocketFactory(sslSocketFactory, trustManager)"
+      ],
+      "condition": "Observing an sslSocketFactory call alone does not satisfy the predicate, because custom factories may validate correctly. It requires evidence that the factory originates from the SSLContext initialized with the permissive manager and remains attached to the client used for the connection."
+    },
+    {
+      "name": "install_allow_all_hostname_verifier",
+      "api_patterns": [
+        "builder.hostnameVerifier(new HostnameVerifier()",
+        "public boolean verify(String hostname, SSLSession session)",
+        "return true;",
+        "builder.hostnameVerifier { _, _ -> true }"
+      ],
+      "condition": "Observing a HostnameVerifier installation alone does not satisfy the predicate. It requires evidence that the installed verifier returns true for arbitrary hostname/session inputs on every effective path. In the reported v1.0.0 Java source, verify(String, SSLSession) reportedly returns true unconditionally."
+    },
+    {
+      "name": "build_configured_http_client",
+      "api_patterns": [
+        "return builder.build();",
+        "builder.build()"
+      ],
+      "condition": "Observing build() alone does not satisfy the predicate. It requires that the built instance retains the custom TLS configuration, is reachable from the reported method result, and is selected for an actual TLS connection."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a class named TLSCertificateValidation exists in a particular Java package; no primary CrySL source establishing such a type was found.",
+    "Do not infer that every use of OkHttpClient.Builder.sslSocketFactory is insecure.",
+    "Do not infer that every custom X509TrustManager trusts all certificates; its effective checkServerTrusted behavior must be established.",
+    "Do not infer that every HostnameVerifier is permissive; unconditional acceptance must be established for the verifier actually installed.",
+    "Do not infer that the constructed client performed a network request, completed a TLS handshake, or transmitted sensitive data.",
+    "Do not infer that a runtime peer certificate was untrusted, self-signed, expired, revoked, or hostname-mismatched from this source-level shape.",
+    "Do not infer that certificate pinning, a proxy, an alternate transport, platform policy, or later client reconfiguration did not impose additional restrictions.",
+    "Do not infer applicability to similarly named TLS-validation APIs from other frameworks."
+  ],
+  "semantic_scope": "This is an evidence-derived, source-level detector reconstruction for the reported org.mifos.mobilebanking.api.SelfServiceOkHttpClient.getMifosOkHttpClient finding at source tag v1.0.0. It observes construction and installation of a permissive X509TrustManager-backed TLS socket factory plus an always-true HostnameVerifier on an OkHttp client builder. It is not a verified CrySL contract and does not itself observe a TLS connection.",
+  "detector_semantics": {
+    "claim": "The normalized advisory record claims that getMifosOkHttpClient installs an all-trusting X509TrustManager and a HostnameVerifier that always returns true, such that certificate-chain and hostname authentication are not performed by that client configuration.",
+    "predicates": [
+      "An X509TrustManager implementation used by the SSLContext has an effectively no-op checkServerTrusted implementation.",
+      "The SSLContext is initialized with that manager and its SSLSocketFactory flows to OkHttpClient.Builder.sslSocketFactory.",
+      "The Builder installs a HostnameVerifier whose verify(String, SSLSession) result is unconditionally true.",
+      "The configured builder is built and the resulting OkHttpClient is the client selected for the connection."
+    ],
+    "limitations": [
+      "No TLSCertificateValidation CrySL source or detector implementation was found, so predicate names and event order are not source-verified detector semantics.",
+      "The finding is a normalized advisory record, not a runtime trace.",
+      "Static source evidence cannot establish Android/OkHttp provider behavior for a particular deployed build, request path, or server certificate.",
+      "The overloaded OkHttp sslSocketFactory call reportedly receives the socket factory made from the custom SSLContext but separately receives a default X509TrustManager; version-specific OkHttp handling of that pairing requires compatibility evidence."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Android documents X509TrustManager.checkServerTrusted(X509Certificate[], String) as building a certification path to a trusted root and returning only if that path is validated and trusted for server SSL authentication.",
+      "Android documents HostnameVerifier.verify(String, SSLSession) as returning true only when the hostname is acceptable.",
+      "The reported v1.0.0 source defines an empty checkServerTrusted implementation, initializes an SSLContext with that manager, and installs a verifier whose verify method returns true."
+    ],
+    "preconditions": [
+      "The custom X509TrustManager must be the effective trust manager used by the TLS socket factory during the relevant handshake.",
+      "The built OkHttpClient must retain and use the installed SSLSocketFactory and HostnameVerifier.",
+      "The code path must execute in the deployed artifact, and the client must be used for a TLS request.",
+      "No subsequent configuration or transport selection may replace or bypass the relevant client configuration."
+    ],
+    "unknowns": [
+      "The canonical qualified type and authoritative CrySL contents for TLSCertificateValidation are unresolved.",
+      "The exact detector implementation, matching granularity, and whether it requires interprocedural data flow are unresolved.",
+      "The deployed OkHttp and Android TLS-provider versions are not identified.",
+      "Whether certificate pinning or another validation layer applies to the actual request path is not established.",
+      "Whether the source tag v1.0.0 corresponds byte-for-byte to the analyzed artifact is not established."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The representative finding characterizes the v1.0.0 configuration as accepting arbitrary certificate chains and arbitrary hostnames for the configured HTTP client.",
+    "runtime_claim": "If the no-op trust manager is effective for the client socket factory and the always-true verifier is invoked for the connection, a peer with an otherwise untrusted certificate chain and/or a certificate whose identity does not match the requested host can pass those two application-configured checks.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A canonical CrySL file whose SPEC target is a qualified type ending exactly in .TLSCertificateValidation, or an authoritative detector-rule source mapping TLSCertificateValidationSpec to a concrete API type.",
+      "The exact analyzed source revision or artifact, including the reported org.mifos.mobilebanking.api.SelfServiceOkHttpClient.getMifosOkHttpClient implementation.",
+      "Data-flow evidence from the no-op X509TrustManager through SSLContext.init and getSocketFactory to the builder's sslSocketFactory call.",
+      "Control-flow evidence that the installed HostnameVerifier returns true for all relevant inputs."
+    ],
+    "runtime": [
+      "A controlled TLS handshake using the actual built client and a chain that the platform default trust store would reject.",
+      "A controlled TLS handshake using a certificate valid for a different hostname than the requested endpoint.",
+      "Evidence that the reported client instance, rather than a different client or transport, services the tested request.",
+      "Captured outcome showing that the handshake/request proceeds under the tested invalid-chain and hostname-mismatch conditions."
+    ],
+    "compatibility": [
+      "The exact OkHttp version and the documented or implemented behavior of its sslSocketFactory(SSLSocketFactory, X509TrustManager) overload.",
+      "The Android API level, security provider, network-security configuration, and any enterprise or user trust-store policy.",
+      "Whether certificate pinning, proxy TLS interception, mutual TLS, WebView, Cronet, or another networking stack is involved.",
+      "Artifact provenance demonstrating that the tested build contains the v1.0.0 source behavior."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "The permissive code is present only in an unreachable, test-only, debug-only, demo-only, or excluded build variant.",
+    "A later mutation, wrapper, or alternate client instance replaces the configured SSLSocketFactory or HostnameVerifier before requests are issued.",
+    "The builder is never built, its result is discarded, or a different HTTP client performs production traffic.",
+    "The matching checkServerTrusted declaration delegates to validation or throws on another effective control-flow path.",
+    "The permissive verifier is installed only for a non-production endpoint or is never invoked by the TLS stack used in practice.",
+    "Certificate pinning or a distinct application-layer authentication mechanism prevents acceptance of the attacker certificate even though conventional chain and hostname checks are bypassed.",
+    "A source match identifies a similarly named API or class from another framework rather than the reported Mifos v1.0.0 Java implementation.",
+    "A static analysis cannot resolve the factory/manager flow accurately across library boundaries or generated code."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TLSCertificateValidation.crysl",
+    "https://raw.githubusercontent.com/openMF/mifos-mobile/v1.0.0/app/src/main/java/org/mifos/mobilebanking/api/SelfServiceOkHttpClient.java",
+    "https://github.com/openMF/mifos-mobile/security/advisories/GHSA-9657-33wf-rmvx",
+    "https://github.com/openMF/mifos-mobile/commit/e505f62b92b19292bfdabd6e996ab76abfeaa90d",
+    "https://developer.android.com/reference/javax/net/ssl/X509TrustManager",
+    "https://developer.android.com/reference/javax/net/ssl/HostnameVerifier?authuser=00"
+  ],
+  "unknowns": [
+    "What real fully qualified API type, if any, TLSCertificateValidationSpec is intended to govern; the required exact simple name is preserved only by the explicitly unverified namespace sentinel.",
+    "Whether TLSCertificateValidationSpec was an unpublished, renamed, deleted, generated, or non-CrySL detector rule.",
+    "The exact CrySL EVENTS, ORDER, CONSTRAINTS, REQUIRES, ENSURES, and FORBIDDEN clauses, if any, for this specification.",
+    "Whether the detector treats chain validation and hostname validation as independently reportable predicates or requires their conjunction.",
+    "Whether the detector recognizes Java anonymous classes, Kotlin object expressions/lambdas, library wrappers, and interprocedural factory propagation equivalently.",
+    "Whether the source tag v1.0.0 implementation is the exact repository artifact that generated the normalized advisory record.",
+    "Whether, in the target runtime, the all-trusting SSLContext socket factory was effective despite the separately supplied default X509TrustManager in the OkHttp builder call."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TLSCertificateValidation.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.mifos.mobilebanking.api.SelfServiceOkHttpClient",
+        "method": "getMifosOkHttpClient",
+        "message": "External finding (CVE-2021-21385): getMifosOkHttpClient installs an all-trusting X509TrustManager and a HostnameVerifier that always returns true. Certificate chains and hostnames are not authenticated. Source tag: v1.0.0. This is a normalized advisory record, not a runtime log."
+      }
+    ],
+    "expected_api_simple_name": "TLSCertificateValidation",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TLSCertificateValidation.crysl"
+  }
+}

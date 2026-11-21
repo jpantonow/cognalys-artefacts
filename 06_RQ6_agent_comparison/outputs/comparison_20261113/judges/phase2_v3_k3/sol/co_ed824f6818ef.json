@@ -1,0 +1,330 @@
+{
+ "unit": "co_ed824f6818ef",
+ "phase": "phase2",
+ "order": [
+  "K24e0e45d",
+  "K4d7ca437",
+  "K5334e115",
+  "Kead28b38",
+  "Kd5c5dbb5",
+  "Kdf4fc59d",
+  "Kfd522574",
+  "K4bb70588",
+  "K0ca6173f",
+  "K9f59b45e",
+  "K76dd5723",
+  "K42588634",
+  "K7b1982b5",
+  "K33261f92",
+  "K2e642863",
+  "Kde2016fc",
+  "K774e08a9",
+  "Ke3d119e2",
+  "K481ce53a",
+  "K4bcbb6ae",
+  "Kf8aef910",
+  "K3e613553",
+  "Kf2f5c3b5"
+ ],
+ "card_sha256": {
+  "K0ca6173f": "01625ede122864a1",
+  "K24e0e45d": "8840878c76165884",
+  "K2e642863": "8442b369cbb077b2",
+  "K33261f92": "49632eb6fb1cf354",
+  "K3e613553": "d63305d2827d4078",
+  "K42588634": "48b403fffc24aecb",
+  "K481ce53a": "7b88ba6ed7918692",
+  "K4bb70588": "86288627de4310b5",
+  "K4bcbb6ae": "0a5f910069441000",
+  "K4d7ca437": "0d1fe1790585bff3",
+  "K5334e115": "5a9c23a111681030",
+  "K76dd5723": "258ddf59d4142880",
+  "K774e08a9": "e268340a40ab12ac",
+  "K7b1982b5": "32b9af5c4688a750",
+  "K9f59b45e": "2d3cd7c80a700f4b",
+  "Kd5c5dbb5": "511aebe2ed6fade4",
+  "Kde2016fc": "05db7a4da05ccb79",
+  "Kdf4fc59d": "4ef46f7fd916aa31",
+  "Ke3d119e2": "c7da83a25ac37d67",
+  "Kead28b38": "5110cfb17ae542ed",
+  "Kf2f5c3b5": "7c534f9f72033dcb",
+  "Kf8aef910": "88c069ba015324d2",
+  "Kfd522574": "aa3ffe06beca8c75"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "Encryptor.encrypt (app/src/main/kotlin/io/treehouses/remote/ssh/Encryptor.kt) is the password-based wrapper taken from ConnectBot/Zach Scrivena. It encrypts an SSH private key only when the user chose a passphrase. Its only caller is PubKeyUtils.encrypt, reached through getEncodedPrivate from BaseSSHKeyGen.generateKey and KeyUtils.generateSmartConnectKey. Each call first fills a new 8-byte salt from SecureRandom. It then runs 1000 rounds of SHA-256 over passphrase||salt and splits the 32-byte digest into a 16-byte AES key and a 16-byte CBC IV. The key and IV handed to SecretKeySpec and IvParameterSpec are therefore neither hardcoded nor constant, and neither repeats across encryptions: both are derived from the user's secret and a random per-message salt. The salt is stored as a prefix of the blob (salt||ciphertext), Base64 in the PubKeyBean JSON in SharedPreferences, so decrypt can derive the same key and IV again. RVSec's 'unknown' message only says it could not trace where the bytes came from. That is expected here, because they come from a KDF and not from KeyGenerator or a direct SecureRandom fill. The fix these rules imply (a random key from KeyGenerator, or an independent random IV) does not fit password-based encryption: the key has to be reproducible from the passphrase. As a statement about key or IV misuse, the finding is a false positive. Real but separate weaknesses exist: a home-made, low-cost KDF instead of PBKDF2 or another standard KDF, an 8-byte salt, SHA1PRNG named explicitly, and unauthenticated CBC. Any change to how the key or IV is derived changes the stored format. The blob has no version marker, and keys users have already saved with a passphrase would stop decrypting in SSH.kt (decodePrivate) unless the PR adds versioning and a legacy decrypt path.\n\nSecond judge: The 'unknown' reports do not establish invalid SecretKeySpec or IvParameterSpec use. Encryptor generates a fresh salt with SecureRandom, applies repeated SHA-256 to the UTF-8 password and salt, and splits the result into a valid 16-byte AES key and 16-byte CBC IV. These are not constants; clearing the source arrays after cipher.init does not erase the initialized cipher. Nevertheless, this is an aging password-encryption scheme: only 1000 rounds of a custom fast hash construction, with unauthenticated CBC. PubKeyUtils uses it to protect generated SSH private keys locally, storing eight salt bytes followed by ciphertext, without format or derivation metadata. KeyUtils serializes those bytes as Base64 in PubKeyBean JSON in SharedPreferences. Consequently, changing only Encryptor would risk making saved SSH identities unreadable.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For new password-protected records, replace the custom password hashing with a standard salted password KDF with an appropriately chosen work factor. Preserve password-based unlocking rather than substituting an unrecoverable random key.",
+   "If replacing the IV derivation or cipher, generate and persist the required fresh IV or nonce and update encryption and decryption together; authenticated encryption is preferable to the existing unauthenticated CBC.",
+   "Introduce distinguishable format or record metadata for changed encryption parameters, while retaining legacy decoding or safely migrating records after successful password-based decryption.",
+   "Verify legacy-record recovery, new-record round trips, and clean failure for incorrect passwords and malformed records."
+  ],
+  "must_not_break": [
+   "Decrypting passphrase-protected private keys that are already stored: the PubKeyBean.privateKey blob in SharedPreferences is salt(8 bytes)||AES-128-CBC/PKCS5 ciphertext, with the key and IV taken from 1000 rounds of SHA-256(passphrase||salt). PubKeyUtils.decodePrivate and Encryptor.decrypt must keep reading it.",
+   "Symmetry between encrypt and decrypt: the same passphrase, salt and iteration count must derive the same key and IV, and the salt must stay prepended to the ciphertext so decrypt can recover it.",
+   "Unencrypted keys (empty passphrase, including the SmartConnectKey) must keep being stored as plain PKCS#8 without going through Encryptor.",
+   "A new random salt on every encryption.",
+   "minSdkVersion 23: any algorithm used must exist in the platform providers on API 23 and later.",
+   "SSH public-key authentication in SSH.kt, which decrypts the private key with the user's passphrase before connecting.",
+   "Existing encrypted private keys: eight-byte salt followed by AES-128-CBC/PKCS5Padding ciphertext, with key and IV reconstructed by 1000 SHA-256 rounds over the UTF-8 password and salt. Do not silently reinterpret or overwrite them using new parameters.",
+   "Existing PubKeyBean persistence, key nicknames, public/private key correspondence, and SSH authentication using the recovered private key. Migration must preserve the SSH identity already authorized on servers.",
+   "Null or empty passwords deliberately produce unencrypted PKCS#8 private-key bytes. Preserve this supported path, including the passwordless SmartConnectKey.",
+   "Password prompting through isEncrypted, cancellation and incorrect-password handling, and the existing in-memory key-use behavior.",
+   "OpenSSH public-key copying and Bluetooth installation on the Raspberry Pi. The local encrypted private-key blob is not an SSH wire format, so hardening it must not alter the public-key output.",
+   "Android API 23 support. Any new KDF or cipher implementation must work there; do not assume platform PBKDF2WithHmacSHA256 availability on every supported version."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 188,
+ "tokens": {
+  "input_tokens": 214954,
+  "cached_input_tokens": 165888,
+  "output_tokens": 6864,
+  "reasoning_output_tokens": 3551
+ },
+ "turns": 1,
+ "tool_calls": 10,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [
+   "/home/AGENTS.md",
+   "/home/antonow/AGENTS.md",
+   "/home/antonow/comparison_20261113/AGENTS.md",
+   "/home/antonow/comparison_20261113/judges/AGENTS.md",
+   "/home/antonow/comparison_20261113/judges/checkout/AGENTS.md",
+   "/home/antonow/comparison_20261113/judges/checkout/co_ed824f6818ef/AGENTS.md"
+  ],
+  "suspicious_paths": [
+   "/home/antonow/comparison_20261113/AGENTS.md",
+   "/home/antonow/comparison_20261113/judges/AGENTS.md"
+  ],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "51e940f5c4908192",
+ "finished_at": "2026-11-16T17:28:29-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K24e0e45d",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Adds costly PBKDF2, fresh salt and nonce, authenticated encryption, version identification, legacy decoding, and meaningful compatibility tests using API-23-compatible algorithms. The claimed successful build contradicts the supplied build status."
+   },
+   {
+    "card_id": "K4d7ca437",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly traces the salted password derivation and explains constructor copying and buffer clearing. Its conclusion appropriately concerns these reports rather than the scheme's overall strength."
+   },
+   {
+    "card_id": "K5334e115",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "Preserves legacy decoding and stores the independent IV, but leaves the custom low-cost KDF unchanged and supplies no required verification. Describing the existing salted, derived IV as nonrandom misleadingly treats the false positive as established misuse."
+   },
+   {
+    "card_id": "Kead28b38",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately identifies inexpensive password guessing and unauthenticated CBC. The compatibility and migration requirements provide a sound reason to propose an issue before implementation."
+   },
+   {
+    "card_id": "Kd5c5dbb5",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Bases non-delivery on unresolved checker constraints rather than assessing the actual password-and-random-salt derivation. It does not establish the code-specific false-positive explanation."
+   },
+   {
+    "card_id": "Kdf4fc59d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "Correctly identifies the separate KDF and authentication weaknesses and explains the need for legacy recovery. The proposed PBKDF2-HMAC-SHA256 direction needs an API 23 availability caveat."
+   },
+   {
+    "card_id": "Kfd522574",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately describes the derivation, offline-guessing risk, and missing authentication. Explicitly accounts for legacy compatibility and the continued weakness of records awaiting migration."
+   },
+   {
+    "card_id": "K4bb70588",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 2,
+    "notes": "The compatibility rationale and separate hardening concerns are sound. However, it incorrectly claims an active imported-key encryption path; this checkout reaches getEncodedPrivate through key generation."
+   },
+   {
+    "card_id": "K0ca6173f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "Provides a specific, sound explanation of the weak derivation and why changing it requires compatible storage handling. It blurs the distinction between the unknown findings and separate weaknesses, and omits the API 23 caveat for PBKDF2-HMAC-SHA256."
+   },
+   {
+    "card_id": "K9f59b45e",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The marked PBKDF2/random-IV format retains legacy recovery, and the supplied legacy fixture is correct. Before merging, raise the new-format work factor above 1,000 and add incorrect-password/malformed-record checks; the build claim contradicts the supplied status."
+   },
+   {
+    "card_id": "K76dd5723",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains fresh salt, populated digest-derived buffers, constructor copying, and reproducible decryption. The decision is specific to the reported initialization calls."
+   },
+   {
+    "card_id": "K42588634",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Retains app-level legacy recovery, but lacks distinguishable format metadata, keeps only 1,000 PBKDF2 iterations, and omits compatibility and failure tests. Its nonrandom-IV claim and definite prediction of future checker reports are unsupported."
+   },
+   {
+    "card_id": "K7b1982b5",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Uses a distinguishable new record and preserves the correct legacy reader. It needs a stronger new-format PBKDF2 work factor and negative tests; the successful-build claim contradicts the supplied status."
+   },
+   {
+    "card_id": "K33261f92",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the salted derivation as the explanation for nonconstant key and IV bytes. It also recognizes the separate weak KDF and the compatibility consequences of changing it."
+   },
+   {
+    "card_id": "K2e642863",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "The suffix format distinguishes new records from legacy ciphertext and preserves legacy recovery. Raise the new-format PBKDF2 cost and add failure tests; the claimed successful build contradicts the supplied status."
+   },
+   {
+    "card_id": "Kde2016fc",
+    "r2": 1,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": null,
+    "notes": "Stores and recovers a fresh independent IV while retaining legacy decryption, but leaves the custom low-cost KDF unchanged and adds no verification. It incorrectly presents the checker's unknown message as establishing a nonrandom-IV defect."
+   },
+   {
+    "card_id": "K774e08a9",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Precisely describes the repeated salted hashing and offline-guessing cost. Its request for calibrated standard derivation, versioning, and legacy recovery is accurate and actionable."
+   },
+   {
+    "card_id": "Ke3d119e2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Relies on unresolved checker mechanics and a bounded-run observation instead of judging the encryption code. A single observed fingerprint does not establish constant IV use in this salted construction."
+   },
+   {
+    "card_id": "K481ce53a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Uncertainty about rule bindings is not a code-based reason for non-delivery. It omits the fresh salt and password derivation that explain these findings."
+   },
+   {
+    "card_id": "K4bcbb6ae",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Discusses checker attribution without evaluating where the actual key and IV bytes originate. The reason is unresolved tooling evidence rather than a judgment about this implementation."
+   },
+   {
+    "card_id": "Kf8aef910",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately explains the custom hash loop, inexpensive offline guessing, and absent derivation metadata. Preserving legacy decryption and testing recovery are appropriate prerequisites for a patch."
+   },
+   {
+    "card_id": "K3e613553",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately reports separate password-storage weaknesses and proposes standard derivation and authenticated encryption. Its compatibility and migration requirements justify handling this as an issue."
+   },
+   {
+    "card_id": "Kf2f5c3b5",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "Preserves legacy recovery and persists the cipher-generated IV. Before merging, strengthen the new-format PBKDF2 cost, validate the format byte, and test failure cases; the build claim contradicts the supplied status."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

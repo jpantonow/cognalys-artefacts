@@ -1,0 +1,27 @@
+{
+  "execution_timestamp": "2026-11-04T00:55:26.142658+00:00",
+  "workflow_status": "SUCCESS_WITH_NO_ACTION",
+  "execution_time_seconds": 0.245061,
+  "config": {
+    "error_solutions_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_lite_20261024/run_ab56/error_solutions",
+    "cloned_projects_dir": "/home/antonow/cognalys_work/lite_ab56/clones",
+    "output_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_lite_20261024/run_ab56/application_results",
+    "worktrees_dir": "/home/antonow/cognalys_work/lite_ab56/worktrees",
+    "save_backups": true,
+    "backup_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_lite_20261024/run_ab56/application_results/method_backups",
+    "dry_run": false,
+    "max_solutions": 0,
+    "git_user_name": "jpantonow",
+    "git_user_email": "jpantonow@gmail.com"
+  },
+  "total_solutions": 0,
+  "results": {
+    "successfully_applied": 0,
+    "failed": 0,
+    "dry_run": 0,
+    "review_only_not_applied": 0,
+    "not_applicable_to_base_branch": 0
+  },
+  "per_solution_details": [],
+  "errors": []
+}

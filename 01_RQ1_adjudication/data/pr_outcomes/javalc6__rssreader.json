@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/javalc6/rssreader/pull/4",
+    "state": "closed",
+    "finding_id": "e6413a8ebbe9",
+    "spec": "MessageDigestSpec",
+    "csv_class": "tools.FileManager",
+    "method_name": "writeFile",
+    "title": "Write file checksums with SHA-256",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:40:30.017565+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "javalc6",
+        "kind": "comment",
+        "body": "Thanks for taking the time to run the app under RVSec, but it will not be merged. In _FileManager_, MD5 is used only as a checksum to detect accidental corruption of a backup file. It isn’t used for authentication, signatures, or password hashing, so MD5’s known weaknesses (collision attacks) don’t apply here. \r\n\r\nSince there’s no secret key, switching to SHA-256 wouldn’t stop anyone from modifying a file and recomputing a valid checksum, so it wouldn’t improve security. \r\n\r\nThe _MessageDigestSpec_ warning is a generic rule that flags MD5 regardless of how it’s used. Note that _MessageDigest.getInstance(\"MD5\")_ isn’t rejected by the Java/Android API [MessageDigest](https://developer.android.com/reference/java/security/MessageDigest)"
+      }
+    ]
+  }
+]

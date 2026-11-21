@@ -1,0 +1,939 @@
+[
+  {
+    "finding": {
+      "apk": "app.michaelwuensch.bitbanana_79.apk",
+      "class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+      "method": "encodePbkdf2",
+      "spec": "SecretKeyFactorySpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "subset_bitbanana",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "confirmed",
+      "issue": true,
+      "issue_target": "application_repository",
+      "issue_kind": "generation_blocked",
+      "issue_repository": "michaelWuensch/BitBanana",
+      "outcome": "issue para o mantenedor do app",
+      "outcome_detail": "michaelWuensch/BitBanana"
+    },
+    "issue": [
+      {
+        "path": "subset_bitbanana/error_solutions/issue_candidates/app.michaelwuensch.bitbanana_79.apk/1_encodePbkdf2_issue.json",
+        "issue_kind": "generation_blocked",
+        "analysis_decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "generation_blockers": [
+          "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+          "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+          "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+          "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+          "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+          "STORED_DERIVED_VALUE_CHANGED"
+        ],
+        "generation_failure": null,
+        "confirmed_cause": "The governed SecretKeyFactory.getInstance call uses literal PBKDF2WithHmacSHA1, which is not in SecretKeyFactorySpec's explicit algorithm allowlist; the acquisition precedes generateSecret, so the confirmed reported cause is the algorithm constraint rather than call ordering (C-001, C-002, C-005).",
+        "why_no_safe_fix": null,
+        "why_no_automatic_fix": null,
+        "remediation_guidance": null,
+        "maintainer_summary": null,
+        "evidence_summary": null
+      }
+    ],
+    "gates": [
+      {
+        "path": "subset_bitbanana/error_solutions/coordinated_drafts/app.michaelwuensch.bitbanana_79.apk/1_encodePbkdf2/semantic_validation.json",
+        "data": {
+          "status": "invalid",
+          "errors": [
+            {
+              "code": "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+              "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/appLock/PinSetupActivity.java",
+              "details": [
+                "AppLockUtil declares no static verifyAppLockVerifier(...)"
+              ]
+            },
+            {
+              "code": "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+              "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/appLock/PinSetupActivity.java",
+              "details": [
+                "AppLockUtil declares no static createCurrentAppLockVerifier(...)"
+              ]
+            },
+            {
+              "code": "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+              "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/appLock/PasswordSetupActivity.java",
+              "details": [
+                "AppLockUtil declares no static createCurrentAppLockVerifier(...)",
+                "AppLockUtil declares no static verifyAppLockVerifier(...)"
+              ]
+            },
+            {
+              "code": "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+              "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/appLock/PasswordSetupFragment.java",
+              "details": [
+                "AppLockUtil declares no static verifyAppLockVerifier(...)"
+              ]
+            },
+            {
+              "code": "SYMBOL_NOT_DECLARED_IN_REPOSITORY",
+              "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/appLock/PasswordEntryActivity.java",
+              "details": [
+                "AppLockUtil declares no static verifyAppLockVerifier(...)"
+              ]
+            },
+            {
+              "code": "STORED_DERIVED_VALUE_CHANGED",
+              "path": "app/src/main/java/app/michaelwuensch/bitbanana/util/UtilFunctions.java",
+              "details": [
+                "the patch changes PBEKeySpec(password,salt,iterations,bytes*8), and the value it derives is stored (app/src/main/java/app/michaelwuensch/bitbanana/appLock/PinSetupActivity.java:103: .putString(PrefsUtil.PIN_HASH, UtilFunctions.appLockDataHash(value))); a value derived the new way no longer matches one derived before, so existing data or the remote side breaks. Keep the original derivation for existing values (verify-then-migrate), or report the finding to the maintainer instead of patching it."
+              ]
+            }
+          ],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [],
+    "index": {
+      "finding_key": "744531f6d880",
+      "apk": "app.michaelwuensch.bitbanana_79.apk",
+      "method": "encodePbkdf2",
+      "spec": "SecretKeyFactorySpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "generation",
+      "signatures": [
+        "generation:semantic:symbol_not_declared_in_repository"
+      ],
+      "evidence_fingerprint": "e87ac6295226af0f3c9fac77786f302900e3ca012ba072e8fc5a13acd92178b7",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/app.michaelwuensch.bitbanana_79.apk/1_encodePbkdf2_evidence.json",
+        "evidence_context": "error_solutions/finding_context/app.michaelwuensch.bitbanana_79.apk/1_encodePbkdf2/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/app.michaelwuensch.bitbanana_79.apk/1_encodePbkdf2_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/app.michaelwuensch.bitbanana_79.apk/1_encodePbkdf2_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/app.michaelwuensch.bitbanana_79.apk/1_encodePbkdf2_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/app.michaelwuensch.bitbanana_79.apk/1_encodePbkdf2_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/app.michaelwuensch.bitbanana_79.apk/1_encodePbkdf2/manifest.json"
+      }
+    }
+  },
+  {
+    "finding": {
+      "apk": "com.gelakinetic.mtgfam_99.apk",
+      "class": "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher$1",
+      "method": "fetch",
+      "spec": "SecretKeySpecSpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "subset_policy",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "not_established",
+      "issue": true,
+      "issue_target": "application_repository",
+      "issue_kind": "generation_blocked",
+      "issue_repository": "AEFeinstein/mtg-familiar",
+      "outcome": "issue para o mantenedor do app",
+      "outcome_detail": "AEFeinstein/mtg-familiar"
+    },
+    "issue": [
+      {
+        "path": "subset_policy/error_solutions/issue_candidates/com.gelakinetic.mtgfam_99.apk/3_fetch_issue.json",
+        "issue_kind": "generation_blocked",
+        "analysis_decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "generation_blockers": [
+          "CHECKED_EXCEPTION_NOT_PROPAGATED"
+        ],
+        "generation_failure": null,
+        "confirmed_cause": "MarketPriceFetcher.fetch converts the application-compiled R.string.key_lastLegalityUpdate value to bytes and passes those constant bytes directly as keyMaterial to the governed two-argument SecretKeySpec constructor. This material is neither generated/randomized nor prepared key material, violating the rule's required preparedKeyMaterial[keyMaterial] || randomized[keyMaterial] predicate.",
+        "why_no_safe_fix": null,
+        "why_no_automatic_fix": null,
+        "remediation_guidance": null,
+        "maintainer_summary": null,
+        "evidence_summary": null
+      }
+    ],
+    "gates": [
+      {
+        "path": "subset_policy/error_solutions/coordinated_drafts/com.gelakinetic.mtgfam_99.apk/3_fetch/semantic_validation.json",
+        "data": {
+          "status": "invalid",
+          "errors": [
+            {
+              "code": "CHECKED_EXCEPTION_NOT_PROPAGATED",
+              "path": "mobile/src/main/java/com/gelakinetic/mtgfam/helpers/tcgp/MarketPriceFetcher.java",
+              "details": [
+                "IOException"
+              ]
+            }
+          ],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [],
+    "index": {
+      "finding_key": "60c8a60d700f",
+      "apk": "com.gelakinetic.mtgfam_99.apk",
+      "method": "fetch",
+      "spec": "SecretKeySpecSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "generation",
+      "signatures": [
+        "generation:semantic:checked_exception_not_propagated"
+      ],
+      "evidence_fingerprint": "3c8190d24f3be2e5470203c7cf0af979a1b5786e60b1342c3d3618e70bcb05a6",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/com.gelakinetic.mtgfam_99.apk/3_fetch_evidence.json",
+        "evidence_context": "error_solutions/finding_context/com.gelakinetic.mtgfam_99.apk/3_fetch/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/com.gelakinetic.mtgfam_99.apk/3_fetch_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/com.gelakinetic.mtgfam_99.apk/3_fetch_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/com.gelakinetic.mtgfam_99.apk/3_fetch_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/com.gelakinetic.mtgfam_99.apk/3_fetch_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/com.gelakinetic.mtgfam_99.apk/3_fetch/manifest.json"
+      }
+    }
+  },
+  {
+    "finding": {
+      "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+      "class": "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider",
+      "method": "configureTrustAllCertificates",
+      "spec": "SSLContextSpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "run2",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "non_security",
+      "solution": true,
+      "apply_status": "NOT_APPLICABLE_TO_BASE",
+      "apply_error": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH",
+      "base_port": "ALREADY_FIXED_UPSTREAM",
+      "submodule": "",
+      "build_status": "",
+      "build_attribution": "",
+      "finding_id": "4c1c74bcbc8f",
+      "outcome": "correção não aplicável: código mudou upstream",
+      "outcome_detail": "o branch de destino já não tem a violação"
+    },
+    "issue": [],
+    "gates": [
+      {
+        "path": "run2/error_solutions/coordinated_drafts/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates/semantic_validation.json",
+        "data": {
+          "status": "valid",
+          "errors": [],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [
+      {
+        "status": "NOT_APPLICABLE_TO_BASE",
+        "error": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH",
+        "base_port": {
+          "decision": "ALREADY_FIXED_UPSTREAM",
+          "explanation": "The base branch already uses the accepted \"TLS\" selector in OkHttpClientProvider.configureTrustAllCertificates; the reported legacy \"SSL\" selector is no longer present. The local variable remains named sslContext, but the detector violation is fixed upstream.",
+          "attempts": []
+        },
+        "build_validation": null,
+        "base_commit": "6bc8c6a5cdabd4ceb4e19a8ba217d0a7838ee2e9",
+        "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/de.lukasneugebauer.nextcloudcookbook_62.apk/4c1c74bcbc8f/1ca58043f7",
+        "contribution_base": {
+          "base_commit": "6bc8c6a5cdabd4ceb4e19a8ba217d0a7838ee2e9",
+          "source_file_path": "app/src/main/java/de/lukasneugebauer/nextcloudcookbook/core/util/OkHttpClientProvider.kt",
+          "target_present": true,
+          "analyzed_code_present": false,
+          "violation_absent_per_port": true
+        }
+      }
+    ],
+    "index": {
+      "finding_key": "4c1c74bcbc8f",
+      "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+      "method": "configureTrustAllCertificates",
+      "spec": "SSLContextSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "apply",
+      "signatures": [
+        "apply:original_code_absent_from_base_branch"
+      ],
+      "evidence_fingerprint": "4d5682ed5fb8a0d5c3979639a4c522ecd1c1a9c421012bb8f7b1781bea1d67ad",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates_evidence.json",
+        "evidence_context": "error_solutions/finding_context/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates/manifest.json",
+        "solution": "error_solutions/de.lukasneugebauer.nextcloudcookbook_62.apk/0_configureTrustAllCertificates_solution.json"
+      }
+    }
+  },
+  {
+    "finding": {
+      "apk": "github.paroj.dsub2000_217.apk",
+      "class": "github.paroj.dsub2000.service.RESTMusicService",
+      "method": "<init>",
+      "spec": "SSLContextSpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "subset_gates",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "confirmed",
+      "solution": true,
+      "apply_status": "NOT_APPLICABLE_TO_BASE",
+      "apply_error": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH",
+      "base_port": "ABSTAIN",
+      "submodule": "",
+      "build_status": "",
+      "build_attribution": "",
+      "finding_id": "f167efd80107",
+      "outcome": "correção não aplicável: código mudou upstream",
+      "outcome_detail": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH"
+    },
+    "issue": [],
+    "gates": [
+      {
+        "path": "subset_gates/error_solutions/coordinated_drafts/github.paroj.dsub2000_217.apk/3__init_/semantic_validation.json",
+        "data": {
+          "status": "valid",
+          "errors": [],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [
+      {
+        "status": "NOT_APPLICABLE_TO_BASE",
+        "error": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH",
+        "base_port": {
+          "decision": "ABSTAIN",
+          "explanation": "ABSTAIN: The reviewed correction replaces the accept-all TrustManager with platform TrustManagerFactory output, which necessarily removes the certificate-trust bypass used exclusively when the insecure-connections option is enabled. Preserving that opted-in behavior would require retaining or introducing a permissive trust manager (violating SSLContextSpec) or designing a different explicit trust mechanism. That is a new security-policy decision outside the reviewed patch.",
+          "attempts": [
+            {
+              "generated": {
+                "explanation": "The base branch still initializes its TLS context with an application-defined accept-all X509TrustManager. Port the reviewed correction while preserving the base branch's legacy-TLS-filtering socket-factory wrapper and existing hostname-verifier behavior.",
+                "decision": "PORT",
+                "edits": [
+                  {
+                    "source_file_path": "app/src/main/java/github/paroj/dsub2000/service/RESTMusicService.java",
+                    "original_code": "import javax.net.ssl.SSLSocketFactory;\nimport javax.net.ssl.TrustManager;\nimport javax.net.ssl.X509TrustManager;",
+                    "edit_kind": "declaration",
+                    "corrected_code": "import javax.net.ssl.SSLSocketFactory;\nimport javax.net.ssl.TrustManagerFactory;",
+                    "reason": "Remove imports used only by the application-defined accept-all trust manager and import TrustManagerFactory for platform trust managers.",
+                    "symbol": "RESTMusicService TLS imports"
+                  },
+                  {
+                    "source_file_path": "app/src/main/java/github/paroj/dsub2000/service/RESTMusicService.java",
+                    "original_code": "    public RESTMusicService() {\n        TrustManager[] trustAllCerts = new TrustManager[] {\n            new X509TrustManager() {\n                public java.security.cert.X509Certificate[] getAcceptedIssuers() {\n                    return new java.security.cert.X509Certificate[0];\n                }\n                public void checkClientTrusted(\n                        java.security.cert.X509Certificate[] certs, String authType) {\n                }\n                public void checkServerTrusted(\n                        java.security.cert.X509Certificate[] certs, String authType) {\n                }\n            }\n        };\n        try {\n            SSLContext insecureSslContext = SSLContext.getInstance(\"TLS\");\n            insecureSslContext.init(null, trustAllCerts, new java.security.SecureRandom());\n            insecureSslSocketFactory = createLegacyTlsFilteringSocketFactory(insecureSslContext.getSocketFactory());\n        } catch (Exception e) {\n        }\n\n        selfSignedHostnameVerifier = new HostnameVerifier() {\n            public boolean verify(String hostname, SSLSession session) {\n                return true;\n            }\n        };\n    }",
+                    "edit_kind": "method",
+                    "corrected_code": "    public RESTMusicService() {\n        try {\n            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());\n            trustManagerFactory.init((java.security.KeyStore) null);\n            SSLContext insecureSslContext = SSLContext.getInstance(\"TLS\");\n            insecureSslContext.init(null, trustManagerFactory.getTrustManagers(), new java.security.SecureRandom());\n            insecureSslSocketFactory = createLegacyTlsFilteringSocketFactory(insecureSslContext.getSocketFactory());\n        } catch (Exception e) {\n        }\n\n        selfSignedHostnameVerifier = new HostnameVerifier() {\n            public boolean verify(String hostname, SSLSession session) {\n                return true;\n            }\n        };\n    }",
+                    "reason": "Initialize the TLS context with TrustManagerFactory-produced platform trust managers rather than an application-defined manager that accepts every certificate. Preserve the base branch's TLS context selection, legacy protocol filtering, socket-factory storage, and existing hostname-verification behavior.",
+                    "symbol": "RESTMusicService.<init>"
+                  }
+                ]
+              },
+              "error": "PORT_VIOLATES_SEMANTIC_GATES:USER_OPTION_NEUTRALIZED: the patch keeps an option's check but removes what the option turned on, so users who enabled it silently lose that behaviour: insecureSslSocketFactory is changed and is only used where the option is on | selfSignedHostnameVerifier is changed and is only used where the option is on. Keep the opted-i"
+            }
+          ]
+        },
+        "build_validation": null,
+        "base_commit": "783459e5ff88cc66b2bbdb47e9a530944ee8b0ec",
+        "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/github.paroj.dsub2000_217.apk/f167efd80107/5539ca089a",
+        "contribution_base": {
+          "base_branch": "edge",
+          "base_commit": "783459e5ff88cc66b2bbdb47e9a530944ee8b0ec",
+          "source_file_path": "app/src/main/java/github/paroj/dsub2000/service/RESTMusicService.java",
+          "target_present": true,
+          "analyzed_code_present": false
+        }
+      }
+    ],
+    "index": {
+      "finding_key": "f167efd80107",
+      "apk": "github.paroj.dsub2000_217.apk",
+      "method": "<init>",
+      "spec": "SSLContextSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "apply",
+      "signatures": [
+        "apply:original_code_absent_from_base_branch"
+      ],
+      "evidence_fingerprint": "b07dbefb8a5e3708d8b6e6337f2de845cc1d8f3f368e906bf5e4c3817e4e92f1",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/github.paroj.dsub2000_217.apk/3__init__evidence.json",
+        "evidence_context": "error_solutions/finding_context/github.paroj.dsub2000_217.apk/3__init_/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/github.paroj.dsub2000_217.apk/3__init__evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/github.paroj.dsub2000_217.apk/3__init__external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/github.paroj.dsub2000_217.apk/3__init__adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/github.paroj.dsub2000_217.apk/3__init__patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/github.paroj.dsub2000_217.apk/3__init_/manifest.json"
+      }
+    }
+  },
+  {
+    "finding": {
+      "apk": "net.gaast.giggity_769.apk",
+      "class": "net.gaast.giggity.Schedule$Item",
+      "method": "hashCode",
+      "spec": "MessageDigestSpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "run2",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "non_security",
+      "solution": true,
+      "apply_status": "NOT_APPLICABLE_TO_BASE",
+      "apply_error": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH",
+      "base_port": "ALREADY_FIXED_UPSTREAM",
+      "submodule": "",
+      "build_status": "",
+      "build_attribution": "",
+      "finding_id": "6eb0c69fa93c",
+      "outcome": "correção não aplicável: código mudou upstream",
+      "outcome_detail": "o branch de destino já não tem a violação"
+    },
+    "issue": [],
+    "gates": [
+      {
+        "path": "run2/error_solutions/coordinated_drafts/net.gaast.giggity_769.apk/15_hashCode/semantic_validation.json",
+        "data": {
+          "status": "valid",
+          "errors": [],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [
+      {
+        "status": "NOT_APPLICABLE_TO_BASE",
+        "error": "ORIGINAL_CODE_ABSENT_FROM_BASE_BRANCH",
+        "base_port": {
+          "decision": "ALREADY_FIXED_UPSTREAM",
+          "explanation": "ALREADY_FIXED_UPSTREAM: `Schedule.Item.hashCode()` in `app/src/main/java/net/gaast/giggity/Schedule.java` already returns `getUrl().hashCode()` and no longer creates an MD5 `MessageDigest` or folds digest bytes. The remaining `ByteBuffer`, `MessageDigest`, and `NoSuchAlgorithmException` imports are unused cleanup only and do not retain the reported violation in the flagged method.",
+          "attempts": []
+        },
+        "build_validation": null,
+        "base_commit": "628aabfef64a67b7b915db0ffda6d433968f4684",
+        "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/net.gaast.giggity_769.apk/6eb0c69fa93c/a57e436079",
+        "contribution_base": {
+          "base_commit": "628aabfef64a67b7b915db0ffda6d433968f4684",
+          "source_file_path": "app/src/main/java/net/gaast/giggity/Schedule.java",
+          "target_present": true,
+          "analyzed_code_present": false,
+          "violation_absent_per_port": true
+        }
+      }
+    ],
+    "index": {
+      "finding_key": "6eb0c69fa93c",
+      "apk": "net.gaast.giggity_769.apk",
+      "method": "hashCode",
+      "spec": "MessageDigestSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "apply",
+      "signatures": [
+        "apply:original_code_absent_from_base_branch"
+      ],
+      "evidence_fingerprint": "64e08921d2d825a25940319ffab148e2fc75755ac965afc1b5d3a2a1a099cca4",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/net.gaast.giggity_769.apk/15_hashCode_evidence.json",
+        "evidence_context": "error_solutions/finding_context/net.gaast.giggity_769.apk/15_hashCode/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/net.gaast.giggity_769.apk/15_hashCode_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/net.gaast.giggity_769.apk/15_hashCode_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/net.gaast.giggity_769.apk/15_hashCode_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/net.gaast.giggity_769.apk/15_hashCode_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/net.gaast.giggity_769.apk/15_hashCode/manifest.json",
+        "solution": "error_solutions/net.gaast.giggity_769.apk/15_hashCode_solution.json"
+      }
+    }
+  },
+  {
+    "finding": {
+      "apk": "org.cry.otp_31.apk",
+      "class": "org.cry.otp.MD5",
+      "method": "<init>",
+      "spec": "MessageDigestSpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "subset_policy2",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "not_established",
+      "issue": true,
+      "issue_target": "application_repository",
+      "issue_kind": "generation_blocked",
+      "issue_repository": "chrismiceli/motp",
+      "outcome": "issue para o mantenedor do app",
+      "outcome_detail": "chrismiceli/motp"
+    },
+    "issue": [
+      {
+        "path": "subset_policy2/error_solutions/issue_candidates/org.cry.otp_31.apk/2__init__issue.json",
+        "issue_kind": "generation_blocked",
+        "analysis_decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "generation_blockers": [
+          "PROTOCOL_MANDATED_ALGORITHM"
+        ],
+        "generation_failure": null,
+        "confirmed_cause": "The governed java.security.MessageDigest.getInstance call in the MD5 constructor is passed the literal \"MD5\", which is outside the MessageDigestSpec allow-list of SHA-256, SHA-384, and SHA-512.",
+        "why_no_safe_fix": null,
+        "why_no_automatic_fix": null,
+        "remediation_guidance": null,
+        "maintainer_summary": null,
+        "evidence_summary": null
+      }
+    ],
+    "gates": [
+      {
+        "path": "subset_policy2/error_solutions/coordinated_drafts/org.cry.otp_31.apk/2__init_/semantic_validation.json",
+        "data": {
+          "status": "invalid",
+          "errors": [
+            {
+              "code": "PROTOCOL_MANDATED_ALGORITHM",
+              "path": "app/src/main/java/org/cry/otp/mOTP.java",
+              "details": [
+                "the code implements mOTP, and the patch stops using MD5 there: every mOTP token and server derives the code with MD5. Values computed the new way stop matching the other side, whatever helper still exists elsewhere. Keep the algorithm, or report the finding to the maintainer instead of patching it."
+              ]
+            }
+          ],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [],
+    "index": {
+      "finding_key": "9da181fd6978",
+      "apk": "org.cry.otp_31.apk",
+      "method": "<init>",
+      "spec": "MessageDigestSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "generation",
+      "signatures": [
+        "generation:semantic:protocol_mandated_algorithm"
+      ],
+      "evidence_fingerprint": "0034b10820ebed874b2e641c1f73801d6a1b1192c3a29c95436296ab0ddbe145",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.cry.otp_31.apk/2__init__evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.cry.otp_31.apk/2__init_/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.cry.otp_31.apk/2__init__evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.cry.otp_31.apk/2__init__external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.cry.otp_31.apk/2__init__adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.cry.otp_31.apk/2__init__patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/org.cry.otp_31.apk/2__init_/manifest.json"
+      }
+    }
+  },
+  {
+    "finding": {
+      "apk": "org.cry.otp_31.apk",
+      "class": "org.cry.otp.TOTP",
+      "method": "hmac_sha",
+      "spec": "MacSpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "run2",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "not_established",
+      "issue": true,
+      "issue_target": "application_repository",
+      "issue_kind": "generation_blocked",
+      "issue_repository": "chrismiceli/motp",
+      "outcome": "issue para o mantenedor do app",
+      "outcome_detail": "chrismiceli/motp"
+    },
+    "issue": [
+      {
+        "path": "run2/error_solutions/issue_candidates/org.cry.otp_31.apk/17_hmac_sha_issue.json",
+        "issue_kind": "generation_blocked",
+        "analysis_decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "generation_blockers": [
+          "PROTOCOL_MANDATED_ALGORITHM"
+        ],
+        "generation_failure": null,
+        "confirmed_cause": "TOTP.gen has a reachable shaType == 0 branch that selects the literal HmacSHA1 and supplies it through hmac_sha's crypto parameter to the resolved one-argument javax.crypto.Mac.getInstance call. HmacSHA1 is outside MacSpec's declared allow-list.",
+        "why_no_safe_fix": null,
+        "why_no_automatic_fix": null,
+        "remediation_guidance": null,
+        "maintainer_summary": null,
+        "evidence_summary": null
+      }
+    ],
+    "gates": [
+      {
+        "path": "run2/error_solutions/coordinated_drafts/org.cry.otp_31.apk/17_hmac_sha/semantic_validation.json",
+        "data": {
+          "status": "invalid",
+          "errors": [
+            {
+              "code": "PROTOCOL_MANDATED_ALGORITHM",
+              "path": "app/src/main/java/org/cry/otp/TOTP.java",
+              "details": [
+                "the code implements HOTP/TOTP (RFC 4226, RFC 6238), and the patch replaces HmacSHA1: codes must match the authenticator the account was enrolled with, which uses the algorithm recorded at enrolment (SHA-1 by default). Values computed the new way stop matching the other side. Keep the algorithm, or report the finding to the maintainer instead of patching it."
+              ]
+            }
+          ],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [],
+    "index": {
+      "finding_key": "4187ba41bc5c",
+      "apk": "org.cry.otp_31.apk",
+      "method": "hmac_sha",
+      "spec": "MacSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "generation",
+      "signatures": [
+        "generation:semantic:protocol_mandated_algorithm"
+      ],
+      "evidence_fingerprint": "e2f6ee7c48bbfe434dfa730dbefe166bc9d4e06e178790ef1970b5c95cb1816a",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.cry.otp_31.apk/17_hmac_sha_evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.cry.otp_31.apk/17_hmac_sha/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.cry.otp_31.apk/17_hmac_sha_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.cry.otp_31.apk/17_hmac_sha_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.cry.otp_31.apk/17_hmac_sha_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.cry.otp_31.apk/17_hmac_sha_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/org.cry.otp_31.apk/17_hmac_sha/manifest.json"
+      }
+    }
+  },
+  {
+    "finding": {
+      "apk": "org.quantumbadger.redreader_117.apk",
+      "class": "org.quantumbadger.redreader.common.General",
+      "method": "sha1",
+      "spec": "MessageDigestSpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "run2",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "not_established",
+      "issue": true,
+      "issue_target": "application_repository",
+      "issue_kind": "generation_blocked",
+      "issue_repository": "QuantumBadger/RedReader",
+      "outcome": "issue para o mantenedor do app",
+      "outcome_detail": "QuantumBadger/RedReader"
+    },
+    "issue": [
+      {
+        "path": "run2/error_solutions/issue_candidates/org.quantumbadger.redreader_117.apk/21_sha1_issue.json",
+        "issue_kind": "generation_blocked",
+        "analysis_decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "generation_blockers": [
+          "STORED_DERIVED_VALUE_CHANGED"
+        ],
+        "generation_failure": null,
+        "confirmed_cause": "The resolved java.security.MessageDigest.getInstance call in General.sha1 is passed the literal \"SHA-1\", violating the MessageDigest rule's required algorithm-membership constraint (CLM-001, CLM-002).",
+        "why_no_safe_fix": null,
+        "why_no_automatic_fix": null,
+        "remediation_guidance": null,
+        "maintainer_summary": null,
+        "evidence_summary": null
+      }
+    ],
+    "gates": [
+      {
+        "path": "run2/error_solutions/coordinated_drafts/org.quantumbadger.redreader_117.apk/21_sha1/semantic_validation.json",
+        "data": {
+          "status": "invalid",
+          "errors": [
+            {
+              "code": "STORED_DERIVED_VALUE_CHANGED",
+              "path": "src/main/java/org/quantumbadger/redreader/common/General.kt",
+              "details": [
+                "the patch changes MessageDigest.getInstance(\"SHA-1\"), and the value it derives is stored (src/main/java/org/quantumbadger/redreader/reddit/RedditSubredditManager.java:100: return General.sha1(user.username.getBytes()) + \"_\" + type + \"_subreddits.db\";); a value derived the new way no longer matches one derived before, so existing data or the remote side breaks. Keep the original derivation for existing values (verify-then-migrate), or report the finding to the maintainer instead of patching it."
+              ]
+            }
+          ],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [],
+    "index": {
+      "finding_key": "d2b58eae2982",
+      "apk": "org.quantumbadger.redreader_117.apk",
+      "method": "sha1",
+      "spec": "MessageDigestSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "generation",
+      "signatures": [
+        "generation:semantic:stored_derived_value_changed"
+      ],
+      "evidence_fingerprint": "cefbbf5333c16c044842d94dddc0c6cb4d1ce7e300b099c9bf167c5614ee12ac",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/org.quantumbadger.redreader_117.apk/21_sha1_evidence.json",
+        "evidence_context": "error_solutions/finding_context/org.quantumbadger.redreader_117.apk/21_sha1/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/org.quantumbadger.redreader_117.apk/21_sha1_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/org.quantumbadger.redreader_117.apk/21_sha1_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/org.quantumbadger.redreader_117.apk/21_sha1_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/org.quantumbadger.redreader_117.apk/21_sha1_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/org.quantumbadger.redreader_117.apk/21_sha1/manifest.json"
+      }
+    }
+  },
+  {
+    "finding": {
+      "apk": "rocks.poopjournal.metadataremover_20020.apk",
+      "class": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+      "method": "<clinit>",
+      "spec": "SecureRandomSpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "run2",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "not_established",
+      "solution": true,
+      "apply_status": "SUCCESS",
+      "apply_error": "",
+      "base_port": "",
+      "submodule": "",
+      "build_status": "failed",
+      "build_attribution": "verified_preexisting_build_failure",
+      "finding_id": "40d39da41dec",
+      "pr": true,
+      "pr_title": "Use an unseeded SecureRandom for filename selection",
+      "pr_committed": false,
+      "pr_files": 1,
+      "pr_added": 1,
+      "pr_removed": 1,
+      "pr_repository": "Crazy-Marvin/MetadataRemover",
+      "outcome": "correção gerada, sem PR",
+      "outcome_detail": "build: failed (verified_preexisting_build_failure)"
+    },
+    "issue": [],
+    "gates": [
+      {
+        "path": "run2/error_solutions/coordinated_drafts/rocks.poopjournal.metadataremover_20020.apk/30__clinit_/semantic_validation.json",
+        "data": {
+          "status": "valid",
+          "errors": [],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [
+      {
+        "status": "SUCCESS",
+        "error": null,
+        "base_port": null,
+        "build_validation": {
+          "status": "failed",
+          "task": "assembleDebug",
+          "return_code": 1,
+          "reason": "production_failure_reproduces_on_base_commit",
+          "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/40d39da41dec/production/logs/projects/be04b4d231-3.log",
+          "finding_id": "40d39da41dec",
+          "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+          "failure_attribution": "verified_preexisting_build_failure",
+          "unselected_flavor": "",
+          "compiler_diagnostics": [],
+          "baseline_compiler_diagnostics": [],
+          "new_compiler_diagnostics": [],
+          "failing_tests": [],
+          "baseline_failing_tests": [],
+          "new_failing_tests": [],
+          "phases": {
+            "production": {
+              "project_name": "be04b4d231-3",
+              "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+              "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+              "task": "assembleDebug",
+              "status": "failed",
+              "return_code": 1,
+              "duration_seconds": 66.11,
+              "apk_count": 0,
+              "copied_apks": [],
+              "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/40d39da41dec/production/logs/projects/be04b4d231-3.log",
+              "reason": "gradle_return_code_1",
+              "incremental_after_failed_build": true
+            },
+            "baseline_production": {
+              "project_name": "baseline_50ff16c19884247c",
+              "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/baseline_build_cache/50ff16c19884247c_worktree/baseline_50ff16c19884247c",
+              "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/baseline_build_cache/50ff16c19884247c_worktree/baseline_50ff16c19884247c",
+              "task": "assembleDebug",
+              "status": "failed",
+              "return_code": 1,
+              "duration_seconds": 196.99,
+              "apk_count": 0,
+              "copied_apks": [],
+              "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/baseline_build_cache/50ff16c19884247c/logs/projects/baseline_50ff16c19884247c.log",
+              "reason": "gradle_return_code_1",
+              "from_cache": true
+            }
+          },
+          "finding_revalidation": {
+            "status": "not_supported",
+            "validation_level": "source_predicate",
+            "analyzer_rerun_required": true,
+            "reason": "detector message has no literal found/allowlist predicate"
+          },
+          "detector_replay": {
+            "outcome": "no_detector_coverage",
+            "detector": {
+              "tool": "ape"
+            },
+            "detail": "no detector adapter re-runs ape and its specification has no Semgrep rule; whether the alert still fires was not checked, and any correctness claim has to rest on other evidence"
+          },
+          "patch_correctness": {
+            "verdict": "unverified",
+            "satisfied": [],
+            "missing": [
+              "build_fails_for_a_reason_not_attributed_to_the_patch",
+              "no_executable_oracle_for_this_detector",
+              "regression_suite_not_run"
+            ],
+            "contradicted": []
+          }
+        },
+        "base_commit": "1a48772b3713711add80eedcf8207cddcaeb6fd3",
+        "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+        "contribution_base": null
+      }
+    ],
+    "index": {
+      "finding_key": "40d39da41dec",
+      "apk": "rocks.poopjournal.metadataremover_20020.apk",
+      "method": "<clinit>",
+      "spec": "SecureRandomSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "build",
+      "signatures": [
+        "build:production_failure_reproduces_on_base_commit"
+      ],
+      "evidence_fingerprint": "86b8a63c1883deb7c72e8ac3587d2da2ca6a017622dccc3a8c0179cf0b1251eb",
+      "pull_request": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/pull_requests/rocks.poopjournal.metadataremover_20020.apk_clinit_SecureRandomSpec_pr.json",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/rocks.poopjournal.metadataremover_20020.apk/30__clinit__evidence.json",
+        "evidence_context": "error_solutions/finding_context/rocks.poopjournal.metadataremover_20020.apk/30__clinit_/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/rocks.poopjournal.metadataremover_20020.apk/30__clinit__evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/rocks.poopjournal.metadataremover_20020.apk/30__clinit__external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/rocks.poopjournal.metadataremover_20020.apk/30__clinit__adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/rocks.poopjournal.metadataremover_20020.apk/30__clinit__patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/rocks.poopjournal.metadataremover_20020.apk/30__clinit_/manifest.json",
+        "validation_feedback": "application_results/build_validation/40d39da41dec/validation_feedback.json",
+        "pull_request": "pull_requests/rocks.poopjournal.metadataremover_20020.apk_clinit_SecureRandomSpec_pr.json"
+      }
+    }
+  },
+  {
+    "finding": {
+      "apk": "systems.sieber.droid_scep_7.apk",
+      "class": "systems.sieber.droid_scep.ScepClient",
+      "method": "CertReq",
+      "spec": "KeyPairGeneratorSpec",
+      "extraction_status": "success",
+      "evidence": "código-fonte",
+      "run": "subset_gates",
+      "analysed": true,
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "detector_violation": "confirmed",
+      "cause_status": "confirmed",
+      "security_impact": "non_security",
+      "issue": true,
+      "issue_target": "application_repository",
+      "issue_kind": "generation_blocked",
+      "issue_repository": "schorschii/Droid_SCEP",
+      "outcome": "issue para o mantenedor do app",
+      "outcome_detail": "schorschii/Droid_SCEP"
+    },
+    "issue": [
+      {
+        "path": "subset_gates/error_solutions/issue_candidates/systems.sieber.droid_scep_7.apk/2_CertReq_issue.json",
+        "issue_kind": "generation_blocked",
+        "analysis_decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+        "generation_blockers": [
+          "CALLER_SUPPLIED_VALUE_OVERRIDDEN"
+        ],
+        "generation_failure": null,
+        "confirmed_cause": "The tracked java.security.KeyPairGenerator is created for RSA, initialized through CertReq's integer isKeyLen parameter, and used to generate a key pair; a runtime observation established that isKeyLen was 8192 at initialize. This violates the reported RSA integer-key-size constraint requiring 3072 or 4096 bits.",
+        "why_no_safe_fix": null,
+        "why_no_automatic_fix": null,
+        "remediation_guidance": null,
+        "maintainer_summary": null,
+        "evidence_summary": null
+      }
+    ],
+    "gates": [
+      {
+        "path": "subset_gates/error_solutions/coordinated_drafts/systems.sieber.droid_scep_7.apk/2_CertReq/semantic_validation.json",
+        "data": {
+          "status": "invalid",
+          "errors": [
+            {
+              "code": "CALLER_SUPPLIED_VALUE_OVERRIDDEN",
+              "path": "app/src/main/java/systems/sieber/droid_scep/ScepClient.java",
+              "details": [
+                "the patch replaces a value the caller or the user chose with one the patch picks, so existing choices silently stop taking effect: isKeyLen: int keyLength = isKeyLen == 3072 ? 3072 : 4096;. Keep honouring the values existing callers and settings supply (offer a compliant default for new choices), or decide that no client-only fix is safe."
+              ]
+            }
+          ],
+          "warnings": []
+        }
+      }
+    ],
+    "application": [],
+    "index": {
+      "finding_key": "9215f97597a6",
+      "apk": "systems.sieber.droid_scep_7.apk",
+      "method": "CertReq",
+      "spec": "KeyPairGeneratorSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "generation",
+      "signatures": [
+        "generation:semantic:caller_supplied_value_overridden"
+      ],
+      "evidence_fingerprint": "d74fef866c6893485d7a5f39366ef759c7fca8b12d8d4870e76520fbd1cc24fa",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/systems.sieber.droid_scep_7.apk/2_CertReq_evidence.json",
+        "evidence_context": "error_solutions/finding_context/systems.sieber.droid_scep_7.apk/2_CertReq/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/systems.sieber.droid_scep_7.apk/2_CertReq_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/systems.sieber.droid_scep_7.apk/2_CertReq_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/systems.sieber.droid_scep_7.apk/2_CertReq_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/systems.sieber.droid_scep_7.apk/2_CertReq_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/systems.sieber.droid_scep_7.apk/2_CertReq/manifest.json"
+      }
+    }
+  }
+]

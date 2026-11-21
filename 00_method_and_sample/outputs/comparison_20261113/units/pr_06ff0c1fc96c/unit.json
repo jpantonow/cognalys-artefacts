@@ -1,0 +1,43 @@
+{
+ "unit": "pr_06ff0c1fc96c",
+ "source": "pr_population",
+ "group": "incorporado",
+ "finding_ids": [
+  "06ff0c1fc96c"
+ ],
+ "apk": "com.ounben.amaradio.debug_159.apk",
+ "repo_url": "https://github.com/ounben/AMARadio",
+ "pinned_commit": "e01537f78694fdee5ad9ac6c216a5e3bedb47b9a",
+ "spec": [
+  "MessageDigestSpec"
+ ],
+ "class": "com.ounben.amaradio.Utils",
+ "method": "md5",
+ "prs": [
+  "https://github.com/ounben/AMARadio/pull/122"
+ ],
+ "original_run": "outputs/rvsec_misuse3_20261016/run6",
+ "original_outcome": "PR pronto",
+ "frozen_outcome": "correção não aplicável: código mudou upstream",
+ "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_misuse3_20261016/run_frozen",
+ "reference_pr_records": [
+  "outputs/rvsec_misuse3_20261016/run6/pull_requests/com.ounben.amaradio.debug_159.apk_md5_MessageDigestSpec_pr.json"
+ ],
+ "reference_diff_lines": 34,
+ "build_task": ":app:assembleFossDebug",
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "06ff0c1fc96c",
+   "unique_error_id": "com.ounben.amaradio.Utils:::md5:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "spec": "MessageDigestSpec",
+   "class": "com.ounben.amaradio.Utils",
+   "method": "md5",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+   "apk": "com.ounben.amaradio.debug_159.apk",
+   "repo_url": "https://github.com/ounben/AMARadio",
+   "commit": "e01537f78694fdee5ad9ac6c216a5e3bedb47b9a",
+   "detector_source_location": "Utils.kt:105"
+  }
+ ]
+}

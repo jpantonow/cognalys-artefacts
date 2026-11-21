@@ -1,0 +1,166 @@
+Preflight passed: declared dependencies, static analysis
+Pipeline steps: spec_generation -> cloning -> repository_setup -> extraction -> spec_context -> detector_rules -> llm -> solutions -> validation -> validation_fix -> revalidation -> prs -> preview -> fix_prs -> revalidation_fix_prs
+
+=== SPEC_GENERATION ===
+$ /home/antonow/venv/bin/python3 -m cognalys.specifications.generate_specifications --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-5.6-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/openai_prompt_logs
+Specification generation: all 1 required files already exist
+
+=== CLONING ===
+$ /home/antonow/venv/bin/python3 -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv --output-dir /home/antonow/cognalys_work/exp_final_v2/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_methods --clone-timeout 1800 --clone-retries 3 --clone-only
+2026-10-27 21:51:52 - INFO - Starting single CSV workflow
+2026-10-27 21:51:52 - INFO - Output dir: /home/antonow/cognalys_work/exp_final_v2/clones
+2026-10-27 21:51:52 - INFO - Clone dir: /home/antonow/cognalys_work/exp_final_v2/clones
+2026-10-27 21:51:52 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_methods
+2026-10-27 21:51:52 - INFO - 1 linhas válidas carregadas
+2026-10-27 21:51:52 - INFO - 1 repositórios únicos mapeados
+2026-10-27 21:51:52 - INFO - [1/1] Cloning org.fedorahosted.freeotp_48.apk from https://github.com/freeotp/freeotp-android
+2026-10-27 21:51:56 - INFO - org.fedorahosted.freeotp_48.apk checked out at the pinned revision bcecd3761a565cdc17a9dd710fcf35dd03d29622
+2026-10-27 21:51:56 - INFO - Successfully cloned org.fedorahosted.freeotp_48.apk
+2026-10-27 21:51:56 - INFO - Cloning results: 1 success, 0 failed, 0 timeout
+
+=== REPOSITORY_SETUP ===
+$ /home/antonow/venv/bin/python3 -m cognalys.extraction.prepare_repository_branches --projects-dir /home/antonow/cognalys_work/exp_final_v2/clones --report /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/repository_setup.json --project org.fedorahosted.freeotp_48.apk
+org.fedorahosted.freeotp_48.apk:  ->  (unchanged)
+
+=== EXTRACTION ===
+$ /home/antonow/venv/bin/python3 -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv --output-dir /home/antonow/cognalys_work/exp_final_v2/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_methods --clone-timeout 1800 --clone-retries 3 --skip-cloning
+2026-10-27 21:51:56 - INFO - Starting single CSV workflow
+2026-10-27 21:51:56 - INFO - Output dir: /home/antonow/cognalys_work/exp_final_v2/clones
+2026-10-27 21:51:56 - INFO - Clone dir: /home/antonow/cognalys_work/exp_final_v2/clones
+2026-10-27 21:51:56 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_methods
+2026-10-27 21:51:56 - INFO - 1 linhas válidas carregadas
+2026-10-27 21:51:56 - INFO - 1 repositórios únicos mapeados
+2026-10-27 21:51:56 - INFO - Reutilizando clones existentes em: /home/antonow/cognalys_work/exp_final_v2/clones
+2026-10-27 21:51:56 - INFO - org.fedorahosted.freeotp_48.apk is already at the pinned revision bcecd3761a565cdc17a9dd710fcf35dd03d29622
+2026-10-27 21:51:56 - INFO - Found clone for org.fedorahosted.freeotp_48.apk: /home/antonow/cognalys_work/exp_final_v2/clones/org.fedorahosted.freeotp_48.apk
+2026-10-27 21:51:56 - INFO - Building index for repository: /home/antonow/cognalys_work/exp_final_v2/clones/org.fedorahosted.freeotp_48.apk
+2026-10-27 21:51:56 - INFO - Indexed 99 classes from 99 unique class definitions
+2026-10-27 21:51:56 - INFO - Extraction complete: 1 success, 0 failed, 0 skipped
+2026-10-27 21:51:56 - INFO - Tracking JSON written to /home/antonow/cognalys_work/exp_final_v2/clones/extraction_tracking.json
+2026-10-27 21:51:56 - INFO - Summary written to /home/antonow/cognalys_work/exp_final_v2/clones/logs/summary_tracked.txt
+
+=== SPEC_CONTEXT ===
+$ /home/antonow/venv/bin/python3 -m cognalys.specifications.enrich_spec_context --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_methods --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv
+Specification registry coverage: 1/1 sample specs available
+Specification context: 1 enriched, 0 missing, 1 total
+
+=== DETECTOR_RULES ===
+$ /home/antonow/venv/bin/python3 -m cognalys.validation.propose_detector_rules --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/data/processed/exp_final/findings_freeotp_v2.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-5.6-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/openai_prompt_logs
+CipherSpec: skipped, judged not local for this version of the specification
+Detector rules: nothing to propose
+
+=== LLM ===
+$ /home/antonow/venv/bin/python3 -m cognalys.llm.generate_error_fixes --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_methods --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions --model gpt-5.6-terra --provider openai --endpoint https://api.openai.com/v1 --timeout 600 --ollama-context-length 16384 --repository-context-budget 140000 --pr-issue-style v3 --max-output-tokens 32768 --reasoning-effort high --validation-mode balanced --validation-feedback-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/build_validation --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/openai_prompt_logs --web-search-cache-ttl-hours 168.0 --web-search-retries 1 --retries 2 --workers 1 --cache-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/.llm_cache --web-search --migration-policies-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/migration_policies.json
+INFO: Testing OpenAI connection...
+INFO: OpenAI connection successful
+INFO: ✓ Model 'gpt-5.6-terra' available
+INFO: Discovered 1 errors to process
+INFO: Processing 1 new errors (0 already complete)
+INFO: Processing: org.fedorahosted.freeotp_48.apk/encrypt
+INFO: LLM cache entry c6dfdb150558 is older than 604800s; refetching
+INFO: LLM cache entry cba8c9d8f626 is older than 604800s; refetching
+INFO: encrypt: blocked only on missing evidence (cause_unconfirmed, maintainer_decision); generated for review, decision is now MULTI_FILE_FIX_PROPOSED_FOR_REVIEW
+WARNING: Semantic validation failed for encrypt (attempt 1/3): CHECKED_EXCEPTION_NOT_PROPAGATED; PUBLIC_API_CONTRACT_CHANGED; retrying coordinated generation for mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java
+WARNING: Semantic validation failed for encrypt (attempt 2/3): CHECKED_EXCEPTION_NOT_PROPAGATED; retrying coordinated generation for mobile/src/androidTest/java/org/fedorahosted/freeotp/EncryptedKeyTest.java
+INFO: Issue candidate prepared for manual review: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/issue_candidates/org.fedorahosted.freeotp_48.apk/0_encrypt_issue.json
+WARNING: Persisted coordinated generation failed for encrypt: EXISTING_TEST_EXPECTATIONS_REWRITTEN; PUBLIC_API_CONTRACT_CHANGED; CHECKED_EXCEPTION_NOT_PROPAGATED; manifest=/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/coordinated_drafts/org.fedorahosted.freeotp_48.apk/0_encrypt/manifest.json
+INFO: [1/1] encrypt
+WARNING: No safe fix generated
+INFO: Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/solutions_tracking.json
+INFO: Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/analysis_summary.txt
+INFO: ======================================================================
+INFO: ANALYSIS COMPLETE
+INFO: Analyzed: 1/1
+INFO: Fixes generated: 0
+INFO: Confirmed external-contract findings: 0
+INFO: Issue candidates: 1
+INFO: Time: 00h 09m 13s
+INFO: LLM cache: 0 hit(s), 14 miss(es)
+
+======================================================================
+LLM Error Fix Generator
+======================================================================
+Model: gpt-5.6-terra
+Provider: openai
+Endpoint: https://api.openai.com/v1
+Timeout: 600s
+Reasoning effort: high
+Validation mode: balanced
+Repository context budget: 140000 characters
+Allow cache invalidation: False
+Web search: True
+Max output tokens: 32768
+Input: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_methods
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions
+LLM cache: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/.llm_cache
+Resume: True
+======================================================================
+
+
+=== SOLUTIONS ===
+$ /home/antonow/venv/bin/python3 -m cognalys.solutions.run_apply --error-solutions-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions --cloned-projects-dir /home/antonow/cognalys_work/exp_final_v2/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results --worktrees-dir /home/antonow/cognalys_work/exp_final_v2/finding_worktrees --backup-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/method_backups --approve-review-only-for-validation --port-model gpt-5.6-terra --port-endpoint https://api.openai.com/v1 --port-timeout 600 --port-max-output-tokens 16384 --port-reasoning-effort high --port-prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/openai_prompt_logs
+2026-10-27 22:01:52,325 - INFO - Starting solution application workflow
+2026-10-27 22:01:52,327 - INFO - ============================================================
+2026-10-27 22:01:52,327 - INFO - STAGE 1: DISCOVERY & MAPPING
+2026-10-27 22:01:52,327 - INFO - ============================================================
+2026-10-27 22:01:52,328 - INFO - Building solution to repository mapping...
+2026-10-27 22:01:52,328 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions
+2026-10-27 22:01:52,456 - INFO - Discovered 0 solutions
+2026-10-27 22:01:52,456 - INFO - Mapping complete
+2026-10-27 22:01:52,456 - INFO - Building solution to repository mapping...
+2026-10-27 22:01:52,456 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions
+2026-10-27 22:01:52,525 - INFO - Discovered 0 solutions
+2026-10-27 22:01:52,525 - INFO - Mapping complete
+2026-10-27 22:01:52,525 - INFO - Mapping report: {'total_apks': 0, 'total_solutions': 0, 'mappings': {}}
+2026-10-27 22:01:52,525 - INFO - Building solution to repository mapping...
+2026-10-27 22:01:52,525 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions
+2026-10-27 22:01:52,663 - INFO - Discovered 0 solutions
+2026-10-27 22:01:52,663 - INFO - Mapping complete
+2026-10-27 22:01:52,670 - INFO - Mapping report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/mapping_report.json
+2026-10-27 22:01:52,670 - INFO - ============================================================
+2026-10-27 22:01:52,670 - INFO - STAGE 2: APPLYING SOLUTIONS
+2026-10-27 22:01:52,671 - INFO - ============================================================
+2026-10-27 22:01:52,671 - INFO - ============================================================
+2026-10-27 22:01:52,671 - INFO - STAGE 3: GENERATING REPORT
+2026-10-27 22:01:52,671 - INFO - ============================================================
+2026-10-27 22:01:52,700 - INFO - Execution report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/execution_report.json
+2026-10-27 22:01:52,704 - INFO - ============================================================
+2026-10-27 22:01:52,706 - INFO - EXECUTION SUMMARY
+2026-10-27 22:01:52,714 - INFO - ============================================================
+2026-10-27 22:01:52,716 - INFO - Successfully Applied: 0
+2026-10-27 22:01:52,717 - INFO - Failed: 0
+2026-10-27 22:01:52,718 - INFO - Total Time: 0.35s
+
+DONE
+{'execution_timestamp': '2026-10-28T01:01:52.675372+00:00', 'workflow_status': 'SUCCESS_WITH_NO_ACTION', 'execution_time_seconds': 0.350152, 'config': {'error_solutions_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions', 'cloned_projects_dir': '/home/antonow/cognalys_work/exp_final_v2/clones', 'output_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results', 'worktrees_dir': '/home/antonow/cognalys_work/exp_final_v2/finding_worktrees', 'save_backups': True, 'backup_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/application_results/method_backups', 'dry_run': False, 'max_solutions': 0, 'git_user_name': 'jpantonow', 'git_user_email': 'jpantonow@gmail.com'}, 'total_solutions': 0, 'results': {'successfully_applied': 0, 'failed': 0, 'dry_run': 0, 'review_only_not_applied': 0, 'not_applicable_to_base_branch': 0}, 'per_solution_details': [], 'errors': []}
+Nothing was applied; skipping validation and validation_fix and revalidation and prs and fix_prs and revalidation_fix_prs (use --force-downstream-steps to always run them). preview still runs.
+
+=== PREVIEW ===
+$ /home/antonow/venv/bin/python3 -m cognalys.prs.generate_github_previews --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/pull_requests --issue-candidates-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/issue_candidates --evidence-reviews-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/error_solutions/evidence_reviews --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/previews --issue-title "Potential security issue found — would you be open to a pull request?" --issue-body "Hi! I'm a Computer Engineering student at the University of Brasília (UnB), working on a research project about how Android apps use security-sensitive APIs." --pr-issue-style v3
+ISSUE PREVIEW: freeotp/freeotp-android -> org.fedorahosted.freeotp_48.apk_encrypt_CipherSpec_no_safe_fix.md
+ANALYSIS PREVIEW: org.fedorahosted.freeotp_48.apk_encrypt_CipherSpec_analysis.md
+Preview summary: 0 PR previews, 1 issue previews, 1 analysis previews, 0 failed
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/previews
+
+Model calls of this run:
+  external_research                4 calls       82,150 in (4,597 cached)      12,823 out  US$ 0.32
+  evidence_extraction              1 calls       36,555 in (0 cached)       5,661 out  US$ 0.14
+  code_generation                  6 calls       29,983 in (7,980 cached)      16,036 out  US$ 0.25
+  patch_planning                   2 calls       12,887 in (1,085 cached)       5,523 out  US$ 0.09
+  adjudication                     1 calls       10,420 in (0 cached)       3,903 out  US$ 0.07
+  total                           14 calls      171,995 in (13,662 cached)      43,946 out  US$ 0.87; 0 answered from the cache
+
+Pipeline finished successfully.
+
+=== RETROSPECTIVE ===
+1 finding(s): 1 at generation; 1 new and 2 recurring failure signature(s)
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/retrospective/retrospective.md
+
+=== STATISTICS ===
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/subset_revisao_lacunas_v2/statistics/statistics.md
+Pipeline elapsed time: 00h 10m 02s
+issue para o mantenedor do app             org.fedorahosted.freeotp_48.apk encrypt [CipherSpec]  (14 calls, 216k tokens, US$ 0.87)
+
+1 findings. issue para o mantenedor do app: 1
+Most model use without a pull request:
+  14 calls, 216k tokens, US$ 0.87          org.fedorahosted.freeotp_48.apk encrypt [CipherSpec] -> issue para o mantenedor do app

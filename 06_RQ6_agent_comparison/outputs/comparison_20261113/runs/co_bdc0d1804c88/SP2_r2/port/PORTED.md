@@ -1,0 +1,1 @@
+The MD5 package-name hash in `AccessPointsAdapterData` is now replaced by a direct package-name check on this tip; the patch conflicted with upstream's constructor injection of `settings` and `configuration`, so I re-anchored it by hand and kept the injected `configuration`. The build (`build_check`, assembleDebug) passed; I did not run the unit tests.

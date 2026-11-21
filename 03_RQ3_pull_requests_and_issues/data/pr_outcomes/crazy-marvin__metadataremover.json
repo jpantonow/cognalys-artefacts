@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/Crazy-Marvin/MetadataRemover/pull/264",
+    "state": "open",
+    "finding_id": "40d39da41dec",
+    "spec": "SecureRandomSpec",
+    "csv_class": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+    "method_name": "<clinit>",
+    "title": "Let SecureRandom seed itself instead of a fixed seed",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:06.737631+00:00",
+    "maintainer_feedback": []
+  }
+]

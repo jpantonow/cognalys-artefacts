@@ -1,0 +1,193 @@
+{
+  "schema_version": 2,
+  "spec_id": "PBEKeySpecSpec",
+  "name": "PBEKeySpecSpec",
+  "applies_to_types": [
+    "javax.crypto.spec.PBEKeySpec"
+  ],
+  "source_title": "CROSSINGTUD Crypto-API-Rules: JavaCryptographicArchitecture/src/PBEKeySpec.crysl",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/PBEKeySpec.crysl",
+  "source_verified": true,
+  "protocol": "construct4(password, salt, iterationCount, keyLength) → clearPassword()",
+  "important_note": "This is a CrySL static-usage contract for javax.crypto.spec.PBEKeySpec. It requires the four-argument constructor, an iteration count of at least 10000, a recognized randomized salt, a non-String and non-hard-coded password, and later clearPassword(). It does not itself establish the concrete KDF algorithm, the actual deployment-time value of an imported setting, or the runtime entropy or uniqueness of a salt.",
+  "events": [
+    {
+      "name": "construct4",
+      "api_patterns": [
+        "new PBEKeySpec(",
+        "PBEKeySpec(",
+        "import javax.crypto.spec.PBEKeySpec"
+      ],
+      "condition": "Observed when type resolution identifies construction of javax.crypto.spec.PBEKeySpec with four arguments: char[] password, byte[] salt, int iterationCount, int keyLength. It satisfies the constructor predicate only when iterationCount >= 10000, password is not a java.lang.String and is not hard-coded, and salt carries the CrySL randomized[salt] predicate."
+    },
+    {
+      "name": "clear_password",
+      "api_patterns": [
+        ".clearPassword()",
+        "clearPassword()"
+      ],
+      "condition": "Observed when clearPassword() is invoked on the tracked javax.crypto.spec.PBEKeySpec instance. It satisfies the required terminal protocol step only after accepted four-argument construction."
+    },
+    {
+      "name": "forbidden_password_only_constructor",
+      "api_patterns": [
+        "new PBEKeySpec(",
+        "PBEKeySpec("
+      ],
+      "condition": "Observed when resolved as javax.crypto.spec.PBEKeySpec(char[]). This constructor is forbidden by the CrySL rule; observing it does not satisfy construct4."
+    },
+    {
+      "name": "forbidden_fixed_size_constructor",
+      "api_patterns": [
+        "new PBEKeySpec(",
+        "PBEKeySpec("
+      ],
+      "condition": "Observed when resolved as javax.crypto.spec.PBEKeySpec(char[], byte[], int). This constructor is forbidden by the CrySL rule; observing it does not satisfy construct4."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a call using PBEKeySpec necessarily performs PBKDF2 or any particular password-based KDF; that depends on the SecretKeyFactory and provider selected elsewhere.",
+    "Do not infer that iterationCount >= 10000 is an Oracle JDK constructor precondition. The documented API requires only a positive iteration count; 10000 is a CrySL rule threshold.",
+    "Do not infer that an imported or configuration-derived iteration value is below 10000 at runtime solely because static analysis permits the value 1.",
+    "Do not infer that a byte[] salt is cryptographically random, unique, sufficiently long, or persisted correctly merely because it is passed to the constructor.",
+    "Do not infer that calling clearPassword() erases caller-owned password arrays, copies returned by getPassword(), derived keys, or provider-internal copies.",
+    "Do not infer that a PBEKeySpec carrying the speccedKey predicate is compatible with every SecretKeyFactory algorithm or provider."
+  ],
+  "semantic_scope": "The rule tracks an object whose qualified type is javax.crypto.spec.PBEKeySpec, not a similarly named class from another framework. It observes constructor arity and arguments, static provenance and type constraints attached to password and salt, the numeric iteration-count constraint, and whether clearPassword() follows construction. After accepted construction it ensures speccedKey[this, keyLength]; after clearPassword() it negates that predicate.",
+  "detector_semantics": {
+    "claim": "For the representative report, the relevant detector claim is that the value flowing to the four-argument PBEKeySpec constructor's iterationCount parameter is not proven to be at least 10000: imported kdfIters has a statically permitted value of 1.",
+    "predicates": [
+      "iterationCount >= 10000",
+      "neverTypeOf[password, java.lang.String]",
+      "notHardCoded[password]",
+      "randomized[salt]",
+      "speccedKey[this, keyLength] after construct4",
+      "speccedKey[this, _] negated after clearPassword()"
+    ],
+    "limitations": [
+      "The randomized[salt], notHardCoded[password], and value-range results depend on the detector's interprocedural and data-flow modeling and predicate implementations, which are not defined in this PBEKeySpec CrySL file.",
+      "The rule file specifies the threshold and lifecycle, but it does not identify the detector version, the configuration-source semantics, or prove that a reported program path executes in production.",
+      "A source-level or bytecode-level call observation is distinct from proving that its argument predicates hold at runtime."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Oracle documents javax.crypto.spec.PBEKeySpec as a user-chosen password used as raw material from which an appropriate SecretKeyFactory derives a cryptographic key.",
+      "Its four-argument constructor accepts password, salt, iterationCount, and requested derived-key length, and clones password and salt.",
+      "clearPassword() clears the object's internal password copy."
+    ],
+    "preconditions": [
+      "For PBEKeySpec(char[], byte[], int, int), salt must not be null or empty.",
+      "For PBEKeySpec(char[], byte[], int, int), iterationCount must be positive.",
+      "For PBEKeySpec(char[], byte[], int, int), keyLength must be positive.",
+      "A null password is represented as an empty char[] by the documented constructor."
+    ],
+    "unknowns": [
+      "The API documentation does not mandate an iteration minimum of 10000.",
+      "The API documentation does not require a particular salt length, entropy level, uniqueness policy, or persistence format.",
+      "The actual derived-key size and provider behavior depend on the selected SecretKeyFactory and provider.",
+      "The rule alone does not state which PBE or KDF algorithm is paired with the PBEKeySpec instance."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "A compliant CrySL use has a statically accepted four-argument PBEKeySpec construction with iterationCount >= 10000, randomized salt provenance, a non-String and non-hard-coded password, and a subsequent clearPassword() call.",
+    "runtime_claim": "At runtime, the Java API accepts any positive iteration count for the four-argument constructor. Whether a configured value is at least 10000, whether a salt was generated randomly, and which KDF and provider consume the specification require runtime, configuration, and call-chain evidence.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Resolve the constructed type to javax.crypto.spec.PBEKeySpec and identify the constructor arity; textual matching alone is insufficient.",
+      "Trace the value passed as the third argument of PBEKeySpec(char[], byte[], int, int), including imported configuration defaults, bounds, and overrides.",
+      "Establish whether the salt has recognized randomized provenance under the detector's predicate semantics.",
+      "Establish whether the password originates from a String or from hard-coded material under the detector's data-flow semantics.",
+      "Trace whether clearPassword() is invoked on the same PBEKeySpec object after construction."
+    ],
+    "runtime": [
+      "Capture the effective deployed value of kdfIters on paths that reach the constructor.",
+      "Capture or otherwise establish the selected SecretKeyFactory algorithm and provider.",
+      "Establish the salt-generation mechanism and whether salts are fresh for the relevant security domain.",
+      "Establish whether clearPassword() is reached on normal and exceptional control-flow paths."
+    ],
+    "compatibility": [
+      "Confirm the detector's exact bundled Crypto-API-Rules revision and CrySL parser or analysis version.",
+      "Confirm that the application runs against a Java or Android API implementation compatible with javax.crypto.spec.PBEKeySpec.",
+      "Confirm provider-specific behavior for the chosen SecretKeyFactory, including interpretation of password characters and requested key length."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A configuration or import abstraction permits 1, but deployment validation or all production configuration values enforce kdfIters >= 10000.",
+    "The salt is generated by a cryptographically secure source through a wrapper, framework API, or library method that the detector does not recognize as establishing randomized[salt].",
+    "A password is supplied from an external secret source but is conservatively classified as hard-coded or String-derived because of incomplete data-flow modeling.",
+    "A low-iteration branch is infeasible in the deployed environment but remains reachable in the analyzer's conservative control-flow model.",
+    "The PBEKeySpec instance is cleared through an alias, helper, or exceptional-path cleanup that the analysis does not connect to the tracked object."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/PBEKeySpec.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/spec/PBEKeySpec.html"
+  ],
+  "unknowns": [
+    "Whether the detector that produced the representative finding used the currently available master revision of PBEKeySpec.crysl or a different bundled revision.",
+    "Which static-analysis semantics caused imported kdfIters to be modeled as permitting 1.",
+    "Whether kdfIters is a build-time constant, environment value, configuration-file value, command-line value, or other imported value at the reported call site.",
+    "Which SecretKeyFactory algorithm and provider consume the resulting PBEKeySpec in com.github.mofosyne.tagdrop.data.format.TagDropCodec.deriveKeyFromPassphrase.",
+    "Whether the actual salt supplied at that call site satisfies the detector's randomized[salt] predicate and the application's runtime security requirements.",
+    "Whether clearPassword() is called on the same PBEKeySpec object on all relevant execution paths."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.github.mofosyne.tagdrop.data.format.TagDropCodec",
+        "method": "deriveKeyFromPassphrase",
+        "message": "expecting iteration count >= 10000 but imported kdfIters permits 1."
+      }
+    ],
+    "expected_api_simple_name": "PBEKeySpec",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.crypto.spec.PBEKeySpec",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/PBEKeySpec.crysl"
+  },
+  "remediation_policies": [
+    {
+      "when": {
+        "message_pattern": "\\bshould be >=\\s*\\d+|\\biteration"
+      },
+      "policy": {
+        "authorized": true,
+        "usage_classification": "pending_evidence",
+        "consumer_scope": "stored_secret_verifier",
+        "scope": "This authorization applies when the derived bytes are stored and later recomputed from the user's secret to verify it (a PIN, password or passphrase hash), or are a key derived from that secret that protects data the app stores itself. It does not apply to a value another system computes or expects.",
+        "authorization_conditions": [
+          "The examined scope shows the derived value is stored and verified by recomputing it from the user's input, or is a key that encrypts data the app stores itself.",
+          "No server, protocol or other application computes or expects the same value."
+        ],
+        "strategy": "Verify, then migrate. Keep the current derivation, unchanged, as the legacy path: a stored value produced the old way is still verified with exactly the old parameters. When that verification succeeds, derive a new value from the same user input with compliant parameters and store it together with a marker of how it was derived (a version or the parameters), so later checks use the new derivation; values created from now on always use the compliant parameters. If the derived bytes are an encryption key for stored data, decrypt with the old key and re-encrypt under the new key in the same step, after the old key opened the data. Choose the compliant parameters as named constants (for example PBKDF2WithHmacSHA256 with an iteration count well above the rule's minimum), never from a value a caller passes.",
+        "required_numeric_constants": [
+          {
+            "symbol_pattern": "(?i)^(?!.*(?:legacy|old)).*iterations.*$",
+            "minimum": 100000,
+            "purpose": "Named iteration count for newly created verifiers, above the detector minimum. Measure unlock latency on supported Android devices. Keep the legacy count unchanged for legacy verification only."
+          }
+        ],
+        "finding_semantics": "The violation is real: the stored verifier is weaker than the rule admits. Existing users must keep working, which is why the old derivation stays for verification only.",
+        "forbidden_changes": [
+          "Do not change the existing derivation in place: a stored value produced the old way would stop verifying and the user would be locked out.",
+          "Do not remove the legacy verification while values in the old form may exist.",
+          "Do not lower a parameter or choose the new parameters from a caller-supplied value.",
+          "Do not change what is stored without a marker that tells the old form from the new one."
+        ],
+        "required_tests": [
+          "A value stored with the old derivation still verifies with the correct input and is then stored in the new form.",
+          "A value stored in the new form verifies with the correct input.",
+          "A wrong input fails for both forms."
+        ],
+        "review_fallback": "Generate MULTI_FILE_FIX_PROPOSED_FOR_REVIEW when the verify-then-migrate path is complete but how the stored value is located or rewritten could not be confirmed in the examined scope.",
+        "keeps_legacy_derivation": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+ "unit": "pr_1381cd4ddb3f",
+ "source": "pr_population",
+ "group": "incorporado",
+ "finding_ids": [
+  "1381cd4ddb3f"
+ ],
+ "apk": "de.jepfa.yapm.debug_202006.apk",
+ "repo_url": "https://github.com/jenspfahl/anotherpass",
+ "pinned_commit": "89b0b68ce403b1fd199255990bf026f02d317eb9",
+ "spec": [
+  "KeyStoreSpec"
+ ],
+ "class": "de.jepfa.yapm.service.secret.SecretService",
+ "method": "getAndroidSecretKey",
+ "prs": [
+  "https://github.com/jenspfahl/ANOTHERpass/pull/103"
+ ],
+ "original_run": "outputs/rerun_correcoes_20261022/run",
+ "original_outcome": "PR pronto",
+ "frozen_outcome": "PR pronto",
+ "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rerun_correcoes_20261022/run_frozen_de_jepfa_yapm",
+ "reference_pr_records": [
+  "outputs/rerun_correcoes_20261022/run/pull_requests/de.jepfa.yapm.debug_202006.apk_getAndroidSecretKey_KeyStoreSpec_pr.json"
+ ],
+ "reference_diff_lines": 16,
+ "build_task": "assembleDebug",
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "1381cd4ddb3f",
+   "unique_error_id": "de.jepfa.yapm.service.secret.SecretService:::getAndroidSecretKey:::KeyStoreSpec:::InvalidSequenceOfMethodCalls:::the observed call sequence is not one KeyStoreSpec accepts",
+   "spec": "KeyStoreSpec",
+   "class": "de.jepfa.yapm.service.secret.SecretService",
+   "method": "getAndroidSecretKey",
+   "message": "the observed call sequence is not one KeyStoreSpec accepts",
+   "apk": "de.jepfa.yapm.debug_202006.apk",
+   "repo_url": "https://github.com/jenspfahl/anotherpass",
+   "commit": "89b0b68ce403b1fd199255990bf026f02d317eb9",
+   "detector_source_location": "SecretService.kt:512"
+  }
+ ]
+}

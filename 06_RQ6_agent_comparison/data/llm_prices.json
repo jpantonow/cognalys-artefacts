@@ -1,0 +1,57 @@
+{
+  "_note": "US dollars per million tokens, per model, as your provider account bills them. A dated model name (gpt-x-2026-01-01) takes the price of its longest listed prefix. Fill in a model to see runs' cost in dollars (cognalys cost) and to use --max-cost; without a price the cost is shown in tokens only. Example entry: \"gpt-example\": {\"input\": 1.25, \"cached_input\": 0.125, \"output\": 10.0}. Optional key cache_write_input: the price of input tokens the provider writes to its prompt cache (the traces' cache_write_input_tokens, part of input); without it writes cost the input price, so a call costs what it did before writes were recorded. A write price above the input price makes every call with writes cost more, so --max-cost trips earlier; add it only as your account bills it. Optional key flex: the same four prices for calls the provider served on its Flex tier (the trace's service_tier); a call served on a tier without its own prices is billed at the standard ones, which undercounts a tier priced above standard (priority, which --llm-service-tier therefore does not offer). Optional key web_search_per_1k_calls: the web search tool's fee in US dollars per 1,000 calls, added to the tokens and never discounted by a tier. OpenAI's pricing page gives $10.00 / 1k calls without defining a call; cost.py bills each web_search_call item whose action is \"search\" (the tool guide: search actions incur the tool call cost), not the open_page and find_in_page items that read a page a search returned. Over the 18 uncached finding-runs of 2026-11-08 (two replicas of 9 findings) that is 3.56 / 3.22 searches per finding against 6.0 / 5.1 items, replica 1 / replica 2; if the billing dashboard shows the fee on every item, widen cost.BILLED_WEB_SEARCH_ACTIONS.",
+  "models": {
+    "claude-opus-5-5": {
+      "input": 4.0,
+      "cached_input": 0.2,
+      "output": 20.0
+    },
+    "claude-sonnet-5-5": {
+      "input": 2.0,
+      "cached_input": 0.1,
+      "cache_write_input": 2.5,
+      "output": 10.0,
+      "web_search_per_1k_calls": 10.0
+    },
+    "gpt-5.6-terra": {
+      "input": 2.0,
+      "cached_input": 2.0,
+      "output": 12.0,
+      "flex": {
+        "input": 1.0,
+        "cached_input": 1.0,
+        "output": 6.0
+      }
+    },
+    "gpt-6.1-terra": {
+      "input": 1.0,
+      "cached_input": 0.05,
+      "cache_write_input": 1.25,
+      "output": 5.0,
+      "web_search_per_1k_calls": 10.0,
+      "flex": {
+        "input": 0.5,
+        "cached_input": 0.025,
+        "cache_write_input": 0.625,
+        "output": 2.5
+      }
+    },
+    "gpt-6.1-sol": {
+      "input": 2.0,
+      "cached_input": 0.1,
+      "cache_write_input": 2.5,
+      "output": 10.0,
+      "web_search_per_1k_calls": 10.0,
+      "flex": {
+        "input": 1.0,
+        "cached_input": 0.05,
+        "cache_write_input": 1.25,
+        "output": 5.0
+      }
+    }
+  },
+  "_gpt-6.1-sol": "Checked on 2026-11-17 against developers.openai.com/api/docs/pricing (short context, up to 272K input tokens), the same table whose gpt-6.1-terra row matches the entry above: Standard 2.00 input, 0.10 cached input, 2.50 cache write, 10.00 output; Flex 1.00 / 0.05 / 1.25 / 5.00. Web search $10.00 / 1k calls. Used only to price the comparison's Codex Sol arm (run on a ChatGPT subscription, so nothing was billed); no Cognalys run uses this model.",
+  "_gpt-6.1-terra": "Checked on 2026-11-09 against developers.openai.com/api/docs/pricing (short context, up to 272K input tokens): Standard 1.00 input, 0.05 cached input, 1.25 for the 30-minute cache write, 5.00 output; Flex 0.50 / 0.025 / 0.625 / 2.50. Web search $10.00 / 1k calls plus search content tokens at the model's rates.",
+  "_gpt-5.6-terra": "The same page lists Standard 2.00 / 0.20 cached / 2.50 30-minute write / 12.00 and Flex 1.00 / 0.10 / 1.25 / 6.00. This entry keeps the prices the recorded gpt-5.6-terra runs (and the paper's cost figures) were computed with, 2.00 input and cached input and 12.00 output, until the account's bill confirms the page: no cache_write_input and no web_search_per_1k_calls, so cognalys cost reprices those runs as before rather than at a mix of the two price sets. Its Flex prices are half of these.",
+  "_claude": "Sonnet 5.5, checked on 2026-11-13 against platform.claude.com/docs/en/about-claude/pricing: 2.00 input, 0.10 cache hits (0.05x input), 2.50 for 5-minute cache writes, 10.00 output; web search $10.00 / 1k searches plus result tokens at the input price."
+}

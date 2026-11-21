@@ -1,0 +1,165 @@
+{
+  "schema_version": 2,
+  "spec_id": "PathTraversalSpec",
+  "name": "PathTraversalSpec",
+  "applies_to_types": [
+    "unverified.PathTraversal"
+  ],
+  "source_title": "Canonical PathTraversal CrySL source was not found: the requested raw URL and the conventional master-branch raw URL returned HTTP 404, and the consulted JavaCryptographicArchitecture/src directory listing did not show a PathTraversal.crysl entry.",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PathTraversal.crysl",
+  "source_verified": false,
+  "protocol": "ConstructTarget(targetPath, child) \u001a ContainmentEvidence(resolvedTarget, intendedBase) \u001a RenameTo(destination) \u001a DeleteRecursively?",
+  "important_note": "No canonical CrySL rule for this name was obtained. unverified.PathTraversal is a schema-required nominal placeholder whose simple name is exactly PathTraversal, not a source-authenticated Java/Kotlin API type. The reported result is a static candidate only; it does not establish execution, attacker control of the value, runtime containment failure, or success of either filesystem operation.",
+  "events": [
+    {
+      "name": "construct_target",
+      "api_patterns": [
+        "File(spec.targetPath, uuid)",
+        "new File(spec.targetPath, uuid)",
+        "File("
+      ],
+      "condition": "Observing construction of a File from a base-like value and child-like value identifies target-path construction. It does not prove that the resulting path escapes the intended base, that either input is untrusted, or that the File denotes an existing filesystem entry."
+    },
+    {
+      "name": "containment_evidence",
+      "api_patterns": [
+        ".getCanonicalPath()",
+        ".getCanonicalFile()",
+        ".toPath().normalize()",
+        ".toRealPath(",
+        ".startsWith("
+      ],
+      "condition": "Observing one of these calls is not sufficient by itself. The predicate is satisfied only when evidence shows that the resolved target is compared with the resolved intended base using path-component-aware containment, with relevant normalization/canonicalization and failure behavior accounted for."
+    },
+    {
+      "name": "rename_target",
+      "api_patterns": [
+        ".renameTo("
+      ],
+      "condition": "Observing renameTo identifies an attempted rename of the receiver to a destination File. It does not prove success: java.io.File.renameTo returns a boolean and has platform-dependent behavior."
+    },
+    {
+      "name": "recursive_delete",
+      "api_patterns": [
+        ".deleteRecursively()"
+      ],
+      "condition": "Observing Kotlin File.deleteRecursively identifies an attempted recursive deletion. It does not prove full deletion, because the API returns false on failure and partial deletion may already have occurred."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That manifest.json, pass.json, main.json, or an id/uuid value is attacker-controlled rather than locally generated or validated.",
+    "That the child value contains traversal syntax, is absolute, names a symlink, or resolves outside spec.targetPath.",
+    "That the code lacks all effective containment validation; a detector may not model custom helpers, sanitizers, platform wrappers, or checks on an interprocedural path.",
+    "That File(spec.targetPath, uuid) maps to the exact Java overload or that spec.targetPath has a particular static type without source-level type evidence.",
+    "That renameTo succeeded, was atomic, stayed on the same filesystem, or replaced any existing file.",
+    "That deleteRecursively executed, succeeded, or deleted content outside the intended directory.",
+    "That this specification is a canonical CROSSINGTUD CrySL rule or that unverified.PathTraversal is a real published API type.",
+    "That the representative finding alone establishes a CWE-22 vulnerability or exploitability."
+  ],
+  "semantic_scope": "The detector report describes a static data-flow candidate in org.ligi.passandroid.ui.UnzipPassController.processFile: a value associated with manifest.json/pass.json or main.json/id is said to reach File(spec.targetPath, uuid), followed by renameTo and optionally deleteRecursively, without detector-recognized path-containment validation. Its scope is this reported source-to-filesystem-operation shape, not a verified CrySL protocol for a published PathTraversal API.",
+  "detector_semantics": {
+    "claim": "Static candidate (not executed): a manifest.json/pass.json value or main.json id reaches File(spec.targetPath, uuid) without recognized path-containment validation before renameTo and optional deleteRecursively (CWE-22).",
+    "predicates": [
+      "A reported metadata-derived value reaches a File construction matching File(spec.targetPath, uuid).",
+      "A subsequent or associated renameTo operation is present in the modeled flow.",
+      "An optional deleteRecursively operation is present in the modeled flow.",
+      "The detector did not recognize qualifying path-containment validation before the modeled filesystem effects."
+    ],
+    "limitations": [
+      "The report explicitly labels the candidate as not executed.",
+      "The supplied finding does not document the detector's source model, taint-propagation rules, alias model, control-flow/path sensitivity, sanitizer model, symlink model, or exact ordering definition.",
+      "Absence of detector-recognized containment evidence is not proof that no runtime containment property holds.",
+      "The report does not provide a canonical PathTraversal.crysl rule from which additional event, order, constraint, or predicate semantics could be derived."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "java.io.File(File parent, String child) creates a File from a parent abstract pathname and a child pathname string. https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html",
+      "java.io.File.renameTo(File dest) attempts to rename the receiver, returns true only on success, and has inherently platform-dependent behavior. https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html",
+      "On the JVM, Kotlin File.deleteRecursively() deletes the receiver and its children, returns a boolean, and may have performed a partial deletion when it fails. https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.io/delete-recursively.html",
+      "Java File.getCanonicalPath() normally removes redundant . and .. names and may resolve symbolic links, but its exact canonical form is system-dependent and filesystem queries can fail. https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html"
+    ],
+    "preconditions": [
+      "The consulted Java and Kotlin API documentation does not impose an intended-base containment precondition on File construction, renameTo, or File.deleteRecursively.",
+      "For the detector predicate, evidence is needed that the resolved destination remains contained by the intended base before a relevant filesystem mutation is attempted."
+    ],
+    "unknowns": [
+      "The repository's exact Kotlin/JDK versions and the imported deleteRecursively overload are not supplied.",
+      "The static types and origins of spec.targetPath and uuid are not supplied.",
+      "The source and destination receivers of renameTo, and the receiver of deleteRecursively, are not supplied.",
+      "No primary source defines how PathTraversalSpec maps these APIs into a formal protocol."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The detector reports an unexecuted static candidate for a potentially unsafe filesystem destination derived from archive/manifest-associated metadata without detector-recognized containment validation.",
+    "runtime_claim": "No runtime path-traversal claim is established. Runtime impact would require evidence of an attacker-influenced path component, filesystem-specific resolution outside the intended base, reachable execution, and a successful or security-relevant filesystem operation.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A primary PathTraversal.crysl file or authoritative rule registry identifying the exact SPEC-qualified type and its EVENTS, ORDER, CONSTRAINTS, and predicates.",
+      "The exact source for org.ligi.passandroid.ui.UnzipPassController.processFile, including variable declarations and imports.",
+      "Evidence identifying the concrete declarations and overloads of File(...), renameTo(...), and deleteRecursively().",
+      "Evidence of the detector's recognized containment-validation patterns and its event-order semantics."
+    ],
+    "runtime": [
+      "A reproducible input that controls the reported metadata value.",
+      "Observed resolved base and destination paths on the target platform, including normalization, canonicalization, absolute-path handling, and symlink behavior.",
+      "Execution evidence showing that the rename or deletion operation is reached and its result/exception behavior.",
+      "Filesystem state and permissions sufficient to determine whether an out-of-base effect occurred."
+    ],
+    "compatibility": [
+      "JDK and Kotlin runtime versions used by the application.",
+      "Operating system, filesystem, separator, case-sensitivity, mount, and symlink behavior.",
+      "Whether the candidate path crosses filesystems, since renameTo behavior is platform-dependent. https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html"
+    ]
+  },
+  "known_false_positive_shapes": [
+    "The metadata-derived value is a generated UUID or an allowlisted identifier that cannot encode an absolute or parent-traversal path.",
+    "A containment check exists in a helper, wrapper, or caller but is not recognized or connected by the detector.",
+    "The child value is transformed to a safe basename or mapped through a fixed server-side identifier before target construction.",
+    "The modeled File construction is not the destination actually passed to renameTo or deleteRecursively because of aliasing or later reassignment.",
+    "The execution path that performs the filesystem operation is unreachable for malformed or externally supplied metadata.",
+    "The target base is itself per-operation isolated such that an apparent lexical escape has no security-relevant access outside the authorized storage boundary."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PathTraversal.crysl",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/PathTraversal.crysl",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/tree/master/JavaCryptographicArchitecture/src",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html",
+    "https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.io/delete-recursively.html"
+  ],
+  "unknowns": [
+    "What real fully qualified API type, if any, is governed by PathTraversalSpec. The required nominal type unverified.PathTraversal is not authenticated by a primary source.",
+    "Whether PathTraversalSpec originated as a CrySL rule, a local detector rule, or a generated/adapted specification.",
+    "The exact formal event order and whether renameTo and deleteRecursively are required, alternative, or merely correlated sinks.",
+    "The detector's definition of valid path containment, including whether it requires canonical paths, real paths, component-aware comparisons, handling of nonexistent paths, and symlink resistance.",
+    "Whether the reported manifest/pass/main JSON values are attacker-controlled and how they are parsed or decoded.",
+    "Whether the representative candidate is reachable and produces an out-of-base filesystem effect at runtime."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PathTraversal.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.ligi.passandroid.ui.UnzipPassController",
+        "method": "processFile",
+        "message": "Static candidate (not executed): manifest.json pass.json value or main.json id reaches File(spec.targetPath, uuid) without path containment validation before renameTo and optional deleteRecursively (CWE-22)."
+      }
+    ],
+    "expected_api_simple_name": "PathTraversal",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PathTraversal.crysl"
+  }
+}

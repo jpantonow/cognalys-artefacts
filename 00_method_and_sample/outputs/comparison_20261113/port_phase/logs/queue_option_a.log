@@ -1,0 +1,340 @@
+== 2026-11-16T20:47:44-03:00 option A queue start
+== 2026-11-16T20:47:44-03:00 hashes match the pre-registration
+== 2026-11-17T01:02:29-03:00 RVSec queue ended; phase 1 (SP2 r3-r4, OP)
+2026-11-17T01:02:30-0300 queue start: 120 pending of 160; C: free 16.2 GB
+2026-11-17T01:02:30-0300 run co_2aaa72c51c14 OP_r1 (C: 16.2 GB free)
+2026-11-17T01:14:26-0300   recorded: {"unit": "co_2aaa72c51c14", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 714, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 11, "consulted_upstream": false}
+2026-11-17T01:14:26-0300 run pr_fff072cb8953 OP_r1 (C: 16.2 GB free)
+2026-11-17T01:24:28-0300   recorded: {"unit": "pr_fff072cb8953", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 600, "delivery_class": "PR", "diff_lines": 71, "build": {"agent_calls": 3, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 3"}, "web_searches": 5, "consulted_upstream": false}
+2026-11-17T01:24:28-0300 run pr_39bba5f1270f OP_r1 (C: 16.2 GB free)
+2026-11-17T01:28:42-0300   recorded: {"unit": "pr_39bba5f1270f", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 248, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 7, "consulted_upstream": false}
+2026-11-17T01:28:42-0300 run co_bdc0d1804c88 OP_r1 (C: 16.2 GB free)
+2026-11-17T01:36:16-0300   recorded: {"unit": "co_bdc0d1804c88", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 454, "delivery_class": "PR", "diff_lines": 117, "build": {"agent_calls": 2, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 2"}, "web_searches": 7, "consulted_upstream": false}
+2026-11-17T01:36:17-0300 run co_9da181fd6978 OP_r1 (C: 16.2 GB free)
+2026-11-17T01:39:39-0300   recorded: {"unit": "co_9da181fd6978", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 202, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 4, "consulted_upstream": false}
+2026-11-17T01:39:40-0300 run co_911173ce3742 OP_r1 (C: 16.2 GB free)
+2026-11-17T01:42:56-0300   recorded: {"unit": "co_911173ce3742", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 196, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 3, "consulted_upstream": false}
+2026-11-17T01:42:57-0300 run co_0b7656970a91 OP_r1 (C: 16.2 GB free)
+2026-11-17T01:45:03-0300   recorded: {"unit": "co_0b7656970a91", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 126, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 3, "consulted_upstream": false}
+2026-11-17T01:45:04-0300 run pr_7d98a07e751d OP_r1 (C: 16.2 GB free)
+2026-11-17T01:50:38-0300   recorded: {"unit": "pr_7d98a07e751d", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 333, "delivery_class": "PR", "diff_lines": 20, "build": {"agent_calls": 2, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 2"}, "web_searches": 6, "consulted_upstream": false}
+2026-11-17T01:50:39-0300 run co_ed824f6818ef OP_r1 (C: 16.2 GB free)
+2026-11-17T01:58:54-0300   recorded: {"unit": "co_ed824f6818ef", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 483, "delivery_class": "PR", "diff_lines": 195, "build": {"agent_calls": 2, "agent_last_status": "success", "final_status": "success", "final_from": "kit call 3"}, "web_searches": 9, "consulted_upstream": false}
+2026-11-17T01:58:54-0300 run pr_2b8cb7f6653b OP_r1 (C: 16.2 GB free)
+2026-11-17T02:06:08-0300   recorded: {"unit": "pr_2b8cb7f6653b", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 434, "delivery_class": "PR", "diff_lines": 57, "build": {"agent_calls": 2, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 2"}, "web_searches": 6, "consulted_upstream": false}
+2026-11-17T02:06:09-0300 run pr_6d0a3cf73013 OP_r1 (C: 16.2 GB free)
+2026-11-17T02:09:48-0300   recorded: {"unit": "pr_6d0a3cf73013", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 219, "delivery_class": "ISSUE", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 5, "consulted_upstream": false}
+2026-11-17T02:09:49-0300 run pr_ac1a8dd4d680 OP_r1 (C: 16.2 GB free)
+2026-11-17T02:16:25-0300   recorded: {"unit": "pr_ac1a8dd4d680", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 395, "delivery_class": "PR", "diff_lines": 15, "build": {"agent_calls": 2, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 2"}, "web_searches": 10, "consulted_upstream": false}
+2026-11-17T02:16:26-0300 run pr_06ff0c1fc96c OP_r1 (C: 16.2 GB free)
+2026-11-17T02:17:24-0300   arm OP: subscription limit/overload; paused 1800 s (1/24): {"limit": "to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 6:02 AM.\"} | {\"type\": \"turn.failed\", \"error\": {\"message\": \"You\\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https
+2026-11-17T02:17:24-0300 run pr_2b8cb7f6653b SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:19:40-0300   recorded: {"unit": "pr_2b8cb7f6653b", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 135, "delivery_class": "PR", "diff_lines": 92, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:19:40-0300 run co_3c8e59dbbfb4 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:21:25-0300   recorded: {"unit": "co_3c8e59dbbfb4", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 104, "delivery_class": "PR", "diff_lines": 107, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 2, "consulted_upstream": false}
+2026-11-17T02:21:26-0300 run co_0a32f516feb2 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:22:46-0300   recorded: {"unit": "co_0a32f516feb2", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 79, "delivery_class": "PR", "diff_lines": 13, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:22:46-0300 run co_ed824f6818ef SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:25:18-0300   recorded: {"unit": "co_ed824f6818ef", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 151, "delivery_class": "PR", "diff_lines": 147, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:25:19-0300 run co_bdc0d1804c88 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:27:22-0300   recorded: {"unit": "co_bdc0d1804c88", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 123, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:27:23-0300 run co_737920a862cd SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:28:16-0300   recorded: {"unit": "co_737920a862cd", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 52, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:28:16-0300 run co_2aaa72c51c14 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:32:46-0300   recorded: {"unit": "co_2aaa72c51c14", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 267, "delivery_class": "PR", "diff_lines": 38, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 1, "consulted_upstream": false}
+2026-11-17T02:32:48-0300 run pr_39bba5f1270f SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:33:21-0300   recorded: {"unit": "pr_39bba5f1270f", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 29, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:33:22-0300 run co_911173ce3742 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:34:24-0300   recorded: {"unit": "co_911173ce3742", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 62, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:34:25-0300 run co_9da181fd6978 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:35:07-0300   recorded: {"unit": "co_9da181fd6978", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 42, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:35:08-0300 run pr_6d0a3cf73013 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:36:23-0300   recorded: {"unit": "pr_6d0a3cf73013", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 75, "delivery_class": "ISSUE", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:36:23-0300 run pr_7d98a07e751d SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:38:24-0300   recorded: {"unit": "pr_7d98a07e751d", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 120, "delivery_class": "PR", "diff_lines": 23, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:38:25-0300 run pr_ac1a8dd4d680 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:40:49-0300   recorded: {"unit": "pr_ac1a8dd4d680", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 143, "delivery_class": "PR", "diff_lines": 15, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:40:50-0300 run pr_1381cd4ddb3f SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:42:39-0300   recorded: {"unit": "pr_1381cd4ddb3f", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 109, "delivery_class": "PR", "diff_lines": 15, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:42:39-0300 run co_f637c4b8467e SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:43:55-0300   recorded: {"unit": "co_f637c4b8467e", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 75, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:43:56-0300 run pr_fff072cb8953 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:46:58-0300   recorded: {"unit": "pr_fff072cb8953", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 181, "delivery_class": "PR", "diff_lines": 67, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:47:00-0300 run pr_9215f97597a6 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:49:20-0300   recorded: {"unit": "pr_9215f97597a6", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 140, "delivery_class": "PR", "diff_lines": 26, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 2, "consulted_upstream": false}
+2026-11-17T02:49:21-0300 run pr_06ff0c1fc96c OP_r1 (C: 16.2 GB free)
+2026-11-17T02:49:24-0300   arm OP: subscription limit/overload; paused 1800 s (2/24): {"limit": "to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 6:02 AM.\"} | {\"type\": \"turn.failed\", \"error\": {\"message\": \"You\\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https
+2026-11-17T02:49:24-0300 run pr_013d2748f3f8 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:50:41-0300   recorded: {"unit": "pr_013d2748f3f8", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 76, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:50:41-0300 run pr_06ff0c1fc96c SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:52:50-0300   recorded: {"unit": "pr_06ff0c1fc96c", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 117, "delivery_class": "PR", "diff_lines": 398, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "kit call 2"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:52:51-0300 run co_0b7656970a91 SP2_r3 (C: 16.2 GB free)
+2026-11-17T02:53:34-0300   recorded: {"unit": "co_0b7656970a91", "arm": "SP2", "replica": 3, "status": "exit 0", "seconds": 43, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:53:35-0300 run co_2aaa72c51c14 SP2_r4 (C: 16.2 GB free)
+2026-11-17T02:55:12-0300   recorded: {"unit": "co_2aaa72c51c14", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 96, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 1, "consulted_upstream": false}
+2026-11-17T02:55:13-0300 run pr_2b8cb7f6653b SP2_r4 (C: 16.2 GB free)
+2026-11-17T02:57:20-0300   recorded: {"unit": "pr_2b8cb7f6653b", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 127, "delivery_class": "PR", "diff_lines": 104, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:57:21-0300 run pr_013d2748f3f8 SP2_r4 (C: 16.2 GB free)
+2026-11-17T02:58:17-0300   recorded: {"unit": "pr_013d2748f3f8", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 56, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:58:18-0300 run co_0a32f516feb2 SP2_r4 (C: 16.2 GB free)
+2026-11-17T02:59:36-0300   recorded: {"unit": "co_0a32f516feb2", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 78, "delivery_class": "PR", "diff_lines": 13, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T02:59:37-0300 run co_f637c4b8467e SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:01:08-0300   recorded: {"unit": "co_f637c4b8467e", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 91, "delivery_class": "PR", "diff_lines": 13, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:01:10-0300 run co_3c8e59dbbfb4 SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:03:13-0300   recorded: {"unit": "co_3c8e59dbbfb4", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 123, "delivery_class": "PR", "diff_lines": 107, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 1, "consulted_upstream": false}
+2026-11-17T03:03:14-0300 run co_0b7656970a91 SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:03:48-0300   recorded: {"unit": "co_0b7656970a91", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 33, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:03:48-0300 run co_911173ce3742 SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:06:37-0300   recorded: {"unit": "co_911173ce3742", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 168, "delivery_class": "PR", "diff_lines": 74, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:06:38-0300 run pr_06ff0c1fc96c SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:08:32-0300   recorded: {"unit": "pr_06ff0c1fc96c", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 114, "delivery_class": "PR", "diff_lines": 32, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:08:33-0300 run co_bdc0d1804c88 SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:09:29-0300   recorded: {"unit": "co_bdc0d1804c88", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 56, "delivery_class": "FALHA", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:09:30-0300 run co_9da181fd6978 SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:10:23-0300   recorded: {"unit": "co_9da181fd6978", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 53, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:10:24-0300 run pr_7d98a07e751d SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:12:15-0300   recorded: {"unit": "pr_7d98a07e751d", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 110, "delivery_class": "PR", "diff_lines": 23, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:12:15-0300 run pr_fff072cb8953 SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:15:25-0300   recorded: {"unit": "pr_fff072cb8953", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 188, "delivery_class": "PR", "diff_lines": 67, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:15:25-0300 run pr_9215f97597a6 SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:17:25-0300   recorded: {"unit": "pr_9215f97597a6", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 119, "delivery_class": "PR", "diff_lines": 25, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:17:26-0300 run pr_1381cd4ddb3f SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:19:28-0300   recorded: {"unit": "pr_1381cd4ddb3f", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 121, "delivery_class": "PR", "diff_lines": 16, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:19:28-0300 run pr_06ff0c1fc96c OP_r1 (C: 16.2 GB free)
+2026-11-17T03:19:32-0300   arm OP: subscription limit/overload; paused 1800 s (3/24): {"limit": "to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 6:02 AM.\"} | {\"type\": \"turn.failed\", \"error\": {\"message\": \"You\\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https
+2026-11-17T03:19:32-0300 run pr_39bba5f1270f SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:20:25-0300   recorded: {"unit": "pr_39bba5f1270f", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 44, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:20:25-0300 run co_ed824f6818ef SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:23:33-0300   recorded: {"unit": "co_ed824f6818ef", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 188, "delivery_class": "PR", "diff_lines": 185, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:23:34-0300 run pr_6d0a3cf73013 SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:24:39-0300   recorded: {"unit": "pr_6d0a3cf73013", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 64, "delivery_class": "ISSUE", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:24:40-0300 run co_737920a862cd SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:25:39-0300   recorded: {"unit": "co_737920a862cd", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 59, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:25:40-0300 run pr_ac1a8dd4d680 SP2_r4 (C: 16.2 GB free)
+2026-11-17T03:27:45-0300   recorded: {"unit": "pr_ac1a8dd4d680", "arm": "SP2", "replica": 4, "status": "exit 0", "seconds": 124, "delivery_class": "PR", "diff_lines": 15, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 0, "consulted_upstream": false}
+2026-11-17T03:27:46-0300 every pending run's arm is paused; sleeping 1305 s
+2026-11-17T03:50:08-0300 run pr_06ff0c1fc96c OP_r1 (C: 16.2 GB free)
+2026-11-17T03:50:12-0300   arm OP: subscription limit/overload; paused 1800 s (4/24): {"limit": "to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 6:02 AM.\"} | {\"type\": \"turn.failed\", \"error\": {\"message\": \"You\\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https
+2026-11-17T03:50:13-0300 every pending run's arm is paused; sleeping 1799 s
+2026-11-17T04:21:00-0300 another Cognalys/RVSec run is active; waiting: 408353 bash /tmp/rvsec_queue_dynval_prs.sh
+2026-11-17T04:51:39-0300 another Cognalys/RVSec run is active; waiting: 408353 bash /tmp/rvsec_queue_dynval_prs.sh
+2026-11-17T05:22:28-0300 another Cognalys/RVSec run is active; waiting: 421097 bash /tmp/rvsec_queue_chain_dynval.sh
+2026-11-17T05:53:05-0300 another Cognalys/RVSec run is active; waiting: 437802 bash /tmp/rvsec_queue_dynval_prs.sh
+== 2026-11-17T06:32:05-03:00 option A queue start
+== 2026-11-17T06:32:06-03:00 hashes match the pre-registration
+== 2026-11-17T12:07:01-03:00 RVSec queue ended; phase 1 (SP2 r3-r4, OP)
+2026-11-17T12:07:01-0300 queue start: 68 pending of 160; C: free 16.5 GB
+2026-11-17T12:07:01-0300 run pr_06ff0c1fc96c OP_r1 (C: 16.5 GB free)
+2026-11-17T12:13:04-0300   recorded: {"unit": "pr_06ff0c1fc96c", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 362, "delivery_class": "PR", "diff_lines": 32, "build": {"agent_calls": 2, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 2"}, "web_searches": 5, "consulted_upstream": false}
+2026-11-17T12:13:05-0300 run pr_9215f97597a6 OP_r1 (C: 16.5 GB free)
+2026-11-17T12:20:08-0300   recorded: {"unit": "pr_9215f97597a6", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 423, "delivery_class": "ISSUE", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 6, "consulted_upstream": false}
+2026-11-17T12:20:09-0300 run pr_013d2748f3f8 OP_r1 (C: 16.5 GB free)
+2026-11-17T12:25:40-0300   recorded: {"unit": "pr_013d2748f3f8", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 331, "delivery_class": "PR", "diff_lines": 15, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 9, "consulted_upstream": false}
+2026-11-17T12:25:41-0300 run co_737920a862cd OP_r1 (C: 16.5 GB free)
+2026-11-17T12:30:14-0300   recorded: {"unit": "co_737920a862cd", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 273, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 6, "consulted_upstream": false}
+2026-11-17T12:30:15-0300 run co_0a32f516feb2 OP_r1 (C: 16.5 GB free)
+2026-11-17T12:33:35-0300   recorded: {"unit": "co_0a32f516feb2", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 200, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 5, "consulted_upstream": false}
+2026-11-17T12:33:36-0300 run co_3c8e59dbbfb4 OP_r1 (C: 16.5 GB free)
+2026-11-17T12:46:10-0300   recorded: {"unit": "co_3c8e59dbbfb4", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 754, "delivery_class": "ISSUE", "diff_lines": 0, "build": {"agent_calls": 1, "agent_last_status": "failed"}, "web_searches": 8, "consulted_upstream": false}
+2026-11-17T12:46:11-0300 run co_f637c4b8467e OP_r1 (C: 16.4 GB free)
+2026-11-17T12:51:39-0300   recorded: {"unit": "co_f637c4b8467e", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 324, "delivery_class": "PR", "diff_lines": 13, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 6, "consulted_upstream": false}
+2026-11-17T12:51:39-0300 run pr_1381cd4ddb3f OP_r1 (C: 16.4 GB free)
+2026-11-17T13:01:48-0300   recorded: {"unit": "pr_1381cd4ddb3f", "arm": "OP", "replica": 1, "status": "exit 0", "seconds": 608, "delivery_class": "PR", "diff_lines": 16, "build": {"agent_calls": 2, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 2"}, "web_searches": 7, "consulted_upstream": false}
+2026-11-17T13:01:49-0300 run pr_1381cd4ddb3f OP_r2 (C: 16.4 GB free)
+2026-11-17T13:10:14-0300   recorded: {"unit": "pr_1381cd4ddb3f", "arm": "OP", "replica": 2, "status": "exit 0", "seconds": 505, "delivery_class": "PR", "diff_lines": 16, "build": {"agent_calls": 2, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 2"}, "web_searches": 8, "consulted_upstream": false}
+2026-11-17T13:10:14-0300 run co_0a32f516feb2 OP_r2 (C: 16.4 GB free)
+2026-11-17T13:17:03-0300   recorded: {"unit": "co_0a32f516feb2", "arm": "OP", "replica": 2, "status": "exit 0", "seconds": 408, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 5, "consulted_upstream": false}
+2026-11-17T13:17:04-0300 run co_f637c4b8467e OP_r2 (C: 16.3 GB free)
+2026-11-17T13:23:21-0300   recorded: {"unit": "co_f637c4b8467e", "arm": "OP", "replica": 2, "status": "exit 0", "seconds": 376, "delivery_class": "PR", "diff_lines": 13, "build": {"agent_calls": 1, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 1"}, "web_searches": 5, "consulted_upstream": false}
+2026-11-17T13:23:21-0300 run co_911173ce3742 OP_r2 (C: 16.2 GB free)
+2026-11-17T13:27:28-0300   recorded: {"unit": "co_911173ce3742", "arm": "OP", "replica": 2, "status": "exit 0", "seconds": 246, "delivery_class": "NENHUMA A\u00c7\u00c3O", "diff_lines": 0, "build": {"agent_calls": 0, "agent_last_status": null}, "web_searches": 4, "consulted_upstream": false}
+2026-11-17T13:27:28-0300 run pr_fff072cb8953 OP_r2 (C: 16.2 GB free)
+2026-11-17T13:38:03-0300   recorded: {"unit": "pr_fff072cb8953", "arm": "OP", "replica": 2, "status": "exit 0", "seconds": 634, "delivery_class": "PR", "diff_lines": 71, "build": {"agent_calls": 3, "agent_last_status": "success", "final_status": "success", "final_from": "agent call 3"}, "web_searches": 3, "consulted_upstream": false}
+2026-11-17T13:38:04-0300 run co_737920a862cd OP_r2 (C: 16.2 GB free)
+2026-11-17T13:38:47-0300   arm OP: subscription limit/overload; paused 1800 s (1/24): {"limit": "to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:07 PM.\"} | {\"type\": \"turn.failed\", \"error\": {\"message\": \"You\\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https
+2026-11-17T13:38:48-0300 every pending run's arm is paused; sleeping 1799 s
+2026-11-17T14:11:18-0300 run co_737920a862cd OP_r2 (C: 16.2 GB free)
+2026-11-17T14:11:24-0300   arm OP: subscription limit/overload; paused 1800 s (2/24): {"limit": "to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:07 PM.\"} | {\"type\": \"turn.failed\", \"error\": {\"message\": \"You\\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https
+2026-11-17T14:11:24-0300 every pending run's arm is paused; sleeping 1799 s
+2026-11-17T14:43:51-0300 run co_737920a862cd OP_r2 (C: 16.2 GB free)
+2026-11-17T14:43:56-0300   arm OP: subscription limit/overload; paused 1800 s (3/24): {"limit": "to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:07 PM.\"} | {\"type\": \"turn.failed\", \"error\": {\"message\": \"You\\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https
+2026-11-17T14:43:56-0300 every pending run's arm is paused; sleeping 1799 s
+2026-11-17T15:16:20-0300 run co_737920a862cd OP_r2 (C: 16.2 GB free)
+2026-11-17T15:16:26-0300   arm OP: subscription limit/overload; paused 1800 s (4/24): {"limit": "to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:07 PM.\"} | {\"type\": \"turn.failed\", \"error\": {\"message\": \"You\\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https
+2026-11-17T15:16:26-0300 every pending run's arm is paused; sleeping 1799 s
+== 2026-11-17T15:37:37-03:00 option A (no OP) queue start
+== 2026-11-17T15:37:37-03:00 hashes match the pre-registration
+2026-11-17T15:37:43-0300 port co_0a32f516feb2 SP2 r1
+2026-11-17T15:38:04-0300   exit 0: {"unit": "co_0a32f516feb2", "arm": "SP2", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 21} 
+2026-11-17T15:38:09-0300 port co_0a32f516feb2 SP2 r2
+2026-11-17T15:38:29-0300   exit 0: {"unit": "co_0a32f516feb2", "arm": "SP2", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 19} 
+2026-11-17T15:38:31-0300 port co_0a32f516feb2 SP2 r3
+2026-11-17T15:38:47-0300   exit 0: {"unit": "co_0a32f516feb2", "arm": "SP2", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 16} 
+2026-11-17T15:38:50-0300 port co_0a32f516feb2 SP2 r4
+2026-11-17T15:39:05-0300   exit 0: {"unit": "co_0a32f516feb2", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 14} 
+2026-11-17T15:39:06-0300 port co_0a32f516feb2 TP r1
+2026-11-17T15:39:21-0300   exit 0: {"unit": "co_0a32f516feb2", "arm": "TP", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 14} 
+2026-11-17T15:39:26-0300 port co_0a32f516feb2 TP r2
+2026-11-17T15:39:41-0300   exit 0: {"unit": "co_0a32f516feb2", "arm": "TP", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 15} 
+2026-11-17T15:39:43-0300 port co_0a32f516feb2 TP r3
+2026-11-17T15:40:00-0300   exit 0: {"unit": "co_0a32f516feb2", "arm": "TP", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 17} 
+2026-11-17T15:40:02-0300 port co_0a32f516feb2 TP r4
+2026-11-17T15:40:16-0300   exit 0: {"unit": "co_0a32f516feb2", "arm": "TP", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 14} 
+2026-11-17T15:40:19-0300 port co_2aaa72c51c14 SP2 r3
+2026-11-17T15:43:02-0300   exit 0: {"unit": "co_2aaa72c51c14", "arm": "SP2", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 162} 
+2026-11-17T15:43:06-0300 port co_3c8e59dbbfb4 SP2 r1
+2026-11-17T15:43:31-0300   exit 0: {"unit": "co_3c8e59dbbfb4", "arm": "SP2", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 25} 
+2026-11-17T15:43:33-0300 port co_3c8e59dbbfb4 SP2 r2
+2026-11-17T15:43:51-0300   exit 0: {"unit": "co_3c8e59dbbfb4", "arm": "SP2", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 18} 
+2026-11-17T15:43:53-0300 port co_3c8e59dbbfb4 SP2 r3
+2026-11-17T15:44:15-0300   exit 0: {"unit": "co_3c8e59dbbfb4", "arm": "SP2", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 21} 
+2026-11-17T15:44:17-0300 port co_3c8e59dbbfb4 SP2 r4
+2026-11-17T15:44:37-0300   exit 0: {"unit": "co_3c8e59dbbfb4", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 20} 
+2026-11-17T15:44:42-0300 port co_911173ce3742 SP2 r4
+2026-11-17T15:46:12-0300   exit 0: {"unit": "co_911173ce3742", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 90} 
+2026-11-17T15:46:14-0300 port co_bdc0d1804c88 SP2 r2
+2026-11-17T15:50:04-0300   exit 0: nApplied patch to 'app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt", "outcome": "ported", "build": {"status": "success", "from": "kit call 2"}, "seconds": 230} 
+2026-11-17T15:50:06-0300 port co_bdc0d1804c88 TP r1
+2026-11-17T15:50:12-0300   exit 75: ro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:07 PM.\"} | {\"type\": \"turn.failed\", \"error\": {\"message\": \"You\\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:07 PM.\"}}\nReading additional input from stdin...\n", "retry_after": 1800} 
+2026-11-17T15:50:15-0300 port co_ed824f6818ef SP2 r1
+2026-11-17T15:51:15-0300   exit 0: {"unit": "co_ed824f6818ef", "arm": "SP2", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 60} 
+2026-11-17T15:51:18-0300 port co_ed824f6818ef SP2 r2
+2026-11-17T15:52:39-0300   exit 0: {"unit": "co_ed824f6818ef", "arm": "SP2", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 80} 
+2026-11-17T15:52:46-0300 port co_ed824f6818ef SP2 r3
+2026-11-17T15:54:11-0300   exit 0: {"unit": "co_ed824f6818ef", "arm": "SP2", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 85} 
+2026-11-17T15:54:16-0300 port co_ed824f6818ef SP2 r4
+2026-11-17T15:55:38-0300   exit 0: {"unit": "co_ed824f6818ef", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 82} 
+2026-11-17T15:55:48-0300 port co_f637c4b8467e SP2 r1
+2026-11-17T15:56:34-0300   exit 0: {"unit": "co_f637c4b8467e", "arm": "SP2", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 45} 
+2026-11-17T15:56:37-0300 port co_f637c4b8467e SP2 r2
+2026-11-17T15:57:26-0300   exit 0: {"unit": "co_f637c4b8467e", "arm": "SP2", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 48} 
+2026-11-17T15:57:29-0300 port co_f637c4b8467e SP2 r4
+2026-11-17T15:58:21-0300   exit 0: {"unit": "co_f637c4b8467e", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 51} 
+2026-11-17T15:58:23-0300 port pr_013d2748f3f8 SP2 r2
+2026-11-17T16:00:48-0300   exit 0: {"unit": "pr_013d2748f3f8", "arm": "SP2", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 144} 
+2026-11-17T16:00:56-0300 port pr_06ff0c1fc96c SP2 r1
+2026-11-17T16:01:52-0300   exit 0: it": "pr_06ff0c1fc96c", "arm": "SP2", "replica": 1, "deterministic_merge": "conflict: Performing three-way merge...\nApplied patch to 'app/schemas/com.ounben.amaradio.database.AMARadioDatabase/7.json' cleanly.\nApplied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt", "outcome": "abstain", "build": null, "seconds": 55} 
+2026-11-17T16:01:54-0300 port pr_06ff0c1fc96c SP2 r2
+2026-11-17T16:04:38-0300   exit 0: {"unit": "pr_06ff0c1fc96c", "arm": "SP2", "replica": 2, "deterministic_merge": "conflict: Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt", "outcome": "already_fixed", "build": null, "seconds": 164} 
+2026-11-17T16:04:40-0300 port pr_06ff0c1fc96c SP2 r3
+2026-11-17T16:05:13-0300   exit 0: it": "pr_06ff0c1fc96c", "arm": "SP2", "replica": 3, "deterministic_merge": "conflict: Performing three-way merge...\nApplied patch to 'app/schemas/com.ounben.amaradio.database.AMARadioDatabase/7.json' cleanly.\nApplied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt", "outcome": "abstain", "build": null, "seconds": 32} 
+2026-11-17T16:05:16-0300 port pr_06ff0c1fc96c SP2 r4
+2026-11-17T16:05:44-0300   exit 0: {"unit": "pr_06ff0c1fc96c", "arm": "SP2", "replica": 4, "deterministic_merge": "conflict: Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt", "outcome": "abstain", "build": null, "seconds": 28} 
+2026-11-17T16:05:46-0300 port pr_1381cd4ddb3f SP2 r1
+2026-11-17T16:06:06-0300   exit 0: {"unit": "pr_1381cd4ddb3f", "arm": "SP2", "replica": 1, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt", "outcome": "abstain", "build": null, "seconds": 19} 
+2026-11-17T16:06:09-0300 port pr_1381cd4ddb3f SP2 r2
+2026-11-17T16:06:26-0300   exit 0: {"unit": "pr_1381cd4ddb3f", "arm": "SP2", "replica": 2, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt", "outcome": "abstain", "build": null, "seconds": 16} 
+2026-11-17T16:06:28-0300 port pr_1381cd4ddb3f SP2 r3
+2026-11-17T16:06:46-0300   exit 0: {"unit": "pr_1381cd4ddb3f", "arm": "SP2", "replica": 3, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt", "outcome": "abstain", "build": null, "seconds": 18} 
+2026-11-17T16:06:48-0300 port pr_1381cd4ddb3f SP2 r4
+2026-11-17T16:06:49-0300   exit 0: {"unit": "pr_1381cd4ddb3f", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "abstain", "build": null, "seconds": 0} 
+2026-11-17T16:06:51-0300 port pr_2b8cb7f6653b SP2 r1
+2026-11-17T16:07:51-0300   exit 0: {"unit": "pr_2b8cb7f6653b", "arm": "SP2", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 59} 
+2026-11-17T16:07:56-0300 port pr_2b8cb7f6653b SP2 r2
+2026-11-17T16:08:45-0300   exit 0: {"unit": "pr_2b8cb7f6653b", "arm": "SP2", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 49} 
+2026-11-17T16:08:48-0300 port pr_2b8cb7f6653b SP2 r3
+2026-11-17T16:09:40-0300   exit 0: {"unit": "pr_2b8cb7f6653b", "arm": "SP2", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 51} 
+2026-11-17T16:09:42-0300 port pr_2b8cb7f6653b SP2 r4
+2026-11-17T16:10:31-0300   exit 0: {"unit": "pr_2b8cb7f6653b", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 48} 
+2026-11-17T16:10:33-0300 port pr_7d98a07e751d SP2 r1
+2026-11-17T16:12:23-0300   exit 0: {"unit": "pr_7d98a07e751d", "arm": "SP2", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 110} 
+2026-11-17T16:12:29-0300 port pr_7d98a07e751d SP2 r2
+2026-11-17T16:13:39-0300   exit 0: {"unit": "pr_7d98a07e751d", "arm": "SP2", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 69} 
+2026-11-17T16:13:45-0300 port pr_7d98a07e751d SP2 r3
+2026-11-17T16:15:03-0300   exit 0: {"unit": "pr_7d98a07e751d", "arm": "SP2", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 77} 
+2026-11-17T16:15:10-0300 port pr_7d98a07e751d SP2 r4
+2026-11-17T16:16:24-0300   exit 0: {"unit": "pr_7d98a07e751d", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 74} 
+2026-11-17T16:16:26-0300 port pr_9215f97597a6 SP2 r1
+2026-11-17T16:16:58-0300   exit 0: {"unit": "pr_9215f97597a6", "arm": "SP2", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 31} 
+2026-11-17T16:17:00-0300 port pr_9215f97597a6 SP2 r3
+2026-11-17T16:17:27-0300   exit 0: {"unit": "pr_9215f97597a6", "arm": "SP2", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 27} 
+2026-11-17T16:17:30-0300 port pr_9215f97597a6 SP2 r4
+2026-11-17T16:17:54-0300   exit 0: {"unit": "pr_9215f97597a6", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 24} 
+2026-11-17T16:18:04-0300 port pr_ac1a8dd4d680 SP2 r1
+== 2026-11-17T17:34:23-03:00 option A (no OP) queue start
+== 2026-11-17T17:34:26-03:00 hashes match the pre-registration
+2026-11-17T17:34:57-0300 port co_bdc0d1804c88 TP r1
+2026-11-17T17:40:31-0300   exit 0: Applied patch to 'app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt", "outcome": "ported", "build": {"status": "failed", "from": "agent call 1"}, "seconds": 333} 
+2026-11-17T17:40:35-0300 port co_bdc0d1804c88 TP r2
+2026-11-17T17:43:46-0300   exit 0: Applied patch to 'app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt", "outcome": "ported", "build": {"status": "failed", "from": "agent call 1"}, "seconds": 191} 
+2026-11-17T17:43:49-0300 port co_bdc0d1804c88 TP r3
+2026-11-17T17:46:13-0300   exit 0: Applied patch to 'app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt", "outcome": "ported", "build": {"status": "failed", "from": "agent call 1"}, "seconds": 143} 
+2026-11-17T17:46:17-0300 port co_bdc0d1804c88 TP r4
+2026-11-17T17:48:57-0300   exit 0: Applied patch to 'app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt' with conflicts.\nU app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt\nU app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt", "outcome": "ported", "build": {"status": "failed", "from": "agent call 1"}, "seconds": 159} 
+2026-11-17T17:49:02-0300 port co_ed824f6818ef TP r1
+2026-11-17T17:50:06-0300   exit 0: {"unit": "co_ed824f6818ef", "arm": "TP", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 64} 
+2026-11-17T17:50:13-0300 port co_ed824f6818ef TP r2
+2026-11-17T17:51:41-0300   exit 0: {"unit": "co_ed824f6818ef", "arm": "TP", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 88} 
+2026-11-17T17:51:45-0300 port co_ed824f6818ef TP r3
+2026-11-17T17:53:01-0300   exit 0: {"unit": "co_ed824f6818ef", "arm": "TP", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 75} 
+2026-11-17T17:53:05-0300 port co_ed824f6818ef TP r4
+2026-11-17T17:54:01-0300   exit 0: {"unit": "co_ed824f6818ef", "arm": "TP", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 56} 
+2026-11-17T17:54:02-0300 port co_f637c4b8467e TP r1
+2026-11-17T17:54:42-0300   exit 0: {"unit": "co_f637c4b8467e", "arm": "TP", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 40} 
+2026-11-17T17:54:44-0300 port co_f637c4b8467e TP r2
+2026-11-17T17:55:26-0300   exit 0: {"unit": "co_f637c4b8467e", "arm": "TP", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 42} 
+2026-11-17T17:55:29-0300 port co_f637c4b8467e TP r3
+2026-11-17T17:56:28-0300   exit 0: {"unit": "co_f637c4b8467e", "arm": "TP", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 58} 
+2026-11-17T17:56:32-0300 port co_f637c4b8467e TP r4
+2026-11-17T17:57:15-0300   exit 0: {"unit": "co_f637c4b8467e", "arm": "TP", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 43} 
+2026-11-17T17:57:18-0300 port pr_06ff0c1fc96c TP r1
+2026-11-17T17:57:45-0300   exit 0: {"unit": "pr_06ff0c1fc96c", "arm": "TP", "replica": 1, "deterministic_merge": "conflict: Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt", "outcome": "abstain", "build": null, "seconds": 26} 
+2026-11-17T17:57:48-0300 port pr_06ff0c1fc96c TP r2
+2026-11-17T17:58:13-0300   exit 0: {"unit": "pr_06ff0c1fc96c", "arm": "TP", "replica": 2, "deterministic_merge": "conflict: Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt", "outcome": "abstain", "build": null, "seconds": 25} 
+2026-11-17T17:58:17-0300 port pr_06ff0c1fc96c TP r3
+2026-11-17T17:58:43-0300   exit 0: {"unit": "pr_06ff0c1fc96c", "arm": "TP", "replica": 3, "deterministic_merge": "conflict: Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt", "outcome": "abstain", "build": null, "seconds": 25} 
+2026-11-17T17:58:48-0300 port pr_06ff0c1fc96c TP r4
+2026-11-17T17:59:17-0300   exit 0: {"unit": "pr_06ff0c1fc96c", "arm": "TP", "replica": 4, "deterministic_merge": "conflict: Applied patch to 'app/src/main/kotlin/com/ounben/amaradio/Utils.kt' with conflicts.\nU app/src/main/kotlin/com/ounben/amaradio/Utils.kt", "outcome": "abstain", "build": null, "seconds": 28} 
+2026-11-17T17:59:27-0300 port pr_1381cd4ddb3f TP r2
+2026-11-17T18:00:00-0300   exit 0: {"unit": "pr_1381cd4ddb3f", "arm": "TP", "replica": 2, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt", "outcome": "abstain", "build": null, "seconds": 32} 
+2026-11-17T18:00:05-0300 port pr_1381cd4ddb3f TP r3
+2026-11-17T18:00:33-0300   exit 0: {"unit": "pr_1381cd4ddb3f", "arm": "TP", "replica": 3, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt", "outcome": "abstain", "build": null, "seconds": 27} 
+2026-11-17T18:00:37-0300 port pr_1381cd4ddb3f TP r4
+2026-11-17T18:01:04-0300   exit 0: {"unit": "pr_1381cd4ddb3f", "arm": "TP", "replica": 4, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt' with conflicts.\nU app/src/main/java/de/jepfa/yapm/service/secret/SecretService.kt", "outcome": "abstain", "build": null, "seconds": 26} 
+2026-11-17T18:01:09-0300 port pr_2b8cb7f6653b TP r1
+2026-11-17T18:02:56-0300   exit 0: {"unit": "pr_2b8cb7f6653b", "arm": "TP", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 106} 
+2026-11-17T18:03:00-0300 port pr_2b8cb7f6653b TP r2
+2026-11-17T18:03:49-0300   exit 0: {"unit": "pr_2b8cb7f6653b", "arm": "TP", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 49} 
+2026-11-17T18:03:52-0300 port pr_2b8cb7f6653b TP r3
+2026-11-17T18:04:43-0300   exit 0: {"unit": "pr_2b8cb7f6653b", "arm": "TP", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 51} 
+2026-11-17T18:04:47-0300 port pr_2b8cb7f6653b TP r4
+2026-11-17T18:05:44-0300   exit 0: {"unit": "pr_2b8cb7f6653b", "arm": "TP", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 57} 
+2026-11-17T18:05:46-0300 port pr_7d98a07e751d TP r1
+2026-11-17T18:07:05-0300   exit 0: {"unit": "pr_7d98a07e751d", "arm": "TP", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 79} 
+2026-11-17T18:07:07-0300 port pr_7d98a07e751d TP r2
+2026-11-17T18:07:42-0300   exit 0: {"unit": "pr_7d98a07e751d", "arm": "TP", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 34} 
+2026-11-17T18:07:46-0300 port pr_7d98a07e751d TP r3
+2026-11-17T18:08:58-0300   exit 0: {"unit": "pr_7d98a07e751d", "arm": "TP", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 72} 
+2026-11-17T18:08:59-0300 port pr_7d98a07e751d TP r4
+2026-11-17T18:09:23-0300   exit 0: {"unit": "pr_7d98a07e751d", "arm": "TP", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 23} 
+2026-11-17T18:09:26-0300 port pr_ac1a8dd4d680 SP2 r1
+2026-11-17T18:11:58-0300   exit 0: {"unit": "pr_ac1a8dd4d680", "arm": "SP2", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 152} 
+2026-11-17T18:12:00-0300 port pr_ac1a8dd4d680 SP2 r2
+2026-11-17T18:14:26-0300   exit 0: {"unit": "pr_ac1a8dd4d680", "arm": "SP2", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 145} 
+2026-11-17T18:14:33-0300 port pr_ac1a8dd4d680 SP2 r3
+2026-11-17T18:16:55-0300   exit 0: {"unit": "pr_ac1a8dd4d680", "arm": "SP2", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 142} 
+2026-11-17T18:17:00-0300 port pr_ac1a8dd4d680 SP2 r4
+2026-11-17T18:19:23-0300   exit 0: {"unit": "pr_ac1a8dd4d680", "arm": "SP2", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 143} 
+2026-11-17T18:19:25-0300 port pr_ac1a8dd4d680 TP r1
+2026-11-17T18:21:44-0300   exit 0: {"unit": "pr_ac1a8dd4d680", "arm": "TP", "replica": 1, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 138} 
+2026-11-17T18:21:48-0300 port pr_ac1a8dd4d680 TP r2
+2026-11-17T18:24:14-0300   exit 0: {"unit": "pr_ac1a8dd4d680", "arm": "TP", "replica": 2, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 146} 
+2026-11-17T18:24:17-0300 port pr_ac1a8dd4d680 TP r3
+2026-11-17T18:26:41-0300   exit 0: {"unit": "pr_ac1a8dd4d680", "arm": "TP", "replica": 3, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 143} 
+2026-11-17T18:26:43-0300 port pr_ac1a8dd4d680 TP r4
+2026-11-17T18:29:09-0300   exit 0: {"unit": "pr_ac1a8dd4d680", "arm": "TP", "replica": 4, "deterministic_merge": "applied", "outcome": "ported", "build": {"status": "success", "from": "kit call 1"}, "seconds": 146} 
+2026-11-17T18:29:12-0300 port pr_fff072cb8953 SP2 r1
+2026-11-17T18:29:46-0300   exit 0: f072cb8953", "arm": "SP2", "replica": 1, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt", "outcome": "abstain", "build": null, "seconds": 33} 
+2026-11-17T18:29:49-0300 port pr_fff072cb8953 SP2 r2
+2026-11-17T18:29:59-0300   exit 0: ff072cb8953", "arm": "SP2", "replica": 2, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt", "outcome": "abstain", "build": null, "seconds": 9} 
+2026-11-17T18:30:01-0300 port pr_fff072cb8953 SP2 r3
+2026-11-17T18:30:11-0300   exit 0: f072cb8953", "arm": "SP2", "replica": 3, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt", "outcome": "abstain", "build": null, "seconds": 10} 
+2026-11-17T18:30:15-0300 port pr_fff072cb8953 SP2 r4
+2026-11-17T18:30:29-0300   exit 0: f072cb8953", "arm": "SP2", "replica": 4, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt", "outcome": "abstain", "build": null, "seconds": 14} 
+2026-11-17T18:30:34-0300 port pr_fff072cb8953 TP r2
+2026-11-17T18:31:38-0300   exit 0: b8953", "arm": "TP", "replica": 2, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt", "outcome": "already_fixed", "build": null, "seconds": 63} 
+2026-11-17T18:31:41-0300 port pr_fff072cb8953 TP r4
+2026-11-17T18:32:04-0300   exit 0: b8953", "arm": "TP", "replica": 4, "deterministic_merge": "conflict: Applied patch to 'app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt' cleanly.\nApplied patch to 'app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt' with conflicts.\nU app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt", "outcome": "already_fixed", "build": null, "seconds": 20} 
+2026-11-17T18:32:12-0300 done: 0 pending left (disabled [])
+== 2026-11-17T18:32:12-03:00 phase 2 driver exit 0
+== 2026-11-17T18:32:12-03:00 option A (no OP) queue end

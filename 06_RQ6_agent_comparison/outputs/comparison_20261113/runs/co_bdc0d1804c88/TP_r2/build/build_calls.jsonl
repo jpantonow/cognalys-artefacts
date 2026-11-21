@@ -1,0 +1,2 @@
+{"call": 1, "caller": "agent", "time": "2026-11-15T13:47:57-0300", "task": "assembleDebug", "diff_sha": "d3d7840e99a9c300", "diff_bytes": 5050, "status": "failed", "reason": "gradle_return_code_1", "used_task": "assembleDebug", "apks": 0, "seconds": 15, "tool_rc": 1}
+{"call": 2, "caller": "agent", "time": "2026-11-15T13:48:47-0300", "task": "assembleDebug", "diff_sha": "d3d7840e99a9c300", "diff_bytes": 5050, "status": "success", "reason": "", "used_task": "assembleDebug", "apks": 1, "seconds": 42, "tool_rc": 0}

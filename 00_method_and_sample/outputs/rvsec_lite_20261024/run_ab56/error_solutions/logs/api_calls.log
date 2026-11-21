@@ -1,0 +1,957 @@
+2026-11-03 21:50:50,850 - INFO - Evidence analysis for from:
+{
+  "architecture_version": "v2",
+  "versions": {
+    "prompt_version": "llm-pipeline-v2.1",
+    "schema_version": "2.1",
+    "policy_version": "2.0",
+    "spec_version": "2",
+    "context_builder_version": "2.16",
+    "semantic_resolver_version": "tree-sitter-semantic-v2"
+  },
+  "input_hashes": {
+    "finding_sha256": "0f2af540c959c05968940c50ead5421b6af67329d994a903d2f6e0df2ccb2d75",
+    "diagnostic_evidence_sha256": "360e97a752f080fe05de3eb132d8721d53b078c02c951e40f11215901d6f03e6",
+    "policy_sha256": "7f8e75666abb17f1622a4b7660d9c50c41ace01771e530d8c9dba63dc296d177",
+    "evidence_sha256": "6a727a04b8ded2746361ec48208ca88322e82ee03ec741f4ddf45926ee4b7e99",
+    "packet_sha256": "8b6a7b17d75db091f44f21fa7d5764a5f1c0686e980a3147db72a2c26d1bdcf7",
+    "external_research_sha256": "e46ab3a86d4adc8ce6118837a9b83d427982ae89e840ab14f38f56d368e367dc"
+  },
+  "diagnostic_evidence": {
+    "evidence_id": "DET-001",
+    "kind": "detector_diagnostic",
+    "trust_level": "reported_detector_output",
+    "informational_only": true,
+    "decision_authority": "none",
+    "sha256": "aab1b3b682f0c1c33f194b592b6cbb3964a19a6d1e5b32f7dba8687fc7843395",
+    "data": {
+      "finding_id": "org.cryptomator.data.cloud.webdav.network.SSLSocketFactories:::from:::SSLContextSpec:::UnsatisfiedConstraint:::the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+      "tool": "rvsec",
+      "specification": "SSLContextSpec",
+      "message": "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+      "reported_class": "org.cryptomator.data.cloud.webdav.network.SSLSocketFactories",
+      "reported_method": "from",
+      "source_file_path": "data/src/main/java/org/cryptomator/data/cloud/webdav/network/SSLSocketFactories.kt",
+      "detector_context": {
+        "code": "SSLCONTEXT-NOBS-05",
+        "site_kind": "NOBS: a required origin was not observed (not a positive contradiction)",
+        "label": "application-manager",
+        "label_meaning": "NOT OBSERVED: the runtime monitor tracks the producers a rule requires by object identity within one process, and saw none for this object. The TrustManager[] given to SSLContext.init holds a trust manager class the application defines. That covers both a manager that accepts every certificate and one that validates; the body of its checkServerTrusted (and the condition under which it is installed) decides which.",
+        "value": "TLSv1.3",
+        "expected": "a TrustManager[] an observed TrustManagerFactory returned",
+        "source_location": "SSLSocketFactories.kt:20",
+        "codes": "SSLCONTEXT-NOBS-03 [platform-default] (1), SSLCONTEXT-NOBS-05 [application-manager] (1), SSLCONTEXT-NOBS-06 [platform-default] (1)",
+        "tools": "monkey:fast",
+        "runtime_observation": "Reported in 1 run(s) of the app; each run starts from a clean, read-only emulator. Trust manager class(es) in the array: org.cryptomator.data.cloud.webdav.network.DefaultTrustManager.",
+        "runtime_coverage_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_lite_20261024/findings_all.coverage.json"
+      }
+    }
+  },
+  "cause_status": "confirmed",
+  "detector_violation": "confirmed",
+  "runtime_security_impact": "non_security",
+  "generation_status": "supported_for_review",
+  "publication_status": "blocked",
+  "evidence_status": {
+    "cause_status": "confirmed",
+    "detector_violation": "confirmed",
+    "runtime_security_impact": "non_security",
+    "scope_status": "complete",
+    "generation_status": "supported_for_review",
+    "publication_status": "blocked"
+  },
+  "external_sources": [
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/SSLContext.html",
+      "supported_claim": "SSLContext is a secure-socket protocol implementation; `init` accepts key managers, trust managers, and a SecureRandom, and null manager arrays invoke provider-selection behavior."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/TrustManagerFactory.html",
+      "supported_claim": "TrustManagerFactory is the provider-based API for creating trust managers after initialization with a KeyStore or provider-specific manager-factory parameters."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/X509TrustManager.html",
+      "supported_claim": "X509TrustManager trust methods are specified to validate certification paths to trusted roots for the relevant authentication type."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/security/java-secure-socket-extension-jsse-reference-guide.html",
+      "supported_claim": "Trust managers may be obtained from a TrustManagerFactory or provided as concrete implementations; endpoint identification and trust validation are separate controls."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html",
+      "supported_claim": "SSLContext protocol algorithm names, including TLS, TLSv1.2, and TLSv1.3, are specified separately from runtime enabled and negotiated protocol configuration."
+    },
+    {
+      "title": "official",
+      "url": "https://www.oracle.com/java/technologies/javase/11-relnote-issues.html",
+      "supported_claim": "Oracle documents TLS 1.3 support and the TLSv1.3 SSLContext algorithm in JDK 11."
+    },
+    {
+      "title": "primary",
+      "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLContext.crysl",
+      "supported_claim": "The rule is scoped by `SPEC javax.net.ssl.SSLContext`; it declares getInstance, init, createSSLEngine, and forbidden getDefault patterns, and requires the stated protocol and provenance predicates."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/javax/net/ssl/SSLContext.html",
+      "supported_claim": "The `getInstance` argument is the standard name of the requested secure-socket protocol; a non-null trust-manager array provides peer-authentication trust decisions."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/17/docs/specs/security/standard-names.html",
+      "supported_claim": "Standard `SSLContext` names include `TLS`, `TLSv1`, `TLSv1.1`, `TLSv1.2`, `TLSv1.3`, `DTLS`, `DTLSv1.0`, and `DTLSv1.2`."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/net/ssl/TrustManager.html",
+      "supported_claim": "A `TrustManager` can be produced by a `TrustManagerFactory` or implemented directly through a `TrustManager` subtype."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/net/ssl/X509TrustManager.html",
+      "supported_claim": "`checkServerTrusted` builds a certification path to a trusted root and throws `CertificateException` when the server chain is not trusted."
+    }
+  ],
+  "observed_events": [
+    "Get: SSLContext.getInstance(tlsVersion) is invoked on javax.net.ssl.SSLContext.",
+    "Init: sslContext.init(null, arrayOf<TrustManager>(trustManager), null) is invoked after Get.",
+    "Socket-factory retrieval: sslContext.socketFactory is retrieved after Init.",
+    "ForbiddenDefault: no SSLContext.getDefault call is present in the reviewed method.",
+    "Engine: no createSSLEngine call is present in the reviewed method."
+  ],
+  "predicate_assessment": [
+    {
+      "event": "The SSLContext.getInstance protocol argument is exactly \"TLSv1.2\" or \"TLSv1.3\".",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. The source assigns \"TLSv1.3\" on Android Q and later and \"TLSv1.2\" otherwise, then passes that local value to SSLContext.getInstance. Both values satisfy the specification's protocol constraint.",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "SSLContext initialization occurs after SSLContext.getInstance on the same local SSLContext value.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. The source obtains sslContext with SSLContext.getInstance(tlsVersion) and subsequently invokes sslContext.init(...) before requesting sslContext.socketFactory, matching the required Get → Init order in this method.",
+      "rule_section": "order"
+    },
+    {
+      "event": "The KeyManager[] argument supplied to SSLContext.init satisfies generatedKeyManagers[km].",
+      "status": "violated",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. The init call supplies null as its KeyManager[] argument. The CrySL rule requires generatedKeyManagers[km] for Init; the specification explicitly distinguishes API-valid null arguments from satisfying its non-null provenance predicates.",
+      "rule_section": "required_predicate"
+    },
+    {
+      "event": "The TrustManager[] argument supplied to SSLContext.init satisfies generatedTrustManagers[tm].",
+      "status": "violated",
+      "evidence": "Evidence IDs: SRC-001, SRC-013, SUP-001, SUP-002, SPEC-001. The method constructs the array with arrayOf<TrustManager>(trustManager). Its resolved WebDAV caller supplies either a DefaultTrustManager wrapper or a PinningTrustManager. DefaultTrustManager obtains a factory-created manager only as an internal delegate, while the array passed to init contains the wrapper; PinningTrustManager is directly constructed. Thus the supplied array is not generated by a TrustManagerFactory.",
+      "rule_section": "required_predicate"
+    },
+    {
+      "event": "The SecureRandom argument supplied to SSLContext.init satisfies randomized[random].",
+      "status": "violated",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. The init call supplies null as its SecureRandom argument. The CrySL rule requires randomized[random] for Init and explicitly states that an API-valid null argument does not satisfy that declared provenance predicate.",
+      "rule_section": "required_predicate"
+    },
+    {
+      "event": "The SSLContext construction trace does not invoke SSLContext.getDefault().",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. The complete reviewed from method invokes SSLContext.getInstance and init, and contains no SSLContext.getDefault invocation. The specification identifies getDefault as a forbidden event.",
+      "rule_section": "forbidden_call"
+    }
+  ],
+  "collateral_violations": [
+    {
+      "predicate": "The KeyManager[] argument supplied to SSLContext.init satisfies generatedKeyManagers[km].",
+      "evidence_ids": [
+        "SRC-001",
+        "SPEC-001"
+      ],
+      "explanation": "The init call supplies null as its KeyManager[] argument. The CrySL rule requires generatedKeyManagers[km] for Init; the specification explicitly distinguishes API-valid null arguments from satisfying its non-null provenance predicates."
+    },
+    {
+      "predicate": "The TrustManager[] argument supplied to SSLContext.init satisfies generatedTrustManagers[tm].",
+      "evidence_ids": [
+        "SRC-001",
+        "SRC-013",
+        "SUP-001",
+        "SUP-002",
+        "SPEC-001"
+      ],
+      "explanation": "The method constructs the array with arrayOf<TrustManager>(trustManager). Its resolved WebDAV caller supplies either a DefaultTrustManager wrapper or a PinningTrustManager. DefaultTrustManager obtains a factory-created manager only as an internal delegate, while the array passed to init contains the wrapper; PinningTrustManager is directly constructed. Thus the supplied array is not generated by a TrustManagerFactory."
+    },
+    {
+      "predicate": "The SecureRandom argument supplied to SSLContext.init satisfies randomized[random].",
+      "evidence_ids": [
+        "SRC-001",
+        "SPEC-001"
+      ],
+      "explanation": "The init call supplies null as its SecureRandom argument. The CrySL rule requires randomized[random] for Init and explicitly states that an API-valid null argument does not satisfy that declared provenance predicate."
+    }
+  ],
+  "confirmed_facts": [
+    "The reviewed calls resolve to javax.net.ssl.SSLContext.getInstance and javax.net.ssl.SSLContext.init(KeyManager[], TrustManager[], SecureRandom).",
+    "The requested SSLContext protocol name is TLSv1.3 on Android Q and later and TLSv1.2 on earlier Android versions.",
+    "DefaultTrustManager delegates client and server certificate trust checks to an X509TrustManager obtained from a TrustManagerFactory initialized with a null KeyStore, while translating CertificateException to NotTrustableCertificateException.",
+    "PinningTrustManager rejects client and server chains unless the first certificate has the configured pin, and its associated hostname verifier accepts a host only when the peer certificate has that pin.",
+    "The SSLContext protocol selector does not itself establish the protocols enabled on derived connections or the protocol negotiated in a handshake.",
+    "The supplied runtime exploration observed execution of SSLSocketFactories.from with a DefaultTrustManager at the governed init call, but did not execute the WebDAV, OkHttp, or TLS paths."
+  ],
+  "unsupported_hypotheses": [],
+  "missing_evidence": [
+    "Which TLS protocol versions are enabled on connections created by the WebDAV OkHttpClient.",
+    "Which TLS protocol version, cipher suite, peer identity, and certificate-validation outcome occur during an actual WebDAV handshake.",
+    "Which provider and Android runtime implementation supply the SSLContext and its derived socket factory at runtime."
+  ],
+  "confirmed_cause": "The `trustManager` parameter reaches `SSLContext.init` as `arrayOf<TrustManager>(trustManager)`. Its resolved WebDAV callers supply application-defined `DefaultTrustManager` or `PinningTrustManager`, not a TrustManagerFactory-produced manager array. Although DefaultTrustManager internally delegates to a factory-produced manager, the object passed to `init` is the wrapper; PinningTrustManager is directly constructed and enforces certificate-pin and hostname checks. Therefore `generatedTrustManagers[tm]` is violated for the reported TrustManager[] argument (CLM-001, CLM-003, CLM-004).",
+  "forward_compatibility_assessment": {
+    "status": "preserved",
+    "dimensions_checked": [],
+    "evidence": "Claim IDs: CLM-001, CLM-003, CLM-004",
+    "strategy": "Make no protocol or trust-policy change. The existing TLSv1.2/TLSv1.3 selector already meets the rule's exact protocol-literal constraint; do not pin a different protocol version or weaken the application-defined certificate checks merely to satisfy TrustManagerFactory provenance."
+  },
+  "migration_assessment": {
+    "usage_kind": "protocol",
+    "evidence": [
+      "The reviewed calls resolve to javax.net.ssl.SSLContext.getInstance and javax.net.ssl.SSLContext.init(KeyManager[], TrustManager[], SecureRandom).",
+      "DefaultTrustManager delegates client and server certificate trust checks to an X509TrustManager obtained from a TrustManagerFactory initialized with a null KeyStore, while translating CertificateException to NotTrustableCertificateException.",
+      "PinningTrustManager rejects client and server chains unless the first certificate has the configured pin, and its associated hostname verifier accepts a host only when the peer certificate has that pin."
+    ],
+    "legacy_compatibility_required": true,
+    "safe_strategy": "Make no protocol or trust-policy change. The existing TLSv1.2/TLSv1.3 selector already meets the rule's exact protocol-literal constraint; do not pin a different protocol version or weaken the application-defined certificate checks merely to satisfy TrustManagerFactory provenance.",
+    "policy_authorized": true
+  },
+  "digest_contract_assessment": {
+    "security_relevance": "false",
+    "contract_kind": "unknown",
+    "expected_digest_source": "",
+    "backend_repository_available": false,
+    "backend_change_required": false,
+    "client_only_change_safe": false,
+    "rollout_strategy": "",
+    "pull_request_note": ""
+  },
+  "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+  "dependency_fix_assessment": {
+    "external_class_confirmed": false,
+    "declared_artifact": "",
+    "current_version": "",
+    "target_version": "",
+    "target_artifact": "",
+    "official_migration_source": "",
+    "upgrade_kind": "unknown",
+    "build_files": [],
+    "call_site_migration_required": false,
+    "compatibility_constraints_satisfied": false,
+    "replacement_preserves_required_capabilities": false,
+    "fork_or_vcs_dependency": false
+  },
+  "coordinated_fix_plan": {
+    "affected_symbols": [
+      "SSLSocketFactories.from",
+      "WebDavCompatibleHttpClient SSL socket-factory construction"
+    ],
+    "required_edits": [
+      {
+        "source_file_path": "data/src/main/java/org/cryptomator/data/cloud/webdav/network/SSLSocketFactories.kt",
+        "symbol": "SSLSocketFactories.from",
+        "reason": "Remove the application-defined TrustManager parameter from this socket-factory constructor. Inside from, initialize a TrustManagerFactory with the default algorithm and a null KeyStore, then pass the TrustManagerFactory-produced trustManagers array to SSLContext.init in place of arrayOf<TrustManager>(trustManager). Retain the existing TLSv1.2/TLSv1.3 selector and the existing null KeyManager[] and SecureRandom arguments. Remove imports made unused by eliminating the custom TrustManager parameter. This changes the runtime-monitored SSLContext.init call so its TrustManager[] originates from TrustManagerFactory rather than containing DefaultTrustManager or PinningTrustManager.",
+        "create_new_file": false,
+        "edit_category": "trust-manager provenance and factory API adjustment",
+        "supporting_claim_ids": [
+          "CLM-001",
+          "CLM-002",
+          "CLM-003",
+          "CLM-004"
+        ]
+      },
+      {
+        "source_file_path": "data/src/main/java/org/cryptomator/data/cloud/webdav/network/WebDavCompatibleHttpClient.kt",
+        "symbol": "WebDavCompatibleHttpClient SSL socket-factory construction",
+        "reason": "Update the sole resolved call from SSLSocketFactories.from(trustManager) to the no-argument factory method. Leave the surrounding WebDAV client configuration that retains the selected DefaultTrustManager or PinningTrustManager and its associated hostname-verification behavior unchanged; only the removed from argument is changed. This keeps the caller compiling while preserving the existing application-level pinning and hostname-policy configuration for publication review.",
+        "create_new_file": false,
+        "edit_category": "caller signature update preserving client pinning configuration",
+        "supporting_claim_ids": [
+          "CLM-003",
+          "CLM-004"
+        ]
+      }
+    ],
+    "required_tests": [],
+    "compatibility_policy_required": true,
+    "scope_evidence": [
+      "Claim IDs: CLM-001, CLM-003, CLM-004"
+    ]
+  },
+  "scope_assessment": {
+    "status": "complete",
+    "local_code_scope": "complete",
+    "external_contract_scope": "unresolved",
+    "multi_file_change_required": true,
+    "reviewed_files": [
+      {
+        "source_file_path": "data/src/main/java/org/cryptomator/data/cloud/webdav/network/SSLSocketFactories.kt",
+        "action": "edit",
+        "symbols": [
+          "SSLSocketFactories.from"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-001, CLM-002, CLM-003, CLM-004"
+      },
+      {
+        "source_file_path": "data/src/main/java/org/cryptomator/data/cloud/webdav/network/WebDavCompatibleHttpClient.kt",
+        "action": "edit",
+        "symbols": [
+          "WebDavCompatibleHttpClient SSL socket-factory construction"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-003, CLM-004"
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/dropbox/DropboxClientFactory.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-002 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/dropbox/DropboxCloudContentRepository.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-003 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/dropbox/DropboxCloudContentRepositoryFactory.java",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-004 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/dropbox/DropboxCloudNodeFactory.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-005 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/dropbox/DropboxFile.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-006 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/dropbox/DropboxFolder.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-007 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/dropbox/DropboxImpl.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-008 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/dropbox/DropboxNode.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-009 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/dropbox/RootDropboxFolder.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-010 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/microsoftgraph/MicrosoftGraphClient.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-011 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "data/src/apiKey/java/org/cryptomator/data/cloud/microsoftgraph/MicrosoftGraphCloudContentRepository.kt",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-012 records a related_source relation; it is accounted for but is not automatically an edit target."
+      },
+      {
+        "source_file_path": "domain/src/main/java/org/cryptomator/domain/usecases/vault/VaultOrUnlockToken.java",
+        "action": "mandatory_context_reviewed",
+        "symbols": [],
+        "evidence": "SRC-014 records a related_source relation; it is accounted for but is not automatically an edit target."
+      }
+    ],
+    "unresolved_relations": [
+      {
+        "kind": "external_protocol",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "Builds, unit tests, and source rechecks cannot decide whether a replacement continues to trust exactly the intended peer certificates and host names. Human review would need to authorize and verify any changed trust policy."
+      },
+      {
+        "kind": "external_protocol",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "Generating a rule-only replacement would require authorizing a changed trust policy despite the stated policy condition. A reviewer would have to explicitly decide to relax or redesign the pinning behavior; this pipeline must not do so."
+      }
+    ]
+  },
+  "issue_candidate": {
+    "eligible": false,
+    "title": "",
+    "finding_summary": "",
+    "why_no_pr": "",
+    "maintainer_question": "",
+    "proposed_next_step": ""
+  },
+  "v2": {
+    "evidence_packet_sha256": "8b6a7b17d75db091f44f21fa7d5764a5f1c0686e980a3147db72a2c26d1bdcf7",
+    "claims": [
+      {
+        "claim_id": "CLM-001",
+        "statement": "The reviewed calls resolve to javax.net.ssl.SSLContext.getInstance and javax.net.ssl.SSLContext.init(KeyManager[], TrustManager[], SecureRandom).",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001",
+          "SPEC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-002",
+        "statement": "The requested SSLContext protocol name is TLSv1.3 on Android Q and later and TLSv1.2 on earlier Android versions.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-003",
+        "statement": "DefaultTrustManager delegates client and server certificate trust checks to an X509TrustManager obtained from a TrustManagerFactory initialized with a null KeyStore, while translating CertificateException to NotTrustableCertificateException.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SUP-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-004",
+        "statement": "PinningTrustManager rejects client and server chains unless the first certificate has the configured pin, and its associated hostname verifier accepts a host only when the peer certificate has that pin.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SUP-002"
+        ]
+      },
+      {
+        "claim_id": "CLM-005",
+        "statement": "The SSLContext protocol selector does not itself establish the protocols enabled on derived connections or the protocol negotiated in a handshake.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SPEC-001",
+          "WEB-005"
+        ]
+      },
+      {
+        "claim_id": "CLM-006",
+        "statement": "The supplied runtime exploration observed execution of SSLSocketFactories.from with a DefaultTrustManager at the governed init call, but did not execute the WebDAV, OkHttp, or TLS paths.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SUP-003",
+          "SUP-004"
+        ]
+      }
+    ],
+    "adjudication": {
+      "generation_status": "supported_for_review",
+      "forward_compatibility_strategy": "Make no protocol or trust-policy change. The existing TLSv1.2/TLSv1.3 selector already meets the rule's exact protocol-literal constraint; do not pin a different protocol version or weaken the application-defined certificate checks merely to satisfy TrustManagerFactory provenance.",
+      "review_assumptions": [
+        "The bounded target and resolved WebDAV caller scope is complete. `SSLSocketFactories.from` receives either `DefaultTrustManager` or `PinningTrustManager` from the WebDAV client configuration (CLM-003, CLM-004).",
+        "`DefaultTrustManager` delegates certificate validation to a TrustManagerFactory-produced manager, while `PinningTrustManager` adds certificate-pin and corresponding hostname checks. Replacing the manager passed to `SSLContext.init` with a factory result would not preserve the pinning route's trust policy (CLM-003, CLM-004).",
+        "The case policy applies, but its condition for a factory-manager substitution fails for `PinningTrustManager`: it performs additional certificate and hostname acceptance checks that must be retained. The policy expressly forbids accepting more certificates or host names.",
+        "The supplied source also establishes separate, unreported SSLContextSpec predicate failures: `init` receives null KeyManager[] and null SecureRandom arguments. They are not folded into this finding's TrustManager provenance cause.",
+        "A TLS handshake and the effective enabled protocol list were not observed. Those runtime facts are unnecessary to establish the reported TrustManager provenance predicate or the source-defined pinning behavior.",
+        "Official JSSE documentation permits both TrustManagerFactory-produced managers and direct TrustManager implementations; this conclusion depends on that documented API semantics (WEB-004, WEB-010)."
+      ],
+      "cause_status": "confirmed",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "correct_use_reason": "The reported custom-manager use is permitted by the documented JSSE API. `SSLContext.init(KeyManager[], TrustManager[], SecureRandom)` accepts a supplied TrustManager array for peer-authentication decisions (Oracle SSLContext API, WEB-001 and WEB-008), and the JSSE reference guide and TrustManager API expressly permit concrete/direct TrustManager implementations as well as TrustManagerFactory-produced ones (WEB-004 and WEB-010). Here, the supplied manager is deliberately a delegating default manager or a pinning manager. A change that makes the PinningTrustManager route satisfy the rule's direct TrustManagerFactory provenance requirement would remove or alter the certificate-pin/hostname policy that the code currently protects (CLM-004).",
+      "blocking_for_generation": [],
+      "blocking_for_publication": [
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "Any patch replacing the pinning trust manager with a factory-created manager must preserve the currently enforced certificate-pin and hostname acceptance policy.",
+          "supporting_claim_ids": [
+            "CLM-004"
+          ],
+          "category": "maintainer_decision",
+          "description": "Builds, unit tests, and source rechecks cannot decide whether a replacement continues to trust exactly the intended peer certificates and host names. Human review would need to authorize and verify any changed trust policy."
+        },
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "The case policy forbids a change that accepts more certificates or host names, but a rule-compliant replacement for the PinningTrustManager route has not been established that preserves its certificate-pin and hostname checks.",
+          "supporting_claim_ids": [
+            "CLM-004"
+          ],
+          "category": "maintainer_decision",
+          "description": "Generating a rule-only replacement would require authorizing a changed trust policy despite the stated policy condition. A reviewer would have to explicitly decide to relax or redesign the pinning behavior; this pipeline must not do so."
+        }
+      ],
+      "current_code_is_correct_use": true,
+      "compatibility_status": "preserved",
+      "required_tests": [],
+      "scope_status": "complete",
+      "confirmed_cause": "The `trustManager` parameter reaches `SSLContext.init` as `arrayOf<TrustManager>(trustManager)`. Its resolved WebDAV callers supply application-defined `DefaultTrustManager` or `PinningTrustManager`, not a TrustManagerFactory-produced manager array. Although DefaultTrustManager internally delegates to a factory-produced manager, the object passed to `init` is the wrapper; PinningTrustManager is directly constructed and enforces certificate-pin and hostname checks. Therefore `generatedTrustManagers[tm]` is violated for the reported TrustManager[] argument (CLM-001, CLM-003, CLM-004).",
+      "cause_rule_section": "required_predicate",
+      "decision_claim_ids": [
+        "CLM-001",
+        "CLM-003",
+        "CLM-004"
+      ],
+      "detector_violation": "confirmed",
+      "publication_status": "blocked",
+      "required_edit_categories": [],
+      "runtime_security_impact": "non_security",
+      "authorized_behavior_change": {
+        "authorized": false,
+        "description": "The supplied case policy authorizes factory-manager substitution only where the custom manager accepts exactly the platform-default set or accepts everything. That condition fails for PinningTrustManager because it enforces additional certificate-pin and hostname checks that must remain intact.",
+        "policy_reference": "case_policy"
+      },
+      "single_round": true
+    },
+    "patch_plan": {
+      "publication_blockers": [
+        "Maintainer review must verify that retaining the existing WebDAV client configuration around the custom PinningTrustManager—including its certificate-pin hostname verifier—continues to reject every non-pinned peer after SSLContext is initialized with the platform TrustManagerFactory output (CLM-004).",
+        "Maintainer review must approve any observed compatibility impact for pinned self-signed or otherwise non-platform-trusted WebDAV endpoints: the factory-backed TLS handshake must not broaden certificate or hostname acceptance, and any loss of previously accepted pinned endpoints must be explicitly accepted before publication (CLM-003, CLM-004)."
+      ],
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "forbidden_changes": [
+        "Do not replace, weaken, or remove the existing PinningTrustManager certificate-pin or hostname-verification configuration in WebDavCompatibleHttpClient.",
+        "Do not accept more certificates or host names than the existing DefaultTrustManager and PinningTrustManager routes accept.",
+        "Do not change or pin the TLS protocol selector; retain TLSv1.3 on Android Q and later and TLSv1.2 on earlier Android versions.",
+        "Do not alter the null KeyManager[] or SecureRandom arguments, which are separate unreported SSLContextSpec predicates.",
+        "Do not rename SSLSocketFactories.from.",
+        "Do not edit DefaultTrustManager.kt or PinningTrustManager.kt because their exact source is unavailable in the manifest.",
+        "Do not edit unrelated cloud persistence, export, or stored-value-format paths."
+      ],
+      "required_edits": [
+        {
+          "create_new_file": false,
+          "source_file_path": "data/src/main/java/org/cryptomator/data/cloud/webdav/network/SSLSocketFactories.kt",
+          "supporting_claim_ids": [
+            "CLM-001",
+            "CLM-002",
+            "CLM-003",
+            "CLM-004"
+          ],
+          "edit_category": "trust-manager provenance and factory API adjustment",
+          "symbol": "SSLSocketFactories.from",
+          "reason": "Remove the application-defined TrustManager parameter from this socket-factory constructor. Inside from, initialize a TrustManagerFactory with the default algorithm and a null KeyStore, then pass the TrustManagerFactory-produced trustManagers array to SSLContext.init in place of arrayOf<TrustManager>(trustManager). Retain the existing TLSv1.2/TLSv1.3 selector and the existing null KeyManager[] and SecureRandom arguments. Remove imports made unused by eliminating the custom TrustManager parameter. This changes the runtime-monitored SSLContext.init call so its TrustManager[] originates from TrustManagerFactory rather than containing DefaultTrustManager or PinningTrustManager."
+        },
+        {
+          "create_new_file": false,
+          "source_file_path": "data/src/main/java/org/cryptomator/data/cloud/webdav/network/WebDavCompatibleHttpClient.kt",
+          "supporting_claim_ids": [
+            "CLM-003",
+            "CLM-004"
+          ],
+          "edit_category": "caller signature update preserving client pinning configuration",
+          "symbol": "WebDavCompatibleHttpClient SSL socket-factory construction",
+          "reason": "Update the sole resolved call from SSLSocketFactories.from(trustManager) to the no-argument factory method. Leave the surrounding WebDAV client configuration that retains the selected DefaultTrustManager or PinningTrustManager and its associated hostname-verification behavior unchanged; only the removed from argument is changed. This keeps the caller compiling while preserving the existing application-level pinning and hostname-policy configuration for publication review."
+        }
+      ],
+      "behavioral_invariants": [
+        "The governed SSLContext.init call receives a TrustManager[] produced by a TrustManagerFactory initialized with a null KeyStore, rather than an array containing an application-defined manager (CLM-001, CLM-003).",
+        "The TLS selector remains TLSv1.3 on Android Q and later and TLSv1.2 on earlier Android versions; this selector does not itself define enabled or negotiated handshake protocols (CLM-002, CLM-005).",
+        "The existing null KeyManager[] and null SecureRandom SSLContext.init arguments remain unchanged because they are separate, unreported predicates.",
+        "WebDavCompatibleHttpClient continues to select and retain its existing DefaultTrustManager or PinningTrustManager configuration outside SSLSocketFactories.from; PinningTrustManager's existing certificate-pin hostname verifier is not replaced, removed, or broadened (CLM-003, CLM-004).",
+        "The pinning route must continue to reject a host whose peer certificate does not have the configured pin (CLM-004).",
+        "No stored value, exported value, persisted-object format, or cloud-content payload format is changed.",
+        "No unit-test edit is planned: this change replaces the platform trust-manager source used by TLS setup, and its observable effect is provider/network handshake behavior rather than a repository-owned branch or parsed value that the available unit-test classpath can exercise."
+      ],
+      "generation_blockers": [],
+      "allowed_apis": [
+        "javax.net.ssl.SSLContext.getInstance(String)",
+        "javax.net.ssl.SSLContext.init(KeyManager[], TrustManager[], SecureRandom)",
+        "javax.net.ssl.TrustManagerFactory.getDefaultAlgorithm()",
+        "javax.net.ssl.TrustManagerFactory.getInstance(String)",
+        "javax.net.ssl.TrustManagerFactory.init(KeyStore)",
+        "javax.net.ssl.TrustManagerFactory.getTrustManagers()"
+      ],
+      "required_tests": []
+    }
+  }
+}
+2026-11-03 21:55:23,696 - INFO - Evidence analysis for tryToFindDefaultTrustManager:
+{
+  "architecture_version": "v2",
+  "versions": {
+    "prompt_version": "llm-pipeline-v2.1",
+    "schema_version": "2.1",
+    "policy_version": "2.0",
+    "spec_version": "2",
+    "context_builder_version": "2.16",
+    "semantic_resolver_version": "tree-sitter-semantic-v2"
+  },
+  "input_hashes": {
+    "finding_sha256": "297bf0ec9a506fa06ba195beb9d1461fbfba4132627c9b80f2c0bdf26c241ba8",
+    "diagnostic_evidence_sha256": "e245a782d365970bf57d4e171241d99c127a01b4f4267cd6f91a577a5c00bb09",
+    "policy_sha256": "9345e4cfbbba7570c519d6d09e4b18351383be188a383a0e6d1315a04a20ffa8",
+    "evidence_sha256": "6aef7b61e986a0650ace244d9cf76503d3233bee52200db0ac6d6fc80ca0791a",
+    "packet_sha256": "1be78857702b820d1b1a88626070293889d3288b40bbec666f67953b6b396f65",
+    "external_research_sha256": "1666160a61c9c9eec311bf8859625969ac3826136df59ed8ae390487f8d32470"
+  },
+  "diagnostic_evidence": {
+    "evidence_id": "DET-001",
+    "kind": "detector_diagnostic",
+    "trust_level": "reported_detector_output",
+    "informational_only": true,
+    "decision_authority": "none",
+    "sha256": "9b8ce2659043299e65c7683d7ec9749ee8db051de273586d3e490fd9b65b45d7",
+    "data": {
+      "finding_id": "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed",
+      "tool": "rvsec",
+      "specification": "TrustManagerFactorySpec",
+      "message": "a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed",
+      "reported_class": "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion",
+      "reported_method": "tryToFindDefaultTrustManager",
+      "source_file_path": "data/src/main/java/org/cryptomator/data/cloud/webdav/network/DefaultTrustManager.kt",
+      "detector_context": {
+        "code": "TRUSTMANAGERFACTORY-NOBS-02",
+        "site_kind": "NOBS: a required origin was not observed (not a positive contradiction)",
+        "label": "platform-default",
+        "label_meaning": "NOT OBSERVED: the runtime monitor tracks the producers a rule requires by object identity within one process, and saw none for this object. The argument was null, which the API documents as 'use the platform default' (e.g. TrustManagerFactory.init((KeyStore) null)); correct code produces this.",
+        "value": "PKIX",
+        "expected": "a KeyStore this instrumentation observed being loaded",
+        "source_location": "DefaultTrustManager.kt:55",
+        "codes": "TRUSTMANAGERFACTORY-NOBS-02 [platform-default] (1)",
+        "tools": "monkey:fast",
+        "runtime_observation": "Reported in 1 run(s) of the app; each run starts from a clean, read-only emulator.",
+        "runtime_coverage_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_lite_20261024/findings_all.coverage.json"
+      }
+    }
+  },
+  "cause_status": "confirmed",
+  "detector_violation": "confirmed",
+  "runtime_security_impact": "non_security",
+  "generation_status": "blocked",
+  "publication_status": "eligible_after_validation",
+  "evidence_status": {
+    "cause_status": "confirmed",
+    "detector_violation": "confirmed",
+    "runtime_security_impact": "non_security",
+    "scope_status": "complete",
+    "generation_status": "blocked",
+    "publication_status": "eligible_after_validation"
+  },
+  "external_sources": [
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/TrustManagerFactory.html",
+      "supported_claim": "`TrustManagerFactory.init(KeyStore)` permits null; the factory creates trust managers and must be initialized before `getTrustManagers()`; PKIX is required by Java-platform implementations in this release."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/security/java-secure-socket-extension-jsse-reference-guide.html",
+      "supported_claim": "For SunJSSE PKIX and SunX509, a null keystore triggers documented default truststore discovery; provider documentation should be consulted for the appropriate initialization method."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html#trustmanagerfactory-algorithms",
+      "supported_claim": "PKIX creates PKIX-validating X509ExtendedTrustManager objects and supports CertPathTrustManagerParameters initialization."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/security/oracle-providers.html",
+      "supported_claim": "SunX509 is retained for backward compatibility and should no longer be used; SunJSSE PKIX and SunX509 have different documented initialization capabilities."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/KeyStore.html",
+      "supported_claim": "A keystore generally must be loaded before access unless loaded during construction; persistence mechanisms and formats are unspecified."
+    },
+    {
+      "title": "primary",
+      "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/TrustManagerFactory.crysl",
+      "supported_claim": "The rule is scoped to `javax.net.ssl.TrustManagerFactory`, declares the quoted event/order patterns, constrains the algorithm to PKIX or SunX509, and does not literally mention null keystores or loading."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/javax/net/ssl/TrustManagerFactory.html",
+      "supported_claim": "The exact runtime result is property-configured rather than an unconditional literal."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/27/security/java-secure-socket-extension-jsse-reference-guide.html",
+      "supported_claim": "The documented Oracle/OpenJDK JSSE default value of `ssl.TrustManagerFactory.algorithm` is `PKIX`."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/11/docs/specs/security/standard-names.html",
+      "supported_claim": "`PKIX` is a standard `TrustManagerFactory` algorithm name and is required to be supported by Java SE implementations."
+    }
+  ],
+  "observed_events": [
+    "Get: TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()) is invoked in tryToFindDefaultTrustManager. [SRC-001]",
+    "Init: trustManagerFactory.init(null as KeyStore?) is invoked after factory acquisition. [SRC-001]",
+    "Trust-manager extraction: the source accesses trustManagerFactory.trustManagers after initialization and returns the first X509TrustManager found. [SRC-001]",
+    "Runtime observation: PKIX was recorded at the governed call in one reported run. [RUN-001]",
+    "Runtime exploration: tryToFindDefaultTrustManager and WebDavCompatibleHttpClient.httpClientFor executed under monkey:fast. [SUP-003]"
+  ],
+  "predicate_assessment": [
+    {
+      "event": "A javax.net.ssl.TrustManagerFactory is acquired before it is initialized on the same local factory instance.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. The source assigns the result of TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()) to trustManagerFactory and subsequently invokes trustManagerFactory.init(...).",
+      "rule_section": "order"
+    },
+    {
+      "event": "The TrustManagerFactory is initialized before its trust-manager collection is accessed.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001. The source invokes trustManagerFactory.init(null as KeyStore?) before accessing trustManagerFactory.trustManagers in the same method.",
+      "rule_section": "order"
+    },
+    {
+      "event": "The algorithm supplied to TrustManagerFactory.getInstance is PKIX or SunX509 in all relevant executions.",
+      "status": "unknown",
+      "evidence": "Evidence IDs: SRC-001, RUN-001, WEB-007. The source obtains the algorithm through getDefaultAlgorithm(), whose result is configured by the runtime security property or implementation fallback. A runtime measurement observed PKIX in one explored run, but that does not establish the value for all relevant configurations or executions.",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "The KeyStore argument supplied to the applicable init(KeyStore) requirement has the specification's generatedKeyStore predicate.",
+      "status": "unknown",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001, RUN-001, WEB-006. The source explicitly supplies null as a nullable KeyStore. The supplied specification describes generatedKeyStore as required for this initialization category but does not define the predicate's treatment of null or platform-default trust material. The runtime monitor's lack of an observed producer does not establish that the predicate is false.",
+      "rule_section": "required_predicate"
+    },
+    {
+      "event": "DefaultTrustManager forwards client and server certificate-chain checks to the selected X509TrustManager delegate.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001. Both checkClientTrusted and checkServerTrusted invoke their corresponding delegate methods and only translate CertificateException into NotTrustableCertificateException.",
+      "rule_section": "other"
+    },
+    {
+      "event": "The TLS client configuration preserves certificate validation and hostname-verification requirements for every relevant connection path.",
+      "status": "unknown",
+      "evidence": "Evidence IDs: SRC-001, SRC-004. The supplied source establishes delegation of certificate checks and shows that a DefaultTrustManager is supplied to an SSL socket-factory builder on one WebDAV branch. It does not establish the implementation of SSLSocketFactories.from, the applicable provider and trust material, default hostname-verification behavior, or actual connection behavior.",
+      "rule_section": "other"
+    },
+    {
+      "event": "The effective enabled TLS protocols are established for the configured WebDAV client.",
+      "status": "unknown",
+      "evidence": "Evidence IDs: SRC-004. No supplied evidence identifies enabled protocol settings or the implementation behavior of SSLSocketFactories.from.",
+      "rule_section": "other"
+    },
+    {
+      "event": "A negotiated TLS protocol is established for an actual WebDAV connection.",
+      "status": "unknown",
+      "evidence": "Evidence IDs: RUN-001, SUP-003. The runtime evidence shows execution of the trust-manager path and WebDavCompatibleHttpClient path in one exploration, but it does not record a TLS handshake or its negotiated protocol.",
+      "rule_section": "other"
+    }
+  ],
+  "collateral_violations": [],
+  "confirmed_facts": [
+    "The reviewed method imports javax.net.ssl.TrustManagerFactory and invokes getInstance, init, and the trust-manager collection accessor on its local factory value.",
+    "The reviewed source explicitly initializes the factory with null cast as a nullable KeyStore.",
+    "A null KeyStore is permitted by the documented TrustManagerFactory.init(KeyStore) API contract.",
+    "The runtime measurement recorded PKIX at the governed call in one reported application run.",
+    "DefaultTrustManager delegates certificate-chain checks to the X509TrustManager it obtained from the factory, while translating certificate exceptions.",
+    "WebDavCompatibleHttpClient selects DefaultTrustManager when the WebDAV cloud has no configured certificate and supplies that manager to its SSL socket-factory configuration."
+  ],
+  "unsupported_hypotheses": [],
+  "missing_evidence": [
+    "What value does ssl.TrustManagerFactory.algorithm have for each deployed runtime and configuration?",
+    "Which provider implements the selected TrustManagerFactory, and does its documented init(null) behavior apply on the target runtime?",
+    "How does the exact detector rule artifact define and evaluate generatedKeyStore for null and platform-default trust material?",
+    "What does SSLSocketFactories.from configure, including its SSLContext, socket factory, enabled protocols, and trust-manager handling?",
+    "Does the configured WebDAV client complete TLS handshakes in production, and which protocol is negotiated?",
+    "What hostname-verification behavior applies on the standard, no-configured-certificate WebDAV branch?"
+  ],
+  "confirmed_cause": "The source invokes `TrustManagerFactory.init(null as KeyStore?)` (TLS-CLAIM-002). The verified rule's Init event requires `generatedKeyStore[keyStore]` evidence for `init(KeyStore)`, which a null platform-default argument cannot provide. However, null is the documented API form for selecting the default trust material (TLS-CLAIM-003; WEB-001), and replacing it would alter what roots the client trusts rather than safely repairing the reported condition.",
+  "forward_compatibility_assessment": {
+    "status": "preserved",
+    "dimensions_checked": [],
+    "evidence": "Claim IDs: TLS-CLAIM-001, TLS-CLAIM-002, TLS-CLAIM-003",
+    "strategy": "Retain `trustManagerFactory.init(null as KeyStore?)`. The null argument is the documented selection of the platform-default trust material; replacing it with an explicitly constructed keystore would not preserve that platform-default behavior."
+  },
+  "migration_assessment": {
+    "usage_kind": "protocol",
+    "evidence": [
+      "The reviewed method imports javax.net.ssl.TrustManagerFactory and invokes getInstance, init, and the trust-manager collection accessor on its local factory value.",
+      "The reviewed source explicitly initializes the factory with null cast as a nullable KeyStore.",
+      "A null KeyStore is permitted by the documented TrustManagerFactory.init(KeyStore) API contract."
+    ],
+    "legacy_compatibility_required": false,
+    "safe_strategy": "Retain `trustManagerFactory.init(null as KeyStore?)`. The null argument is the documented selection of the platform-default trust material; replacing it with an explicitly constructed keystore would not preserve that platform-default behavior.",
+    "policy_authorized": false
+  },
+  "digest_contract_assessment": {
+    "security_relevance": "false",
+    "contract_kind": "unknown",
+    "expected_digest_source": "",
+    "backend_repository_available": false,
+    "backend_change_required": false,
+    "client_only_change_safe": false,
+    "rollout_strategy": "",
+    "pull_request_note": ""
+  },
+  "decision": "NO_SAFE_FIX",
+  "dependency_fix_assessment": {
+    "external_class_confirmed": false,
+    "declared_artifact": "",
+    "current_version": "",
+    "target_version": "",
+    "target_artifact": "",
+    "official_migration_source": "",
+    "upgrade_kind": "unknown",
+    "build_files": [],
+    "call_site_migration_required": false,
+    "compatibility_constraints_satisfied": false,
+    "replacement_preserves_required_capabilities": false,
+    "fork_or_vcs_dependency": false
+  },
+  "coordinated_fix_plan": {
+    "affected_symbols": [],
+    "required_edits": [],
+    "required_tests": [],
+    "compatibility_policy_required": false,
+    "scope_evidence": [
+      "Claim IDs: TLS-CLAIM-001, TLS-CLAIM-002, TLS-CLAIM-003"
+    ]
+  },
+  "scope_assessment": {
+    "status": "complete",
+    "local_code_scope": "complete",
+    "external_contract_scope": "not_applicable",
+    "multi_file_change_required": false,
+    "reviewed_files": [
+      {
+        "source_file_path": "data/src/main/java/org/cryptomator/data/cloud/webdav/network/DefaultTrustManager.kt",
+        "action": "semantic_resolved_caller",
+        "symbols": [
+          "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager#tryToFindDefaultTrustManager()"
+        ],
+        "evidence": "CALL-001 records a resolved_caller relation; it is accounted for but is not automatically an edit target."
+      }
+    ],
+    "unresolved_relations": []
+  },
+  "issue_candidate": {
+    "eligible": false,
+    "title": "DefaultTrustManager platform-default trust store handling",
+    "maintainer_question": "Did you intend `tryToFindDefaultTrustManager` to use the platform default trust store via `TrustManagerFactory.init(null as KeyStore?)`? If so, this issue can simply be closed as intentional.",
+    "finding_summary": "I found that `tryToFindDefaultTrustManager` calls `TrustManagerFactory.init(null as KeyStore?)`, which requests the platform default trust material. The reported check expects an explicitly generated keystore instead, but changing this call would change which roots the client trusts.",
+    "why_no_pr": "I didn't open a pull request because replacing the null keystore would alter the client’s trust roots rather than safely address the reported condition.",
+    "proposed_next_step": "Otherwise I’m happy to update the implementation once you identify the intended trust material."
+  },
+  "v2": {
+    "evidence_packet_sha256": "1be78857702b820d1b1a88626070293889d3288b40bbec666f67953b6b396f65",
+    "claims": [
+      {
+        "claim_id": "TLS-CLAIM-001",
+        "statement": "The reviewed method imports javax.net.ssl.TrustManagerFactory and invokes getInstance, init, and the trust-manager collection accessor on its local factory value.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001"
+        ]
+      },
+      {
+        "claim_id": "TLS-CLAIM-002",
+        "statement": "The reviewed source explicitly initializes the factory with null cast as a nullable KeyStore.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001"
+        ]
+      },
+      {
+        "claim_id": "TLS-CLAIM-003",
+        "statement": "A null KeyStore is permitted by the documented TrustManagerFactory.init(KeyStore) API contract.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "WEB-001"
+        ]
+      },
+      {
+        "claim_id": "TLS-CLAIM-004",
+        "statement": "The runtime measurement recorded PKIX at the governed call in one reported application run.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "RUN-001"
+        ]
+      },
+      {
+        "claim_id": "TLS-CLAIM-005",
+        "statement": "DefaultTrustManager delegates certificate-chain checks to the X509TrustManager it obtained from the factory, while translating certificate exceptions.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001"
+        ]
+      },
+      {
+        "claim_id": "TLS-CLAIM-006",
+        "statement": "WebDavCompatibleHttpClient selects DefaultTrustManager when the WebDAV cloud has no configured certificate and supplies that manager to its SSL socket-factory configuration.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-004"
+        ]
+      },
+      {
+        "claim_id": "TLS-CLAIM-007",
+        "statement": "The exact TrustManagerFactory default-algorithm value for all target runtime configurations is not established.",
+        "epistemic_status": "unknown",
+        "evidence_ids": [
+          "SRC-001",
+          "RUN-001",
+          "WEB-007"
+        ]
+      },
+      {
+        "claim_id": "TLS-CLAIM-008",
+        "statement": "The supplied evidence does not establish an actual TLS handshake, enabled protocol set, or negotiated protocol for this client.",
+        "epistemic_status": "unknown",
+        "evidence_ids": [
+          "SRC-004",
+          "SUP-003"
+        ]
+      }
+    ],
+    "adjudication": {
+      "generation_status": "blocked",
+      "forward_compatibility_strategy": "Retain `trustManagerFactory.init(null as KeyStore?)`. The null argument is the documented selection of the platform-default trust material; replacing it with an explicitly constructed keystore would not preserve that platform-default behavior.",
+      "review_assumptions": [
+        "The rendered finding concerns the null KeyStore initialization and the rule's `generatedKeyStore` requirement, not the separate runtime-configured default-algorithm constraint; the latter is not adjudicated as an additional violation at this site.",
+        "The verified published rule is treated as describing the relevant Init requirement, although the exact compiled detector-rule revision is not identified."
+      ],
+      "cause_status": "confirmed",
+      "decision": "NO_SAFE_FIX",
+      "correct_use_reason": "`TrustManagerFactory.init(KeyStore)` documents that a null KeyStore is permitted and selects the default trust material (WEB-001). The source deliberately passes `null as KeyStore?` to use that documented platform default (TLS-CLAIM-002, TLS-CLAIM-003). An explicit keystore is not an equivalent replacement for the platform-default trust-store selection.",
+      "blocking_for_generation": [],
+      "blocking_for_publication": [],
+      "current_code_is_correct_use": true,
+      "compatibility_status": "preserved",
+      "required_tests": [],
+      "scope_status": "complete",
+      "confirmed_cause": "The source invokes `TrustManagerFactory.init(null as KeyStore?)` (TLS-CLAIM-002). The verified rule's Init event requires `generatedKeyStore[keyStore]` evidence for `init(KeyStore)`, which a null platform-default argument cannot provide. However, null is the documented API form for selecting the default trust material (TLS-CLAIM-003; WEB-001), and replacing it would alter what roots the client trusts rather than safely repairing the reported condition.",
+      "cause_rule_section": "required_predicate",
+      "decision_claim_ids": [
+        "TLS-CLAIM-001",
+        "TLS-CLAIM-002",
+        "TLS-CLAIM-003"
+      ],
+      "detector_violation": "confirmed",
+      "publication_status": "eligible_after_validation",
+      "required_edit_categories": [],
+      "runtime_security_impact": "non_security",
+      "authorized_behavior_change": {
+        "authorized": false,
+        "description": "No behavior change is proposed: changing the null KeyStore argument would replace the documented platform-default trust-material selection.",
+        "policy_reference": ""
+      }
+    },
+    "patch_plan": {
+      "decision": "NO_SAFE_FIX",
+      "required_edits": [],
+      "required_tests": [],
+      "behavioral_invariants": [],
+      "allowed_apis": [],
+      "forbidden_changes": [],
+      "generation_blockers": [],
+      "publication_blockers": []
+    }
+  }
+}

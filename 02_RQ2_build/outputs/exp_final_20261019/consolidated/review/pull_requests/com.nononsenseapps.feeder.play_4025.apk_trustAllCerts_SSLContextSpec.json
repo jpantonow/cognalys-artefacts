@@ -1,0 +1,188 @@
+{
+  "repository": "outputs/finding_worktrees/com.nononsenseapps.feeder.play_4025.apk/3b969f2358c1/d7762e8b1b",
+  "remote_name": "origin",
+  "remote_url": "https://github.com/spacecowboy/Feeder",
+  "repo_host": "github.com",
+  "repo_owner": "spacecowboy",
+  "repo_name": "Feeder",
+  "branch": "fix/trustallcerts-sslcontextspec-3b969f2358c1-d7762e8b1b",
+  "base_branch": "master",
+  "base_commit": "2be0a8426f5c177ef5985181b7986b756a441cd5",
+  "finding_id": "3b969f2358c1",
+  "solution_revision": "d7762e8b1b",
+  "commit_hash": "e433c91341e60c178f70e72f96dfef51f4a0e5dd",
+  "source_file": "app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt",
+  "spec": "SSLContextSpec",
+  "method_name": "trustAllCerts",
+  "csv_class": "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+  "error_message": "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+  "tool": "ape",
+  "build_validation": {
+    "status": "success_app_module_only",
+    "task": ":app:compileFdroidDebugSources",
+    "return_code": 0,
+    "reason": "full_build_timeout_patched_module_recompiled",
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/3b969f2358c1/app_module_compile_only/logs/projects/d7762e8b1b.log",
+    "finding_id": "3b969f2358c1",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.nononsenseapps.feeder.play_4025.apk/3b969f2358c1/d7762e8b1b",
+    "failure_attribution": "",
+    "unselected_flavor": "",
+    "compiler_diagnostics": [],
+    "baseline_compiler_diagnostics": [],
+    "new_compiler_diagnostics": [],
+    "failing_tests": [],
+    "baseline_failing_tests": [],
+    "new_failing_tests": [],
+    "phases": {
+      "production": {
+        "project_name": "d7762e8b1b",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.nononsenseapps.feeder.play_4025.apk/3b969f2358c1/d7762e8b1b",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.nononsenseapps.feeder.play_4025.apk/3b969f2358c1/d7762e8b1b",
+        "task": ":app:assembleFdroidDebug",
+        "status": "timeout",
+        "return_code": null,
+        "duration_seconds": 1843.76,
+        "apk_count": 0,
+        "copied_apks": [],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/3b969f2358c1/production/logs/projects/d7762e8b1b.log",
+        "reason": "timeout_after_1800s"
+      },
+      "app_module_compile_only": {
+        "status": "success_app_module_only",
+        "reason": "full_build_timeout_patched_module_recompiled",
+        "task": ":app:compileFdroidDebugSources",
+        "return_code": 0,
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/3b969f2358c1/app_module_compile_only/logs/projects/d7762e8b1b.log",
+        "unrelated_module_failure_task": ""
+      }
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "detector_replay": {
+      "outcome": "unchanged",
+      "baseline": {
+        "seconds": 6.86,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "31",
+            "endline": "31",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "trustAllCerts",
+        "match_scope": "method",
+        "method_lines": [
+          12,
+          42
+        ],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "31",
+            "endline": "31",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the SSLContextSpec rule fires in trustAllCerts"
+      },
+      "patched": {
+        "seconds": 7.11,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "22",
+            "endline": "22",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "trustAllCerts",
+        "match_scope": "method",
+        "method_lines": [
+          13,
+          34
+        ],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "22",
+            "endline": "22",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the SSLContextSpec rule fires in trustAllCerts"
+      },
+      "detail": "the reported rule still fires after the patch",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/SSLContextSpec.yml",
+        "rules_sha256": "5f5e521a3ad18daf67b78d431e1bafe813ce0f85210471f6202adc1f7c1e520b"
+      }
+    },
+    "patch_correctness": {
+      "verdict": "incorrect",
+      "satisfied": [
+        "builds"
+      ],
+      "missing": [
+        "regression_suite_not_run"
+      ],
+      "contradicted": [
+        "detector_replay_unchanged"
+      ]
+    }
+  },
+  "manual_review_required": true,
+  "auto_apply": false,
+  "publication_allowed": false,
+  "publishable": false,
+  "preview_status": "REVIEW_ONLY_NOT_PUBLISHABLE",
+  "original_method_body": "fun OkHttpClient.Builder.trustAllCerts() {\n    try {\n        val trustManager =\n            object : X509TrustManager {\n                override fun checkClientTrusted(\n                    chain: Array<out X509Certificate>?,\n                    authType: String?,\n                ) {\n                }\n\n                override fun checkServerTrusted(\n                    chain: Array<out X509Certificate>?,\n                    authType: String?,\n                ) {\n                }\n\n                override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()\n            }\n\n        val sslContext = SSLContext.getInstance(\"TLS\")\n        sslContext.init(null, arrayOf<TrustManager>(trustManager), null)\n        val sslSocketFactory = sslContext.socketFactory\n\n        sslSocketFactory(sslSocketFactory, trustManager)\n            .hostnameVerifier(HostnameVerifier { _, _ -> true })\n    } catch (e: NoSuchAlgorithmException) {\n        // ignore\n    } catch (e: KeyManagementException) {\n        // ignore\n    }\n}\n",
+  "corrected_method_body": "fun OkHttpClient.Builder.trustAllCerts() {\n    try {\n        val trustManagerFactory =\n            TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())\n        trustManagerFactory.init(null as KeyStore?)\n        val trustManager =\n            trustManagerFactory.trustManagers.filterIsInstance<X509TrustManager>().firstOrNull()\n                ?: throw NoSuchAlgorithmException(\"No X509TrustManager available\")\n\n        val sslContext = SSLContext.getInstance(\"TLS\")\n        sslContext.init(null, arrayOf<TrustManager>(trustManager), null)\n        val sslSocketFactory = sslContext.socketFactory\n\n        sslSocketFactory(sslSocketFactory, trustManager)\n    } catch (e: NoSuchAlgorithmException) {\n        // ignore\n    } catch (e: KeyManagementException) {\n        // ignore\n    } catch (e: KeyStoreException) {\n        // ignore\n    }\n}\n",
+  "coordinated_edits": [
+    {
+      "source_file": "app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt",
+      "symbol": "imports",
+      "edit_kind": "declaration",
+      "original_code": "import okhttp3.OkHttpClient\nimport java.security.KeyManagementException\nimport java.security.NoSuchAlgorithmException\nimport java.security.cert.X509Certificate\nimport javax.net.ssl.HostnameVerifier\nimport javax.net.ssl.SSLContext\nimport javax.net.ssl.TrustManager\nimport javax.net.ssl.X509TrustManager\n",
+      "corrected_code": "import okhttp3.OkHttpClient\nimport java.security.KeyManagementException\nimport java.security.KeyStore\nimport java.security.KeyStoreException\nimport java.security.NoSuchAlgorithmException\nimport javax.net.ssl.SSLContext\nimport javax.net.ssl.TrustManager\nimport javax.net.ssl.TrustManagerFactory\nimport javax.net.ssl.X509TrustManager\n",
+      "reason": "Remove imports used solely by the permissive trust and hostname-verification bypasses, and add the platform trust-manager factory and KeyStore types required to initialize it safely."
+    },
+    {
+      "source_file": "app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt",
+      "symbol": "trustAllCerts",
+      "edit_kind": "method",
+      "original_code": "fun OkHttpClient.Builder.trustAllCerts() {\n    try {\n        val trustManager =\n            object : X509TrustManager {\n                override fun checkClientTrusted(\n                    chain: Array<out X509Certificate>?,\n                    authType: String?,\n                ) {\n                }\n\n                override fun checkServerTrusted(\n                    chain: Array<out X509Certificate>?,\n                    authType: String?,\n                ) {\n                }\n\n                override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()\n            }\n\n        val sslContext = SSLContext.getInstance(\"TLS\")\n        sslContext.init(null, arrayOf<TrustManager>(trustManager), null)\n        val sslSocketFactory = sslContext.socketFactory\n\n        sslSocketFactory(sslSocketFactory, trustManager)\n            .hostnameVerifier(HostnameVerifier { _, _ -> true })\n    } catch (e: NoSuchAlgorithmException) {\n        // ignore\n    } catch (e: KeyManagementException) {\n        // ignore\n    }\n}\n",
+      "corrected_code": "fun OkHttpClient.Builder.trustAllCerts() {\n    try {\n        val trustManagerFactory =\n            TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())\n        trustManagerFactory.init(null as KeyStore?)\n        val trustManager =\n            trustManagerFactory.trustManagers.filterIsInstance<X509TrustManager>().firstOrNull()\n                ?: throw NoSuchAlgorithmException(\"No X509TrustManager available\")\n\n        val sslContext = SSLContext.getInstance(\"TLS\")\n        sslContext.init(null, arrayOf<TrustManager>(trustManager), null)\n        val sslSocketFactory = sslContext.socketFactory\n\n        sslSocketFactory(sslSocketFactory, trustManager)\n    } catch (e: NoSuchAlgorithmException) {\n        // ignore\n    } catch (e: KeyManagementException) {\n        // ignore\n    } catch (e: KeyStoreException) {\n        // ignore\n    }\n}\n",
+      "reason": "Use the same platform-default X509TrustManager for SSLContext initialization and OkHttp configuration, rather than accepting every certificate. Do not install a permissive HostnameVerifier, allowing normal OkHttp hostname validation. The KeyStoreException catch preserves the method's existing fail-closed setup-failure behavior for the newly introduced factory initialization."
+    }
+  ],
+  "changed_files": [
+    "app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt"
+  ],
+  "diff": "diff --git a/app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt b/app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt\nindex 3c66965..0a1bfc6 100644\n--- a/app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt\n+++ b/app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt\n@@ -2,41 +2,33 @@ package com.nononsenseapps.jsonfeed\n \n import okhttp3.OkHttpClient\n import java.security.KeyManagementException\n+import java.security.KeyStore\n+import java.security.KeyStoreException\n import java.security.NoSuchAlgorithmException\n-import java.security.cert.X509Certificate\n-import javax.net.ssl.HostnameVerifier\n import javax.net.ssl.SSLContext\n import javax.net.ssl.TrustManager\n+import javax.net.ssl.TrustManagerFactory\n import javax.net.ssl.X509TrustManager\n \n fun OkHttpClient.Builder.trustAllCerts() {\n     try {\n+        val trustManagerFactory =\n+            TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())\n+        trustManagerFactory.init(null as KeyStore?)\n         val trustManager =\n-            object : X509TrustManager {\n-                override fun checkClientTrusted(\n-                    chain: Array<out X509Certificate>?,\n-                    authType: String?,\n-                ) {\n-                }\n-\n-                override fun checkServerTrusted(\n-                    chain: Array<out X509Certificate>?,\n-                    authType: String?,\n-                ) {\n-                }\n-\n-                override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()\n-            }\n+            trustManagerFactory.trustManagers.filterIsInstance<X509TrustManager>().firstOrNull()\n+                ?: throw NoSuchAlgorithmException(\"No X509TrustManager available\")\n \n         val sslContext = SSLContext.getInstance(\"TLS\")\n         sslContext.init(null, arrayOf<TrustManager>(trustManager), null)\n         val sslSocketFactory = sslContext.socketFactory\n \n         sslSocketFactory(sslSocketFactory, trustManager)\n-            .hostnameVerifier(HostnameVerifier { _, _ -> true })\n     } catch (e: NoSuchAlgorithmException) {\n         // ignore\n     } catch (e: KeyManagementException) {\n         // ignore\n+    } catch (e: KeyStoreException) {\n+        // ignore\n     }\n }\n",
+  "title": "Use platform trust managers for TLS setup",
+  "body": "## Summary\n\nI found that `trustAllCerts` created an app-defined trust manager with empty certificate checks, passed it to `SSLContext.init`, reused it for OkHttp, and installed a hostname verifier that always returned true. This violates the SSLContext analysis rule because the manager does not come from a `TrustManagerFactory`.\n\nI now initialize the platform-default `TrustManagerFactory`, select its `X509TrustManager`, and use that same manager for both SSL context and OkHttp setup. I removed the permissive hostname verifier, retained the `TLS` context selector, and handle `KeyStoreException` alongside the existing setup exceptions.\n\nI found this while running the app under RVSec, a runtime-verification tool that watches the app's calls to the Java cryptography and TLS APIs and checks each sequence of calls against usage rules written in CrySL. `SSLContextSpec` is the rule this code did not satisfy.\n\n## How was this tested?\n\n- No automated test was added in this change\n- [x] The patched module compiles successfully (`:app:compileFdroidDebugSources`); the full multi-module build was not completed in this environment\n\n---\n\n*I'm an undergraduate Computer Engineering student at the University of Bras\u00edlia (UnB); this contribution is part of a research project on the analysis of Android apps, and I'm happy to adjust it to match the project's conventions.*",
+  "text_problems": [],
+  "dry_run": false,
+  "existing_open_pull_request": ""
+}

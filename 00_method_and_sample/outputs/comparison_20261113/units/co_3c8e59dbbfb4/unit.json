@@ -1,0 +1,37 @@
+{
+ "unit": "co_3c8e59dbbfb4",
+ "source": "spec_cohort",
+ "group": "no_pr",
+ "finding_ids": [
+  "3c8e59dbbfb4"
+ ],
+ "apk": "de.stephanlindauer.criticalmaps_104.apk",
+ "repo_url": "https://github.com/CriticalMaps/criticalmaps-android",
+ "pinned_commit": "d78a78eb67172ae8ec9ffcde4c8124cb64db2acb",
+ "spec": [
+  "MessageDigestSpec"
+ ],
+ "class": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1",
+ "method": "SHA1",
+ "latest_outcome": [
+  "issue para o mantenedor do app"
+ ],
+ "bench_id": [],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "3c8e59dbbfb4",
+   "unique_error_id": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1:::SHA1:::MessageDigestSpec:::UnsafeAlgorithm:::expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "spec": "MessageDigestSpec",
+   "class": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1",
+   "method": "SHA1",
+   "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found SHA-1",
+   "apk": "de.stephanlindauer.criticalmaps_104.apk",
+   "repo_url": "https://github.com/CriticalMaps/criticalmaps-android",
+   "commit": "d78a78eb67172ae8ec9ffcde4c8124cb64db2acb",
+   "detector_source_location": "AeSimpleSHA1.java:14"
+  }
+ ]
+}

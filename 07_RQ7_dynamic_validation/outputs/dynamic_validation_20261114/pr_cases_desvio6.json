@@ -1,0 +1,836 @@
+{
+ "generated_at": "2026-11-19T01:41:53.421228+00:00",
+ "preregistration": "docs/preregistro_validacao_prs_20261115.md (desvio 6, 2026-11-18)",
+ "source": "outputs/dynamic_validation_20261114/pr_cases.json (unchanged)",
+ "build_order_rule": "after the cases of pr_cases_resolved.json and pr_cases_oldmsg.json; accepted, open, closed_by_maintainer",
+ "extra_repetitions_B": {
+  "reader_47": 3,
+  "intertune_96": 3,
+  "yourlocalweather_213": 3,
+  "owncloudnewsreader_196": 3,
+  "bitbanana_79": 4
+ },
+ "cases": [
+  {
+   "pr_url": "https://github.com/session-foundation/session-android/pull/2241",
+   "status": "accepted",
+   "case": "messenger_4545",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use TLS for the regular node HTTP client",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "session-foundation/session-android",
+    "base_ref": "dev",
+    "base_sha": "a8011acb1abebb783cd93b9e6976a77c9c5d36b3",
+    "head_repo": "jpantonow/session-android",
+    "head_ref": "fix/createregularnodeokhttpclient-sslcontextspec-63bfe4a50889-c9c3bb365d",
+    "head_sha": "51a9cc1b369c597fe3a4ae68240fd4aebbb5d71c",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/session-foundation__session-android__2241.diff",
+   "metadata": "outputs/rvsec_tls_20261015/session_20261015/run/pull_requests/network.loki.messenger.fdroid.debug_4545.apk_createRegularNodeOkHttpClient_SSLContextSpec_pr.json",
+   "run_dir": "outputs/rvsec_tls_20261015/session_20261015/run",
+   "apk": "network.loki.messenger.fdroid.debug_4545.apk",
+   "spec": "SSLContextSpec",
+   "class": "org.thoughtcrime.securesms.api.http.HttpClientsKt",
+   "method": "createRegularNodeOkHttpClient",
+   "finding_id_sources": {
+    "outcome_record": "63bfe4a50889",
+    "pr_metadata": "63bfe4a50889",
+    "inventory_findings": null
+   },
+   "finding_id": "63bfe4a50889",
+   "spec_active": true,
+   "repo_url": "https://github.com/session-foundation/session-android",
+   "sources_csv": [
+    "outputs/rvsec_tls_20261015/sources.csv"
+   ],
+   "analysed_commit": "dd6c41a0c6df8ac39cb568653df2c6ae5aec0d17",
+   "app_packages": [
+    "network.loki.messenger",
+    "org.thoughtcrime.securesms",
+    "org.session.libsession"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "dev",
+   "pipeline_base_commit": "a8011acb1abebb783cd93b9e6976a77c9c5d36b3",
+   "pipeline_patch_commit": "51a9cc1b369c597fe3a4ae68240fd4aebbb5d71c",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+   "detector_code": "SSLCONTEXT-PROTO-00",
+   "message": "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+   "detector_source": [
+    "outputs/rvsec_tls_20261015/session_20261015/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "SSLCONTEXT-PROTO-00",
+     "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:compileFdroidDebugSources",
+    "pipeline_validation_status": "success_app_module_only",
+    "pipeline_production_task": ":app:assembleFdroidDebug",
+    "pipeline_production_status": "timeout",
+    "pipeline_apks": [],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": ":app:assembleWebsiteDebug",
+    "apk_glob": null,
+    "basis": null
+   },
+   "base_sites": [
+    [
+     "org.thoughtcrime.securesms.api.http.HttpClientsKt",
+     "createRegularNodeOkHttpClient"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "org.thoughtcrime.securesms.api.http.HttpClientsKt",
+     "createRegularNodeOkHttpClient"
+    ]
+   ],
+   "site_check": "declaration of 'createRegularNodeOkHttpClient' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": null,
+   "non_gradle": null,
+   "build_commit": "a8011acb1abebb783cd93b9e6976a77c9c5d36b3",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/session-foundation__session-android__2241.diff",
+   "problems": [
+    "no APK-producing build task: pipeline production build timeout (:app:assembleFdroidDebug), and no queue build.log line for this APK",
+    "build system not established (no Gradle build record)"
+   ],
+   "notes": [],
+   "complete": false,
+   "status_in_pr_cases": "open",
+   "filled": {
+    "status": {
+     "value": "accepted",
+     "how": "GitHub API 2026-11-18: merged true, merged_at 2026-11-17T23:39:24Z"
+    },
+    "build_task": {
+     "value": ":app:assembleWebsiteDebug",
+     "how": "outputs/rvsec_tls_20261015/run.log: 'network.loki.messenger.fdroid.debug_4545.apk  https://github.com/session-foundation/session-android @ dd6c41a0c6df  task :app:assembleWebsiteDebug' and '[1/1] network.loki.messenger.fdroid: success, apk_count=1' (the queue build that produced the analysed APK)"
+    },
+    "apk_glob": {
+     "value": null,
+     "how": "no APK name recorded; pick rule 3 (clarification 3): the only APK of the build"
+    }
+   },
+   "build_order": 36,
+   "deviation": "2026-11-18 desvio 6",
+   "inclusion": "2026-11-18 desvio 6: excluded before; the missing value fixed from a recorded source",
+   "problems_in_pr_cases": [
+    "no APK-producing build task: pipeline production build timeout (:app:assembleFdroidDebug), and no queue build.log line for this APK",
+    "build system not established (no Gradle build record)"
+   ],
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/Waboodoo/HTTP-Shortcuts/pull/576",
+   "status": "accepted",
+   "case": "httpshortcuts_1104060001",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Harden TLS protocol selection",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-08-11T17:48:09Z",
+    "base_repo": "Waboodoo/HTTP-Shortcuts",
+    "base_ref": "develop",
+    "base_sha": "bf6364778226099b34564506e83c2a829e6dc72e",
+    "head_repo": "jpantonow/HTTP-Shortcuts",
+    "head_ref": "fix/configuretls-sslcontextspec-20260809143627-5f4e475a",
+    "head_sha": "583297c406e8b059bfd9147508b6f6fb412feb27",
+    "commits": 2,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/Waboodoo__HTTP-Shortcuts__576.diff",
+   "metadata": null,
+   "run_dir": null,
+   "apk": "ch.rmy.android.http_shortcuts_1104060001.apk",
+   "spec": "SSLContextSpec",
+   "class": "ch.rmy.android.http_shortcuts.http.HttpClientFactory",
+   "method": "configureTLS",
+   "finding_id_sources": {
+    "outcome_record": null,
+    "pr_metadata": null,
+    "inventory_findings": null
+   },
+   "finding_id": null,
+   "spec_active": true,
+   "repo_url": "https://github.com/Waboodoo/HTTP-Shortcuts",
+   "sources_csv": null,
+   "analysed_commit": null,
+   "app_packages": [
+    "ch.rmy.android.http_shortcuts.debug"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": null,
+   "pipeline_base_commit": null,
+   "pipeline_patch_commit": null,
+   "head_sha_is_pipeline_commit": null,
+   "pr_diff_matches_pipeline_diff": null,
+   "pr_message": "expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+   "detector_code": "__deviation6_spec_level__",
+   "message": "\u0000deviation 6: spec-level criterion, no message is compared\u0000",
+   "detector_source": null,
+   "detector_candidates": null,
+   "build": {
+    "build_task": "assembleDebug",
+    "apk_glob": "app-universal-debug.apk"
+   },
+   "base_sites": [
+    [
+     "ch.rmy.android.http_shortcuts.http.HttpClientFactory",
+     "configureTLS"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "ch.rmy.android.http_shortcuts.http.HttpClientFactory",
+     "configureTLS"
+    ]
+   ],
+   "site_check": "declaration of '' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": null,
+   "non_gradle": null,
+   "build_commit": "bf6364778226099b34564506e83c2a829e6dc72e",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/Waboodoo__HTTP-Shortcuts__576.diff",
+   "pr_merge_base": "bf6364778226099b34564506e83c2a829e6dc72e",
+   "problems": [
+    "the inventory has no identity record for this PR (identity_status missing)",
+    "APK unknown (no identity record); case name, packages and finding cannot be derived",
+    "spec not recorded",
+    "class not recorded",
+    "method not recorded",
+    "finding_id not recorded",
+    "no pipeline build record: build task and apk glob unknown",
+    "build system not established (no Gradle build record)"
+   ],
+   "notes": [
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": false,
+   "filled": {
+    "finding identity": {
+     "value": [
+      "ch.rmy.android.http_shortcuts.http.HttpClientFactory",
+      "configureTLS",
+      "SSLContextSpec",
+      "expecting one of {TLSv1.2, TLSv1.3} but found TLS."
+     ],
+     "how": "data/processed/errors_amostragem.csv row: ch.rmy.android.http_shortcuts_1104060001.apk,1,180,ape,12,SSLContextSpec,ch.rmy.android.http_shortcuts.http.HttpClientFactory,configureTLS,expecting one of {TLSv1.2, TLSv1.3} but found TLS.; PR head branch 'fix/configuretls-sslcontextspec-20260809143627-5f4e475a' (configureTLS, SSLContextSpec)"
+    },
+    "build_task/apk_glob": {
+     "value": [
+      "assembleDebug",
+      "app-universal-debug.apk"
+     ],
+     "how": "data/raw/exp_novo/dataset.csv row ch.rmy.android.http_shortcuts_1104060001.apk: head_build_task / head_build_variant"
+    },
+    "sites": {
+     "value": [
+      [
+       "ch.rmy.android.http_shortcuts.http.HttpClientFactory",
+       "configureTLS"
+      ]
+     ],
+     "how": "the finding's site in both APKs; the PR diff changes TLSEnabledSSLSocketFactory.withTLS (the socket factory configureTLS installs), not the site's file"
+    },
+    "detector_code/message": {
+     "value": "sentinels matching no report",
+     "how": "old-format message with no current detector row: spec-level criterion as in deviation 5"
+    },
+    "app_packages": {
+     "value": [
+      "ch.rmy.android.http_shortcuts.debug"
+     ],
+     "how": "manifest package of the built base APK (build/httpshortcuts_1104060001/base.badging)"
+    }
+   },
+   "spec_level": true,
+   "build_order": 37,
+   "deviation": "2026-11-18 desvio 6",
+   "inclusion": "2026-11-18 desvio 6: excluded before; the missing value fixed from a recorded source",
+   "problems_in_pr_cases": [
+    "the inventory has no identity record for this PR (identity_status missing)",
+    "APK unknown (no identity record); case name, packages and finding cannot be derived",
+    "spec not recorded",
+    "class not recorded",
+    "method not recorded",
+    "finding_id not recorded",
+    "no pipeline build record: build task and apk glob unknown",
+    "build system not established (no Gradle build record)"
+   ],
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/lneugebauer/nextcloud-cookbook/pull/204",
+   "status": "accepted",
+   "case": "nextcloudcookbook_62",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Fix configureTrustAllCertificates",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-08-09T16:52:01Z",
+    "base_repo": "lneugebauer/nextcloud-cookbook",
+    "base_ref": "main",
+    "base_sha": "6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+    "head_repo": "jpantonow/nextcloud-cookbook",
+    "head_ref": "fix/configuretrustallcertificates-sslcontextspec-20260808220330-93360dba",
+    "head_sha": "537a7c8d2fe447200f0c0b634ca3be24ca955a3a",
+    "commits": 3,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/lneugebauer__nextcloud-cookbook__204.diff",
+   "metadata": null,
+   "run_dir": null,
+   "apk": "de.lukasneugebauer.nextcloudcookbook_62.apk",
+   "spec": "SSLContextSpec",
+   "class": "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider",
+   "method": "configureTrustAllCertificates",
+   "finding_id_sources": {
+    "outcome_record": null,
+    "pr_metadata": null,
+    "inventory_findings": [
+     "4c1c74bcbc8f"
+    ]
+   },
+   "finding_id": "4c1c74bcbc8f",
+   "spec_active": true,
+   "repo_url": "https://github.com/lneugebauer/nextcloud-cookbook",
+   "sources_csv": null,
+   "analysed_commit": "cf063f9be44143013ff44ee3ce4fdd768aca113e",
+   "app_packages": [
+    "de.lukasneugebauer.nextcloudcookbook.debug"
+   ],
+   "packages_source": null,
+   "pipeline_base_branch": null,
+   "pipeline_base_commit": null,
+   "pipeline_patch_commit": null,
+   "head_sha_is_pipeline_commit": null,
+   "pr_diff_matches_pipeline_diff": null,
+   "pr_message": null,
+   "detector_code": "SSLCONTEXT-PROTO-00",
+   "message": "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL",
+   "detector_source": [
+    "data/processed/exp_final/findings_exp_final.csv",
+    "data/processed/exp_final/findings_nativos.csv",
+    "data/processed/rv_import_findings.csv"
+   ],
+   "detector_candidates": [
+    [
+     "SSLCONTEXT-PROTO-00",
+     "expecting one of TLSV1.2,TLSV1.3,TLS but found SSL"
+    ]
+   ],
+   "build": {
+    "build_task": "assembleDebug",
+    "apk_glob": "app-googlePlay-debug.apk"
+   },
+   "base_sites": [
+    [
+     "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider",
+     "configureTrustAllCertificates"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "de.lukasneugebauer.nextcloudcookbook.core.util.OkHttpClientProvider",
+     "configureTrustAllCertificates"
+    ]
+   ],
+   "site_check": "declaration of 'configureTrustAllCertificates' in 0 removed / 0 added diff lines",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": null,
+   "non_gradle": null,
+   "build_commit": "6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+   "build_commit_basis": "merge base of the PR head with its base branch (the PR's .diff is relative to it); the PR diff differs from the pipeline's or no pipeline diff is recorded",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/lneugebauer__nextcloud-cookbook__204.diff",
+   "pr_merge_base": "6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+   "problems": [
+    "no pipeline PR metadata (*_pr.json) among the identity's records: ['data/processed/exp_final/findings_exp_final.csv']",
+    "no pipeline build record: build task and apk glob unknown",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: de.lukasneugebauer.nextcloudcookbook",
+    "build system not established (no Gradle build record)"
+   ],
+   "notes": [
+    "finding_id taken from the inventory's findings list (no PR metadata)",
+    "no PR message recorded; the only detector row at this site and spec was taken",
+    "PR diff differs from the pipeline diff (or none recorded): base = merge base, patched = merge base + PR diff (equivalently the PR head)"
+   ],
+   "complete": false,
+   "filled": {
+    "build_task/apk_glob": {
+     "value": [
+      "assembleDebug",
+      "app-googlePlay-debug.apk"
+     ],
+     "how": "data/raw/exp_novo/dataset.csv row de.lukasneugebauer.nextcloudcookbook_62.apk: head_build_task 'assembleDebug', head_build_variant 'app-googlePlay-debug.apk' (head_pinned_commit 'cf063f9be44143013ff44ee3ce4fdd768aca113e'); the source deviation 5 used"
+    },
+    "finding identity": {
+     "value": [
+      "4c1c74bcbc8f",
+      "SSLCONTEXT-PROTO-00"
+     ],
+     "how": "pr_cases.json: the inventory's finding 4c1c74bcbc8f and the only detector row at the site and spec"
+    },
+    "app_packages": {
+     "value": [
+      "de.lukasneugebauer.nextcloudcookbook.debug"
+     ],
+     "how": "manifest package of the built base APK (build/nextcloudcookbook_62/base.badging)"
+    }
+   },
+   "build_order": 38,
+   "deviation": "2026-11-18 desvio 6",
+   "inclusion": "2026-11-18 desvio 6: excluded before; the missing value fixed from a recorded source",
+   "problems_in_pr_cases": [
+    "no pipeline PR metadata (*_pr.json) among the identity's records: ['data/processed/exp_final/findings_exp_final.csv']",
+    "no pipeline build record: build task and apk glob unknown",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: de.lukasneugebauer.nextcloudcookbook",
+    "build system not established (no Gradle build record)"
+   ],
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/Crazy-Marvin/MetadataRemover/pull/264",
+   "status": "open",
+   "case": "metadataremover_20020",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Let SecureRandom seed itself instead of a fixed seed",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "Crazy-Marvin/MetadataRemover",
+    "base_ref": "development",
+    "base_sha": "1a48772b3713711add80eedcf8207cddcaeb6fd3",
+    "head_repo": "jpantonow/MetadataRemover",
+    "head_ref": "fix/clinit-securerandomspec-40d39da41dec-be04b4d231-2",
+    "head_sha": "29752a8c97bb941f51cd3b2cb2235e2a249b8657",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/Crazy-Marvin__MetadataRemover__264.diff",
+   "metadata": "outputs/run_20261010_200449/pull_requests/rocks.poopjournal.metadataremover_20020.apk_clinit_SecureRandomSpec_pr.json",
+   "run_dir": "outputs/run_20261010_200449",
+   "apk": "rocks.poopjournal.metadataremover_20020.apk",
+   "spec": "SecureRandomSpec",
+   "class": "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+   "method": "<clinit>",
+   "finding_id_sources": {
+    "outcome_record": "40d39da41dec",
+    "pr_metadata": "40d39da41dec",
+    "inventory_findings": [
+     "40d39da41dec"
+    ]
+   },
+   "finding_id": "40d39da41dec",
+   "spec_active": true,
+   "repo_url": "https://github.com/Crazy-Marvin/MetadataRemover",
+   "sources_csv": null,
+   "analysed_commit": "b09bc5a97c922c25c9c56d3c97a4d343712ce808",
+   "app_packages": null,
+   "packages_source": null,
+   "pipeline_base_branch": "development",
+   "pipeline_base_commit": "1a48772b3713711add80eedcf8207cddcaeb6fd3",
+   "pipeline_patch_commit": "29752a8c97bb941f51cd3b2cb2235e2a249b8657",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the constructor expects a byte array observed to come from a randomized source",
+   "detector_code": "SECURERANDOM-NOBS-01",
+   "message": "the constructor expects a byte array observed to come from a randomized source",
+   "detector_source": [
+    "data/processed/rv_import_findings.csv"
+   ],
+   "detector_candidates": [
+    [
+     "SECURERANDOM-NOBS-01",
+     "the constructor expects a byte array observed to come from a randomized source"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": "assembleDebug",
+    "pipeline_validation_status": "failed",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "failed",
+    "pipeline_apks": [],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": "assembleDebug",
+    "apk_glob": "app-armeabi-v7a-debug.apk",
+    "basis": null
+   },
+   "base_sites": [
+    [
+     "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+     "<clinit>"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "rocks.poopjournal.metadataremover.viewmodel.MainViewModel",
+     "<clinit>"
+    ]
+   ],
+   "site_check": "synthetic or special method name '<clinit>': not checked against the diff",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": null,
+   "non_gradle": null,
+   "build_commit": "1a48772b3713711add80eedcf8207cddcaeb6fd3",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/Crazy-Marvin__MetadataRemover__264.diff",
+   "problems": [
+    "no APK-producing build task: pipeline production build failed (assembleDebug), and no queue build.log line for this APK",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: rocks.poopjournal.metadataremover",
+    "build system not established (no Gradle build record)"
+   ],
+   "notes": [],
+   "complete": false,
+   "filled": {
+    "build_task/apk_glob": {
+     "value": [
+      "assembleDebug",
+      "app-armeabi-v7a-debug.apk"
+     ],
+     "how": "data/raw/exp_novo/dataset.csv row rocks.poopjournal.metadataremover_20020.apk: head_build_task 'assembleDebug', head_build_variant 'app-armeabi-v7a-debug.apk' (head_pinned_commit 'b09bc5a97c922c25c9c56d3c97a4d343712ce808'); the source deviation 5 used"
+    },
+    "app_packages": {
+     "value": null,
+     "how": "pending: from `aapt2 dump badging` of the base APK once tools/build_prs.sh builds it"
+    }
+   },
+   "build_order": 39,
+   "deviation": "2026-11-18 desvio 6",
+   "inclusion": "2026-11-18 desvio 6: excluded before; the missing value fixed from a recorded source",
+   "problems_in_pr_cases": [
+    "no APK-producing build task: pipeline production build failed (assembleDebug), and no queue build.log line for this APK",
+    "app packages not recorded (no sources.csv row for this APK); the APK name's package is only a hint: rocks.poopjournal.metadataremover",
+    "build system not established (no Gradle build record)"
+   ],
+   "unresolved": [
+    "app_packages"
+   ]
+  },
+  {
+   "pr_url": "https://github.com/aivanovski/keepassvault/pull/347",
+   "status": "open",
+   "case": "passnotes_11700_pr347",
+   "already_validated": false,
+   "validated_case": "passnotes_11700",
+   "pr_api": {
+    "title": "Fix createHttpClient",
+    "state": "open",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "aivanovski/keepassvault",
+    "base_ref": "master",
+    "base_sha": "77b70f8a30586252b278cf0c0d0ff142e8096008",
+    "head_repo": "jpantonow/keepassvault",
+    "head_ref": "fix/createhttpclient-sslcontextspec-ecccf29c6686-97bf6da120",
+    "head_sha": "928ced2e88e11176977e65aef1ee501266f33e5b",
+    "commits": 1,
+    "changed_files": 2,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/aivanovski__keepassvault__347.diff",
+   "metadata": "outputs/run_20260915_124127/pull_requests/com.ivanovsky.passnotes_11700.apk_createHttpClient_pr.json",
+   "run_dir": "outputs/run_20260915_124127",
+   "apk": "com.ivanovsky.passnotes_11700.apk",
+   "spec": "SSLContextSpec",
+   "class": "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+   "method": "createHttpClient",
+   "finding_id_sources": {
+    "outcome_record": "ecccf29c6686",
+    "pr_metadata": "ecccf29c6686",
+    "inventory_findings": [
+     "6d29118e4263"
+    ]
+   },
+   "finding_id": "ecccf29c6686",
+   "spec_active": true,
+   "repo_url": "https://github.com/aivanovski/keepassvault",
+   "sources_csv": null,
+   "analysed_commit": "5fbadf408925223118006cba6337d37765bf1669",
+   "app_packages": [
+    "com.ivanovsky.passnotes"
+   ],
+   "packages_source": "classify.py CASES (validated case)",
+   "pipeline_base_branch": "master",
+   "pipeline_base_commit": "77b70f8a30586252b278cf0c0d0ff142e8096008",
+   "pipeline_patch_commit": "928ced2e88e11176977e65aef1ee501266f33e5b",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "expecting one of {TLSv1.2, TLSv1.3} but found TLS.",
+   "detector_code": "__deviation6_spec_level__",
+   "message": "\u0000deviation 6: spec-level criterion, no message is compared\u0000",
+   "detector_source": null,
+   "detector_candidates": [
+    [
+     "SSLCONTEXT-NOBS-05",
+     "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:compileAutomationDebugKotlin",
+    "pipeline_validation_status": "success_app_module_only",
+    "pipeline_production_task": "assembleDebug",
+    "pipeline_production_status": "failed",
+    "pipeline_apks": [],
+    "rvsec_build_task": null,
+    "rvsec_build_commit_prefix": null,
+    "rvsec_build_log": null,
+    "build_task": ":app:assembleAutomationDebug",
+    "apk_glob": "app-automation-debug.apk",
+    "basis": "validated case's build_all.sh"
+   },
+   "base_sites": [
+    [
+     "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+     "createHttpClient"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+     "createHttpClient"
+    ]
+   ],
+   "site_check": "declaration of 'createHttpClient' in 0 removed / 0 added diff lines; sites from classify.py CASES (validated patch = this PR's diff)",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "77b70f8a30586252b278cf0c0d0ff142e8096008",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/aivanovski__keepassvault__347.diff",
+   "validated_config": {
+    "build": {
+     "case": "passnotes_11700",
+     "repo_url": "https://github.com/aivanovski/keepassvault",
+     "commit": "77b70f8a30586252b278cf0c0d0ff142e8096008",
+     "task": ":app:assembleAutomationDebug",
+     "apk_glob": "app-automation-debug.apk"
+    },
+    "packages": [
+     "com.ivanovsky.passnotes"
+    ],
+    "spec": "SSLContextSpec",
+    "code": "SSLCONTEXT-NOBS-05",
+    "message": "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+    "base_sites": [
+     [
+      "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+      "createHttpClient"
+     ]
+    ],
+    "patched_sites": [
+     [
+      "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+      "createHttpClient"
+     ]
+    ]
+   },
+   "problems": [
+    "no detector row at this site carries the PR's message 'expecting one of {TLSv1.2, TLSv1.3} but found TLS.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('SSLCONTEXT-NOBS-05', 'the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory')]"
+   ],
+   "notes": [
+    "the inventory's run34 finding for this PR has another id ['6d29118e4263'] (the PR came from an earlier run)",
+    "pipeline remote https://github.com/aivanovski/kpassnotes differs from the PR's repository (renamed or moved)",
+    "build task/apk glob from the validated case's build_all.sh (:app:assembleAutomationDebug, app-automation-debug.apk) instead: no APK-producing build task: pipeline production build failed (assembleDebug), and no queue build.log line for this APK"
+   ],
+   "complete": false,
+   "case_in_pr_cases": "passnotes_11700",
+   "filled": {
+    "finding identity": {
+     "value": [
+      "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+      "createHttpClient",
+      "SSLContextSpec",
+      "expecting one of {TLSv1.2, TLSv1.3} but found TLS."
+     ],
+     "how": "pr_cases.json pr_message (the PR's finding, old-format TLS-protocol message); the 14/11 validation used another finding (SSLCONTEXT-NOBS-05) and another patch (patches/passnotes_11700.diff)"
+    },
+    "detector_code/message": {
+     "value": "sentinels matching no report",
+     "how": "old-format message with no current detector row: spec-level criterion as in deviation 5"
+    }
+   },
+   "spec_level": true,
+   "build_order": 40,
+   "deviation": "2026-11-18 desvio 6",
+   "inclusion": "2026-11-18 desvio 6: excluded before; the missing value fixed from a recorded source",
+   "problems_in_pr_cases": [
+    "no detector row at this site carries the PR's message 'expecting one of {TLSv1.2, TLSv1.3} but found TLS.' with a detector code (global findings CSVs (the run names no findings file)); rows at the site: [('SSLCONTEXT-NOBS-05', 'the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory')]"
+   ],
+   "unresolved": []
+  },
+  {
+   "pr_url": "https://github.com/idunnololz/summit/pull/54",
+   "status": "closed_by_maintainer",
+   "case": "summit_355",
+   "already_validated": false,
+   "validated_case": null,
+   "pr_api": {
+    "title": "Use SHA-256 for disk cache keys",
+    "state": "closed",
+    "merged": false,
+    "merged_at": null,
+    "base_repo": "idunnololz/summit",
+    "base_ref": "main",
+    "base_sha": "701fe7b5510ad5c1a2457af81ae944681069ef67",
+    "head_repo": "jpantonow/summit",
+    "head_ref": "fix/md5-messagedigestspec-554ed6e23b16-5977938e95",
+    "head_sha": "33acb75a5501beab89838becf21052d00551f30f",
+    "commits": 1,
+    "changed_files": 1,
+    "repo_language": "Kotlin"
+   },
+   "pr_diff_file": "outputs/dynamic_validation_20261114/pr_api_cache/idunnololz__summit__54.diff",
+   "metadata": "outputs/rvsec_misuse5_20261017/run/pull_requests/com.idunnololz.summit.fdroid.debug_355.apk_md5_MessageDigestSpec_pr.json",
+   "run_dir": "outputs/rvsec_misuse5_20261017/run",
+   "apk": "com.idunnololz.summit.fdroid.debug_355.apk",
+   "spec": "MessageDigestSpec",
+   "class": "com.idunnololz.summit.cache.SimpleDiskCache",
+   "method": "md5",
+   "finding_id_sources": {
+    "outcome_record": "554ed6e23b16",
+    "pr_metadata": "554ed6e23b16",
+    "inventory_findings": null
+   },
+   "finding_id": "554ed6e23b16",
+   "spec_active": true,
+   "repo_url": "https://github.com/idunnololz/summit",
+   "sources_csv": [
+    "outputs/rvsec_misuse5_20261017/sources.csv"
+   ],
+   "analysed_commit": "b00f4f809cd28fd469f7f7bfe48c2e2466f55ed1",
+   "app_packages": [
+    "com.idunnololz.summit",
+    "it.vercruysse.lemmyapi"
+   ],
+   "packages_source": "sources.csv manifest_package",
+   "pipeline_base_branch": "main",
+   "pipeline_base_commit": "701fe7b5510ad5c1a2457af81ae944681069ef67",
+   "pipeline_patch_commit": "33acb75a5501beab89838becf21052d00551f30f",
+   "head_sha_is_pipeline_commit": true,
+   "pr_diff_matches_pipeline_diff": true,
+   "pr_message": "the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused",
+   "detector_code": "MESSAGEDIGEST-ORDER-02",
+   "message": "the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused",
+   "detector_source": [
+    "outputs/rvsec_misuse5_20261017/findings.jsonl"
+   ],
+   "detector_candidates": [
+    [
+     "MESSAGEDIGEST-ORDER-02",
+     "the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused"
+    ]
+   ],
+   "build": {
+    "pipeline_validation_task": ":app:compileDefaultDebugSources",
+    "pipeline_validation_status": "success_app_module_only",
+    "pipeline_production_task": ":app:assembleDefaultDebug",
+    "pipeline_production_status": "timeout",
+    "pipeline_apks": [],
+    "rvsec_build_task": ":app:assembleFdroidDebug",
+    "rvsec_build_commit_prefix": "b00f4f809cd2",
+    "rvsec_build_log": "outputs/rvsec_misuse5_20261017/build.log",
+    "build_task": ":app:assembleFdroidDebug",
+    "apk_glob": null,
+    "basis": "the queue's build of the analysed APK (build.log); the pipeline's production build was timeout (:app:assembleDefaultDebug)"
+   },
+   "base_sites": [
+    [
+     "com.idunnololz.summit.cache.SimpleDiskCache",
+     "md5"
+    ]
+   ],
+   "patched_sites": [
+    [
+     "com.idunnololz.summit.cache.SimpleDiskCache",
+     "sha256"
+    ]
+   ],
+   "site_check": "the diff removes 1 declaration line(s) of 'md5' and adds none (method renamed or removed); declarations added in that file: ['toInternalKey', 'sha256']",
+   "language": "Kotlin",
+   "build_markers": [],
+   "build_system": "gradle-android",
+   "non_gradle": false,
+   "build_commit": "701fe7b5510ad5c1a2457af81ae944681069ef67",
+   "build_commit_basis": "pipeline base commit; the PR's diff equals the pipeline's",
+   "patch_to_apply": "outputs/dynamic_validation_20261114/pr_api_cache/idunnololz__summit__54.diff",
+   "problems": [
+    "APK name of task :app:assembleFdroidDebug not recorded (no copied APKs for it); apk_glob unknown",
+    "patched_sites need reading the diff: the diff removes 1 declaration line(s) of 'md5' and adds none (method renamed or removed); declarations added in that file: ['toInternalKey', 'sha256']"
+   ],
+   "notes": [
+    "the queue's build of the analysed APK (build.log); the pipeline's production build was timeout (:app:assembleDefaultDebug)"
+   ],
+   "complete": false,
+   "filled": {
+    "apk_glob": {
+     "value": null,
+     "how": "outputs/rvsec_misuse5_20261017/build.log: '[1/1] com.idunnololz.summit.fdroid: success, apk_count=1' for :app:assembleFdroidDebug; pick rule 3: the only APK"
+    },
+    "patched_sites": {
+     "value": [
+      [
+       "com.idunnololz.summit.cache.SimpleDiskCache",
+       "sha256"
+      ]
+     ],
+     "how": "PR diff idunnololz__summit__54.diff, SimpleDiskCache.kt: `private fun md5(s: String)` is renamed `sha256`; the governed call `MessageDigest.getInstance(\"SHA-256\")` (was \"MD5\") and its update/digest stay in it (pre-registered rule for a renamed method)"
+    }
+   },
+   "build_order": 41,
+   "deviation": "2026-11-18 desvio 6",
+   "inclusion": "2026-11-18 desvio 6: excluded before; the missing value fixed from a recorded source",
+   "problems_in_pr_cases": [
+    "APK name of task :app:assembleFdroidDebug not recorded (no copied APKs for it); apk_glob unknown",
+    "patched_sites need reading the diff: the diff removes 1 declaration line(s) of 'md5' and adds none (method renamed or removed); declarations added in that file: ['toInternalKey', 'sha256']"
+   ],
+   "unresolved": []
+  },
+  {
+   "case": "bitbanana_79",
+   "pr_url": "https://github.com/michaelWuensch/BitBanana/pull/184",
+   "status": "open",
+   "reuse_apks": true,
+   "deviation": "2026-11-18 desvio 6",
+   "build_order": 42,
+   "repo_url": "https://github.com/michaelWuensch/BitBanana",
+   "build_commit": "e813eb374cb6bc23d2436b38ecada9c47d7cda38",
+   "app_packages": [
+    "app.michaelwuensch.bitbanana"
+   ],
+   "inclusion": "2026-11-18 desvio 6 B: one more repetition (rep 4) on apks/bitbanana_79 (14/11); config classify.CASES['bitbanana_79'] unchanged; queue.sh's repository/commit/packages"
+  }
+ ]
+}

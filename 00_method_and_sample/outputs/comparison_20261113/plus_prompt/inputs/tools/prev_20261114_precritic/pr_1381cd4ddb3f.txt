@@ -1,0 +1,21 @@
+Earlier proposals for this rule in other repositories, and what their maintainers answered:
+
+1. Repository: christianrowlands/android-network-survey
+   Outcome: closed
+   Proposal: Use KeyStore.getKey when reading the encryption key
+   Maintainer said: Thanks for the PR. For an AndroidKeyStore AES key, getEntry and getKey return the same key, so this doesn't change how the app behaves. It only satisfies the CrySL rule. There's also a second copy of this code in NsAnalyticsCryptoManager that would be left different. I'm going to close this one rather than make a change that only satisfies the rule, but I appreciate you running the app through RVSec.
+
+2. Repository: leekleak/traffic-light
+   Outcome: merged
+   Proposal: Use KeyStore.getKey to read secret keys
+   Maintainer said: Thanks
+
+3. Repository: tokn-authenticator/tokn
+   Outcome: merged
+   Proposal: Read Android keystore keys with getKey
+   Maintainer said: thanks
+
+4. Repository: nextcloud/news-android
+   Outcome: merged
+   Proposal: Fix loadAppKeyStore
+   Maintainer said: (no comment)

@@ -1,0 +1,32 @@
+{
+ "card_id": "Kf6df60fe",
+ "card_sha256": "d7405f4165fc8bca",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 4195,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 384
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0414784,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "0378e6d3d44f3574",
+ "finished_at": "2026-11-16T11:51:29-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.25,
+  "reason": "The patch is careful and backward-compatible. It adds a format-version byte, keeps a legacy decryption path, and uses a separate key alias without breaking existing data. The single short comment and tidy constants look like a planned, reviewed pipeline patch, and the style reads more like Claude than GPT. This is a weak signal, so confidence is low."
+ }
+}

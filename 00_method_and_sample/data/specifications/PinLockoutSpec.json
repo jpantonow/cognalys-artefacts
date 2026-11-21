@@ -1,0 +1,141 @@
+{
+  "schema_version": 2,
+  "spec_id": "PinLockoutSpec",
+  "name": "PinLockoutSpec",
+  "applies_to_types": [
+    "zip.arcanum.core.security.PinLockout"
+  ],
+  "source_title": "Attempted canonical Crypto-API-Rules CrySL source for PinLockout (not found)",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PinLockout.crysl",
+  "source_verified": false,
+  "protocol": "unverified; no PinLockout-specific CrySL EVENTS/ORDER protocol was available from the attempted primary source",
+  "important_note": "The representative finding establishes only that the detector associated a wall-clock read in zip.arcanum.core.security.PinManager.verifyPin with a lockout-timing concern. It does not establish the API signature, state model, lockout duration, persistence behavior, or a runtime bypass without source-level and runtime evidence.",
+  "events": [
+    {
+      "name": "pin_verification_observed",
+      "api_patterns": [
+        "verifyPin("
+      ],
+      "condition": "Observed when source contains an invocation or declaration matching verifyPin(. This observation alone does not prove that the call evaluates lockout state, consumes a failed attempt, or grants authentication."
+    },
+    {
+      "name": "wall_clock_read_observed",
+      "api_patterns": [
+        "System.currentTimeMillis()"
+      ],
+      "condition": "Observed when source contains System.currentTimeMillis(). The relevant predicate is satisfied only if that returned wall-clock value participates in the lockout-expiry or remaining-delay decision for the same PIN-verification state."
+    },
+    {
+      "name": "monotonic_lockout_timing_predicate",
+      "api_patterns": [
+        "System.nanoTime()",
+        "elapsedRealtime()"
+      ],
+      "condition": "Not satisfied merely by observing either substring. It requires evidence that a monotonic elapsed-time source is used consistently to record and compare the start or expiry of the lockout interval, including across the relevant execution boundary."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That zip.arcanum.core.security.PinLockout exists as a loadable production type rather than being the intended CrySL-governed type name inferred from PinLockoutSpec and the neighboring reported package.",
+    "That PinManager.verifyPin directly invokes a PinLockout API.",
+    "That every use of System.currentTimeMillis() in verifyPin controls lockout timing.",
+    "That moving the wall clock forward produces an authentication or lockout bypass in the deployed runtime.",
+    "That a monotonic clock alone is sufficient when lockout state must survive process restart, reboot, synchronization, or persistence.",
+    "Any particular retry threshold, cooldown duration, PIN hashing policy, or successful-verification reset behavior.",
+    "That an unrelated API named PinLockout, including Apple Pay status constants or examples from other frameworks, is governed by this specification."
+  ],
+  "semantic_scope": "Static, local evidence concerning the reported zip.arcanum.core.security.PinManager.verifyPin method and its use of System.currentTimeMillis() in a purported PIN-lockout timing path. The intended CrySL naming target is the qualified type zip.arcanum.core.security.PinLockout, whose simple name exactly matches PinLockout.",
+  "detector_semantics": {
+    "claim": "The representative finding claims that lockout timing in PinManager.verifyPin uses System.currentTimeMillis() where a monotonic clock is expected, creating a potential clock-forward bypass.",
+    "predicates": [
+      "A relevant lockout-expiry, cooldown, or remaining-time computation is reachable from verifyPin.",
+      "That computation reads System.currentTimeMillis().",
+      "The wall-clock result influences whether verification remains locked out or becomes permitted.",
+      "No compensating logic prevents a forward wall-clock change from satisfying the expiry condition prematurely."
+    ],
+    "limitations": [
+      "The reported message does not expose the detector's complete data-flow, control-flow, aliasing, or interprocedural model.",
+      "A substring match or call-site observation is not proof that the clock value determines authorization.",
+      "Static evidence does not establish that an attacker or user can alter the relevant device clock, nor that the altered time is retained or trusted at runtime.",
+      "No canonical PinLockout CrySL rule was found and consulted; therefore no unverified CrySL event/order/constraint semantics are asserted."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "No authoritative documentation or primary implementation for zip.arcanum.core.security.PinLockout was found.",
+      "The only supplied implementation context is zip.arcanum.core.security.PinManager.verifyPin and the detector's description of a lockout-timing concern."
+    ],
+    "preconditions": [
+      "Unverified: a PIN-verification operation and associated failed-attempt or lockout state must exist for the detector message to describe an actual lockout path.",
+      "Unverified: verifyPin must reach the clock-dependent decision on the analyzed path."
+    ],
+    "unknowns": [
+      "The actual public API and package declaration of PinLockout.",
+      "Whether PinLockout is a standalone class, nested type, interface, generated model, or only an intended specification target.",
+      "verifyPin parameters, return type, exceptions, and relationship to lockout state.",
+      "Whether lockout is per user, account, device, session, or credential.",
+      "Whether lockout timestamps are durable and how restart or reboot is handled."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "A wall-clock-based lockout expiration check can be bypassed by advancing the clock if that clock directly controls expiry.",
+    "runtime_claim": "Unproven. Runtime exploitability requires evidence of the exact expiry comparison, clock-manipulation capability, absence of compensating checks, and the behavior of stored lockout state.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Primary source for zip.arcanum.core.security.PinLockout, including its package declaration and callable API.",
+      "Primary implementation of zip.arcanum.core.security.PinManager.verifyPin.",
+      "Data-flow evidence connecting System.currentTimeMillis() to lockout eligibility, expiry, or delay calculation.",
+      "Any PinLockoutSpec/CrySL file actually loaded by the detector, including EVENTS, ORDER, CONSTRAINTS, REQUIRES, and ENSURES sections."
+    ],
+    "runtime": [
+      "A controlled test showing a failed PIN attempt creates a lockout state.",
+      "A test showing that advancing wall-clock time before genuine elapsed time changes the lockout decision.",
+      "A paired test showing the intended monotonic-time design does not permit that early transition.",
+      "Tests across process restart, reboot, and any persistent state boundary relevant to the implementation."
+    ],
+    "compatibility": [
+      "Target Java/Android/runtime version and available monotonic-clock API.",
+      "Whether elapsed-time values are persisted or compared with wall-clock timestamps.",
+      "Device-management, OS permission, emulator, or attacker model governing clock changes.",
+      "Any synchronization or server-authoritative time mechanism that may alter the observed behavior."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "System.currentTimeMillis() is used only for audit logging, telemetry, UI messaging, or timestamp formatting in verifyPin.",
+    "A wall-clock value is read in verifyPin but does not affect the authorization or lockout branch.",
+    "The actual lockout decision is based on a server-authoritative deadline, secure hardware state, or monotonic elapsed-time source elsewhere.",
+    "The clock-derived value is guarded by an independent monotonic-duration check before access is granted.",
+    "The detector matched an unrelated verifyPin overload or helper that has no lockout responsibility.",
+    "The intended PinLockout type is absent from the analyzed artifact and the finding instead concerns a local convention or generated specification."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PinLockout.crysl",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/tree/master/JavaCryptographicArchitecture/src"
+  ],
+  "unknowns": [
+    "The requested canonical raw URL was fetched but returned HTTP 404, so it could not be consulted.",
+    "The canonical Crypto-API-Rules JavaCryptographicArchitecture source directory consulted does not list PinLockout.crysl.",
+    "No alternative primary source for a PinLockout CrySL rule or the zip.arcanum.core.security.PinLockout API was found.",
+    "The qualified target type is inferred as zip.arcanum.core.security.PinLockout from the required CrySL simple-name convention and the reported neighboring package; its existence and API are not source-verified.",
+    "The actual detector rule implementation, including its precise accepted clock APIs and data-flow predicates, remains unavailable."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "zip.arcanum.core.security.PinManager",
+        "method": "verifyPin",
+        "message": "expecting lockout timing to use a monotonic clock but verifyPin uses System.currentTimeMillis(), allowing a clock-forward bypass."
+      }
+    ],
+    "expected_api_simple_name": "PinLockout",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/PinLockout.crysl"
+  }
+}

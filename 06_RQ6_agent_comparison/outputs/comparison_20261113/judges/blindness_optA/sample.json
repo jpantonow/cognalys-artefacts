@@ -1,0 +1,41 @@
+{
+ "n": 30,
+ "per_arm": 10,
+ "cards": [
+  "Kf5fc8033",
+  "Kade8719c",
+  "K936bcb3a",
+  "K953b099a",
+  "K74f01c61",
+  "K19e4e422",
+  "Kbbd30599",
+  "Ke3aff027",
+  "K0669ebf2",
+  "K7fcfb8c2",
+  "Kbd4420b6",
+  "Kec2e8df5",
+  "K599b3a3d",
+  "Ke0e06a3d",
+  "K33cec007",
+  "K89af4c15",
+  "K965c7a10",
+  "K2c9edc44",
+  "K17d798a7",
+  "K300818b3",
+  "K9dc9035b",
+  "K9cff173c",
+  "K8f2bf906",
+  "K8dcb8f89",
+  "Ke7cf42d9",
+  "Kf5096721",
+  "Kffc88fc4",
+  "K4acf22db",
+  "Kc5aa41e3",
+  "K36b2b260"
+ ],
+ "per_arm_drawn": {
+  "C": 10,
+  "TP": 10,
+  "SP2": 10
+ }
+}

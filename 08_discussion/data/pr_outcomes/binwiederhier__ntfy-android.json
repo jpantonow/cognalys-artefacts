@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/binwiederhier/ntfy-android/pull/184",
+    "state": "open",
+    "finding_id": "",
+    "spec": "Collections_SynchronizedMap",
+    "csv_class": "io.heckel.ntfy.util.Log",
+    "method_name": "scrub",
+    "title": "Fix scrub",
+    "impact_class": "not_recorded",
+    "recorded_at": "2026-11-19T20:37:40.319552+00:00",
+    "maintainer_feedback": []
+  }
+]

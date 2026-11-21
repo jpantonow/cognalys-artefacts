@@ -1,0 +1,168 @@
+=== 2026-11-16T03:57:17-03:00 cognalys run --max-cost 2.0
+Frozen experiment: manifest written to /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3_fixes/manifests/co_0a32f516feb2_r4.json. Specification generation and learning-store writes are disabled for this run; web research not archived is fetched live.
+Preflight passed: declared dependencies, static analysis
+Pipeline steps: spec_generation -> cloning -> repository_setup -> extraction -> spec_context -> detector_rules -> llm -> solutions -> validation -> validation_fix -> revalidation -> prs -> preview -> fix_prs -> revalidation_fix_prs
+
+=== SPEC_GENERATION ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.generate_specifications --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/openai_prompt_logs
+frozen experiment: 2 specification(s) already present; none generated
+
+=== CLONING ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv --output-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_methods --clone-timeout 1800 --clone-retries 3 --clone-only
+2026-11-16 03:57:42 - INFO - Starting single CSV workflow
+2026-11-16 03:57:42 - INFO - Output dir: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones
+2026-11-16 03:57:42 - INFO - Clone dir: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones
+2026-11-16 03:57:42 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_methods
+2026-11-16 03:57:42 - INFO - 2 linhas válidas carregadas
+2026-11-16 03:57:42 - INFO - 1 repositórios únicos mapeados
+2026-11-16 03:57:42 - INFO - [1/1] Cloning org.cry.otp_31.apk from https://github.com/chrismiceli/motp
+2026-11-16 03:57:44 - INFO - org.cry.otp_31.apk is already at the pinned revision 3fc6c3d20d7b32f96699b847a543d83d4439572c
+2026-11-16 03:57:44 - INFO - Successfully cloned org.cry.otp_31.apk
+2026-11-16 03:57:44 - INFO - Cloning results: 1 success, 0 failed, 0 timeout
+
+=== REPOSITORY_SETUP ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.prepare_repository_branches --projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones --report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/repository_setup.json --project org.cry.otp_31.apk
+org.cry.otp_31.apk: master -> master (unchanged)
+
+=== EXTRACTION ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv --output-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_methods --clone-timeout 1800 --clone-retries 3 --skip-cloning
+2026-11-16 03:57:45 - INFO - Starting single CSV workflow
+2026-11-16 03:57:45 - INFO - Output dir: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones
+2026-11-16 03:57:45 - INFO - Clone dir: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones
+2026-11-16 03:57:45 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_methods
+2026-11-16 03:57:45 - INFO - 2 linhas válidas carregadas
+2026-11-16 03:57:45 - INFO - 1 repositórios únicos mapeados
+2026-11-16 03:57:45 - INFO - Reutilizando clones existentes em: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones
+2026-11-16 03:57:45 - INFO - org.cry.otp_31.apk is already at the pinned revision 3fc6c3d20d7b32f96699b847a543d83d4439572c
+2026-11-16 03:57:45 - INFO - Found clone for org.cry.otp_31.apk: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones/org.cry.otp_31.apk
+2026-11-16 03:57:45 - INFO - Building index for repository: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones/org.cry.otp_31.apk
+2026-11-16 03:57:45 - INFO - Indexed 12 classes from 12 unique class definitions
+2026-11-16 03:57:45 - INFO - Extraction complete: 2 success, 0 failed, 0 skipped
+2026-11-16 03:57:45 - INFO - Tracking JSON written to /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones/extraction_tracking.json
+2026-11-16 03:57:45 - INFO - Summary written to /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones/logs/summary_tracked.txt
+
+=== SPEC_CONTEXT ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.enrich_spec_context --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_methods --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv
+Specification registry coverage: 2/2 sample specs available
+Specification context: 2 enriched, 0 missing, 2 total
+
+=== DETECTOR_RULES ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.propose_detector_rules --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/openai_prompt_logs
+MacSpec: skipped, judged not local for this version of the specification
+SecretKeySpecSpec: skipped, judged not local for this version of the specification
+Detector rules: nothing to propose
+
+=== LLM ===
+$ /home/antonow/venv/bin/python -m cognalys.llm.generate_error_fixes --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_methods --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions --model gpt-6.1-terra --provider openai --endpoint https://api.openai.com/v1 --timeout 600 --ollama-context-length 16384 --repository-context-budget 140000 --pr-issue-style v3 --max-output-tokens 32768 --reasoning-effort high --validation-mode balanced --validation-feedback-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/build_validation --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/openai_prompt_logs --web-search-cache-ttl-hours 168.0 --web-search-retries 1 --retries 2 --workers 1 --no-cache --research-corpus-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus --research-corpus-max-age-days 90.0 --web-search --migration-policies-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/migration_policies.json
+INFO: Testing OpenAI connection...
+INFO: OpenAI connection successful
+INFO: ✓ Model 'gpt-6.1-terra' available
+INFO: Discovered 2 errors to process
+INFO: Processing 2 new errors (0 already complete)
+INFO: hmac_sha is analysed together with hmac_sha: one call sequence
+INFO: Processing: org.cry.otp_31.apk/hmac_sha
+INFO: Research corpus hit: cb14a5c307cd
+INFO: hmac_sha: confirmed violation without a safe correction: Mac.getInstance receives HmacSHA1 on the selected SHA-1 path, outside MacSpec's allowed algorithms (SRC-001, RUN-001; C2). The joint SecretKeySpec finding is also confirmed: the constructor receives RAW, outside its algorithm allow-list (SRC-001, SPEC-002; C3). Preserving SHA-1 while merely changing
+WARNING: Evidence phase abstained for hmac_sha: decision=NO_SAFE_FIX, cause_status=confirmed, detector_violation=confirmed, cause=Mac.getInstance receives HmacSHA1 on the selected SHA-1 path, outside MacSpec's allowed algorithms (SRC-001, RUN-001; C2). The joint SecretKeySpec finding is also confirmed: the constructor receives RAW, outside its algorithm allow-list (SRC-001, SPEC-002; C3). Preserving SHA-1 while merely changing that key label to HmacSHA1 would still violate the joint allow-list., scope_issues=none; review saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions/evidence_reviews/org.cry.otp_31.apk/0_hmac_sha_evidence.json
+INFO: [1/1] hmac_sha
+WARNING: No safe fix generated
+INFO: Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions/solutions_tracking.json
+INFO: Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions/analysis_summary.txt
+INFO: ======================================================================
+INFO: ANALYSIS COMPLETE
+INFO: Analyzed: 1/2
+INFO: Fixes generated: 0
+INFO: Confirmed external-contract findings: 0
+INFO: Issue candidates: 0
+INFO: Time: 00h 03m 01s
+INFO: LLM cache: 0 hit(s), 0 miss(es), 0 replayed within a finding
+INFO: Research corpus: 1 served, 0 researched and stored, 0 kept, 0 expired
+
+======================================================================
+LLM Error Fix Generator
+======================================================================
+Model: gpt-6.1-terra
+Provider: openai
+Endpoint: https://api.openai.com/v1
+Timeout: 600s
+Reasoning effort: high
+Validation mode: balanced
+Repository context budget: 140000 characters
+Allow cache invalidation: False
+Web search: True
+Max output tokens: 32768
+Input: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_methods
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions
+LLM cache: disabled
+Resume: True
+======================================================================
+
+Research corpus: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus (126 entries, max age 90 days)
+
+=== SOLUTIONS ===
+$ /home/antonow/venv/bin/python -m cognalys.solutions.run_apply --error-solutions-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions --cloned-projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results --worktrees-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/worktrees --backup-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/method_backups --approve-review-only-for-validation --port-model gpt-6.1-terra --port-endpoint https://api.openai.com/v1 --port-timeout 600 --port-max-output-tokens 16384 --port-reasoning-effort high --port-prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/openai_prompt_logs
+2026-11-16 04:01:19,157 - INFO - Starting solution application workflow
+2026-11-16 04:01:19,170 - INFO - ============================================================
+2026-11-16 04:01:19,170 - INFO - STAGE 1: DISCOVERY & MAPPING
+2026-11-16 04:01:19,170 - INFO - ============================================================
+2026-11-16 04:01:19,171 - INFO - Building solution to repository mapping...
+2026-11-16 04:01:19,171 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions
+2026-11-16 04:01:19,402 - INFO - Discovered 0 solutions
+2026-11-16 04:01:19,403 - INFO - Mapping complete
+2026-11-16 04:01:19,403 - INFO - Building solution to repository mapping...
+2026-11-16 04:01:19,403 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions
+2026-11-16 04:01:19,619 - INFO - Discovered 0 solutions
+2026-11-16 04:01:19,620 - INFO - Mapping complete
+2026-11-16 04:01:19,620 - INFO - Mapping report: {'total_apks': 0, 'total_solutions': 0, 'mappings': {}}
+2026-11-16 04:01:19,621 - INFO - Building solution to repository mapping...
+2026-11-16 04:01:19,621 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions
+2026-11-16 04:01:19,852 - INFO - Discovered 0 solutions
+2026-11-16 04:01:19,852 - INFO - Mapping complete
+2026-11-16 04:01:19,863 - INFO - Mapping report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/mapping_report.json
+2026-11-16 04:01:19,864 - INFO - ============================================================
+2026-11-16 04:01:19,864 - INFO - STAGE 2: APPLYING SOLUTIONS
+2026-11-16 04:01:19,865 - INFO - ============================================================
+2026-11-16 04:01:19,865 - INFO - ============================================================
+2026-11-16 04:01:19,866 - INFO - STAGE 3: GENERATING REPORT
+2026-11-16 04:01:19,866 - INFO - ============================================================
+2026-11-16 04:01:19,907 - INFO - Execution report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/execution_report.json
+2026-11-16 04:01:19,907 - INFO - ============================================================
+2026-11-16 04:01:19,907 - INFO - EXECUTION SUMMARY
+2026-11-16 04:01:19,908 - INFO - ============================================================
+2026-11-16 04:01:19,908 - INFO - Successfully Applied: 0
+2026-11-16 04:01:19,908 - INFO - Failed: 0
+2026-11-16 04:01:19,908 - INFO - Total Time: 0.72s
+
+DONE
+{'execution_timestamp': '2026-11-16T07:01:19.874476+00:00', 'workflow_status': 'SUCCESS_WITH_NO_ACTION', 'execution_time_seconds': 0.717189, 'config': {'error_solutions_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions', 'cloned_projects_dir': '/home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/clones', 'output_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results', 'worktrees_dir': '/home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r4/worktrees', 'save_backups': True, 'backup_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/application_results/method_backups', 'dry_run': False, 'max_solutions': 0, 'git_user_name': 'jpantonow', 'git_user_email': 'jpantonow@gmail.com'}, 'total_solutions': 0, 'results': {'successfully_applied': 0, 'failed': 0, 'dry_run': 0, 'review_only_not_applied': 0, 'not_applicable_to_base_branch': 0}, 'per_solution_details': [], 'errors': []}
+Nothing was applied; No issue candidates were produced; skipping validation and validation_fix and revalidation and prs and fix_prs and revalidation_fix_prs (use --force-downstream-steps to always run them). preview still runs.
+
+=== PREVIEW ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.generate_github_previews --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/pull_requests --issue-candidates-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions/issue_candidates --evidence-reviews-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/error_solutions/evidence_reviews --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/previews --issue-title "Potential security issue found — would you be open to a pull request?" --issue-title-without-security-impact "Question about the {api} use in {location} — would you be open to a pull request?" --issue-body "Hi! I'm a Computer Engineering student at the University of Brasília (UnB), working on a research project about how Android apps use security-sensitive APIs." --pr-issue-style v3
+ANALYSIS PREVIEW: org.cry.otp_31.apk_hmac_sha_MacSpec_analysis.md
+Preview summary: 0 PR previews, 0 issue previews, 1 analysis previews, 0 failed
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/previews
+
+Model calls of this run:
+  evidence_extraction              1 calls       35,998 in (31,211 cached, 4,784 written)       4,357 out  US$ 0.01
+  external_research                2 calls       24,301 in (5,251 cached, 1,626 written)       3,269 out  US$ 0.04
+  adjudication                     1 calls       14,791 in (8,291 cached, 6,497 written)       4,154 out  US$ 0.01
+  issue_presentation               1 calls        1,021 in (0 cached, 0 written)         802 out  US$ 0.00
+  total                            5 calls       76,111 in (44,753 cached, 12,907 written)      12,582 out  US$ 0.07; 0 answered from the cache, 1 served by the research corpus; 2 web search calls billed; served tiers flex 5
+
+Pipeline finished successfully.
+Run status: complete
+
+=== RETROSPECTIVE ===
+1 finding(s): 1 at adjudication; 1 new and 0 recurring failure signature(s)
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/retrospective/retrospective.md
+
+=== STATISTICS ===
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r4/statistics/statistics.md
+Pipeline elapsed time: 00h 03m 55s
+violação confirmada sem correção segura    org.cry.otp_31.apk hmac_sha [MacSpec]  (5 calls, 89k tokens, US$ 0.07)
+violação confirmada sem correção segura    org.cry.otp_31.apk hmac_sha [SecretKeySpecSpec]
+
+2 findings. violação confirmada sem correção segura: 2
+Most model use without a pull request:
+  5 calls, 89k tokens, US$ 0.07            org.cry.otp_31.apk hmac_sha [MacSpec] -> violação confirmada sem correção segura

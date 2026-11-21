@@ -1,0 +1,174 @@
+{
+  "schema_version": 2,
+  "spec_id": "CipherSpec",
+  "name": "CipherSpec",
+  "applies_to_types": [
+    "javax.crypto.Cipher"
+  ],
+  "source_title": "Cipher.crysl — CROSSINGTUD Crypto-API-Rules",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Cipher.crysl",
+  "source_verified": true,
+  "protocol": "Get, Init+, AADUpdate*, WKB+ | (FINWOU | (Update+, DoFinal))+",
+  "important_note": "Under the CrySL naming convention and the consulted rule's `SPEC javax.crypto.Cipher` declaration, CipherSpec governs `javax.crypto.Cipher`, not an application class or a namesake such as ESAPI's `org.owasp.esapi.crypto.CipherSpec`. The reported enclosing methods named `encrypt`, `decrypt`, and `create` do not establish a rule violation or prove which Cipher event occurred. This is a static protocol/predicate rule, not proof that a runtime operation is confidential, authentic, successful, or interoperable.",
+  "events": [
+    {
+      "name": "Get",
+      "api_patterns": [
+        "Cipher.getInstance(",
+        "javax.crypto.Cipher.getInstance("
+      ],
+      "condition": "Observed: a local source match is a candidate factory call. Satisfies `Get` only when resolution identifies a `javax.crypto.Cipher.getInstance` overload with one or two arguments and the resulting Cipher object is the object followed by later rule events."
+    },
+    {
+      "name": "Init",
+      "api_patterns": [
+        ".init("
+      ],
+      "condition": "Observed: a call syntactically ending in `.init(`. Satisfies `Init` only when its resolved receiver is the tracked `javax.crypto.Cipher` and its signature is one of the modeled initialization overloads using a mode with a certificate or key, optionally parameters and/or `SecureRandom`."
+    },
+    {
+      "name": "AADUpdate",
+      "api_patterns": [
+        ".updateAAD("
+      ],
+      "condition": "Observed: a call syntactically ending in `.updateAAD(`. Satisfies `AADUpdate` only when its resolved receiver is the tracked Cipher and it is a byte-array, byte-array slice, or `ByteBuffer` overload; the rule further forbids this event for CTR, CTS, CFB, ECB, and OFB transformations."
+    },
+    {
+      "name": "Update",
+      "api_patterns": [
+        ".update("
+      ],
+      "condition": "Observed: a call syntactically ending in `.update(`. Satisfies `Update` only for a tracked Cipher and one of the modeled array or `ByteBuffer` overload forms; applicable offset and length predicates must also hold."
+    },
+    {
+      "name": "DoFinal",
+      "api_patterns": [
+        ".doFinal("
+      ],
+      "condition": "Observed: a call syntactically ending in `.doFinal(`. Satisfies `DoFinal` only for a modeled Cipher overload. `FINWOU` is the subset taking plaintext/input in the same call and is permitted as a one-shot final operation; zero-input/output finalization is modeled only after one or more `Update` events."
+    },
+    {
+      "name": "WKB",
+      "api_patterns": [
+        ".wrap("
+      ],
+      "condition": "Observed: a call syntactically ending in `.wrap(`. Satisfies `WKB` only when the resolved receiver is the tracked Cipher and bytes are produced by `Cipher.wrap(Key)` after required `Get` and `Init` events."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that the reported `encrypt`, `decrypt`, or `create` methods directly invoke `javax.crypto.Cipher`; the output supplies enclosing names but no resolved invocation, receiver, or call path.",
+    "Do not infer that this rule governs `org.owasp.esapi.crypto.CipherSpec`, TLS CipherSpec terminology, or another type whose name merely ends in `Spec`.",
+    "Do not infer successful encryption, decryption, authentication, key wrapping, or absence of exceptions from a matching event sequence.",
+    "Do not infer GCM IV/nonce uniqueness, key entropy, key length, ciphertext transport, authentication-tag verification, or replay resistance solely from satisfaction of this rule.",
+    "Do not infer that every JCA- or Android-supported Cipher transformation is accepted by the rule; it uses a bounded transformation policy.",
+    "Do not infer the specific violated order, constraint, required predicate, or missing evidence from the representative message value `unknown`."
+  ],
+  "semantic_scope": "The rule observes resolved uses of `javax.crypto.Cipher`: `getInstance`, selected `init` overloads, `updateAAD`, selected `update` and `doFinal` overloads, and `wrap`. It checks per-object event order, selected transformation/mode/padding and operation-mode constraints, buffer-bounds predicates, absence-of-call constraints, and CrySL typestate predicates including generated keys, randomized randomness, prepared parameters, and un-MACed plaintext. It does not model `Cipher.unwrap`, Cipher getters, provider-selection semantics beyond the two-argument factory event, or application-specific wrapper method names.",
+  "detector_semantics": {
+    "claim": "For each tracked `javax.crypto.Cipher` object, the consulted CrySL rule requires a `Get` event followed by one or more `Init` events, optional AAD updates, and then either key wrapping or modeled finalization/streaming. It also applies stated transformation, mode, padding, type, range, and predicate constraints.",
+    "predicates": [
+      "`encmode` must be one of 1, 2, 3, or 4.",
+      "Public/private-key or certificate initialization implies RSA for wrap/unwrap modes 3 or 4; a `SecretKey` implies an allow-listed AES or PBE-with-AES algorithm.",
+      "AES is restricted to GCM, CTR, CTS, CFB, or OFB and requires `NoPadding`; RSA is restricted to no mode or ECB with the rule's listed padding values.",
+      "CTR, CTS, CFB, and OFB decryption/non-encryption modes may not use an init form without explicit IV/parameters; their encryption mode requires `preparedIV[paramSpec]`.",
+      "GCM requires `preparedGCM[paramSpec]`; listed OAEP padding cases require `preparedOAEP[paramSpec]`; `AlgorithmParameters` require `preparedAlg[params, alg(transformation)]`.",
+      "Key initialization requires one of `generatedKey[key, alg(transformation)]`, `generatedPubkey[key]`, or `generatedPrivkey[key]`; a supplied `SecureRandom` requires `randomized[random]`.",
+      "For modeled byte-array overloads, offsets and lengths must satisfy the rule's nonnegative and buffer-bound constraints; plaintext must satisfy `!macced[this, plainText]`."
+    ],
+    "limitations": [
+      "Predicate satisfaction is only as complete as the installed CrySL rules, dataflow/alias analysis, dependency bytecode, and available call graph.",
+      "The exact detector version, compiled rules artifact, active rule revision, analysis configuration, and error category hidden by `message: \"unknown\"` were not supplied.",
+      "The source rule contains security policy choices narrower than the general JCA API contract and is not a complete language-level specification of Cipher."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "`javax.crypto.Cipher` is the JCE cipher API. `getInstance` obtains an implementation for a transformation; `init` selects an operation mode and key/parameters; `update` processes multipart input; `doFinal` completes a single- or multipart operation; and `wrap` wraps a key.",
+      "Transformations may be `algorithm/mode/padding` or just `algorithm`; with an incomplete transformation, mode and padding defaults are provider-specific.",
+      "For AEAD modes, authentication tags are appended during encryption and verified during decryption. For GCM/CCM, all AAD must be supplied before ciphertext processing."
+    ],
+    "preconditions": [
+      "A provider must support the requested transformation; the API documentation recommends a fully specified algorithm/mode/padding transformation.",
+      "Cipher operations must follow initialization with an appropriate Cipher operation mode and compatible key/parameters.",
+      "For GCM/CCM, `updateAAD` data must precede `update` and `doFinal` ciphertext processing.",
+      "Exact parameter and IV/nonce requirements depend on the selected transformation, provider, operation mode, and key."
+    ],
+    "unknowns": [
+      "The representative findings do not disclose the actual transformation string, provider, Cipher operation mode, key type, parameter type, IV/nonce source, or overload used.",
+      "The target runtime may be Android or a particular JDK/provider version; supported transformations and provider behavior are runtime-dependent.",
+      "Whether the detector's `preparedGCM`, `preparedIV`, `preparedOAEP`, `preparedAlg`, `generatedKey`, and related predicates are produced by other installed rules has not been established."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The rule claims conformance to its static allow-list and usage-protocol policy, plus availability of named CrySL evidence predicates for keys, randomness, and parameters.",
+    "runtime_claim": "At runtime, Cipher behavior and security properties depend on the actual transformation, provider implementation, initialization values, key material, nonce/IV lifecycle, AAD, ciphertext/tag handling, and exception handling. The JCA API requires AAD-before-ciphertext processing for GCM/CCM and documents provider-specific defaults when a transformation is incomplete.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "The exact CipherSpec/CrySL rule artifact and immutable revision or commit used by the detector.",
+      "Resolved bytecode owners and full signatures for calls in the three reported methods, including receiver identity or alias relation to the same `javax.crypto.Cipher` object.",
+      "The transformation argument, Cipher mode constant, key/certificate type, parameter object, random source, and relevant buffer offset/length values or dataflow facts.",
+      "The specific detector violation category and trace collapsed into `message: \"unknown\"`."
+    ],
+    "runtime": [
+      "The concrete JCA/Android provider and version and whether it supports the actual transformation.",
+      "Actual key algorithm, size, provenance, and lifecycle; actual IV/nonce values and uniqueness behavior; actual GCM tag length when applicable.",
+      "Whether initialization, AAD, update/finalization, output handling, and exceptions occur on the path exercised in production."
+    ],
+    "compatibility": [
+      "Target Java version or Android API level and security-provider configuration.",
+      "Provider-specific transformation aliases/defaults and enabled or disabled cryptographic algorithms.",
+      "Compatibility of the consulted current rule source with the detector's compiled CrySL binary and analysis-engine version."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A syntactic `.init(`, `.update(`, or `.doFinal(` match on a non-Cipher receiver when local matching is used without resolved type information.",
+    "A partial program/dependency view in which factory, initialization, finalization, or predicate-producing code is external, reflection-based, native, generated, or omitted from the call graph.",
+    "A runtime-valid provider-specific transformation rejected because the CrySL rule's algorithm/mode/padding allow-list is narrower than the complete JCA provider surface.",
+    "A valid one-shot zero-input `Cipher.doFinal()` immediately after initialization: the rule defines that overload, but its order expression admits it only after one or more modeled `Update` events.",
+    "A valid `Cipher.unwrap(...)` workflow: JCA supports it, but the consulted rule models `wrap` and has no `unwrap` event.",
+    "Code whose enclosing method is named `encrypt`, `decrypt`, or `create` but delegates to another component, uses a different crypto API, or only prepares values without operating a Cipher."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Cipher.crysl",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/javax/crypto/Cipher.html"
+  ],
+  "unknowns": [
+    "Which immutable CrySL rule revision and analyzer artifact produced the reported `CipherSpec` findings.",
+    "Which actual resolved `javax.crypto.Cipher` invocation, if any, is reachable from each reported enclosing method.",
+    "Which exact protocol edge, constraint, or required predicate led to each `message: \"unknown\"` finding.",
+    "Whether the analyzed application uses JDK JCE, Android crypto providers, or a third-party provider, and the relevant provider/version configuration.",
+    "The formal producer definitions and cross-rule availability of referenced CrySL predicates in the detector's installed ruleset.",
+    "Whether exceptional paths, interprocedural aliases, reflection, dependency stubs, or incomplete bytecode affected the detector trace."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.beemdevelopment.aegis.crypto.CryptoUtils",
+        "method": "encrypt",
+        "message": "unknown"
+      },
+      {
+        "class": "com.gelakinetic.mtgfam.helpers.tcgp.MarketPriceFetcher",
+        "method": "decrypt",
+        "message": "unknown"
+      },
+      {
+        "class": "dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler",
+        "method": "create",
+        "message": "unknown"
+      }
+    ],
+    "expected_api_simple_name": "Cipher",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.crypto.Cipher",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Cipher.crysl"
+  },
+  "analysis_family": "cipher"
+}

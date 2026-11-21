@@ -1,0 +1,175 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The supplied result is marked \"Static candidate (not executed)\".",
+      "No application source, repository, APK/decompilation artifact, or runtime trace was supplied or independently located for the reported classes.",
+      "The finding does not establish the exact registration call, annotation visibility, JavaScript settings, navigation policy, domain normalization, storage lifetime, or later enforcement behavior.",
+      "The finding does not establish that an attacker-controlled top-level page or iframe successfully invokes the callback at runtime."
+    ],
+    "predicates": [
+      "A WebView bridge registration associates an ElementPickerBridge instance with the JavaScript-visible name \"blockadsPickerProxy\".",
+      "The bridge remains available for pages outside an element-picker-only state.",
+      "Web content can cause an invocation of onPickerCompleted(cssSelector, domain).",
+      "The cssSelector and domain values reach persistent ElementRule creation or storage through BrowserViewModel.",
+      "The effective stored domain is page-supplied and can target another domain.",
+      "No effective user confirmation or equivalent authorization check guards persistence."
+    ],
+    "claim": "The reported static candidate states that an in-app browser registers app.pwhs.blockads.ui.browser.picker.ElementPickerBridge under the name \"blockadsPickerProxy\" on every loaded page, and that onPickerCompleted(cssSelector, domain) persists an ElementRule for a page-supplied domain without user confirmation."
+  },
+  "unknowns": [
+    "Whether the reported application actually calls addJavascriptInterface for ElementPickerBridge and under what navigation lifecycle.",
+    "Whether onPickerCompleted is public and annotated with @JavascriptInterface.",
+    "The application's targetSdkVersion, minSdkVersion, device versions, and WebView provider versions.",
+    "Whether JavaScript is enabled in the relevant WebView.",
+    "Whether the bridge is removed, replaced, or otherwise disabled outside picker mode.",
+    "Whether the reported domain and selector values are normalized, validated, bound to the current origin, or rejected before storage."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "android.webkit.WebView.addJavascriptInterface(Object, String) injects the supplied object under the supplied JavaScript name.",
+      "Android documents that the injected object is available to all frames of the page, including iframes.",
+      "For applications targeting API level 17 or later, JavaScript can access public methods annotated with android.webkit.JavascriptInterface; older target/device combinations have broader legacy exposure behavior.",
+      "Injected objects become visible to JavaScript on the next page load or reload.",
+      "Android documents that addJavascriptInterface lacks origin-based access control: the app cannot safely determine the calling frame's URL or origin, and WebView.getUrl() is not a security-valid caller check.",
+      "JavaScript-to-Java bridge calls occur on a WebView background thread, requiring application-side thread-safety handling."
+    ],
+    "preconditions": [
+      "The application calls WebView.addJavascriptInterface with a non-null object and non-null bridge name.",
+      "JavaScript is enabled before the injected object is expected to be used.",
+      "A subsequent page load or reload makes the object visible to page JavaScript.",
+      "The bridge method is exposed under the applicable Android target-SDK and device-version rules, normally as a public @JavascriptInterface method for modern target SDKs.",
+      "JavaScript executing in a loaded WebView frame invokes the injected object name and method."
+    ],
+    "unknowns": [
+      "Whether the reported application actually calls addJavascriptInterface for ElementPickerBridge and under what navigation lifecycle.",
+      "Whether onPickerCompleted is public and annotated with @JavascriptInterface.",
+      "The application's targetSdkVersion, minSdkVersion, device versions, and WebView provider versions.",
+      "Whether JavaScript is enabled in the relevant WebView.",
+      "Whether the bridge is removed, replaced, or otherwise disabled outside picker mode.",
+      "Whether the reported domain and selector values are normalized, validated, bound to the current origin, or rejected before storage."
+    ]
+  },
+  "authoritative_sources": [
+    "https://developer.android.com/develop/ui/views/layout/webapps/native-api-access-jsbridge",
+    "https://developer.android.com/reference/android/webkit/WebView",
+    "https://developer.android.com/reference/android/webkit/JavascriptInterface",
+    "https://developer.android.com/develop/ui/views/layout/webapps/webview",
+    "https://cwe.mitre.org/data/definitions/749.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observing addJavascriptInterface(...) or the alias literal establishes only a possible registration site. The predicate requires that an ElementPickerBridge instance is passed to android.webkit.WebView.addJavascriptInterface with the name \"blockadsPickerProxy\", that JavaScript is enabled, and that a page is subsequently loaded or reloaded so the injected object becomes visible.",
+      "name": "javascript_bridge_registered",
+      "api_patterns": [
+        "addJavascriptInterface(",
+        "\"blockadsPickerProxy\"",
+        "ElementPickerBridge"
+      ]
+    },
+    {
+      "condition": "Observing the method declaration or annotation establishes only that a candidate entry point exists. The predicate requires that onPickerCompleted is public and JavaScript-exposed under the app's target-SDK/device compatibility conditions, and that JavaScript in a loaded frame invokes the registered alias. Android documents that addJavascriptInterface exposes the object to every frame, including iframes, and does not provide origin-based caller identification.",
+      "name": "bridge_method_exposed_to_web_content",
+      "api_patterns": [
+        "@JavascriptInterface",
+        "onPickerCompleted("
+      ]
+    },
+    {
+      "condition": "Observing a call to onPickerCompleted or construction/use of ElementRule does not prove persistence or attacker control. The predicate requires interprocedural data flow from the JavaScript-supplied cssSelector and domain parameters into a stored ElementRule, with domain retained as the rule's effective target and with no effective user-confirmation, authorization, origin-validation, or same-domain binding on that path.",
+      "name": "page_arguments_reach_rule_persistence",
+      "api_patterns": [
+        "onPickerCompleted(",
+        "ElementRule(",
+        "BrowserViewModel"
+      ]
+    },
+    {
+      "condition": "A persisted rule alone is insufficient. The predicate requires that a page-controlled domain argument can designate a domain different from the currently loaded page, that the rule survives the current page/session as claimed, and that later rule application uses that stored domain and selector to hide content for the designated domain.",
+      "name": "cross_domain_persistent_effect",
+      "api_patterns": [
+        "onPickerCompleted(",
+        "ElementRule("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "WebViewJavascriptBridgeSpec is a detector concern, not a published Android, CrySL, or library API type. The authoritative Android sources verify the WebView JavaScript-bridge semantics only. They do not independently verify the reported application's ElementPickerBridge implementation, its BrowserViewModel persistence flow, user-interface behavior, supported SDK configuration, or runtime exploitability. The supplied finding is explicitly a static candidate and not evidence of execution.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a type named WebViewJavascriptBridgeSpec exists in Android, CrySL, a detector catalog, or the application.",
+    "Do not infer that app.pwhs.blockads.ui.browser.picker.ElementPickerBridge is annotated with @JavascriptInterface, public, or registered through addJavascriptInterface without inspecting the relevant application artifact or source.",
+    "Do not infer that JavaScript is enabled merely because a WebView bridge registration site exists.",
+    "Do not infer that every visited top-level site can invoke the method solely from the registration alias; page loading, JavaScript execution, method exposure, and bridge reachability remain necessary.",
+    "Do not infer that the calling frame is the top-level page, trusted, or same-origin; Android documents that injected objects are available to all frames and that the app cannot determine the calling frame's origin.",
+    "Do not infer that the domain parameter is attacker-controlled, used unchanged, cross-domain, or persisted durably without data-flow and storage evidence.",
+    "Do not infer absence of confirmation from absence of a confirmation call in the bridge method alone; confirmation or authorization may occur in callers, ViewModel code, repository code, or UI state handling.",
+    "Do not infer a runtime CWE-749 vulnerability, impact, or exploitability from this static candidate alone."
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, the concern would require an exposed and reachable bridge method, JavaScript execution by untrusted or insufficiently trusted content in a frame, successful callback invocation after bridge visibility takes effect, page-controlled values reaching durable rule storage, and later cross-domain application of the stored rule.",
+    "equivalent": false,
+    "detector_claim": "A broadly registered JavaScript bridge exposes a callback that reportedly accepts web-supplied selector and domain values and persists an element-hiding rule without user confirmation, potentially allowing a page to plant rules for another domain."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "The application's targetSdkVersion and the tested Android device/API level, because JavaScript exposure differs across legacy and modern Android compatibility behavior.",
+      "The exact Android System WebView/Chromium provider version used for runtime reproduction.",
+      "Whether JavaScript is enabled for the relevant WebView instance.",
+      "Whether the invocation originates in a main frame or iframe, because Android documents that injected objects are exposed to all frames and do not provide origin-based caller identification."
+    ],
+    "runtime": [
+      "A controlled WebView navigation trace showing whether the bridge object becomes available to the loaded top-level page and to an iframe.",
+      "A trace showing an actual invocation of blockadsPickerProxy.onPickerCompleted with controlled cssSelector and domain values.",
+      "Observable evidence of the resulting ElementRule storage record and its effective domain.",
+      "A separate navigation showing whether the stored rule affects the designated domain and whether that domain can differ from the initiating page.",
+      "Evidence of any user confirmation, authorization, picker-mode restriction, or rejection during the same execution path."
+    ],
+    "source_level": [
+      "The concrete WebView.addJavascriptInterface(ElementPickerBridge, \"blockadsPickerProxy\") call site and its lifecycle relative to page loads and picker mode.",
+      "The full ElementPickerBridge declaration, including public visibility and any @JavascriptInterface annotation on onPickerCompleted.",
+      "The complete onPickerCompleted implementation and all callee paths into BrowserViewModel, ElementRule construction, repositories, preferences, databases, or other persistent stores.",
+      "The domain-selection logic, including canonicalization, allowlists, current-page binding, and behavior when the supplied domain differs from the loaded page host.",
+      "All confirmation, authorization, picker-active-state, and UI-state checks that dominate the persistence operation.",
+      "The later rule-consumption path that establishes whether a stored ElementRule is durable and applied to the indicated domain."
+    ]
+  },
+  "name": "WebViewJavascriptBridgeSpec",
+  "source_url": "https://developer.android.com/develop/ui/views/layout/webapps/native-api-access-jsbridge",
+  "applies_to_types": [
+    "android.webkit.WebView",
+    "android.webkit.JavascriptInterface"
+  ],
+  "source_title": "Native API access JavaScript bridge | Android Developers",
+  "semantic_scope": "The concern models an Android WebView JavaScript bridge whose reported application-specific callback, ElementPickerBridge.onPickerCompleted(cssSelector, domain), may accept strings from web content and may feed them into persistent element-hiding rules. Its platform scope is android.webkit.WebView.addJavascriptInterface(Object, String) and android.webkit.JavascriptInterface; its application-specific persistence claim is limited to the supplied detector finding.",
+  "spec_id": "WebViewJavascriptBridgeSpec",
+  "known_false_positive_shapes": [
+    "The alias is registered only on a WebView that loads application-authored, non-navigable content, despite a broad-looking registration site.",
+    "The bridge is registered transiently and removed or replaced before untrusted content or non-picker pages can load.",
+    "onPickerCompleted is not publicly JavaScript-accessible under the application's target-SDK/device combination, or JavaScript is disabled.",
+    "The page cannot invoke the callback because the alias is unavailable until a reload that does not occur on the relevant path.",
+    "The callback ignores supplied domain values, derives the effective domain from a trusted source, or rejects a value that differs from a validated current domain.",
+    "ElementRule creation is in-memory, scoped to a current picker session, or discarded before subsequent pages can consume it.",
+    "An effective user confirmation, authorization requirement, or picker-active-state check exists outside the locally matched method body.",
+    "Stored rules are never applied to the reported target domain, or selector execution is constrained so that no meaningful content-hiding effect occurs."
+  ],
+  "protocol": "WebView.addJavascriptInterface(ElementPickerBridge, \"blockadsPickerProxy\") -> page or iframe JavaScript invokes blockadsPickerProxy.onPickerCompleted(cssSelector, domain) after a page reload -> bridge receives page-controlled strings -> [detector-reported static flow] BrowserViewModel persists an ElementRule using cssSelector and domain.",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "app.pwhs.blockads.ui.browser.picker.ElementPickerBridge",
+        "method": "onPickerCompleted",
+        "message": "Static candidate (not executed): the in-app browser registers ElementPickerBridge as 'blockadsPickerProxy' on every page it loads, not only while the element picker is active, and onPickerCompleted(cssSelector, domain) is persisted by BrowserViewModel as an ElementRule for the page-supplied domain without user confirmation, so any visited website can plant persistent hiding rules for other domains (CWE-749)."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:android.webkit.WebView",
+    "checked_url": "https://developer.android.com/develop/ui/views/layout/webapps/native-api-access-jsbridge"
+  }
+}

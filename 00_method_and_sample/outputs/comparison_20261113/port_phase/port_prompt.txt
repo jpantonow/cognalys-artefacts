@@ -1,0 +1,17 @@
+You are continuing your contribution to this open-source Android app. Earlier, working on commit $pinned, you analysed a report from RVSec, a runtime checker for how Android apps use the Java cryptography and TLS APIs, and you wrote a code change and a pull request description. Both are final: the change is in $patch_file and the description in $pr_file.
+
+A pull request targets the tip of the base branch ($branch), and the code has moved on since $pinned. This repository is checked out at that tip ($tip). The commit $pinned is in its history, so `git diff $pinned HEAD -- <file>` shows what upstream changed in a file since your analysis.
+
+Carry your change onto this tip. This is a porting step, not a second analysis: do not redesign the correction, do not fix anything else, and keep the same intent with exact, minimal edits.
+1. Try to apply your change as it is (for example `git apply --3way $patch_file`). If parts do not apply, re-anchor the same correction on the code as it is now, file by file.
+2. If the base already holds the correction, or the reported code is gone so that there is nothing left to correct, do not edit anything.
+3. If the change cannot be carried over without redesigning it, do not edit anything.
+4. When you edited files, review your ported diff (`git diff`) against the code as it is on this tip: look for a concrete scenario through the app's own code where the ported change breaks something that the original change did not, and fix the port if so.
+5. When you edited files, build with $build_check and fix any failure the port caused.
+
+Then write exactly one of these files at the repository root, with one or two plain sentences that say why:
+- PORTED.md, when your change is now applied on this tip (say whether the build passed).
+- ALREADY_FIXED.md, when the base already holds the correction or the reported code is gone (case 2).
+- ABSTAIN.md, when the change cannot be carried over (case 3).
+
+Do not change the pull request description, do not commit, push, open pull requests or issues, or contact anyone. You may search the web.

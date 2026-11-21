@@ -1,0 +1,31 @@
+{
+ "card_id": "Kc5aa41e3",
+ "card_sha256": "bdce5faacf544d9f",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3166,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 359
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0327458,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "56a2d9bddfd2a77b",
+ "finished_at": "2026-11-17T18:57:48-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.42,
+  "reason": "The card opens with a templated, slot-filled reason label (\"an external contract prevents the correction: impact not confirmed\") and repeats \"Reason:\", which looks like a pipeline's fixed taxonomy output. The prose after it is short, plain and evenly structured, which fits a staged pipeline more than an agent's session narrative. This is a weak signal, so confidence is low."
+ }
+}

@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-10-28T01:25:53.256048+00:00",
+  "repositories": [
+    {
+      "repository": "org.fedorahosted.freeotp_48.apk",
+      "initial_branch": "",
+      "selected_branch": "",
+      "branch_policy": {},
+      "guidance_files": [
+        "CONTRIBUTING.md",
+        "README.md"
+      ],
+      "status": "unchanged"
+    }
+  ]
+}

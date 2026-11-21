@@ -1,0 +1,210 @@
+{
+ "rule": [
+  "Phase 2 (port to the base tip), option A of 2026-11-16: fixes, per unit, the base tip the agents port to.",
+  "",
+  "The tip is the one arm C ported to: the base_commit its k3 runs recorded (c_arm_k3, c_arm_k3_fixes). A unit",
+  "where C recorded none (it never reached the port) gets the tip of the branch C named, as of the start of"
+ ],
+ "units": {
+  "co_0a32f516feb2": {
+   "repo": "chrismiceli/motp",
+   "branch": "master",
+   "pinned_commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+   "tip": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+   "source": "C k3 base_commit",
+   "as_of": null,
+   "commits_after_pin": "0",
+   "bare": "/home/antonow/comparison_20261113/tips/chrismiceli__motp.git"
+  },
+  "co_0b7656970a91": {
+   "repo": "StellarSand/Password-Monitor",
+   "branch": "main",
+   "pinned_commit": "3ef9c433cba6a0d91006eedc7acd07152ca5cde5",
+   "tip": "97d970d38b0b3040786941898db3d3a64cf70381",
+   "source": "tip of main at C's first k3 run of the unit",
+   "as_of": "2026-11-14T17:50:56-0300",
+   "commits_after_pin": "15",
+   "bare": "/home/antonow/comparison_20261113/tips/StellarSand__Password-Monitor.git"
+  },
+  "co_2aaa72c51c14": {
+   "repo": "M66B/FairEmail",
+   "branch": "master",
+   "pinned_commit": "4b1c9fa27a21d71fde5768fb151d4c0a5b579f16",
+   "tip": "1bbec8ba2281ae98b1d5f4647c42efaa424676c8",
+   "source": "tip of master at C's first k3 run of the unit",
+   "as_of": "2026-11-14T17:57:41-0300",
+   "commits_after_pin": "344",
+   "bare": "/home/antonow/comparison_20261113/tips/M66B__FairEmail.git"
+  },
+  "co_3c8e59dbbfb4": {
+   "repo": "CriticalMaps/criticalmaps-android",
+   "branch": "master",
+   "pinned_commit": "d78a78eb67172ae8ec9ffcde4c8124cb64db2acb",
+   "tip": "185771d14e5b55f8a57d351521f17afc7a8298cf",
+   "source": "tip of master at C's first k3 run of the unit",
+   "as_of": "2026-11-14T18:08:19-0300",
+   "commits_after_pin": "2",
+   "bare": "/home/antonow/comparison_20261113/tips/CriticalMaps__criticalmaps-android.git"
+  },
+  "co_737920a862cd": {
+   "repo": "Giton22/kyllene",
+   "branch": "master",
+   "pinned_commit": "f7e7b418188ac057b3abd50502a4c50d82b0754c",
+   "tip": "1fb94f8a6e873897cbe998d38aaa0afa98d2dd25",
+   "source": "tip of master at C's first k3 run of the unit",
+   "as_of": "2026-11-14T18:16:43-0300",
+   "commits_after_pin": "22",
+   "bare": "/home/antonow/comparison_20261113/tips/Giton22__kyllene.git"
+  },
+  "co_911173ce3742": {
+   "repo": "paroj/DSub2000",
+   "branch": "edge",
+   "pinned_commit": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "tip": "163282db680402e82c3421ee5fc6b7d3a9bd48a2",
+   "source": "tip of edge at C's first k3 run of the unit",
+   "as_of": "2026-11-14T18:22:00-0300",
+   "commits_after_pin": "120",
+   "bare": "/home/antonow/comparison_20261113/tips/paroj__DSub2000.git"
+  },
+  "co_9da181fd6978": {
+   "repo": "chrismiceli/motp",
+   "branch": "master",
+   "pinned_commit": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+   "tip": "3fc6c3d20d7b32f96699b847a543d83d4439572c",
+   "source": "tip of master at C's first k3 run of the unit",
+   "as_of": "2026-11-14T18:26:36-0300",
+   "commits_after_pin": "0",
+   "bare": "/home/antonow/comparison_20261113/tips/chrismiceli__motp.git"
+  },
+  "co_bdc0d1804c88": {
+   "repo": "VREMSoftwareDevelopment/WifiAnalyzer",
+   "branch": "main",
+   "pinned_commit": "131c2fae4f86e54aa71d87e522a3b4874bb4e68a",
+   "tip": "21b57769ece6e50250fce7991a08d6643b09c159",
+   "source": "tip of main at C's first k3 run of the unit",
+   "as_of": "2026-11-14T18:31:19-0300",
+   "commits_after_pin": "19",
+   "bare": "/home/antonow/comparison_20261113/tips/VREMSoftwareDevelopment__WifiAnalyzer.git"
+  },
+  "co_ed824f6818ef": {
+   "repo": "treehouses/remote",
+   "branch": "master",
+   "pinned_commit": "68e8e3e2be41a7a2026b3edee0bb98fb27f38afb",
+   "tip": "68e8e3e2be41a7a2026b3edee0bb98fb27f38afb",
+   "source": "tip of master at C's first k3 run of the unit",
+   "as_of": "2026-11-14T18:35:45-0300",
+   "commits_after_pin": "0",
+   "bare": "/home/antonow/comparison_20261113/tips/treehouses__remote.git"
+  },
+  "co_f637c4b8467e": {
+   "repo": "ThHSzR/winterhold",
+   "branch": "main",
+   "pinned_commit": "88974cb4f8f8dde97df3017a4defb89cc5d6d0c8",
+   "tip": "505daf1cea42a56aa2d36a1b21ef9287748338fa",
+   "source": "C k3 base_commit",
+   "as_of": null,
+   "commits_after_pin": "1",
+   "bare": "/home/antonow/comparison_20261113/tips/ThHSzR__winterhold.git"
+  },
+  "pr_013d2748f3f8": {
+   "repo": "yogeshpaliyal/KeyPass",
+   "branch": "master",
+   "pinned_commit": "f0ef4cd98349ddc7320c164e3d8173f334407bd2",
+   "tip": "ca9adca05c5a73bd854e4dec52cf46415602514f",
+   "source": "tip of master at C's first k3 run of the unit",
+   "as_of": "2026-11-14T18:45:38-0300",
+   "commits_after_pin": "14",
+   "bare": "/home/antonow/comparison_20261113/tips/yogeshpaliyal__KeyPass.git"
+  },
+  "pr_06ff0c1fc96c": {
+   "repo": "ounben/AMARadio",
+   "branch": "master",
+   "pinned_commit": "e01537f78694fdee5ad9ac6c216a5e3bedb47b9a",
+   "tip": "5acf39b439955f4cc0caa0f1eaa76beb7c55c3f2",
+   "source": "C k3 base_commit",
+   "as_of": null,
+   "commits_after_pin": "179",
+   "bare": "/home/antonow/comparison_20261113/tips/ounben__AMARadio.git"
+  },
+  "pr_1381cd4ddb3f": {
+   "repo": "jenspfahl/anotherpass",
+   "branch": "master",
+   "pinned_commit": "89b0b68ce403b1fd199255990bf026f02d317eb9",
+   "tip": "670ff023cd3cee4c8f0efc6b0ce10223fc0d784a",
+   "source": "C k3 base_commit",
+   "as_of": null,
+   "commits_after_pin": "4",
+   "bare": "/home/antonow/comparison_20261113/tips/jenspfahl__anotherpass.git"
+  },
+  "pr_2b8cb7f6653b": {
+   "repo": "vauth/salty-app",
+   "branch": "main",
+   "pinned_commit": "ef78cac61a4c28fa2df1b4a2bc23a7ae2c2a40b8",
+   "tip": "7045ba2e1b0a272ad1f46e4b842642859dc792c9",
+   "source": "C k3 base_commit",
+   "as_of": null,
+   "commits_after_pin": "1",
+   "bare": "/home/antonow/comparison_20261113/tips/vauth__salty-app.git"
+  },
+  "pr_39bba5f1270f": {
+   "repo": "vitorpamplona/amethyst",
+   "branch": "main",
+   "pinned_commit": "60b29df3f03775819f57992e5ccafddf32498ede",
+   "tip": "db1d8e97ca34f07f41546578ff04cd01f030a963",
+   "source": "tip of main at C's first k3 run of the unit",
+   "as_of": "2026-11-14T19:21:46-0300",
+   "commits_after_pin": "1544",
+   "bare": "/home/antonow/comparison_20261113/tips/vitorpamplona__amethyst.git"
+  },
+  "pr_6d0a3cf73013": {
+   "repo": "Ashinch/ReadYou",
+   "branch": "main",
+   "pinned_commit": "091c9207527a10a135b307c9f7747306da36f686",
+   "tip": "d2b979ccad9a3e54b9499929a9dc2824578b0fd9",
+   "source": "C k3 base_commit",
+   "as_of": null,
+   "commits_after_pin": "7",
+   "bare": "/home/antonow/comparison_20261113/tips/Ashinch__ReadYou.git"
+  },
+  "pr_7d98a07e751d": {
+   "repo": "thatSFguy/meshcore-mobile-app",
+   "branch": "main",
+   "pinned_commit": "8f226db77a067f5de614514fe755695209868037",
+   "tip": "818250c6cc8f3ed018eabdc7e0c6c5e70e96497e",
+   "source": "C k3 base_commit",
+   "as_of": null,
+   "commits_after_pin": "7",
+   "bare": "/home/antonow/comparison_20261113/tips/thatSFguy__meshcore-mobile-app.git"
+  },
+  "pr_9215f97597a6": {
+   "repo": "schorschii/Droid_SCEP",
+   "branch": "master",
+   "pinned_commit": "d8e13b746f1028116f847f36afc249011ac93498",
+   "tip": "d8e13b746f1028116f847f36afc249011ac93498",
+   "source": "tip of master at C's first k3 run of the unit",
+   "as_of": "2026-11-14T20:06:07-0300",
+   "commits_after_pin": "0",
+   "bare": "/home/antonow/comparison_20261113/tips/schorschii__Droid_SCEP.git"
+  },
+  "pr_ac1a8dd4d680": {
+   "repo": "christianrowlands/android-network-survey",
+   "branch": "develop",
+   "pinned_commit": "6352b7030268784d623162d7c5f0047215c8c3f2",
+   "tip": "4b92316d50a578926b3e82559c4313d252f131ec",
+   "source": "C k3 base_commit",
+   "as_of": null,
+   "commits_after_pin": "108",
+   "bare": "/home/antonow/comparison_20261113/tips/christianrowlands__android-network-survey.git"
+  },
+  "pr_fff072cb8953": {
+   "repo": "Crustack/NotallyX",
+   "branch": "main",
+   "pinned_commit": "f8c9cea0fdc35be7f495bb323ddab50632bdc373",
+   "tip": "39225b8eb3a4e181ad879dd0255e445c70c22e33",
+   "source": "C k3 base_commit",
+   "as_of": null,
+   "commits_after_pin": "14",
+   "bare": "/home/antonow/comparison_20261113/tips/Crustack__NotallyX.git"
+  }
+ }
+}

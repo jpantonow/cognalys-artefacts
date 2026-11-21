@@ -1,0 +1,95 @@
+{
+ "view": "patch",
+ "per_arm": 10,
+ "cards": [
+  "Keedea591",
+  "K67e6e4c0",
+  "Kf8c93c09",
+  "K8cd2e818",
+  "Kac99b9f3",
+  "Ka396d98a",
+  "K9b3c5b03",
+  "Kbaeb1d41",
+  "Kf231d9fd",
+  "Kc2ece92e",
+  "Ka867721d",
+  "K03c352fd",
+  "K57fec149",
+  "Kc0a05a55",
+  "Kbeabbbaa",
+  "Kb0013529",
+  "Kee8da6ad",
+  "Kf83f9cc0",
+  "K76b5b215",
+  "Kf0278b49",
+  "K1334c717",
+  "K792aedc0",
+  "K25d6d8e2",
+  "Kf74d2d3c",
+  "K5addd4d3",
+  "Kc8757f17",
+  "Kebf3b324",
+  "Kbc10a712",
+  "Kfc54db20",
+  "Kc79b0332",
+  "K70d7c53b",
+  "Kf03b5b99",
+  "K46ceac76",
+  "Kdd238b3e",
+  "K8f2bf906",
+  "K64afe6f8",
+  "Kcf2c7bc4",
+  "K7853b19a",
+  "Ka8019b58",
+  "K2ef6ec5e",
+  "Kf6df60fe",
+  "Kde2016fc",
+  "K457d1dcc",
+  "K24e0e45d",
+  "K0cc48e01"
+ ],
+ "per_arm_report": {
+  "S": {
+   "pr_cards": 16,
+   "drawn": 10,
+   "short_of_per_arm": 0,
+   "pr_cards_not_drawn": 6,
+   "non_pr_cards_left_out": 64
+  },
+  "O": {
+   "pr_cards": 15,
+   "drawn": 10,
+   "short_of_per_arm": 0,
+   "pr_cards_not_drawn": 5,
+   "non_pr_cards_left_out": 65
+  },
+  "T": {
+   "pr_cards": 23,
+   "drawn": 10,
+   "short_of_per_arm": 0,
+   "pr_cards_not_drawn": 13,
+   "non_pr_cards_left_out": 57
+  },
+  "C": {
+   "pr_cards": 31,
+   "drawn": 10,
+   "short_of_per_arm": 0,
+   "pr_cards_not_drawn": 21,
+   "non_pr_cards_left_out": 49
+  },
+  "D": {
+   "pr_cards": 5,
+   "drawn": 5,
+   "short_of_per_arm": 5,
+   "pr_cards_not_drawn": 0,
+   "non_pr_cards_left_out": 10
+  }
+ },
+ "per_arm_drawn": {
+  "S": 10,
+  "O": 10,
+  "T": 10,
+  "C": 10,
+  "D": 5
+ }
+}

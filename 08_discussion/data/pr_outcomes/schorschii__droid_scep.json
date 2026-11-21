@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/schorschii/Droid_SCEP/pull/2",
+    "state": "open",
+    "finding_id": "9215f97597a6",
+    "spec": "KeyPairGeneratorSpec",
+    "csv_class": "systems.sieber.droid_scep.ScepClient",
+    "method_name": "CertReq",
+    "title": "Validate RSA key sizes before enrollment",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:39:31.562494+00:00",
+    "maintainer_feedback": []
+  }
+]

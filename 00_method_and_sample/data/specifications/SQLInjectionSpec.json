@@ -1,0 +1,151 @@
+{
+  "schema_version": 2,
+  "spec_id": "SQLInjectionSpec",
+  "name": "SQLInjectionSpec",
+  "applies_to_types": [
+    "com.owncloud.android.providers.SQLInjection"
+  ],
+  "source_title": "Requested canonical CrySL source, SQLInjection.crysl — unavailable (HTTP 404)",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SQLInjection.crysl",
+  "source_verified": false,
+  "protocol": "Unverified as a CrySL protocol: ContentProvider.delete(uri, selection, selectionArgs) -> SQLiteDatabase.delete(table, whereClause, whereArgs), with a finding when externally controllable SQL-predicate text reaches whereClause rather than being confined to bound argument values.",
+  "important_note": "The requested canonical SQLInjection.crysl URL was consulted but returned HTTP 404, and the consulted CROSSINGTUD JavaCryptographicArchitecture source-directory listing does not list SQLInjection.crysl. Consequently, com.owncloud.android.providers.SQLInjection is an unverified, finding-package-qualified identity included only to meet the required XSpec naming convention; it is not evidence that this class exists in ownCloud or that it is the detector's actual target. This context describes the representative source/data-flow finding, not a verified CrySL protocol or proof of exploitability.",
+  "events": [
+    {
+      "name": "content_provider_delete_entry",
+      "api_patterns": [
+        "public int delete(Uri uri, String selection, String[] selectionArgs)",
+        "override fun delete(uri: Uri, where: String?, whereArgs: Array<String>?): Int"
+      ],
+      "condition": "Observing either substring identifies a ContentProvider deletion-entry shape only. The predicate requires additional evidence that caller-controllable selection/where text reaches a SQL predicate sink."
+    },
+    {
+      "name": "sqlite_delete_sink",
+      "api_patterns": [
+        "db.delete(",
+        "SQLiteDatabase.delete("
+      ],
+      "condition": "Observing a SQLiteDatabase deletion call identifies a potential sink only. The predicate requires evidence that its whereClause contains attacker-controlled SQL syntax or dynamically assembled predicate text without independently verified validation."
+    },
+    {
+      "name": "selection_argument_binding",
+      "api_patterns": [
+        "whereArgs",
+        "selectionArgs",
+        "\"?\""
+      ],
+      "condition": "Observing an argument array or placeholder is not itself proof of parameterization. Binding is supported only when variable values occupy placeholders in a separately controlled WHERE-clause structure and are supplied through the corresponding argument array."
+    },
+    {
+      "name": "dynamic_predicate_composition",
+      "api_patterns": [
+        "\" AND ($where)\"",
+        "\" AND (\" + where + \")\"",
+        "db.delete(ProviderTableMeta.FILE_TABLE_NAME, where, whereArgs)"
+      ],
+      "condition": "Observing these substrings is evidence of direct forwarding or composition of predicate text. A finding additionally requires attacker-controlled or otherwise untrusted flow into where; a literal or proven-safe predicate is not equivalent to injection."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that com.owncloud.android.providers.SQLInjection exists, is an Android framework type, or is the actual type declared by a CrySL rule.",
+    "Do not infer that the reported FileContentProvider implementation is currently vulnerable; the ownCloud advisory covers versions earlier than 3.0.4 and states that the provider was made unexported.",
+    "Do not infer exploitability from a SQLiteDatabase.delete call alone.",
+    "Do not infer that non-null whereArgs or selectionArgs makes a dynamic whereClause safe.",
+    "Do not infer that every provider caller is untrusted, that the provider is exported in the analyzed build, or that required permissions are absent.",
+    "Do not infer a runtime SQL execution path, affected table, disclosure, modification, or deletion impact without execution and deployment evidence.",
+    "Do not infer any specific EVENTS, ORDER, CONSTRAINTS, REQUIRES, or ENSURES clauses for the missing CrySL source."
+  ],
+  "semantic_scope": "The representative finding concerns Android ContentProvider deletion code in com.owncloud.android.providers.FileContentProvider and transfer of its where/selection predicate to android.database.sqlite.SQLiteDatabase.delete. Android documents ContentProvider.delete(Uri, String, String[]) as a deletion handler and SQLiteDatabase.delete(String, String, String[]) as accepting an optional WHERE clause plus values bound for question-mark placeholders.",
+  "detector_semantics": {
+    "claim": "The detector reports a potential SQL-injection condition when a ContentProvider delete selection/where predicate is concatenated into, or forwarded directly as, a SQLite deletion predicate without evidence that attacker-controlled SQL syntax has been neutralized.",
+    "predicates": [
+      "A ContentProvider-style delete entry point supplies a String selection/where parameter.",
+      "That value flows to SQLiteDatabase.delete's whereClause parameter, directly or through string composition.",
+      "The analysis lacks evidence that dynamic values are restricted to SQLite placeholder bindings or otherwise safely validated for the predicate grammar.",
+      "For the reported issue shape, security impact additionally depends on an attacker being able to invoke the provider path."
+    ],
+    "limitations": [
+      "No SQLInjection.crysl source was available to establish the detector's exact event vocabulary, control-flow sensitivity, taint sources, sanitizers, path conditions, or whether the message is generated by CrySL.",
+      "The representative message does not establish the exact source-to-sink path, selected URI-matcher branch, concrete table, or deployed manifest configuration.",
+      "Static observation does not establish that SQLite executed attacker-controlled SQL or that an attack succeeded."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Android documents ContentProvider.delete(Uri, String, String[]) as the provider operation for deleting rows.",
+      "Android documents SQLiteDatabase.delete(String table, String whereClause, String[] whereArgs) as a row-deletion convenience method: whereClause is an optional WHERE clause, null deletes all rows, and question marks in that clause are replaced with String values bound from whereArgs."
+    ],
+    "preconditions": [
+      "SQLiteDatabase.delete requires a non-null table name.",
+      "For documented SQLite binding, the WHERE clause contains question-mark placeholders and corresponding dynamic values are supplied in whereArgs; whereArgs may be null when whereClause is null or has no placeholders.",
+      "A ContentProvider implementation is responsible for handling delete requests and applying the selection clause to its deletion operation."
+    ],
+    "unknowns": [
+      "Whether the intended SQLInjectionSpec models android.database.sqlite.SQLiteDatabase, ContentProvider implementations, an ownCloud-specific abstraction, or an unlocated custom type named SQLInjection.",
+      "Whether the detector recognizes URI-derived values, StringBuilder operations, Kotlin interpolation, wrapper methods, allow-list validation, or framework permission checks.",
+      "Whether the representative finding corresponds exactly to ownCloud Android 2.21.1, another revision, or transformed/decompiled code."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "Potential unsafe construction or forwarding of a caller-influenced SQL WHERE predicate to SQLite deletion.",
+    "runtime_claim": "A SQL-injection vulnerability requires a reachable path in which an attacker controls SQL-grammar-bearing predicate text and SQLite evaluates that text with security-relevant effect.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Obtain the actual SQLInjection.crysl or equivalent detector-rule source and verify its SPEC-qualified type, events, ordering expression, constraints, and predicate definitions.",
+      "Inspect the exact analyzed FileContentProvider revision, including delete overloads and helpers, URI-matcher branches, manifest declaration, permissions, and input-validation or normalization code.",
+      "Establish a source-to-sink path from a caller-controlled ContentProvider selection/where parameter to SQLiteDatabase.delete's whereClause argument."
+    ],
+    "runtime": [
+      "Demonstrate that the relevant provider is externally invocable in the installed build by the tested caller identity.",
+      "Demonstrate that the selected URI route reaches the reported delete branch and receives the supplied selection/where value.",
+      "Demonstrate that a non-benign SQL predicate changes evaluated deletion semantics or has another security-relevant database effect."
+    ],
+    "compatibility": [
+      "Confirm Android API behavior for the device/API level in scope and the exact SQLiteDatabase overload used.",
+      "Confirm the ownCloud application version and manifest configuration; the ownCloud advisory identifies affected versions as earlier than 3.0.4 and says the remediation was to unexport the provider.",
+      "Confirm Kotlin/Java source representation before relying on literal source-substring matching."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "The provider is not exported, is protected by a permission, or rejects the relevant untrusted caller before delete processing.",
+    "The forwarded where/selection is a compile-time constant or is selected only from a closed, trusted allow-list.",
+    "Untrusted values are passed solely in whereArgs/selectionArgs while predicate structure is fixed and uses question-mark placeholders.",
+    "A wrapper validates the predicate against a complete grammar or strict allow-list before the observed SQLite call.",
+    "The detected db.delete call lies on an unreachable URI branch or a branch unavailable to external callers.",
+    "The reported source substring appears in test, dead, generated, or non-shipping code."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SQLInjection.crysl",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/tree/master/JavaCryptographicArchitecture/src",
+    "https://developer.android.com/reference/android/content/ContentProvider",
+    "https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase",
+    "https://owncloud.com/security-advisories/oc-sa-2023-002/"
+  ],
+  "unknowns": [
+    "The canonical source for SQLInjectionSpec has not been located. The explicitly requested raw URL was fetched and returned HTTP 404; source_verified is therefore false.",
+    "The fully qualified type declared by the intended SQLInjection CrySL rule is unknown. com.owncloud.android.providers.SQLInjection is only an unverified package-qualified placeholder derived from the reported class namespace, not a verified API declaration.",
+    "Whether SQLInjectionSpec is derived from CROSSINGTUD Crypto-API-Rules is unconfirmed; the consulted JCA corpus directory lists cryptographic rule files and does not list SQLInjection.crysl.",
+    "The exact detector implementation, sanitization model, taint-source definition, and false-positive/false-negative behavior cannot be recovered from the representative message.",
+    "The precise ownCloud revision and deployment conditions behind the finding remain unverified. The ownCloud advisory confirms a historical exported-ContentProvider SQL-injection issue affecting versions earlier than 3.0.4, but does not substitute for the missing detector specification."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.owncloud.android.providers.FileContentProvider",
+        "method": "delete",
+        "message": "expecting ContentProvider SQL predicates to be parameterized or sanitized, but delete concatenates the attacker-controlled where clause into SQLite delete predicates and also forwards it directly for several provider tables."
+      }
+    ],
+    "expected_api_simple_name": "SQLInjection",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SQLInjection.crysl"
+  }
+}

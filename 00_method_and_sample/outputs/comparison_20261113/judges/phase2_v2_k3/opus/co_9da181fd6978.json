@@ -1,0 +1,312 @@
+{
+ "unit": "co_9da181fd6978",
+ "phase": "phase2",
+ "order": [
+  "K719744c9",
+  "K40a273b6",
+  "K9b97526b",
+  "Ke1292025",
+  "Kca87e995",
+  "Kdd394128",
+  "K5cc1209d",
+  "K85d7e420",
+  "K9cff173c",
+  "K5276fa75",
+  "K8eb1a4da",
+  "Kc1ae6ce8",
+  "Kd8990aba",
+  "Kc8d73009",
+  "K376a4081",
+  "K6879d772",
+  "K8e2f674f",
+  "Ke69b71dd",
+  "K271f8017",
+  "K879c1343",
+  "Ka63702b6",
+  "K0ea946c6",
+  "Ke2a7bb86"
+ ],
+ "card_sha256": {
+  "K0ea946c6": "a7e60b04806a65db",
+  "K271f8017": "af7fd0a2d5cb79fd",
+  "K376a4081": "1c2d4067fefef29a",
+  "K40a273b6": "62dd88819a5349a6",
+  "K5276fa75": "fbcb483a8f00c0b7",
+  "K5cc1209d": "fc4ea21cecab4014",
+  "K6879d772": "18487c0323ef6787",
+  "K719744c9": "c1e374b5e004e295",
+  "K85d7e420": "71c555a422e42b55",
+  "K879c1343": "c83951199d502eec",
+  "K8e2f674f": "bb12033538c137d8",
+  "K8eb1a4da": "9d0fc35ab7901ff5",
+  "K9b97526b": "12023d36ad0a1faa",
+  "K9cff173c": "f93ce9760d3211db",
+  "Ka63702b6": "6610d7419d8efe1c",
+  "Kc1ae6ce8": "7ab24c413e8a35ac",
+  "Kc8d73009": "ce5453f48ee9125b",
+  "Kca87e995": "bc25fab33607a7b9",
+  "Kd8990aba": "a4f8707cf02b1983",
+  "Kdd394128": "a51f58080e302292",
+  "Ke1292025": "458bb027d509fb11",
+  "Ke2a7bb86": "9dc2996258e81930",
+  "Ke69b71dd": "c5338ee1ebf6712a"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "org.cry.otp.MD5 is used in only two places, and both are the Mobile-OTP (mOTP) algorithm. mOTP.gen() follows the published spec linked in the class javadoc (motp.sourceforge.net). It derives the 16-hex-char secret as MD5(seed)[0..16]. Each code is MD5(epoch/10s + secret + PIN), truncated to 6 hex chars. Profiles.java:250 uses the same MD5(seed)[0..16] to show the user the secret, which they then enter on the mOTP server. MD5 here is required by an external protocol that the server on the other end checks. The app does not choose it, and nothing here relies on collision resistance: it is a short truncated keyed OTP and a key derivation that both sides must reproduce exactly. If MD5 were replaced with SHA-256 or another digest, every code the app produces would be rejected by mOTP servers. The secret shown in the dialog would no longer match what users have already registered with servers. Every stored mOTP profile (the seed in the DB) would also stop working. So the RVSec finding is a false positive for this app. A PR that changes the digest would break the feature. An issue would only tell the maintainers that the mOTP spec uses MD5, which they already know and cannot change, so nothing useful would be sent. HOTP/TOTP are separate code paths and are not touched by this class.\n\nSecond judge: MD5 is part of the supported mOTP protocol, not an independently replaceable digest choice. mOTP.gen derives secret = MD5(seed).asHex().substring(0, 16), then returns the first six hexadecimal characters of MD5(epoch + secret + PIN). Profiles also exposes that same derived secret through View Secret for provisioning. Replacing either hash with SHA-256 would change credentials or generated codes and break existing mOTP verifiers. The report identifies a legacy cryptographic dependency but does not establish a practical authentication bypass. An issue explaining the protocol constraint and discussing coordinated migration is acceptable; taking no action on this generic rule violation is also reasonable. An algorithm-replacement PR is not justified by this finding.",
+  "must_change": [],
+  "must_not_break": [
+   "mOTP code generation in mOTP.gen() must stay byte-for-byte compatible with the Mobile-OTP spec: MD5(epoch_10s + MD5(seed)[0..16] + PIN), first 6 hex chars",
+   "Codes must still be accepted by existing mOTP servers that users have already enrolled with",
+   "The secret shown in the Profiles 'secret' dialog (MD5(seed) first 16 hex chars) must stay the same as the value already registered on servers",
+   "Existing stored mOTP profiles (seed, PIN, time zone in the DBAdapter database) must keep producing valid codes after an app update",
+   "The HOTP/TOTP code paths, which do not use this class, must not be affected",
+   "Existing mOTP profiles: seeds stored in SQLite and copied into SharedPreferences must continue deriving the same first 16 lowercase hexadecimal characters of MD5(seed), including leading zeroes.",
+   "Provisioning through Profiles' View Secret must continue showing the same secret already configured on the corresponding verifier.",
+   "mOTP generation must preserve the first six lowercase hexadecimal characters of MD5(epoch + secret + PIN), using the existing string encoding, concatenation order, configured timezone offset and ten-second time calculation.",
+   "Existing mOTP peers must remain able to validate generated codes. Changing only the client digest, silently converting profiles to HOTP/TOTP, or removing mOTP support would break supported setups."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 32,
+ "tokens": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 22638,
+  "cache_read_input_tokens": 18327,
+  "output_tokens": 3532
+ },
+ "turns": 4,
+ "tool_calls": 3,
+ "claude_reported_cost_usd": 0.2554254,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "1792b4bea3acb082",
+ "finished_at": "2026-11-16T10:10:49-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K719744c9",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Short but correct: MD5 is fixed by the Mobile-OTP spec for secret derivation and codes, so changing it breaks server compatibility."
+   },
+   {
+    "card_id": "K40a273b6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate and specific: names both call sites, gives the exact mOTP formula, and explains why neither a swap nor a dual-digest option helps."
+   },
+   {
+    "card_id": "K9b97526b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Thorough and correct: cites mOTP.java:20-24 and Profiles.java:250 and explains the server-side protocol constraint."
+   },
+   {
+    "card_id": "Ke1292025",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Brief but correct protocol-compatibility reason specific to mOTP."
+   },
+   {
+    "card_id": "Kca87e995",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly describes the mOTP seed→secret→OTP derivation and the external verifier contract, despite some tool-style phrasing."
+   },
+   {
+    "card_id": "Kdd394128",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: covers the protocol-mandated OTP hash and the enrolled-secret derivation in Profiles."
+   },
+   {
+    "card_id": "K5cc1209d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Mentions the mOTP secret/OTP derivation, but the reasoning is mostly tool-pipeline output and wrongly says the external verifier requirement is not established."
+   },
+   {
+    "card_id": "K85d7e420",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Correctly says a change would alter the displayed secret and OTP, but the reasoning leans on internal 'policy' jargon and says the verifier is unidentified instead of naming mOTP."
+   },
+   {
+    "card_id": "K9cff173c",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: Mobile-OTP mandates MD5, and the secret derivation for existing profiles would change."
+   },
+   {
+    "card_id": "K5276fa75",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct: MD5 supports mOTP secret derivation, enrollment display and code generation."
+   },
+   {
+    "card_id": "K8eb1a4da",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Detailed and accurate, with verified call sites; notes that HOTP/TOTP are unaffected."
+   },
+   {
+    "card_id": "Kc1ae6ce8",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct, specific protocol-compatibility reason covering both the codes and the secrets."
+   },
+   {
+    "card_id": "Kd8990aba",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Concise and correct mOTP compatibility reason."
+   },
+   {
+    "card_id": "Kc8d73009",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate: two callers, both mOTP; explains the server/profile breakage and HOTP/TOTP separation."
+   },
+   {
+    "card_id": "K376a4081",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct: gives the spec formula and covers the secret displayed for enrollment."
+   },
+   {
+    "card_id": "K6879d772",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific to the mOTP secret, its display and code generation."
+   },
+   {
+    "card_id": "K8e2f674f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct protocol-compatibility reason covering both codes and seed derivation."
+   },
+   {
+    "card_id": "Ke69b71dd",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate formula, call sites and interoperability reasoning."
+   },
+   {
+    "card_id": "K271f8017",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct: MD5 is an mOTP requirement, a change would regress, and an issue offers nothing to act on."
+   },
+   {
+    "card_id": "K879c1343",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct about the server-verified OTP and the provisioned secret; calling the derivation 'an app choice' is a minor quibble."
+   },
+   {
+    "card_id": "Ka63702b6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "Only tool-pipeline output ('every proposed change leaves the calls'); it never names the mOTP protocol constraint as the reason."
+   },
+   {
+    "card_id": "K0ea946c6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "The reason rests on an internal 'case policy' rather than a judgement about the code; it never identifies the mOTP protocol."
+   },
+   {
+    "card_id": "Ke2a7bb86",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: protocol-mandated OTP hash and the secret derivation for existing profiles."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

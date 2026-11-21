@@ -1,0 +1,29 @@
+2026-11-03 22:09:44,532 - INFO - Testing OpenAI connection...
+2026-11-03 22:09:45,313 - INFO - OpenAI connection successful
+2026-11-03 22:09:46,198 - INFO - ✓ Model 'gpt-5.6-terra' available
+2026-11-03 22:09:46,251 - INFO - Discovered 1 errors to process
+2026-11-03 22:09:46,256 - INFO - Processing 1 new errors (0 already complete)
+2026-11-03 22:09:46,317 - INFO - Processing: com.example.trigger.debug_408.apk/createKeyPair
+2026-11-03 22:10:26,696 - DEBUG - Running the isolated evidence pipeline for createKeyPair...
+2026-11-03 22:10:26,918 - INFO - LLM cache hit: a57fe325d039
+2026-11-03 22:10:26,985 - INFO - LLM cache hit: 6c39877c04de
+2026-11-03 22:10:27,072 - INFO - LLM cache hit: b2fcb008c8a5
+2026-11-03 22:10:27,146 - INFO - LLM cache hit: 1b47a798744b
+2026-11-03 22:11:33,362 - INFO - Supplemented evidence for createKeyPair (app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519): 3 of 3 requests answered from the repository with 3 entries (SUP-001, SUP-002, SUP-003)
+2026-11-03 22:13:34,382 - INFO - createKeyPair: generation blockers a reviewer settles (compatibility_contract) moved to publication; decision is now MULTI_FILE_FIX_PROPOSED_FOR_REVIEW
+2026-11-03 22:14:51,624 - DEBUG - Calling persisted per-file coordinated generation for createKeyPair...
+2026-11-03 22:14:51,625 - INFO - createKeyPair: adjudication judged the current code correct use; one reviewed draft, no retries or replan
+2026-11-03 22:16:02,138 - INFO - createKeyPair: violation without security impact: The reported factory use requests "ED25519", which is a documented Java KeyPairGenerator standard algorithm name (WEB-002, WEB-009). KeyPairGenerator is expressly provider-based and its factory/initialization behavior is documented by the JCA API (WEB-001). The CrySL allowlist excludes this documented algorithm, but replacing it with RSA, EC, DSA, DH, or DiffieHellman would change the selected SSH identity algorithm, its encoded key material, and the application's advertised ED25519 support; it would not preserve what this code generates and later supplies for SSH authentication (SRC-001, SRC-008, SRC-009, SRC-010, CALLEE-003).
+2026-11-03 22:16:02,139 - WARNING - Persisted coordinated generation failed for createKeyPair: UNINTENDED_BEHAVIOR_CHANGE; manifest=/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_trigger_20261028/run_ab56/error_solutions/coordinated_drafts/com.example.trigger.debug_408.apk/0_createKeyPair/manifest.json
+2026-11-03 22:16:02,144 - INFO - [1/1] createKeyPair
+2026-11-03 22:16:02,157 - WARNING - No safe fix generated
+2026-11-03 22:16:02,200 - INFO - Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_trigger_20261028/run_ab56/error_solutions/solutions_tracking.json
+2026-11-03 22:16:02,205 - INFO - Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_trigger_20261028/run_ab56/error_solutions/analysis_summary.txt
+2026-11-03 22:16:02,206 - INFO - ======================================================================
+2026-11-03 22:16:02,206 - INFO - ANALYSIS COMPLETE
+2026-11-03 22:16:02,207 - INFO - Analyzed: 1/1
+2026-11-03 22:16:02,207 - INFO - Fixes generated: 0
+2026-11-03 22:16:02,208 - INFO - Confirmed external-contract findings: 0
+2026-11-03 22:16:02,208 - INFO - Issue candidates: 0
+2026-11-03 22:16:02,208 - INFO - Time: 00h 06m 16s
+2026-11-03 22:16:02,209 - INFO - LLM cache: 4 hit(s), 8 miss(es)

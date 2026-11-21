@@ -1,0 +1,185 @@
+{
+ "https://github.com/0xzhangke/fread/pull/168": [
+  "ape:sata"
+ ],
+ "https://github.com/aivanovski/keepassvault/pull/347": [
+  "ape"
+ ],
+ "https://github.com/anenasa/androidtv-news/pull/14": [
+  "static:manual"
+ ],
+ "https://github.com/binwiederhier/ntfy-android/pull/184": [
+  "ape"
+ ],
+ "https://github.com/bitcraze/crazyflie-android-client/pull/103": [
+  "ape"
+ ],
+ "https://github.com/bombusmod/bombusmod/pull/316": [
+  "ares"
+ ],
+ "https://github.com/chiu-xah/hfut-schedule/pull/109": [
+  "static:manual"
+ ],
+ "https://github.com/christianrowlands/android-network-survey/pull/149": [
+  "web_research"
+ ],
+ "https://github.com/christianrowlands/android-network-survey/pull/154": [
+  "ape"
+ ],
+ "https://github.com/crazy-marvin/metadataremover/pull/264": [
+  "ape"
+ ],
+ "https://github.com/crustack/notallyx/pull/1167": [
+  "rvsec"
+ ],
+ "https://github.com/domi04151309/homeapp/pull/114": [
+  "static:manual"
+ ],
+ "https://github.com/etesync/android/pull/301": [
+  "ape"
+ ],
+ "https://github.com/fliegendewurst/triliumdroid/pull/177": [
+  "rvsec"
+ ],
+ "https://github.com/fossifyorg/gallery/pull/1145": [
+  "web_research"
+ ],
+ "https://github.com/freeotp/freeotp-android/pull/521": [
+  "ares"
+ ],
+ "https://github.com/freeotp/freeotp-android/pull/524": [
+  "ares"
+ ],
+ "https://github.com/gigabytedevelopers/cometotp/pull/114": [
+  "rvsec"
+ ],
+ "https://github.com/hanjoongcho/aaf-easydiary/pull/253": [
+  "static:manual"
+ ],
+ "https://github.com/hiddenramblings/tagmo/pull/765": [
+  "static:manual"
+ ],
+ "https://github.com/idunnololz/summit/pull/54": [
+  "rvsec"
+ ],
+ "https://github.com/itzskyeyt/intertune/pull/52": [
+  "rvsec"
+ ],
+ "https://github.com/javalc6/rssreader/pull/4": [
+  "ape:sata"
+ ],
+ "https://github.com/jenspfahl/anotherpass/pull/103": [
+  "ape:sata"
+ ],
+ "https://github.com/jimvixx/shortmessagesecure/pull/83": [
+  "ape:sata"
+ ],
+ "https://github.com/jimvixx/shortmessagesecure/pull/89": [
+  "monkey:fast"
+ ],
+ "https://github.com/leekleak/traffic-light/pull/238": [
+  "ape"
+ ],
+ "https://github.com/legal-hkr/comfychair/pull/43": [
+  "static:manual"
+ ],
+ "https://github.com/michaelwuensch/bitbanana/pull/184": [
+  "ape"
+ ],
+ "https://github.com/mouse233/localsend-kotlin/pull/58": [
+  "rvsec"
+ ],
+ "https://github.com/mretallack/slimbook/pull/3": [
+  "static:manual"
+ ],
+ "https://github.com/nelenkov/wwwjdic/pull/115": [
+  "humanoid"
+ ],
+ "https://github.com/nextcloud/news-android/pull/1716": [
+  "ape"
+ ],
+ "https://github.com/omaawr/tuisku/pull/11": [
+  "static:manual"
+ ],
+ "https://github.com/omaawr/tuisku/pull/12": [
+  "static:manual"
+ ],
+ "https://github.com/openhab/openhab-android/pull/4039": [
+  "ape"
+ ],
+ "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121": [
+  "rvsec"
+ ],
+ "https://github.com/ounben/amaradio/pull/122": [
+  "rvsec"
+ ],
+ "https://github.com/paroj/dsub2000/pull/160": [
+  "ape"
+ ],
+ "https://github.com/paroj/dsub2000/pull/178": [
+  "ape"
+ ],
+ "https://github.com/patzly/grocy-android/pull/1012": [
+  "rvsec"
+ ],
+ "https://github.com/patzly/grocy-android/pull/1013": [
+  "rvsec"
+ ],
+ "https://github.com/privacydragon/bookwyrm_android/pull/29": [
+  "rvsec"
+ ],
+ "https://github.com/readyouapp/readyou/pull/1334": [
+  "rvsec"
+ ],
+ "https://github.com/schorschii/droid_scep/pull/2": [
+  "ape"
+ ],
+ "https://github.com/session-foundation/session-android/pull/2241": [
+  "ape:sata"
+ ],
+ "https://github.com/silentcoderhere/aihub/pull/279": [
+  "static:semgrep"
+ ],
+ "https://github.com/spacecowboy/feeder/pull/1210": [
+  "droidbot:dfs_naive"
+ ],
+ "https://github.com/stardomains3/oxproxion/pull/94": [
+  "static:manual"
+ ],
+ "https://github.com/thatsfguy/meshcore-mobile-app/pull/10": [
+  "rvsec"
+ ],
+ "https://github.com/thuryn/your-local-weather/pull/209": [
+  "rvsec"
+ ],
+ "https://github.com/tokn-authenticator/tokn/pull/138": [
+  "ape"
+ ],
+ "https://github.com/valent-in/auto-shine/pull/12": [
+  "static:manual"
+ ],
+ "https://github.com/vauth/salty-app/pull/6": [
+  "rvsec"
+ ],
+ "https://github.com/vitorpamplona/amethyst/pull/4642": [
+  "rvsec"
+ ],
+ "https://github.com/vremsoftwaredevelopment/wifianalyzer/pull/618": [
+  "ape"
+ ],
+ "https://github.com/wilm0r/giggity/pull/543": [
+  "ape"
+ ],
+ "https://github.com/wolpi/prim-ftpd/pull/453": [
+  "rvsec"
+ ],
+ "https://github.com/yogeshpaliyal/keypass/pull/1252": [
+  "rvsec"
+ ],
+ "https://github.com/zamojski/towercollector/pull/284": [
+  "web_research"
+ ],
+ "https://github.com/zfdang/zsmth-android/pull/66": [
+  "rvsec"
+ ]
+}

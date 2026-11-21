@@ -1,0 +1,1648 @@
+{
+ "plan": "docs/PLANO_VALIDACAO_DINAMICA.md section 1",
+ "cases": {
+  "tokn_19": {
+   "config": {
+    "packages": [
+     "me.diamondforge.tokn"
+    ],
+    "spec": "KeyStoreSpec",
+    "code": "KEYSTORE-ORDER-00",
+    "message": "the observed call sequence is not one KeyStoreSpec accepts",
+    "base_sites": [
+     [
+      "me.diamondforge.tokn.security.KeystoreManager",
+      "getOrCreateKey"
+     ]
+    ],
+    "patched_sites": [
+     [
+      "me.diamondforge.tokn.security.KeystoreManager",
+      "getOrCreateKey"
+     ]
+    ],
+    "note": ""
+   },
+   "runs": {
+    "base_r1": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata",
+      "monkey:fast"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "me.diamondforge.tokn.security.KeystoreManager.getOrCreateKey [KEYSTORE-ORDER-00] v=1 code=KEYSTORE-ORDER-00 ev=ge1 obj=KeyStore val='' exp='' msg='the observed call sequence is not one KeyStoreSpec accepts'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 668,
+       "reports": 5,
+       "methods_reached": 3377,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 666,
+       "reports": 5,
+       "methods_reached": 3601,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 3708
+    },
+    "patched_r1": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 657,
+       "reports": 2,
+       "methods_reached": 2572,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 664,
+       "reports": 2,
+       "methods_reached": 4527,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 4217
+    },
+    "base_r2": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata",
+      "monkey:fast"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "me.diamondforge.tokn.security.KeystoreManager.getOrCreateKey [KEYSTORE-ORDER-00] v=1 code=KEYSTORE-ORDER-00 ev=ge1 obj=KeyStore val='' exp='' msg='the observed call sequence is not one KeyStoreSpec accepts'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 671,
+       "reports": 5,
+       "methods_reached": 2435,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 658,
+       "reports": 5,
+       "methods_reached": 3760,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 3448
+    },
+    "patched_r2": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 673,
+       "reports": 2,
+       "methods_reached": 2711,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 657,
+       "reports": 2,
+       "methods_reached": 3159,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 2833
+    },
+    "base_r3": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata",
+      "monkey:fast"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "me.diamondforge.tokn.security.KeystoreManager.getOrCreateKey [KEYSTORE-ORDER-00] v=1 code=KEYSTORE-ORDER-00 ev=ge1 obj=KeyStore val='' exp='' msg='the observed call sequence is not one KeyStoreSpec accepts'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 686,
+       "reports": 5,
+       "methods_reached": 2785,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 655,
+       "reports": 5,
+       "methods_reached": 3178,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 3048
+    },
+    "patched_r3": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 675,
+       "reports": 4,
+       "methods_reached": 3221,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 663,
+       "reports": 2,
+       "methods_reached": 2977,
+       "site_methods_reached": [
+        "me.diamondforge.tokn.security.KeystoreManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 3145
+    }
+   },
+   "summary": {
+    "base_finished": 3,
+    "patched_finished": 3,
+    "base_reproduces": 3,
+    "base_covered": 3,
+    "patched_violation": 0,
+    "patched_same_message": 0,
+    "patched_covered": 3,
+    "incomplete": false,
+    "result": "corrigido"
+   }
+  },
+  "bitbanana_79": {
+   "config": {
+    "packages": [
+     "app.michaelwuensch.bitbanana"
+    ],
+    "spec": "PBEKeySpecSpec",
+    "code": "PBEKEYSPEC-CONSTR-00",
+    "message": "the third argument should be >= 10000",
+    "base_sites": [
+     [
+      "app.michaelwuensch.bitbanana.util.UtilFunctions",
+      "encodePbkdf2"
+     ]
+    ],
+    "patched_sites": [
+     [
+      "app.michaelwuensch.bitbanana.util.UtilFunctions",
+      "encodeCurrentAppLockPbkdf2"
+     ],
+     [
+      "app.michaelwuensch.bitbanana.util.UtilFunctions",
+      "encodeLegacyAppLockPbkdf2"
+     ],
+     [
+      "app.michaelwuensch.bitbanana.util.UtilFunctions",
+      "encodePbkdf2"
+     ]
+    ],
+    "note": "encodePbkdf2 runs only from the app-lock password/PIN setup and entry screens; the explorers must turn an app lock on. The patch renames the method, so the patched sites are encodeCurrentAppLockPbkdf2 / encodeLegacyAppLockPbkdf2."
+   },
+   "runs": {
+    "base_r1": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": false,
+     "covered_by": [],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 665,
+       "reports": 23,
+       "methods_reached": 2986,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "ERROR",
+       "seconds": 56,
+       "reports": 0,
+       "methods_reached": 3813,
+       "site_methods_reached": [],
+       "error": "TaskExecutionError: EmulatorError: Failed to install app app.michaelwuensch.bitbanana.debug_81.apk caused by RuntimeError: APK installation failed for app.michaelwuensch.bitbanana.debug_81.apk on emul"
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 661,
+       "reports": 26,
+       "methods_reached": 3813,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 1490
+    },
+    "patched_r1": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": false,
+     "covered_by": [],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 665,
+       "reports": 26,
+       "methods_reached": 3013,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 659,
+       "reports": 26,
+       "methods_reached": 5218,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 1481
+    },
+    "base_r2": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "app.michaelwuensch.bitbanana.util.UtilFunctions.encodePbkdf2 [PBEKEYSPEC-CONSTR-00] v=1 code=PBEKEYSPEC-CONSTR-00 ev=c1 obj=PBEKeySpec val='5000' exp='>= 10000' msg='the third argument should be >= 10000'",
+      "app.michaelwuensch.bitbanana.util.UtilFunctions.encodePbkdf2 [PBEKEYSPEC-NOBS-01] v=1 code=PBEKEYSPEC-NOBS-01 ev=c1 obj=PBEKeySpec val='' exp='a randomized byte[]' msg='the second argument was not observed to come from a randomized source' vfp='sha256:9ffdc54e15abd290'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 681,
+       "reports": 20,
+       "methods_reached": 2532,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 654,
+       "reports": 36,
+       "methods_reached": 3945,
+       "site_methods_reached": [
+        "app.michaelwuensch.bitbanana.util.UtilFunctions::encodePbkdf2"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 1626
+    },
+    "patched_r2": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": false,
+     "covered_by": [],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 677,
+       "reports": 23,
+       "methods_reached": 2719,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 660,
+       "reports": 26,
+       "methods_reached": 4990,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 1403
+    },
+    "base_r3": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": false,
+     "covered_by": [],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 704,
+       "reports": 23,
+       "methods_reached": 2764,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 682,
+       "reports": 26,
+       "methods_reached": 5026,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 1463
+    },
+    "patched_r3": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": false,
+     "covered_by": [],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 685,
+       "reports": 23,
+       "methods_reached": 3039,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 655,
+       "reports": 26,
+       "methods_reached": 5196,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 1552
+    }
+   },
+   "summary": {
+    "base_finished": 3,
+    "patched_finished": 3,
+    "base_reproduces": 1,
+    "base_covered": 1,
+    "patched_violation": 0,
+    "patched_same_message": 0,
+    "patched_covered": 0,
+    "incomplete": false,
+    "result": "inconclusivo (cobertura)"
+   }
+  },
+  "untis_29198884": {
+   "config": {
+    "packages": [
+     "com.sapuseven.untis"
+    ],
+    "spec": "MessageDigestSpec",
+    "code": "MESSAGEDIGEST-ALG-02",
+    "message": "expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5",
+    "base_sites": [
+     [
+      "com.sapuseven.untis.core.data.cache.DiskCache",
+      "getCacheFile"
+     ],
+     [
+      "com.sapuseven.untis.data.cache.DiskCache",
+      "getCacheFile"
+     ]
+    ],
+    "patched_sites": [
+     [
+      "com.sapuseven.untis.core.data.cache.DiskCache",
+      "getCacheFile"
+     ],
+     [
+      "com.sapuseven.untis.data.cache.DiskCache",
+      "getCacheFile"
+     ]
+    ],
+    "note": "BetterUntis normally needs a WebUntis school login; the cache may not be written without one."
+   },
+   "runs": {
+    "base_r1": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata"
+     ],
+     "reports_at_site": 3,
+     "messages": [
+      "com.sapuseven.untis.core.data.cache.DiskCache.getCacheFile [MESSAGEDIGEST-ALG-02] v=1 code=MESSAGEDIGEST-ALG-02 ev=g4 obj=MessageDigest val='MD5' exp='SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512' msg='expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5'",
+      "com.sapuseven.untis.core.data.cache.DiskCache.getCacheFile [MESSAGEDIGEST-ALG-01] v=1 code=MESSAGEDIGEST-ALG-01 ev=d2 obj=MessageDigest val='MD5' exp='SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512' msg='expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5'",
+      "com.sapuseven.untis.core.data.cache.DiskCache.getCacheFile [MESSAGEDIGEST-ORDER-02] v=1 code=MESSAGEDIGEST-ORDER-02 ev=d2 obj=MessageDigest val='' exp='' msg='the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 668,
+       "reports": 25,
+       "methods_reached": 4921,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 673,
+       "reports": 23,
+       "methods_reached": 8141,
+       "site_methods_reached": [
+        "com.sapuseven.untis.core.data.cache.DiskCache::getCacheFile"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 4437
+    },
+    "patched_r1": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 671,
+       "reports": 19,
+       "methods_reached": 4563,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 657,
+       "reports": 20,
+       "methods_reached": 8908,
+       "site_methods_reached": [
+        "com.sapuseven.untis.core.data.cache.DiskCache::getCacheFile"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 4913
+    },
+    "base_r2": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata"
+     ],
+     "reports_at_site": 3,
+     "messages": [
+      "com.sapuseven.untis.core.data.cache.DiskCache.getCacheFile [MESSAGEDIGEST-ALG-02] v=1 code=MESSAGEDIGEST-ALG-02 ev=g4 obj=MessageDigest val='MD5' exp='SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512' msg='expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5'",
+      "com.sapuseven.untis.core.data.cache.DiskCache.getCacheFile [MESSAGEDIGEST-ALG-01] v=1 code=MESSAGEDIGEST-ALG-01 ev=d2 obj=MessageDigest val='MD5' exp='SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512' msg='expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5'",
+      "com.sapuseven.untis.core.data.cache.DiskCache.getCacheFile [MESSAGEDIGEST-ORDER-02] v=1 code=MESSAGEDIGEST-ORDER-02 ev=d2 obj=MessageDigest val='' exp='' msg='the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 682,
+       "reports": 19,
+       "methods_reached": 4779,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 660,
+       "reports": 23,
+       "methods_reached": 8595,
+       "site_methods_reached": [
+        "com.sapuseven.untis.core.data.cache.DiskCache::getCacheFile"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 4500
+    },
+    "patched_r2": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 674,
+       "reports": 19,
+       "methods_reached": 4800,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 664,
+       "reports": 20,
+       "methods_reached": 7755,
+       "site_methods_reached": [
+        "com.sapuseven.untis.core.data.cache.DiskCache::getCacheFile"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 3930
+    },
+    "base_r3": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata"
+     ],
+     "reports_at_site": 3,
+     "messages": [
+      "com.sapuseven.untis.core.data.cache.DiskCache.getCacheFile [MESSAGEDIGEST-ALG-02] v=1 code=MESSAGEDIGEST-ALG-02 ev=g4 obj=MessageDigest val='MD5' exp='SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512' msg='expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5'",
+      "com.sapuseven.untis.core.data.cache.DiskCache.getCacheFile [MESSAGEDIGEST-ALG-01] v=1 code=MESSAGEDIGEST-ALG-01 ev=d2 obj=MessageDigest val='MD5' exp='SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512' msg='expecting one of SHA-256,SHA-384,SHA-512,SHA256,SHA384,SHA512 but found MD5'",
+      "com.sapuseven.untis.core.data.cache.DiskCache.getCacheFile [MESSAGEDIGEST-ORDER-02] v=1 code=MESSAGEDIGEST-ORDER-02 ev=d2 obj=MessageDigest val='' exp='' msg='the observed call sequence is not one MessageDigestSpec accepts, after a creation the specification refused'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 680,
+       "reports": 19,
+       "methods_reached": 4524,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 656,
+       "reports": 23,
+       "methods_reached": 9185,
+       "site_methods_reached": [
+        "com.sapuseven.untis.core.data.cache.DiskCache::getCacheFile"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 5201
+    },
+    "patched_r3": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": false,
+     "covered_by": [],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 681,
+       "reports": 19,
+       "methods_reached": 4543,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 662,
+       "reports": 20,
+       "methods_reached": 4900,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 1567
+    }
+   },
+   "summary": {
+    "base_finished": 3,
+    "patched_finished": 3,
+    "base_reproduces": 3,
+    "base_covered": 3,
+    "patched_violation": 0,
+    "patched_same_message": 0,
+    "patched_covered": 2,
+    "incomplete": false,
+    "result": "corrigido"
+   }
+  },
+  "networksurvey_114": {
+   "config": {
+    "packages": [
+     "com.craxiom.networksurvey",
+     "com.craxiom"
+    ],
+    "spec": "KeyStoreSpec",
+    "code": "KEYSTORE-ORDER-00",
+    "message": "the observed call sequence is not one KeyStoreSpec accepts",
+    "base_sites": [
+     [
+      "com.craxiom.networksurvey.util.CryptoManager",
+      "getOrCreateKey"
+     ]
+    ],
+    "patched_sites": [
+     [
+      "com.craxiom.networksurvey.util.CryptoManager",
+      "getOrCreateKey"
+     ]
+    ],
+    "run_dirs": {
+     "base": "base_nobb",
+     "patched": "patched_nobb"
+    },
+    "note": "APKs rebuilt without net.bytebuddy in both variants (same commit, same Gradle task): RVSec could not instrument the first builds (dexlib2 failed on bytebuddy; base_r*/patched_r* unexplorable x6). base_nobb_r1 was rerun after the first attempt died of SIGHUP (exit 129) after 21 s; that attempt is kept as base_nobb_r1.hup_20261115."
+   },
+   "runs": {
+    "base_r1": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata"
+     ],
+     "reports_at_site": 1,
+     "messages": [
+      "com.craxiom.networksurvey.util.CryptoManager.getOrCreateKey [KEYSTORE-ORDER-00] v=1 code=KEYSTORE-ORDER-00 ev=ge1 obj=KeyStore val='' exp='' msg='the observed call sequence is not one KeyStoreSpec accepts'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 693,
+       "reports": 3,
+       "methods_reached": 10758,
+       "site_methods_reached": [],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 665,
+       "reports": 18,
+       "methods_reached": 12164,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 7693
+    },
+    "patched_r1": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 679,
+       "reports": 3,
+       "methods_reached": 11916,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 657,
+       "reports": 5,
+       "methods_reached": 9089,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 8098
+    },
+    "base_r2": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata",
+      "monkey:fast"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "com.craxiom.networksurvey.util.CryptoManager.getOrCreateKey [KEYSTORE-ORDER-00] v=1 code=KEYSTORE-ORDER-00 ev=ge1 obj=KeyStore val='' exp='' msg='the observed call sequence is not one KeyStoreSpec accepts'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 684,
+       "reports": 8,
+       "methods_reached": 9198,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 663,
+       "reports": 8,
+       "methods_reached": 12155,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 7831
+    },
+    "patched_r2": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 691,
+       "reports": 5,
+       "methods_reached": 13187,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 659,
+       "reports": 5,
+       "methods_reached": 10227,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 8115
+    },
+    "base_r3": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata",
+      "monkey:fast"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "com.craxiom.networksurvey.util.CryptoManager.getOrCreateKey [KEYSTORE-ORDER-00] v=1 code=KEYSTORE-ORDER-00 ev=ge1 obj=KeyStore val='' exp='' msg='the observed call sequence is not one KeyStoreSpec accepts'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 687,
+       "reports": 18,
+       "methods_reached": 12216,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 657,
+       "reports": 8,
+       "methods_reached": 12333,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 8370
+    },
+    "patched_r3": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 691,
+       "reports": 15,
+       "methods_reached": 14838,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 664,
+       "reports": 5,
+       "methods_reached": 10005,
+       "site_methods_reached": [
+        "com.craxiom.networksurvey.util.CryptoManager::getOrCreateKey"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 8840
+    }
+   },
+   "summary": {
+    "base_finished": 3,
+    "patched_finished": 3,
+    "base_reproduces": 3,
+    "base_covered": 3,
+    "patched_violation": 0,
+    "patched_same_message": 0,
+    "patched_covered": 3,
+    "incomplete": false,
+    "result": "corrigido"
+   }
+  },
+  "passnotes_11700": {
+   "config": {
+    "packages": [
+     "com.ivanovsky.passnotes"
+    ],
+    "spec": "SSLContextSpec",
+    "code": "SSLCONTEXT-NOBS-05",
+    "message": "the TrustManager[] given to SSLContext.init holds a manager of a class the application defines and was not observed coming from a TrustManagerFactory",
+    "base_sites": [
+     [
+      "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+      "createHttpClient"
+     ]
+    ],
+    "patched_sites": [
+     [
+      "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory",
+      "createHttpClient"
+     ]
+    ],
+    "note": "The violating branch is `BuildConfig.DEBUG && type == UNSECURE`: it runs only after a WebDAV client of type UNSECURE is created, which needs a WebDAV server set up in the UI. The patch keeps SSLContext.getInstance(\"TLS\") and the hostname verifier; another SSLContextSpec message at the same site counts as a violation in the plan's table and is shown under 'messages'."
+   },
+   "runs": {
+    "base_r1": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 671,
+       "reports": 6,
+       "methods_reached": 4201,
+       "site_methods_reached": [
+        "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory::createHttpClient"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 656,
+       "reports": 21,
+       "methods_reached": 6124,
+       "site_methods_reached": [
+        "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory::createHttpClient"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 3419
+    },
+    "patched_r1": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 676,
+       "reports": 6,
+       "methods_reached": 4185,
+       "site_methods_reached": [
+        "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory::createHttpClient"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 655,
+       "reports": 0,
+       "methods_reached": 3117,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 2786
+    },
+    "base_r2": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 684,
+       "reports": 6,
+       "methods_reached": 4245,
+       "site_methods_reached": [
+        "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory::createHttpClient"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 660,
+       "reports": 15,
+       "methods_reached": 4558,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 3345
+    },
+    "patched_r2": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 674,
+       "reports": 3,
+       "methods_reached": 3708,
+       "site_methods_reached": [
+        "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory::createHttpClient"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 658,
+       "reports": 18,
+       "methods_reached": 5175,
+       "site_methods_reached": [
+        "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory::createHttpClient"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 3152
+    },
+    "base_r3": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast"
+     ],
+     "violating_tools": [
+      "monkey:fast"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory.createHttpClient [SSLCONTEXT-NOBS-03] v=1 code=SSLCONTEXT-NOBS-03 ev=init obj=SSLContext val='TLS' exp='a KeyManager[] an observed KeyManagerFactory returned' msg='a null KeyManager[] given to SSLContext.init requests the platform default",
+      "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory.createHttpClient [SSLCONTEXT-NOBS-05] v=1 code=SSLCONTEXT-NOBS-05 ev=init obj=SSLContext val='TLS' exp='a TrustManager[] an observed TrustManagerFactory returned' msg='the TrustManager[] given to SSLContext.init holds a manager of a class"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 681,
+       "reports": 8,
+       "methods_reached": 4327,
+       "site_methods_reached": [
+        "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory::createHttpClient"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 655,
+       "reports": 18,
+       "methods_reached": 5240,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 3336
+    },
+    "patched_r3": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 681,
+       "reports": 6,
+       "methods_reached": 4362,
+       "site_methods_reached": [
+        "com.ivanovsky.passnotes.data.repository.file.webdav.HttpClientFactory::createHttpClient"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 654,
+       "reports": 3,
+       "methods_reached": 3914,
+       "site_methods_reached": [],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 2921
+    }
+   },
+   "summary": {
+    "base_finished": 3,
+    "patched_finished": 3,
+    "base_reproduces": 1,
+    "base_covered": 3,
+    "patched_violation": 0,
+    "patched_same_message": 0,
+    "patched_covered": 3,
+    "incomplete": false,
+    "result": "corrigido"
+   }
+  },
+  "trafficlight_38": {
+   "config": {
+    "packages": [
+     "com.leekleak.trafficlight"
+    ],
+    "spec": "KeyStoreSpec",
+    "code": "KEYSTORE-ORDER-00",
+    "message": "the observed call sequence is not one KeyStoreSpec accepts",
+    "base_sites": [
+     [
+      "com.leekleak.trafficlight.database.CryptoManager",
+      "getSecretKey"
+     ]
+    ],
+    "patched_sites": [
+     [
+      "com.leekleak.trafficlight.database.CryptoManager",
+      "getSecretKey"
+     ]
+    ],
+    "note": ""
+   },
+   "runs": {
+    "base_r1": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata",
+      "monkey:fast"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "com.leekleak.trafficlight.database.CryptoManager.getSecretKey$lambda$0 [KEYSTORE-ORDER-00] v=1 code=KEYSTORE-ORDER-00 ev=ge1 obj=KeyStore val='' exp='' msg='the observed call sequence is not one KeyStoreSpec accepts'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 680,
+       "reports": 3,
+       "methods_reached": 1062,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 653,
+       "reports": 4,
+       "methods_reached": 1064,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 805
+    },
+    "patched_r1": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 677,
+       "reports": 2,
+       "methods_reached": 1060,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 653,
+       "reports": 2,
+       "methods_reached": 1062,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 811
+    },
+    "base_r2": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata",
+      "monkey:fast"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "com.leekleak.trafficlight.database.CryptoManager.getSecretKey$lambda$0 [KEYSTORE-ORDER-00] v=1 code=KEYSTORE-ORDER-00 ev=ge1 obj=KeyStore val='' exp='' msg='the observed call sequence is not one KeyStoreSpec accepts'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 684,
+       "reports": 3,
+       "methods_reached": 1062,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 660,
+       "reports": 4,
+       "methods_reached": 1070,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 811
+    },
+    "patched_r2": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 679,
+       "reports": 2,
+       "methods_reached": 1059,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 661,
+       "reports": 2,
+       "methods_reached": 1062,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 803
+    },
+    "base_r3": {
+     "state": "done",
+     "violation": true,
+     "same_message": true,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [
+      "ape:sata",
+      "monkey:fast"
+     ],
+     "reports_at_site": 2,
+     "messages": [
+      "com.leekleak.trafficlight.database.CryptoManager.getSecretKey$lambda$0 [KEYSTORE-ORDER-00] v=1 code=KEYSTORE-ORDER-00 ev=ge1 obj=KeyStore val='' exp='' msg='the observed call sequence is not one KeyStoreSpec accepts'"
+     ],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 683,
+       "reports": 3,
+       "methods_reached": 1062,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 656,
+       "reports": 4,
+       "methods_reached": 1056,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 805
+    },
+    "patched_r3": {
+     "state": "done",
+     "violation": false,
+     "same_message": false,
+     "covered": true,
+     "covered_by": [
+      "monkey:fast",
+      "ape:sata"
+     ],
+     "violating_tools": [],
+     "reports_at_site": 0,
+     "messages": [],
+     "tasks": [
+      {
+       "tool": "monkey:fast",
+       "state": "COMPLETED",
+       "seconds": 681,
+       "reports": 2,
+       "methods_reached": 1060,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      },
+      {
+       "tool": "ape:sata",
+       "state": "COMPLETED",
+       "seconds": 656,
+       "reports": 2,
+       "methods_reached": 1064,
+       "site_methods_reached": [
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$0",
+        "com.leekleak.trafficlight.database.CryptoManager::getSecretKey$lambda$1"
+       ],
+       "error": ""
+      }
+     ],
+     "app_methods_reached": 805
+    }
+   },
+   "summary": {
+    "base_finished": 3,
+    "patched_finished": 3,
+    "base_reproduces": 3,
+    "base_covered": 3,
+    "patched_violation": 0,
+    "patched_same_message": 0,
+    "patched_covered": 3,
+    "incomplete": false,
+    "result": "corrigido"
+   }
+  }
+ },
+ "totals": {
+  "cases": 6,
+  "corrigido": 5,
+  "nao_corrigido": 0,
+  "inconclusivo_cobertura": 1,
+  "base_nao_reproduz": 0,
+  "pendente": 0
+ }
+}

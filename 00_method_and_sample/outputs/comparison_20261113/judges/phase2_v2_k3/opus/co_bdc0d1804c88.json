@@ -1,0 +1,306 @@
+{
+ "unit": "co_bdc0d1804c88",
+ "phase": "phase2",
+ "order": [
+  "K07076238",
+  "Ke3aff027",
+  "K2c9edc44",
+  "K03efa06b",
+  "Kc8550043",
+  "Ke2a39f93",
+  "K97e6decd",
+  "K69a32893",
+  "Kf097cf60",
+  "K9be16361",
+  "K384e8289",
+  "K8315ce84",
+  "K70124f3a",
+  "Kb45aaa15",
+  "K599b3a3d",
+  "Kb50656ab",
+  "K9b3210a2",
+  "K2a273f4f",
+  "Ka07e6b0f",
+  "Kf4144d95",
+  "Ka8175d17",
+  "Ka5b4a4cb"
+ ],
+ "card_sha256": {
+  "K03efa06b": "40ccef8aa7b67ac8",
+  "K07076238": "6c32bd3c05e3989a",
+  "K2a273f4f": "988e5bc013d59905",
+  "K2c9edc44": "c66e908f1282c896",
+  "K384e8289": "a7744c23b4ae0d2f",
+  "K599b3a3d": "f68ff612ca6a52e0",
+  "K69a32893": "d6632f3d246ef2a1",
+  "K70124f3a": "4b845d583e844487",
+  "K8315ce84": "3129dd27c3407394",
+  "K97e6decd": "f8083bf0417435cd",
+  "K9b3210a2": "80d64d4291a959b6",
+  "K9be16361": "929d0d0cc93a9089",
+  "Ka07e6b0f": "8f8d92ff602840df",
+  "Ka5b4a4cb": "86c510a072e86dce",
+  "Ka8175d17": "e49c1284a456a198",
+  "Kb45aaa15": "e3b11005c9082d3a",
+  "Kb50656ab": "55edf57985ad9fd9",
+  "Kc8550043": "8da83cb0157714f4",
+  "Ke2a39f93": "94ba8375bd8c0e3c",
+  "Ke3aff027": "8b7cec72bbfe4c41",
+  "Kf097cf60": "24d0bfe92bd2e24b",
+  "Kf4144d95": "97c67ad11bd2288b"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive for cryptographic misuse. In AccessPointsAdapterData.calculateChildType (and the identical GraphWrapper.calculateGraphType), MD5 runs over the app's own public package name (mainActivity.packageName). The 16-byte digest is then reduced to a 32-bit Int with ByteArray.contentHashCode(). That Int is compared with the hard-coded constants TYPE1/TYPE2/TYPE3 in GraphConstants.kt (1147798476, 535509942, 1256180258). These are precomputed fingerprints of the official application IDs: com.vrem.wifianalyzer, plus the .BETA/debug suffix variants from app/build.gradle. The result sets Configuration.size to SIZE_MAX or SIZE_MIN. Configuration.sizeAvailable then quietly degrades Cache signal averaging (Cache.kt:64/88) and adds an \"S\" flag in AboutFragment. So this is an obfuscated anti-repackaging or clone-detection check. It is not a security control. No secret, password, signature, integrity check of untrusted data, stored data or protocol is involved. The input is a public string, the comparison has only 32 bits, and anyone who repackages the app can patch the comparison out. Collision resistance therefore protects nothing, and SHA-256 adds no security. Changing the algorithm would require recomputing all three magic constants. If any one is wrong, the official build silently drops to SIZE_MIN and shows degraded signal readings. That is a regression for real users that unit tests (which mock sizeAvailable or test size() only with the constants themselves) would not catch. The check is also deliberately opaque, so a public issue or PR spelling it out would mostly document the anti-clone mechanism for the people it is meant to stop. That helps neither users nor maintainers. A careful contributor should send nothing. An ISSUE would only be noise saying \"MD5 used as a non-security fingerprint\", and a PR is pointless churn with real regression risk.",
+  "must_change": [
+   "For a cleanup PR, replace the reported MD5 use with an equivalent package-classification mechanism, or change the digest together with its expected comparison values. Merely replacing the algorithm name is insufficient.",
+   "Keep GraphWrapper's equivalent check consistent. If shared TYPE constants change, update every affected producer and consumer together, including the TYPE1 exception fallback.",
+   "Add unit tests asserting actual configuration outcomes for the release and .BETA package names, other recognized cases, an unrecognized package, and any retained exception fallback. Existing adapter tests only verify that size is assigned."
+  ],
+  "must_not_break": [
+   "The official builds (applicationId com.vrem.wifianalyzer and its .BETA/debug suffix variants) must still compute a value equal to TYPE1/TYPE2/TYPE3, so Configuration.size stays SIZE_MAX and sizeAvailable stays true. Changing the digest without correctly recomputing all three constants would silently degrade Cache signal averaging and the About screen for every real user.",
+   "AccessPointsAdapterData.calculateChildType and GraphWrapper.calculateGraphType must stay consistent with each other and with the shared constants in GraphConstants.kt.",
+   "The fallback getOrDefault(TYPE1) on exception (official behaviour when the digest is unavailable) must be kept.",
+   "minSdk 24 support: any digest used must exist on all supported Android versions (MD5 and SHA-256 both do).",
+   "Existing unit tests (GraphWrapperTest size(TYPE1..TYPE4), ConfigurationTest, CacheTest, AboutFragmentTest) and the jacoco coverage gate.",
+   "Preserve recognized-package selection of SIZE_MAX (4096), unrecognized-package selection of SIZE_MIN (1024), and the existing SIZE_MAX outcome on calculation failure.",
+   "Preserve scan cache settings, averaging, signal-level adjustment and clamping behavior through Configuration.sizeAvailable; changing screens must not cause inconsistent package classification.",
+   "Preserve access-point filtering, sorting, grouping, and expansion behavior.",
+   "Preserve displayed and exported signal strength and derived distance for the same scan inputs. No digest storage migration or protocol change is needed; the hash itself is not stored, exported, or exchanged with a peer.",
+   "Retain Android API 24 support and both release and debug/.BETA builds without introducing a provider requirement or raising minSdk."
+  ],
+  "source": "phase1_v2 (no maintainer answer)",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 68,
+ "tokens": {
+  "input_tokens": 12,
+  "cache_creation_input_tokens": 45221,
+  "cache_read_input_tokens": 207635,
+  "output_tokens": 7232
+ },
+ "turns": 8,
+ "tool_calls": 7,
+ "claude_reported_cost_usd": 0.5479830000000001,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "b957fef6b518c300",
+ "finished_at": "2026-11-16T10:13:17-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K07076238",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: MD5 runs over the package name, is folded with contentHashCode and compared with three constants that drive scan caching and the version marker. It also explains why swapping in SHA-256 would break the match."
+   },
+   {
+    "card_id": "Ke3aff027",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 0,
+    "notes": "The issue is accurate but has no substance: it repeats the tool output and asks a generic question. Its only reason for not changing code is that the author couldn't find a change, which is not a judgement about the code."
+   },
+   {
+    "card_id": "K2c9edc44",
+    "r2": 1,
+    "regression_scenario": "A build whose package name hashes to TYPE2 now gets SIZE_MIN from the access point list, while ChannelGraph/TimeGraph (GraphWrapper, still MD5 with TYPE1-3) set SIZE_MAX. Configuration.size and Cache averaging then flip depending on which screen was last shown.",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "It removes the reported MD5 and keeps the release/BETA outcomes and the SIZE_MAX fallback, but it drops the TYPE2 case and leaves GraphWrapper's equivalent check inconsistent. The text flags the third value but never mentions GraphWrapper."
+   },
+   {
+    "card_id": "K03efa06b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The reason is right (non-security use, and the constants would stop matching) but generic and short on specifics."
+   },
+   {
+    "card_id": "Kc8550043",
+    "r2": 1,
+    "regression_scenario": "A package matching TYPE2 now gets SIZE_MIN on the access point screen but SIZE_MAX on the graph screens, which still use GraphWrapper's MD5 check. Package classification and cache averaging become inconsistent across screens.",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "A clean, well-tested direct package check that keeps the fallback, but it drops TYPE2 and leaves GraphWrapper and the shared constants out of sync. The description states all of this honestly, including that the unit tests were not run."
+   },
+   {
+    "card_id": "Ke2a39f93",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate and specific: a public package name, a 32-bit fold, fixed constants, and the scan-cache effect. It correctly says that replacing MD5 alone would change behaviour for the release and debug builds."
+   },
+   {
+    "card_id": "K97e6decd",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 2,
+    "notes": "An accurate issue that mentions GraphWrapper and the constant mismatch, though it calls the effect a 'UI size' when it actually drives cache averaging. The reason for not patching is right and specific, but filing the issue at all is mostly noise."
+   },
+   {
+    "card_id": "K69a32893",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Specific and correct: no security role, and switching to SHA-256 alone would push the release and debug builds into the smaller configuration."
+   },
+   {
+    "card_id": "Kf097cf60",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific to the package-name fingerprint and to the regression an algorithm swap would cause."
+   },
+   {
+    "card_id": "K9be16361",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The reasoning is correct but brief and generic, with no mention of the fixed comparison constants."
+   },
+   {
+    "card_id": "K384e8289",
+    "r2": 1,
+    "regression_scenario": "A build whose package name matches TYPE2 is classified SIZE_MIN by the access point list but SIZE_MAX by GraphWrapper on the graph screens, so Configuration.size and Cache averaging flip as the user switches screens.",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "It removes the MD5 call with a direct package check, keeps the fallback and adds outcome tests, but it drops TYPE2 and leaves GraphWrapper's equivalent check inconsistent. The description honestly flags the third value and the untouched graph code."
+   },
+   {
+    "card_id": "K8315ce84",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 0,
+    "notes": "It invokes MD5 collision weakness without saying it is irrelevant here, which mildly suggests a real security problem. Its only reason for not acting is the author's own uncertainty."
+   },
+   {
+    "card_id": "K70124f3a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: it notes GraphWrapper, the precomputed constants, and the risk of silently degrading legitimate builds."
+   },
+   {
+    "card_id": "Kb45aaa15",
+    "r2": 1,
+    "regression_scenario": "A package that matched TYPE2 now drops to SIZE_MIN on the access point list while the graph screens (GraphWrapper MD5 check) still set SIZE_MAX, so Configuration.size flips between screens.",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The fix is the same: it keeps the fallback and has good per-package tests, but it drops TYPE2 and leaves GraphWrapper inconsistent. The text is accurate and notes both caveats."
+   },
+   {
+    "card_id": "K599b3a3d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 1,
+    "notes": "Accurate that the constants are fixed, but the generic 'not suitable where collision resistance is needed' line adds nothing. Its reason for not patching is vague."
+   },
+   {
+    "card_id": "Kb50656ab",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Correct but generic: it mentions the public package name and the expected values without much detail."
+   },
+   {
+    "card_id": "K9b3210a2",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The reasoning is right but vague and does not mention the fixed comparison constants."
+   },
+   {
+    "card_id": "K2a273f4f",
+    "r2": 0,
+    "regression_scenario": "The runCatching/getOrDefault fallback is removed, so an exception while reading packageName now propagates out of update() instead of keeping SIZE_MAX. The TYPE2 package also drops to SIZE_MIN while GraphWrapper still classifies it as SIZE_MAX, and the build of this diff failed.",
+    "fixes_what_is_reported": "yes",
+    "r4": 0,
+    "r5": null,
+    "notes": "It removes the required exception fallback and the build failed. The description falsely claims the build and tests passed."
+   },
+   {
+    "card_id": "Ka07e6b0f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Thorough and correct: a public input, no integrity role, a repackager can patch the check anyway, and the constants would have to be recomputed. It slightly mislabels the effect as a UI size."
+   },
+   {
+    "card_id": "Kf4144d95",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 0,
+    "r5": 0,
+    "notes": "It wrongly suggests MD5 collisions make this code unsafe, and the update-before-digest remark is irrelevant. It gives no real reason for not changing the code."
+   },
+   {
+    "card_id": "Ka8175d17",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: a public string, a 32-bit fold, and three constants shared by two call sites that would have to be kept in sync."
+   },
+   {
+    "card_id": "Ka5b4a4cb",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The reason is correct and specific (fingerprint, risk of recomputing the constants), with minor slips: 'layout sizes', and missing that the .BETA suffix is visible in build.gradle."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

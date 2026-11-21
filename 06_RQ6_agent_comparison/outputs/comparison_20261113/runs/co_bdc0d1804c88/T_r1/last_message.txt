@@ -1,0 +1,3 @@
+Created [NO_ACTION.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/T_r1/repo/NO_ACTION.md). The digest is used for an internal configuration value, not a security purpose; replacing it could change behavior without a security benefit.
+
+No source files were changed, and the build was not run.

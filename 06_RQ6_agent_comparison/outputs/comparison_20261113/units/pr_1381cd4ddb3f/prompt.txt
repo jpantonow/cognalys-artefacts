@@ -1,0 +1,15 @@
+You are contributing to this open-source Android app as an outside contributor. RVSec, a runtime checker for how Android apps use the Java cryptography and TLS APIs, ran the APK built from the current commit and reported:
+
+- Rule: KeyStoreSpec
+  Class: de.jepfa.yapm.service.secret.SecretService
+  Method: getAndroidSecretKey
+  Message: the observed call sequence is not one KeyStoreSpec accepts
+
+Decide what, if anything, the maintainers should receive, and write exactly one of these files at the repository root:
+- PR.md, when a code change should be proposed. Edit the source files directly (do not commit). Put the pull request's title on the first line as '# <title>', followed by the description you would submit.
+- ISSUE.md, when the maintainers should be told but you should not change the code. Put the issue's title on the first line as '# <title>', followed by the issue text.
+- NO_ACTION.md, when nothing should be sent to the maintainers. Explain why.
+
+Write for the maintainers: short plain paragraphs that describe only what your change does and why. Do not use the names of the checker's rules or of compiled classes. If the repository has a pull request template, fill it in and tick only what is true. If it asks about AI use, answer that the contribution is AI-assisted. Say that the project builds only if you ran the build and it passed.
+
+To build the app, run /home/antonow/comparison_20261113/bin/build_check. It prints the result and the end of the build log. You may search the web. Do not commit, push, open pull requests or issues, or contact anyone.

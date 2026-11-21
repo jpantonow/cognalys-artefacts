@@ -1,0 +1,142 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule contains no event for KeyPairGenerator, AlgorithmParameterGenerator, Signature, KeyAgreement, or provider lookup.",
+      "The rule has no predicate establishing that the selected provider recognizes an allow-listed alias or OID.",
+      "The rule provides no curve-size, protocol-purpose, key-lifetime, validation, randomness, or downstream-use condition.",
+      "A static implementation may be unable to prove a dynamic string's runtime value even where the runtime membership condition is satisfied.",
+      "The rule text does not state that its finite allow-list is the complete or current Java standard-name registry."
+    ],
+    "predicates": [
+      "The governed API type named by the rule is java.security.spec.ECGenParameterSpec.",
+      "The required event is c1: ECGenParameterSpec(stdName).",
+      "The sole order requirement is that c1 occurs.",
+      "The constructor argument's value at execution belongs to the exact finite string set in the CRYSL CONSTRAINTS clause.",
+      "The postcondition stated by the rule is preparedEC[this]."
+    ],
+    "claim": "A compliant c1 constructor event establishes preparedEC[this] for the newly constructed ECGenParameterSpec object."
+  },
+  "unknowns": [
+    "The CRYSL source does not explain the security rationale for its particular allow-list or the meaning intended for preparedEC beyond the stated ENSURES predicate.",
+    "The rule does not identify a target Java release, provider set, or organizational cryptographic policy.",
+    "It is unresolved whether the detector implementation evaluates string membership exactly at runtime, symbolically, by constants only, or through another approximation.",
+    "The rule does not establish whether listed aliases and OIDs are recognized uniformly by all providers.",
+    "The rule does not connect the specification object to any later provider operation, so the actual selected curve and security-relevant use remain unresolved."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "ECGenParameterSpec is an immutable AlgorithmParameterSpec for identifying precomputed elliptic-curve domain parameters by a standard or predefined name.",
+      "The constructor creates the specification from stdName; the API documentation directs callers to the selected provider's documentation for supported names.",
+      "Java's standard algorithm-name specification separately lists standardized ECGenParameterSpec names."
+    ],
+    "preconditions": [
+      "stdName must be non-null; the documented constructor exception is NullPointerException when it is null.",
+      "A non-null name must be supported by the provider ultimately used if the specification is later supplied to a provider operation requiring that curve.",
+      "Provider support and aliases are implementation-dependent beyond the platform's documented minimum requirements."
+    ],
+    "unknowns": [
+      "The constructor documentation does not declare that every non-null name is validated or rejected at construction time.",
+      "The documentation does not make the detector's allow-list a complete list of provider-supported names.",
+      "The documentation does not state that every standardized ECGenParameterSpec name is available from every third-party provider."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/ECGenParameterSpec.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/spec/ECGenParameterSpec.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/KeyPairGenerator.html"
+  ],
+  "schema_version": 2,
+  "non_security_violation_shapes": [
+    "`ECGenParameterSpec(\"unrecognized-test-name\")` created solely in a unit test or negative test and never supplied to a cryptographic provider.",
+    "An unallow-listed name placed in an object that is never used for parameter initialization, key generation, signing, verification, encryption, decryption, or key agreement.",
+    "An unallow-listed name that is later rejected by the provider before any key material is generated or used; this violates the detector's membership condition but does not by itself establish a security impact."
+  ],
+  "source_verified": true,
+  "important_note": "This specification observes only construction of java.security.spec.ECGenParameterSpec and applies a fixed name allow-list. Its ENSURES clause marks the resulting object as preparedEC[this] after a compliant construction, but it does not prove that a provider accepts the name, that the object initializes a key generator, that keys are generated, or that any generated key is appropriate for a particular protocol or security policy.",
+  "events": [
+    {
+      "condition": "At execution of the constructor call, stdName must be one of: \"brainpoolP224r1\", \"1.3.36.3.3.2.8.1.1.5\", \"brainpoolP256r1\", \"1.3.36.3.3.2.8.1.1.7\", \"brainpoolP320r1\", \"1.3.36.3.3.2.8.1.1.9\", \"brainpoolP384r1\", \"1.3.36.3.3.2.8.1.1.11\", \"brainpoolP512r1\", \"1.3.36.3.3.2.8.1.1.13\", \"secp224r1\", \"NIST P-224\", \"1.3.132.0.33\", \"secp256r1\", \"NIST P-256\", \"X9.62 prime256v1\", \"1.2.840.10045.3.1.7\", \"secp384r1\", \"NIST P-384\", \"1.3.132.0.34\", \"secp521r1\", \"NIST P-521\", or \"1.3.132.0.35\". This is a runtime value-membership predicate, not a requirement that the source argument be spelled as a string literal.",
+      "name": "c1",
+      "api_patterns": [
+        "new ECGenParameterSpec(",
+        "ECGenParameterSpec(",
+        "new java.security.spec.ECGenParameterSpec(",
+        "java.security.spec.ECGenParameterSpec("
+      ]
+    }
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, the JCA API represents a named EC parameter request. Whether it is usable depends on the provider later selected, and whether it is suitable depends on the actual cryptographic operation and deployment policy.",
+    "equivalent": false,
+    "detector_claim": "The detector treats construction with a name in its fixed allow-list as sufficient to label that ECGenParameterSpec object preparedEC."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Consult the selected provider's documentation for its supported ECGenParameterSpec names and aliases.",
+      "Check the Java Security Standard Algorithm Names specification for standardized names applicable to the deployed Java release.",
+      "Verify any required interoperability profile or organizational curve policy independently of the detector allow-list."
+    ],
+    "runtime": [
+      "Capture the effective stdName value at the constructor invocation.",
+      "Identify the JCA provider and JDK/runtime version used by the later cryptographic operation.",
+      "If compatibility is at issue, initialize the relevant provider service with the specification and record whether it accepts the name.",
+      "If security impact is claimed, establish that the resulting parameters are actually used for a security-relevant key-generation or cryptographic operation."
+    ],
+    "source_level": [
+      "Resolve the constructed type to java.security.spec.ECGenParameterSpec rather than a same-named type from another package or framework.",
+      "Establish that the constructor call is reachable if reporting an executable finding rather than a dead-code observation.",
+      "For an asserted rule violation, establish the possible runtime value or values of stdName rather than relying solely on the source spelling of an expression.",
+      "Use the CRYSL rule source as the authority for the detector's exact finite allow-list and preparedEC postcondition."
+    ]
+  },
+  "forbidden_inferences_without_evidence": [
+    "That an allow-listed name is supported by the installed or selected JCA provider.",
+    "That construction alone causes EC parameters to be generated or any key pair to be generated.",
+    "That the constructed specification is subsequently supplied to KeyPairGenerator.initialize or another cryptographic API.",
+    "That an allow-listed curve name meets the deployment's current security, compliance, interoperability, or protocol requirements.",
+    "That a name absent from the rule is unsupported by the JCA API or insecure.",
+    "That a finding identifies a particular EC signature, key-agreement, certificate, SSH, TLS, or other protocol use."
+  ],
+  "name": "ECGenParameterSpecSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/ECGenParameterSpec.crysl",
+  "applies_to_types": [
+    "java.security.spec.ECGenParameterSpec"
+  ],
+  "source_title": "Crypto-API-Rules: ECGenParameterSpec.crysl",
+  "semantic_scope": "For every finding of this rule, the detector observes a construction event for java.security.spec.ECGenParameterSpec and tests the constructor argument's runtime string value against the rule's fixed allow-list. It does not observe provider selection, provider support, later initialization, key generation, key use, or the surrounding protocol.",
+  "spec_id": "ECGenParameterSpecSpec",
+  "known_false_positive_shapes": [
+    "A non-literal value such as `val curve = configuredCurveName(); ECGenParameterSpec(curve)` where the value at execution is an exact allow-listed string, but static analysis cannot establish that value.",
+    "`ECGenParameterSpec(\"SECP256R1\")` where the applicable Java standard-name specification treats standard names as case-insensitive, while the CRYSL constraint spells only lowercase `\"secp256r1\"`.",
+    "`ECGenParameterSpec(\"secp256k1\")` on a runtime/provider that supports it: the current Java Security Standard Algorithm Names specification lists `secp256k1` for ECGenParameterSpec, but the detector rule's finite list omits it.",
+    "Construction using another standardized ECGenParameterSpec name omitted by the rule, such as a documented `sect*`, `secp160*`, `secp192*`, or `secp224k1` name, when the selected provider supports that name.",
+    "Construction using a provider-documented predefined name or alias omitted by the rule, when evidence establishes provider support and the deployment's policy permits it."
+  ],
+  "protocol": "Con := c1; ORDER Con, where c1 is ECGenParameterSpec(stdName).",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/ECGenParameterSpec.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:java.security.spec.ECGenParameterSpec"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "app.passwordstore.ui.sshkeygen.KeyGenType$1",
+        "method": "invokeSuspend",
+        "message": "the elliptic curve standard name is not one the rule admits"
+      }
+    ],
+    "expected_api_simple_name": "ECGenParameterSpec",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:java.security.spec.ECGenParameterSpec",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/ECGenParameterSpec.crysl"
+  }
+}

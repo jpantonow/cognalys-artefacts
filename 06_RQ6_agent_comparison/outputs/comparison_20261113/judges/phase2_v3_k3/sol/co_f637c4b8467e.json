@@ -1,0 +1,317 @@
+{
+ "unit": "co_f637c4b8467e",
+ "phase": "phase2",
+ "order": [
+  "K8b61902c",
+  "Kf9af7c20",
+  "K1656cee0",
+  "K15c6914f",
+  "Kc2ece92e",
+  "K26df4d8e",
+  "Kf924ace0",
+  "K74085612",
+  "K36b2b260",
+  "Kad48d6a5",
+  "Ke6f27b9d",
+  "Kf752c156",
+  "K74d0ba25",
+  "Kb7bf498f",
+  "K61bb2412",
+  "K4a8ebaab",
+  "K18be5cad",
+  "Ke8ce9c41",
+  "K202209fc",
+  "Kbdec6036",
+  "K9643b5de",
+  "K0fc13c04",
+  "K37b626e6"
+ ],
+ "card_sha256": {
+  "K0fc13c04": "86131cf243b62570",
+  "K15c6914f": "7ffdb8f170156f0e",
+  "K1656cee0": "f4675abeb0afdb17",
+  "K18be5cad": "4e6440da3e9c6c96",
+  "K202209fc": "20384fbecc6f49f7",
+  "K26df4d8e": "055669267b4d592f",
+  "K36b2b260": "b804dd520da34d1c",
+  "K37b626e6": "7311948fbc4f6482",
+  "K4a8ebaab": "0ae22a069dba56cb",
+  "K61bb2412": "74732afe070d6a0c",
+  "K74085612": "f40de088720dfa57",
+  "K74d0ba25": "953200c549f1c06e",
+  "K8b61902c": "b54e2d1f033c287d",
+  "K9643b5de": "1f558e07e905f38c",
+  "Kad48d6a5": "5f0952c1453d78dc",
+  "Kb7bf498f": "baae8b34ccbd2435",
+  "Kbdec6036": "cf8954d2bbce2c20",
+  "Kc2ece92e": "425453be178810e1",
+  "Ke6f27b9d": "24428c4da1888caf",
+  "Ke8ce9c41": "f5ca4d85b247e934",
+  "Kf752c156": "aabe639e2b539b87",
+  "Kf924ace0": "e60572bbe0f1a4b6",
+  "Kf9af7c20": "f08c4e4e4f31e4ff"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive. `WebAccessUsers.derive(password, salt)` (WebAccessUsers.kt:120-124) runs PBKDF2WithHmacSHA256 with 210,000 iterations and a 256-bit output. Every salt that gets stored with a hash comes from `random()` (line 119): 24 bytes from `SecureRandom`, hex-encoded. That happens in the legacy migration (line 38), initial admin creation (line 45), `add` (line 64) and `resetPassword` (line 88). RVSec loses track of where the salt came from at two points. First, the random bytes are turned into a hex String, persisted in SharedPreferences (\"accounts_v2\"), read back, and passed to `PBEKeySpec` as `salt.toByteArray()`. That is 48 ASCII bytes still carrying 192 bits of randomness, which is well above the usual 128-bit minimum. Second, on `login` the salt is read from storage, and for an unknown username it is the constant `\"0\".repeat(48)` (line 103). That constant is a deliberate dummy so a missing user costs the same PBKDF2 time as a real one. Its output is never stored and never matches, because the method returns 401 when `user == null`. So there is no fixed or predictable salt protecting any stored credential. The README and docs/ISSUE_2.md describe exactly this design (per-user random salt, PBKDF2-HMAC-SHA256, 210k iterations), and android/test-lifecycle.py builds account records with the same scheme (`secrets.token_hex(24)` salt, `salt.encode()`). Re-encoding the salt would invalidate stored hashes, and dropping the dummy derivation would make login timing reveal which usernames exist.\n\nSecond judge: This report does not establish insecure password storage. WebAccessUsers generates each account salt using 24 bytes from SecureRandom, encoded as 48 hex characters, during initial creation, legacy migration, add, and resetPassword. It persists the salt alongside the hash in web_access/accounts_v2 and correctly reuses it for verification. Loading a salt from storage or converting its string to bytes need not preserve the checker's randomness provenance. There is also a genuinely constant salt: login uses \"0\".repeat(48) when the username does not exist. That derivation performs dummy password-hashing work; its result is never stored or accepted because user == null forces rejection. A PR replacing the dummy constant with a SecureRandom-generated dummy salt must not claim that existing account salts are insecure.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [
+   "For a PR addressing the constant fallback, give unknown-user derivations a securely generated dummy salt, preferably initialized once per WebAccessUsers instance with the existing random() helper. Keep it separate from persisted account credentials.",
+   "Retain the expensive dummy derivation before rejecting an unknown username; verify that unknown users still fail and existing users still authenticate."
+  ],
+  "must_not_break": [
+   "Existing stored accounts in SharedPreferences \"web_access\"/\"accounts_v2\": salts are hex strings and the PBKDF2 input is the UTF-8 bytes of that hex string. Changing the salt encoding (e.g. hex-decoding before use), the iteration count, the key length or the algorithm would lock out every existing web user.",
+   "The hash format: lowercase hex of the 32-byte PBKDF2-HMAC-SHA256 output with 210,000 iterations, which android/test-lifecycle.py reproduces with hashlib.pbkdf2_hmac('sha256', password, salt.encode(), 210000, 32).hex()",
+   "Constant-work login for unknown usernames: the dummy-salt derive call on line 103 keeps the response time from revealing whether a username exists. Removing it or replacing it would reopen username enumeration.",
+   "Migration of legacy \"users\"/\"secret\" prefs to accounts_v2, including legacyUntil handling and initial admin password generation",
+   "Per-user fresh SecureRandom salts on add/resetPassword, plus the session revocation, rate limiting and MessageDigest.isEqual comparison in login",
+   "Existing accounts_v2 credentials must continue working across restart and upgrade. Verification must use the saved salt, not a newly generated salt on each login.",
+   "Preserve the existing derivation format: PBKDF2WithHmacSHA256, 210000 iterations, 256-bit output encoded as hex, and UTF-8 bytes of the stored hexadecimal salt string. Hex-decoding that string would change existing hashes. android/test-lifecycle.py also constructs credentials using this format.",
+   "Keep fresh individual SecureRandom salts for account creation, migration, and password reset; do not rewrite existing hashes without the password.",
+   "Preserve migration from users/key and secret, including usuarioN usernames, the seven-day legacy-password window, removal of plaintext legacy secrets, and permanent password reset through the APK.",
+   "Preserve rejection of unknown, inactive, and expired legacy accounts, hash comparison, rate limiting, and session revocation on password reset. Do not expose account hashes or salts through the web API.",
+   "Maintain Android 8/API 26 support and the existing browser username/password login and session-cookie contract; clients do not supply or manage salts."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 139,
+ "tokens": {
+  "input_tokens": 155002,
+  "cached_input_tokens": 119936,
+  "output_tokens": 5082,
+  "reasoning_output_tokens": 2167
+ },
+ "turns": 1,
+ "tool_calls": 6,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "fffb0214a3029e5f",
+ "finished_at": "2026-11-16T17:32:14-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K8b61902c",
+    "r2": 0,
+    "regression_scenario": "Create or reset an account through the APK, then reinstall the prior APK retaining preferences. Its login derives from the stored string rather than raw salt bytes, so the correct password fails.",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The compatibility branch preserves preexisting credentials, but new credentials violate the required hexadecimal-text salt derivation format. The description accurately discloses this incompatibility."
+   },
+   {
+    "card_id": "Kf9af7c20",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly distinguishes securely salted stored credentials from the harmless unknown-user dummy derivation."
+   },
+   {
+    "card_id": "K1656cee0",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correctly randomizes only the dummy salt while preserving stored verifiers and expensive rejection. Add the requested verification that existing accounts authenticate and unknown users fail."
+   },
+   {
+    "card_id": "K15c6914f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately explains preserved salt entropy, stored-salt reuse, and unconditional rejection of unknown users."
+   },
+   {
+    "card_id": "Kc2ece92e",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The fallback change preserves credential compatibility and dummy PBKDF2 work without claiming insecure stored passwords. Focused existing-user and unknown-user login verification is missing."
+   },
+   {
+    "card_id": "K26df4d8e",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Gives the correct code-specific reason: real credential salts are random, and the constant protects no stored password."
+   },
+   {
+    "card_id": "Kf924ace0",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly accounts for hexadecimal encoding, persistence across restarts, and the discarded dummy result."
+   },
+   {
+    "card_id": "K74085612",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Identifies all credential-writing paths and correctly explains the provenance limitation and dummy derivation."
+   },
+   {
+    "card_id": "K36b2b260",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The implementation preserves saved credentials and unknown-user rejection, and the description appropriately avoids claiming security impact. Add focused login regression verification before merging."
+   },
+   {
+    "card_id": "Kad48d6a5",
+    "r2": 0,
+    "regression_scenario": "Reset an existing account's password through the APK, then reinstall the prior APK retaining preferences. That APK ignores rawSalt and hashes the hexadecimal text, so the correct password is rejected.",
+    "fixes_what_is_reported": "yes",
+    "r4": 1,
+    "r5": null,
+    "notes": "Versioned decoding preserves old records but changes the explicitly required derivation format for new and reset accounts. The description also predicts a continuing RVSec report without having rerun it."
+   },
+   {
+    "card_id": "Ke6f27b9d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains random account salts, persistent verification, and the noncredential purpose of the fixed dummy salt."
+   },
+   {
+    "card_id": "Kf752c156",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correctly replaces the constant fallback without changing existing verifiers or removing PBKDF2 work. Add verification of successful existing-account login and rejection of unknown users."
+   },
+   {
+    "card_id": "K74d0ba25",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The change and its limited motivation are described accurately, and compatibility is preserved. The requested login verification remains outstanding."
+   },
+   {
+    "card_id": "Kb7bf498f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly traces every stored credential salt to SecureRandom and explains why the fixed dummy salt creates no password-storage vulnerability."
+   },
+   {
+    "card_id": "K61bb2412",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Provides a specific and correct false-positive analysis, including salt entropy, persistence, dummy rejection, and encoding compatibility."
+   },
+   {
+    "card_id": "K4a8ebaab",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly distinguishes per-account random salts from the fixed salt used solely for rejected dummy work."
+   },
+   {
+    "card_id": "K18be5cad",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately covers all credential writers, saved-salt verification, and the timing purpose of the unknown-user derivation."
+   },
+   {
+    "card_id": "Ke8ce9c41",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "The conclusion is supported by all four random-salt creation paths and unconditional rejection of the dummy result."
+   },
+   {
+    "card_id": "K202209fc",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "The fallback-only change preserves existing credentials and expensive unknown-user rejection. Add the requested existing-user and unknown-user login verification."
+   },
+   {
+    "card_id": "Kbdec6036",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": 0,
+    "notes": "The issue repeats the observation but omits the random credential-salt lifecycle and harmless dummy path. Inability to find a patch is not a code-specific justification for leaving the code unchanged."
+   },
+   {
+    "card_id": "K9643b5de",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "yes",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correctly limits the change to the unknown-user salt and acknowledges uncertainty about the observed execution path. Existing-account and unknown-user login verification is still needed."
+   },
+   {
+    "card_id": "K0fc13c04",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains fresh salts for stored credentials, necessary reuse during verification, and retained dummy hashing for unknown users."
+   },
+   {
+    "card_id": "K37b626e6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately explains preserved randomness through encoding and persistence, plus expensive dummy derivation followed by rejection without a session."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

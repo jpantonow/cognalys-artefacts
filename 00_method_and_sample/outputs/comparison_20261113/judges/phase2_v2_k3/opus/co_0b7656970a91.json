@@ -1,0 +1,311 @@
+{
+ "unit": "co_0b7656970a91",
+ "phase": "phase2",
+ "order": [
+  "Kb2507b4a",
+  "Kedab3ddb",
+  "Kb8ac64fc",
+  "Kbee94fd9",
+  "K3f3d5fea",
+  "K097a3b88",
+  "K06d031ff",
+  "Ke87aaaea",
+  "Kedace99f",
+  "Kc5aa41e3",
+  "Kcc07297f",
+  "Kb0e7c7c7",
+  "Kfefb24db",
+  "Kbdd9e938",
+  "K0a930410",
+  "K816267cf",
+  "Ka5da5949",
+  "K12ea8568",
+  "Ke43f274d",
+  "K33884647",
+  "K793585f1",
+  "K4bdc9aba",
+  "Kadc66626"
+ ],
+ "card_sha256": {
+  "K06d031ff": "15d087e46c6939a6",
+  "K097a3b88": "876bc047d742b8d1",
+  "K0a930410": "e9e42de0cb2406e8",
+  "K12ea8568": "cb4e699fe238036d",
+  "K33884647": "74e3c12806261673",
+  "K3f3d5fea": "9a754eda04ab3a18",
+  "K4bdc9aba": "787af24c0f5ce4a8",
+  "K793585f1": "97f0f18b047d0f7d",
+  "K816267cf": "48f26bac37a78d36",
+  "Ka5da5949": "a72f7a19bdac3da6",
+  "Kadc66626": "ee1741e720200547",
+  "Kb0e7c7c7": "ef8ee9a4c4f61571",
+  "Kb2507b4a": "6bdcadef90a4ce69",
+  "Kb8ac64fc": "d81c2983b121f1ce",
+  "Kbdd9e938": "d6e6f3c8d1b543ec",
+  "Kbee94fd9": "ef8926bdc0ff5119",
+  "Kc5aa41e3": "bdce5faacf544d9f",
+  "Kcc07297f": "6bb0f030e653e3cb",
+  "Ke43f274d": "f511fb904e2b7d0b",
+  "Ke87aaaea": "2917bce5e1dfc2fd",
+  "Kedab3ddb": "5200f4677379f30f",
+  "Kedace99f": "98238ca6c42d97cf",
+  "Kfefb24db": "d3e321ad34f26a03"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "This is a false positive. The SHA-1 MessageDigest singleton created at AppModule.kt:32 has one consumer, HashUtils.getHashPrefixAndSuffix (HashUtils.kt:32-43). That function hashes the user's password, hex-encodes it in uppercase, and splits it into a 5-character prefix and a 35-character suffix. ApiService.kt:27 sends the prefix to https://api.pwnedpasswords.com/range/{prefix}. getHashCount then matches the suffix against the returned SUFFIX:COUNT lines. This is the Have I Been Pwned Pwned Passwords k-anonymity range API, and it is defined over SHA-1 hashes: 40 hex characters split 5 + 35. SHA-1 is used here as a lookup key the external protocol requires. It is not used for signatures, integrity, password storage, or any security decision. Nothing is stored, and the hash itself is never sent; only a 5-character prefix leaves the device, which is how the protocol is designed. Switching to SHA-256/384/512 would send the wrong-length or wrong prefixes and suffixes, so no suffix would ever match and every password would wrongly show as never breached. The app's only feature would silently stop working. The upstream API does offer an NTLM mode, but that is not stronger and is not what the rule asks for. A PR is therefore not acceptable. An issue that only reports 'SHA-1 found' would also be noise for the maintainers, because the algorithm is fixed by the third-party API and the maintainer cannot change it.\n\nSecond judge: The SHA-1 digest in AppModule.kt serves the Have I Been Pwned Pwned Passwords lookup protocol, not password storage or authentication. HashUtils hashes the password, formats uppercase hexadecimal, sends its first five characters to https://api.pwnedpasswords.com/range/{prefix}, and compares the remaining suffix locally against returned breach counts. Both single and batch scans use this path. SHA-1 is required for compatibility with that dataset; replacing it with SHA-256/384/512 would cause missed matches and misleading 'not breached' results. This algorithm-only warning does not establish a vulnerability requiring a PR or issue.",
+  "must_change": [],
+  "must_not_break": [
+   "The HIBP Pwned Passwords range lookup must keep working: the app must hash with SHA-1 and send the first 5 uppercase hex characters to https://api.pwnedpasswords.com/range/{prefix}",
+   "Suffix matching in HashUtils.getHashCount must keep working; it depends on the 35-character SHA-1 suffix format the API returns",
+   "Breach counts must stay correct; changing the digest would make every password show as not found (ITEM_NOT_FOUND)",
+   "The k-anonymity property must hold: only the 5-character prefix leaves the device, never the full hash or the password",
+   "The Koin DI wiring that HashUtils uses (get<MessageDigest>()) must keep providing the digest",
+   "Preserve the protocol's SHA-1 of UTF-8 password bytes, formatted as 40 uppercase hexadecimal characters and split into a five-character prefix and 35-character suffix.",
+   "Preserve correct suffix matching and breach counts for both single-password and batch scans; substituting a SHA-2 digest would invalidate those lookups.",
+   "Keep the range request over HTTPS and send only the hash prefix; keep the password, full digest, and suffix out of the request."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 35,
+ "tokens": {
+  "input_tokens": 6,
+  "cache_creation_input_tokens": 24413,
+  "cache_read_input_tokens": 42428,
+  "output_tokens": 3950
+ },
+ "turns": 4,
+ "tool_calls": 3,
+ "claude_reported_cost_usd": 0.2828136,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "3ab47bdc1030fd86",
+ "finished_at": "2026-11-16T09:56:25-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Kb2507b4a",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the HIBP range protocol (5-char prefix, local suffix match) as requiring SHA-1 and says SHA-2 would cause false negatives."
+   },
+   {
+    "card_id": "Kedab3ddb",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Right conclusion that an external counterpart fixes the digest, but the reasoning leans on internal policy jargon and leaves open what the service accepts, without naming HIBP or calling this a false positive."
+   },
+   {
+    "card_id": "Kb8ac64fc",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Says the digest leaves the process and interoperability must be kept, which is correct but vague and policy-driven; it does not identify the HIBP protocol and calls the violation 'real'."
+   },
+   {
+    "card_id": "Kbee94fd9",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately traces AppModule → HashUtils → ApiService and explains why SHA-2 would make breached passwords show as absent."
+   },
+   {
+    "card_id": "K3f3d5fea",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: HIBP k-anonymity range lookup over HTTPS, and SHA-2 would break matching."
+   },
+   {
+    "card_id": "K097a3b88",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Cites the correct files and lines and the HIBP SHA-1 range contract; the reason is right and specific."
+   },
+   {
+    "card_id": "K06d031ff",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Thorough and accurate: 5+35 split, the API URL, every password showing as not breached under SHA-2, and SHA-1 used only as a lookup key."
+   },
+   {
+    "card_id": "Ke87aaaea",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Describes the external range lookup correctly but treats it as unknown whether the service supports a compliant digest; the reason is right but hedged and vague."
+   },
+   {
+    "card_id": "Kedace99f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurate false-positive analysis that mentions the NTLM option, the absence of a SHA-2 mode, and that only the prefix leaves the device."
+   },
+   {
+    "card_id": "Kc5aa41e3",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Detailed, verified trace through HashUtils, ApiService and getHashCount, with the correct protocol reasoning."
+   },
+   {
+    "card_id": "Kcc07297f",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Specific file references and the correct reason that the HIBP range API is defined over SHA-1."
+   },
+   {
+    "card_id": "Kb0e7c7c7",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Concise and correct: the SHA-1 prefix/suffix lookup against Pwned Passwords means a SHA-256 change would break compatibility."
+   },
+   {
+    "card_id": "Kfefb24db",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific explanation of the HIBP SHA-1 keying and the silent false-negative regression."
+   },
+   {
+    "card_id": "Kbdd9e938",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The headline reason (an external counterpart fixes the value) is right, but the details mostly cite policy and missing packet context rather than an analysis of the HIBP protocol."
+   },
+   {
+    "card_id": "K0a930410",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific: SHA-1 is required by the range API, and switching would report every password as not breached."
+   },
+   {
+    "card_id": "K816267cf",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Despite the policy jargon, it correctly traces the uppercase-hex SHA-1 5-char prefix sent to api.pwnedpasswords.com and why a client-only change breaks the lookup."
+   },
+   {
+    "card_id": "Ka5da5949",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct reason specific to the Pwned Passwords range lookup."
+   },
+   {
+    "card_id": "K12ea8568",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Names the correct files and the API's SHA-1/NTLM contract; the reason is right."
+   },
+   {
+    "card_id": "Ke43f274d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Short but specific and correct about the HIBP range API needing SHA-1."
+   },
+   {
+    "card_id": "K33884647",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Very thorough and verified: digest wiring, both single and batch callers, and the API contract (ScanFragment:255 is the getHashCount call, a close enough reference)."
+   },
+   {
+    "card_id": "K793585f1",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct and specific reasoning about protocol-required SHA-1 and the incompatibility of SHA-2 prefixes and suffixes."
+   },
+   {
+    "card_id": "K4bdc9aba",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Brief but correct and specific to the Pwned Passwords range protocol."
+   },
+   {
+    "card_id": "Kadc66626",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct, specific reason: SHA-1 is needed to match the HIBP dataset, and SHA-2 would give incorrect results."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

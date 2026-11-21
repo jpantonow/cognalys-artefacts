@@ -1,0 +1,8 @@
+distinct findings: 45 Counter({'consolidated': 33, 'bench': 11, 'both': 1})
+strata: Counter({'no_pr': 25, 'our_pr_merged': 8, 'our_pr_closed': 7, 'our_pr_open': 5})
+strata x part: Counter({('no_pr', 'consolidated'): 19, ('no_pr', 'bench'): 6, ('our_pr_open', 'consolidated'): 5, ('our_pr_merged', 'consolidated'): 5, ('our_pr_closed', 'consolidated'): 4, ('our_pr_merged', 'bench'): 3, ('our_pr_closed', 'bench'): 2, ('our_pr_closed', 'both'): 1})
+specs: [('MessageDigestSpec', 14), ('SSLContextSpec', 7), ('SecretKeySpecSpec', 6), ('KeyStoreSpec', 3), ('IvParameterSpecSpec', 3), ('PBEKeySpecSpec', 2), ('GCMParameterSpecSpec', 2), ('CipherSpec', 2), ('SecretKeyFactorySpec', 1), ('KeyManagerFactorySpec', 1), ('MacSpec', 1), ('AlgorithmParametersSpec', 1), ('SecureRandomSpec', 1), ('KeyPairGeneratorSpec', 1)]
+specs, analysed strata (no_pr + closed): [('MessageDigestSpec', 13), ('SecretKeySpecSpec', 6), ('IvParameterSpecSpec', 3), ('SSLContextSpec', 3), ('GCMParameterSpecSpec', 2), ('SecretKeyFactorySpec', 1), ('PBEKeySpecSpec', 1), ('KeyStoreSpec', 1), ('MacSpec', 1), ('AlgorithmParametersSpec', 1)]
+latest outcome, no_pr stratum: [('issue para o mantenedor do app', 11), ('falso positivo reconhecido', 4), ('PR pronto', 4), ('violação confirmada sem correção segura', 3), ('evidência insuficiente', 2), ('correção gerada, sem PR', 1)]
+latest outcome, all: [('PR pronto', 20), ('issue para o mantenedor do app', 12), ('falso positivo reconhecido', 4), ('violação confirmada sem correção segura', 3), ('correção não aplicável: código mudou upstream', 2), ('evidência insuficiente', 2), ('correção gerada, sem PR', 1), ('não analisado', 1)]
+apks in analysed strata: 24

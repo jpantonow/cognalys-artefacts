@@ -1,0 +1,13 @@
+Below is one response to a report about an open-source Android app: RVSec, a runtime checker for how Android apps use the Java cryptography and TLS APIs, reported a finding, and someone decided what to send the app's maintainers (a pull request, an issue, or nothing) and wrote the text below.
+
+Three sources wrote responses like this one, about a third each:
+- TP: an AI coding agent, Codex with GPT-6.1 Terra, working in a checkout of the repository, instructed to follow a multi-step process in one session (gather evidence about the finding, decide, plan and draft a patch, review it, build it and write the text).
+- SP2: an AI coding agent, Claude Sonnet 5.5 in Claude Code, working in a checkout of the repository, instructed to follow the same multi-step process in one session.
+- C: Cognalys, a multi-step pipeline on GPT-6.1 Terra that gathers evidence about the finding, decides, plans and drafts a patch, reviews it, builds it and writes the text.
+
+Which source wrote this response? Answer from the card alone; there is nothing else to read.
+
+Answer with one JSON object and nothing else:
+{"guess": "TP" | "SP2" | "C", "confidence": 0.0-1.0, "reason": "..."}
+
+$card

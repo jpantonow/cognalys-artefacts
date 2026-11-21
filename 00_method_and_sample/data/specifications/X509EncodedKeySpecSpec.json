@@ -1,0 +1,135 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The supplied rule gives no definition, producer rules, or runtime test for preparedKeyMaterial.",
+      "A missing-predicate report establishes only that the detector did not establish the required predicate under its analysis model; it does not establish that the predicate is false at runtime.",
+      "The rule has no constraints on key algorithm, key size, trust anchor, provenance, certificate chain, or later use of the resulting specification object."
+    ],
+    "predicates": [
+      "preparedKeyMaterial[encodedKey] is the sole REQUIRES predicate.",
+      "speccedKey[this, _] is the sole ENSURES predicate and applies after Con.",
+      "Con is an alias for c1."
+    ],
+    "claim": "The rule requires preparedKeyMaterial[encodedKey] at c1 and ensures speccedKey[this, _] after c1."
+  },
+  "unknowns": [
+    "What exact semantic property preparedKeyMaterial represents and which operations or rules produce it.",
+    "Whether the detector treats preparedKeyMaterial as provenance, syntactic/structural validity, successful decoding, a trusted-source fact, or another abstract property.",
+    "What the wildcard value in speccedKey[this, _] represents and which later rules consume that ensured predicate.",
+    "Whether the relevant downstream provider performs structural parsing, algorithm-specific validation, or trust validation when the specification object is consumed.",
+    "Which target runtime, library version, provider, and detector predicate-producer configuration apply to any individual report."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "The governed Java type represents an ASN.1 encoding of a public key using the X.509 SubjectPublicKeyInfo form.",
+      "Its one-argument constructor creates a specification from encoded key bytes assumed to be X.509-encoded and copies the supplied array.",
+      "getEncoded() returns a new byte array, and getFormat() returns \"X.509\"."
+    ],
+    "preconditions": [
+      "The one-argument constructor throws NullPointerException when encodedKey is null.",
+      "The API documentation says encodedKey is assumed to be encoded according to the X.509 standard.",
+      "Neither the JDK nor Android API documentation names preparedKeyMaterial as an API precondition."
+    ],
+    "unknowns": [
+      "The constructor documentation does not specify that it fully parses or validates the SubjectPublicKeyInfo structure at construction time.",
+      "Whether a later consumer accepts the encoding, and what validation it performs, depends on the consuming API, provider, algorithm, and runtime.",
+      "The relationship between the detector predicate preparedKeyMaterial and the documented assumption of X.509 encoding is not defined by the CrySL rule or the API documentation."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/X509EncodedKeySpec.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/spec/X509EncodedKeySpec.html",
+    "https://developer.android.com/reference/java/security/spec/X509EncodedKeySpec",
+    "https://raw.githubusercontent.com/openjdk/jdk/master/src/java.base/share/classes/java/security/spec/X509EncodedKeySpec.java",
+    "https://raw.githubusercontent.com/openjdk/jdk/master/src/java.base/share/classes/java/security/spec/EncodedKeySpec.java"
+  ],
+  "schema_version": 2,
+  "non_security_violation_shapes": [
+    "preparedKeyMaterial[encodedKey] is genuinely false, but the specification object is constructed and discarded in a non-production fuzzing or parser-exploration harness without being used in an authentication, authorization, encryption, decryption, or signature decision.",
+    "preparedKeyMaterial[encodedKey] is genuinely false, and the object is created only as a negative test input for a downstream parser or KeyFactory failure-path test, with no deployed security property depending on the result.",
+    "preparedKeyMaterial[encodedKey] is genuinely false, but the construction occurs in an offline diagnostic or migration tool whose result is not trusted or used to make a security-relevant decision."
+  ],
+  "source_verified": true,
+  "important_note": "This is a one-event CrySL rule. It requires the analysis predicate preparedKeyMaterial[encodedKey] for the one-argument constructor and records speccedKey[this, _] after construction. It does not itself define how key material becomes “prepared,” nor does it prove public-key authenticity, trust, algorithm suitability, successful KeyFactory parsing, or correctness of any later cryptographic operation.",
+  "events": [
+    {
+      "condition": "This event is construction through the one-argument java.security.spec.X509EncodedKeySpec(byte[] encodedKey) constructor. The rule requires the analysis predicate preparedKeyMaterial[encodedKey]. The rule contains no runtime value condition, such as if(...), condition(...), target(...), or args(...); satisfying the predicate is not determined by how the source spells the argument.",
+      "name": "c1",
+      "api_patterns": [
+        "new X509EncodedKeySpec(",
+        "new java.security.spec.X509EncodedKeySpec(",
+        "X509EncodedKeySpec("
+      ]
+    }
+  ],
+  "security_semantics": {
+    "runtime_claim": "The governed constructor copies a non-null byte array that is assumed to contain an X.509 public-key encoding. The API documentation does not impose or evaluate a runtime predicate named preparedKeyMaterial.",
+    "equivalent": false,
+    "detector_claim": "Construction through c1 is permitted by the rule only when preparedKeyMaterial[encodedKey] is established; after c1, the rule marks the receiver as speccedKey[this, _]."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Confirm the target platform exposes the one-argument constructor: it is documented in the JDK API and Android documents it from API level 1.",
+      "Treat the byte[]/String overload separately: it is documented in Java since 9 and in Android from API level 35, but is not an event in this rule.",
+      "Confirm the detector rule revision and its predicate-producer configuration, because the supplied rule alone does not say how preparedKeyMaterial is recognized."
+    ],
+    "runtime": [
+      "If runtime behavior matters, establish that the actual byte array is non-null and determine whether it is accepted as the intended SubjectPublicKeyInfo encoding by the relevant consuming API/provider.",
+      "Establish the bytes' provenance, integrity/authenticity requirements, expected algorithm, and the security-sensitive operation that consumes the resulting key separately from this constructor.",
+      "If a runtime predicate is asserted, define it and test its value at the constructor call; this CrySL rule itself provides no runtime boolean condition."
+    ],
+    "source_level": [
+      "Resolve the invoked constructor to java.security.spec.X509EncodedKeySpec(byte[]) rather than a namesake type or the byte[]/String overload.",
+      "Establish the byte[] data flow into encodedKey and identify the detector-recognized fact or producer that establishes preparedKeyMaterial[encodedKey].",
+      "Do not substitute a source-text heuristic such as the presence or absence of a decode or validation call for the rule predicate unless the detector's predicate semantics specifically support that substitution."
+    ]
+  },
+  "forbidden_inferences_without_evidence": [
+    "That the bytes are malformed, are not an X.509 SubjectPublicKeyInfo encoding, or will fail when later consumed by a KeyFactory.",
+    "That the byte array was not decoded, parsed, validated, copied, retrieved from a trusted resource, or otherwise prepared at runtime; the report says the required predicate was not established by the detector.",
+    "That the public key is untrusted, attacker-controlled, revoked, mismatched to an expected key, or capable of bypassing an authorization or signature-verification decision.",
+    "That preparedKeyMaterial requires any particular operation, such as Base64 decoding, certificate validation, signature verification, decryption, or a byte-array clone; the rule does not define the predicate.",
+    "That the two-argument X509EncodedKeySpec(byte[], String) overload is governed by this rule; c1 names only the one-argument constructor.",
+    "That a similarly named type from another package or framework is in scope; the rule SPEC names java.security.spec.X509EncodedKeySpec."
+  ],
+  "name": "X509EncodedKeySpecSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/X509EncodedKeySpec.crysl",
+  "applies_to_types": [
+    "java.security.spec.X509EncodedKeySpec"
+  ],
+  "source_title": "Crypto-API-Rules: JavaCryptographicArchitecture/src/X509EncodedKeySpec.crysl",
+  "semantic_scope": "For every finding of this rule, the detector observes a construction event matching the one-argument java.security.spec.X509EncodedKeySpec(byte[] encodedKey) constructor and checks whether preparedKeyMaterial[encodedKey] has been established for that event. On a compliant event, the rule ensures speccedKey[this, _] after construction. The rule does not contain events for getEncoded(), getFormat(), KeyFactory.generatePublic(...), the byte[]/String constructor, or any other API type.",
+  "spec_id": "X509EncodedKeySpecSpec",
+  "known_false_positive_shapes": [
+    "The exact one-argument constructor is invoked with material for which preparedKeyMaterial is in fact true, but that fact was established through an unmodeled library, native boundary, reflection, deserialization boundary, or interprocedural path that the detector cannot recognize.",
+    "A detector or local matcher resolves a namesake type from another package or framework as java.security.spec.X509EncodedKeySpec; that is not an event covered by this rule.",
+    "A detector or local matcher treats X509EncodedKeySpec(byte[], String) as c1 merely because the constructor name matches; the rule's c1 clause has one argument only.",
+    "An imprecise call graph or unresolved dependency model attributes a call to the governed constructor when that constructor is not the actual resolved target."
+  ],
+  "protocol": "Con := c1; ORDER Con, where c1 = X509EncodedKeySpec(encodedKey).",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/X509EncodedKeySpec.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:java.security.spec.X509EncodedKeySpec"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.cryptomator.domain.usecases.AndroidLicenseVerifier",
+        "method": "getPublicKey",
+        "message": "no preparation of the encoded key material was observed"
+      }
+    ],
+    "expected_api_simple_name": "X509EncodedKeySpec",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:java.security.spec.X509EncodedKeySpec",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/X509EncodedKeySpec.crysl"
+  }
+}

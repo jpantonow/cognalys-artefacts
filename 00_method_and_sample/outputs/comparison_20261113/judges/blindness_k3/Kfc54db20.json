@@ -1,0 +1,31 @@
+{
+ "card_id": "Kfc54db20",
+ "card_sha256": "6d274062654d3e96",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 6497,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 485
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0619144,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "c64c3be2b38caa45",
+ "finished_at": "2026-11-16T11:45:50-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.38,
+  "reason": "The phrase \"supplied build check\" points to a pipeline that runs a build step, which fits Cognalys. The card also says the author did not build this exact diff, which fits a pipeline whose final diff changed after the build. The writing is short and imperative, and the tests are compact (Mockito mocks plus a generated PEM). Both of those read more like GPT than Sonnet, so C is more likely than D."
+ }
+}

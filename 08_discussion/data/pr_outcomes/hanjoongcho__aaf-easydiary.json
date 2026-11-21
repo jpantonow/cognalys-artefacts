@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/hanjoongcho/aaf-easydiary/pull/253",
+    "state": "merged",
+    "finding_id": "479800df7ec6",
+    "spec": "ZipSlipSpec",
+    "csv_class": "me.blog.korn123.easydiary.helper.ZipHelper",
+    "method_name": "decompress",
+    "title": "Fix decompress",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:08.137658+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "hanjoongcho",
+        "kind": "comment",
+        "body": "@jpantonow Thank you for submitting a PR to address the Path Traversal security vulnerability.\r\n\r\nI've thoroughly reviewed the PR description, code, and test files. Although I haven't run actual tests with the requested version yet, since the ZIP file is generated according to the application's export rules, it will import if it complies with those rules. Otherwise (if it doesn't follow the rules or if a file containing an intentional Path Traversal attack is mistakenly imported), having the operation itself simply ignored is sufficient.\r\n\r\nI will run tests directly using your PR code, and if there are no issues, I'll merge it.\r\n\r\nThank you for your interest in this project!"
+      }
+    ]
+  }
+]

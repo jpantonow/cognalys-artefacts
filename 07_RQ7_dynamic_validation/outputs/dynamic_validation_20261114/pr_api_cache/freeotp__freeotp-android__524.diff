@@ -1,0 +1,189 @@
+diff --git a/mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyCipherSpecTest.java b/mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyCipherSpecTest.java
+new file mode 100644
+index 00000000..77913785
+--- /dev/null
++++ b/mobile/src/androidTest/java/org/fedorahosted/freeotp/encryptor/EncryptedKeyCipherSpecTest.java
+@@ -0,0 +1,72 @@
++package org.fedorahosted.freeotp.encryptor;
++
++import org.junit.Assert;
++import org.junit.Test;
++
++import java.io.IOException;
++import java.security.InvalidAlgorithmParameterException;
++import java.security.InvalidKeyException;
++import java.security.NoSuchAlgorithmException;
++import java.security.spec.InvalidKeySpecException;
++
++import javax.crypto.BadPaddingException;
++import javax.crypto.IllegalBlockSizeException;
++import javax.crypto.KeyGenerator;
++import javax.crypto.NoSuchPaddingException;
++import javax.crypto.SecretKey;
++import javax.crypto.spec.SecretKeySpec;
++
++public class EncryptedKeyCipherSpecTest {
++
++    @Test
++    public void generatedAesKeyRoundTripsThroughEncryptedKey()
++            throws BadPaddingException, IOException, IllegalBlockSizeException,
++            InvalidAlgorithmParameterException, InvalidKeyException, InvalidKeySpecException,
++            NoSuchAlgorithmException, NoSuchPaddingException {
++        SecretKey encryptionKey = generateAesKey();
++        SecretKey plaintext = generateAesKey();
++
++        EncryptedKey encrypted = EncryptedKey.encrypt(encryptionKey, plaintext);
++        SecretKey decrypted = encrypted.decrypt(encryptionKey);
++
++        Assert.assertArrayEquals(plaintext.getEncoded(), decrypted.getEncoded());
++    }
++
++    @Test
++    public void masterKeyPasswordRecoverySuppliesAesKeyForEncryptedKey()
++            throws BadPaddingException, IOException, IllegalBlockSizeException,
++            InvalidAlgorithmParameterException, InvalidKeyException, InvalidKeySpecException,
++            NoSuchAlgorithmException, NoSuchPaddingException {
++        String password = "cipher-spec-test-password";
++        MasterKey masterKey = MasterKey.generate(password);
++        SecretKey recoveredEncryptionKey = masterKey.decrypt(password);
++        SecretKey plaintext = generateAesKey();
++
++        EncryptedKey encrypted = EncryptedKey.encrypt(recoveredEncryptionKey, plaintext);
++        SecretKey decrypted = encrypted.decrypt(recoveredEncryptionKey);
++
++        Assert.assertArrayEquals(plaintext.getEncoded(), decrypted.getEncoded());
++    }
++
++    @Test
++    public void legacyEncodedAesKeyDecryptsExistingEncryptedKeyRecord()
++            throws BadPaddingException, IOException, IllegalBlockSizeException,
++            InvalidAlgorithmParameterException, InvalidKeyException, InvalidKeySpecException,
++            NoSuchAlgorithmException, NoSuchPaddingException {
++        SecretKey legacyEncryptionKey = generateAesKey();
++        SecretKey plaintext = generateAesKey();
++        EncryptedKey existingRecord = EncryptedKey.encrypt(legacyEncryptionKey, plaintext);
++        SecretKey reconstructedLegacyKey = new SecretKeySpec(
++                legacyEncryptionKey.getEncoded(), "AES");
++
++        SecretKey decrypted = existingRecord.decrypt(reconstructedLegacyKey);
++
++        Assert.assertArrayEquals(plaintext.getEncoded(), decrypted.getEncoded());
++    }
++
++    private static SecretKey generateAesKey() throws NoSuchAlgorithmException {
++        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
++        keyGenerator.init(128);
++        return keyGenerator.generateKey();
++    }
++}
+diff --git a/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java b/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java
+index 4baa69da..11eec408 100644
+--- a/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java
++++ b/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/EncryptedKey.java
+@@ -32,14 +32,17 @@ private EncryptedKey(Cipher cipher, SecretKey token)
+         mParameters = cipher.getParameters().getEncoded();
+     }
+ 
+-    public static EncryptedKey encrypt(SecretKey key, SecretKey plaintext)
++    public static EncryptedKey encrypt(SecretKey encryptionKey, SecretKey plaintext)
+             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
+             BadPaddingException, IllegalBlockSizeException, IOException {
+-        if (key == null) {
++        if (encryptionKey == null) {
+             throw new InvalidKeyException("Key is null");
+         }
++        if (!"AES".equalsIgnoreCase(encryptionKey.getAlgorithm())) {
++            throw new InvalidKeyException("Encryption key algorithm must be AES");
++        }
+         Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+-        cipher.init(Cipher.ENCRYPT_MODE, key);
++        cipher.init(Cipher.ENCRYPT_MODE, encryptionKey);
+         return new EncryptedKey(cipher, plaintext);
+     }
+ 
+diff --git a/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java b/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java
+index 4692c97e..de0d7983 100644
+--- a/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java
++++ b/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/Encryptor.java
+@@ -45,15 +45,23 @@ public Map<String, EncryptedKey> encryptToken(SecretKey key) throws
+             BadPaddingException, NoSuchPaddingException, IOException {
+         Map<String, EncryptedKey> data = new HashMap<>();
+ 
+-        Key mk = null;
++        Key masterKey;
+         try {
+-            mk = mKeyStore.getKey(MASTER, null);
++            masterKey = mKeyStore.getKey(MASTER, null);
+         } catch (Exception e) {
+             Log.e(LOGTAG, "Exception", e);
++            InvalidKeyException invalidKeyException =
++                    new InvalidKeyException("Unable to access master key");
++            invalidKeyException.initCause(e);
++            throw invalidKeyException;
+         }
+ 
+-        // Encrypt token key
+-        EncryptedKey ekc = EncryptedKey.encrypt((SecretKey) mk, key);
++        if (!(masterKey instanceof SecretKey)) {
++            throw new InvalidKeyException("Master key is unavailable or is not a secret key");
++        }
++
++        // Encrypt token key using the established recoverable master-key identity.
++        EncryptedKey ekc = EncryptedKey.encrypt((SecretKey) masterKey, key);
+ 
+         data.put("key", ekc);
+         return data;
+diff --git a/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java b/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java
+index 5e277c95..d7885ce3 100644
+--- a/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java
++++ b/mobile/src/main/java/org/fedorahosted/freeotp/encryptor/MasterKey.java
+@@ -6,6 +6,7 @@
+ import java.security.NoSuchAlgorithmException;
+ import java.security.SecureRandom;
+ import java.security.spec.InvalidKeySpecException;
++import java.util.Arrays;
+ 
+ import javax.crypto.BadPaddingException;
+ import javax.crypto.IllegalBlockSizeException;
+@@ -36,18 +37,27 @@ private MasterKey(PBEKeySpec spec) throws NoSuchAlgorithmException,
+             IllegalBlockSizeException, InvalidKeyException, BadPaddingException,
+             NoSuchPaddingException, InvalidKeySpecException, IOException {
+         SecretKeyFactory skf = getSecretKeyFactory();
+-        SecretKey pwd = skf.generateSecret(spec);
++        SecretKey passwordKey = skf.generateSecret(spec);
+ 
+-        byte[] raw = new byte[pwd.getEncoded().length];
++        byte[] raw = new byte[passwordKey.getEncoded().length];
+         new SecureRandom().nextBytes(raw);
+         SecretKey key = new SecretKeySpec(raw, "AES");
+ 
+-        mEncryptedKey = EncryptedKey.encrypt(pwd, key);
++        mEncryptedKey = EncryptedKey.encrypt(provisionEncryptionKey(passwordKey), key);
+         mIterations = spec.getIterationCount();
+         mAlgorithm = skf.getAlgorithm();
+         mSalt = spec.getSalt();
+     }
+ 
++    private static SecretKey provisionEncryptionKey(SecretKey passwordKey) {
++        byte[] keyMaterial = passwordKey.getEncoded();
++        try {
++            return new SecretKeySpec(keyMaterial, "AES");
++        } finally {
++            Arrays.fill(keyMaterial, (byte) 0);
++        }
++    }
++
+     public static MasterKey generate(String pwd) throws BadPaddingException,
+             NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException,
+             InvalidKeyException, InvalidKeySpecException, IOException {
+@@ -61,8 +71,8 @@ private SecretKey decrypt(PBEKeySpec spec) throws NoSuchAlgorithmException,
+             BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException,
+             IOException {
+         SecretKeyFactory skf = SecretKeyFactory.getInstance(mAlgorithm);
+-        SecretKey pwd = skf.generateSecret(spec);
+-        return mEncryptedKey.decrypt(pwd);
++        SecretKey passwordKey = skf.generateSecret(spec);
++        return mEncryptedKey.decrypt(provisionEncryptionKey(passwordKey));
+     }
+ 
+     public SecretKey decrypt(String pwd) throws BadPaddingException,

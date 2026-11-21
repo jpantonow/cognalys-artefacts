@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer/pull/618",
+    "state": "closed",
+    "finding_id": "9564e018f0f4",
+    "spec": "MessageDigestSpec",
+    "csv_class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+    "method_name": "calculateChildType",
+    "title": "Fix calculateChildType",
+    "impact_class": "not_recorded",
+    "recorded_at": "2026-11-19T20:37:47.337532+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "VREMSoftwareDevelopment",
+        "kind": "comment",
+        "body": "This is a false positive. MD5 is used here as a checksum, not as a security control — that's exactly what it's still appropriate for. There's no password, token, or integrity check involved.\r\n\r\nClosing this one, but thanks for the effort.   "
+      }
+    ]
+  }
+]

@@ -1,0 +1,158 @@
+diff --git a/app/src/androidTest/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensionsTest.kt b/app/src/androidTest/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensionsTest.kt
+new file mode 100644
+index 0000000000..bc8389e3cc
+--- /dev/null
++++ b/app/src/androidTest/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensionsTest.kt
+@@ -0,0 +1,41 @@
++package com.nononsenseapps.jsonfeed
++
++import androidx.test.ext.junit.runners.AndroidJUnit4
++import org.junit.Test
++import org.junit.runner.RunWith
++import java.io.IOException
++import kotlin.test.assertEquals
++import kotlin.test.assertFailsWith
++
++@RunWith(AndroidJUnit4::class)
++class OkHttpBuilderExtensionsTest {
++    @Test
++    fun legacyTlsProtocolsAreRemovedWhileSupportedAndFutureProtocolsRemainEnabled() {
++        val filteredProtocols =
++            filterLegacyTlsProtocols(
++                arrayOf(
++                    "SSL",
++                    "SSLv2Hello",
++                    "SSLv3",
++                    "sSlCustom",
++                    "TLSv1",
++                    "TLSv1.0",
++                    "TLSv1.1",
++                    "TLSv1.2",
++                    "TLSv1.3",
++                    "TLSv9.0",
++                ),
++            )
++
++        assertEquals(listOf("TLSv1.2", "TLSv1.3", "TLSv9.0"), filteredProtocols.toList())
++    }
++
++    @Test
++    fun legacyTlsProtocolFilteringFailsClosedWhenNothingAcceptableRemains() {
++        assertFailsWith<IOException> {
++            filterLegacyTlsProtocols(
++                arrayOf("SSLv3", "TLSv1", "TLSv1.0", "TLSv1.1"),
++            )
++        }
++    }
++}
+diff --git a/app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt b/app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt
+index 3c66965a6a..0fbd249d69 100644
+--- a/app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt
++++ b/app/src/main/java/com/nononsenseapps/jsonfeed/OkHttpBuilderExtensions.kt
+@@ -1,11 +1,16 @@
+ package com.nononsenseapps.jsonfeed
+ 
+ import okhttp3.OkHttpClient
++import java.io.IOException
++import java.net.InetAddress
++import java.net.Socket
+ import java.security.KeyManagementException
+ import java.security.NoSuchAlgorithmException
+ import java.security.cert.X509Certificate
+ import javax.net.ssl.HostnameVerifier
+ import javax.net.ssl.SSLContext
++import javax.net.ssl.SSLSocket
++import javax.net.ssl.SSLSocketFactory
+ import javax.net.ssl.TrustManager
+ import javax.net.ssl.X509TrustManager
+ 
+@@ -30,7 +35,7 @@ fun OkHttpClient.Builder.trustAllCerts() {
+ 
+         val sslContext = SSLContext.getInstance("TLS")
+         sslContext.init(null, arrayOf<TrustManager>(trustManager), null)
+-        val sslSocketFactory = sslContext.socketFactory
++        val sslSocketFactory = ProtocolFilteringSslSocketFactory(sslContext.socketFactory)
+ 
+         sslSocketFactory(sslSocketFactory, trustManager)
+             .hostnameVerifier(HostnameVerifier { _, _ -> true })
+@@ -40,3 +45,80 @@ fun OkHttpClient.Builder.trustAllCerts() {
+         // ignore
+     }
+ }
++
++internal fun filterLegacyTlsProtocols(enabledProtocols: Array<String>): Array<String> {
++    val filteredProtocols = enabledProtocols.filterNot(::isLegacyTlsProtocol).toTypedArray()
++    if (filteredProtocols.isEmpty()) {
++        throw IOException("No acceptable TLS protocols remain enabled")
++    }
++    return filteredProtocols
++}
++
++private fun isLegacyTlsProtocol(protocol: String): Boolean =
++    protocol.startsWith(prefix = "SSL", ignoreCase = true) ||
++        protocol.equals("TLSv1", ignoreCase = true) ||
++        protocol.equals("TLSv1.0", ignoreCase = true) ||
++        protocol.equals("TLSv1.1", ignoreCase = true)
++
++private class ProtocolFilteringSslSocketFactory(
++    private val delegate: SSLSocketFactory,
++) : SSLSocketFactory() {
++    override fun getDefaultCipherSuites(): Array<String> = delegate.defaultCipherSuites
++
++    override fun getSupportedCipherSuites(): Array<String> = delegate.supportedCipherSuites
++
++    @Throws(IOException::class)
++    override fun createSocket(): Socket = configure(delegate.createSocket())
++
++    @Throws(IOException::class)
++    override fun createSocket(
++        host: String,
++        port: Int,
++    ): Socket = configure(delegate.createSocket(host, port))
++
++    @Throws(IOException::class)
++    override fun createSocket(
++        host: String,
++        port: Int,
++        localHost: InetAddress,
++        localPort: Int,
++    ): Socket = configure(delegate.createSocket(host, port, localHost, localPort))
++
++    @Throws(IOException::class)
++    override fun createSocket(
++        host: InetAddress,
++        port: Int,
++    ): Socket = configure(delegate.createSocket(host, port))
++
++    @Throws(IOException::class)
++    override fun createSocket(
++        address: InetAddress,
++        port: Int,
++        localAddress: InetAddress,
++        localPort: Int,
++    ): Socket = configure(delegate.createSocket(address, port, localAddress, localPort))
++
++    @Throws(IOException::class)
++    override fun createSocket(
++        socket: Socket,
++        host: String,
++        port: Int,
++        autoClose: Boolean,
++    ): Socket = configure(delegate.createSocket(socket, host, port, autoClose))
++
++    private fun configure(socket: Socket): Socket {
++        if (socket is SSLSocket) {
++            try {
++                socket.enabledProtocols = filterLegacyTlsProtocols(socket.enabledProtocols)
++            } catch (e: IOException) {
++                try {
++                    socket.close()
++                } catch (_: IOException) {
++                    // Preserve the protocol-filtering failure.
++                }
++                throw e
++            }
++        }
++        return socket
++    }
++}

@@ -1,0 +1,371 @@
+{
+ "url": "https://api.github.com/repos/paroj/DSub2000/compare/474f6ca847649220f7965fe95f1285d1d8b4ca64...d7d35647f9fb25769100997573032fab47e197b5",
+ "fetched_at": "2026-11-15T16:18:00.938622+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/paroj/DSub2000/compare/474f6ca847649220f7965fe95f1285d1d8b4ca64...d7d35647f9fb25769100997573032fab47e197b5",
+  "html_url": "https://github.com/paroj/DSub2000/compare/474f6ca847649220f7965fe95f1285d1d8b4ca64...d7d35647f9fb25769100997573032fab47e197b5",
+  "permalink_url": "https://github.com/paroj/DSub2000/compare/paroj:474f6ca...paroj:d7d3564",
+  "diff_url": "https://github.com/paroj/DSub2000/compare/474f6ca847649220f7965fe95f1285d1d8b4ca64...d7d35647f9fb25769100997573032fab47e197b5.diff",
+  "patch_url": "https://github.com/paroj/DSub2000/compare/474f6ca847649220f7965fe95f1285d1d8b4ca64...d7d35647f9fb25769100997573032fab47e197b5.patch",
+  "base_commit": {
+   "sha": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "node_id": "C_kwDOHIDUFNoAKDQ3NGY2Y2E4NDc2NDkyMjBmNzk2NWZlOTVmMTI4NWQxZDhiNGNhNjQ",
+   "commit": {
+    "author": {
+     "name": "pauljako",
+     "email": "126326487+pauljako@users.noreply.github.com",
+     "date": "2026-06-17T11:36:09Z"
+    },
+    "committer": {
+     "name": "Pavel Rojtberg",
+     "email": "rojtberg@gmail.com",
+     "date": "2026-06-17T12:37:07Z"
+    },
+    "message": "fix(DSubWidgetProvider.java): make hasInstances return false if AppWidgetManager is null\n\nThis is for some reason required on WearOS",
+    "tree": {
+     "sha": "1a2d1e16e247236199b9ead82ab3908b07f7a002",
+     "url": "https://api.github.com/repos/paroj/DSub2000/git/trees/1a2d1e16e247236199b9ead82ab3908b07f7a002"
+    },
+    "url": "https://api.github.com/repos/paroj/DSub2000/git/commits/474f6ca847649220f7965fe95f1285d1d8b4ca64",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/paroj/DSub2000/commits/474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "html_url": "https://github.com/paroj/DSub2000/commit/474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "comments_url": "https://api.github.com/repos/paroj/DSub2000/commits/474f6ca847649220f7965fe95f1285d1d8b4ca64/comments",
+   "author": {
+    "login": "pauljako",
+    "id": 126326487,
+    "node_id": "U_kgDOB4eW1w",
+    "avatar_url": "https://avatars.githubusercontent.com/u/126326487?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/pauljako",
+    "html_url": "https://github.com/pauljako",
+    "followers_url": "https://api.github.com/users/pauljako/followers",
+    "following_url": "https://api.github.com/users/pauljako/following{/other_user}",
+    "gists_url": "https://api.github.com/users/pauljako/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/pauljako/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/pauljako/subscriptions",
+    "organizations_url": "https://api.github.com/users/pauljako/orgs",
+    "repos_url": "https://api.github.com/users/pauljako/repos",
+    "events_url": "https://api.github.com/users/pauljako/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/pauljako/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "paroj",
+    "id": 4941802,
+    "node_id": "MDQ6VXNlcjQ5NDE4MDI=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/4941802?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/paroj",
+    "html_url": "https://github.com/paroj",
+    "followers_url": "https://api.github.com/users/paroj/followers",
+    "following_url": "https://api.github.com/users/paroj/following{/other_user}",
+    "gists_url": "https://api.github.com/users/paroj/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/paroj/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/paroj/subscriptions",
+    "organizations_url": "https://api.github.com/users/paroj/orgs",
+    "repos_url": "https://api.github.com/users/paroj/repos",
+    "events_url": "https://api.github.com/users/paroj/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/paroj/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "e3e7607d37c2257b412cdcf9ef4bf4b602ea3a2b",
+     "url": "https://api.github.com/repos/paroj/DSub2000/commits/e3e7607d37c2257b412cdcf9ef4bf4b602ea3a2b",
+     "html_url": "https://github.com/paroj/DSub2000/commit/e3e7607d37c2257b412cdcf9ef4bf4b602ea3a2b"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "node_id": "C_kwDOHIDUFNoAKDQ3NGY2Y2E4NDc2NDkyMjBmNzk2NWZlOTVmMTI4NWQxZDhiNGNhNjQ",
+   "commit": {
+    "author": {
+     "name": "pauljako",
+     "email": "126326487+pauljako@users.noreply.github.com",
+     "date": "2026-06-17T11:36:09Z"
+    },
+    "committer": {
+     "name": "Pavel Rojtberg",
+     "email": "rojtberg@gmail.com",
+     "date": "2026-06-17T12:37:07Z"
+    },
+    "message": "fix(DSubWidgetProvider.java): make hasInstances return false if AppWidgetManager is null\n\nThis is for some reason required on WearOS",
+    "tree": {
+     "sha": "1a2d1e16e247236199b9ead82ab3908b07f7a002",
+     "url": "https://api.github.com/repos/paroj/DSub2000/git/trees/1a2d1e16e247236199b9ead82ab3908b07f7a002"
+    },
+    "url": "https://api.github.com/repos/paroj/DSub2000/git/commits/474f6ca847649220f7965fe95f1285d1d8b4ca64",
+    "comment_count": 0,
+    "verification": {
+     "verified": false,
+     "reason": "unsigned",
+     "signature": null,
+     "payload": null,
+     "verified_at": null
+    }
+   },
+   "url": "https://api.github.com/repos/paroj/DSub2000/commits/474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "html_url": "https://github.com/paroj/DSub2000/commit/474f6ca847649220f7965fe95f1285d1d8b4ca64",
+   "comments_url": "https://api.github.com/repos/paroj/DSub2000/commits/474f6ca847649220f7965fe95f1285d1d8b4ca64/comments",
+   "author": {
+    "login": "pauljako",
+    "id": 126326487,
+    "node_id": "U_kgDOB4eW1w",
+    "avatar_url": "https://avatars.githubusercontent.com/u/126326487?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/pauljako",
+    "html_url": "https://github.com/pauljako",
+    "followers_url": "https://api.github.com/users/pauljako/followers",
+    "following_url": "https://api.github.com/users/pauljako/following{/other_user}",
+    "gists_url": "https://api.github.com/users/pauljako/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/pauljako/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/pauljako/subscriptions",
+    "organizations_url": "https://api.github.com/users/pauljako/orgs",
+    "repos_url": "https://api.github.com/users/pauljako/repos",
+    "events_url": "https://api.github.com/users/pauljako/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/pauljako/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "paroj",
+    "id": 4941802,
+    "node_id": "MDQ6VXNlcjQ5NDE4MDI=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/4941802?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/paroj",
+    "html_url": "https://github.com/paroj",
+    "followers_url": "https://api.github.com/users/paroj/followers",
+    "following_url": "https://api.github.com/users/paroj/following{/other_user}",
+    "gists_url": "https://api.github.com/users/paroj/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/paroj/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/paroj/subscriptions",
+    "organizations_url": "https://api.github.com/users/paroj/orgs",
+    "repos_url": "https://api.github.com/users/paroj/repos",
+    "events_url": "https://api.github.com/users/paroj/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/paroj/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "e3e7607d37c2257b412cdcf9ef4bf4b602ea3a2b",
+     "url": "https://api.github.com/repos/paroj/DSub2000/commits/e3e7607d37c2257b412cdcf9ef4bf4b602ea3a2b",
+     "html_url": "https://github.com/paroj/DSub2000/commit/e3e7607d37c2257b412cdcf9ef4bf4b602ea3a2b"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 2,
+  "behind_by": 0,
+  "total_commits": 2,
+  "commits": [
+   {
+    "sha": "db75a54703c23fa6086335635b2f06782da71c4b",
+    "node_id": "C_kwDOHIDUFNoAKGRiNzVhNTQ3MDNjMjNmYTYwODYzMzU2MzViMmYwNjc4MmRhNzFjNGI",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-30T18:45:03Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-30T18:45:03Z"
+     },
+     "message": "Fix <init>",
+     "tree": {
+      "sha": "407c8266a61defdebfe220d8e0045702f84ca5b3",
+      "url": "https://api.github.com/repos/paroj/DSub2000/git/trees/407c8266a61defdebfe220d8e0045702f84ca5b3"
+     },
+     "url": "https://api.github.com/repos/paroj/DSub2000/git/commits/db75a54703c23fa6086335635b2f06782da71c4b",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/paroj/DSub2000/commits/db75a54703c23fa6086335635b2f06782da71c4b",
+    "html_url": "https://github.com/paroj/DSub2000/commit/db75a54703c23fa6086335635b2f06782da71c4b",
+    "comments_url": "https://api.github.com/repos/paroj/DSub2000/commits/db75a54703c23fa6086335635b2f06782da71c4b/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "474f6ca847649220f7965fe95f1285d1d8b4ca64",
+      "url": "https://api.github.com/repos/paroj/DSub2000/commits/474f6ca847649220f7965fe95f1285d1d8b4ca64",
+      "html_url": "https://github.com/paroj/DSub2000/commit/474f6ca847649220f7965fe95f1285d1d8b4ca64"
+     }
+    ]
+   },
+   {
+    "sha": "d7d35647f9fb25769100997573032fab47e197b5",
+    "node_id": "C_kwDOHIDUFNoAKGQ3ZDM1NjQ3ZjlmYjI1NzY5MTAwOTk3NTczMDMyZmFiNDdlMTk3YjU",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-31T00:42:47Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-31T00:42:47Z"
+     },
+     "message": "Address pull request feedback for <init>",
+     "tree": {
+      "sha": "848e102544e1ed623603ab6ab877aca1e189a34b",
+      "url": "https://api.github.com/repos/paroj/DSub2000/git/trees/848e102544e1ed623603ab6ab877aca1e189a34b"
+     },
+     "url": "https://api.github.com/repos/paroj/DSub2000/git/commits/d7d35647f9fb25769100997573032fab47e197b5",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/paroj/DSub2000/commits/d7d35647f9fb25769100997573032fab47e197b5",
+    "html_url": "https://github.com/paroj/DSub2000/commit/d7d35647f9fb25769100997573032fab47e197b5",
+    "comments_url": "https://api.github.com/repos/paroj/DSub2000/commits/d7d35647f9fb25769100997573032fab47e197b5/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "db75a54703c23fa6086335635b2f06782da71c4b",
+      "url": "https://api.github.com/repos/paroj/DSub2000/commits/db75a54703c23fa6086335635b2f06782da71c4b",
+      "html_url": "https://github.com/paroj/DSub2000/commit/db75a54703c23fa6086335635b2f06782da71c4b"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "54505f27f1d5d0349150a7a5ec5983e833b794ba",
+    "filename": "app/src/androidTest/java/github/paroj/dsub2000/ApplicationTest.java",
+    "status": "modified",
+    "additions": 58,
+    "deletions": 2,
+    "changes": 60,
+    "blob_url": "https://github.com/paroj/DSub2000/blob/d7d35647f9fb25769100997573032fab47e197b5/app%2Fsrc%2FandroidTest%2Fjava%2Fgithub%2Fparoj%2Fdsub2000%2FApplicationTest.java",
+    "raw_url": "https://github.com/paroj/DSub2000/raw/d7d35647f9fb25769100997573032fab47e197b5/app%2Fsrc%2FandroidTest%2Fjava%2Fgithub%2Fparoj%2Fdsub2000%2FApplicationTest.java",
+    "contents_url": "https://api.github.com/repos/paroj/DSub2000/contents/app%2Fsrc%2FandroidTest%2Fjava%2Fgithub%2Fparoj%2Fdsub2000%2FApplicationTest.java?ref=d7d35647f9fb25769100997573032fab47e197b5",
+    "patch": "@@ -1,9 +1,65 @@\n package github.paroj.dsub2000;\n \n+import github.paroj.dsub2000.service.RESTMusicService;\n+\n+import junit.framework.TestCase;\n+\n /**\n  * <a href=\"http://d.android.com/tools/testing/testing_android.html\">Testing Fundamentals</a>\n  */\n-public class ApplicationTest {\n+public class ApplicationTest extends TestCase {\n \tpublic ApplicationTest() {\n \t}\n-}\n\\ No newline at end of file\n+\n+\tpublic void testFilterLegacyTlsProtocolsRemovesOnlyLegacyProtocols() {\n+\t\tString[] filteredProtocols = RESTMusicService.filterLegacyTlsProtocols(new String[] {\n+\t\t\t\t\"SSL\",\n+\t\t\t\t\"SSLv3\",\n+\t\t\t\t\"TLSv1\",\n+\t\t\t\t\"TLSv1.0\",\n+\t\t\t\t\"TLSv1.1\",\n+\t\t\t\t\"TLSv1.2\",\n+\t\t\t\t\"TLSv1.3\",\n+\t\t\t\t\"TLSv1.4\"\n+\t\t});\n+\n+\t\tassertDoesNotContain(filteredProtocols, \"SSL\");\n+\t\tassertDoesNotContain(filteredProtocols, \"SSLv3\");\n+\t\tassertDoesNotContain(filteredProtocols, \"TLSv1\");\n+\t\tassertDoesNotContain(filteredProtocols, \"TLSv1.0\");\n+\t\tassertDoesNotContain(filteredProtocols, \"TLSv1.1\");\n+\t\tassertContains(filteredProtocols, \"TLSv1.2\");\n+\t\tassertContains(filteredProtocols, \"TLSv1.3\");\n+\t\tassertContains(filteredProtocols, \"TLSv1.4\");\n+\t}\n+\n+\tpublic void testFilterLegacyTlsProtocolsFailsClosedWithoutAcceptableProtocol() {\n+\t\ttry {\n+\t\t\tRESTMusicService.filterLegacyTlsProtocols(new String[] {\n+\t\t\t\t\t\"SSLv3\",\n+\t\t\t\t\t\"TLSv1\",\n+\t\t\t\t\t\"TLSv1.0\",\n+\t\t\t\t\t\"TLSv1.1\"\n+\t\t\t});\n+\t\t\tfail(\"Expected filtering an all-legacy protocol set to fail closed\");\n+\t\t} catch (IllegalStateException expected) {\n+\t\t\t// Expected: no provider-enabled protocol remains safe to use.\n+\t\t}\n+\t}\n+\n+\tprivate void assertContains(String[] protocols, String expectedProtocol) {\n+\t\tfor (String protocol : protocols) {\n+\t\t\tif (expectedProtocol.equals(protocol)) {\n+\t\t\t\treturn;\n+\t\t\t}\n+\t\t}\n+\t\tfail(\"Expected protocol to remain enabled: \" + expectedProtocol);\n+\t}\n+\n+\tprivate void assertDoesNotContain(String[] protocols, String unwantedProtocol) {\n+\t\tfor (String protocol : protocols) {\n+\t\t\tassertFalse(\"Legacy protocol must be removed: \" + unwantedProtocol,\n+\t\t\t\t\tunwantedProtocol.equals(protocol));\n+\t\t}\n+\t}\n+}"
+   },
+   {
+    "sha": "e6f5ff8eb3a49b0b88eebd9bce59611141e0060a",
+    "filename": "app/src/main/java/github/paroj/dsub2000/service/RESTMusicService.java",
+    "status": "modified",
+    "additions": 132,
+    "deletions": 28,
+    "changes": 160,
+    "blob_url": "https://github.com/paroj/DSub2000/blob/d7d35647f9fb25769100997573032fab47e197b5/app%2Fsrc%2Fmain%2Fjava%2Fgithub%2Fparoj%2Fdsub2000%2Fservice%2FRESTMusicService.java",
+    "raw_url": "https://github.com/paroj/DSub2000/raw/d7d35647f9fb25769100997573032fab47e197b5/app%2Fsrc%2Fmain%2Fjava%2Fgithub%2Fparoj%2Fdsub2000%2Fservice%2FRESTMusicService.java",
+    "contents_url": "https://api.github.com/repos/paroj/DSub2000/contents/app%2Fsrc%2Fmain%2Fjava%2Fgithub%2Fparoj%2Fdsub2000%2Fservice%2FRESTMusicService.java?ref=d7d35647f9fb25769100997573032fab47e197b5",
+    "patch": "@@ -120,33 +120,133 @@ public class RESTMusicService implements MusicService {\n \tprivate boolean hasInstalledGoogleSSL = false;\n \n     public RESTMusicService() {\n-\t\tTrustManager[] trustAllCerts = new TrustManager[]{\n-\t\t\tnew X509TrustManager() {\n-\t\t\t\tpublic java.security.cert.X509Certificate[] getAcceptedIssuers() {\n-\t\t\t\t\treturn null;\n-\t\t\t\t}\n-\t\t\t\tpublic void checkClientTrusted(\n-\t\t\t\t\t\tjava.security.cert.X509Certificate[] certs, String authType) {\n-\t\t\t\t}\n-\t\t\t\tpublic void checkServerTrusted(\n-\t\t\t\t\t\tjava.security.cert.X509Certificate[] certs, String authType) {\n-\t\t\t\t}\n-\t\t\t}\n-\t\t};\n-\t\ttry {\n-\t\t\tSSLContext insecureSslContext = SSLContext.getInstance(\"TLS\");\n-\t\t\tinsecureSslContext.init(null, trustAllCerts, new java.security.SecureRandom());\n-\t\t\tinsecureSslSocketFactory = insecureSslContext.getSocketFactory();\n-\t\t} catch (Exception e) {\n-\t\t}\n+        TrustManager[] trustAllCerts = new TrustManager[] {\n+            new X509TrustManager() {\n+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {\n+                    return new java.security.cert.X509Certificate[0];\n+                }\n+                public void checkClientTrusted(\n+                        java.security.cert.X509Certificate[] certs, String authType) {\n+                }\n+                public void checkServerTrusted(\n+                        java.security.cert.X509Certificate[] certs, String authType) {\n+                }\n+            }\n+        };\n+        try {\n+            SSLContext insecureSslContext = SSLContext.getInstance(\"TLS\");\n+            insecureSslContext.init(null, trustAllCerts, new java.security.SecureRandom());\n+            insecureSslSocketFactory = createLegacyTlsFilteringSocketFactory(insecureSslContext.getSocketFactory());\n+        } catch (Exception e) {\n+        }\n \n-\t\tselfSignedHostnameVerifier = new HostnameVerifier() {\n-\t\t\tpublic boolean verify(String hostname, SSLSession session) {\n-\t\t\t\treturn true;\n-\t\t\t}\n-\t\t};\n+        selfSignedHostnameVerifier = new HostnameVerifier() {\n+            public boolean verify(String hostname, SSLSession session) {\n+                return true;\n+            }\n+        };\n+    }\n+\n+    public static String[] filterLegacyTlsProtocols(String[] enabledProtocols) {\n+        if (enabledProtocols == null) {\n+            throw new IllegalStateException(\"No TLS protocols are enabled\");\n+        }\n+\n+        List<String> filteredProtocols = new ArrayList<String>(enabledProtocols.length);\n+        for (String protocol : enabledProtocols) {\n+            if (protocol != null && !isLegacyTlsProtocol(protocol)) {\n+                filteredProtocols.add(protocol);\n+            }\n+        }\n+\n+        if (filteredProtocols.isEmpty()) {\n+            throw new IllegalStateException(\"No acceptable TLS protocols remain enabled\");\n+        }\n+        return filteredProtocols.toArray(new String[filteredProtocols.size()]);\n     }\n \n+    private static SSLSocketFactory createLegacyTlsFilteringSocketFactory(SSLSocketFactory socketFactory) {\n+        if (socketFactory instanceof LegacyTlsFilteringSocketFactory) {\n+            return socketFactory;\n+        }\n+        return new LegacyTlsFilteringSocketFactory(socketFactory);\n+    }\n+\n+    \tprivate static boolean isLegacyTlsProtocol(String protocol) {\n+    \t\treturn protocol != null && (protocol.startsWith(\"SSL\")\n+    \t\t\t\t|| \"TLSv1\".equals(protocol)\n+    \t\t\t\t|| \"TLSv1.0\".equals(protocol)\n+    \t\t\t\t|| \"TLSv1.1\".equals(protocol));\n+    \t}\n+\n+    \tprivate static class LegacyTlsFilteringSocketFactory extends SSLSocketFactory {\n+    \t\tprivate final SSLSocketFactory delegate;\n+\n+    \t\tLegacyTlsFilteringSocketFactory(SSLSocketFactory delegate) {\n+    \t\t\tthis.delegate = delegate;\n+    \t\t}\n+\n+    \t\t@Override\n+    \t\tpublic String[] getDefaultCipherSuites() {\n+    \t\t\treturn delegate.getDefaultCipherSuites();\n+    \t\t}\n+\n+    \t\t@Override\n+    \t\tpublic String[] getSupportedCipherSuites() {\n+    \t\t\treturn delegate.getSupportedCipherSuites();\n+    \t\t}\n+\n+    \t\t@Override\n+    \t\tpublic java.net.Socket createSocket() throws IOException {\n+    \t\t\treturn configureSocket(delegate.createSocket());\n+    \t\t}\n+\n+    \t\t@Override\n+    \t\tpublic java.net.Socket createSocket(String host, int port) throws IOException {\n+    \t\t\treturn configureSocket(delegate.createSocket(host, port));\n+    \t\t}\n+\n+    \t\t@Override\n+    \t\tpublic java.net.Socket createSocket(String host, int port, java.net.InetAddress localHost, int localPort) throws IOException {\n+    \t\t\treturn configureSocket(delegate.createSocket(host, port, localHost, localPort));\n+    \t\t}\n+\n+    \t\t@Override\n+    \t\tpublic java.net.Socket createSocket(java.net.InetAddress host, int port) throws IOException {\n+    \t\t\treturn configureSocket(delegate.createSocket(host, port));\n+    \t\t}\n+\n+    \t\t@Override\n+    \t\tpublic java.net.Socket createSocket(java.net.InetAddress address, int port, java.net.InetAddress localAddress, int localPort) throws IOException {\n+    \t\t\treturn configureSocket(delegate.createSocket(address, port, localAddress, localPort));\n+    \t\t}\n+\n+    \t\t@Override\n+    \t\tpublic java.net.Socket createSocket(java.net.Socket socket, String host, int port, boolean autoClose) throws IOException {\n+    \t\t\treturn configureSocket(delegate.createSocket(socket, host, port, autoClose));\n+    \t\t}\n+\n+    \t\tprivate java.net.Socket configureSocket(java.net.Socket socket) throws IOException {\n+    \t\t\tif (!(socket instanceof javax.net.ssl.SSLSocket)) {\n+    \t\t\t\tsocket.close();\n+    \t\t\t\tthrow new SSLException(\"TLS socket factory returned a non-SSL socket\");\n+    \t\t\t}\n+\n+    \t\t\ttry {\n+    \t\t\t\tjavax.net.ssl.SSLSocket sslSocket = (javax.net.ssl.SSLSocket) socket;\n+    \t\t\t\tsslSocket.setEnabledProtocols(filterLegacyTlsProtocols(sslSocket.getEnabledProtocols()));\n+    \t\t\t\treturn sslSocket;\n+    \t\t\t} catch (RuntimeException e) {\n+    \t\t\t\ttry {\n+    \t\t\t\t\tsocket.close();\n+    \t\t\t\t} catch (IOException ignored) {\n+    \t\t\t\t}\n+    \t\t\t\tSSLException sslException = new SSLException(\"Failed to configure TLS socket\");\n+    \t\t\t\tsslException.initCause(e);\n+    \t\t\t\tthrow sslException;\n+    \t\t\t}\n+    \t\t}\n+    \t}\n     @Override\n     public void ping(Context context, ProgressListener progressListener) throws Exception {\n         Reader reader = getReader(context, progressListener, \"ping\");\n@@ -1964,11 +2064,15 @@ private HttpURLConnection getConnectionDirect(Context context, String url, Map<S\n \t\t\t}\n \t\t}\n \n-\t\tif(Util.isAllowInsecureEnabled(context, getInstance(context)) && (connection instanceof HttpsURLConnection)) {\n-\t\t\t// if we allow insecure connections, disable ssl checks\n+\t\tif(connection instanceof HttpsURLConnection) {\n \t\t\tHttpsURLConnection sslConnection = (HttpsURLConnection) connection;\n-\t\t\tsslConnection.setSSLSocketFactory(insecureSslSocketFactory);\n-\t\t\tsslConnection.setHostnameVerifier(selfSignedHostnameVerifier);\n+\t\t\tif(Util.isAllowInsecureEnabled(context, getInstance(context))) {\n+\t\t\t\t// if we allow insecure connections, disable ssl checks\n+\t\t\t\tsslConnection.setSSLSocketFactory(insecureSslSocketFactory);\n+\t\t\t\tsslConnection.setHostnameVerifier(selfSignedHostnameVerifier);\n+\t\t\t} else {\n+\t\t\t\tsslConnection.setSSLSocketFactory(createLegacyTlsFilteringSocketFactory(HttpsURLConnection.getDefaultSSLSocketFactory()));\n+\t\t\t}\n \t\t}\n \n \t\tSharedPreferences prefs = Util.getPreferences(context);"
+   }
+  ]
+ }
+}

@@ -1,0 +1,53 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T215325_976948_1181_0018_evidence_extraction",
+  "parent_call_id": "",
+  "finding_id": "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed",
+  "stage": "evidence_extraction",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 142515,
+  "input_tokens": 35993,
+  "cached_input_tokens": 1335,
+  "output_tokens": 5939,
+  "latency_ms": 62624,
+  "retry_count": 0,
+  "request_id": "req_a28656d518854786a6c1ea7485cf0cb4",
+  "section_telemetry": {
+    "stable_policy": {
+      "characters": 1863,
+      "approx_tokens": 466,
+      "sha256": "9345e4cfbbba7570c519d6d09e4b18351383be188a383a0e6d1315a04a20ffa8"
+    },
+    "finding_evidence_packet": {
+      "characters": 121023,
+      "approx_tokens": 30256,
+      "sha256": "e989111a4df6518f83c398ab0d5f0dd243169f7b31a102a1b7d5aa392c7d4a48"
+    },
+    "external_research": {
+      "characters": 16351,
+      "approx_tokens": 4088,
+      "sha256": "1666160a61c9c9eec311bf8859625969ac3826136df59ed8ae390487f8d32470"
+    },
+    "previously_requested_evidence": {
+      "characters": 145,
+      "approx_tokens": 36,
+      "sha256": "77d07ac92fdde7d27dddda00a1bbf3344a457884d692f30bdca85f4ebaa1b3f7"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 0,
+  "openai_response_id": "resp_07eeae69636f8ec9006aea82067ac087d2965d820a4e96998f",
+  "response_status": "completed",
+  "background_polls": 8,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T21:54:29"
+}

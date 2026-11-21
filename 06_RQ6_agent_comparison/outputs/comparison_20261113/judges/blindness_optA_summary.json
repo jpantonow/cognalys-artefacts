@@ -1,0 +1,93 @@
+{
+ "full": {
+  "C": {
+   "drawn": 10,
+   "answered": 10,
+   "right_arm": 9,
+   "right_family": 9,
+   "failed": 0,
+   "stale": 0,
+   "mean_confidence": 0.525,
+   "guesses": {
+    "C": 9,
+    "TP": 1
+   },
+   "precision_of_guess": "9/23"
+  },
+  "TP": {
+   "drawn": 10,
+   "answered": 10,
+   "right_arm": 3,
+   "right_family": 3,
+   "failed": 0,
+   "stale": 0,
+   "mean_confidence": 0.44,
+   "guesses": {
+    "C": 7,
+    "TP": 3
+   },
+   "precision_of_guess": "3/7"
+  },
+  "SP2": {
+   "drawn": 10,
+   "answered": 10,
+   "right_arm": 0,
+   "right_family": 3,
+   "failed": 0,
+   "stale": 0,
+   "mean_confidence": 0.416,
+   "guesses": {
+    "C": 7,
+    "TP": 3
+   },
+   "precision_of_guess": "0/0"
+  }
+ },
+ "patch": {
+  "C": {
+   "drawn": 10,
+   "answered": 10,
+   "right_arm": 1,
+   "right_family": 1,
+   "failed": 0,
+   "stale": 0,
+   "mean_confidence": 0.391,
+   "guesses": {
+    "TP": 8,
+    "C": 1,
+    "SP2": 1
+   },
+   "precision_of_guess": "1/6"
+  },
+  "TP": {
+   "drawn": 10,
+   "answered": 10,
+   "right_arm": 8,
+   "right_family": 9,
+   "failed": 0,
+   "stale": 0,
+   "mean_confidence": 0.383,
+   "guesses": {
+    "TP": 8,
+    "SP2": 1,
+    "C": 1
+   },
+   "precision_of_guess": "8/21"
+  },
+  "SP2": {
+   "drawn": 10,
+   "answered": 10,
+   "right_arm": 1,
+   "right_family": 6,
+   "failed": 0,
+   "stale": 0,
+   "mean_confidence": 0.38,
+   "guesses": {
+    "C": 4,
+    "TP": 5,
+    "SP2": 1
+   },
+   "precision_of_guess": "1/3"
+  }
+ }
+}

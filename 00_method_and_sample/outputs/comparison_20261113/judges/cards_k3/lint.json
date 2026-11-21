@@ -1,0 +1,142 @@
+{
+ "generated_at": "2026-11-17T18:52:07-0300",
+ "cards_sha256": "28c3b70e5a921dec",
+ "passed": true,
+ "cards_per_arm": {
+  "S": {
+   "PR": 16,
+   "NO_ACTION": 51,
+   "ISSUE": 13
+  },
+  "O": {
+   "NO_ACTION": 63,
+   "PR": 15,
+   "ISSUE": 2
+  },
+  "T": {
+   "NO_ACTION": 49,
+   "PR": 23,
+   "ISSUE": 8
+  },
+  "TP": {
+   "PR": 38,
+   "NO_ACTION": 24,
+   "ISSUE": 16,
+   "FAILURE": 2
+  },
+  "SP2": {
+   "PR": 46,
+   "NO_ACTION": 27,
+   "FAILURE": 2,
+   "ISSUE": 5
+  },
+  "C": {
+   "PR": 31,
+   "NO_ACTION": 39,
+   "ISSUE": 10
+  },
+  "D": {
+   "FAILURE": 2,
+   "NO_ACTION": 7,
+   "ISSUE": 3,
+   "PR": 5
+  }
+ },
+ "violations_per_arm": {},
+ "violations": [],
+ "allowed_project_text": [
+  {
+   "card_id": "Kf4721416",
+   "unit": "pr_fff072cb8953",
+   "arm": "C",
+   "field": "text",
+   "marker": "Claude",
+   "token": "Claude",
+   "context": "tatement that best describes the role of AI (e.g., ChatGPT, Claude, GitHub Copilot) in this PR:  - **No AI was used** (written",
+   "allowed_project_text": true
+  },
+  {
+   "card_id": "Kf4721416",
+   "unit": "pr_fff072cb8953",
+   "arm": "C",
+   "field": "text",
+   "marker": "GPT",
+   "token": "ChatGPT",
+   "context": "the statement that best describes the role of AI (e.g., ChatGPT, Claude, GitHub Copilot) in this PR:  - **No AI was used** ",
+   "allowed_project_text": true
+  }
+ ],
+ "normalisation_per_arm": {
+  "S": {
+   "evidence_id": 0,
+   "detector_code": 0,
+   "decision_name": 0,
+   "file_name": 0,
+   "run_folder": 0,
+   "claim_ref": 0,
+   "pipeline_word": 0,
+   "ai_disclosure_sentence": 24
+  },
+  "O": {
+   "evidence_id": 0,
+   "detector_code": 0,
+   "decision_name": 0,
+   "file_name": 0,
+   "run_folder": 0,
+   "claim_ref": 0,
+   "pipeline_word": 0,
+   "ai_disclosure_sentence": 4
+  },
+  "T": {
+   "evidence_id": 0,
+   "detector_code": 0,
+   "decision_name": 0,
+   "file_name": 0,
+   "run_folder": 0,
+   "claim_ref": 0,
+   "pipeline_word": 0,
+   "ai_disclosure_sentence": 2
+  },
+  "TP": {
+   "evidence_id": 0,
+   "detector_code": 0,
+   "decision_name": 0,
+   "file_name": 0,
+   "run_folder": 0,
+   "claim_ref": 0,
+   "pipeline_word": 0,
+   "ai_disclosure_sentence": 16
+  },
+  "SP2": {
+   "evidence_id": 0,
+   "detector_code": 0,
+   "decision_name": 0,
+   "file_name": 0,
+   "run_folder": 0,
+   "claim_ref": 0,
+   "pipeline_word": 0,
+   "ai_disclosure_sentence": 23
+  },
+  "C": {
+   "evidence_id": 95,
+   "detector_code": 0,
+   "decision_name": 0,
+   "file_name": 0,
+   "run_folder": 0,
+   "claim_ref": 93,
+   "pipeline_word": 8,
+   "author_intro_sentence": 30,
+   "ai_disclosure_sentence": 4
+  },
+  "D": {
+   "evidence_id": 5,
+   "detector_code": 0,
+   "decision_name": 0,
+   "file_name": 0,
+   "run_folder": 0,
+   "claim_ref": 2,
+   "pipeline_word": 0,
+   "author_intro_sentence": 6
+  }
+ }
+}

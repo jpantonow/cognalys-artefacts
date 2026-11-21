@@ -1,0 +1,117 @@
+diff --git a/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt b/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt
+index 690b6fd7..e521ea21 100644
+--- a/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt
++++ b/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterData.kt
+@@ -22,13 +22,9 @@ import com.vrem.annotation.OpenClass
+ import com.vrem.wifianalyzer.MainContext
+ import com.vrem.wifianalyzer.SIZE_MAX
+ import com.vrem.wifianalyzer.SIZE_MIN
+-import com.vrem.wifianalyzer.wifi.graphutils.TYPE1
+-import com.vrem.wifianalyzer.wifi.graphutils.TYPE2
+-import com.vrem.wifianalyzer.wifi.graphutils.TYPE3
+ import com.vrem.wifianalyzer.wifi.model.WiFiData
+ import com.vrem.wifianalyzer.wifi.model.WiFiDetail
+ import com.vrem.wifianalyzer.wifi.predicate.makeAccessPointsPredicate
+-import java.security.MessageDigest
+ 
+ @OpenClass
+ class AccessPointsAdapterData(
+@@ -39,7 +35,7 @@ class AccessPointsAdapterData(
+         wiFiData: WiFiData,
+         expandableListView: ExpandableListView?,
+     ) {
+-        MainContext.INSTANCE.configuration.size = type(calculateChildType())
++        MainContext.INSTANCE.configuration.size = calculateChildType()
+         val settings = MainContext.INSTANCE.settings
+         val predicate = makeAccessPointsPredicate(settings)
+         wiFiDetails.clear()
+@@ -64,15 +60,9 @@ class AccessPointsAdapterData(
+ 
+     private fun calculateChildType(): Int =
+         runCatching {
+-            with(MessageDigest.getInstance("MD5")) {
+-                update(
+-                    MainContext.INSTANCE.mainActivity.packageName
+-                        .toByteArray(),
+-                )
+-                val digest: ByteArray = digest()
+-                digest.contentHashCode()
++            when (MainContext.INSTANCE.mainActivity.packageName) {
++                "com.vrem.wifianalyzer", "com.vrem.wifianalyzer.BETA" -> SIZE_MAX
++                else -> SIZE_MIN
+             }
+-        }.getOrDefault(TYPE1)
+-
+-    private fun type(value: Int): Int = if (value == TYPE1 || value == TYPE2 || value == TYPE3) SIZE_MAX else SIZE_MIN
++        }.getOrDefault(SIZE_MAX)
+ }
+diff --git a/app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt b/app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt
+index 1dcd956d..889fe0a0 100644
+--- a/app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt
++++ b/app/src/test/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/AccessPointsAdapterDataTest.kt
+@@ -19,6 +19,8 @@ package com.vrem.wifianalyzer.wifi.accesspoint
+ 
+ import android.widget.ExpandableListView
+ import com.vrem.wifianalyzer.MainContextHelper.INSTANCE
++import com.vrem.wifianalyzer.SIZE_MAX
++import com.vrem.wifianalyzer.SIZE_MIN
+ import com.vrem.wifianalyzer.wifi.band.WiFiBand
+ import com.vrem.wifianalyzer.wifi.model.GroupBy
+ import com.vrem.wifianalyzer.wifi.model.Security
+@@ -112,6 +114,56 @@ class AccessPointsAdapterDataTest {
+         verify(accessPointsAdapterGroup).onGroupExpanded(wiFiDetails, index)
+     }
+ 
++    @Test
++    fun updateWithReleasePackage() {
++        // Arrange
++        val mainActivity = INSTANCE.mainActivity
++        whenever(mainActivity.packageName).thenReturn("com.vrem.wifianalyzer")
++        // Act and assert
++        updateAndVerifySize(SIZE_MAX)
++    }
++
++    @Test
++    fun updateWithBetaPackage() {
++        // Arrange
++        val mainActivity = INSTANCE.mainActivity
++        whenever(mainActivity.packageName).thenReturn("com.vrem.wifianalyzer.BETA")
++        // Act and assert
++        updateAndVerifySize(SIZE_MAX)
++    }
++
++    @Test
++    fun updateWithOtherPackage() {
++        // Arrange
++        val mainActivity = INSTANCE.mainActivity
++        whenever(mainActivity.packageName).thenReturn("org.example.wifianalyzer")
++        // Act and assert
++        updateAndVerifySize(SIZE_MIN)
++    }
++
++    @Test
++    fun updateWhenPackageNameFails() {
++        // Arrange
++        val mainActivity = INSTANCE.mainActivity
++        whenever(mainActivity.packageName).thenThrow(IllegalStateException("Package name unavailable"))
++        // Act and assert
++        updateAndVerifySize(SIZE_MAX)
++    }
++
++    private fun updateAndVerifySize(expectedSize: Int) {
++        // Arrange
++        val wiFiDetails = emptyList<WiFiDetail>()
++        withSettings()
++        doReturn(wiFiDetails).whenever(wiFiData).wiFiDetails(any<Predicate>(), eq(SortBy.SSID), eq(GroupBy.CHANNEL))
++        // Act
++        fixture.update(wiFiData, expandableListView)
++        // Assert
++        verify(configuration).size = expectedSize
++        verify(wiFiData).wiFiDetails(any<Predicate>(), eq(SortBy.SSID), eq(GroupBy.CHANNEL))
++        verify(accessPointsAdapterGroup).update(wiFiDetails, expandableListView)
++        verifySettings()
++    }
++
+     private fun withWiFiDetail(): WiFiDetail =
+         WiFiDetail(
+             WiFiIdentifier("SSID1", "BSSID1"),

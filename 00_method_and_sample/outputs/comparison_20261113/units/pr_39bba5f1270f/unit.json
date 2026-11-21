@@ -1,0 +1,43 @@
+{
+ "unit": "pr_39bba5f1270f",
+ "source": "pr_population",
+ "group": "fechado",
+ "finding_ids": [
+  "39bba5f1270f"
+ ],
+ "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+ "repo_url": "https://github.com/vitorpamplona/amethyst",
+ "pinned_commit": "60b29df3f03775819f57992e5ccafddf32498ede",
+ "spec": [
+  "GCMParameterSpecSpec"
+ ],
+ "class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+ "method": "decrypt",
+ "prs": [
+  "https://github.com/vitorpamplona/amethyst/pull/4642"
+ ],
+ "original_run": "outputs/rvsec_amethyst_20261024/run",
+ "original_outcome": "PR pronto",
+ "frozen_outcome": "violação sem impacto de segurança",
+ "frozen_run": "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/rvsec_amethyst_20261024/run_frozen",
+ "reference_pr_records": [
+  "outputs/rvsec_amethyst_20261024/run/pull_requests/com.vitorpamplona.amethyst.debug_464.apk_decrypt_GCMParameterSpecSpec_pr.json"
+ ],
+ "reference_diff_lines": 39,
+ "build_task": ":amethyst:assembleFdroidDebug",
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "39bba5f1270f",
+   "unique_error_id": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption:::decrypt:::GCMParameterSpecSpec:::UnsatisfiedConstraint:::the IV material was not observed to come from a randomized source",
+   "spec": "GCMParameterSpecSpec",
+   "class": "com.vitorpamplona.amethyst.commons.model.preferences.SecretEncryption",
+   "method": "decrypt",
+   "message": "the IV material was not observed to come from a randomized source",
+   "apk": "com.vitorpamplona.amethyst.debug_464.apk",
+   "repo_url": "https://github.com/vitorpamplona/amethyst",
+   "commit": "60b29df3f03775819f57992e5ccafddf32498ede",
+   "detector_source_location": "SecretEncryption.android.kt:177"
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+diff --git a/app/src/main/java/com/leekleak/trafficlight/database/CryptoManager.kt b/app/src/main/java/com/leekleak/trafficlight/database/CryptoManager.kt
+index d36939c..f8aa630 100644
+--- a/app/src/main/java/com/leekleak/trafficlight/database/CryptoManager.kt
++++ b/app/src/main/java/com/leekleak/trafficlight/database/CryptoManager.kt
+@@ -22,7 +22,7 @@ object CryptoManager {
+ 
+     private fun getSecretKey(alias: String): SecretKey {
+         return keyCache.computeIfAbsent(alias) { key ->
+-            (keyStore.getEntry(key, null) as? KeyStore.SecretKeyEntry)?.secretKey ?: createKey(key)
++            (keyStore.getKey(key, null) as? SecretKey) ?: createKey(key)
+         }
+     }
+ 

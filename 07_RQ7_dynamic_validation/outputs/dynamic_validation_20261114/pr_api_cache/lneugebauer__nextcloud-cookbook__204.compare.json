@@ -1,0 +1,431 @@
+{
+ "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/compare/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0...537a7c8d2fe447200f0c0b634ca3be24ca955a3a",
+ "fetched_at": "2026-11-15T17:18:36.864835+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/compare/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0...537a7c8d2fe447200f0c0b634ca3be24ca955a3a",
+  "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/compare/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0...537a7c8d2fe447200f0c0b634ca3be24ca955a3a",
+  "permalink_url": "https://github.com/lneugebauer/nextcloud-cookbook/compare/lneugebauer:6b943ed...lneugebauer:537a7c8",
+  "diff_url": "https://github.com/lneugebauer/nextcloud-cookbook/compare/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0...537a7c8d2fe447200f0c0b634ca3be24ca955a3a.diff",
+  "patch_url": "https://github.com/lneugebauer/nextcloud-cookbook/compare/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0...537a7c8d2fe447200f0c0b634ca3be24ca955a3a.patch",
+  "base_commit": {
+   "sha": "6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+   "node_id": "C_kwDOF69xRdoAKDZiOTQzZWQzZDBiNDNkNTMyZjA4M2JhNzQxOWNmZDJhYzFhYjAyZTA",
+   "commit": {
+    "author": {
+     "name": "Lukas Neugebauer",
+     "email": "25110308+lneugebauer@users.noreply.github.com",
+     "date": "2026-08-06T19:19:43Z"
+    },
+    "committer": {
+     "name": "GitHub",
+     "email": "noreply@github.com",
+     "date": "2026-08-06T19:19:43Z"
+    },
+    "message": "Merge pull request #197 from dahool/feat-friendly-errors-on-create\n\nfeat: Friendly error handling when creating a recipe",
+    "tree": {
+     "sha": "1caa2146f93acb86187eb2e19dfa8098a199ae48",
+     "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/trees/1caa2146f93acb86187eb2e19dfa8098a199ae48"
+    },
+    "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/commits/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqdN5PCRC1aQ7uu5UhlAAAojgQAEMO7eVRZP6SwxHu5clQ9P3S\nWzvTWbzaYWI/muNFL5pGtCByGX7jOV/crYAly55DHFwcuPlJtGpxQwsHb4x5vtPO\nkndqC4pTRNQzImJmaoiYt0TFv+3q3ZWYa3Otvp7QZlVQE1mYEtL/nomO3xqq6WxK\nWolyScmT1OyUCm1qAstAwYt7sMcp8Eui5wknbgMopw6ABa7syp+cTBd6FaDwgy2D\nl2ifRj01EwVsSpZCRHfN/OdQM9NX2LSpagex7y1PR4DQN2myXE26f8X9k+ep3uyr\nQAq7epS33EtrzJOdnGrGYIy//mqpdOfhLnZ7xpxVfB1nKe1kYrugW3U/CogsEQR/\n0iIuS7Yt4yKWpkqsSwYvWOzU543MK6n49sZh2PMg72iIsfnW8Nd78Yq7Vu69kUL4\nurLM3Wj/wodij9qyKkPVrMcqfOTwLCI85W/AYk7YiZ3o/XscaXaZ2q6tWFtzwzzx\nSaVW263BHpUjEBCnUxiArYqmnFqT+qXtrF/85a4ar9ziZSM2t8He9EBT7Zq6n+a3\nfakhGkJFJJXLmUkdH/wJeoeiHKtDsyx2cmQxPMwNTLadyv0flHCA7KF8BDZ+qU20\n9UIHkeQ3koSgCUa+BoYBb7SoX8ubNR5SWlJn1o5tGjwf54GQ+W3KSTsUSKrh+nYr\nytFaLpUZRwMhKmprezdB\n=ggID\n-----END PGP SIGNATURE-----\n",
+     "payload": "tree 1caa2146f93acb86187eb2e19dfa8098a199ae48\nparent 236a9489c92e356203efaefa148feee8443a9c26\nparent 2b64d116dd40a7ea798935b7ddc9b863e4a21fd8\nauthor Lukas Neugebauer <25110308+lneugebauer@users.noreply.github.com> 1786043983 +0200\ncommitter GitHub <noreply@github.com> 1786043983 +0200\n\nMerge pull request #197 from dahool/feat-friendly-errors-on-create\n\nfeat: Friendly error handling when creating a recipe",
+     "verified_at": "2026-08-06T19:22:19Z"
+    }
+   },
+   "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+   "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+   "comments_url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0/comments",
+   "author": {
+    "login": "lneugebauer",
+    "id": 25110308,
+    "node_id": "MDQ6VXNlcjI1MTEwMzA4",
+    "avatar_url": "https://avatars.githubusercontent.com/u/25110308?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/lneugebauer",
+    "html_url": "https://github.com/lneugebauer",
+    "followers_url": "https://api.github.com/users/lneugebauer/followers",
+    "following_url": "https://api.github.com/users/lneugebauer/following{/other_user}",
+    "gists_url": "https://api.github.com/users/lneugebauer/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/lneugebauer/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/lneugebauer/subscriptions",
+    "organizations_url": "https://api.github.com/users/lneugebauer/orgs",
+    "repos_url": "https://api.github.com/users/lneugebauer/repos",
+    "events_url": "https://api.github.com/users/lneugebauer/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/lneugebauer/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "236a9489c92e356203efaefa148feee8443a9c26",
+     "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/236a9489c92e356203efaefa148feee8443a9c26",
+     "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/236a9489c92e356203efaefa148feee8443a9c26"
+    },
+    {
+     "sha": "2b64d116dd40a7ea798935b7ddc9b863e4a21fd8",
+     "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/2b64d116dd40a7ea798935b7ddc9b863e4a21fd8",
+     "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/2b64d116dd40a7ea798935b7ddc9b863e4a21fd8"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+   "node_id": "C_kwDOF69xRdoAKDZiOTQzZWQzZDBiNDNkNTMyZjA4M2JhNzQxOWNmZDJhYzFhYjAyZTA",
+   "commit": {
+    "author": {
+     "name": "Lukas Neugebauer",
+     "email": "25110308+lneugebauer@users.noreply.github.com",
+     "date": "2026-08-06T19:19:43Z"
+    },
+    "committer": {
+     "name": "GitHub",
+     "email": "noreply@github.com",
+     "date": "2026-08-06T19:19:43Z"
+    },
+    "message": "Merge pull request #197 from dahool/feat-friendly-errors-on-create\n\nfeat: Friendly error handling when creating a recipe",
+    "tree": {
+     "sha": "1caa2146f93acb86187eb2e19dfa8098a199ae48",
+     "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/trees/1caa2146f93acb86187eb2e19dfa8098a199ae48"
+    },
+    "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/commits/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqdN5PCRC1aQ7uu5UhlAAAojgQAEMO7eVRZP6SwxHu5clQ9P3S\nWzvTWbzaYWI/muNFL5pGtCByGX7jOV/crYAly55DHFwcuPlJtGpxQwsHb4x5vtPO\nkndqC4pTRNQzImJmaoiYt0TFv+3q3ZWYa3Otvp7QZlVQE1mYEtL/nomO3xqq6WxK\nWolyScmT1OyUCm1qAstAwYt7sMcp8Eui5wknbgMopw6ABa7syp+cTBd6FaDwgy2D\nl2ifRj01EwVsSpZCRHfN/OdQM9NX2LSpagex7y1PR4DQN2myXE26f8X9k+ep3uyr\nQAq7epS33EtrzJOdnGrGYIy//mqpdOfhLnZ7xpxVfB1nKe1kYrugW3U/CogsEQR/\n0iIuS7Yt4yKWpkqsSwYvWOzU543MK6n49sZh2PMg72iIsfnW8Nd78Yq7Vu69kUL4\nurLM3Wj/wodij9qyKkPVrMcqfOTwLCI85W/AYk7YiZ3o/XscaXaZ2q6tWFtzwzzx\nSaVW263BHpUjEBCnUxiArYqmnFqT+qXtrF/85a4ar9ziZSM2t8He9EBT7Zq6n+a3\nfakhGkJFJJXLmUkdH/wJeoeiHKtDsyx2cmQxPMwNTLadyv0flHCA7KF8BDZ+qU20\n9UIHkeQ3koSgCUa+BoYBb7SoX8ubNR5SWlJn1o5tGjwf54GQ+W3KSTsUSKrh+nYr\nytFaLpUZRwMhKmprezdB\n=ggID\n-----END PGP SIGNATURE-----\n",
+     "payload": "tree 1caa2146f93acb86187eb2e19dfa8098a199ae48\nparent 236a9489c92e356203efaefa148feee8443a9c26\nparent 2b64d116dd40a7ea798935b7ddc9b863e4a21fd8\nauthor Lukas Neugebauer <25110308+lneugebauer@users.noreply.github.com> 1786043983 +0200\ncommitter GitHub <noreply@github.com> 1786043983 +0200\n\nMerge pull request #197 from dahool/feat-friendly-errors-on-create\n\nfeat: Friendly error handling when creating a recipe",
+     "verified_at": "2026-08-06T19:22:19Z"
+    }
+   },
+   "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+   "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+   "comments_url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0/comments",
+   "author": {
+    "login": "lneugebauer",
+    "id": 25110308,
+    "node_id": "MDQ6VXNlcjI1MTEwMzA4",
+    "avatar_url": "https://avatars.githubusercontent.com/u/25110308?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/lneugebauer",
+    "html_url": "https://github.com/lneugebauer",
+    "followers_url": "https://api.github.com/users/lneugebauer/followers",
+    "following_url": "https://api.github.com/users/lneugebauer/following{/other_user}",
+    "gists_url": "https://api.github.com/users/lneugebauer/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/lneugebauer/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/lneugebauer/subscriptions",
+    "organizations_url": "https://api.github.com/users/lneugebauer/orgs",
+    "repos_url": "https://api.github.com/users/lneugebauer/repos",
+    "events_url": "https://api.github.com/users/lneugebauer/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/lneugebauer/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "236a9489c92e356203efaefa148feee8443a9c26",
+     "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/236a9489c92e356203efaefa148feee8443a9c26",
+     "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/236a9489c92e356203efaefa148feee8443a9c26"
+    },
+    {
+     "sha": "2b64d116dd40a7ea798935b7ddc9b863e4a21fd8",
+     "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/2b64d116dd40a7ea798935b7ddc9b863e4a21fd8",
+     "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/2b64d116dd40a7ea798935b7ddc9b863e4a21fd8"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 3,
+  "behind_by": 0,
+  "total_commits": 3,
+  "commits": [
+   {
+    "sha": "08452b3f48f82fb159176a789b3649431db2d1d9",
+    "node_id": "C_kwDOF69xRdoAKDA4NDUyYjNmNDhmODJmYjE1OTE3NmE3ODliMzY0OTQzMWRiMmQxZDk",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-08T22:03:48Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-08T22:03:48Z"
+     },
+     "message": "Fix configureTrustAllCertificates",
+     "tree": {
+      "sha": "0ced55034fc2d2921d1dd0dc2f75efb3e9de3e6d",
+      "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/trees/0ced55034fc2d2921d1dd0dc2f75efb3e9de3e6d"
+     },
+     "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/commits/08452b3f48f82fb159176a789b3649431db2d1d9",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/08452b3f48f82fb159176a789b3649431db2d1d9",
+    "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/08452b3f48f82fb159176a789b3649431db2d1d9",
+    "comments_url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/08452b3f48f82fb159176a789b3649431db2d1d9/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+      "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0",
+      "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/6b943ed3d0b43d532f083ba7419cfd2ac1ab02e0"
+     }
+    ]
+   },
+   {
+    "sha": "be79873cd61d75515fda6ac32825f100c8f97a05",
+    "node_id": "C_kwDOF69xRdoAKGJlNzk4NzNjZDYxZDc1NTE1ZmRhNmFjMzI4MjVmMTAwYzhmOTdhMDU",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-09T15:32:15Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-09T15:32:15Z"
+     },
+     "message": "Address pull request feedback for configureTrustAllCertificates",
+     "tree": {
+      "sha": "9051cf8c7d9c5c22293f77591b84564cd6e1de2f",
+      "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/trees/9051cf8c7d9c5c22293f77591b84564cd6e1de2f"
+     },
+     "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/commits/be79873cd61d75515fda6ac32825f100c8f97a05",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/be79873cd61d75515fda6ac32825f100c8f97a05",
+    "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/be79873cd61d75515fda6ac32825f100c8f97a05",
+    "comments_url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/be79873cd61d75515fda6ac32825f100c8f97a05/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "08452b3f48f82fb159176a789b3649431db2d1d9",
+      "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/08452b3f48f82fb159176a789b3649431db2d1d9",
+      "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/08452b3f48f82fb159176a789b3649431db2d1d9"
+     }
+    ]
+   },
+   {
+    "sha": "537a7c8d2fe447200f0c0b634ca3be24ca955a3a",
+    "node_id": "C_kwDOF69xRdoAKDUzN2E3YzhkMmZlNDQ3MjAwZjBjMGI2MzRjYTNiZTI0Y2E5NTVhM2E",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-08-09T15:39:26Z"
+     },
+     "committer": {
+      "name": "$GIT_AUTHOR_NAME",
+      "email": "$GIT_AUTHOR_EMAIL",
+      "date": "2026-08-09T15:39:26Z"
+     },
+     "message": "Log trust-all TLS configuration failures",
+     "tree": {
+      "sha": "0b4f5407a61a93ad82a2332e2fd9e874304972d8",
+      "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/trees/0b4f5407a61a93ad82a2332e2fd9e874304972d8"
+     },
+     "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/git/commits/537a7c8d2fe447200f0c0b634ca3be24ca955a3a",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/537a7c8d2fe447200f0c0b634ca3be24ca955a3a",
+    "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/537a7c8d2fe447200f0c0b634ca3be24ca955a3a",
+    "comments_url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/537a7c8d2fe447200f0c0b634ca3be24ca955a3a/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": null,
+    "parents": [
+     {
+      "sha": "be79873cd61d75515fda6ac32825f100c8f97a05",
+      "url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/commits/be79873cd61d75515fda6ac32825f100c8f97a05",
+      "html_url": "https://github.com/lneugebauer/nextcloud-cookbook/commit/be79873cd61d75515fda6ac32825f100c8f97a05"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "8b835635444843f8a5f7831fb46ad7c0c0fa45ce",
+    "filename": "app/src/main/java/de/lukasneugebauer/nextcloudcookbook/core/util/OkHttpClientProvider.kt",
+    "status": "modified",
+    "additions": 17,
+    "deletions": 17,
+    "changes": 34,
+    "blob_url": "https://github.com/lneugebauer/nextcloud-cookbook/blob/537a7c8d2fe447200f0c0b634ca3be24ca955a3a/app%2Fsrc%2Fmain%2Fjava%2Fde%2Flukasneugebauer%2Fnextcloudcookbook%2Fcore%2Futil%2FOkHttpClientProvider.kt",
+    "raw_url": "https://github.com/lneugebauer/nextcloud-cookbook/raw/537a7c8d2fe447200f0c0b634ca3be24ca955a3a/app%2Fsrc%2Fmain%2Fjava%2Fde%2Flukasneugebauer%2Fnextcloudcookbook%2Fcore%2Futil%2FOkHttpClientProvider.kt",
+    "contents_url": "https://api.github.com/repos/lneugebauer/nextcloud-cookbook/contents/app%2Fsrc%2Fmain%2Fjava%2Fde%2Flukasneugebauer%2Fnextcloudcookbook%2Fcore%2Futil%2FOkHttpClientProvider.kt?ref=537a7c8d2fe447200f0c0b634ca3be24ca955a3a",
+    "patch": "@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged\n import kotlinx.coroutines.flow.map\n import kotlinx.coroutines.launch\n import okhttp3.OkHttpClient\n+import timber.log.Timber\n import java.security.SecureRandom\n import java.security.cert.X509Certificate\n import javax.inject.Inject\n@@ -53,31 +54,30 @@ class OkHttpClientProvider\n         @SuppressLint(\"CustomX509TrustManager\", \"TrustAllX509TrustManager\")\n         private fun configureTrustAllCertificates(builder: OkHttpClient.Builder) {\n             try {\n-                val trustAllCerts =\n-                    arrayOf<TrustManager>(\n-                        object : X509TrustManager {\n-                            override fun checkClientTrusted(\n-                                chain: Array<X509Certificate>,\n-                                authType: String,\n-                            ) {}\n+                val trustManager =\n+                    object : X509TrustManager {\n+                        override fun checkClientTrusted(\n+                            chain: Array<X509Certificate>,\n+                            authType: String,\n+                        ) {}\n \n-                            override fun checkServerTrusted(\n-                                chain: Array<X509Certificate>,\n-                                authType: String,\n-                            ) {}\n+                        override fun checkServerTrusted(\n+                            chain: Array<X509Certificate>,\n+                            authType: String,\n+                        ) {}\n \n-                            override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()\n-                        },\n-                    )\n+                        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()\n+                    }\n+                val trustAllCerts = arrayOf<TrustManager>(trustManager)\n \n-                val sslContext = SSLContext.getInstance(\"SSL\")\n+                val sslContext = SSLContext.getInstance(\"TLS\")\n                 sslContext.init(null, trustAllCerts, SecureRandom())\n \n                 builder\n-                    .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)\n+                    .sslSocketFactory(sslContext.socketFactory, trustManager)\n                     .hostnameVerifier { _, _ -> true }\n             } catch (e: Exception) {\n-                // Do nothing if SSL configuration fails, keep default settings\n+                Timber.e(e, \"Could not configure trust-all TLS\")\n             }\n         }\n     }"
+   }
+  ]
+ }
+}

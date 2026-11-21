@@ -1,0 +1,31 @@
+{
+ "card_id": "Ke3aff027",
+ "card_sha256": "8b7cec72bbfe4c41",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 8,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2968,
+  "cache_read_input_tokens": 1149,
+  "output_tokens": 383
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0316418,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "adc792b8163a6aca",
+ "finished_at": "2026-11-17T18:55:11-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.55,
+  "reason": "The text reads like it was filled into a fixed template. The evidence sentence (\"receives the literal MD5, outside the reported algorithm allow-list; the runtime measurement also recorded MD5\") looks slot-filled, and the closing lines are generic boilerplate. The issue shows no sign of real engagement with the repository, such as noting that MD5 is used for a non-security grouping hash. An agent working in a checkout would more likely have mentioned that. This points to the pipeline rather than an interactive agent, though the evidence is thin."
+ }
+}

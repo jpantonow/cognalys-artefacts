@@ -1,0 +1,53 @@
+[
+  {
+    "pull_request": "https://github.com/paroj/DSub2000/pull/160",
+    "state": "merged",
+    "finding_id": "42e63cf76e71",
+    "spec": "SSLContextSpec",
+    "csv_class": "github.paroj.dsub2000.service.RESTMusicService",
+    "method_name": "<init>",
+    "title": "Fix <init>",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:37:52.531170+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "Copilot",
+        "kind": "review",
+        "body": "Wrapping the global HttpsURLConnection default SSLSocketFactory unconditionally in the constructor can lead to wrapper stacking if RESTMusicService is instantiated more than once, and it makes the global TLS behavior dependent on object construction order. Guard against double-wrapping so subsequent instances don’t keep nesting factories."
+      },
+      {
+        "author": "Copilot",
+        "kind": "review",
+        "body": "If legacy-protocol filtering removes all enabled protocols, filterLegacyTlsProtocols throws IllegalStateException, which currently bubbles out of SSLSocketFactory.createSocket(...) as an unchecked exception. That’s surprising for callers expecting an IOException/SSLException from socket creation and can make failures harder to handle consistently; convert this to an SSLException (and still close the socket) when it occurs during socket configuration."
+      },
+      {
+        "author": "Copilot",
+        "kind": "review",
+        "body": "This test file’s declared package (`github.paroj.dsub2000.service`) no longer matches its directory (`.../androidTest/java/github/paroj/dsub2000/ApplicationTest.java`). While it may still compile, it makes the test harder to locate/maintain and is inconsistent with the other androidTest files (which mirror package-to-directory). Consider moving this file under `app/src/androidTest/java/github/paroj/dsub2000/service/` to match its package declaration."
+      },
+      {
+        "author": "Copilot",
+        "kind": "review",
+        "body": "X509TrustManager.getAcceptedIssuers() should not return null; some TLS stacks assume a non-null array and may NPE. Even for a permissive trust manager, return an empty certificate array instead."
+      }
+    ]
+  },
+  {
+    "pull_request": "https://github.com/paroj/DSub2000/pull/178",
+    "state": "closed",
+    "finding_id": "f167efd80107",
+    "spec": "SSLContextSpec",
+    "csv_class": "github.paroj.dsub2000.service.RESTMusicService",
+    "method_name": "<init>",
+    "title": "Use platform trust managers for HTTPS connections",
+    "impact_class": "security_impact",
+    "recorded_at": "2026-11-19T20:39:20.752836+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "paroj",
+        "kind": "comment",
+        "body": "skipping certificate checks is the whole point here. When that setting is off the default path should also be good already, no?"
+      }
+    ]
+  }
+]

@@ -1,0 +1,160 @@
+{
+  "schema_version": 2,
+  "spec_id": "DatabaseCrashSpec",
+  "name": "DatabaseCrashSpec",
+  "applies_to_types": [
+    "unresolved.DatabaseCrash"
+  ],
+  "source_title": "No canonical DatabaseCrash CrySL source was found: the explicitly requested raw primary-source URL returned HTTP 404 when fetched.",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/DatabaseCrash.crysl",
+  "source_verified": false,
+  "protocol": "reported-operation -> matching-SQLite-exception-evidence",
+  "important_note": "There is no verified API type or CrySL rule for DatabaseCrashSpec. The required applies_to_types entry is a syntactic unresolved placeholder whose simple name is exactly DatabaseCrash; it must not be treated as an existing Java/Android API or as a type actually governed by a specification. The two reported call sites belong to different application classes, and neither class has the required simple name DatabaseCrash.",
+  "events": [
+    {
+      "name": "reported_database_operation",
+      "api_patterns": [
+        "insertChapter(",
+        "syncDecks("
+      ],
+      "condition": "Observed when local source, a stack trace, or a detector record contains either reported method-call substring. Observation alone does not establish a database crash, a failed transaction, or that either method threw an exception."
+    },
+    {
+      "name": "unique_constraint_exception_evidence",
+      "api_patterns": [
+        "SQLiteConstraintException",
+        "UNIQUE constraint failed: chapters.url"
+      ],
+      "condition": "Satisfied only when exception evidence identifies SQLiteConstraintException together with the reported unique-constraint message. Android documents SQLiteConstraintException as an integrity-constraint violation; it is not documentation of database-file corruption or an application crash."
+    },
+    {
+      "name": "database_corruption_exception_evidence",
+      "api_patterns": [
+        "SQLiteDatabaseCorruptException",
+        "database disk image is malformed"
+      ],
+      "condition": "Satisfied only when exception evidence identifies SQLiteDatabaseCorruptException together with the reported malformed-image message. Android documents that exception as indicating a corrupt SQLite database file; it does not, by itself, establish the corruption cause, recoverability, persistence of damage, or process termination."
+    },
+    {
+      "name": "unresolved_spec_target",
+      "api_patterns": [
+        "DatabaseCrash"
+      ],
+      "condition": "Observed only as a requested CrySL target-name token. It is not satisfied as an API-target predicate: no consulted primary source defines a qualified API type named DatabaseCrash or a CrySL SPEC declaration for it."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That eu.kanade.tachiyomi.data.database.MangaDatabase.insertChapter caused, observed, or can repair database-file corruption.",
+    "That com.ichi2.anki.provider.DeckManager.syncDecks caused the malformed SQLite image rather than merely encountering it.",
+    "That SQLiteConstraintException means a database crash, corruption, disk failure, or security incident.",
+    "That a UNIQUE constraint failure on chapters.url and a SQLiteDatabaseCorruptException have one shared database, code path, root cause, or remediation.",
+    "That either reported application class is the API governed by DatabaseCrashSpec.",
+    "That unresolved.DatabaseCrash exists in Android, the Java platform, Tachiyomi, AnkiDroid, or the CROSSINGTUD corpus.",
+    "That the detector establishes exploitability, confidentiality impact, integrity impact beyond the reported SQLite condition, availability impact, or a successful runtime crash."
+  ],
+  "semantic_scope": "The available evidence supports only classification of two reported SQLite-related exception/message shapes in two distinct application-method contexts: a unique-constraint violation at insertChapter and a database-corruption exception at syncDecks. It does not provide a verified CrySL protocol, an API contract for either application method, or a verified DatabaseCrash API type.",
+  "detector_semantics": {
+    "claim": "A DatabaseCrashSpec finding can only be described, on the supplied evidence, as a detector label associated with a reported database-operation context and SQLite exception/message evidence; its formal rule predicates are unverified because the requested canonical CrySL source was unavailable.",
+    "predicates": [
+      "call_context_observed: a finding identifies either MangaDatabase.insertChapter or DeckManager.syncDecks.",
+      "constraint_message_observed: the evidence contains SQLiteConstraintException and the UNIQUE constraint failed: chapters.url text.",
+      "corruption_message_observed: the evidence contains SQLiteDatabaseCorruptException and the database disk image is malformed text.",
+      "verified_crysl_target: unavailable; no consulted primary source establishes a SPEC whose governed qualified type has simple name DatabaseCrash."
+    ],
+    "limitations": [
+      "No source-defined event alphabet, ORDER clause, CONSTRAINTS clause, REQUIRES clause, ENSURES clause, or exception predicate was available for DatabaseCrashSpec.",
+      "Method-name matching is not proof that the method was executed, that the shown exception propagated from it, or that a particular database instance was affected.",
+      "The supplied findings are insufficient to determine whether matching is static, log-based, trace-based, interprocedural, path-sensitive, or runtime-confirmed."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Android documents android.database.sqlite.SQLiteConstraintException as an integrity-constraint violation and android.database.sqlite.SQLiteDatabaseCorruptException as indicating that the SQLite database file is corrupt. Both are SQLiteException subclasses."
+    ],
+    "preconditions": [
+      "For the unique-constraint interpretation, the reported exception/message must be authentic runtime evidence from the relevant SQLite operation and database.",
+      "For the database-corruption interpretation, the reported exception/message must be authentic runtime evidence from SQLite rather than a copied, wrapped, synthesized, or stale log string.",
+      "No primary source was located for the behavior, parameters, transaction boundaries, error handling, or persistence guarantees of the reported MangaDatabase.insertChapter and DeckManager.syncDecks methods."
+    ],
+    "unknowns": [
+      "Whether insertChapter and syncDecks are exact source-level declarations for the builds that produced the findings.",
+      "Whether each exception was thrown, caught, wrapped, retried, ignored, or propagated.",
+      "Which Android/SQLite versions, database files, schemas, and transactions were involved.",
+      "Whether the message text originates directly from SQLite or an intermediate library layer."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "Unverified. No primary DatabaseCrash CrySL rule was available to establish a security property, misuse definition, or security-relevant protocol.",
+    "runtime_claim": "The reported SQLiteConstraintException supports an integrity-constraint violation at an operation; the reported SQLiteDatabaseCorruptException supports that SQLite identified a database file as corrupt. Neither documented exception classification alone proves a security vulnerability or a process crash.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A canonical DatabaseCrash.crysl file, or another maintainer-authored rule source, containing a SPEC declaration for a qualified API type whose simple name is DatabaseCrash.",
+      "The relevant source revision or immutable artifact for MangaDatabase.insertChapter and DeckManager.syncDecks.",
+      "A source-defined mapping from detector finding fields to CrySL events, predicates, and violation conditions."
+    ],
+    "runtime": [
+      "Original stack traces showing exception type, message, cause chain, and frames for each finding.",
+      "Database and SQLite diagnostics sufficient to associate each exception with a specific database file and operation.",
+      "Evidence of propagation or process termination before asserting an application or database crash."
+    ],
+    "compatibility": [
+      "Android API level and SQLite implementation version.",
+      "Exact application version, build variant, dependency set, and obfuscation/mapping status.",
+      "Schema/migration version, including the definition of chapters.url and its unique constraint."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "A local matcher sees insertChapter( or syncDecks( but the method was never executed on the analyzed path.",
+    "A log, test fixture, comment, exception wrapper, or telemetry payload contains one of the SQLite exception substrings without a corresponding runtime exception.",
+    "SQLiteConstraintException is labeled as a crash even though Android defines it as an integrity-constraint violation.",
+    "The malformed-image text is historical, copied from another device/database, or emitted after the database had already been replaced or recovered.",
+    "Two independent findings from separate applications/components are merged into one supposed DatabaseCrash event.",
+    "A namesake type ending in Spec, or a type from another framework, is selected despite not being a qualified API type whose simple name is DatabaseCrash."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/DatabaseCrash.crysl",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/blob/master/JavaCryptographicArchitecture/src/Cipher.crysl",
+    "https://developer.android.com/reference/kotlin/android/database/sqlite/SQLiteConstraintException",
+    "https://developer.android.com/reference/android/database/sqlite/SQLiteDatabaseCorruptException"
+  ],
+  "unknowns": [
+    "Whether DatabaseCrashSpec is an internal/project-local detector label rather than a CrySL specification.",
+    "The actual qualified API type intended by the DatabaseCrash name; no authoritative type definition was found.",
+    "Whether a DatabaseCrash.crysl rule exists in another branch, repository, generated artifact, or unpublished corpus.",
+    "The exact detector implementation and whether its findings require both a method context and an exception/message predicate.",
+    "Whether the reported Tachiyomi and AnkiDroid findings were generated from the same application run, device, database engine, or data source.",
+    "Any formal event ordering, constraints, preconditions, guarantees, or security property for DatabaseCrashSpec."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/DatabaseCrash.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "eu.kanade.tachiyomi.data.database.MangaDatabase",
+        "method": "insertChapter",
+        "message": "SQLiteConstraintException: UNIQUE constraint failed: chapters.url"
+      },
+      {
+        "class": "com.ichi2.anki.provider.DeckManager",
+        "method": "syncDecks",
+        "message": "SQLiteDatabaseCorruptException: database disk image is malformed."
+      }
+    ],
+    "expected_api_simple_name": "DatabaseCrash",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/DatabaseCrash.crysl"
+  }
+}

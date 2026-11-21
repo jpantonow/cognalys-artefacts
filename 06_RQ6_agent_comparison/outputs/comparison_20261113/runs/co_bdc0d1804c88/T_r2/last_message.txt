@@ -1,0 +1,3 @@
+Created [NO_ACTION.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/T_r2/repo/NO_ACTION.md). The digest selects configuration behavior from the package name; it does not protect data or verify authenticity. Changing it would also change existing behavior.
+
+No source changes were made, and the build was not run.

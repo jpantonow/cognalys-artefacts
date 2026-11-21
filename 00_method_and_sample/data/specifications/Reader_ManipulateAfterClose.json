@@ -1,0 +1,144 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The close event is declared as a creation event and is observed before the close call; the property does not condition monitoring on normal return from close().",
+      "The rule does not inspect whether IOException was thrown, caught, suppressed, or absent.",
+      "The rule does not test thread identity, locking, happens-before relationships, or synchronization.",
+      "The supplied property source does not specify report cardinality for repeated manipulate calls after a match; generated-monitor/runtime behavior would be required to establish that.",
+      "Only call join points covered by the actual weaving/instrumentation configuration can be observed."
+    ],
+    "predicates": [
+      "close: `call(* Reader+.close(..)) && target(r)`",
+      "manipulate: `(call(* Reader+.read(..)) || call(* Reader+.ready(..)) || call(* Reader+.mark(..)) || call(* Reader+.reset(..)) || call(* Reader+.skip(..))) && target(r)`",
+      "Both pointcuts use before advice, so each event is recorded at the call join point before the callee executes.",
+      "`Reader+` is an AspectJ subtype pattern and includes `java.io.Reader` and its subtypes; `target(r)` is a runtime target-instance predicate."
+    ],
+    "claim": "The rule emits its critical message upon a match of the declared extended regular expression `close+ manipulate+` for monitor parameter `r`; its message describes this as invocation of a selected Reader operation after `close()`."
+  },
+  "unknowns": [
+    "The supplied rule does not state whether the generated monitor reports every post-close manipulate event, only a first match, or some other report cardinality.",
+    "The rule source alone does not identify the actual agent/weaver configuration, excluded packages, class-loader coverage, or whether all candidate call sites were instrumented.",
+    "The rule source does not define cross-thread ordering beyond the runtime order in which its before-call events are observed.",
+    "The rule does not establish whether the concrete Reader implementation's close() completed, whether it was idempotent in practice, or whether a later operation actually threw IOException.",
+    "The property source does not state how the monitor handles object identity/lifecycle after garbage collection or monitor eviction; that requires generated-monitor/runtime implementation evidence."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "`java.io.Reader` is the abstract API for character streams.",
+      "`Reader.close()` closes the stream and releases associated system resources.",
+      "Once a Reader stream has been closed, subsequent `read()`, `ready()`, `mark()`, `reset()`, and `skip()` invocations throw `IOException`.",
+      "The governed operation groups read characters, test readiness, establish a mark, reset position, and skip characters."
+    ],
+    "preconditions": [
+      "The documented post-close `IOException` statement applies after the stream has been closed, whereas this detector records entry to `close()` before that call completes.",
+      "`mark()` and `reset()` may independently throw `IOException` when the operation is unsupported, no valid mark exists, or another I/O error occurs.",
+      "`skip(long)` may independently throw `IllegalArgumentException` for a negative count, in addition to `IOException` for an I/O error."
+    ],
+    "unknowns": [
+      "Whether a specific concrete subtype's `close()` invocation completed normally in the observed execution.",
+      "Whether a concrete subtype has nonstandard behavior despite the Reader API contract.",
+      "Whether concurrent close and manipulate calls had a synchronization relationship that establishes a completed closed state before the manipulate call."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Reader_ManipulateAfterClose.mop",
+    "https://docs.oracle.com/javase/6/docs/api/java/io/Reader.html",
+    "https://eclipse.dev/aspectj/doc/released/progguide/semantics-pointcuts.html",
+    "https://eclipse.dev/aspectj/doc/released/progguide/quick.html"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observed before a call matching `call(* Reader+.close(..))` when its runtime target is bound as `r`, an instance of `java.io.Reader` or a subtype. The rule tests no return value, exception, completion status, argument value, or implementation-specific closed-state field.",
+      "name": "close",
+      "api_patterns": [
+        "close("
+      ]
+    },
+    {
+      "condition": "Observed before a call matching one of `call(* Reader+.read(..))`, `call(* Reader+.ready(..))`, `call(* Reader+.mark(..))`, `call(* Reader+.reset(..))`, or `call(* Reader+.skip(..))`, when its runtime target is bound as `r`, an instance of `java.io.Reader` or a subtype. The rule matches all argument lists for each named method; a source substring alone is insufficient without resolving the call and target type.",
+      "name": "manipulate",
+      "api_patterns": [
+        "read(",
+        "ready()",
+        "mark(",
+        "reset()",
+        "skip("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "This is a temporal before-call monitor, not proof that `close()` completed successfully, that the object was actually in a closed implementation state, or that the later call threw `IOException`. Both selected events are observed before their invoked methods execute.",
+  "forbidden_inferences_without_evidence": [
+    "That a reported `close()` invocation returned normally or released resources.",
+    "That the later `read`, `ready`, `mark`, `reset`, or `skip` invocation actually executed, completed, or threw `IOException`.",
+    "That the concrete Reader subtype conforms to the documented `java.io.Reader` post-close contract.",
+    "That methods not named by the rule, including `markSupported()`, `transferTo()`, `readAllAsString()`, or `readAllLines()`, are covered.",
+    "That the finding establishes a security vulnerability, exploit path, confidentiality impact, integrity impact, availability impact, or attacker control.",
+    "That a lexical occurrence such as `read(` denotes a governed call without resolved method/target-type and runtime-target evidence.",
+    "That the reported application class or method is itself the API governed by the specification; the governed API is `java.io.Reader` and its subtypes."
+  ],
+  "security_semantics": {
+    "runtime_claim": "The documented Reader contract says that the selected operations throw `IOException` once the stream has been closed, but this rule does not observe the closed-state transition or the later call's outcome.",
+    "equivalent": false,
+    "detector_claim": "The detector claims a temporal API-protocol match: a selected Reader operation was invoked after an observed `close` call on the same target."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "The runtime must use pointcut/weaving semantics compatible with the supplied JavaMOP/AspectJ-style `call`, `target`, and `Reader+` clauses.",
+      "Instrumentation coverage must include the relevant call sites and class-loading paths.",
+      "For subtype scope, confirm the concrete runtime receiver is assignable to `java.io.Reader`; AspectJ `+` subtype matching includes the base type and subtypes."
+    ],
+    "runtime": [
+      "A runtime trace or monitor record showing a before-call `close` event followed by a before-call `manipulate` event with the same bound target object.",
+      "If claiming an actual post-closure API violation rather than a detector match, evidence that `close` completed and that the later governed invocation occurred afterward under the relevant concurrency ordering.",
+      "If claiming the documented exception behavior occurred, the exception outcome from the manipulate call."
+    ],
+    "source_level": [
+      "Resolve the receiver and invoked declaration to `java.io.Reader` or a subtype and to one of `close`, `read`, `ready`, `mark`, `reset`, or `skip`; method-name text by itself is not sufficient.",
+      "Establish that the two calls concern the same object identity, not merely variables with the same name or type.",
+      "For a source-level interpretation of “after close,” inspect control flow and exception paths around `close()`, including whether the call can throw before resource closure."
+    ]
+  },
+  "name": "Reader_ManipulateAfterClose",
+  "source_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Reader_ManipulateAfterClose.mop",
+  "applies_to_types": [
+    "java.io.Reader"
+  ],
+  "source_title": "Reader_ManipulateAfterClose.mop — JavaMOP/RV-Monitor property source",
+  "semantic_scope": "For every finding of this rule, the detector observes a before-call event for `close(..)` and then a before-call event for `read(..)`, `ready(..)`, `mark(..)`, `reset(..)`, or `skip(..)` on the same runtime target object bound as `r`. `Reader+` includes `java.io.Reader` and its subtypes, and `target(r)` requires that target object to be an instance of the bound type.",
+  "spec_id": "Reader_ManipulateAfterClose",
+  "known_false_positive_shapes": [
+    "`close()` is entered and throws before it successfully closes the underlying stream, but a later governed call is still reported because the monitor recorded close before execution.",
+    "One thread enters `close()`, while another thread enters a governed operation before `close()` has completed; the monitor's before-call ordering can report the operation even though completed-closure ordering is not established.",
+    "A concrete implementation has unusual or nonconforming lifecycle behavior, including reopening or delegating lifecycle state in a way not represented by the monitor's event history.",
+    "The application deliberately invokes a governed method after close solely to obtain and handle the documented `IOException`; the rule still reports the protocol event sequence.",
+    "A later call is intercepted before execution but does not reach normal method execution because of another runtime failure or dispatch-related issue."
+  ],
+  "protocol": "For the same bound runtime target object `r`: `close(r)+ manipulate(r)+`, where `manipulate` is a call to `read`, `ready`, `mark`, `reset`, or `skip`.",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Reader_ManipulateAfterClose.mop",
+    "format": "mop",
+    "catalog_entry": "javamop_property",
+    "detail": "mop_property_declaration:Reader_ManipulateAfterClose"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.bea.xml.stream.reader.XmlReader",
+        "method": "read",
+        "message": "Reader_ManipulateAfterClose read(), ready(), mark(), reset() or skip() was invoked after close()."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "mop"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "mop_property_declaration:Reader_ManipulateAfterClose",
+    "checked_url": "https://raw.githubusercontent.com/SoftEngResearch/javamop-agent-bundle/refs/heads/master/props/Reader_ManipulateAfterClose.mop"
+  }
+}

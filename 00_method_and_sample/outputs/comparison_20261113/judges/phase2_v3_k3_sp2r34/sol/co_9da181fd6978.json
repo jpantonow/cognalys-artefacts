@@ -1,0 +1,85 @@
+{
+ "unit": "co_9da181fd6978",
+ "phase": "phase2",
+ "order": [
+  "K312e5e1d",
+  "Keca4062d"
+ ],
+ "card_sha256": {
+  "K312e5e1d": "bba01f521def01c2",
+  "Keca4062d": "d5f3c8e89ba9b115"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "org.cry.otp.MD5 is used in only two places, and both are the Mobile-OTP (mOTP) algorithm. mOTP.gen() follows the published spec linked in the class javadoc (motp.sourceforge.net). It derives the 16-hex-char secret as MD5(seed)[0..16]. Each code is MD5(epoch/10s + secret + PIN), truncated to 6 hex chars. Profiles.java:250 uses the same MD5(seed)[0..16] to show the user the secret, which they then enter on the mOTP server. MD5 here is required by an external protocol that the server on the other end checks. The app does not choose it, and nothing here relies on collision resistance: it is a short truncated keyed OTP and a key derivation that both sides must reproduce exactly. If MD5 were replaced with SHA-256 or another digest, every code the app produces would be rejected by mOTP servers. The secret shown in the dialog would no longer match what users have already registered with servers. Every stored mOTP profile (the seed in the DB) would also stop working. So the RVSec finding is a false positive for this app. A PR that changes the digest would break the feature. HOTP/TOTP are separate code paths and are not touched by this class.\n\nSecond judge: MD5 is part of the supported mOTP protocol, not an independently replaceable digest choice. mOTP.gen derives secret = MD5(seed).asHex().substring(0, 16), then returns the first six hexadecimal characters of MD5(epoch + secret + PIN). Profiles also exposes that same derived secret through View Secret for provisioning. Replacing either hash with SHA-256 would change credentials or generated codes and break existing mOTP verifiers. The report identifies a legacy cryptographic dependency but does not establish a practical authentication bypass.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [],
+  "must_not_break": [
+   "mOTP code generation in mOTP.gen() must stay byte-for-byte compatible with the Mobile-OTP spec: MD5(epoch_10s + MD5(seed)[0..16] + PIN), first 6 hex chars",
+   "Codes must still be accepted by existing mOTP servers that users have already enrolled with",
+   "The secret shown in the Profiles 'secret' dialog (MD5(seed) first 16 hex chars) must stay the same as the value already registered on servers",
+   "Existing stored mOTP profiles (seed, PIN, time zone in the DBAdapter database) must keep producing valid codes after an app update",
+   "The HOTP/TOTP code paths, which do not use this class, must not be affected",
+   "Existing mOTP profiles: seeds stored in SQLite and copied into SharedPreferences must continue deriving the same first 16 lowercase hexadecimal characters of MD5(seed), including leading zeroes.",
+   "Provisioning through Profiles' View Secret must continue showing the same secret already configured on the corresponding verifier.",
+   "mOTP generation must preserve the first six lowercase hexadecimal characters of MD5(epoch + secret + PIN), using the existing string encoding, concatenation order, configured timezone offset and ten-second time calculation.",
+   "Existing mOTP peers must remain able to validate generated codes. Changing only the client digest, silently converting profiles to HOTP/TOTP, or removing mOTP support would break supported setups."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "28c3b70e5a921dec",
+ "option_a_new_cards": [
+  "SP2_r3",
+  "SP2_r4"
+ ],
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 22,
+ "tokens": {
+  "input_tokens": 53048,
+  "cached_input_tokens": 32128,
+  "output_tokens": 611,
+  "reasoning_output_tokens": 99
+ },
+ "turns": 1,
+ "tool_calls": 3,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "12eea04016734ca0",
+ "finished_at": "2026-11-17T19:07:19-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K312e5e1d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies MD5 as required for mOTP interoperability and provisioning. Leaving it unchanged preserves existing profiles and server compatibility; the literal MD5 call does not establish a vulnerability."
+   },
+   {
+    "card_id": "Keca4062d",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Gives a code-specific compatibility reason for no action: changing either digest would alter server-validated codes or enrolled secrets. Correctly distinguishes the observed MD5 call from demonstrated security impact."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

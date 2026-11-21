@@ -1,0 +1,534 @@
+2026-11-03 22:14:51,608 - INFO - Evidence analysis for createKeyPair:
+{
+  "architecture_version": "v2",
+  "versions": {
+    "prompt_version": "llm-pipeline-v2.1",
+    "schema_version": "2.1",
+    "policy_version": "2.0",
+    "spec_version": "2",
+    "context_builder_version": "2.16",
+    "semantic_resolver_version": "tree-sitter-semantic-v2"
+  },
+  "input_hashes": {
+    "finding_sha256": "6f595ecb4d52cfc98791c04701ea6b9ffd9d2486a1f7b1880769a0eccbf8e500",
+    "diagnostic_evidence_sha256": "eb8a2df062372c48afe54c3b5881fd5817321abb7537779167b0492105d51613",
+    "policy_sha256": "a078b562d270df0b5eddf1230840702fe1c60926d1d50b213cae74c7ac97f396",
+    "evidence_sha256": "4af08cc3272984e80448bbf186df2ace1a3a941161c59b566ea28dc90dc098ab",
+    "packet_sha256": "892cd155656402ac433209a3565c5aba27c97137310f1245f7c9ccf1ec4181db",
+    "external_research_sha256": "f6722caf448a180de2a8acee50349f0936241a985464a2ebc95f05fd42e02b25"
+  },
+  "diagnostic_evidence": {
+    "evidence_id": "DET-001",
+    "kind": "detector_diagnostic",
+    "trust_level": "reported_detector_output",
+    "informational_only": true,
+    "decision_authority": "none",
+    "sha256": "4793f37e9c636fe2dbd5d52655f604c6aa62e4e597c8e65407729af106e311d5",
+    "data": {
+      "finding_id": "app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+      "tool": "rvsec",
+      "specification": "KeyPairGeneratorSpec",
+      "message": "expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+      "reported_class": "app.trigger.ssh.GenerateIdentityTask",
+      "reported_method": "createKeyPair",
+      "source_file_path": "app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt",
+      "detector_context": {
+        "code": "KEYPAIRGENERATOR-ALG-00",
+        "site_kind": "ALG: the algorithm or transformation string is not in the rule's allow-list",
+        "label": "violation",
+        "label_meaning": "A value check of the rule fired: an algorithm, key size, protocol, keystore type or other constraint outside what the rule admits, a required origin positively contradicted, or a forbidden call. The value seen and the admitted values are in value/expected.",
+        "value": "ED25519",
+        "expected": "RSA,EC,DSA,DiffieHellman,DH",
+        "source_location": "GenerateIdentityTask.kt:79",
+        "codes": "KEYPAIRGENERATOR-ORDER-02 [creation-refused] (2), KEYPAIRGENERATOR-ALG-00 [violation] (1), KEYPAIRGENERATOR-KEYSIZE-01 [violation] (1)",
+        "tools": "monkey:fast",
+        "runtime_observation": "Reported in 1 run(s) of the app; each run starts from a clean, read-only emulator.",
+        "runtime_coverage_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/rvsec_trigger_20261028/findings_all.coverage.json"
+      }
+    }
+  },
+  "cause_status": "confirmed",
+  "detector_violation": "confirmed",
+  "runtime_security_impact": "non_security",
+  "generation_status": "supported_for_review",
+  "publication_status": "blocked",
+  "evidence_status": {
+    "cause_status": "confirmed",
+    "detector_violation": "confirmed",
+    "runtime_security_impact": "non_security",
+    "scope_status": "complete",
+    "generation_status": "supported_for_review",
+    "publication_status": "blocked"
+  },
+  "external_sources": [
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/15/docs/api/java.base/java/security/KeyPairGenerator.html",
+      "supported_claim": "`KeyPairGenerator` provides provider-based generation of public/private key pairs; explicit initialization is recommended because defaults may differ or change; algorithm and initialization failures are documented through the applicable exceptions."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html",
+      "supported_claim": "Ed25519 is a documented `KeyPairGenerator` algorithm; the specification also identifies generic names including PKCS#8, X.509, RAW, and PKCS#1."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/15/docs/api/java.base/java/security/spec/NamedParameterSpec.html",
+      "supported_claim": "`NamedParameterSpec.ED25519` documents Ed25519 parameters and is available since JDK 15."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/15/docs/api/java.base/java/security/interfaces/EdECKey.html",
+      "supported_claim": "Edwards-curve keys are distinct from keys represented by `ECKey` and are intended for RFC 8032-based algorithms such as EdDSA."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/15/security/oracle-providers.html",
+      "supported_claim": "Oracle JDK 15 documents SunEC support for Ed25519 and specifies 255 as its default and supported integer key size for the Ed25519 key-pair generator."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/23/migrate/security-updates.html",
+      "supported_claim": "EdDSA was implemented in JDK 15 and does not replace ECDSA."
+    },
+    {
+      "title": "primary",
+      "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/KeyPairGenerator.crysl",
+      "supported_claim": "The rule declares `SPEC java.security.KeyPairGenerator`, models `getInstance`, `initialize`, `generateKeyPair`, and `genKeyPair` events, specifies `Get, Init, Gen`, and evaluates the quoted algorithm allowlist condition."
+    },
+    {
+      "title": "primary",
+      "url": "https://raw.githubusercontent.com/connectbot/trilead-ssh2/main/src/main/java/com/trilead/ssh2/crypto/keys/Ed25519Provider.java",
+      "supported_claim": "`Ed25519Provider` declares `public static final String KEY_ALGORITHM = \"Ed25519\"` and registers an Ed25519 key-pair generator."
+    },
+    {
+      "title": "official",
+      "url": "https://docs.oracle.com/en/java/javase/17/docs/specs/security/standard-names.html",
+      "supported_claim": "`Ed25519` is a documented `KeyPairGenerator` algorithm name; Java SE standard algorithm names are not case-sensitive."
+    },
+    {
+      "title": "primary",
+      "url": "https://www.rfc-editor.org/rfc/rfc8709.html",
+      "supported_claim": "RFC 8709 specifies the SSH identifier `ssh-ed25519` and its Ed25519 public-key encoding."
+    }
+  ],
+  "observed_events": [
+    "Get: KeyPairGenerator.getInstance(type) is called in createKeyPair.",
+    "Init: keyPairGen.initialize(bits, random) is called after Get with an integer and SecureRandom.",
+    "Gen: keyPairGen.generateKeyPair() is called after Init.",
+    "A new SecureRandom instance is supplied to the initialization call.",
+    "The generated private and public key encodings are cloned into a returned KeyPairBean.",
+    "One runtime measurement recorded ED25519 at the governed factory call."
+  ],
+  "predicate_assessment": [
+    {
+      "event": "The governed java.security.KeyPairGenerator usage follows the required Get → Init → Gen event order.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001, SEQ-001. The reviewed method obtains a generator, initializes the same local generator, and then invokes generateKeyPair; the resolved binding identifies all three calls as java.security.KeyPairGenerator calls governed by the specification.",
+      "rule_section": "order"
+    },
+    {
+      "event": "Each governed KeyPairGenerator.getInstance algorithm argument is in the specification allowlist {RSA, EC, DSA, DiffieHellman, DH}.",
+      "status": "violated",
+      "evidence": "Evidence IDs: SRC-001, SUP-001, CALL-002, RUN-001, SPEC-001. A resolved caller invokes createKeyPair with KeyPairBean.KEY_TYPE_ED25519, whose supplied definition is \"ED25519\"; this reaches getInstance(type). The runtime measurement also records ED25519 reaching the governed call. ED25519 is not in the specification allowlist.",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "For each RSA initialization, the integer key size is either 3072 or 4096 as required by the specification.",
+      "status": "violated",
+      "evidence": "Evidence IDs: SRC-001, SUP-001, CALL-006, CALL-004, SPEC-001. The resolved RSA-2048 caller passes KEY_TYPE_RSA and 2048 to createKeyPair, and the method passes bits to initialize(bits, random). Although a separate RSA-4096 caller passes 4096, the 2048 invocation does not meet the applicable RSA size condition.",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "For each DSA initialization, the integer key size is 3072 as required by the specification.",
+      "status": "violated",
+      "evidence": "Evidence IDs: SRC-001, SUP-001, CALL-005, SPEC-001. The resolved DSA caller passes KEY_TYPE_DSA and 1024 to createKeyPair, and bits is forwarded to initialize(bits, random). The specification's DSA integer-size condition admits 3072 only.",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "For each EC initialization, the integer key size is 256 as required by the specification.",
+      "status": "violated",
+      "evidence": "Evidence IDs: SRC-001, SUP-001, CALL-001, CALL-003, SPEC-001. The two resolved EC callers pass 384 and 521, respectively, and the method forwards bits to initialize(bits, random). Neither value meets the specification's stated EC integer-size condition of 256.",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "The initialization call supplies a SecureRandom argument.",
+      "status": "confirmed",
+      "evidence": "Evidence IDs: SRC-001. The reviewed method constructs SecureRandom(), stores it in random, and passes random as the second argument to keyPairGen.initialize(bits, random).",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "The selected runtime provider supports each requested algorithm and integer initialization value.",
+      "status": "unknown",
+      "evidence": "Evidence IDs: SRC-001, RUN-001, WEB-001. The one-argument getInstance(type) call does not name a provider. The supplied source and runtime measurement do not identify the installed provider, provider version, or successful acceptance of every algorithm/size combination.",
+      "rule_section": "constraint"
+    },
+    {
+      "event": "Each generated key pair receives the specification's generatedKeypair[keyPair, algorithm] assurance.",
+      "status": "violated",
+      "evidence": "Evidence IDs: SRC-001, SPEC-001, SUP-001, CALL-001, CALL-002, CALL-003, CALL-005, CALL-006. The specification states that this assurance follows compliant usage. The reviewed usage has algorithm and applicable integer-size constraint failures, so the required compliant usage condition does not hold for all generated pairs.",
+      "rule_section": "required_predicate"
+    }
+  ],
+  "collateral_violations": [
+    {
+      "predicate": "Each generated key pair receives the specification's generatedKeypair[keyPair, algorithm] assurance.",
+      "evidence_ids": [
+        "SRC-001",
+        "SPEC-001",
+        "SUP-001",
+        "CALL-001",
+        "CALL-002",
+        "CALL-003",
+        "CALL-005",
+        "CALL-006"
+      ],
+      "explanation": "The specification states that this assurance follows compliant usage. The reviewed usage has algorithm and applicable integer-size constraint failures, so the required compliant usage condition does not hold for all generated pairs."
+    }
+  ],
+  "confirmed_facts": [
+    "The reviewed method uses the governed JCA type java.security.KeyPairGenerator through getInstance(type), initialize(bits, random), and generateKeyPair().",
+    "The source exposes six resolved createKeyPair parameter combinations: ED25519/256, EC/384, EC/521, RSA/2048, RSA/4096, and DSA/1024.",
+    "ED25519 reached the governed call in one measured application run.",
+    "The observed ED25519 mismatch is a failure of this KeyPairGeneratorSpec allowlist, not evidence that Ed25519 is absent from Java's documented KeyPairGenerator algorithm names.",
+    "The reviewed method serializes the generated private and public keys into a KeyPairBean as cloned encoded byte arrays; with the empty secret passed by this method, getEncodedPrivate returns the private key's encoded bytes rather than invoking its encryption branch."
+  ],
+  "unsupported_hypotheses": [],
+  "missing_evidence": [
+    "Which provider and provider version the Android runtime selects for KeyPairGenerator.getInstance(type).",
+    "Whether every requested algorithm/size pair is accepted and completes key generation on deployed runtimes.",
+    "Whether generateKeyPair completed successfully during the measured ED25519 run.",
+    "Which persisted keys already exist and whether they must remain usable after any algorithm-policy change.",
+    "Whether the target SSH endpoints and any external consumers support each generated key algorithm and encoding."
+  ],
+  "confirmed_cause": "The reported getInstance algorithm argument is ED25519, supplied by the resolved ED25519 caller and observed at the governed call; ED25519 is outside this CrySL KeyPairGeneratorSpec allowlist {RSA, EC, DSA, DiffieHellman, DH} (SRC-001, SUP-001, CALL-002, RUN-001, SPEC-001; CLM-002, CLM-003, CLM-004).",
+  "forward_compatibility_assessment": {
+    "status": "preserved",
+    "dimensions_checked": [],
+    "evidence": "Claim IDs: CLM-001, CLM-002, CLM-003, CLM-004, CLM-005",
+    "strategy": "Retain the documented ED25519 KeyPairGenerator use. The durable resolution is a version-aware update to the governing rule/allowlist rather than an application downgrade from ED25519 to a different key algorithm. Any separately authorized algorithm migration would need an explicit SSH-key storage and endpoint-compatibility migration policy."
+  },
+  "migration_assessment": {
+    "usage_kind": "unknown",
+    "evidence": [
+      "The reviewed method uses the governed JCA type java.security.KeyPairGenerator through getInstance(type), initialize(bits, random), and generateKeyPair().",
+      "The source exposes six resolved createKeyPair parameter combinations: ED25519/256, EC/384, EC/521, RSA/2048, RSA/4096, and DSA/1024.",
+      "ED25519 reached the governed call in one measured application run.",
+      "The observed ED25519 mismatch is a failure of this KeyPairGeneratorSpec allowlist, not evidence that Ed25519 is absent from Java's documented KeyPairGenerator algorithm names.",
+      "The reviewed method serializes the generated private and public keys into a KeyPairBean as cloned encoded byte arrays; with the empty secret passed by this method, getEncodedPrivate returns the private key's encoded bytes rather than invoking its encryption branch."
+    ],
+    "legacy_compatibility_required": true,
+    "safe_strategy": "Retain the documented ED25519 KeyPairGenerator use. The durable resolution is a version-aware update to the governing rule/allowlist rather than an application downgrade from ED25519 to a different key algorithm. Any separately authorized algorithm migration would need an explicit SSH-key storage and endpoint-compatibility migration policy.",
+    "policy_authorized": false
+  },
+  "digest_contract_assessment": {
+    "security_relevance": "false",
+    "contract_kind": "unknown",
+    "expected_digest_source": "",
+    "backend_repository_available": false,
+    "backend_change_required": false,
+    "client_only_change_safe": false,
+    "rollout_strategy": "",
+    "pull_request_note": ""
+  },
+  "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+  "dependency_fix_assessment": {
+    "external_class_confirmed": false,
+    "declared_artifact": "",
+    "current_version": "",
+    "target_version": "",
+    "target_artifact": "",
+    "official_migration_source": "",
+    "upgrade_kind": "unknown",
+    "build_files": [],
+    "call_site_migration_required": false,
+    "compatibility_constraints_satisfied": false,
+    "replacement_preserves_required_capabilities": false,
+    "fork_or_vcs_dependency": false
+  },
+  "coordinated_fix_plan": {
+    "affected_symbols": [
+      "createKeyPair",
+      "onCreate"
+    ],
+    "required_edits": [
+      {
+        "source_file_path": "app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt",
+        "symbol": "createKeyPair",
+        "reason": "Replace the ED25519 literal at the ED25519 generation-selection call site with the allowlisted EC literal, leaving the existing initialization argument and all other createKeyPair branches unchanged. This makes the value forwarded to the monitored KeyPairGenerator.getInstance(type) call EC rather than ED25519, while the generated KeyPairBean records the newly selected EC identity type and encoded key material.",
+        "create_new_file": false,
+        "edit_category": "governed algorithm-value replacement",
+        "supporting_claim_ids": [
+          "CLM-001",
+          "CLM-002",
+          "CLM-003",
+          "CLM-004",
+          "CLM-005"
+        ]
+      },
+      {
+        "source_file_path": "app/src/main/kotlin/app/trigger/ssh/SshKeyPairActivity.kt",
+        "symbol": "onCreate",
+        "reason": "Replace the ED25519 new-identity selection presented and submitted by the key-generation UI with the EC selection used by GenerateIdentityTask, so the UI does not advertise or request an ED25519 identity while the generation task creates an EC identity. Keep display, import, recovery, and use of already stored ED25519 identities unchanged.",
+        "create_new_file": false,
+        "edit_category": "key-generation UI selection migration",
+        "supporting_claim_ids": [
+          "CLM-002",
+          "CLM-005"
+        ]
+      }
+    ],
+    "required_tests": [],
+    "compatibility_policy_required": true,
+    "scope_evidence": [
+      "Claim IDs: CLM-001, CLM-002, CLM-003, CLM-004, CLM-005"
+    ]
+  },
+  "scope_assessment": {
+    "status": "complete",
+    "local_code_scope": "complete",
+    "external_contract_scope": "unresolved",
+    "multi_file_change_required": true,
+    "reviewed_files": [
+      {
+        "source_file_path": "app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt",
+        "action": "edit",
+        "symbols": [
+          "createKeyPair"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-001, CLM-002, CLM-003, CLM-004, CLM-005"
+      },
+      {
+        "source_file_path": "app/src/main/kotlin/app/trigger/ssh/SshKeyPairActivity.kt",
+        "action": "edit",
+        "symbols": [
+          "onCreate"
+        ],
+        "evidence": "Planned from adjudicated claims: CLM-002, CLM-005"
+      }
+    ],
+    "unresolved_relations": [
+      {
+        "kind": "other",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "A rule-compliant algorithm substitution would alter stored KeyPairBean type/encodings and the SSH public-key algorithm offered to endpoints. The repository establishes local retention and decoding, but not compatibility of existing stored identities or deployed SSH endpoints with a replacement. A reviewer would have to authorize and define any migration."
+      },
+      {
+        "kind": "other",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "The selected provider and its support for every requested algorithm/initialization pair are not established. Gradle build, unit tests, androidTest-source compilation, and source recheck do not determine deployed-provider behavior."
+      },
+      {
+        "kind": "other",
+        "blocking_for_generation": false,
+        "blocking_for_publication": true,
+        "description": "The repository retains the algorithm type and encoded key bytes for subsequent SSH authentication. Replacing ED25519 with an allowlisted algorithm changes the identity consumers receive; no policy authorizes that behavior change."
+      }
+    ]
+  },
+  "issue_candidate": {
+    "eligible": false,
+    "title": "",
+    "finding_summary": "",
+    "why_no_pr": "",
+    "maintainer_question": "",
+    "proposed_next_step": ""
+  },
+  "v2": {
+    "evidence_packet_sha256": "892cd155656402ac433209a3565c5aba27c97137310f1245f7c9ccf1ec4181db",
+    "claims": [
+      {
+        "claim_id": "CLM-001",
+        "statement": "The reviewed method uses the governed JCA type java.security.KeyPairGenerator through getInstance(type), initialize(bits, random), and generateKeyPair().",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001",
+          "SPEC-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-002",
+        "statement": "The source exposes six resolved createKeyPair parameter combinations: ED25519/256, EC/384, EC/521, RSA/2048, RSA/4096, and DSA/1024.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SUP-001",
+          "CALL-001",
+          "CALL-002",
+          "CALL-003",
+          "CALL-004",
+          "CALL-005",
+          "CALL-006"
+        ]
+      },
+      {
+        "claim_id": "CLM-003",
+        "statement": "ED25519 reached the governed call in one measured application run.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "RUN-001"
+        ]
+      },
+      {
+        "claim_id": "CLM-004",
+        "statement": "The observed ED25519 mismatch is a failure of this KeyPairGeneratorSpec allowlist, not evidence that Ed25519 is absent from Java's documented KeyPairGenerator algorithm names.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SPEC-001",
+          "RUN-001",
+          "WEB-002",
+          "WEB-009"
+        ]
+      },
+      {
+        "claim_id": "CLM-005",
+        "statement": "The reviewed method serializes the generated private and public keys into a KeyPairBean as cloned encoded byte arrays; with the empty secret passed by this method, getEncodedPrivate returns the private key's encoded bytes rather than invoking its encryption branch.",
+        "epistemic_status": "confirmed",
+        "evidence_ids": [
+          "SRC-001",
+          "CALLEE-003"
+        ]
+      },
+      {
+        "claim_id": "CLM-006",
+        "statement": "The supplied evidence does not establish that the selected provider accepts the requested initialization combinations or that generation succeeds for every source branch.",
+        "epistemic_status": "unknown",
+        "evidence_ids": [
+          "SRC-001",
+          "WEB-001"
+        ]
+      }
+    ],
+    "adjudication": {
+      "generation_status": "supported_for_review",
+      "forward_compatibility_strategy": "Retain the documented ED25519 KeyPairGenerator use. The durable resolution is a version-aware update to the governing rule/allowlist rather than an application downgrade from ED25519 to a different key algorithm. Any separately authorized algorithm migration would need an explicit SSH-key storage and endpoint-compatibility migration policy.",
+      "review_assumptions": [
+        "The detector rendered an explicit expected-algorithm list, and the reviewed resolved call is a governed java.security.KeyPairGenerator.getInstance(String) call; detector attribution is therefore corroborated rather than merely source-established (SRC-001, SPEC-001, CLM-001).",
+        "ED25519 is deliberately within this application's advertised SSH key-generation capability, and the generated KeyPairBean preserves both the selected type and encoded key material for later SSH public-key authentication (app_purpose; SRC-001, SRC-008, SRC-009, SRC-010, CALLEE-003, CLM-005).",
+        "Official Java standard-name documentation identifies Ed25519 as a KeyPairGenerator algorithm. This supports correctness of the factory algorithm name, but does not establish availability from every Android provider or compatibility with every SSH endpoint (WEB-001, WEB-002, WEB-009).",
+        "Separate, unreported rule predicates are source-level violations under the supplied CrySL rule: RSA/2048, DSA/1024, EC/384, and EC/521 do not meet its respective integer-size clauses. They are not folded into the cause of this ED25519 UnsafeAlgorithm report, which is solely the reported algorithm-allowlist constraint (SRC-001, SUP-001, CALL-001, CALL-003, CALL-005, CALL-006, SPEC-001).",
+        "The selected runtime provider and deployed SSH endpoint acceptance remain unestablished. Those facts do not make ED25519 an incorrect JCA algorithm name and do not justify replacing it with a different algorithm without an authorized migration (CLM-006)."
+      ],
+      "cause_status": "confirmed",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "correct_use_reason": "The reported factory use requests \"ED25519\", which is a documented Java KeyPairGenerator standard algorithm name (WEB-002, WEB-009). KeyPairGenerator is expressly provider-based and its factory/initialization behavior is documented by the JCA API (WEB-001). The CrySL allowlist excludes this documented algorithm, but replacing it with RSA, EC, DSA, DH, or DiffieHellman would change the selected SSH identity algorithm, its encoded key material, and the application's advertised ED25519 support; it would not preserve what this code generates and later supplies for SSH authentication (SRC-001, SRC-008, SRC-009, SRC-010, CALLEE-003).",
+      "blocking_for_generation": [],
+      "blocking_for_publication": [
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "SSH identity and endpoint compatibility",
+          "supporting_claim_ids": [
+            "CLM-002",
+            "CLM-005",
+            "CLM-006"
+          ],
+          "category": "compatibility_contract",
+          "description": "A rule-compliant algorithm substitution would alter stored KeyPairBean type/encodings and the SSH public-key algorithm offered to endpoints. The repository establishes local retention and decoding, but not compatibility of existing stored identities or deployed SSH endpoints with a replacement. A reviewer would have to authorize and define any migration."
+        },
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "Deployed Android provider behavior",
+          "supporting_claim_ids": [
+            "CLM-006"
+          ],
+          "category": "runtime_behavior",
+          "description": "The selected provider and its support for every requested algorithm/initialization pair are not established. Gradle build, unit tests, androidTest-source compilation, and source recheck do not determine deployed-provider behavior."
+        },
+        {
+          "discharged_by_pipeline_validation": false,
+          "kind": "An allowlist-compliant replacement necessarily changes the intentionally selected ED25519 SSH key algorithm and its retained encoded identity. No behavior-preserving application edit can satisfy this obsolete allowlist constraint.",
+          "supporting_claim_ids": [
+            "CLM-002",
+            "CLM-004",
+            "CLM-005"
+          ],
+          "category": "compatibility_contract",
+          "description": "The repository retains the algorithm type and encoded key bytes for subsequent SSH authentication. Replacing ED25519 with an allowlisted algorithm changes the identity consumers receive; no policy authorizes that behavior change."
+        }
+      ],
+      "current_code_is_correct_use": true,
+      "compatibility_status": "preserved",
+      "required_tests": [
+        "No repository source patch is safe to generate for this finding. If a future policy authorizes an algorithm migration, test generation and decode/round-trip of newly generated and existing KeyPairBean values, plus SSH public-key authentication against supported target endpoints and Android provider/runtime versions."
+      ],
+      "scope_status": "complete",
+      "confirmed_cause": "The reported getInstance algorithm argument is ED25519, supplied by the resolved ED25519 caller and observed at the governed call; ED25519 is outside this CrySL KeyPairGeneratorSpec allowlist {RSA, EC, DSA, DiffieHellman, DH} (SRC-001, SUP-001, CALL-002, RUN-001, SPEC-001; CLM-002, CLM-003, CLM-004).",
+      "cause_rule_section": "constraint",
+      "decision_claim_ids": [
+        "CLM-001",
+        "CLM-002",
+        "CLM-003",
+        "CLM-004",
+        "CLM-005"
+      ],
+      "detector_violation": "confirmed",
+      "publication_status": "blocked",
+      "required_edit_categories": [],
+      "runtime_security_impact": "non_security",
+      "authorized_behavior_change": {
+        "authorized": false,
+        "description": "No case policy authorizes removal or substitution of the application's ED25519 SSH key-generation behavior. Such a substitution changes the generated identity algorithm and its external SSH compatibility contract.",
+        "policy_reference": ""
+      },
+      "single_round": true
+    },
+    "patch_plan": {
+      "publication_blockers": [
+        "Authorize publication of the ED25519-to-EC SSH identity migration. The authorization must explicitly accept that newly generated identities use EC rather than ED25519 and define endpoint compatibility expectations for the resulting SSH public-key algorithm (CLM-002, CLM-005, CLM-006).",
+        "Validate the replacement generation flow on supported Android providers and runtime versions. The available evidence does not establish provider acceptance of every requested KeyPairGenerator algorithm/initialization pair, including the unchanged 256-bit initialization used by the former ED25519 selection (CLM-001, CLM-006).",
+        "Because the repository has no test source set, perform reviewer validation rather than adding a test edit: generate a new EC identity through the updated UI, verify it can be retained and used for SSH public-key authentication against supported endpoints, and verify pre-existing ED25519 KeyPairData identities still decode and remain usable through the existing recovery/import paths (CLM-002, CLM-005, CLM-006)."
+      ],
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "forbidden_changes": [
+        "Do not change the existing KeyPairGenerator initialization size, SecureRandom argument, key serialization, private-key encoding, or any unrelated KeyPairGenerator branch while replacing the ED25519 selection.",
+        "Do not alter KeyPairBean, KeyPairData, PubkeyUtils, SshTools, or their stored-data readers/writers; existing ED25519 identities must remain in their existing stored representation and be read by the unchanged compatibility paths.",
+        "Do not rename createKeyPair or restructure the factory call; the fix must change the value that reaches KeyPairGenerator.getInstance at the runtime-monitored call.",
+        "Do not change the RSA, DSA, or existing EC generation selections or their arguments.",
+        "Do not add or modify tests or build configuration; the repository has no established test source root or test source set."
+      ],
+      "required_edits": [
+        {
+          "create_new_file": false,
+          "source_file_path": "app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt",
+          "supporting_claim_ids": [
+            "CLM-001",
+            "CLM-002",
+            "CLM-003",
+            "CLM-004",
+            "CLM-005"
+          ],
+          "edit_category": "governed algorithm-value replacement",
+          "symbol": "createKeyPair",
+          "reason": "Replace the ED25519 literal at the ED25519 generation-selection call site with the allowlisted EC literal, leaving the existing initialization argument and all other createKeyPair branches unchanged. This makes the value forwarded to the monitored KeyPairGenerator.getInstance(type) call EC rather than ED25519, while the generated KeyPairBean records the newly selected EC identity type and encoded key material."
+        },
+        {
+          "create_new_file": false,
+          "source_file_path": "app/src/main/kotlin/app/trigger/ssh/SshKeyPairActivity.kt",
+          "supporting_claim_ids": [
+            "CLM-002",
+            "CLM-005"
+          ],
+          "edit_category": "key-generation UI selection migration",
+          "symbol": "onCreate",
+          "reason": "Replace the ED25519 new-identity selection presented and submitted by the key-generation UI with the EC selection used by GenerateIdentityTask, so the UI does not advertise or request an ED25519 identity while the generation task creates an EC identity. Keep display, import, recovery, and use of already stored ED25519 identities unchanged."
+        }
+      ],
+      "behavioral_invariants": [
+        "At the reported runtime-monitored call, KeyPairGenerator.getInstance receives EC for a newly requested identity through the former ED25519 UI path; it no longer receives ED25519 from that path.",
+        "Keep the existing KeyPairGenerator initialization argument, SecureRandom use, generation call, and private/public encoded-byte serialization unchanged; only the selected factory algorithm/type value changes.",
+        "Leave the existing EC, RSA, and DSA selection paths and their arguments unchanged.",
+        "New identities generated through the migrated UI path are stored as EC identities with their generated encoded key material; no conversion of an existing ED25519 identity is performed.",
+        "Existing persisted ED25519 identity data remains readable without a format migration: leave the KeyPairBean decoding/recovery code in app/src/main/kotlin/app/trigger/ssh/PubkeyUtils.kt and the KeyPairData persistence/recovery paths in app/src/main/kotlin/app/trigger/ssh/SshTools.kt unchanged.",
+        "Do not introduce device-bound keys, new encryption dependencies, or storage-format changes; restored or imported existing identities retain their current portability characteristics."
+      ],
+      "generation_blockers": [],
+      "allowed_apis": [
+        "Existing java.security.KeyPairGenerator.getInstance(\"EC\") usage through GenerateIdentityTask.createKeyPair",
+        "Existing KeyPairGenerator.initialize(bits, random) and generateKeyPair() flow",
+        "Existing KeyPairBean encoded-key serialization and existing PubkeyUtils/SshTools decoding and recovery mechanisms"
+      ],
+      "required_tests": []
+    }
+  }
+}

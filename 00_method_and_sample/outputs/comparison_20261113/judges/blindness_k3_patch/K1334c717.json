@@ -1,0 +1,32 @@
+{
+ "card_id": "K1334c717",
+ "card_sha256": "468634fd95d82c2a",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 6,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3379,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 343
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0341304,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "d983e8776a499b70",
+ "finished_at": "2026-11-16T11:49:03-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.25,
+  "reason": "This is a minimal, careful fix: it moves KeyGenerator.getInstance inside the tier loop and adds a short explanatory comment. The author also built this exact diff and it passed. That build step fits the multi-step pipeline, which always builds its patch, better than the agents, which build only sometimes. The comment's tidy, Claude-like wording tips the guess slightly toward D over C. The evidence is weak, so my confidence is low."
+ }
+}

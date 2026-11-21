@@ -1,0 +1,176 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "The rule has no event for SSLSocket.setSSLParameters, SSLServerSocket.setSSLParameters, SSLEngine.setSSLParameters, startHandshake, or retrieval of a negotiated SSLSession.",
+      "The rule contains no AspectJ target(T) or args(T) clause; therefore no subtype-matching conclusion follows from an AspectJ expression here.",
+      "The rule text does not define the analyzer's operational treatment of null arrays, empty arrays, aliases, post-call array mutation, reflection, infeasible branches, or unknown values; these depend on the CryptoAnalysis/CogniCrypt implementation and configuration."
+    ],
+    "predicates": [
+      "ORDER: (Con1, ((CipherSuite, SetProtocol) | (SetProtocol, CipherSuite))) | (Con2, SetProtocol) | Con3.",
+      "elements(protocols) in {\"TLSv1.2\", \"TLSv1.3\"}.",
+      "elements(protocols) in {\"TLSv1.2\"} => elements(cipherSuites) in {\"TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\", \"TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384\", \"TLS_DHE_DSS_WITH_AES_128_GCM_SHA256\", \"TLS_DHE_DSS_WITH_AES_256_GCM_SHA384\", \"TLS_DHE_RSA_WITH_AES_128_GCM_SHA256\", \"TLS_DHE_RSA_WITH_AES_256_GCM_SHA384\", \"TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384\", \"TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256\", \"TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384\"}.",
+      "elements(protocols) in {\"TLSv1.3\"} => elements(cipherSuites) in {\"TLS_AES_128_GCM_SHA256\", \"TLS_AES_256_GCM_SHA384\"}.",
+      "ENSURES generatedSSLParameters[this]."
+    ],
+    "claim": "The detector rule governs javax.net.ssl.SSLParameters construction and its setCipherSuites(String[]) and setProtocols(String[]) calls. It accepts only the stated event orders, restricts bound protocol-array elements to TLSv1.2 or TLSv1.3, and conditionally restricts cipher-suite-array elements under the two literal protocol predicates."
+  },
+  "unknowns": [
+    "Which exact CryptoAnalysis/CogniCrypt version and rule compiler produced a result, and therefore the precise operational semantics of CrySL elements(...), nulls, empty arrays, aliasing, and array mutation.",
+    "Whether a reported source path resolves to javax.net.ssl.SSLParameters and contains a tracked rule trace; a representative message alone does not prove this.",
+    "Whether a tracked object is applied to a live TLS endpoint and, if so, which socket or engine, provider, JDK version, security properties, client/server role, peer, and negotiated session are involved.",
+    "Whether the TLSv1.2 and TLSv1.3 cipher-suite allowlists represent intended organizational policy, a historical compatibility baseline, or an attempted enumeration of acceptable suites.",
+    "Whether a report arises from a literal runtime value, an unknown propagated value, path imprecision, or the analyzer's interpretation of CrySL constraints."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "javax.net.ssl.SSLParameters encapsulates parameters for an SSL/TLS/DTLS connection, including cipher suites and protocols.",
+      "The no-argument constructor initializes cipherSuites and protocols to null. The one-array and two-array constructors are documented as equivalent to the no-argument constructor followed by setCipherSuites, or setCipherSuites followed by setProtocols, respectively.",
+      "setCipherSuites(String[]) and setProtocols(String[]) set their respective parameter arrays."
+    ],
+    "preconditions": [
+      "SSLParameters constructors and the two setters document their String[] arguments as allowing null.",
+      "When SSLSocket applies SSLParameters, it invokes setEnabledCipherSuites only when getCipherSuites() is non-null and setEnabledProtocols only when getProtocols() is non-null. Thus, the platform API permits protocol-only parameter objects, while this rule's Con1 order requires both setter events.",
+      "Requested suites must be supported by the selected SSL/TLS implementation when they are ultimately enabled; providers can support names outside Java's standard cipher-suite name list."
+    ],
+    "unknowns": [
+      "The SSLParameters API does not guarantee that a requested protocol or suite is supported by the selected provider, remains enabled under runtime security policy, or can be negotiated with a peer.",
+      "The rule does not identify which connection type, provider, runtime version, client/server mode, or endpoint uses a tracked SSLParameters object.",
+      "The supplied rule does not state the detector's exact interpretation of elements(...) for null or empty arrays."
+    ]
+  },
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLParameters.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/SSLParameters.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/SSLSocket.html#setSSLParameters(javax.net.ssl.SSLParameters)",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/net/ssl/SSLEngine.html#setSSLParameters(javax.net.ssl.SSLParameters)",
+    "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html#jsse-cipher-suite-names",
+    "https://datatracker.ietf.org/doc/html/rfc8446"
+  ],
+  "schema_version": 2,
+  "non_security_violation_shapes": [
+    "A test, fixture, diagnostic, or unreachable object-construction path creates an SSLParameters object with a prohibited protocol array but never applies it to a TLS connection. It can violate the rule if analyzed as reachable, without affecting connection security.",
+    "A configuration object violates the Con1 or Con2 event-order requirement but is used only as transient metadata, logging input, or a negative-validation test and is never passed to a socket or engine.",
+    "A deliberately incompatible suite/protocol combination is constructed solely to verify that a provider or application rejects it before networking begins."
+  ],
+  "source_verified": true,
+  "important_note": "This is a CrySL policy over construction and two mutator calls on javax.net.ssl.SSLParameters. A finding does not establish that parameters are applied to an SSLSocket, SSLServerSocket, or SSLEngine; that a TLS handshake occurs; or that any particular protocol or cipher suite is negotiated.",
+  "events": [
+    {
+      "condition": "Observation: invoke the zero-argument javax.net.ssl.SSLParameters constructor. ORDER then requires both CipherSuite and SetProtocol, in either order: (CipherSuite, SetProtocol) | (SetProtocol, CipherSuite). This event has no independent array-value predicate.",
+      "name": "Con1",
+      "api_patterns": [
+        "new SSLParameters()",
+        "new javax.net.ssl.SSLParameters()",
+        "SSLParameters()",
+        "javax.net.ssl.SSLParameters()"
+      ]
+    },
+    {
+      "condition": "Observation: invoke the one-argument javax.net.ssl.SSLParameters constructor with one String[] argument bound as cipherSuites; distinguish this overload by resolved arity and type. ORDER requires SetProtocol after Con2. The bound arrays are subject to elements(protocols) in {\"TLSv1.2\", \"TLSv1.3\"} and the rule's two conditional cipher-suite predicates.",
+      "name": "Con2",
+      "api_patterns": [
+        "new SSLParameters(",
+        "new javax.net.ssl.SSLParameters(",
+        "SSLParameters(",
+        "javax.net.ssl.SSLParameters("
+      ]
+    },
+    {
+      "condition": "Observation: invoke the two-argument javax.net.ssl.SSLParameters constructor with String[] cipherSuites followed by String[] protocols; distinguish this overload by resolved arity and type. ORDER requires no later event, but the bound arrays must satisfy elements(protocols) in {\"TLSv1.2\", \"TLSv1.3\"} and the rule's two conditional cipher-suite predicates.",
+      "name": "Con3",
+      "api_patterns": [
+        "new SSLParameters(",
+        "new javax.net.ssl.SSLParameters(",
+        "SSLParameters(",
+        "javax.net.ssl.SSLParameters("
+      ]
+    },
+    {
+      "condition": "Observation: call setCipherSuites(String[]) on the tracked javax.net.ssl.SSLParameters object and bind its argument as cipherSuites. For a Con1 trace, CipherSuite and SetProtocol must both occur in either permitted order. The cipherSuites value is constrained only when the rule's TLSv1.2-only or TLSv1.3-only elements(protocols) predicate holds.",
+      "name": "CipherSuite",
+      "api_patterns": [
+        ".setCipherSuites(",
+        "setCipherSuites("
+      ]
+    },
+    {
+      "condition": "Observation: call setProtocols(String[]) on the tracked javax.net.ssl.SSLParameters object and bind its argument as protocols. Runtime value predicate: elements(protocols) in {\"TLSv1.2\", \"TLSv1.3\"}. The rule additionally applies its conditional cipher-suite predicates when elements(protocols) is in {\"TLSv1.2\"} or in {\"TLSv1.3\"}.",
+      "name": "SetProtocol",
+      "api_patterns": [
+        ".setProtocols(",
+        "setProtocols("
+      ]
+    }
+  ],
+  "security_semantics": {
+    "runtime_claim": "At runtime, SSLParameters affects a socket or engine only when applied. For SSLSocket and SSLEngine, non-null protocol and cipher-suite arrays are transferred to enabled settings; a handshake subsequently negotiates a mutually usable protocol and suite with the peer. A configured suite may never be used because of peer support, restrictions, or unavailable credentials.",
+    "equivalent": false,
+    "detector_claim": "The detector policy rejects tracked protocol arrays containing elements outside TLSv1.2 and TLSv1.3, and conditionally limits tracked cipher-suite arrays under its literal TLSv1.2-only and TLSv1.3-only predicates. This is a source-level claim about a tracked SSLParameters trace and argument values, not a claim about an established connection."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Check provider support using the relevant getSupportedProtocols and getSupportedCipherSuites APIs or provider documentation.",
+      "Check that endpoints have a compatible protocol and cipher-suite intersection; a handshake requires a common usable configuration.",
+      "For TLS 1.3, distinguish TLS 1.3 suite names from TLS 1.2-or-earlier names: RFC 8446 states that TLS 1.3 suites cannot be used with TLS 1.2 and lower, and vice versa."
+    ],
+    "runtime": [
+      "Show that the tracked object reaches SSLSocket.setSSLParameters, SSLServerSocket.setSSLParameters, or SSLEngine.setSSLParameters on the executed path.",
+      "Capture effective enabled protocols and cipher suites after application and the negotiated SSLSession protocol and cipher suite after a successful handshake.",
+      "Establish the executed provider, JDK/runtime security configuration, endpoint role, credentials, and peer-supported settings."
+    ],
+    "source_level": [
+      "Resolve the receiver type to javax.net.ssl.SSLParameters rather than a similarly named parameter or specification class.",
+      "Establish the applicable constructor overload and the tracked setter sequence on the same object.",
+      "Trace actual String[] values reaching constructors or setters, including branch feasibility and whether later writes replace an earlier value.",
+      "For a prohibited protocol report, establish that the name is in the String[] bound to protocols at a tracked event, rather than merely appearing elsewhere in source."
+    ]
+  },
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a finding means the SSLParameters object is passed to setSSLParameters or affects an actual TLS connection.",
+    "Do not infer that a protocol string appearing in source is the runtime value of the String[] bound to a tracked constructor or setProtocols call; the predicate concerns the value at execution.",
+    "Do not infer that a reported SSLv3 value is reachable on an executed tracked-object trace without control-flow, data-flow, and runtime evidence.",
+    "Do not infer that an accepted rule trace negotiates TLSv1.2 or TLSv1.3; negotiation also depends on provider support, enabled settings, local credentials, algorithm restrictions, and peer capabilities.",
+    "Do not infer peer authentication, hostname verification, certificate validation, SNI behavior, or endpoint-identity protection; none is an event or constraint in this rule.",
+    "Do not infer that every provider accepts every named suite; providers may have provider-specific supported names and application of unsupported requested protocols or suites can fail."
+  ],
+  "name": "SSLParametersSpec",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLParameters.crysl",
+  "applies_to_types": [
+    "javax.net.ssl.SSLParameters"
+  ],
+  "source_title": "Crypto-API-Rules: javax.net.ssl.SSLParameters CrySL rule (SSLParameters.crysl)",
+  "semantic_scope": "For every finding of this rule, the observed subject is a statically tracked javax.net.ssl.SSLParameters object. The rule observes only its three constructors, setCipherSuites(String[]), setProtocols(String[]), the specified event ordering, and values bound to the cipherSuites and protocols variables. It emits generatedSSLParameters[this]. It does not observe application to a connection, handshake execution, negotiated session values, peer behavior, certificate or hostname validation, or APIs outside these constructor and mutator event forms.",
+  "spec_id": "SSLParametersSpec",
+  "known_false_positive_shapes": [
+    "A static data-flow or control-flow error reports a disallowed protocol string even though the executed tracked constructor or setProtocols invocation receives only values satisfying the rule. This is a detector misread rather than a runtime predicate violation.",
+    "A protocol-only configuration, such as new SSLParameters() followed by setProtocols(new String[] {\"TLSv1.3\"}), can be reported because Con1 requires both setters. The documented SSLSocket and SSLEngine behavior leaves enabled cipher suites unchanged when getCipherSuites() is null, so the rule is stricter than that API shape. Whether defaults satisfy a deployment policy still requires runtime evidence.",
+    "A TLSv1.3-only configuration using a standardized TLS 1.3 suite outside the two-item rule allowlist, such as TLS_CHACHA20_POLY1305_SHA256 or TLS_AES_128_CCM_SHA256, can be reported even though RFC 8446 defines those suites and Java lists their standard names. This is a narrow or outdated-policy false-positive shape, not evidence that the suite is insecure.",
+    "A provider-supported secure suite with a provider-specific name can be reported when it falls outside the hard-coded allowlist, although the Java API permits providers to support names outside the standard list. Runtime provider support and suitability must be demonstrated."
+  ],
+  "protocol": "(Con1 → ((CipherSuite → SetProtocol) | (SetProtocol → CipherSuite))) | (Con2 → SetProtocol) | Con3",
+  "detector_rule_source": {
+    "url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLParameters.crysl",
+    "format": "crysl",
+    "catalog_entry": "crysl_rule",
+    "detail": "crysl_spec_line:javax.net.ssl.SSLParameters"
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.zhangke.framework.architect.http.GlobalOkHttpClient",
+        "method": "buildSSLFactory",
+        "message": "expecting one of TLSv1.2,TLSv1.3 but found SSLv3"
+      }
+    ],
+    "expected_api_simple_name": "SSLParameters",
+    "deterministic_validation": "passed",
+    "detector_rule": "crysl"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:javax.net.ssl.SSLParameters",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/SSLParameters.crysl"
+  }
+}

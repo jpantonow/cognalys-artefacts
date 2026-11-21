@@ -1,0 +1,32 @@
+{
+ "card_id": "K24e0e45d",
+ "card_sha256": "8840878c76165884",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 8,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 7689,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 538
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0725104,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "ddf72c8b753f78af",
+ "finished_at": "2026-11-16T11:51:54-0300",
+ "output": {
+  "guess": "O",
+  "confidence": 0.33,
+  "reason": "The diff wasn't built, which points to a coding agent rather than the Cognalys pipeline, since the pipeline includes a build step. The code is dense and terse: `.also{}` idioms, a minimal `assertFails` helper, a single-line format comment and no explanatory scaffolding. That reads like Codex more than Claude. It is also an ambitious but tidy redesign: a versioned GCM+PBKDF2 format with a legacy CBC fallback, AAD over the prefix, and a test that reconstructs the legacy format. That level of care fits the stronger Codex variant (Sol) a little better than Terra. This is a weak inference."
+ }
+}

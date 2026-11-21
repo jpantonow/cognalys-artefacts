@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/Chiu-xaH/HFUT-Schedule/pull/109",
+    "state": "closed",
+    "finding_id": "b71c759b9fd6",
+    "spec": "HardcodedSecretSpec",
+    "csv_class": "com.hfut.schedule.network.api.inf.GiteeService",
+    "method_name": "getUpdate",
+    "title": "Fix getUpdate",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:53.721502+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "Chiu-xaH",
+        "kind": "comment",
+        "body": "Thank you for pointing this out. Although removing the Token parameter does not affect the content returned by the interface, for the sake of the stability of the application, the code that functions properly will not be changed.（感谢指出，虽然去掉传Token不影响接口返回的内容，但为了应用的稳定性，能正常运行的代码就不去变更了）"
+      }
+    ]
+  }
+]

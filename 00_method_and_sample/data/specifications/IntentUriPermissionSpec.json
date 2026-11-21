@@ -1,0 +1,171 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "No published detector-rule catalog under the name IntentUriPermissionSpec was identified from the supplied evidence; the name is treated as a concern label.",
+      "The normalized advisory finding does not prove that every matching code path is externally invocable.",
+      "The normalized finding does not prove runtime presence of grant flags, a content URI, provider grant eligibility, or a successful provider operation.",
+      "The finding does not establish whether sanitization, copying, flag removal, URI replacement, or caller validation occurs on all relevant paths."
+    ],
+    "predicates": [
+      "An Activity obtains or retains its incoming Intent.",
+      "That Intent, or a dataflow alias, is supplied as the Intent argument to setResult(int, Intent).",
+      "The returned object may preserve URI data, ClipData, and/or FLAG_GRANT_READ_URI_PERMISSION or FLAG_GRANT_WRITE_URI_PERMISSION that were present in caller input."
+    ],
+    "claim": "The finding claims that returning an incoming Intent through Activity.setResult(int, Intent) can reflect caller-controlled URI permission grant flags and URI state back to the result recipient."
+  },
+  "unknowns": [
+    "There is no supplied detector implementation or rule catalog defining IntentUriPermissionSpec predicates, taint sources, sinks, interprocedural behavior, or confidence thresholds.",
+    "The exact relationship between this concern label and any CWE mapping is not formally specified; CWE-926 is relevant to externally reachable Android components, but does not by itself fully model URI-grant reflection.",
+    "Whether the detector considers only Intent.getData(), also considers ClipData, or models recursively contained URI-bearing Intent items is not established by the representative finding.",
+    "Whether the detector requires an exported Activity and a grant-capable provider, or merely reports the incoming-Intent-to-setResult flow, is not established.",
+    "Whether the detector models permission checks, signature restrictions, runtime caller verification, URI path restrictions, Android version behavior, and result-launch modality is unresolved."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "Activity.setResult(int, Intent) returns the supplied Intent to the caller. Android documents that, from Android 2.3 onward, read and write URI-grant flags on that result Intent grant the receiving Activity access to the specific URIs in the Intent.",
+      "Intent documents that FLAG_GRANT_READ_URI_PERMISSION and FLAG_GRANT_WRITE_URI_PERMISSION apply respectively to URI data and URIs in ClipData.",
+      "Provider manifest documentation states that android:grantUriPermissions can temporarily overcome normal provider export and read/write permission restrictions.",
+      "FileProvider documentation describes delivering a content URI and URI grants to another application, including result delivery with setResult()."
+    ],
+    "preconditions": [
+      "The result is delivered to a caller capable of receiving an Activity result.",
+      "At result delivery, the exact returned Intent carries a qualifying URI in its data or ClipData and carries read and/or write URI-grant flags.",
+      "The URI identifies a provider resource for which temporary permission may be granted, such as a provider with android:grantUriPermissions=\"true\" or an applicable grant-uri-permission declaration.",
+      "The receiving application performs an operation compatible with the granted mode, such as ContentResolver.openInputStream(Uri) for read access or openOutputStream(Uri) for write access."
+    ],
+    "unknowns": [
+      "Whether result delivery preserves grants identically across all supported Android releases and OEM implementations for the application's configured target and minimum SDK levels.",
+      "Whether the relevant URI is held in Intent data, ClipData, nested ClipData items, or another application-specific transport.",
+      "Whether a specific provider accepts the requested URI path and implements readable or writable operations for it.",
+      "Whether an application transforms, clears, copies, or validates incoming Intent fields before result delivery."
+    ]
+  },
+  "authoritative_sources": [
+    "https://cwe.mitre.org/data/definitions/926.html",
+    "https://developer.android.com/reference/android/app/Activity#setResult(int,android.content.Intent)",
+    "https://developer.android.com/reference/android/content/Intent#FLAG_GRANT_READ_URI_PERMISSION",
+    "https://developer.android.com/reference/android/content/Intent#FLAG_GRANT_WRITE_URI_PERMISSION",
+    "https://developer.android.com/reference/android/content/ContentProvider",
+    "https://developer.android.com/reference/android/content/ContentResolver",
+    "https://developer.android.com/reference/androidx/core/content/FileProvider",
+    "https://developer.android.com/guide/topics/manifest/provider-element",
+    "https://developer.android.com/privacy-and-security/security-best-practices"
+  ],
+  "schema_version": 2,
+  "events": [
+    {
+      "condition": "Observing getIntent() establishes only that code retrieved the Activity's launch Intent. Its predicate is satisfied only when the retrieved Intent, or a dataflow alias of it, remains the result Intent supplied to setResult without removing relevant URI, ClipData, or grant-flag state.",
+      "name": "incoming_intent_retrieval",
+      "api_patterns": [
+        "getIntent()"
+      ]
+    },
+    {
+      "condition": "Observing setResult(...) establishes only that an Activity records a result. Its predicate is satisfied only when the Intent argument is the incoming Intent or an alias that preserves a content URI or ClipData URI together with FLAG_GRANT_READ_URI_PERMISSION and/or FLAG_GRANT_WRITE_URI_PERMISSION.",
+      "name": "result_intent_submission",
+      "api_patterns": [
+        "setResult(",
+        "setResult(RESULT_OK,",
+        "setResult(Activity.RESULT_OK,"
+      ]
+    },
+    {
+      "condition": "A local occurrence of a grant-flag constant or a flag-mutator call is not enough. The predicate requires evidence that a read and/or write grant flag is present on the exact Intent delivered through setResult at runtime; it can be preserved from caller input even when the receiving code contains no grant-flag constant.",
+      "name": "uri_grant_flag_presence_or_preservation",
+      "api_patterns": [
+        "Intent.FLAG_GRANT_READ_URI_PERMISSION",
+        "Intent.FLAG_GRANT_WRITE_URI_PERMISSION",
+        "addFlags(",
+        "setFlags(",
+        "removeFlags("
+      ]
+    },
+    {
+      "condition": "Observing a ContentResolver stream call establishes an attempted use of a URI. The predicate requires that the returned URI identifies an eligible provider resource and that Android has actually granted the calling application the requested mode; a call alone does not establish successful read or write access.",
+      "name": "result_uri_access_attempt",
+      "api_patterns": [
+        "contentResolver.openInputStream(",
+        "contentResolver.openOutputStream(",
+        "getContentResolver().openInputStream(",
+        "getContentResolver().openOutputStream("
+      ]
+    }
+  ],
+  "source_verified": true,
+  "important_note": "IntentUriPermissionSpec is a concern specification, not an Android API type, CrySL rule, or published detector-rule identifier. It describes a potential capability-reflection flow; a source-level observation of an incoming Intent passed to setResult does not by itself prove that an untrusted caller can obtain usable read or write access.",
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a type named IntentUriPermissionSpec exists in Android, AndroidX, CrySL, or another API framework.",
+    "Do not infer that every call to Activity.setResult(int, Intent) grants URI permissions.",
+    "Do not infer that getIntent() is attacker-controlled merely because it is an incoming Intent.",
+    "Do not infer that URI grant flags are present merely because an Intent is returned unchanged.",
+    "Do not infer that an Activity is externally reachable without manifest, permission, task-launch, or caller-identity evidence.",
+    "Do not infer that a ContentProvider is exported; android:grantUriPermissions can enable temporary access even where android:exported is false.",
+    "Do not infer successful read or write access without evidence that the URI names an eligible provider resource, the provider permits grants for that resource, and the caller uses the granted mode."
+  ],
+  "security_semantics": {
+    "runtime_claim": "A privilege-impacting URI grant occurs only if an untrusted or insufficiently restricted caller can start the Activity for result, the returned Intent still carries a grant flag and eligible URI, Android creates the grant, and the caller can use that URI against the provider.",
+    "equivalent": false,
+    "detector_claim": "Potential capability reflection: caller-controlled URI grant flags and URI references may be returned through an Activity result."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Activity.setResult(int, Intent) documents result URI-grant support from Android 2.3 onward.",
+      "Intent URI grants can apply to both Intent data and ClipData; analysis must account for both representations.",
+      "AndroidX FileProvider documentation identifies additional ClipData handling for Android 4.1 through Android 5.1 when sharing content URIs.",
+      "Provider export defaults and manifest interpretation vary on older Android API levels, so manifest conclusions require the application's target SDK and device API level."
+    ],
+    "runtime": [
+      "A test caller with the relevant trust level can launch the Activity for a result.",
+      "The caller can place a content URI and URI-grant flags on the launch Intent and later receives them in the result Intent.",
+      "The platform records a temporary URI grant for the caller in the requested read and/or write mode.",
+      "The caller can perform a permitted operation through ContentResolver against the returned URI."
+    ],
+    "source_level": [
+      "Dataflow evidence from getIntent(), an Activity Intent field, or an equivalent incoming-Intent source to the Intent argument of setResult(int, Intent).",
+      "Path-sensitive evidence that the result Intent retains relevant data URI or ClipData state and does not remove read/write grant flags before setResult.",
+      "Manifest evidence for the Activity's export status, required permission, intent filters, and any caller restrictions.",
+      "Manifest and provider evidence for android:grantUriPermissions, grant-uri-permission restrictions, provider authority, and accessible URI paths."
+    ]
+  },
+  "name": "IntentUriPermissionSpec",
+  "source_url": "https://securitylab.github.com/advisories/GHSL-2022-046_WordPress_for_Android/",
+  "applies_to_types": [
+    "android.app.Activity",
+    "android.content.Intent",
+    "android.content.ContentProvider",
+    "android.content.ContentResolver",
+    "androidx.core.content.FileProvider"
+  ],
+  "source_title": "GHSL-2022-046: Arbitrary Intent in WordPress for Android leads to read and write access",
+  "semantic_scope": "For every finding of this concern, the detector observes a source-level pattern in which an Activity returns an incoming Intent, or a derived alias, as result data and thereby may preserve caller-supplied URI-bearing state and URI permission grant flags. The scope is the potential reflection of a URI capability through the Activity-result channel; it does not itself establish external reachability, actual flags, an eligible provider, a successful URI operation, or exploitability.",
+  "spec_id": "IntentUriPermissionSpec",
+  "known_false_positive_shapes": [
+    "The result Intent is newly created and does not retain the incoming URI, ClipData, or flags.",
+    "The incoming Intent is copied only after URI grant flags are removed or after data and ClipData are cleared or replaced with trusted values.",
+    "The Activity cannot be launched by an untrusted application because of non-export status, a signature-level permission, an effective runtime caller check, or another access-control boundary.",
+    "The caller does not launch for result, no result recipient exists, or the relevant execution path never invokes setResult with the incoming Intent.",
+    "The returned URI does not resolve to a grantable provider resource, is rejected by provider path policy, or lacks an implemented readable or writable operation.",
+    "The returned Intent has no qualifying content URI in data or ClipData at delivery time.",
+    "The provider does not permit temporary grants for the URI, or the requested read/write mode is not granted."
+  ],
+  "protocol": "external caller supplies Intent I containing a content URI and grant flags -> an externally reachable Activity receives I -> the Activity retains I or an alias from getIntent() -> the Activity passes that Intent to setResult(...) -> Android delivers the result and may grant the caller temporary URI read/write access -> the caller attempts provider access through ContentResolver",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "org.wordpress.android.ui.posts.EditPostActivity",
+        "method": "saveResult",
+        "message": "External finding (GHSL-2022-046): saveResult returns the incoming Intent through setResult, preserving caller-controlled URI and grant flags. The exported activity can consequently grant unintended access through its FileProvider. Source tag: 20.1. This is a normalized advisory record, not a runtime log."
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:Activity",
+    "checked_url": "https://securitylab.github.com/advisories/GHSL-2022-046_WordPress_for_Android/"
+  }
+}

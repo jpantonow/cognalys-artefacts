@@ -1,0 +1,2 @@
+apk,class,method,spec,outcome,detail
+org.fedorahosted.freeotp_48.apk,org.fedorahosted.freeotp.encryptor.EncryptedKey,encrypt,CipherSpec,issue para o mantenedor do app,freeotp/freeotp-android

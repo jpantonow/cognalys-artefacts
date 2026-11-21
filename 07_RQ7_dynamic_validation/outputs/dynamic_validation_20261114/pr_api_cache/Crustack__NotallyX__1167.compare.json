@@ -1,0 +1,465 @@
+{
+ "url": "https://api.github.com/repos/Crustack/NotallyX/compare/549707d367ac925f7f5a34ce20d2e87236ebe705...4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+ "fetched_at": "2026-11-15T16:16:25.509102+00:00",
+ "response": {
+  "url": "https://api.github.com/repos/Crustack/NotallyX/compare/549707d367ac925f7f5a34ce20d2e87236ebe705...4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+  "html_url": "https://github.com/Crustack/NotallyX/compare/549707d367ac925f7f5a34ce20d2e87236ebe705...4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+  "permalink_url": "https://github.com/Crustack/NotallyX/compare/Crustack:549707d...Crustack:4d02972",
+  "diff_url": "https://github.com/Crustack/NotallyX/compare/549707d367ac925f7f5a34ce20d2e87236ebe705...4d0297232d86d6ffd3063a9c6e5ed30916efcdff.diff",
+  "patch_url": "https://github.com/Crustack/NotallyX/compare/549707d367ac925f7f5a34ce20d2e87236ebe705...4d0297232d86d6ffd3063a9c6e5ed30916efcdff.patch",
+  "base_commit": {
+   "sha": "549707d367ac925f7f5a34ce20d2e87236ebe705",
+   "node_id": "C_kwDOM9WaPNoAKDU0OTcwN2QzNjdhYzkyNWY3ZjVhMzRjZTIwZDJlODcyMzZlYmU3MDU",
+   "commit": {
+    "author": {
+     "name": "Crustack",
+     "email": "crustackk@gmail.com",
+     "date": "2026-10-28T18:37:01Z"
+    },
+    "committer": {
+     "name": "Crustack",
+     "email": "crustackk@gmail.com",
+     "date": "2026-10-28T18:37:01Z"
+    },
+    "message": "Add v7.11.4 changelogs",
+    "tree": {
+     "sha": "473aa8d73ff3c0d1290c352237cd72b242498f7f",
+     "url": "https://api.github.com/repos/Crustack/NotallyX/git/trees/473aa8d73ff3c0d1290c352237cd72b242498f7f"
+    },
+    "url": "https://api.github.com/repos/Crustack/NotallyX/git/commits/549707d367ac925f7f5a34ce20d2e87236ebe705",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\niQHIBAABCgAyFiEEYs4C/8QUkZpm4GTEN9Q9g/Bnm3oFAmriQM0UHGNydXN0YWNr\na0BnbWFpbC5jb20ACgkQN9Q9g/Bnm3oWKQv8Caxf8TyEHZriU2kaTBkt92fpR/Bu\nl0wHn51DuZgoU+bqG6u1EZQWtOnPPc6xqgnh5iH1gmov71JTh6rvxYojL78WXBIx\nLJ1vz6YZqOx0w7+KeF1dDbzPLZrDyGHOd89mYdU0YChwBPd4oa4cV7ifWdRW4vTk\nkkWiEjhztUt0XbrZKIXNk7gtkqc4f4ievKIYDdnuSSGm2wZPP0+bPlLjehpbyvem\nnv6sB0zx+rh5IB7fi0v4I9Bjpsg1CC7vuiL/YJnOrvGlgcydz0gSFCbRz+K9lUkh\nTFlLY3puWGs2zSu8cQNjoRmGitIdBDDGYcbvrH0FExO69w1H9+rCIXFIHQ6HSrWx\nK7Lh6cAiEQB69E1kq3o1KVrKBYnu+O6lPX19iyp6axdwaREgtEwGqiPfBg2/NOWn\nx+/jYQrZZYU0PO7LW7q7RoNKIlCyf77Vl8RKVLCN08ovHkTrup181WAvbSvXBexV\nXa+lOO4uJjYJcbqlKOOzY+0GPkg4o+DYqIfe\n=jJ2h\n-----END PGP SIGNATURE-----",
+     "payload": "tree 473aa8d73ff3c0d1290c352237cd72b242498f7f\nparent 5b17e01f6591a3e2d1c86d90a7d4faab6c0efc9f\nauthor Crustack <crustackk@gmail.com> 1793212621 +0100\ncommitter Crustack <crustackk@gmail.com> 1793212621 +0100\n\nAdd v7.11.4 changelogs\n",
+     "verified_at": "2026-10-28T18:48:44Z"
+    }
+   },
+   "url": "https://api.github.com/repos/Crustack/NotallyX/commits/549707d367ac925f7f5a34ce20d2e87236ebe705",
+   "html_url": "https://github.com/Crustack/NotallyX/commit/549707d367ac925f7f5a34ce20d2e87236ebe705",
+   "comments_url": "https://api.github.com/repos/Crustack/NotallyX/commits/549707d367ac925f7f5a34ce20d2e87236ebe705/comments",
+   "author": {
+    "login": "Crustack",
+    "id": 39240633,
+    "node_id": "MDQ6VXNlcjM5MjQwNjMz",
+    "avatar_url": "https://avatars.githubusercontent.com/u/39240633?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Crustack",
+    "html_url": "https://github.com/Crustack",
+    "followers_url": "https://api.github.com/users/Crustack/followers",
+    "following_url": "https://api.github.com/users/Crustack/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Crustack/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Crustack/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Crustack/subscriptions",
+    "organizations_url": "https://api.github.com/users/Crustack/orgs",
+    "repos_url": "https://api.github.com/users/Crustack/repos",
+    "events_url": "https://api.github.com/users/Crustack/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Crustack/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "Crustack",
+    "id": 39240633,
+    "node_id": "MDQ6VXNlcjM5MjQwNjMz",
+    "avatar_url": "https://avatars.githubusercontent.com/u/39240633?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Crustack",
+    "html_url": "https://github.com/Crustack",
+    "followers_url": "https://api.github.com/users/Crustack/followers",
+    "following_url": "https://api.github.com/users/Crustack/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Crustack/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Crustack/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Crustack/subscriptions",
+    "organizations_url": "https://api.github.com/users/Crustack/orgs",
+    "repos_url": "https://api.github.com/users/Crustack/repos",
+    "events_url": "https://api.github.com/users/Crustack/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Crustack/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "5b17e01f6591a3e2d1c86d90a7d4faab6c0efc9f",
+     "url": "https://api.github.com/repos/Crustack/NotallyX/commits/5b17e01f6591a3e2d1c86d90a7d4faab6c0efc9f",
+     "html_url": "https://github.com/Crustack/NotallyX/commit/5b17e01f6591a3e2d1c86d90a7d4faab6c0efc9f"
+    }
+   ]
+  },
+  "merge_base_commit": {
+   "sha": "549707d367ac925f7f5a34ce20d2e87236ebe705",
+   "node_id": "C_kwDOM9WaPNoAKDU0OTcwN2QzNjdhYzkyNWY3ZjVhMzRjZTIwZDJlODcyMzZlYmU3MDU",
+   "commit": {
+    "author": {
+     "name": "Crustack",
+     "email": "crustackk@gmail.com",
+     "date": "2026-10-28T18:37:01Z"
+    },
+    "committer": {
+     "name": "Crustack",
+     "email": "crustackk@gmail.com",
+     "date": "2026-10-28T18:37:01Z"
+    },
+    "message": "Add v7.11.4 changelogs",
+    "tree": {
+     "sha": "473aa8d73ff3c0d1290c352237cd72b242498f7f",
+     "url": "https://api.github.com/repos/Crustack/NotallyX/git/trees/473aa8d73ff3c0d1290c352237cd72b242498f7f"
+    },
+    "url": "https://api.github.com/repos/Crustack/NotallyX/git/commits/549707d367ac925f7f5a34ce20d2e87236ebe705",
+    "comment_count": 0,
+    "verification": {
+     "verified": true,
+     "reason": "valid",
+     "signature": "-----BEGIN PGP SIGNATURE-----\n\niQHIBAABCgAyFiEEYs4C/8QUkZpm4GTEN9Q9g/Bnm3oFAmriQM0UHGNydXN0YWNr\na0BnbWFpbC5jb20ACgkQN9Q9g/Bnm3oWKQv8Caxf8TyEHZriU2kaTBkt92fpR/Bu\nl0wHn51DuZgoU+bqG6u1EZQWtOnPPc6xqgnh5iH1gmov71JTh6rvxYojL78WXBIx\nLJ1vz6YZqOx0w7+KeF1dDbzPLZrDyGHOd89mYdU0YChwBPd4oa4cV7ifWdRW4vTk\nkkWiEjhztUt0XbrZKIXNk7gtkqc4f4ievKIYDdnuSSGm2wZPP0+bPlLjehpbyvem\nnv6sB0zx+rh5IB7fi0v4I9Bjpsg1CC7vuiL/YJnOrvGlgcydz0gSFCbRz+K9lUkh\nTFlLY3puWGs2zSu8cQNjoRmGitIdBDDGYcbvrH0FExO69w1H9+rCIXFIHQ6HSrWx\nK7Lh6cAiEQB69E1kq3o1KVrKBYnu+O6lPX19iyp6axdwaREgtEwGqiPfBg2/NOWn\nx+/jYQrZZYU0PO7LW7q7RoNKIlCyf77Vl8RKVLCN08ovHkTrup181WAvbSvXBexV\nXa+lOO4uJjYJcbqlKOOzY+0GPkg4o+DYqIfe\n=jJ2h\n-----END PGP SIGNATURE-----",
+     "payload": "tree 473aa8d73ff3c0d1290c352237cd72b242498f7f\nparent 5b17e01f6591a3e2d1c86d90a7d4faab6c0efc9f\nauthor Crustack <crustackk@gmail.com> 1793212621 +0100\ncommitter Crustack <crustackk@gmail.com> 1793212621 +0100\n\nAdd v7.11.4 changelogs\n",
+     "verified_at": "2026-10-28T18:48:44Z"
+    }
+   },
+   "url": "https://api.github.com/repos/Crustack/NotallyX/commits/549707d367ac925f7f5a34ce20d2e87236ebe705",
+   "html_url": "https://github.com/Crustack/NotallyX/commit/549707d367ac925f7f5a34ce20d2e87236ebe705",
+   "comments_url": "https://api.github.com/repos/Crustack/NotallyX/commits/549707d367ac925f7f5a34ce20d2e87236ebe705/comments",
+   "author": {
+    "login": "Crustack",
+    "id": 39240633,
+    "node_id": "MDQ6VXNlcjM5MjQwNjMz",
+    "avatar_url": "https://avatars.githubusercontent.com/u/39240633?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Crustack",
+    "html_url": "https://github.com/Crustack",
+    "followers_url": "https://api.github.com/users/Crustack/followers",
+    "following_url": "https://api.github.com/users/Crustack/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Crustack/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Crustack/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Crustack/subscriptions",
+    "organizations_url": "https://api.github.com/users/Crustack/orgs",
+    "repos_url": "https://api.github.com/users/Crustack/repos",
+    "events_url": "https://api.github.com/users/Crustack/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Crustack/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "committer": {
+    "login": "Crustack",
+    "id": 39240633,
+    "node_id": "MDQ6VXNlcjM5MjQwNjMz",
+    "avatar_url": "https://avatars.githubusercontent.com/u/39240633?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Crustack",
+    "html_url": "https://github.com/Crustack",
+    "followers_url": "https://api.github.com/users/Crustack/followers",
+    "following_url": "https://api.github.com/users/Crustack/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Crustack/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Crustack/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Crustack/subscriptions",
+    "organizations_url": "https://api.github.com/users/Crustack/orgs",
+    "repos_url": "https://api.github.com/users/Crustack/repos",
+    "events_url": "https://api.github.com/users/Crustack/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Crustack/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+   },
+   "parents": [
+    {
+     "sha": "5b17e01f6591a3e2d1c86d90a7d4faab6c0efc9f",
+     "url": "https://api.github.com/repos/Crustack/NotallyX/commits/5b17e01f6591a3e2d1c86d90a7d4faab6c0efc9f",
+     "html_url": "https://github.com/Crustack/NotallyX/commit/5b17e01f6591a3e2d1c86d90a7d4faab6c0efc9f"
+    }
+   ]
+  },
+  "status": "ahead",
+  "ahead_by": 3,
+  "behind_by": 0,
+  "total_commits": 3,
+  "commits": [
+   {
+    "sha": "427c9f34f9ce4cf8d4bb220d79344c9d99b2774e",
+    "node_id": "C_kwDOM9WaPNoAKDQyN2M5ZjM0ZjljZTRjZjhkNGJiMjIwZDc5MzQ0YzlkOTliMjc3NGU",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-30T03:53:20Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-30T03:53:20Z"
+     },
+     "message": "Repair validation compilation for fff072cb8953\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+     "tree": {
+      "sha": "6fdaccaba357170ee84df2fbdb5dc1de6544cc87",
+      "url": "https://api.github.com/repos/Crustack/NotallyX/git/trees/6fdaccaba357170ee84df2fbdb5dc1de6544cc87"
+     },
+     "url": "https://api.github.com/repos/Crustack/NotallyX/git/commits/427c9f34f9ce4cf8d4bb220d79344c9d99b2774e",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/Crustack/NotallyX/commits/427c9f34f9ce4cf8d4bb220d79344c9d99b2774e",
+    "html_url": "https://github.com/Crustack/NotallyX/commit/427c9f34f9ce4cf8d4bb220d79344c9d99b2774e",
+    "comments_url": "https://api.github.com/repos/Crustack/NotallyX/commits/427c9f34f9ce4cf8d4bb220d79344c9d99b2774e/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "549707d367ac925f7f5a34ce20d2e87236ebe705",
+      "url": "https://api.github.com/repos/Crustack/NotallyX/commits/549707d367ac925f7f5a34ce20d2e87236ebe705",
+      "html_url": "https://github.com/Crustack/NotallyX/commit/549707d367ac925f7f5a34ce20d2e87236ebe705"
+     }
+    ]
+   },
+   {
+    "sha": "7841ba4ec4f3797c9b85725daa3ef4dc908554fb",
+    "node_id": "C_kwDOM9WaPNoAKDc4NDFiYTRlYzRmMzc5N2M5Yjg1NzI1ZGFhM2VmNGRjOTA4NTU0ZmI",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-30T04:00:03Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-30T04:00:03Z"
+     },
+     "message": "Use SHA-256 for export hash verification\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+     "tree": {
+      "sha": "5d1967d780d889dee09078bf88a91683d673cfc0",
+      "url": "https://api.github.com/repos/Crustack/NotallyX/git/trees/5d1967d780d889dee09078bf88a91683d673cfc0"
+     },
+     "url": "https://api.github.com/repos/Crustack/NotallyX/git/commits/7841ba4ec4f3797c9b85725daa3ef4dc908554fb",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/Crustack/NotallyX/commits/7841ba4ec4f3797c9b85725daa3ef4dc908554fb",
+    "html_url": "https://github.com/Crustack/NotallyX/commit/7841ba4ec4f3797c9b85725daa3ef4dc908554fb",
+    "comments_url": "https://api.github.com/repos/Crustack/NotallyX/commits/7841ba4ec4f3797c9b85725daa3ef4dc908554fb/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "427c9f34f9ce4cf8d4bb220d79344c9d99b2774e",
+      "url": "https://api.github.com/repos/Crustack/NotallyX/commits/427c9f34f9ce4cf8d4bb220d79344c9d99b2774e",
+      "html_url": "https://github.com/Crustack/NotallyX/commit/427c9f34f9ce4cf8d4bb220d79344c9d99b2774e"
+     }
+    ]
+   },
+   {
+    "sha": "4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+    "node_id": "C_kwDOM9WaPNoAKDRkMDI5NzIzMmQ4NmQ2ZmZkMzA2M2E5YzZlNWVkMzA5MTZlZmNkZmY",
+    "commit": {
+     "author": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-30T09:25:53Z"
+     },
+     "committer": {
+      "name": "jpantonow",
+      "email": "jpantonow@gmail.com",
+      "date": "2026-10-30T09:25:53Z"
+     },
+     "message": "Verify SHA-256 hash against known digest\n\nSigned-off-by: jpantonow <jpantonow@gmail.com>",
+     "tree": {
+      "sha": "463d88974ab826cf216e14a45ce856c450bda4ef",
+      "url": "https://api.github.com/repos/Crustack/NotallyX/git/trees/463d88974ab826cf216e14a45ce856c450bda4ef"
+     },
+     "url": "https://api.github.com/repos/Crustack/NotallyX/git/commits/4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+     "comment_count": 0,
+     "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+     }
+    },
+    "url": "https://api.github.com/repos/Crustack/NotallyX/commits/4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+    "html_url": "https://github.com/Crustack/NotallyX/commit/4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+    "comments_url": "https://api.github.com/repos/Crustack/NotallyX/commits/4d0297232d86d6ffd3063a9c6e5ed30916efcdff/comments",
+    "author": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "committer": {
+     "login": "jpantonow",
+     "id": 129221613,
+     "node_id": "U_kgDOB7PD7Q",
+     "avatar_url": "https://avatars.githubusercontent.com/u/129221613?v=4",
+     "gravatar_id": "",
+     "url": "https://api.github.com/users/jpantonow",
+     "html_url": "https://github.com/jpantonow",
+     "followers_url": "https://api.github.com/users/jpantonow/followers",
+     "following_url": "https://api.github.com/users/jpantonow/following{/other_user}",
+     "gists_url": "https://api.github.com/users/jpantonow/gists{/gist_id}",
+     "starred_url": "https://api.github.com/users/jpantonow/starred{/owner}{/repo}",
+     "subscriptions_url": "https://api.github.com/users/jpantonow/subscriptions",
+     "organizations_url": "https://api.github.com/users/jpantonow/orgs",
+     "repos_url": "https://api.github.com/users/jpantonow/repos",
+     "events_url": "https://api.github.com/users/jpantonow/events{/privacy}",
+     "received_events_url": "https://api.github.com/users/jpantonow/received_events",
+     "type": "User",
+     "user_view_type": "public",
+     "site_admin": false
+    },
+    "parents": [
+     {
+      "sha": "7841ba4ec4f3797c9b85725daa3ef4dc908554fb",
+      "url": "https://api.github.com/repos/Crustack/NotallyX/commits/7841ba4ec4f3797c9b85725daa3ef4dc908554fb",
+      "html_url": "https://github.com/Crustack/NotallyX/commit/7841ba4ec4f3797c9b85725daa3ef4dc908554fb"
+     }
+    ]
+   }
+  ],
+  "files": [
+   {
+    "sha": "1c6ff29a778a3555b4293738124f039ced4e6bea",
+    "filename": "app/src/main/java/com/philkes/notallyx/utils/IOExtensions.kt",
+    "status": "modified",
+    "additions": 6,
+    "deletions": 6,
+    "changes": 12,
+    "blob_url": "https://github.com/Crustack/NotallyX/blob/4d0297232d86d6ffd3063a9c6e5ed30916efcdff/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fphilkes%2Fnotallyx%2Futils%2FIOExtensions.kt",
+    "raw_url": "https://github.com/Crustack/NotallyX/raw/4d0297232d86d6ffd3063a9c6e5ed30916efcdff/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fphilkes%2Fnotallyx%2Futils%2FIOExtensions.kt",
+    "contents_url": "https://api.github.com/repos/Crustack/NotallyX/contents/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fphilkes%2Fnotallyx%2Futils%2FIOExtensions.kt?ref=4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+    "patch": "@@ -561,16 +561,16 @@ private fun ZipFile.verifyEncryptedArchive() {\n     }\n }\n \n-fun Context.md5Hash(uri: Uri): ByteArray? {\n-    return contentResolver.openInputStream(uri)?.md5Hash()\n+fun Context.sha256Hash(uri: Uri): ByteArray? {\n+    return contentResolver.openInputStream(uri)?.sha256Hash()\n }\n \n-fun File.md5Hash(): ByteArray {\n-    return inputStream().md5Hash()\n+fun File.sha256Hash(): ByteArray {\n+    return inputStream().sha256Hash()\n }\n \n-fun InputStream.md5Hash(): ByteArray {\n-    val digest = MessageDigest.getInstance(\"MD5\")\n+fun InputStream.sha256Hash(): ByteArray {\n+    val digest = MessageDigest.getInstance(\"SHA-256\")\n     use { fis ->\n         val buffer = ByteArray(BUFFER_SIZE / 2)\n         var bytes = fis.read(buffer)"
+   },
+   {
+    "sha": "7f4312f266f9ea9ea908f51bf0a75eef628bf258",
+    "filename": "app/src/main/java/com/philkes/notallyx/utils/backup/ExportExtensions.kt",
+    "status": "modified",
+    "additions": 12,
+    "deletions": 8,
+    "changes": 20,
+    "blob_url": "https://github.com/Crustack/NotallyX/blob/4d0297232d86d6ffd3063a9c6e5ed30916efcdff/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fphilkes%2Fnotallyx%2Futils%2Fbackup%2FExportExtensions.kt",
+    "raw_url": "https://github.com/Crustack/NotallyX/raw/4d0297232d86d6ffd3063a9c6e5ed30916efcdff/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fphilkes%2Fnotallyx%2Futils%2Fbackup%2FExportExtensions.kt",
+    "contents_url": "https://api.github.com/repos/Crustack/NotallyX/contents/app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fphilkes%2Fnotallyx%2Futils%2Fbackup%2FExportExtensions.kt?ref=4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+    "patch": "@@ -68,7 +68,7 @@ import com.philkes.notallyx.utils.getLogFileUri\n import com.philkes.notallyx.utils.keepOnlyNewest\n import com.philkes.notallyx.utils.listZipFiles\n import com.philkes.notallyx.utils.log\n-import com.philkes.notallyx.utils.md5Hash\n+import com.philkes.notallyx.utils.sha256Hash\n import com.philkes.notallyx.utils.resolveAttachmentFile\n import com.philkes.notallyx.utils.security.decryptDatabase\n import com.philkes.notallyx.utils.security.getInitializedCipherForDecryption\n@@ -465,8 +465,8 @@ private fun ContextWrapper.writeFileVerified(source: File, target: Uri) {\n         FileInputStream(source).use { input -> input.copyToLarge(out) }\n         out.flush()\n     }\n-    val targetMd5 = runCatching { md5Hash(target) }.getOrNull()\n-    if (targetMd5 == null || !targetMd5.contentEquals(source.md5Hash())) {\n+    val targetSha256 = runCatching { sha256Hash(target) }.getOrNull()\n+    if (targetSha256 == null || !targetSha256.contentEquals(source.sha256Hash())) {\n         throw IOException(\"Writing '$target' failed, its content does not match '${source.name}'\")\n     }\n }\n@@ -703,10 +703,14 @@ suspend fun ContextWrapper.exportAsZip(\n             }\n         }\n         // Guard against null/IO issues when immediately reopening fileUri via SAF\n-        val sourceMd5 = runCatching { zipFile.file.md5Hash() }.getOrNull()\n-        val targetMd5 = runCatching { md5Hash(fileUri) }.getOrNull()\n-        if (sourceMd5 == null || targetMd5 == null || !targetMd5.contentEquals(sourceMd5)) {\n-            log(TAG, stackTrace = \"Exported zipFile '$fileUri' has wrong MD5 hash!\")\n+        val sourceSha256 = runCatching { zipFile.file.sha256Hash() }.getOrNull()\n+        val targetSha256 = runCatching { sha256Hash(fileUri) }.getOrNull()\n+        if (\n+            sourceSha256 == null ||\n+                targetSha256 == null ||\n+                !targetSha256.contentEquals(sourceSha256)\n+        ) {\n+            log(TAG, stackTrace = \"Exported zipFile '$fileUri' has wrong SHA-256 hash!\")\n             if (retryOnFail) {\n                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {\n                     try {\n@@ -720,7 +724,7 @@ suspend fun ContextWrapper.exportAsZip(\n                 return exportAsZip(fileUri, compress, password, backupProgress, false)\n             } else {\n                 throw IOException(\n-                    \"exportAsZip failed because created '$fileUri' has wrong or unverifiable MD5 hash!\"\n+                    \"exportAsZip failed because created '$fileUri' has wrong or unverifiable SHA-256 hash!\"\n                 )\n             }\n         }"
+   },
+   {
+    "sha": "05e073cc73509fa678d163b44c179f615cea9fc7",
+    "filename": "app/src/test/kotlin/com/philkes/notallyx/utils/IOExtensionsTest.kt",
+    "status": "added",
+    "additions": 38,
+    "deletions": 0,
+    "changes": 38,
+    "blob_url": "https://github.com/Crustack/NotallyX/blob/4d0297232d86d6ffd3063a9c6e5ed30916efcdff/app%2Fsrc%2Ftest%2Fkotlin%2Fcom%2Fphilkes%2Fnotallyx%2Futils%2FIOExtensionsTest.kt",
+    "raw_url": "https://github.com/Crustack/NotallyX/raw/4d0297232d86d6ffd3063a9c6e5ed30916efcdff/app%2Fsrc%2Ftest%2Fkotlin%2Fcom%2Fphilkes%2Fnotallyx%2Futils%2FIOExtensionsTest.kt",
+    "contents_url": "https://api.github.com/repos/Crustack/NotallyX/contents/app%2Fsrc%2Ftest%2Fkotlin%2Fcom%2Fphilkes%2Fnotallyx%2Futils%2FIOExtensionsTest.kt?ref=4d0297232d86d6ffd3063a9c6e5ed30916efcdff",
+    "patch": "@@ -0,0 +1,38 @@\n+package com.philkes.notallyx.utils\n+\n+import java.io.ByteArrayInputStream\n+import org.junit.Assert.assertArrayEquals\n+import org.junit.Assert.assertEquals\n+import org.junit.Assert.assertFalse\n+import org.junit.Test\n+\n+class IOExtensionsTest {\n+    @Test\n+    fun `sha256Hash returns equal digest bytes for identical content`() {\n+        val content = \"unchanged export content\".toByteArray()\n+\n+        val originalDigest = ByteArrayInputStream(content).sha256Hash()\n+        val copiedDigest = ByteArrayInputStream(content.copyOf()).sha256Hash()\n+\n+        assertArrayEquals(originalDigest, copiedDigest)\n+    }\n+\n+    @Test\n+    fun `sha256Hash returns different digest bytes for modified content`() {\n+        val originalDigest = ByteArrayInputStream(\"original export content\".toByteArray()).sha256Hash()\n+        val modifiedDigest = ByteArrayInputStream(\"modified export content\".toByteArray()).sha256Hash()\n+\n+        assertFalse(originalDigest.contentEquals(modifiedDigest))\n+    }\n+\n+    @Test\n+    fun `sha256Hash returns published digest for abc`() {\n+        val digest = ByteArrayInputStream(\"abc\".toByteArray()).sha256Hash()\n+        val digestHex = digest.joinToString(\"\") { \"%02x\".format(it.toInt() and 0xff) }\n+\n+        assertEquals(\n+            \"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\",\n+            digestHex,\n+        )\n+    }\n+}"
+   }
+  ]
+ }
+}

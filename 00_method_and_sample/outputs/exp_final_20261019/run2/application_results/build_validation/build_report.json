@@ -1,0 +1,1212 @@
+[
+  {
+    "project_name": "49107d192b",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/53c35a191a23/49107d192b",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/53c35a191a23/49107d192b",
+    "task": "assembleDebug",
+    "status": "success",
+    "return_code": 0,
+    "duration_seconds": 1335.81,
+    "apk_count": 1,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/53c35a191a23/production/apks/49107d192b/bitbanana-1.1.0-debug.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/53c35a191a23/production/logs/projects/49107d192b.log",
+    "reason": "",
+    "phases": {
+      "production": {
+        "project_name": "49107d192b",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/53c35a191a23/49107d192b",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/53c35a191a23/49107d192b",
+        "task": "assembleDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 1335.81,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/53c35a191a23/production/apks/49107d192b/bitbanana-1.1.0-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/53c35a191a23/production/logs/projects/49107d192b.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "not_reproduced",
+      "baseline": {
+        "seconds": 2.59,
+        "exit_code": 0,
+        "status": "alert_absent",
+        "violations": [],
+        "rule": "PBEKeySpecSpec",
+        "method": "encodePbkdf2",
+        "match_scope": "method",
+        "method_lines": [
+          91,
+          96
+        ],
+        "matching_violations": [],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 0,
+        "detail": "the PBEKeySpecSpec rule does not fire in encodePbkdf2"
+      },
+      "patched": {
+        "seconds": 2.76,
+        "exit_code": 0,
+        "status": "alert_absent",
+        "violations": [],
+        "rule": "PBEKeySpecSpec",
+        "method": "encodePbkdf2",
+        "match_scope": "method",
+        "method_lines": [
+          91,
+          100
+        ],
+        "matching_violations": [],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 0,
+        "detail": "the PBEKeySpecSpec rule does not fire in encodePbkdf2"
+      },
+      "detail": "the rule does not fire on the unpatched file either, so the patch cannot be credited with removing it; the corpus entry was produced under other conditions",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/PBEKeySpecSpec.yml",
+        "rules_sha256": "4d9684f2c7e2b72d533b746685fc9957cb259eab844c4ca1e12e035c3259beb0"
+      }
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "no deterministic source predicate adapter for specification"
+    },
+    "finding_id": "53c35a191a23",
+    "apk_name": "app.michaelwuensch.bitbanana_79.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/53c35a191a23/49107d192b"
+  },
+  {
+    "project_name": "eccca7a79a",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.craxiom.networksurvey_114.apk/ac1a8dd4d680/eccca7a79a",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.craxiom.networksurvey_114.apk/ac1a8dd4d680/eccca7a79a",
+    "task": ":networksurvey:assembleCdrDebug",
+    "status": "success",
+    "return_code": 0,
+    "duration_seconds": 947.99,
+    "apk_count": 4,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/apks/eccca7a79a/networksurvey-1.59-cdr-arm64-v8a-debug.apk",
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/apks/eccca7a79a/networksurvey-1.59-cdr-armeabi-v7a-debug.apk",
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/apks/eccca7a79a/networksurvey-1.59-cdr-x86-debug.apk",
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/apks/eccca7a79a/networksurvey-1.59-cdr-x86_64-debug.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/logs/projects/eccca7a79a.log",
+    "reason": "",
+    "phases": {
+      "production": {
+        "project_name": "eccca7a79a",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.craxiom.networksurvey_114.apk/ac1a8dd4d680/eccca7a79a",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.craxiom.networksurvey_114.apk/ac1a8dd4d680/eccca7a79a",
+        "task": ":networksurvey:assembleCdrDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 947.99,
+        "apk_count": 4,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/apks/eccca7a79a/networksurvey-1.59-cdr-arm64-v8a-debug.apk",
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/apks/eccca7a79a/networksurvey-1.59-cdr-armeabi-v7a-debug.apk",
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/apks/eccca7a79a/networksurvey-1.59-cdr-x86-debug.apk",
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/apks/eccca7a79a/networksurvey-1.59-cdr-x86_64-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/ac1a8dd4d680/production/logs/projects/eccca7a79a.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "no_detector_coverage",
+      "detector": {
+        "tool": "ape"
+      },
+      "detail": "no detector adapter re-runs ape and its specification has no Semgrep rule; whether the alert still fires was not checked, and any correctness claim has to rest on other evidence"
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "finding_id": "ac1a8dd4d680",
+    "apk_name": "com.craxiom.networksurvey_114.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.craxiom.networksurvey_114.apk/ac1a8dd4d680/eccca7a79a"
+  },
+  {
+    "project_name": "4be51154ed",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.ivanovsky.passnotes_11700.apk/6d29118e4263/4be51154ed",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.ivanovsky.passnotes_11700.apk/6d29118e4263/4be51154ed",
+    "task": ":app:assembleAutomationDebug",
+    "status": "success",
+    "return_code": 0,
+    "duration_seconds": 1476.05,
+    "apk_count": 1,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/6d29118e4263/production/apks/4be51154ed/app-automation-debug.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/6d29118e4263/production/logs/projects/4be51154ed.log",
+    "reason": "",
+    "phases": {
+      "production": {
+        "project_name": "4be51154ed",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.ivanovsky.passnotes_11700.apk/6d29118e4263/4be51154ed",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.ivanovsky.passnotes_11700.apk/6d29118e4263/4be51154ed",
+        "task": ":app:assembleAutomationDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 1476.05,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/6d29118e4263/production/apks/4be51154ed/app-automation-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/6d29118e4263/production/logs/projects/4be51154ed.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "unchanged",
+      "baseline": {
+        "seconds": 3.5,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "37",
+            "endline": "37",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "createHttpClient",
+        "match_scope": "method",
+        "method_lines": [
+          16,
+          45
+        ],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "37",
+            "endline": "37",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the SSLContextSpec rule fires in createHttpClient"
+      },
+      "patched": {
+        "seconds": 2.89,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "44",
+            "endline": "44",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "createHttpClient",
+        "match_scope": "method",
+        "method_lines": [
+          16,
+          52
+        ],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "44",
+            "endline": "44",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the SSLContextSpec rule fires in createHttpClient"
+      },
+      "detail": "the reported rule still fires after the patch",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/SSLContextSpec.yml",
+        "rules_sha256": "5f5e521a3ad18daf67b78d431e1bafe813ce0f85210471f6202adc1f7c1e520b"
+      }
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "finding_id": "6d29118e4263",
+    "apk_name": "com.ivanovsky.passnotes_11700.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.ivanovsky.passnotes_11700.apk/6d29118e4263/4be51154ed"
+  },
+  {
+    "project_name": "ac66f81076",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.leekleak.trafficlight_38.apk/32249b3e5e5d/ac66f81076",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.leekleak.trafficlight_38.apk/32249b3e5e5d/ac66f81076",
+    "task": ":app:assembleFullDebug",
+    "status": "success",
+    "return_code": 0,
+    "duration_seconds": 8248.88,
+    "apk_count": 1,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/32249b3e5e5d/production/apks/ac66f81076/com.leekleak.trafficlight-3.4-full-debug.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/32249b3e5e5d/production/logs/projects/ac66f81076.log",
+    "reason": "",
+    "phases": {
+      "production": {
+        "project_name": "ac66f81076",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.leekleak.trafficlight_38.apk/32249b3e5e5d/ac66f81076",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.leekleak.trafficlight_38.apk/32249b3e5e5d/ac66f81076",
+        "task": ":app:assembleFullDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 8248.88,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/32249b3e5e5d/production/apks/ac66f81076/com.leekleak.trafficlight-3.4-full-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/32249b3e5e5d/production/logs/projects/ac66f81076.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "no_detector_coverage",
+      "detector": {
+        "tool": "ape"
+      },
+      "detail": "no detector adapter re-runs ape and its specification has no Semgrep rule; whether the alert still fires was not checked, and any correctness claim has to rest on other evidence"
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "finding_id": "32249b3e5e5d",
+    "apk_name": "com.leekleak.trafficlight_38.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.leekleak.trafficlight_38.apk/32249b3e5e5d/ac66f81076"
+  },
+  {
+    "project_name": "d7762e8b1b",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.nononsenseapps.feeder.play_4025.apk/3b969f2358c1/d7762e8b1b",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.nononsenseapps.feeder.play_4025.apk/3b969f2358c1/d7762e8b1b",
+    "task": ":app:compileFdroidDebugSources",
+    "status": "success_app_module_only",
+    "return_code": 0,
+    "duration_seconds": 1843.76,
+    "apk_count": 0,
+    "copied_apks": [],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/3b969f2358c1/app_module_compile_only/logs/projects/d7762e8b1b.log",
+    "reason": "full_build_timeout_patched_module_recompiled",
+    "unrelated_module_failure_task": "",
+    "phases": {
+      "production": {
+        "project_name": "d7762e8b1b",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.nononsenseapps.feeder.play_4025.apk/3b969f2358c1/d7762e8b1b",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.nononsenseapps.feeder.play_4025.apk/3b969f2358c1/d7762e8b1b",
+        "task": ":app:assembleFdroidDebug",
+        "status": "timeout",
+        "return_code": null,
+        "duration_seconds": 1843.76,
+        "apk_count": 0,
+        "copied_apks": [],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/3b969f2358c1/production/logs/projects/d7762e8b1b.log",
+        "reason": "timeout_after_1800s"
+      },
+      "app_module_compile_only": {
+        "status": "success_app_module_only",
+        "reason": "full_build_timeout_patched_module_recompiled",
+        "task": ":app:compileFdroidDebugSources",
+        "return_code": 0,
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/3b969f2358c1/app_module_compile_only/logs/projects/d7762e8b1b.log",
+        "unrelated_module_failure_task": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "unchanged",
+      "baseline": {
+        "seconds": 6.86,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "31",
+            "endline": "31",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "trustAllCerts",
+        "match_scope": "method",
+        "method_lines": [
+          12,
+          42
+        ],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "31",
+            "endline": "31",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the SSLContextSpec rule fires in trustAllCerts"
+      },
+      "patched": {
+        "seconds": 7.11,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "22",
+            "endline": "22",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "trustAllCerts",
+        "match_scope": "method",
+        "method_lines": [
+          13,
+          34
+        ],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "22",
+            "endline": "22",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the SSLContextSpec rule fires in trustAllCerts"
+      },
+      "detail": "the reported rule still fires after the patch",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/SSLContextSpec.yml",
+        "rules_sha256": "5f5e521a3ad18daf67b78d431e1bafe813ce0f85210471f6202adc1f7c1e520b"
+      }
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "finding_id": "3b969f2358c1",
+    "apk_name": "com.nononsenseapps.feeder.play_4025.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.nononsenseapps.feeder.play_4025.apk/3b969f2358c1/d7762e8b1b"
+  },
+  {
+    "project_name": "47b1165883",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.sapuseven.untis_29198884.apk/21b3aced6bcf/47b1165883",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.sapuseven.untis_29198884.apk/21b3aced6bcf/47b1165883",
+    "task": "assembleDebug",
+    "status": "success",
+    "return_code": 0,
+    "duration_seconds": 1799.74,
+    "apk_count": 2,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/apks/47b1165883/app-foss-debug.apk",
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/apks/47b1165883/app-gms-debug.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/logs/projects/47b1165883.log",
+    "reason": "",
+    "phases": {
+      "production": {
+        "project_name": "47b1165883",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.sapuseven.untis_29198884.apk/21b3aced6bcf/47b1165883",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.sapuseven.untis_29198884.apk/21b3aced6bcf/47b1165883",
+        "task": "assembleDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 1799.74,
+        "apk_count": 2,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/apks/47b1165883/app-foss-debug.apk",
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/apks/47b1165883/app-gms-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/21b3aced6bcf/production/logs/projects/47b1165883.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "repaired",
+      "baseline": {
+        "seconds": 3.07,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "message-digest-non-allowlisted-literal-algorithm",
+            "beginline": "62",
+            "endline": "62",
+            "message": "MessageDigest algorithm literal is not SHA-256, SHA-384, or SHA-512",
+            "metadata": {}
+          }
+        ],
+        "rule": "MessageDigestSpec",
+        "method": "getCacheFile",
+        "match_scope": "method",
+        "method_lines": [
+          61,
+          64
+        ],
+        "matching_violations": [
+          {
+            "rule": "message-digest-non-allowlisted-literal-algorithm",
+            "beginline": "62",
+            "endline": "62",
+            "message": "MessageDigest algorithm literal is not SHA-256, SHA-384, or SHA-512",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the MessageDigestSpec rule fires in getCacheFile"
+      },
+      "patched": {
+        "seconds": 2.77,
+        "exit_code": 0,
+        "status": "alert_absent",
+        "violations": [],
+        "rule": "MessageDigestSpec",
+        "method": "getCacheFile",
+        "match_scope": "method",
+        "method_lines": [
+          61,
+          64
+        ],
+        "matching_violations": [],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 0,
+        "detail": "the MessageDigestSpec rule does not fire in getCacheFile"
+      },
+      "detail": "the reported rule fired before the patch and does not fire after it",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/MessageDigestSpec.yml",
+        "rules_sha256": "2da80d36f501a65cf0fa8800c2a0912be79108f3ddcddf0c376590a139090a74"
+      }
+    },
+    "finding_revalidation": {
+      "status": "passed",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "specification": "MessageDigestSpec",
+      "factory_type": "MessageDigest",
+      "outcome": "substituted",
+      "forbidden_algorithm": "MD5",
+      "allowed_algorithms": [
+        "SHA-256",
+        "SHA-384",
+        "SHA-512",
+        "SHA256",
+        "SHA384",
+        "SHA512"
+      ],
+      "remaining_forbidden_occurrences": [],
+      "allowed_factory_occurrences": [
+        {
+          "source_file_path": "core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt",
+          "line": 62,
+          "algorithm": "SHA-256"
+        }
+      ],
+      "remaining_factory_calls": [
+        {
+          "source_file_path": "core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt",
+          "line": 62
+        }
+      ],
+      "removal_evidence": [
+        {
+          "source_file_path": "core/data/src/main/kotlin/com/sapuseven/untis/core/data/cache/DiskCache.kt",
+          "edit_kind": "method",
+          "removed_occurrences": 1
+        }
+      ],
+      "protocol_filter_evidence": [],
+      "reason": ""
+    },
+    "finding_id": "21b3aced6bcf",
+    "apk_name": "com.sapuseven.untis_29198884.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.sapuseven.untis_29198884.apk/21b3aced6bcf/47b1165883"
+  },
+  {
+    "project_name": "6514d2f4ef",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/github.paroj.dsub2000_217.apk/f167efd80107/6514d2f4ef",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/github.paroj.dsub2000_217.apk/f167efd80107/6514d2f4ef",
+    "task": ":app:assembleFlossDebug",
+    "status": "success",
+    "return_code": 0,
+    "duration_seconds": 228.36,
+    "apk_count": 1,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/f167efd80107/production/apks/6514d2f4ef/DSub2000_5.8.0-rc1-floss-debug.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/f167efd80107/production/logs/projects/6514d2f4ef.log",
+    "reason": "",
+    "phases": {
+      "production": {
+        "project_name": "6514d2f4ef",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/github.paroj.dsub2000_217.apk/f167efd80107/6514d2f4ef",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/github.paroj.dsub2000_217.apk/f167efd80107/6514d2f4ef",
+        "task": ":app:assembleFlossDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 228.36,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/f167efd80107/production/apks/6514d2f4ef/DSub2000_5.8.0-rc1-floss-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/f167efd80107/production/logs/projects/6514d2f4ef.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "unchanged",
+      "baseline": {
+        "seconds": 2.58,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "138",
+            "endline": "138",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "<init>",
+        "match_scope": "file",
+        "method_lines": [],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "138",
+            "endline": "138",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the rule fires in this file; the reported method could not be located, so the match is attributed to the file"
+      },
+      "patched": {
+        "seconds": 3.31,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "124",
+            "endline": "124",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "rule": "SSLContextSpec",
+        "method": "<init>",
+        "match_scope": "file",
+        "method_lines": [],
+        "matching_violations": [
+          {
+            "rule": "sslcontext-disallowed-protocol-or-default",
+            "beginline": "124",
+            "endline": "124",
+            "message": "SSLContext must be obtained with getInstance(\"TLSv1.2\" or \"TLSv1.3\"); other protocol names and getDefault() are not allowed",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the rule fires in this file; the reported method could not be located, so the match is attributed to the file"
+      },
+      "detail": "the reported rule still fires after the patch",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/SSLContextSpec.yml",
+        "rules_sha256": "5f5e521a3ad18daf67b78d431e1bafe813ce0f85210471f6202adc1f7c1e520b"
+      }
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "finding_id": "f167efd80107",
+    "apk_name": "github.paroj.dsub2000_217.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/github.paroj.dsub2000_217.apk/f167efd80107/6514d2f4ef"
+  },
+  {
+    "project_name": "93a7a5a1b3-2",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/me.diamondforge.tokn_19.apk/0aeb52bd220d/93a7a5a1b3-2",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/me.diamondforge.tokn_19.apk/0aeb52bd220d/93a7a5a1b3-2",
+    "task": "assembleDebug",
+    "status": "success",
+    "return_code": 0,
+    "duration_seconds": 508.98,
+    "apk_count": 1,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/0aeb52bd220d/production/apks/93a7a5a1b3-2/app-debug.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/0aeb52bd220d/production/logs/projects/93a7a5a1b3-2.log",
+    "reason": "",
+    "phases": {
+      "production": {
+        "project_name": "93a7a5a1b3-2",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/me.diamondforge.tokn_19.apk/0aeb52bd220d/93a7a5a1b3-2",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/me.diamondforge.tokn_19.apk/0aeb52bd220d/93a7a5a1b3-2",
+        "task": "assembleDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 508.98,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/0aeb52bd220d/production/apks/93a7a5a1b3-2/app-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/0aeb52bd220d/production/logs/projects/93a7a5a1b3-2.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "no_detector_coverage",
+      "detector": {
+        "tool": "ape"
+      },
+      "detail": "no detector adapter re-runs ape and its specification has no Semgrep rule; whether the alert still fires was not checked, and any correctness claim has to rest on other evidence"
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "finding_id": "0aeb52bd220d",
+    "apk_name": "me.diamondforge.tokn_19.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/me.diamondforge.tokn_19.apk/0aeb52bd220d/93a7a5a1b3-2"
+  },
+  {
+    "project_name": "5251ed1813",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/systems.sieber.droid_scep_7.apk/9215f97597a6/5251ed1813",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/systems.sieber.droid_scep_7.apk/9215f97597a6/5251ed1813",
+    "task": ":app:assembleGoogleDebug",
+    "status": "success",
+    "return_code": 0,
+    "duration_seconds": 80.19,
+    "apk_count": 1,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/9215f97597a6/production/apks/5251ed1813/droid_scep.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/9215f97597a6/production/logs/projects/5251ed1813.log",
+    "reason": "",
+    "phases": {
+      "production": {
+        "project_name": "5251ed1813",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/systems.sieber.droid_scep_7.apk/9215f97597a6/5251ed1813",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/systems.sieber.droid_scep_7.apk/9215f97597a6/5251ed1813",
+        "task": ":app:assembleGoogleDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 80.19,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/9215f97597a6/production/apks/5251ed1813/droid_scep.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/9215f97597a6/production/logs/projects/5251ed1813.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "no_detector_coverage",
+      "detector": {
+        "tool": "ape"
+      },
+      "detail": "no detector adapter re-runs ape and its specification has no Semgrep rule; whether the alert still fires was not checked, and any correctness claim has to rest on other evidence"
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "finding_id": "9215f97597a6",
+    "apk_name": "systems.sieber.droid_scep_7.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/systems.sieber.droid_scep_7.apk/9215f97597a6/5251ed1813"
+  },
+  {
+    "project_name": "8e68a5fbec",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/744531f6d880/8e68a5fbec",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/744531f6d880/8e68a5fbec",
+    "task": "assembleDebug",
+    "status": "failed",
+    "return_code": 1,
+    "duration_seconds": 460.0,
+    "apk_count": 0,
+    "copied_apks": [],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/744531f6d880/production/logs/projects/8e68a5fbec.log",
+    "reason": "gradle_return_code_1",
+    "incremental_after_failed_build": true,
+    "build_failure_phase": "execution",
+    "phases": {
+      "production": {
+        "project_name": "8e68a5fbec",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/744531f6d880/8e68a5fbec",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/744531f6d880/8e68a5fbec",
+        "task": "assembleDebug",
+        "status": "failed",
+        "return_code": 1,
+        "duration_seconds": 460.0,
+        "apk_count": 0,
+        "copied_apks": [],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/744531f6d880/production/logs/projects/8e68a5fbec.log",
+        "reason": "gradle_return_code_1",
+        "incremental_after_failed_build": true
+      }
+    },
+    "detector_replay": {
+      "outcome": "no_detector_coverage",
+      "detector": {
+        "tool": "ape"
+      },
+      "detail": "no detector adapter re-runs ape and its specification has no Semgrep rule; whether the alert still fires was not checked, and any correctness claim has to rest on other evidence"
+    },
+    "finding_revalidation": {
+      "status": "failed",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "specification": "SecretKeyFactorySpec",
+      "factory_type": "SecretKeyFactory",
+      "outcome": "",
+      "forbidden_algorithm": "PBKDF2WithHmacSHA1",
+      "allowed_algorithms": [
+        "PBKDF2WithHmacSHA512",
+        "PBKDF2WithHmacSHA384",
+        "PBKDF2WithHmacSHA256",
+        "PBKDF2WithHmacSHA224",
+        "PBEWithHmacSHA512AndAES_128",
+        "PBEWithHmacSHA384AndAES_128",
+        "PBEWithHmacSHA224AndAES_128",
+        "PBEWithHmacSHA256AndAES_128",
+        "PBEWithHmacSHA224AndAES_256",
+        "PBEWithHmacSHA256AndAES_256",
+        "PBEWithHmacSHA384AndAES_256",
+        "PBEWithHmacSHA512AndAES_256"
+      ],
+      "remaining_forbidden_occurrences": [
+        {
+          "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/util/AppLockUtil.java",
+          "line": 235,
+          "algorithm": "PBKDF2WithHmacSHA1"
+        }
+      ],
+      "allowed_factory_occurrences": [
+        {
+          "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/util/UtilFunctions.java",
+          "line": 94,
+          "algorithm": "PBKDF2WithHmacSHA256"
+        }
+      ],
+      "remaining_factory_calls": [
+        {
+          "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/util/AppLockUtil.java",
+          "line": 235
+        },
+        {
+          "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/util/UtilFunctions.java",
+          "line": 94
+        }
+      ],
+      "removal_evidence": [
+        {
+          "source_file_path": "app/src/main/java/app/michaelwuensch/bitbanana/util/UtilFunctions.java",
+          "edit_kind": "method",
+          "removed_occurrences": 1
+        }
+      ],
+      "protocol_filter_evidence": [],
+      "reason": "the forbidden algorithm literal is still present"
+    },
+    "compiler_diagnostics": [
+      {
+        "path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/744531f6d880/8e68a5fbec/app/src/main/java/app/michaelwuensch/bitbanana/appLock/PasswordEntryActivity.java",
+        "line": 224,
+        "message": "unreported exception IOException; must be caught or declared to be thrown",
+        "source_line": "String emergencyCredential = PrefsUtil.getEncryptedPrefs().getString(PrefsUtil.EMERGENCY_PASSWORD_HASH, \"\");",
+        "attribution": "generated_or_replaced_code"
+      },
+      {
+        "path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/744531f6d880/8e68a5fbec/app/src/main/java/app/michaelwuensch/bitbanana/appLock/PasswordEntryActivity.java",
+        "line": 227,
+        "message": "unreported exception IOException; must be caught or declared to be thrown",
+        "source_line": "String credential = PrefsUtil.getEncryptedPrefs().getString(PrefsUtil.PASSWORD_HASH, \"\");",
+        "attribution": "generated_or_replaced_code"
+      },
+      {
+        "path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/744531f6d880/8e68a5fbec/app/src/main/java/app/michaelwuensch/bitbanana/appLock/PasswordEntryActivity.java",
+        "line": 231,
+        "message": "unreported exception IOException; must be caught or declared to be thrown",
+        "source_line": "PrefsUtil.getEncryptedPrefs().edit()",
+        "attribution": "generated_or_replaced_code"
+      },
+      {
+        "path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/744531f6d880/8e68a5fbec/app/src/main/java/app/michaelwuensch/bitbanana/appLock/PasswordEntryActivity.java",
+        "line": 236,
+        "message": "unreported exception IOException; must be caught or declared to be thrown",
+        "source_line": "PrefsUtil.getEncryptedPrefs().edit()",
+        "attribution": "generated_or_replaced_code"
+      }
+    ],
+    "failure_attribution": "generated_patch",
+    "finding_id": "744531f6d880",
+    "apk_name": "app.michaelwuensch.bitbanana_79.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/app.michaelwuensch.bitbanana_79.apk/744531f6d880/8e68a5fbec"
+  },
+  {
+    "project_name": "02b8b828de",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.gelakinetic.mtgfam_99.apk/60c8a60d700f/02b8b828de",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.gelakinetic.mtgfam_99.apk/60c8a60d700f/02b8b828de",
+    "task": ":mobile:assembleDebugAndroidTest",
+    "status": "success",
+    "return_code": 0,
+    "duration_seconds": 78.5,
+    "apk_count": 1,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/60c8a60d700f/patched_tests/apks/02b8b828de/mobile-debug-androidTest.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/60c8a60d700f/patched_tests/logs/projects/02b8b828de.log",
+    "reason": "",
+    "phases": {
+      "production": {
+        "project_name": "02b8b828de",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.gelakinetic.mtgfam_99.apk/60c8a60d700f/02b8b828de",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.gelakinetic.mtgfam_99.apk/60c8a60d700f/02b8b828de",
+        "task": "assembleDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 137.1,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/60c8a60d700f/production/apks/02b8b828de/mobile-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/60c8a60d700f/production/logs/projects/02b8b828de.log",
+        "reason": "",
+        "reused_after_test_only_repair": true
+      },
+      "patched_tests": {
+        "project_name": "02b8b828de",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.gelakinetic.mtgfam_99.apk/60c8a60d700f/02b8b828de",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.gelakinetic.mtgfam_99.apk/60c8a60d700f/02b8b828de",
+        "task": ":mobile:assembleDebugAndroidTest",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 78.5,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/60c8a60d700f/patched_tests/apks/02b8b828de/mobile-debug-androidTest.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/60c8a60d700f/patched_tests/logs/projects/02b8b828de.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "not_reproduced",
+      "baseline": {
+        "seconds": 3.24,
+        "exit_code": 0,
+        "status": "alert_absent",
+        "violations": [],
+        "rule": "SecretKeySpecSpec",
+        "method": "fetch",
+        "match_scope": "method",
+        "method_lines": [
+          109,
+          175
+        ],
+        "matching_violations": [],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 0,
+        "detail": "the SecretKeySpecSpec rule does not fire in fetch"
+      },
+      "patched": {
+        "seconds": 3.3,
+        "exit_code": 0,
+        "status": "alert_absent",
+        "violations": [],
+        "rule": "SecretKeySpecSpec",
+        "method": "fetch",
+        "match_scope": "method",
+        "method_lines": [
+          119,
+          179
+        ],
+        "matching_violations": [],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 0,
+        "detail": "the SecretKeySpecSpec rule does not fire in fetch"
+      },
+      "detail": "the rule does not fire on the unpatched file either, so the patch cannot be credited with removing it; the corpus entry was produced under other conditions",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/SecretKeySpecSpec.yml",
+        "rules_sha256": "644fbfc9775b4d1a56b91ffbc7c97571888c0f764aebb95c65c67109c9f735cc"
+      }
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "no deterministic source predicate adapter for specification"
+    },
+    "finding_id": "60c8a60d700f",
+    "apk_name": "com.gelakinetic.mtgfam_99.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/com.gelakinetic.mtgfam_99.apk/60c8a60d700f/02b8b828de"
+  },
+  {
+    "project_name": "0760e6f426",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/org.cry.otp_31.apk/9da181fd6978/0760e6f426",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/org.cry.otp_31.apk/9da181fd6978/0760e6f426",
+    "task": "assembleDebug",
+    "status": "failed",
+    "return_code": 0,
+    "duration_seconds": 93.13,
+    "apk_count": 1,
+    "copied_apks": [
+      "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/9da181fd6978/production/apks/0760e6f426/app-debug.apk"
+    ],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/9da181fd6978/production/logs/projects/0760e6f426.log",
+    "reason": "original_finding_source_predicate_still_present",
+    "phases": {
+      "production": {
+        "project_name": "0760e6f426",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/org.cry.otp_31.apk/9da181fd6978/0760e6f426",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/org.cry.otp_31.apk/9da181fd6978/0760e6f426",
+        "task": "assembleDebug",
+        "status": "success",
+        "return_code": 0,
+        "duration_seconds": 93.13,
+        "apk_count": 1,
+        "copied_apks": [
+          "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/9da181fd6978/production/apks/0760e6f426/app-debug.apk"
+        ],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/9da181fd6978/production/logs/projects/0760e6f426.log",
+        "reason": ""
+      }
+    },
+    "detector_replay": {
+      "outcome": "unchanged",
+      "baseline": {
+        "seconds": 2.89,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "message-digest-non-allowlisted-literal-algorithm",
+            "beginline": "19",
+            "endline": "19",
+            "message": "MessageDigest algorithm literal is not SHA-256, SHA-384, or SHA-512",
+            "metadata": {}
+          }
+        ],
+        "rule": "MessageDigestSpec",
+        "method": "<init>",
+        "match_scope": "file",
+        "method_lines": [],
+        "matching_violations": [
+          {
+            "rule": "message-digest-non-allowlisted-literal-algorithm",
+            "beginline": "19",
+            "endline": "19",
+            "message": "MessageDigest algorithm literal is not SHA-256, SHA-384, or SHA-512",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the rule fires in this file; the reported method could not be located, so the match is attributed to the file"
+      },
+      "patched": {
+        "seconds": 3.22,
+        "exit_code": 0,
+        "status": "alert_present",
+        "violations": [
+          {
+            "rule": "message-digest-non-allowlisted-literal-algorithm",
+            "beginline": "19",
+            "endline": "19",
+            "message": "MessageDigest algorithm literal is not SHA-256, SHA-384, or SHA-512",
+            "metadata": {}
+          }
+        ],
+        "rule": "MessageDigestSpec",
+        "method": "<init>",
+        "match_scope": "file",
+        "method_lines": [],
+        "matching_violations": [
+          {
+            "rule": "message-digest-non-allowlisted-literal-algorithm",
+            "beginline": "19",
+            "endline": "19",
+            "message": "MessageDigest algorithm literal is not SHA-256, SHA-384, or SHA-512",
+            "metadata": {}
+          }
+        ],
+        "excluded_by_method_conditions": [],
+        "violations_in_file": 1,
+        "detail": "the rule fires in this file; the reported method could not be located, so the match is attributed to the file"
+      },
+      "detail": "the reported rule still fires after the patch",
+      "detector": {
+        "tool": "semgrep",
+        "version": "1.172.0",
+        "rules": "data/detector_rules/semgrep/MessageDigestSpec.yml",
+        "rules_sha256": "2da80d36f501a65cf0fa8800c2a0912be79108f3ddcddf0c376590a139090a74"
+      }
+    },
+    "finding_revalidation": {
+      "status": "failed",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "specification": "MessageDigestSpec",
+      "factory_type": "MessageDigest",
+      "outcome": "",
+      "forbidden_algorithm": "MD5",
+      "allowed_algorithms": [
+        "SHA-256",
+        "SHA-384",
+        "SHA-512",
+        "SHA256",
+        "SHA384",
+        "SHA512"
+      ],
+      "remaining_forbidden_occurrences": [
+        {
+          "source_file_path": "app/src/main/java/org/cry/otp/MD5.java",
+          "line": 19,
+          "algorithm": "MD5"
+        }
+      ],
+      "allowed_factory_occurrences": [
+        {
+          "source_file_path": "app/src/main/java/org/cry/otp/MD5.java",
+          "line": 51,
+          "algorithm": "SHA-256"
+        }
+      ],
+      "remaining_factory_calls": [
+        {
+          "source_file_path": "app/src/main/java/org/cry/otp/MD5.java",
+          "line": 19
+        },
+        {
+          "source_file_path": "app/src/main/java/org/cry/otp/MD5.java",
+          "line": 51
+        }
+      ],
+      "removal_evidence": [],
+      "protocol_filter_evidence": [],
+      "reason": "the forbidden algorithm literal is still present"
+    },
+    "finding_id": "9da181fd6978",
+    "apk_name": "org.cry.otp_31.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/org.cry.otp_31.apk/9da181fd6978/0760e6f426"
+  },
+  {
+    "project_name": "be04b4d231-3",
+    "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+    "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+    "task": "assembleDebug",
+    "status": "failed",
+    "return_code": 1,
+    "duration_seconds": 66.11,
+    "apk_count": 0,
+    "copied_apks": [],
+    "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/40d39da41dec/production/logs/projects/be04b4d231-3.log",
+    "reason": "production_failure_reproduces_on_base_commit",
+    "incremental_after_failed_build": true,
+    "build_failure_phase": "execution",
+    "failure_attribution": "verified_preexisting_build_failure",
+    "phases": {
+      "production": {
+        "project_name": "be04b4d231-3",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3",
+        "task": "assembleDebug",
+        "status": "failed",
+        "return_code": 1,
+        "duration_seconds": 66.11,
+        "apk_count": 0,
+        "copied_apks": [],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/run2/application_results/build_validation/40d39da41dec/production/logs/projects/be04b4d231-3.log",
+        "reason": "gradle_return_code_1",
+        "incremental_after_failed_build": true
+      },
+      "baseline_production": {
+        "project_name": "baseline_50ff16c19884247c",
+        "project_dir": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/baseline_build_cache/50ff16c19884247c_worktree/baseline_50ff16c19884247c",
+        "gradle_root": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/baseline_build_cache/50ff16c19884247c_worktree/baseline_50ff16c19884247c",
+        "task": "assembleDebug",
+        "status": "failed",
+        "return_code": 1,
+        "duration_seconds": 196.99,
+        "apk_count": 0,
+        "copied_apks": [],
+        "log_file": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/exp_final_20261019/baseline_build_cache/50ff16c19884247c/logs/projects/baseline_50ff16c19884247c.log",
+        "reason": "gradle_return_code_1",
+        "from_cache": true
+      }
+    },
+    "detector_replay": {
+      "outcome": "no_detector_coverage",
+      "detector": {
+        "tool": "ape"
+      },
+      "detail": "no detector adapter re-runs ape and its specification has no Semgrep rule; whether the alert still fires was not checked, and any correctness claim has to rest on other evidence"
+    },
+    "finding_revalidation": {
+      "status": "not_supported",
+      "validation_level": "source_predicate",
+      "analyzer_rerun_required": true,
+      "reason": "detector message has no literal found/allowlist predicate"
+    },
+    "finding_id": "40d39da41dec",
+    "apk_name": "rocks.poopjournal.metadataremover_20020.apk",
+    "worktree_path": "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/finding_worktrees/rocks.poopjournal.metadataremover_20020.apk/40d39da41dec/be04b4d231-3"
+  }
+]

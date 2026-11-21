@@ -1,0 +1,44 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T215157_797115_1181_0013_external_research.research",
+  "parent_call_id": "group-20261103T215157_753416-1181-13",
+  "finding_id": "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed",
+  "stage": "external_research.research",
+  "status": "cache_hit",
+  "delivery": "cache_hit",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 7073,
+  "input_tokens": 0,
+  "cached_input_tokens": 0,
+  "output_tokens": 0,
+  "latency_ms": 0,
+  "retry_count": 0,
+  "request_id": "",
+  "section_telemetry": {
+    "question_scope": {
+      "characters": 404,
+      "approx_tokens": 101,
+      "sha256": "14fa4a97387a78af4a838875b8a2a449f849c60b2b6ab4757930c3a924a59e58"
+    },
+    "questions": {
+      "characters": 1380,
+      "approx_tokens": 345,
+      "sha256": "0f517736a4fb80a483c44a9a4b7380d0b192f39b8499409b08ab994478917f87"
+    },
+    "spec_policy": {
+      "characters": 435,
+      "approx_tokens": 109,
+      "sha256": "7d66e1664a1ff79e625a5a92da99c6b31b04266ac7ae4f918c427b1e72bc9959"
+    },
+    "reported_by_rule": {
+      "characters": 3765,
+      "approx_tokens": 941,
+      "sha256": "81ffb8c5e44903588b5f5b17b09a5498e38c8d0bd1beff96cf36e6ad4a3f5edc"
+    }
+  },
+  "completed_at": "2026-11-03T21:51:57"
+}

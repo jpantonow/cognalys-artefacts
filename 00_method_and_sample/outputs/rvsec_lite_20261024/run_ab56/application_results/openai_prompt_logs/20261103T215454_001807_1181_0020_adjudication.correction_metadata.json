@@ -1,0 +1,83 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T215454_001807_1181_0020_adjudication.correction",
+  "parent_call_id": "",
+  "finding_id": "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed",
+  "stage": "adjudication.correction",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 59094,
+  "input_tokens": 12961,
+  "cached_input_tokens": 7311,
+  "output_tokens": 1600,
+  "latency_ms": 22630,
+  "retry_count": 0,
+  "request_id": "req_c57056f22b764866a066f5daaad3046a",
+  "section_telemetry": {
+    "finding": {
+      "characters": 782,
+      "approx_tokens": 196,
+      "sha256": "297bf0ec9a506fa06ba195beb9d1461fbfba4132627c9b80f2c0bdf26c241ba8"
+    },
+    "scope_completeness": {
+      "characters": 219,
+      "approx_tokens": 55,
+      "sha256": "f3a15e9d124572300d86f253e1c9608853f35e24681f8d889d918d9b67824e19"
+    },
+    "case_policy": {
+      "characters": 2,
+      "approx_tokens": 1,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "validated_evidence_extraction": {
+      "characters": 10419,
+      "approx_tokens": 2605,
+      "sha256": "cc81cb3943a7bd42d1dfa8614691292119a03a56e5f81eab5d3e400c5b492146"
+    },
+    "external_evidence_catalog": {
+      "characters": 7300,
+      "approx_tokens": 1825,
+      "sha256": "319660624bbd9add11a5733afeba3d20ed426126b2ddad8da129309828693d9f"
+    },
+    "valid_evidence_ids": {
+      "characters": 395,
+      "approx_tokens": 99,
+      "sha256": "4295b75d401cd353772df518d025ba63fc232427cba6019d963a815ccf093431"
+    },
+    "reported_by_rule": {
+      "characters": 3765,
+      "approx_tokens": 941,
+      "sha256": "81ffb8c5e44903588b5f5b17b09a5498e38c8d0bd1beff96cf36e6ad4a3f5edc"
+    },
+    "rename_safety": {
+      "characters": 573,
+      "approx_tokens": 143,
+      "sha256": "4eb2e311350bb386939fdc50743df9ea7247baf7122ed125b0f67c0e0e1ccee0"
+    },
+    "rejected_adjudication": {
+      "characters": 2318,
+      "approx_tokens": 580,
+      "sha256": "6d3ff6dfe7d1966efb1312c7a614d5d3bf455e8215607ad69a0a947b9c194c9f"
+    },
+    "deterministic_validation_errors": {
+      "characters": 51,
+      "approx_tokens": 13,
+      "sha256": "60767c3719e1e9efabc611a2a58f6077961550e8daa5e8da372bd9c8535f4aa8"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 0,
+  "openai_response_id": "resp_03b4e27d8328c90d006aea825e477887d2a9df89a830bbb5df",
+  "response_status": "completed",
+  "background_polls": 4,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T21:55:16"
+}

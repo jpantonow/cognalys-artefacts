@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/Vauth/salty-app/pull/6",
+    "state": "open",
+    "finding_id": "2b8cb7f6653b",
+    "spec": "CipherSpec",
+    "csv_class": "com.vauth.salty.utils.HashUtils",
+    "method_name": "encode",
+    "title": "Generate PBKDF2 salts for new encrypted values",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:40:19.499102+00:00",
+    "maintainer_feedback": []
+  }
+]

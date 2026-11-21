@@ -1,0 +1,148 @@
+{
+  "detector_semantics": {
+    "limitations": [
+      "No published detector-rule catalog or governed API type named IvChainJunctionSpec was identified.",
+      "The reported interface is a generic marker interface; it does not identify a concrete IV-bearing subtype.",
+      "The supplied diagnostic contains no value comparison across Cipher initializations and therefore cannot detect same-key/same-counter reuse.",
+      "The diagnostic does not establish provider behavior, selected transformation, operation mode, reachability, or successful encryption."
+    ],
+    "predicates": [
+      "A call resolves to javax.crypto.Cipher.init with a java.security.spec.AlgorithmParameterSpec argument.",
+      "The supplied parameter value is identical to, or statically aliased/data-flow-associated with, a previously reported parameter-spec origin.",
+      "The diagnostic text indicates prior reporting at the origin rather than independently proving a new security defect at the Cipher.init call."
+    ],
+    "claim": "The parameter-spec argument at a Cipher initialization sink is associated with an earlier report at the parameter-spec construction/origin site."
+  },
+  "unknowns": [
+    "Whether the diagnostic is only a duplicate-report suppression/junction message or is intended to be emitted as an independently actionable security finding.",
+    "Whether the concrete parameter specification is IV-bearing and, if so, whether it supplies the CTR initial counter.",
+    "Whether the resolved Cipher transformation is CTR and whether the parameterized operation is encryption.",
+    "Whether any two successful encryptions share the same effective key and overlapping counter-block sequence.",
+    "Whether uniqueness is preserved across threads, retries, persisted state, process restarts, key rotation, and multiple hosts.",
+    "Whether the code has an independent authentication mechanism; CTR-mode counter uniqueness alone does not establish integrity or authenticity."
+  ],
+  "api_semantics": {
+    "documented_behavior": [
+      "java.security.spec.AlgorithmParameterSpec is a transparent, type-safety grouping interface for cryptographic parameter specifications.",
+      "javax.crypto.Cipher.init(int, Key, AlgorithmParameterSpec) initializes a Cipher for encryption, decryption, wrapping, or unwrapping using the supplied key and algorithm parameters.",
+      "Reinitializing a Cipher discards its previously acquired state.",
+      "When parameters are required but omitted, the JDK API permits provider-generated parameters for encryption or wrapping in some cases; decryption or unwrapping may fail when required parameters are absent."
+    ],
+    "preconditions": [
+      "The selected provider and Cipher transformation must support the supplied parameter-spec implementation.",
+      "The supplied parameters must be appropriate for the selected Cipher transformation or Cipher.init can throw InvalidAlgorithmParameterException.",
+      "For a CTR-specific security conclusion, evidence must establish both the actual CTR transformation and how the provider interprets the supplied parameter specification as an initial counter or equivalent input."
+    ],
+    "unknowns": [
+      "Which concrete AlgorithmParameterSpec implementation is passed.",
+      "Which Cipher provider and transformation are selected.",
+      "Whether the parameter value represents an IV, nonce, initial counter, authentication-tag length, padding parameter, or another algorithm parameter.",
+      "Whether the initialization is for encryption and is followed by encryption of more than one message."
+    ]
+  },
+  "authoritative_sources": [
+    "https://cwe.mitre.org/data/definitions/323.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/Cipher.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/spec/AlgorithmParameterSpec.html",
+    "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-38a.pdf"
+  ],
+  "schema_version": 2,
+  "non_security_violation_shapes": [
+    "A non-production CTR known-answer-test harness deliberately repeats a fixed key and initial counter solely to reproduce a published test vector, never encrypts protected data, and is excluded from deployed cryptographic operation.",
+    "An offline fixture generator deliberately repeats a CTR key/counter pair only for publicly available, non-sensitive deterministic test data, with no confidentiality or authenticity property relied upon by users."
+  ],
+  "source_verified": true,
+  "important_note": "IvChainJunctionSpec is a concern label, not a Java, Android, CrySL, or library API type. The supplied diagnostic establishes only a provenance/junction relationship between an AlgorithmParameterSpec-origin report and javax.crypto.Cipher.init. It does not establish that the parameter is an IV, that AES-CTR is actually selected at runtime, or that an IV/counter is reused.",
+  "events": [
+    {
+      "condition": "Observed when a value statically resolved as java.security.spec.AlgorithmParameterSpec has an origin/construction report. The junction predicate is satisfied only when that same value, or a statically associated alias, later reaches the applicable Cipher.init overload. This event does not prove that the concrete parameter specification contains an IV, nonce, or CTR initial counter.",
+      "name": "algorithm-parameter-spec-origin",
+      "api_patterns": [
+        "AlgorithmParameterSpec ",
+        "AlgorithmParameterSpec params"
+      ]
+    },
+    {
+      "condition": "Observed when a resolved javax.crypto.Cipher.init overload receives a java.security.spec.AlgorithmParameterSpec argument. The junction predicate is satisfied only if that argument has already been reported at its origin. Observing this call does not satisfy the separate security predicate that an IV/nonce/counter is unique, unpredictable where required, correctly sized, accepted by the provider, or used for encryption rather than decryption.",
+      "name": "cipher-parameter-initialization-junction",
+      "api_patterns": [
+        ".init(Cipher.ENCRYPT_MODE,",
+        ".init(Cipher.DECRYPT_MODE,",
+        ".init(Cipher.WRAP_MODE,",
+        ".init(Cipher.UNWRAP_MODE,"
+      ]
+    }
+  ],
+  "security_semantics": {
+    "runtime_claim": "If the resolved operation is CTR encryption and the supplied parameter determines the initial counter, NIST SP 800-38A requires every counter block used under a given key to be unique across all encrypted messages; reuse can compromise plaintext confidentiality. CWE-323 describes the broader nonce/key-pair reuse weakness.",
+    "equivalent": false,
+    "detector_claim": "A parameter-spec construction report reaches a Cipher.init parameter sink and has already been reported at its origin."
+  },
+  "evidence_requirements": {
+    "compatibility": [
+      "Verify the provider's accepted parameter-spec type and encoding for the resolved transformation.",
+      "Verify IV/counter length, byte ordering, counter-field width, and overflow behavior for the selected provider.",
+      "Verify that any persisted, transmitted, or reconstructed IV/counter value is compatible with the corresponding decryption path.",
+      "Verify whether the implementation uses an authenticated construction separately, because CTR mode supplies confidentiality but not message authentication."
+    ],
+    "runtime": [
+      "Capture the effective Cipher transformation, provider, operation mode, key identity or key-derivation context, and parameter bytes for each successful encryption operation.",
+      "Determine whether the parameter contributes the CTR initial counter and how the provider increments counter blocks.",
+      "Compare counter-block ranges across messages encrypted under the same key, including concurrency, retries, restart recovery, and distributed-node behavior.",
+      "Confirm that the calls execute successfully and process protected plaintext through update or doFinal."
+    ],
+    "source_level": [
+      "Resolve the receiver to javax.crypto.Cipher and the invoked overload to init(int, Key, AlgorithmParameterSpec) or init(int, Key, AlgorithmParameterSpec, SecureRandom).",
+      "Resolve the concrete runtime-capable AlgorithmParameterSpec subtype rather than relying solely on its interface type.",
+      "Resolve the Cipher.getInstance transformation string and provider configuration.",
+      "Establish an alias/data-flow path from the reported parameter origin to the exact Cipher.init argument.",
+      "For a CWE-323 conclusion, identify at least two encryption initializations that use the same effective key and overlapping or identical CTR counter blocks."
+    ]
+  },
+  "forbidden_inferences_without_evidence": [
+    "That the concrete AlgorithmParameterSpec is javax.crypto.spec.IvParameterSpec rather than another parameter-spec implementation.",
+    "That the selected Cipher transformation is AES/CTR, or any particular algorithm, mode, padding, or provider.",
+    "That the call initializes encryption rather than decryption, wrapping, or unwrapping.",
+    "That the parameter bytes are an IV, nonce, or CTR initial counter.",
+    "That two encryption operations use the same key and the same initial counter or IV.",
+    "That an IV or counter is constant, predictable, insufficiently random, attacker-controlled, or reused across process restarts or distributed nodes.",
+    "That the Cipher.init call is reachable, succeeds at runtime, or is followed by update/doFinal encryption.",
+    "That ciphertext is transmitted, protects sensitive data, or is exposed to an attacker.",
+    "That confidentiality, integrity, authenticity, or replay resistance is provided by CTR mode alone."
+  ],
+  "name": "IvChainJunctionSpec",
+  "source_url": "https://cwe.mitre.org/data/definitions/323.html",
+  "applies_to_types": [
+    "java.security.spec.AlgorithmParameterSpec",
+    "javax.crypto.Cipher"
+  ],
+  "source_title": "CWE-323: Reusing a Nonce, Key Pair in Encryption",
+  "semantic_scope": "For every finding represented by this concern, the detector observes that a java.security.spec.AlgorithmParameterSpec supplied to a javax.crypto.Cipher.init overload was already reported where the parameter object was constructed or originated. Its observable is report provenance and parameter-to-initialization flow, not a concrete IV/nonce value, a key/parameter reuse comparison, cipher-transformation semantics, or a runtime cryptographic failure.",
+  "spec_id": "IvChainJunctionSpec",
+  "known_false_positive_shapes": [
+    "A non-IV AlgorithmParameterSpec, such as a parameter specification for another Cipher transformation, flows to Cipher.init and is treated as though it were an IV/counter source.",
+    "A parameter object is supplied only to Cipher.init in DECRYPT_MODE using the IV/counter received with the ciphertext; matching the sender's encryption parameter is necessary for decryption and is not nonce reuse by the decryptor.",
+    "A fresh, globally unique IV or initial counter is created for every encryption, but the detector emits the junction message merely because the same parameter object was already reported at its construction site.",
+    "The transformation is provider-specific or does not interpret the supplied parameter specification as an IV or CTR initial counter."
+  ],
+  "protocol": "AlgorithmParameterSpec construction/origin is reported -> an aliased value is supplied to Cipher.init(opmode, key, params) -> junction diagnostic suppresses or associates the sink with the prior construction report; unobserved security predicate for CTR encryption: counter blocks, including the initial counter under a given key, remain unique across messages.",
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.javimetallab.papercript.crypto.SecretCodec",
+        "method": "aesCtr",
+        "message": "the AlgorithmParameterSpec given to Cipher.init was already reported where it was constructed"
+      }
+    ],
+    "expected_api_simple_name": "",
+    "deterministic_validation": "passed",
+    "detector_rule": "none_published"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "document_mentions_type:java.security.spec.AlgorithmParameterSpec",
+    "checked_url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/Cipher.html"
+  }
+}

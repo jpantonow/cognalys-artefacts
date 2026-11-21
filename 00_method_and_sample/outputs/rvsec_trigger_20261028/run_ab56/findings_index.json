@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "run_id": "run_ab56",
+  "findings": [
+    {
+      "finding_key": "af56e4495339",
+      "apk": "com.example.trigger.debug_408.apk",
+      "method": "createKeyPair",
+      "spec": "KeyPairGeneratorSpec",
+      "decision": "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW",
+      "terminal_stage": "generation",
+      "signatures": [
+        "generation:semantic:unintended_behavior_change"
+      ],
+      "evidence_fingerprint": "b388efd5024a25c7f9ec3456e2d2f0bb10992ef93f590b6e24887b4cd0dd70be",
+      "pull_request": "",
+      "artifacts": {
+        "evidence_review": "error_solutions/evidence_reviews/com.example.trigger.debug_408.apk/0_createKeyPair_evidence.json",
+        "evidence_context": "error_solutions/finding_context/com.example.trigger.debug_408.apk/0_createKeyPair/manifest.json",
+        "evidence_packet": "error_solutions/v2_artifacts/com.example.trigger.debug_408.apk/0_createKeyPair_evidence_packet.json",
+        "external_research": "error_solutions/v2_artifacts/com.example.trigger.debug_408.apk/0_createKeyPair_external_research.json",
+        "adjudication": "error_solutions/v2_artifacts/com.example.trigger.debug_408.apk/0_createKeyPair_adjudication.json",
+        "patch_plan": "error_solutions/v2_artifacts/com.example.trigger.debug_408.apk/0_createKeyPair_patch_plan.json",
+        "coordinated_drafts": "error_solutions/coordinated_drafts/com.example.trigger.debug_408.apk/0_createKeyPair/manifest.json"
+      }
+    }
+  ]
+}

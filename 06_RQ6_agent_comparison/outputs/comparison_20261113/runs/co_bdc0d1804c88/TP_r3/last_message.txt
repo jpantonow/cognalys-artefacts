@@ -1,0 +1,5 @@
+Prepared [PR.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r3/repo/PR.md) and the source change. The access-point configuration now uses explicit checks for the release and debug package names instead of hashing them.
+
+The debug APK build and six focused unit tests passed. The previous code recognized a third numeric discriminator whose package name could not be identified; the PR asks maintainers to check whether another distributed package depends on it.
+
+The stage-by-stage record is in [ANALYSIS.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r3/repo/ANALYSIS.md). Nothing was committed or sent.

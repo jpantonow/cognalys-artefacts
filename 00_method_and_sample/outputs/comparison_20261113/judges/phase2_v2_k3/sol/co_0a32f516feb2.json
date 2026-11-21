@@ -1,0 +1,312 @@
+{
+ "unit": "co_0a32f516feb2",
+ "phase": "phase2",
+ "order": [
+  "K5af67d0b",
+  "Kf231d9fd",
+  "K0669ebf2",
+  "K6bdd6bc1",
+  "Kc725d499",
+  "K61e5b479",
+  "Ka43e80a1",
+  "Kf751666e",
+  "K21bd29d4",
+  "K81ad09c1",
+  "Kca6acd2b",
+  "K1258e929",
+  "Kd84943fb",
+  "Kfbcdceee",
+  "Kf6ab2d8e",
+  "Kbaeb1d41",
+  "K5167b58a",
+  "Kbe8116b3",
+  "K673acfc6",
+  "Kca2cd0ea",
+  "K0f0a215e",
+  "Kb262b5f0"
+ ],
+ "card_sha256": {
+  "K0669ebf2": "3a958828aee3c063",
+  "K0f0a215e": "b30eebb9304942e1",
+  "K1258e929": "d3c36e614f8099a0",
+  "K21bd29d4": "4eb814a7ab95fff8",
+  "K5167b58a": "a8d2a2ab4550eea9",
+  "K5af67d0b": "d10023b4f17baac2",
+  "K61e5b479": "b91b19471f148ba9",
+  "K673acfc6": "2bfbfd0e73656a09",
+  "K6bdd6bc1": "5eed730f52618e2d",
+  "K81ad09c1": "fd2620fd3e6fdd51",
+  "Ka43e80a1": "c799654c25fb3bcb",
+  "Kb262b5f0": "da39afe93acd2aef",
+  "Kbaeb1d41": "3496c4d7bbef9495",
+  "Kbe8116b3": "6e66d37fda86413d",
+  "Kc725d499": "1e235a72fb3307b9",
+  "Kca2cd0ea": "735bb64e77715f73",
+  "Kca6acd2b": "a55926b384f413cd",
+  "Kd84943fb": "8402ff7c23248efb",
+  "Kf231d9fd": "7e98bd44781b72ec",
+  "Kf6ab2d8e": "bfc6b958ee709a74",
+  "Kf751666e": "f766646e83dd9aa8",
+  "Kfbcdceee": "ebae84c9023c0668"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "Both findings are false positives for this code. TOTP.hmac_sha is a direct port of the RFC 6238 reference code. TOTP.gen picks the MAC from an int shaType: 0 gives HmacSHA1, 1 gives HmacSHA256, anything else gives HmacSHA512. In Home.java that int comes from the totpSHATypeSpinner, whose choices (arrays.xml SHATypes) are SHA-1, SHA-256 and SHA-512. HmacSHA1 is only used when the user picks SHA-1, which is the RFC 6238 default and the algorithm almost every TOTP server uses. The app cannot choose the algorithm: the server that issued the shared secret decides it, and codes only match if both sides use the same one. HMAC-SHA1 is also not broken in this role, because HMAC security does not depend on SHA-1 collision resistance. SHA-256 and SHA-512 are already offered. Removing or replacing HmacSHA1 would make the app produce wrong codes for every SHA-1 account, so it would no longer work as an authenticator for most services. It would also fail the RFC 6238 test vectors in app/src/test/java/TotpTests.java, which call TOTP.gen(seed, t, 8, 0, 30) and expect the SHA-1 results. The SecretKeySpecSpec finding is about the algorithm label \"RAW\" on the key. That label does not affect the computation: HMAC Mac implementations only read the key bytes, and the HMAC itself is identical. Changing it would be cosmetic and would only quiet the checker, with no security gain. So there is no weakness to fix and nothing worth reporting; an issue would only make the maintainers close a false positive. HOTP.java uses the same pattern (HmacSHA1 with a \"RAW\" key, as RFC 4226 requires) for the same reasons.\n\nSecond judge: TOTP.java implements RFC 6238 and deliberately selects HmacSHA1, HmacSHA256, or HmacSHA512. Home.java takes that selection from the SHA spinner; SHA-1 is its first/default option. The algorithm must match the verifier: replacing SHA-1 with SHA-256 changes passwords and breaks existing enrollments. SHA-1 collision weaknesses do not by themselves establish a vulnerability in this HMAC-based use. The RAW argument to SecretKeySpec labels the supplied key bytes; Mac.getInstance(crypto) selects the actual computation. It does not mean unencrypted storage or an unkeyed hash. NO_ACTION is therefore reasonable for these generic allowlist findings. An ISSUE explaining the protocol requirement and optional key-label cleanup is acceptable. A PR can replace RAW with the actual selected HMAC algorithm without changing OTP results; this improves API specificity but does not eliminate the checker's rejection of intentional HMAC-SHA1.",
+  "must_change": [
+   "For a code fix, construct the TOTP SecretKeySpec with the selected crypto value, e.g. new SecretKeySpec(keyBytes, crypto), matching Mac.getInstance(crypto). Do not hard-code an allowlisted algorithm unrelated to the selected MAC.",
+   "Validate unchanged TOTP results for SHA-1, SHA-256, and SHA-512 using the RFC vectors in TotpTests.java. If relying on that suite for full coverage, correct its iteration: the current loop exercises only the first two of six timestamps."
+  ],
+  "must_not_break": [
+   "HmacSHA1 must stay available when shaType == 0 (user picks SHA-1). It is the RFC 6238 default and what most TOTP servers use; removing or replacing it makes the app generate codes that don't match the server",
+   "The RFC 6238 test vectors in TotpTests (SHA-1, SHA-256 and SHA-512 with the reference seeds) must still pass",
+   "The mapping from spinner position to algorithm (0=SHA-1, 1=SHA-256, 2=SHA-512) in Home.java and arrays.xml SHATypes must stay the same",
+   "Existing saved profiles/seeds in DBAdapter must keep producing the same codes; the HMAC output for a given key and time must not change",
+   "HOTP's RFC 4226 HMAC-SHA1 computation must not change; it shares the same pattern and is required for compatibility with HOTP servers",
+   "Code generation must keep working on every supported Android version (minSdk 21 to targetSdk 36)",
+   "Preserve SHA selection semantics: 0 selects SHA-1, 1 selects SHA-256, and the existing remaining branch selects SHA-512. Retain SHA-1 support and the existing default so enrolled accounts continue matching their verifiers.",
+   "Preserve identical OTPs for the same seed, time, algorithm, interval, and digit count, including the eight-byte counter encoding, dynamic truncation, modulo operation, and leading-zero padding. Keep the supported 30/60-second intervals and configurable output length.",
+   "Preserve existing hexadecimal seed bytes in the SQLite profiles database and active-profile preferences, including seeds entered through ASCII or Base32 conversion and those displayed by View Secret. Do not hash, regenerate, resize, or reinterpret seeds. SHA selection currently comes from the generation spinner, not a stored profile algorithm field.",
+   "Retain compatibility with the declared Android minimum API 21 and its JCA providers. Do not require a newer Android version, a new provider, or key migration for this metadata change.",
+   "Leave HOTP and mOTP behavior intact; changing their algorithms is neither required nor justified by this TOTP report."
+  ],
+  "source": "gabarito_final.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v2, the author's rule of 2026-11-14 (build_gabarito_v2.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 193,
+ "tokens": {
+  "input_tokens": 118775,
+  "cached_input_tokens": 82176,
+  "output_tokens": 5664,
+  "reasoning_output_tokens": 3441
+ },
+ "turns": 1,
+ "tool_calls": 5,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [
+   "/home/antonow",
+   "/home/antonow/comparison_20261113/judges/checkout",
+   "/home/antonow/comparison_20261113/judges/sessions/sol/phase2/co_0a32f516feb2/home"
+  ],
+  "suspicious_paths": [
+   "/home/antonow/comparison_20261113/judges/sessions/sol/phase2/co_0a32f516feb2/home"
+  ],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "790acb102351c326",
+ "finished_at": "2026-11-16T09:55:49-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "K5af67d0b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains protocol compatibility and why RAW does not weaken this HMAC computation."
+   },
+   {
+    "card_id": "Kf231d9fd",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correct optional metadata cleanup with accurate compatibility reasoning. Before merging, validate RFC outputs and correct the test loop; intentional SHA-1 findings remain."
+   },
+   {
+    "card_id": "K0669ebf2",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Uses the correct selected algorithm and accurately acknowledges remaining SHA-1 reports. Needs RFC-vector validation and the test-loop correction."
+   },
+   {
+    "card_id": "K6bdd6bc1",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": null,
+    "notes": "Correct metadata cleanup and coverage of all 18 vectors, preserving existing behavior. The stated unit-test command has a minor formatting error; SHA-1 allowlist objections remain."
+   },
+   {
+    "card_id": "Kc725d499",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "The change and compatibility explanation are correct. Run the RFC vectors and repair their incomplete iteration before merging; SHA-1 remains intentionally available."
+   },
+   {
+    "card_id": "K61e5b479",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Recognizes the compatibility constraint and lack of security impact. The explanation focuses on satisfying allowlists rather than explaining why the underlying HMAC and RAW usage are harmless."
+   },
+   {
+    "card_id": "Ka43e80a1",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Accurately describes the selected key label and remaining checker findings. Needs actual RFC-vector validation, including correction of the existing loop."
+   },
+   {
+    "card_id": "Kf751666e",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies protocol-required SHA-1 support and the harmless reference-implementation key label."
+   },
+   {
+    "card_id": "K21bd29d4",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Mergeable optional cleanup with correct coverage of all timestamps and algorithms. Preserving SHA-1 appropriately leaves its allowlist findings unresolved."
+   },
+   {
+    "card_id": "K81ad09c1",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "The conditional matches every algorithm reachable through TOTP.gen, although passing crypto directly is simpler. Needs complete RFC-vector coverage and validation."
+   },
+   {
+    "card_id": "Kca6acd2b",
+    "r2": 3,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correct selected-algorithm label and complete RFC-vector iteration without changing OTP semantics. Intentional SHA-1 allowlist findings remain."
+   },
+   {
+    "card_id": "K1258e929",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Gives the correct code-specific compatibility and key-label reasons for taking no action."
+   },
+   {
+    "card_id": "Kd84943fb",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Correctly avoids changing the selected TOTP algorithm and recognizes no security impact. It lacks the cryptographic explanation establishing that these allowlist findings are false positives."
+   },
+   {
+    "card_id": "Kfbcdceee",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Leaves both reported calls unchanged on the SHA-1 path, so it misses the required metadata cleanup there. The unrelated exception handler suggests an incompatible algorithm substitution and does not handle the exceptions normally wrapped by TOTP."
+   },
+   {
+    "card_id": "Kf6ab2d8e",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Reject the hard-coded HmacSHA256 label: it is unrelated to the selected MAC in SHA-1 and SHA-512 modes. The text honestly acknowledges this mismatch, but the required approach is to use crypto."
+   },
+   {
+    "card_id": "Kbaeb1d41",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correct optional metadata change, preserving all algorithm selections. Needs RFC-vector validation and correction of the existing test iteration."
+   },
+   {
+    "card_id": "K5167b58a",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": null,
+    "notes": "Incorrectly labels SHA-1 keys HMACSHA256 merely to match the allowlist; it must use the selected crypto value. The description states the edit accurately but omits the significance of that mismatch."
+   },
+   {
+    "card_id": "Kbe8116b3",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": null,
+    "notes": "Correct selected-algorithm cleanup, pending complete RFC-vector validation. The blanket statement about Mac.init ignoring algorithm labels overstates the API guarantee, although the supported HMAC implementations preserve these outputs."
+   },
+   {
+    "card_id": "K673acfc6",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Thorough, correct reasoning about verifier compatibility, HMAC-SHA1 security, and the harmless RAW label."
+   },
+   {
+    "card_id": "Kca2cd0ea",
+    "r2": 0,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Hard-coding HmacSHA256 violates the required correspondence with the selected MAC for SHA-1 and SHA-512. The description accurately discloses the problem, but disclosure does not make the patch acceptable."
+   },
+   {
+    "card_id": "K0f0a215e",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": null,
+    "notes": "Correct optional key-label cleanup with an accurate explanation of retained SHA-1 reports. Needs complete RFC-vector validation and the test-loop correction."
+   },
+   {
+    "card_id": "Kb262b5f0",
+    "r2": 2,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 1,
+    "r5": null,
+    "notes": "The code change correctly uses crypto, but the existing vectors need to be run and their loop corrected. The claim that existing tests already cover the output omits their incomplete timestamp coverage."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

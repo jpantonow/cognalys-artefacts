@@ -1,0 +1,26 @@
+[
+  {
+    "pull_request": "https://github.com/BombusMod/BombusMod/pull/316",
+    "state": "merged",
+    "finding_id": "3451a9747f93",
+    "spec": "Closeable_MeaninglessClose",
+    "csv_class": "util.Strconv",
+    "method_name": "baosFromBase64",
+    "title": "Fix baosFromBase64",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:38:32.936052+00:00",
+    "incorporated_evidence": {
+      "diff_reverse_applies": true,
+      "references": [
+        "comment by vitalyster"
+      ]
+    },
+    "maintainer_feedback": [
+      {
+        "author": "vitalyster",
+        "kind": "comment",
+        "body": "Thanks for the contribution, @jpantonow — merged (with a reworded commit message/description, since `Fix baosFromBase64` alone didn't explain the change). For future PRs, please write a proper commit message describing what changed and why, rather than a generic one-liner."
+      }
+    ]
+  }
+]

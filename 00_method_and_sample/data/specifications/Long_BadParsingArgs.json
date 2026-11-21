@@ -1,0 +1,131 @@
+{
+  "schema_version": 2,
+  "spec_id": "Long_BadParsingArgs",
+  "name": "Long_BadParsingArgs",
+  "applies_to_types": [
+    "java.lang.Long_BadParsingArgs"
+  ],
+  "source_title": "Requested canonical CrySL source for Long_BadParsingArgs (not found; attempted raw URL returned HTTP 404)",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Long_BadParsingArgs.crysl",
+  "source_verified": false,
+  "protocol": "parseLong_string_call",
+  "important_note": "This is an argument-validity/exception-behavior detector, not a cryptographic protocol rule. The canonical CrySL source was not found, so the exact accepted predicate, event syntax, and treatment of exception handlers cannot be stated as verified rule semantics. The nominal governed type is included to meet the requested CrySL naming convention; the reported invoked API is java.lang.Long.parseLong(String), not a JDK class named java.lang.Long_BadParsingArgs.",
+  "events": [
+    {
+      "name": "parseLong_string_call",
+      "api_patterns": [
+        "Long.parseLong(",
+        "java.lang.Long.parseLong("
+      ],
+      "condition": "Observation: a call site resolves to java.lang.Long.parseLong(java.lang.String). Predicate satisfaction: the supplied String is non-null, has signed-decimal syntax accepted by Long.parseLong, and represents a value in the signed long range. The exact detector predicate, including whether it instead requires local validation or handling of NumberFormatException, is unverified without the missing rule source."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That the reported call in tranquvis.simplesmsremote.Services$SMSReceiverService.getStartTime will throw NumberFormatException at runtime.",
+    "That the argument is definitely malformed merely because the detector emitted \"Wrong argument\".",
+    "That a preceding validation, framework parser contract, sanitization routine, or caller-side exception handler is absent or ineffective.",
+    "That this rule is a canonical CROSSINGTUD Crypto-API-Rules CrySL rule.",
+    "That java.lang.Long_BadParsingArgs is an actual JDK runtime class; it is the nominal governed type required by the stated CrySL naming convention, while the reported invoked API is java.lang.Long.parseLong(String).",
+    "That the finding establishes a security vulnerability, exploit path, or cryptographic misuse."
+  ],
+  "semantic_scope": "The reported finding is anchored at a use-site call to java.lang.Long.parseLong(String) in tranquvis.simplesmsremote.Services$SMSReceiverService.getStartTime. The rule name and historical evidence indicate concern about an argument that may not parse as a long and may therefore produce an unhandled or insufficiently explained NumberFormatException; the exact static evidence required by this detector is unknown.",
+  "detector_semantics": {
+    "claim": "A String supplied to Long.parseLong(String) is not proven to meet the detector's required parsing/handling predicate.",
+    "predicates": [
+      "A resolved invocation of java.lang.Long.parseLong(java.lang.String) is observed.",
+      "The argument must satisfy Long.parseLong's documented signed-decimal parsing requirements for the call to complete normally.",
+      "Any additional detector requirement—such as an explicit pre-check, a local catch of NumberFormatException, or a particular validator—is unverified because the canonical rule file was unavailable."
+    ],
+    "limitations": [
+      "The detector finding is static evidence, not a runtime parse result.",
+      "Source-substring matching alone cannot distinguish parseLong(String) from other overloads; symbol/type resolution is required.",
+      "Historical evaluation data recorded both true bugs and false alarms for Long_BadParsingArgs, so the identifier does not itself prove a defect.",
+      "The historical property appears to predate or sit outside the supplied Crypto-API-Rules CrySL corpus; its exact relationship to the present detector is unresolved."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "java.lang.Long.parseLong(String) parses a signed decimal long; its behavior is equivalent to parseLong(s, 10).",
+      "The input may have a leading '+' or '-', but otherwise must contain decimal digits and the represented value must fit in the signed long range.",
+      "Long.parseLong(String) throws NumberFormatException when the String is not parsable as a long."
+    ],
+    "preconditions": [
+      "The argument is not null.",
+      "The argument is not empty.",
+      "The argument has signed-decimal syntax accepted by Long.parseLong(String).",
+      "The represented value is within the signed long range."
+    ],
+    "unknowns": [
+      "Which Java/Android library version is used by the analyzed application.",
+      "Whether the detector models the overload strictly as Long.parseLong(String), as stated in its message, or applies a broader textual matcher.",
+      "Whether the detector requires proof of parsability, explicit exception handling, or both."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "Possible bad parsing argument or missing handling around java.lang.Long.parseLong(String).",
+    "runtime_claim": "At runtime, an actually non-parsable input causes NumberFormatException; a parsable in-range signed-decimal input returns a long.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A retrievable canonical Long_BadParsingArgs CrySL or equivalent detector-rule source is required to verify the rule target, event declarations, constraints, and message-to-predicate mapping.",
+      "The requested canonical CROSSINGTUD raw source was attempted and returned HTTP 404; therefore no rule body was consulted.",
+      "Historical Spec-Eval material links manually written .mop specifications to the property-db repository and lists Long_BadParsingArgs findings, but this is supporting provenance rather than a verified source for the present CrySL rule."
+    ],
+    "runtime": [
+      "The concrete String value reaching the reported Long.parseLong(String) call.",
+      "A reproducer demonstrating whether that value is parsable and whether NumberFormatException escapes the relevant application boundary.",
+      "Evidence of surrounding validation, parser contracts, fallback behavior, or exception translation."
+    ],
+    "compatibility": [
+      "Resolved target signature and declaring class from the analyzed bytecode/source classpath.",
+      "Java/Android runtime version and any desugaring, shadowing, or alternate-library behavior affecting java.lang.Long.",
+      "The detector version and the exact specification bundle from which Long_BadParsingArgs was loaded."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "The input is guaranteed numeric by a higher-level parser or grammar, but that interprocedural/framework contract is not modeled. A historical Long_BadParsingArgs report included a maintainer statement that a surrounding parser ensured only long values reached the call.",
+    "The value was validated, normalized, or generated by a helper that the detector cannot recognize as establishing parsability.",
+    "NumberFormatException is intentionally caught or translated at an enclosing boundary that the detector does not model.",
+    "The API deliberately exposes NumberFormatException as part of its public-input contract; historical reports focused on improving handling or diagnostics rather than proving that every such call was invalid.",
+    "The detector cannot prove range bounds even when the input's syntax is numeric."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Long_BadParsingArgs.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Long.html",
+    "https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/lang/Long.java",
+    "https://github.com/runtimeverification/property-db"
+  ],
+  "unknowns": [
+    "No primary canonical source for Long_BadParsingArgs.crysl was found at the required CROSSINGTUD location; whether the rule exists under a renamed path, another branch, or a non-CrySL corpus remains unresolved.",
+    "The exact formal condition behind the message \"Wrong argument to Long.parseLong(String s)\" is unavailable.",
+    "It is unresolved whether this detector flags lack of a parsability pre-check, lack of NumberFormatException handling, an inferred malformed value, or a combination.",
+    "The nominal type java.lang.Long_BadParsingArgs is included solely to follow the requested CrySL naming convention; the available Java API documentation instead describes java.lang.Long.",
+    "The reported class and method identify a finding location but do not supply the argument expression, dataflow, enclosing exception behavior, or runtime input needed to determine the concrete outcome."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Long_BadParsingArgs.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "tranquvis.simplesmsremote.Services$SMSReceiverService",
+        "method": "getStartTime",
+        "message": "Long_BadParsingArgs Wrong argument to Long.parseLong(String s)"
+      }
+    ],
+    "expected_api_simple_name": "Long_BadParsingArgs",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Long_BadParsingArgs.crysl"
+  }
+}

@@ -1,0 +1,39 @@
+{
+ "unit": "co_f637c4b8467e",
+ "source": "spec_cohort",
+ "group": "no_pr",
+ "finding_ids": [
+  "f637c4b8467e"
+ ],
+ "apk": "br.eng.thsouza.winterhold.debug_8.apk",
+ "repo_url": "https://github.com/ThHSzR/winterhold",
+ "pinned_commit": "88974cb4f8f8dde97df3017a4defb89cc5d6d0c8",
+ "spec": [
+  "PBEKeySpecSpec"
+ ],
+ "class": "br.eng.thsouza.winterhold.WebAccessUsers$Companion",
+ "method": "derive",
+ "latest_outcome": [
+  "issue para o mantenedor do app"
+ ],
+ "bench_id": [
+  "winterhold_salt"
+ ],
+ "build_task": "assembleDebug",
+ "overlaps_pr_population": false,
+ "eligible": true,
+ "rows": [
+  {
+   "finding_id": "f637c4b8467e",
+   "unique_error_id": "br.eng.thsouza.winterhold.WebAccessUsers$Companion:::derive:::PBEKeySpecSpec:::UnsatisfiedConstraint:::the second argument was not observed to come from a randomized source",
+   "spec": "PBEKeySpecSpec",
+   "class": "br.eng.thsouza.winterhold.WebAccessUsers$Companion",
+   "method": "derive",
+   "message": "the second argument was not observed to come from a randomized source",
+   "apk": "br.eng.thsouza.winterhold.debug_8.apk",
+   "repo_url": "https://github.com/ThHSzR/winterhold",
+   "commit": "88974cb4f8f8dde97df3017a4defb89cc5d6d0c8",
+   "detector_source_location": "WebAccessUsers.kt:121"
+  }
+ ]
+}

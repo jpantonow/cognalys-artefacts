@@ -1,0 +1,201 @@
+=== 2026-11-16T02:52:47-03:00 cognalys run --max-cost 2.0
+Frozen experiment: manifest written to /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3_fixes/manifests/co_0a32f516feb2_r1.json. Specification generation and learning-store writes are disabled for this run; web research not archived is fetched live.
+Preflight passed: declared dependencies, static analysis
+Pipeline steps: spec_generation -> cloning -> repository_setup -> extraction -> spec_context -> detector_rules -> llm -> solutions -> validation -> validation_fix -> revalidation -> prs -> preview -> fix_prs -> revalidation_fix_prs
+
+=== SPEC_GENERATION ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.generate_specifications --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/openai_prompt_logs
+frozen experiment: 2 specification(s) already present; none generated
+
+=== CLONING ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv --output-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_methods --clone-timeout 1800 --clone-retries 3 --clone-only
+2026-11-16 02:53:16 - INFO - Starting single CSV workflow
+2026-11-16 02:53:16 - INFO - Output dir: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones
+2026-11-16 02:53:16 - INFO - Clone dir: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones
+2026-11-16 02:53:16 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_methods
+2026-11-16 02:53:16 - INFO - 2 linhas válidas carregadas
+2026-11-16 02:53:16 - INFO - 1 repositórios únicos mapeados
+2026-11-16 02:53:16 - INFO - [1/1] Cloning org.cry.otp_31.apk from https://github.com/chrismiceli/motp
+2026-11-16 02:53:18 - INFO - org.cry.otp_31.apk is already at the pinned revision 3fc6c3d20d7b32f96699b847a543d83d4439572c
+2026-11-16 02:53:18 - INFO - Successfully cloned org.cry.otp_31.apk
+2026-11-16 02:53:18 - INFO - Cloning results: 1 success, 0 failed, 0 timeout
+
+=== REPOSITORY_SETUP ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.prepare_repository_branches --projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones --report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/repository_setup.json --project org.cry.otp_31.apk
+org.cry.otp_31.apk: master -> master (unchanged)
+
+=== EXTRACTION ===
+$ /home/antonow/venv/bin/python -m cognalys.extraction.extract_methods_single_csv --csv-file /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv --output-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones --methods-output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_methods --clone-timeout 1800 --clone-retries 3 --skip-cloning
+2026-11-16 02:53:19 - INFO - Starting single CSV workflow
+2026-11-16 02:53:19 - INFO - Output dir: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones
+2026-11-16 02:53:19 - INFO - Clone dir: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones
+2026-11-16 02:53:19 - INFO - Methods output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_methods
+2026-11-16 02:53:19 - INFO - 2 linhas válidas carregadas
+2026-11-16 02:53:19 - INFO - 1 repositórios únicos mapeados
+2026-11-16 02:53:19 - INFO - Reutilizando clones existentes em: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones
+2026-11-16 02:53:19 - INFO - org.cry.otp_31.apk is already at the pinned revision 3fc6c3d20d7b32f96699b847a543d83d4439572c
+2026-11-16 02:53:19 - INFO - Found clone for org.cry.otp_31.apk: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones/org.cry.otp_31.apk
+2026-11-16 02:53:19 - INFO - Building index for repository: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones/org.cry.otp_31.apk
+2026-11-16 02:53:19 - INFO - Indexed 12 classes from 12 unique class definitions
+2026-11-16 02:53:19 - INFO - Extraction complete: 2 success, 0 failed, 0 skipped
+2026-11-16 02:53:19 - INFO - Tracking JSON written to /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones/extraction_tracking.json
+2026-11-16 02:53:19 - INFO - Summary written to /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones/logs/summary_tracked.txt
+
+=== SPEC_CONTEXT ===
+$ /home/antonow/venv/bin/python -m cognalys.specifications.enrich_spec_context --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_methods --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv
+Specification registry coverage: 2/2 sample specs available
+Specification context: 2 enriched, 0 missing, 2 total
+
+=== DETECTOR_RULES ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.propose_detector_rules --required-specs-csv /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_arm_k3/findings/co_0a32f516feb2.csv --specifications-dir /mnt/c/Users/Antonow/Documents/tcc_v3/data/specifications --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/openai_prompt_logs
+MacSpec: skipped, judged not local for this version of the specification
+SecretKeySpecSpec: skipped, judged not local for this version of the specification
+Detector rules: nothing to propose
+
+=== LLM ===
+$ /home/antonow/venv/bin/python -m cognalys.llm.generate_error_fixes --input-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_methods --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_solutions --model gpt-6.1-terra --provider openai --endpoint https://api.openai.com/v1 --timeout 600 --ollama-context-length 16384 --repository-context-budget 140000 --pr-issue-style v3 --max-output-tokens 32768 --reasoning-effort high --validation-mode balanced --validation-feedback-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/build_validation --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/openai_prompt_logs --web-search-cache-ttl-hours 168.0 --web-search-retries 1 --retries 2 --workers 1 --no-cache --research-corpus-dir /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus --research-corpus-max-age-days 90.0 --web-search --migration-policies-file /mnt/c/Users/Antonow/Documents/tcc_v3/data/migration_policies.json
+INFO: Testing OpenAI connection...
+INFO: OpenAI connection successful
+INFO: ✓ Model 'gpt-6.1-terra' available
+INFO: Discovered 2 errors to process
+INFO: Processing 2 new errors (0 already complete)
+INFO: hmac_sha is analysed together with hmac_sha: one call sequence
+INFO: Processing: org.cry.otp_31.apk/hmac_sha
+INFO: Research corpus hit: cb14a5c307cd
+INFO: hmac_sha: generation blockers a reviewer settles (compatibility_contract) moved to publication; decision is now MULTI_FILE_FIX_PROPOSED_FOR_REVIEW
+INFO: [1/1] hmac_sha
+INFO: ✓ Solution saved (confidence: 70%)
+INFO: Tracking saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_solutions/solutions_tracking.json
+INFO: Summary report saved: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_solutions/analysis_summary.txt
+INFO: ======================================================================
+INFO: ANALYSIS COMPLETE
+INFO: Analyzed: 1/2
+INFO: Fixes generated: 1
+INFO: Confirmed external-contract findings: 0
+INFO: Issue candidates: 0
+INFO: Time: 00h 04m 26s
+INFO: LLM cache: 0 hit(s), 0 miss(es), 0 replayed within a finding
+INFO: Research corpus: 1 served, 0 researched and stored, 0 kept, 0 expired
+
+======================================================================
+LLM Error Fix Generator
+======================================================================
+Model: gpt-6.1-terra
+Provider: openai
+Endpoint: https://api.openai.com/v1
+Timeout: 600s
+Reasoning effort: high
+Validation mode: balanced
+Repository context budget: 140000 characters
+Allow cache invalidation: False
+Web search: True
+Max output tokens: 32768
+Input: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_methods
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_solutions
+LLM cache: disabled
+Resume: True
+======================================================================
+
+Research corpus: /mnt/c/Users/Antonow/Documents/tcc_v3/outputs/research_corpus (126 entries, max age 90 days)
+
+=== SOLUTIONS ===
+$ /home/antonow/venv/bin/python -m cognalys.solutions.run_apply --error-solutions-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_solutions --cloned-projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results --worktrees-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/worktrees --backup-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/method_backups --approve-review-only-for-validation --port-model gpt-6.1-terra --port-endpoint https://api.openai.com/v1 --port-timeout 600 --port-max-output-tokens 16384 --port-reasoning-effort high --port-prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/openai_prompt_logs
+2026-11-16 02:58:20,662 - INFO - Starting solution application workflow
+2026-11-16 02:58:20,666 - INFO - ============================================================
+2026-11-16 02:58:20,666 - INFO - STAGE 1: DISCOVERY & MAPPING
+2026-11-16 02:58:20,667 - INFO - ============================================================
+2026-11-16 02:58:20,667 - INFO - Building solution to repository mapping...
+2026-11-16 02:58:20,667 - INFO - Discovering solutions in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_solutions
+2026-11-16 02:58:22,987 - INFO - Discovered 1 solutions
+2026-11-16 02:58:22,988 - INFO - Mapping complete
+2026-11-16 02:58:22,988 - INFO - Mapping report: {'total_apks': 1, 'total_solutions': 1, 'mappings': {'org.cry.otp_31.apk': {'apk_name': 'org.cry.otp_31.apk', 'solutions': [{'method_name': 'hmac_sha', 'csv_class': 'org.cry.otp.TOTP', 'spec': 'MacSpec', 'error_message': 'expecting one of HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1', 'tool': 'droidmate', 'detector_context': {'code': 'MAC-ALG-00', 'site_kind': "ALG: the algorithm or transformation string is not in the rule's allow-list", 'label': 'violation', 'label_meaning': 'A value check of the rule fired: an algorithm, key size, protocol, keystore type or other constraint outside what the rule admits, a required origin positively contradicted, or a forbidden call. The value seen and the admitted values are in value/expected.', 'value': 'HmacSHA1', 'expected': 'HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512', 'source_location': 'TOTP.java:47', 'runtime_observation': 'Reported in 1 run(s) of the app; each run starts from a clean, read-only emulator.'}, 'relative_method_file': 'org.cry.otp_31.apk/app/src/main/java/org/cry/otp/TOTP.java', 'source_file': 'app/src/main/java/org/cry/otp/TOTP.java', 'quality_score': 100, 'decision': 'MULTI_FILE_FIX_PROPOSED_FOR_REVIEW', 'manual_review_required': True, 'auto_apply': False, 'publication_allowed': False, 'publication_status': 'blocked'}]}}}
+2026-11-16 02:58:22,997 - INFO - Mapping report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/mapping_report.json
+2026-11-16 02:58:22,998 - INFO - ============================================================
+2026-11-16 02:58:22,998 - INFO - STAGE 2: APPLYING SOLUTIONS
+2026-11-16 02:58:22,998 - INFO - ============================================================
+2026-11-16 02:58:22,999 - INFO - Processing 1/1: hmac_sha
+2026-11-16 02:58:22,999 - WARNING - Applying review-only solution for hmac_sha to an isolated worktree for validation; publication remains disabled
+2026-11-16 02:58:23,066 - INFO - Created finding worktree /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/worktrees/org.cry.otp_31.apk/4187ba41bc5c/a410948b28 on fix/hmac_sha-secretkeyspecspec-4187ba41bc5c-a410948b28
+2026-11-16 02:58:23,119 - INFO - Backup saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/method_backups/org.cry.otp_31.apk/TOTP_hmac_sha_20261116T055823Z.java.bak
+2026-11-16 02:58:23,121 - INFO - Successfully patched hmac_sha
+2026-11-16 02:58:23,121 - INFO - ============================================================
+2026-11-16 02:58:23,122 - INFO - STAGE 3: GENERATING REPORT
+2026-11-16 02:58:23,122 - INFO - ============================================================
+2026-11-16 02:58:23,155 - INFO - Execution report saved to /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/execution_report.json
+2026-11-16 02:58:23,155 - INFO - ============================================================
+2026-11-16 02:58:23,155 - INFO - EXECUTION SUMMARY
+2026-11-16 02:58:23,156 - INFO - ============================================================
+2026-11-16 02:58:23,156 - INFO - Successfully Applied: 1
+2026-11-16 02:58:23,156 - INFO - Failed: 0
+2026-11-16 02:58:23,156 - INFO - Total Time: 2.47s
+
+DONE
+{'execution_timestamp': '2026-11-16T05:58:23.128947+00:00', 'workflow_status': 'SUCCESS', 'execution_time_seconds': 2.466965, 'config': {'error_solutions_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_solutions', 'cloned_projects_dir': '/home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones', 'output_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results', 'worktrees_dir': '/home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/worktrees', 'save_backups': True, 'backup_dir': '/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/method_backups', 'dry_run': False, 'max_solutions': 0, 'git_user_name': 'jpantonow', 'git_user_email': 'jpantonow@gmail.com'}, 'total_solutions': 1, 'results': {'successfully_applied': 1, 'failed': 0, 'dry_run': 0, 'review_only_not_applied': 0, 'not_applicable_to_base_branch': 0}, 'per_solution_details': [{'apk_name': 'org.cry.otp_31.apk', 'method_name': 'hmac_sha', 'csv_class': 'org.cry.otp.TOTP', 'source_file': 'app/src/main/java/org/cry/otp/TOTP.java', 'spec': 'MacSpec', 'error_message': 'expecting one of HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1', 'tool': 'droidmate', 'detector_context': {'code': 'MAC-ALG-00', 'site_kind': "ALG: the algorithm or transformation string is not in the rule's allow-list", 'label': 'violation', 'label_meaning': 'A value check of the rule fired: an algorithm, key size, protocol, keystore type or other constraint outside what the rule admits, a required origin positively contradicted, or a forbidden call. The value seen and the admitted values are in value/expected.', 'value': 'HmacSHA1', 'expected': 'HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512', 'source_location': 'TOTP.java:47', 'runtime_observation': 'Reported in 1 run(s) of the app; each run starts from a clean, read-only emulator.'}, 'repository_guidance': [], 'branch_policy': {}, 'compatibility_policy': {}, 'migration_assessment': {'usage_kind': 'unknown', 'evidence': ['A runtime measurement recorded HmacSHA1 at the governed call in one app run.', "RAW is the SecretKeySpec constructor's algorithm argument; it is not a call to getFormat.", 'The test source contains TOTP expected-value assertions for shaType values 0, 1, and 2; the evidence does not report a test execution result.', 'The supplied source does not identify a particular external TOTP verifier or establish its algorithm requirements.'], 'legacy_compatibility_required': True, 'safe_strategy': 'Preserve the selectable TOTP algorithms and their outputs. Replacing SHA-1 with SHA-256 would require a coordinated change to verifiers configured for SHA-1.', 'policy_authorized': False}, 'publication_considerations': [{'category': 'compatibility_contract', 'description': 'A reviewer would have to determine how any proposed change preserves or coordinates the SHA-1 verifier contract; the pipeline cannot validate external verifiers.', 'kind': 'selected_totp_algorithm_compatibility', 'supporting_claim_ids': ['C1', 'C3', 'C4']}, {'category': 'compatibility_contract', 'description': 'The SHA-1 selection must continue producing SHA-1 TOTP values for matching verifiers. No compliant replacement preserving that path is established; changing its algorithm also leaves the joint key-label constraint to address.', 'kind': 'selected_totp_algorithm_compatibility', 'supporting_claim_ids': ['C1', 'C3', 'C4']}], 'publication_blocker_record': {'decision': 'MULTI_FILE_FIX_PROPOSED_FOR_REVIEW', 'blockers': [{'category': 'compatibility_contract', 'kind': 'selected_totp_algorithm_compatibility', 'description': 'A reviewer would have to determine how any proposed change preserves or coordinates the SHA-1 verifier contract; the pipeline cannot validate external verifiers.', 'discharged_by_pipeline_validation': False}, {'category': 'compatibility_contract', 'kind': 'selected_totp_algorithm_compatibility', 'description': 'The SHA-1 selection must continue producing SHA-1 TOTP values for matching verifiers. No compliant replacement preserving that path is established; changing its algorithm also leaves the joint key-label constraint to address.', 'discharged_by_pipeline_validation': False}], 'discharged_blockers': [], 'evidence_gap_promoted': [], 'plan_publication_blockers': ['Review compatibility with external SHA-1 verifiers; the selected SHA-1 path remains noncompliant with MacSpec. [C1, C3, C4]', 'The SHA-1 path also retains RAW at SecretKeySpec because no compatible, correctly labeled allow-listed replacement is established. The joint finding remains on that path. [C1, C2, C3]'], 'behavior_review': {'status': 'reviewed', 'review_contract_version': 23, 'regression_count': 0, 'patch_has_no_effect': False}}, 'digest_contract_assessment': {'security_relevance': 'false', 'contract_kind': 'unknown', 'expected_digest_source': '', 'backend_repository_available': False, 'backend_change_required': False, 'client_only_change_safe': False, 'rollout_strategy': '', 'pull_request_note': ''}, 'review_assumptions': ['Supported JCE providers accept HmacSHA256 and HmacSHA512 as SecretKeySpec labels for their corresponding MAC implementations.'], 'review_blockers': [], 'required_tests': ['Verify RFC 6238 TOTP vectors for SHA-1, SHA-256 and SHA-512 on supported providers.'], 'decision': 'MULTI_FILE_FIX_PROPOSED_FOR_REVIEW', 'manual_review_required': True, 'auto_apply': False, 'publication_allowed': False, 'publication_status': 'blocked', 'semantic_validation': {'status': 'valid', 'errors': [], 'warnings': []}, 'stored_value_contract': {}, 'fix_scope': 'review_only', 'applied_for_validation': True, 'review_contract_version': 23, 'pr_attribution': {'reported_finding': {'csv_class': 'org.cry.otp.TOTP', 'method_name': 'hmac_sha', 'spec': 'MacSpec', 'error_message': 'expecting one of HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1', 'unique_error_id': 'org.cry.otp.TOTP:::hmac_sha:::MacSpec:::UnsafeAlgorithm:::expecting one of HmacSHA256,HmacSHA384,HmacSHA512,HmacPBESHA1,PBEWithHmacSHA1,PBEWithHmacSHA224,PBEWithHmacSHA256,PBEWithHmacSHA384,PBEWithHmacSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found HmacSHA1', 'reason': 'Mac.getInstance still receives HmacSHA1 for shaType 0; the key-label change does not alter the algorithm passed to that call.'}, 'attributed_to': [{'csv_class': 'org.cry.otp.TOTP', 'method_name': 'hmac_sha', 'spec': 'SecretKeySpecSpec', 'error_message': 'expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found RAW', 'unique_error_id': 'org.cry.otp.TOTP:::hmac_sha:::SecretKeySpecSpec:::UnsafeAlgorithm:::expecting one of AES,HMACSHA256,HMACSHA384,HMACSHA512,HMAC-SHA256,HMAC/SHA256,HMAC-SHA384,HMAC/SHA384,HMAC/SHA512,HMAC-SHA512 but found RAW'}]}, 'status': 'SUCCESS', 'error': None, 'original_method_body': '            SecretKeySpec macKey = new SecretKeySpec(keyBytes, "RAW");', 'corrected_method_body': '            SecretKeySpec macKey = new SecretKeySpec(keyBytes,\n                    ("HmacSHA256".equals(crypto) || "HmacSHA512".equals(crypto)) ? crypto : "RAW");', 'finding_id': '4187ba41bc5c', 'branch': 'fix/hmac_sha-secretkeyspecspec-4187ba41bc5c-a410948b28', 'base_branch': 'master', 'base_commit': '3fc6c3d20d7b32f96699b847a543d83d4439572c', 'solution_revision': 'a410948b28', 'worktree_attempt': 1, 'orphaned_worktree_paths': [], 'worktree_path': '/home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/worktrees/org.cry.otp_31.apk/4187ba41bc5c/a410948b28', 'base_repository_path': '/home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones/org.cry.otp_31.apk', 'coordinated_edits': [{'source_file': 'app/src/main/java/org/cry/otp/TOTP.java', 'symbol': 'hmac_sha', 'edit_kind': 'declaration', 'original_code': '            SecretKeySpec macKey = new SecretKeySpec(keyBytes, "RAW");', 'corrected_code': '            SecretKeySpec macKey = new SecretKeySpec(keyBytes,\n                    ("HmacSHA256".equals(crypto) || "HmacSHA512".equals(crypto)) ? crypto : "RAW");', 'reason': 'Use allowed key labels for the two compatible selections while preserving the key bytes and the existing RAW label for SHA-1.'}], 'changed_files': ['app/src/main/java/org/cry/otp/TOTP.java'], 'quality_score': 100, 'explanation': '<!-- pr-title: Use selected HMAC key labels for SHA-256 and SHA-512 -->\nIn `TOTP.hmac_sha`, the code builds an HMAC key from `keyBytes` with the label `RAW`. RVSec reported that this `SecretKeySpec` call uses a label its rule does not accept.\n\nI changed the label to the selected algorithm for `HmacSHA256` and `HmacSHA512`. The key bytes stay the same, and other selections, including SHA-1, retain `RAW`; the reported label therefore remains in use for those selections.', 'applied_timestamp': '2026-11-16T05:58:23.121507+00:00'}], 'errors': []}
+
+=== VALIDATION ===
+$ /home/antonow/venv/bin/python -m cognalys.validation.applied_solutions --projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/build_validation --execution-report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/execution_report.json --variant debug --timeout 3600
+Running isolated compilation validation for 1 finding(s)
+2026-11-16 02:58:24,328 - INFO - Projects dir: /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/worktrees/org.cry.otp_31.apk/4187ba41bc5c
+2026-11-16 02:58:24,330 - INFO - Output dir: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/build_validation/4187ba41bc5c/production
+2026-11-16 02:58:24,330 - INFO - Android SDK: /home/antonow/Android/Sdk
+2026-11-16 02:58:24,331 - INFO - Gradle task: assembleDebug
+2026-11-16 02:58:24,332 - INFO - Minification override: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/build_validation/4187ba41bc5c/production/disable_proguard.init.gradle
+2026-11-16 02:58:24,333 - INFO - Clean before build: True
+2026-11-16 02:58:24,333 - INFO - Initialize Git submodules: True
+2026-11-16 02:58:24,334 - INFO - Projects selected: 1
+2026-11-16 02:58:24,334 - INFO - [1/1] Building a410948b28
+2026-11-16 02:59:01,453 - INFO - [1/1] a410948b28: success, apk_count=1, log=/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/build_validation/4187ba41bc5c/production/logs/projects/a410948b28.log
+2026-11-16 02:59:01,479 - INFO - Done: 1 success, 0 failed, 0 infrastructure failure, 0 skipped, 0 timeout
+2026-11-16 02:59:01,480 - INFO - Reports: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/build_validation/4187ba41bc5c/production/build_report.json and /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/build_validation/4187ba41bc5c/production/build_report.csv
+Compilation validation: 1 passed, 0 failed, 0 not executed; 1 solution records enriched
+Validation succeeded for every solution; skipping validation_fix and revalidation (use --force-revalidation to always run them).
+
+=== PRS ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.run_prs --execution-report /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/execution_report.json --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/pull_requests --pr-issue-style v3 --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 16384 --reasoning-effort high --cache-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/.llm_cache --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/openai_prompt_logs
+2026-11-16 02:59:02,850 - INFO - Loaded 1 solutions
+2026-11-16 02:59:02,851 - INFO - hmac_sha [MacSpec] has no effect in its own patch; the pull request is attributed to hmac_sha [SecretKeySpecSpec]
+2026-11-16 02:59:02,851 - INFO - Generating a non-publishable PR preview for review-only solution org.cry.otp_31.apk
+2026-11-16 02:59:03,436 - INFO - Branch already exists: fix/hmac_sha-secretkeyspecspec-4187ba41bc5c-a410948b28
+2026-11-16 02:59:08,389 - INFO - hmac_sha: fix_scope review_only, not publishable (compatibility_contract: A reviewer would have to determine how any proposed change preserves or coordinates the SHA-1 verifier contract; the pipeline cannot validate external verifiers.; compatibility_contract: The SHA-1 selection must continue producing SHA-1 TOTP values for matching verifiers. No compliant replacement preserving that path is established; changing its algorithm also leaves the joint key-label constraint to address.)
+2026-11-16 02:59:08,768 - INFO - PR generated: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/pull_requests/org.cry.otp_31.apk_hmac_sha_MacSpec_pr.json
+2026-11-16 02:59:08,768 - INFO - PR generation summary: 1 generated, 0 failed
+
+=== PREVIEW ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.generate_github_previews --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/pull_requests --issue-candidates-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_solutions/issue_candidates --evidence-reviews-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/error_solutions/evidence_reviews --output-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/previews --issue-title "Potential security issue found — would you be open to a pull request?" --issue-title-without-security-impact "Question about the {api} use in {location} — would you be open to a pull request?" --issue-body "Hi! I'm a Computer Engineering student at the University of Brasília (UnB), working on a research project about how Android apps use security-sensitive APIs." --pr-issue-style v3
+PREVIEW: chrismiceli/motp -> org.cry.otp_31.apk_hmac_sha_MacSpec.md
+ANALYSIS PREVIEW: org.cry.otp_31.apk_hmac_sha_MacSpec_analysis.md
+Preview summary: 1 PR previews, 1 issue previews, 1 analysis previews, 0 failed
+Output: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/previews
+
+=== FIX_PRS ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.pr_feedback --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/pull_requests --projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones --worktrees-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/worktrees --output /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/fix_prs_report.json --model gpt-6.1-terra --endpoint https://api.openai.com/v1 --timeout 600 --max-output-tokens 32768 --reasoning-effort high --prompt-log-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/openai_prompt_logs
+WARNING: No published pull requests found in /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/pull_requests: this step scans '*_pr_created.json' there and found none, so nothing was revised. If the pull request you meant to revise was opened by an earlier run, point --pull-requests-dir at that run's pull_requests directory.
+
+=== REVALIDATION_FIX_PRS ===
+$ /home/antonow/venv/bin/python -m cognalys.prs.pr_feedback --revalidate --pull-requests-dir /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/pull_requests --projects-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/clones --worktrees-dir /home/antonow/cognalys_work/c_arm_k3_fixes/co_0a32f516feb2_r1/worktrees --output /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/application_results/fix_prs_report.json --timeout 600 --build-variant debug --build-timeout 3600
+
+Model calls of this run:
+  evidence_extraction              1 calls       36,042 in (0 cached, 36,039 written)       3,630 out  US$ 0.03
+  external_research                2 calls       24,081 in (0 cached, 6,894 written)       3,457 out  US$ 0.03
+  code_generation                  2 calls       15,730 in (0 cached, 15,724 written)       2,272 out  US$ 0.02
+  patch_planning                   2 calls       15,361 in (7,430 cached, 7,925 written)       7,184 out  US$ 0.02
+  adjudication                     1 calls       14,754 in (0 cached, 14,751 written)       4,734 out  US$ 0.02
+  pr_generation                    1 calls        1,241 in (0 cached, 1,238 written)         582 out  US$ 0.00
+  total                            9 calls      107,209 in (7,430 cached, 82,571 written)      21,859 out  US$ 0.13; 0 answered from the cache, 1 served by the research corpus; 1 web search calls billed; served tiers flex 9
+
+Pipeline finished successfully.
+Run status: complete
+
+=== RETROSPECTIVE ===
+1 finding(s): 1 at generation; 1 new and 0 recurring failure signature(s)
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/retrospective/retrospective.md
+
+=== STATISTICS ===
+Report: /mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/c_arm_k3_fixes/co_0a32f516feb2/r1/statistics/statistics.md
+Pipeline elapsed time: 00h 06m 22s
+violação sem impacto de segurança          org.cry.otp_31.apk hmac_sha [MacSpec]  (8 calls, 127k tokens, US$ 0.12)
+PR pronto                                  org.cry.otp_31.apk hmac_sha [SecretKeySpecSpec] -> Use selected HMAC key labels for SHA-256 and SHA-512 [PR atribuído a este achado; hmac_sha [MacSpec] ficou sem efeito no patch]  (1 calls, 2k tokens, US$ 0.00)
+
+2 findings. violação sem impacto de segurança: 1, PR pronto: 1
+Most model use without a pull request:
+  8 calls, 127k tokens, US$ 0.12           org.cry.otp_31.apk hmac_sha [MacSpec] -> violação sem impacto de segurança

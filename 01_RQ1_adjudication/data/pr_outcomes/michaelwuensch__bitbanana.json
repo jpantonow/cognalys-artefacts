@@ -1,0 +1,14 @@
+[
+  {
+    "pull_request": "https://github.com/michaelWuensch/BitBanana/pull/184",
+    "state": "open",
+    "finding_id": "53c35a191a23",
+    "spec": "PBEKeySpecSpec",
+    "csv_class": "app.michaelwuensch.bitbanana.util.UtilFunctions",
+    "method_name": "encodePbkdf2",
+    "title": "Upgrade app-lock verifiers to PBKDF2-HMAC-SHA256",
+    "impact_class": "security_impact",
+    "recorded_at": "2026-11-19T20:39:17.825296+00:00",
+    "maintainer_feedback": []
+  }
+]

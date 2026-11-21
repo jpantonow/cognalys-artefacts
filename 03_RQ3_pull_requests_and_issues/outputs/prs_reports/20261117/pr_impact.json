@@ -1,0 +1,189 @@
+{
+ "https://github.com/0xzhangke/fread/pull/168": [
+  "no_security_impact"
+ ],
+ "https://github.com/aivanovski/keepassvault/pull/347": [
+  "impact_not_established"
+ ],
+ "https://github.com/anenasa/androidtv-news/pull/14": [
+  "impact_not_established"
+ ],
+ "https://github.com/binwiederhier/ntfy-android/pull/184": [
+  "not_recorded"
+ ],
+ "https://github.com/bitcraze/crazyflie-android-client/pull/103": [
+  "impact_not_established"
+ ],
+ "https://github.com/bombusmod/bombusmod/pull/316": [
+  "impact_not_established"
+ ],
+ "https://github.com/chiu-xah/hfut-schedule/pull/109": [
+  "impact_not_established"
+ ],
+ "https://github.com/christianrowlands/android-network-survey/pull/149": [
+  "no_security_impact"
+ ],
+ "https://github.com/christianrowlands/android-network-survey/pull/154": [
+  "no_security_impact"
+ ],
+ "https://github.com/crazy-marvin/metadataremover/pull/264": [
+  "impact_not_established"
+ ],
+ "https://github.com/crustack/notallyx/pull/1167": [
+  "no_security_impact"
+ ],
+ "https://github.com/domi04151309/homeapp/pull/114": [
+  "impact_not_established"
+ ],
+ "https://github.com/etesync/android/pull/301": [
+  "impact_not_established"
+ ],
+ "https://github.com/fliegendewurst/triliumdroid/pull/177": [
+  "impact_not_established"
+ ],
+ "https://github.com/fossifyorg/gallery/pull/1145": [
+  "no_security_impact"
+ ],
+ "https://github.com/freeotp/freeotp-android/pull/521": [
+  "not_recorded"
+ ],
+ "https://github.com/freeotp/freeotp-android/pull/524": [
+  "impact_not_established"
+ ],
+ "https://github.com/gigabytedevelopers/cometotp/pull/114": [
+  "impact_not_established"
+ ],
+ "https://github.com/hanjoongcho/aaf-easydiary/pull/253": [
+  "impact_not_established"
+ ],
+ "https://github.com/hiddenramblings/tagmo/pull/765": [
+  "impact_not_established"
+ ],
+ "https://github.com/idunnololz/summit/pull/54": [
+  "no_security_impact"
+ ],
+ "https://github.com/itzskyeyt/intertune/pull/52": [
+  "impact_not_established"
+ ],
+ "https://github.com/javalc6/rssreader/pull/4": [
+  "impact_not_established"
+ ],
+ "https://github.com/jenspfahl/anotherpass/pull/103": [
+  "no_security_impact"
+ ],
+ "https://github.com/jimvixx/shortmessagesecure/pull/83": [
+  "impact_not_established"
+ ],
+ "https://github.com/jimvixx/shortmessagesecure/pull/89": [
+  "impact_not_established"
+ ],
+ "https://github.com/leekleak/traffic-light/pull/238": [
+  "no_security_impact"
+ ],
+ "https://github.com/legal-hkr/comfychair/pull/43": [
+  "impact_not_established"
+ ],
+ "https://github.com/michaelwuensch/bitbanana/pull/184": [
+  "security_impact"
+ ],
+ "https://github.com/mouse233/localsend-kotlin/pull/58": [
+  "not_recorded"
+ ],
+ "https://github.com/mretallack/slimbook/pull/3": [
+  "impact_not_established"
+ ],
+ "https://github.com/nelenkov/wwwjdic/pull/115": [
+  "impact_not_established"
+ ],
+ "https://github.com/nextcloud/news-android/pull/1716": [
+  "impact_not_established"
+ ],
+ "https://github.com/omaawr/tuisku/pull/11": [
+  "impact_not_established"
+ ],
+ "https://github.com/omaawr/tuisku/pull/12": [
+  "impact_not_established"
+ ],
+ "https://github.com/openhab/openhab-android/pull/4039": [
+  "not_recorded"
+ ],
+ "https://github.com/orgzly-revived/orgzly-android-revived/pull/1121": [
+  "no_security_impact"
+ ],
+ "https://github.com/ounben/amaradio/pull/122": [
+  "impact_not_established"
+ ],
+ "https://github.com/paroj/dsub2000/pull/160": [
+  "impact_not_established"
+ ],
+ "https://github.com/paroj/dsub2000/pull/178": [
+  "security_impact"
+ ],
+ "https://github.com/patzly/grocy-android/pull/1012": [
+  "impact_not_established"
+ ],
+ "https://github.com/patzly/grocy-android/pull/1013": [
+  "impact_not_established"
+ ],
+ "https://github.com/privacydragon/bookwyrm_android/pull/29": [
+  "not_recorded"
+ ],
+ "https://github.com/readyouapp/readyou/pull/1334": [
+  "security_impact"
+ ],
+ "https://github.com/schorschii/droid_scep/pull/2": [
+  "impact_not_established"
+ ],
+ "https://github.com/session-foundation/session-android/pull/2241": [
+  "security_impact"
+ ],
+ "https://github.com/silentcoderhere/aihub/pull/279": [
+  "impact_not_established"
+ ],
+ "https://github.com/spacecowboy/feeder/pull/1210": [
+  "impact_not_established"
+ ],
+ "https://github.com/stardomains3/oxproxion/pull/94": [
+  "impact_not_established"
+ ],
+ "https://github.com/thatsfguy/meshcore-mobile-app/pull/10": [
+  "impact_not_established"
+ ],
+ "https://github.com/thuryn/your-local-weather/pull/209": [
+  "impact_not_established"
+ ],
+ "https://github.com/tokn-authenticator/tokn/pull/138": [
+  "no_security_impact"
+ ],
+ "https://github.com/valent-in/auto-shine/pull/12": [
+  "impact_not_established",
+  "not_recorded"
+ ],
+ "https://github.com/vauth/salty-app/pull/6": [
+  "impact_not_established"
+ ],
+ "https://github.com/vitorpamplona/amethyst/pull/4642": [
+  "impact_not_established"
+ ],
+ "https://github.com/vremsoftwaredevelopment/wifianalyzer/pull/618": [
+  "not_recorded"
+ ],
+ "https://github.com/wilm0r/giggity/pull/543": [
+  "impact_not_established"
+ ],
+ "https://github.com/woheller69/whobird/pull/144": [
+  "security_impact"
+ ],
+ "https://github.com/wolpi/prim-ftpd/pull/453": [
+  "impact_not_established"
+ ],
+ "https://github.com/yogeshpaliyal/keypass/pull/1252": [
+  "impact_not_established"
+ ],
+ "https://github.com/zamojski/towercollector/pull/284": [
+  "no_security_impact"
+ ],
+ "https://github.com/zfdang/zsmth-android/pull/66": [
+  "security_impact"
+ ]
+}

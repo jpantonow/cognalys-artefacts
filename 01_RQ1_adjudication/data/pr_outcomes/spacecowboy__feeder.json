@@ -1,0 +1,30 @@
+[
+  {
+    "pull_request": "https://github.com/spacecowboy/Feeder/pull/1210",
+    "state": "open",
+    "finding_id": "f35c9589f426",
+    "spec": "SSLContextSpec",
+    "csv_class": "com.nononsenseapps.jsonfeed.OkHttpBuilderExtensionsKt",
+    "method_name": "trustAllCerts",
+    "title": "Fix trustAllCerts",
+    "impact_class": "impact_not_established",
+    "recorded_at": "2026-11-19T20:37:59.378545+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "spacecowboy",
+        "kind": "comment",
+        "body": "now please use your human brain and summarize what your ai-pal did please. I'm not reading through that wall of ai text"
+      },
+      {
+        "author": "spacecowboy",
+        "kind": "comment",
+        "body": "This PR would mean some sites would stop working. And that is not acceptable."
+      },
+      {
+        "author": "ibrahim-iqbal",
+        "kind": "review",
+        "body": "Read this carefully — the fix is right, and the delegate approach is the cleanest way to do it.\n\n**Context for anyone reading this later:** `trustAllCerts` is Feeder's user-opt-in helper for self-hosted servers with weird cert setups (self-signed, custom CA, mismatched hostname). The tightening here doesn't change what it accepts on the trust side — it changes what protocols the resulting `SSLSocketFactory` will speak. `SSLContext.getInstance(\"TLS\")` on Android/JVM initialises the context correctly but leaves legacy TLSv1/TLSv1.1 (and, historically, SSLv2/v3) in each socket's `enabledProtocols`. `droidbot:dfs_naive` caught that.\n\nWhat lands:\n\n- `ProtocolFilteringSslSocketFactory` wraps every socket the delegate creates, then strips anything matching `SSL*`, `TLSv1`, `TLSv1.0`, `TLSv1.1` from `enabledProtocols`. What survives is TLS 1.2/1.3, which is exactly the tool's expectation.\n- `filterLegacyTlsProtocols` throws `IOException` if the filter would empty the array — fail-secure rather than silently disable TLS entirely. Good.\n- Wrapping is preferred over calling `SSLContext.getInstance(\"TLSv1.3\")` because Android's min-API surface still varies on TLS 1.3 availability, and the delegate model keeps `NoSuchAlgorithmException` handling out of hot paths.\n- All seven `createSocket` overloads are covered, including the `(socket, host, port, autoClose)` layered variant that OkHttp actually uses. If any of those had been missed, the wrapper would silently return an un-filtered socket for that code path.\n- The `configure` closer-on-failure block preserves the filtering exception rather than swallowing it under a `close()` failure. Nice detail.\n\nSmall observations, non-blocking:\n\n- `isLegacyTlsProtocol` uses `ignoreCase = true` — matches historical `TLSv1` vs `TLSv1.0` naming quirks across JDK vendors, so this is defensive not paranoid.\n- The added androidTest exercises the filter directly; a wider integration test asserting a real TLSv1.2-only handshake would be nice-to-have"
+      }
+    ]
+  }
+]

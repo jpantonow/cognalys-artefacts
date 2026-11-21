@@ -1,0 +1,31 @@
+# Arm D (Cognalys + Sonnet 5.5) of the agent comparison of 2026-11-13, unit pr_7d98a07e751d, replica 2.
+# APK io.github.thatsfguy.meshcore.native.debug_1.apk at 8f226db77a067f5de614514fe755695209868037; findings 7030778fa5d0, 7d98a07e751d.
+# Built by outputs/comparison_20261113/cognalys_d_arm_k3/build_d_arm.py; run with run_d_arm.sh.
+findings = ["/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/findings/pr_7d98a07e751d.jsonl"]
+run-dir = "/mnt/c/Users/Antonow/Documents/tcc_v3/frozen_runs_20261113/d_arm_sonnet_k3/pr_7d98a07e751d/r2"
+
+llm-provider = "anthropic"
+llm-model = "claude-sonnet-5-5"
+llm-endpoint = "https://api.anthropic.com"
+llm-reasoning-effort = "high"
+spec-model = "claude-sonnet-5-5"
+llm-max-output-tokens = 32768
+llm-timeout = 600
+max-cost = 3.00
+
+validate-build = true
+approve-review-only-for-validation = true
+generate-previews = true
+online-dependency-resolution = true
+build-timeout = 3600
+cloned-projects-dir = "/home/antonow/cognalys_work/d_arm_sonnet_k3/pr_7d98a07e751d_r2/clones"
+worktrees-dir = "/home/antonow/cognalys_work/d_arm_sonnet_k3/pr_7d98a07e751d_r2/worktrees"
+
+# Leak controls and freezing (as in the frozen PR run).
+holdout-repository = true
+learning-dir = "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/frozen_pr_20261113/learning"
+no-llm-cache = true
+llm-research-corpus-dir = "outputs/research_corpus"
+experiment-manifest = "/mnt/c/Users/Antonow/Documents/tcc_v3/outputs/comparison_20261113/cognalys_d_arm_k3/manifests/pr_7d98a07e751d_r2.json"
+experiment-live-research = true
+experiment-condition = "comparison_d_arm_k3"

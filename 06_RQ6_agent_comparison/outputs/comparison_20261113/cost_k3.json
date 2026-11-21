@@ -1,0 +1,93 @@
+{
+ "S": {
+  "model": "claude-sonnet-5-5",
+  "runs": 80,
+  "cost_usd_priced_runs": 80,
+  "cost_usd_total": 9.3804,
+  "cost_usd_mean_per_run": 0.1173,
+  "cost_usd_api_total": 9.3804,
+  "cost_usd_api_mean_per_run": 0.1173,
+  "cost_usd_list_mean_per_run": 0.1173,
+  "cost_usd_flex_mean_per_run": null,
+  "median_seconds": 28.0,
+  "median_diff_lines_pr": 49.0
+ },
+ "O": {
+  "model": "gpt-6.1-sol",
+  "runs": 80,
+  "cost_usd_priced_runs": 80,
+  "cost_usd_total": 9.6138,
+  "cost_usd_mean_per_run": 0.1202,
+  "cost_usd_api_total": 10.0337,
+  "cost_usd_api_mean_per_run": 0.1254,
+  "cost_usd_list_mean_per_run": 0.1254,
+  "cost_usd_flex_mean_per_run": 0.0653,
+  "median_seconds": 52.0,
+  "median_diff_lines_pr": 161
+ },
+ "T": {
+  "model": "gpt-6.1-terra",
+  "runs": 80,
+  "cost_usd_priced_runs": 80,
+  "cost_usd_total": 3.2993,
+  "cost_usd_mean_per_run": 0.0412,
+  "cost_usd_api_total": 3.4893,
+  "cost_usd_api_mean_per_run": 0.0436,
+  "cost_usd_list_mean_per_run": 0.0436,
+  "cost_usd_flex_mean_per_run": 0.023,
+  "median_seconds": 29.0,
+  "median_diff_lines_pr": 84
+ },
+ "TP": {
+  "model": "gpt-6.1-terra (+ prompt)",
+  "runs": 80,
+  "cost_usd_priced_runs": 80,
+  "cost_usd_total": 15.1368,
+  "cost_usd_mean_per_run": 0.1892,
+  "cost_usd_api_total": 15.9268,
+  "cost_usd_api_mean_per_run": 0.1991,
+  "cost_usd_list_mean_per_run": 0.1991,
+  "cost_usd_flex_mean_per_run": 0.1045,
+  "median_seconds": 179.0,
+  "median_diff_lines_pr": 21.0
+ },
+ "SP2": {
+  "model": "claude-sonnet-5-5 (+ prompt sp2)",
+  "runs": 80,
+  "cost_usd_priced_runs": 80,
+  "cost_usd_total": 28.2494,
+  "cost_usd_mean_per_run": 0.3531,
+  "cost_usd_api_total": 28.2494,
+  "cost_usd_api_mean_per_run": 0.3531,
+  "cost_usd_list_mean_per_run": 0.3531,
+  "cost_usd_flex_mean_per_run": null,
+  "median_seconds": 106.5,
+  "median_diff_lines_pr": 35.0
+ },
+ "C": {
+  "model": "gpt-6.1-terra (Flex)",
+  "runs": 80,
+  "cost_usd_priced_runs": 80,
+  "cost_usd_total": 8.1153,
+  "cost_usd_mean_per_run": 0.1014,
+  "cost_usd_api_total": 8.1153,
+  "cost_usd_api_mean_per_run": 0.1014,
+  "cost_usd_list_mean_per_run": 0.1945,
+  "cost_usd_flex_mean_per_run": 0.1014,
+  "median_seconds": null,
+  "median_diff_lines_pr": 8
+ },
+ "D": {
+  "model": "claude-sonnet-5-5 (Cognalys)",
+  "runs": 18,
+  "cost_usd_priced_runs": 18,
+  "cost_usd_total": 8.803,
+  "cost_usd_mean_per_run": 0.4891,
+  "cost_usd_api_total": 8.803,
+  "cost_usd_api_mean_per_run": 0.4891,
+  "cost_usd_list_mean_per_run": 0.4891,
+  "cost_usd_flex_mean_per_run": null,
+  "median_seconds": null,
+  "median_diff_lines_pr": 21.0
+ }
+}

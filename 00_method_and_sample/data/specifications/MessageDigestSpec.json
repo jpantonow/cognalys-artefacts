@@ -1,0 +1,334 @@
+{
+  "schema_version": 2,
+  "spec_id": "MessageDigestSpec",
+  "name": "MessageDigestSpec",
+  "applies_to_types": [
+    "java.security.MessageDigest"
+  ],
+  "source_title": "MessageDigest.crysl — CROSSINGTUD Crypto-API-Rules, Java Cryptographic Architecture rules",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/MessageDigest.crysl",
+  "source_verified": true,
+  "protocol": "Get · (digest(byte[]) | (update+ · (digest() | digest(byte[], int, int))))+",
+  "important_note": "This CrySL rule proves conformance only to its modeled API-call sequence, literal algorithm allow-list, and selected array-range constraints for java.security.MessageDigest. A finding does not by itself prove that the digest is reached at runtime, that it protects security-sensitive data, that an exploit exists, or that replacing an algorithm would preserve application compatibility.",
+  "events": [
+    {
+      "name": "Get",
+      "api_patterns": [
+        "MessageDigest.getInstance(",
+        "java.security.MessageDigest.getInstance("
+      ],
+      "condition": "Observed when a getInstance(String) or getInstance(String, provider) call is resolved to java.security.MessageDigest. It satisfies the rule's Get event only when the selected algorithm argument satisfies the rule predicate exactly: algorithm in {\"SHA-256\", \"SHA-384\", \"SHA-512\"}. Observing a factory call alone does not establish that predicate, especially when the argument is not statically known."
+    },
+    {
+      "name": "Update",
+      "api_patterns": [
+        ".update(",
+        "messageDigest.update("
+      ],
+      "condition": "Observed only when the receiver is resolved to java.security.MessageDigest and the overload is update(byte), update(byte[]), update(byte[], int, int), or update(ByteBuffer). It contributes to a conforming path only after Get and only when followed by a modeled Digest event. For update(byte[], offset, len), the rule predicate additionally requires length[input] >= offset + len, offset >= 0, and len > 0; merely calling update does not prove those conditions."
+    },
+    {
+      "name": "DigestWithInput",
+      "api_patterns": [
+        ".digest(",
+        "messageDigest.digest("
+      ],
+      "condition": "Observed when digest(byte[]) is invoked on a java.security.MessageDigest receiver. It satisfies the digest-with-input branch only after Get; this branch is permitted without a prior explicit update because the JDK API documents digest(byte[]) as a final update followed by completion. Observing this call does not establish any property of the input's contents or the returned digest's later use."
+    },
+    {
+      "name": "DigestAfterUpdate",
+      "api_patterns": [
+        ".digest(",
+        "messageDigest.digest("
+      ],
+      "condition": "Observed when digest() or digest(byte[], int, int) is invoked on a java.security.MessageDigest receiver. It satisfies the update-then-digest branch only after one or more modeled Update events following Get. For digest(output, offset, len), the rule additionally requires length[output] >= offset + len, offset >= 0, and len > 0; seeing the call does not itself establish these bounds."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "That every reported MD5 or SHA-1 use is security-sensitive rather than a cache key, checksum, display fingerprint, equality/hashCode aid, or other non-security identifier.",
+    "That the reported call executes on a feasible production path or that the reported algorithm value is the value used at runtime when the value is dynamic.",
+    "That a MessageDigest result is used for password storage, authentication, signatures, integrity verification, key derivation, or another particular security function.",
+    "That a provider accepts, rejects, aliases, or implements a particular algorithm name in the deployed runtime.",
+    "That the application can safely change the algorithm without changing persisted values, protocol formats, cache keys, interoperability, or verification behavior.",
+    "That an \"unknown\" report means a cryptographically weak algorithm was selected; it can also reflect incomplete value, call-target, or path information.",
+    "That this rule covers a different API whose type name merely contains MessageDigest or ends in Spec."
+  ],
+  "semantic_scope": "The verified rule is a CrySL specification whose declared governed type is exactly java.security.MessageDigest. It models MessageDigest.getInstance overloads, the four update overloads, and three digest overloads. Its representative messages match the rule's factory-algorithm constraint: only the literal strings SHA-256, SHA-384, and SHA-512 satisfy the declared allow-list.",
+  "detector_semantics": {
+    "claim": "For a modeled java.security.MessageDigest acquisition, an explicit message such as \"expecting one of {SHA-256, SHA-384, SHA-512} but found SHA-1\" indicates that the detector associated the factory algorithm argument with SHA-1 and that value violates this CrySL rule's algorithm-membership predicate.",
+    "predicates": [
+      "The relevant call target is java.security.MessageDigest.getInstance(String) or java.security.MessageDigest.getInstance(String, ...).",
+      "algorithm in {\"SHA-256\", \"SHA-384\", \"SHA-512\"}.",
+      "For update(byte[], preOffset, preLen): length[preInput] >= preOffset + preLen, preOffset >= 0, and preLen > 0.",
+      "For digest(output, offset, len): length[output] >= offset + len, offset >= 0, and len > 0.",
+      "The modeled event sequence conforms to Get followed by one or more permitted digest-computation branches."
+    ],
+    "limitations": [
+      "The supplied findings show constraint messages, not a complete event trace, receiver type-resolution trace, or proof of runtime reachability.",
+      "The rule itself does not define why this exact three-algorithm policy was chosen, nor does it classify the purpose of a digest.",
+      "The source rule does not state how a particular scanner reports unresolved values; therefore the meaning of a finding whose message is only \"unknown\" cannot be determined from the rule file alone.",
+      "This source was verified at the repository's master branch; the exact CrySL rule revision bundled with the detector was not supplied."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "The JDK MessageDigest API provides one-way message digests.",
+      "A MessageDigest starts initialized; update methods add data, digest methods complete the hash, and a digest call resets the object to its initialized state.",
+      "digest(byte[]) performs a final update using that argument before completing the digest."
+    ],
+    "preconditions": [
+      "getInstance requires a non-null algorithm name and requires a provider implementation for that algorithm; provider-taking overloads impose their documented provider requirements.",
+      "update(byte[], offset, len) requires a valid input buffer and range under the JDK API.",
+      "digest(byte[], offset, len) requires a valid output buffer and sufficient allotted space; the API can throw DigestException when an error occurs.",
+      "The CrySL rule adds its own stricter modeled positivity predicates preLen > 0 and len > 0 for the offset/length overloads."
+    ],
+    "unknowns": [
+      "The CrySL source does not establish whether all JDK-legal zero-length update or output-buffer operations are intended to be considered misuse or are an intentional conservative detector policy.",
+      "The CrySL source does not model reset() as an event; the handling of reset and other unlisted methods by the particular analysis engine requires engine-level evidence.",
+      "The provider, JDK release, Android runtime, and algorithm availability for each representative finding are not provided."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The detector policy accepts only SHA-256, SHA-384, or SHA-512 at the modeled MessageDigest factory call.",
+    "runtime_claim": "The Java MessageDigest API documents digest construction and processing behavior, but it does not make the CrySL allow-list a universal runtime security guarantee. In particular, the documented API includes SHA-1 among Java-platform-required MessageDigest algorithms, while the CrySL policy rejects SHA-1.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "A call site or bytecode trace resolving the reported invocation to java.security.MessageDigest.getInstance, rather than to a similarly named application or library API.",
+      "The exact algorithm argument expression and, for non-literals, value-flow evidence sufficient to determine its possible runtime values.",
+      "The precise CrySL rules archive or commit and scanner version used to produce the finding.",
+      "For typestate or range conclusions, the relevant receiver-specific call sequence and values of offset, len, and buffer lengths."
+    ],
+    "runtime": [
+      "A reproduction under the deployed JDK or Android runtime and configured security provider(s).",
+      "Evidence that the path is reachable with the reported algorithm value.",
+      "Evidence of what data is hashed and how the resulting digest is consumed."
+    ],
+    "compatibility": [
+      "Evidence of persisted hashes, cache-file names, protocol fields, fingerprints, or interoperability formats that depend on the existing digest output.",
+      "Evidence that all producers and consumers can migrate consistently if an algorithm or digest length changes.",
+      "Provider and platform support evidence for any candidate algorithm in the actual deployment environment."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "Algorithm values selected dynamically where static analysis reports an unresolved or overly broad value set although production configuration restricts the value to an allowed algorithm.",
+    "A report tied to a source location that contains multiple digest-related calls, without enough supplied trace information to identify which java.security.MessageDigest factory invocation supplied the constrained algorithm.",
+    "A zero-length update(byte[], offset, len) or digest(byte[], offset, len) operation that is valid for the runtime API but violates the CrySL rule's explicit len > 0 predicate.",
+    "Code using digest(byte[]) directly after getInstance. This is permitted by the verified CrySL protocol and should not be inferred to be an incomplete-update violation merely because no separate update call appears."
+  ],
+  "non_security_violation_shapes": [
+    "MD5 or SHA-1 used only as a non-adversarial cache-file key, in-memory hashCode helper, checksum, or UI/display fingerprint. Such code still violates the rule's unconditional allow-list, but may not represent a security defect in context."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/MessageDigest.crysl",
+    "https://github.com/CROSSINGTUD/Crypto-API-Rules/blob/master/JavaCryptographicArchitecture/src/MessageDigest.crysl",
+    "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/security/MessageDigest.html",
+    "https://docs.oracle.com/en/java/javase/25/docs/specs/security/standard-names.html#messagedigest-algorithms"
+  ],
+  "unknowns": [
+    "Which exact version, commit, or locally modified copy of MessageDigest.crysl generated these findings.",
+    "Whether the detector's \"unknown\" finding in de.blau.android.presets.Preset reflects an unresolved algorithm value, unresolved call target, a protocol/range violation, or another detector diagnostic.",
+    "Whether each reported MD5 or SHA-1 digest is security-sensitive and attacker-relevant.",
+    "Whether each algorithm string is a compile-time literal, configuration value, provider alias, or transformed value at runtime.",
+    "Which runtime provider implements each reported MessageDigest and whether deployment policies disable, warn on, or otherwise constrain the requested algorithm.",
+    "Whether unmodeled reset() calls or other unlisted MessageDigest methods affect the analysis outcome in the detector version used."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.password.monitor.utils.HashUtils$Companion$getHashPrefixAndSuffix$2",
+        "method": "invokeSuspend",
+        "message": "expecting one of {SHA-256, SHA-384, SHA-512} but found SHA-1."
+      },
+      {
+        "class": "com.sapuseven.untis.data.cache.DiskCache",
+        "method": "getCacheFile",
+        "message": "expecting one of {SHA-256, SHA-384, SHA-512} but found MD5."
+      },
+      {
+        "class": "com.schwegelbin.openbible.logic.GettersKt",
+        "method": "getChecksum",
+        "message": "expecting one of {SHA-256, SHA-384, SHA-512} but found SHA-1."
+      },
+      {
+        "class": "com.vrem.wifianalyzer.wifi.accesspoint.AccessPointsAdapterData",
+        "method": "calculateChildType",
+        "message": "expecting one of {SHA-256, SHA-384, SHA-512} but found MD5."
+      },
+      {
+        "class": "de.blau.android.presets.Preset",
+        "method": "<init>",
+        "message": "unknown"
+      },
+      {
+        "class": "de.stephanlindauer.criticalmaps.utils.AeSimpleSHA1",
+        "method": "SHA1",
+        "message": "expecting one of {SHA-256, SHA-384, SHA-512} but found SHA-1."
+      },
+      {
+        "class": "eu.faircode.email.Helper",
+        "method": "getFingerprint",
+        "message": "expecting one of {SHA-256, SHA-384, SHA-512} but found SHA1."
+      },
+      {
+        "class": "net.gaast.giggity.Schedule$Item",
+        "method": "hashCode",
+        "message": "expecting one of {SHA-256, SHA-384, SHA-512} but found MD5."
+      },
+      {
+        "class": "org.quantumbadger.redreader.common.General",
+        "method": "sha1",
+        "message": "expecting one of {SHA-256, SHA-384, SHA-512} but found SHA-1."
+      }
+    ],
+    "expected_api_simple_name": "MessageDigest",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": true,
+  "source_audit": {
+    "state": "verified",
+    "detail": "crysl_spec_line:java.security.MessageDigest",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/master/JavaCryptographicArchitecture/src/MessageDigest.crysl"
+  },
+  "analysis_family": "message_digest",
+  "remediation_policies": [
+    {
+      "when": {
+        "message_pattern": "\\bfound\\s+(?:SHA-?1|MD-?5|MD-?2|SHA-?0)\\b"
+      },
+      "evidence": [
+        "value_fallback",
+        "digest_reference",
+        "digest_file_name",
+        "digest_store_key"
+      ],
+      "policy": {
+        "authorized": true,
+        "usage_classification": "pending_evidence",
+        "consumer_scope": "internal_recomputed_digest_value",
+        "scope": "This authorization is conditional and applies only to a digest whose value is recomputed from live data and compared against another value produced by the same code path in the same process. It does not authorize changing a digest whose value is persisted, transmitted, exported, or compared against a value produced by any other program or by an earlier release.",
+        "authorization_conditions": [
+          "The examined scope classifies the usage as a cache or runtime discriminator, not as persistence, protocol, public_api, fingerprint, or password.",
+          "The expected value source is internal to this repository.",
+          "No persistence, network, protocol, identity, or security sink for the derived value was identified in the examined scope."
+        ],
+        "strategy": "Replace the weak algorithm literal with a governed algorithm (SHA-256 preferred) while preserving the surrounding method signature, return type, and value-derivation shape. Both the stored comparison value and the recomputed value come from the same method, so an in-process discriminator stays correct across the change without any value migration.",
+        "finding_semantics": "A confirmed algorithm-allowlist violation is a real finding even when the digest is not used for security. Do not claim a runtime security impact that the evidence does not establish, and do not treat the absence of a proven security impact as a reason to leave the governed algorithm in place.",
+        "absence_of_proof_guidance": "A bounded scope analysis can never prove that no unexamined, reflective, packaged, or external consumer exists. When the examined scope is complete for the reachable callers and identified no such consumer, treat that as supporting the internal classification rather than as a compatibility blocker. Requiring proof of a universal negative would make every digest migration permanently unfixable, which is not the intent of this policy.",
+        "forbidden_changes": [
+          "Do not change the method signature or return type; when the method folds digest bytes into a fixed-width value (an int, a long, a hashCode), keep the number of bytes folded, while a helper that returns the whole digest returns the new algorithm's full output; the name may change when rename_safety reports no hard blocker (a repository check the pipeline runs, not a maintainer approval): then rename it and update every reference in the same patch.",
+          "Do not make a function whose name states the weak algorithm (sha1, md5) compute a different digest: switch every caller of the weak-named function to a correctly named function, an existing one or a new one the patch adds beside it (for example a sha256 helper); or rename the weak-named function when rename_safety reports no hard blocker (a repository check the pipeline runs, not a maintainer approval), updating every reference in the same patch.",
+          "Do not change a digest whose value names or keys stored data (a file, a database, a preferences entry) or is sent out of the process; derived_value_consumers records where it goes. A file in the app's cache directory (a consumer of kind cache), which the platform may delete at any time, is not stored data.",
+          "Do not migrate a digest whose expected value is produced by an external backend, another repository, or a previous release.",
+          "Do not introduce a persisted or transmitted representation of the digest that did not already exist.",
+          "Do not claim the change removes a security vulnerability when the evidence classifies the usage as non-security."
+        ],
+        "required_tests": [
+          "The discriminator still reports an unmodified value as unmodified.",
+          "The discriminator still reports a modified value as modified."
+        ],
+        "review_fallback": "Generate MULTI_FILE_FIX_PROPOSED_FOR_REVIEW when the digest usage is internal and recomputed in process but any consumer inventory, persisted representation, or cross-release value contract remains unresolved."
+      },
+      "variants": [
+        {
+          "when_evidence": "is_hashcode_override",
+          "set": {
+            "usage_classification": "hashcode_override",
+            "strategy": "This digest implements an override of Object.hashCode(). Do not merely substitute a governed algorithm: replace the MessageDigest usage entirely with the idiomatic, non-cryptographic form -- java.util.Objects.hash(...) over the same fields the current implementation digests, or the equivalent String.hashCode(). That removes the governed-API violation at its root, drops the NoSuchAlgorithmException handling and the byte-buffer folding, and preserves the method signature and int return type. Keep hashCode consistent with equals over the same fields.",
+            "required_tests": [
+              "Two items with equal hashed fields produce equal hashCode values.",
+              "hashCode stays consistent with equals for the same fields."
+            ]
+          },
+          "append": {
+            "forbidden_changes": [
+              "Do not keep a java.security.MessageDigest call inside hashCode(); replacing MD5 with SHA-256 there would satisfy the detector while preserving the underlying design defect.",
+              "Do not change which fields participate in the hash, and do not make hashCode inconsistent with equals."
+            ]
+          }
+        },
+        {
+          "when_evidence": "expected_digests_verified",
+          "set": {
+            "usage_classification": "artifact_integrity_check",
+            "consumer_scope": "verified_expected_digest_replacement",
+            "uses_replacement_values": true,
+            "scope": "The digest checks the integrity of files the code downloads from fixed URLs against fixed expected constants. established_digest_reference_evidence shows, by downloading each file, which constant each file's current digest equals, and gives the SHA-256 of the same file.",
+            "authorization_conditions": [],
+            "strategy": "Compute SHA-256 instead of the weak digest wherever these files are checked, and replace each expected constant listed in replacement_values with its new_value, exactly as given. A constant whose name states the weak algorithm may be renamed only when every reference is in the edited files. Constants in unmatched_digest_constants have no known SHA-256: remove the check against them rather than keeping the weak algorithm for them, so a file that only they accepted is treated like any other mismatch. MessageDigest SHA-256 is available on every Android version, so no fallback is needed.",
+            "finding_semantics": "The weak digest guards downloaded files; the replacement values were computed from the files the code downloads, not assumed.",
+            "forbidden_changes": [
+              "Do not invent, shorten or reformat a digest value: use each new_value exactly as given.",
+              "Do not keep the weak algorithm for any check, including a legacy one.",
+              "Do not change the download URLs, the file names, or the download flow beyond what the new expected values require."
+            ],
+            "required_tests": []
+          },
+          "append": {
+            "states_facts": [
+              "digest_references"
+            ]
+          }
+        },
+        {
+          "when_evidence": "names_stored_file",
+          "set": {
+            "usage_classification": "persisted_file_name",
+            "consumer_scope": "persisted_file_name",
+            "scope": "This authorization applies when the digest value is part of the name of a file the application itself creates and opens (a database, cache or data file) and nothing outside the application relies on that name.",
+            "authorization_conditions": [
+              "The examined scope shows the digest only forms the name of a file this application creates and opens itself.",
+              "No server, export format, backup format or other application relies on the file name."
+            ],
+            "strategy": "Rename, then migrate. Name the file with a governed algorithm (SHA-256 preferred) from now on. Before the file is opened, when no file exists under the new name and one exists under the old name, rename the old file to the new name -- for a SQLite database also its -journal, -wal and -shm companions -- so the user's data is kept. Keep the old derivation only to compute the old name for that rename, in a helper whose name says it is the legacy name; a function named after the weak algorithm must not start computing a different digest.",
+            "forbidden_changes": [
+              "Do not leave existing data behind: a file under the old name must be renamed to the new one before it is opened, never ignored or deleted.",
+              "Do not make a function whose name states the weak algorithm compute a different digest.",
+              "Do not change a digest that leaves the application (a backup or export format, a server path)."
+            ],
+            "required_tests": [
+              "A file stored under the old name is found under the new name after the migration, with its content unchanged.",
+              "A new file is named with the governed algorithm."
+            ],
+            "keeps_legacy_derivation": true
+          },
+          "append": {
+            "states_facts": [
+              "stored_file_name"
+            ]
+          }
+        },
+        {
+          "when_evidence": "keys_stored_entries",
+          "set": {
+            "usage_classification": "stored_entry_key",
+            "consumer_scope": "stored_entry_key",
+            "scope": "This authorization applies when the digest value is the key under which the application itself stores entries (a map saved to preferences, a key-value or binary store, a repository or DAO) and nothing outside the application relies on that key. established_digest_store_key_evidence lists the stores and the files that read and write them.",
+            "authorization_conditions": [
+              "The examined scope shows the digest only keys entries this application stores and loads itself.",
+              "No server, export format, backup format or other application relies on the key."
+            ],
+            "strategy": "Re-key, then migrate. Derive the key with a governed algorithm (SHA-256 preferred) from now on. Where the stored entries are loaded -- every store in store_key_sites, whose files are listed in store_files and must be part of the change -- move each entry found under the legacy key to the new key before it is used: write it under the new key and remove the old one, for every place data is kept under that key (a saved map, a binary or key-value store, files named by it), so nothing the user had is orphaned. Keep the old derivation only to compute the legacy key for that move, in a helper whose name says it is the legacy key; a function named after the weak algorithm must not start computing a different digest.",
+            "forbidden_changes": [
+              "Do not leave existing entries behind: an entry stored under the legacy key must be moved to the new key when it is loaded, never ignored or deleted.",
+              "Do not make a function whose name states the weak algorithm compute a different digest.",
+              "Do not change a key that leaves the application (a backup or export format, a server path)."
+            ],
+            "required_tests": [
+              "An entry stored under the legacy key is found under the new key after the migration, with its content unchanged.",
+              "A new entry is keyed with the governed algorithm."
+            ],
+            "keeps_legacy_derivation": true
+          },
+          "append": {
+            "states_facts": [
+              "stored_entry_key"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

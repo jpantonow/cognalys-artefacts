@@ -1,0 +1,48 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T215230_653148_1181_0016_external_research.synthesis",
+  "parent_call_id": "group-20261103T215158_061507-1181-15",
+  "finding_id": "org.cryptomator.data.cloud.webdav.network.DefaultTrustManager$Companion:::tryToFindDefaultTrustManager:::TrustManagerFactorySpec:::UnsatisfiedConstraint:::a null KeyStore given to TrustManagerFactory.init requests the platform default trust store, whose loading was not observed",
+  "stage": "external_research.synthesis",
+  "status": "success",
+  "delivery": "sent_to_openai",
+  "prompt_version": "llm-pipeline-v2.1",
+  "schema_version": "2.1",
+  "policy_version": "2.0",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "high",
+  "input_characters": 7478,
+  "input_tokens": 1633,
+  "cached_input_tokens": 0,
+  "output_tokens": 843,
+  "latency_ms": 11468,
+  "retry_count": 0,
+  "request_id": "req_8bb0675a3dc74e2faa557ca30d8d173d",
+  "section_telemetry": {
+    "finding": {
+      "characters": 782,
+      "approx_tokens": 196,
+      "sha256": "297bf0ec9a506fa06ba195beb9d1461fbfba4132627c9b80f2c0bdf26c241ba8"
+    },
+    "questions": {
+      "characters": 1345,
+      "approx_tokens": 336,
+      "sha256": "031845df905d7ad66e7b82608eb43cabd0600bcbdc983bcc022c5b3513ca85d7"
+    },
+    "spec_policy": {
+      "characters": 435,
+      "approx_tokens": 109,
+      "sha256": "7d66e1664a1ff79e625a5a92da99c6b31b04266ac7ae4f918c427b1e72bc9959"
+    }
+  },
+  "retry_statuses": [],
+  "retry_errors": [],
+  "create_retries": [],
+  "server_created_after_ms": 291,
+  "openai_response_id": "resp_01ed0384e9fd8ecf006aea81cf42dc87d2b2a7e0b5940a499d",
+  "response_status": "completed",
+  "background_polls": 3,
+  "queued_resubmissions": 0,
+  "queued_cancelled_response_ids": [],
+  "completed_at": "2026-11-03T21:52:42"
+}

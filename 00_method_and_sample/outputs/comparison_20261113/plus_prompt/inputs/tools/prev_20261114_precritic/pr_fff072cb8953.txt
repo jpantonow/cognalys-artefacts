@@ -1,0 +1,21 @@
+Earlier proposals for this rule in other repositories, and what their maintainers answered:
+
+1. Repository: ItzSkyeYT/InterTune
+   Outcome: closed
+   Proposal: Migrate widget artwork hashes to SHA-256
+   Maintainer said: Thanks for the PR! This hash only names the widget’s cached cover files, so it does no security work, and switching it means migrating files for no gain. I’ll leave it as it is and close this.
+
+2. Repository: javalc6/rssreader
+   Outcome: closed
+   Proposal: Write file checksums with SHA-256
+   Maintainer said: Thanks for taking the time to run the app under RVSec, but it will not be merged. In _FileManager_, MD5 is used only as a checksum to detect accidental corruption of a backup file. It isn’t used for authentication, signatures, or password hashing, so MD5’s known weaknesses (collision attacks) don’t apply here. Since there’s no secret key, switching to SHA-256 wouldn’t stop anyone from modifying a file and recomputing a valid checksum, so it wouldn’t improve security. The _MessageDigestSpec_ warning is a generic rule that flags MD5 regardless of how it’s used. Note that _MessageDigest.getInstance("MD5")_ isn’t rejected by the Java/Android API [MessageDigest](https://developer.android.com/reference/java/security/MessageDigest)
+
+3. Repository: VREMSoftwareDevelopment/WiFiAnalyzer
+   Outcome: closed
+   Proposal: Fix calculateChildType
+   Maintainer said: This is a false positive. MD5 is used here as a checksum, not as a security control — that's exactly what it's still appropriate for. There's no password, token, or integrity check involved. Closing this one, but thanks for the effort.
+
+4. Repository: jimvixx/ShortMessageSecure
+   Outcome: merged
+   Proposal: Use SHA-256 for conversation stable IDs
+   Maintainer said: Thanks for the contribution and for checking SMSecure with RVSec! The change looks good. Although SHA-1 is only used here to generate stable RecyclerView item IDs and does not affect cryptographic security, switching to SHA-256 is a reasonable improvement. One small request before merging: could you also update the `AssertionError` message from `"SHA-1 missing"` to `"SHA-256 missing"` to match the new algorithm? Thanks again for your work! | Thanks for the quick update! Everything looks good now. I'll go ahead and merge the PR. Thanks again for your contribution to SMSecure!

@@ -1,0 +1,5 @@
+Prepared [PR.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r4/repo/PR.md) and the source change. The adapter now selects the cache size directly for the repository’s release and debug package names instead of hashing them with MD5.
+
+The debug APK build and eight focused unit tests passed. The repository does not identify the package name behind a third existing numeric mapping, so the PR asks maintainers to check separately built variants. RVSec was not rerun.
+
+The requested stage notes are in [ANALYSIS.md](/home/antonow/comparison_20261113/work/co_bdc0d1804c88/TP_r4/repo/ANALYSIS.md).

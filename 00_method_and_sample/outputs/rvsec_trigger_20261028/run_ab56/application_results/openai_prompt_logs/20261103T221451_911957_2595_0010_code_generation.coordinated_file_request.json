@@ -1,0 +1,160 @@
+{
+  "trace_version": 2,
+  "call_id": "20261103T221451_911957_2595_0010_code_generation.coordinated_file",
+  "parent_call_id": "",
+  "stage": "code_generation.coordinated_file",
+  "recorded_at": "2026-11-03T22:14:51",
+  "delivery": "sent_to_openai",
+  "endpoint": "https://api.openai.com/v1",
+  "model": "gpt-5.6-terra",
+  "timeout_seconds": 600,
+  "max_output_tokens": 32768,
+  "reasoning_effort": "high",
+  "web_search": false,
+  "json_mode": true,
+  "schema_name": "coordinated_file_draft",
+  "json_schema": {
+    "type": "object",
+    "properties": {
+      "decision": {
+        "type": "string",
+        "enum": [
+          "MULTI_FILE_FIX_PROPOSED_FOR_REVIEW"
+        ]
+      },
+      "source_file_path": {
+        "type": "string"
+      },
+      "explanation": {
+        "type": "string"
+      },
+      "edits": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "source_file_path": {
+              "type": "string",
+              "description": "The requested repository-relative path."
+            },
+            "symbol": {
+              "type": "string"
+            },
+            "edit_kind": {
+              "type": "string",
+              "enum": [
+                "method",
+                "declaration",
+                "constant",
+                "test",
+                "create",
+                "delete"
+              ]
+            },
+            "original_code": {
+              "type": "string",
+              "description": "Exact existing source block."
+            },
+            "corrected_code": {
+              "type": "string",
+              "description": "Complete replacement source block; empty only for edit_kind=delete."
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_file_path",
+            "symbol",
+            "edit_kind",
+            "original_code",
+            "corrected_code",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "no_change_required": {
+        "type": "boolean"
+      },
+      "provided_contracts": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "required_contracts": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "required_tests": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "manual_review_required": {
+        "type": "boolean"
+      },
+      "review_assumptions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "confidence": {
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ]
+      }
+    },
+    "required": [
+      "decision",
+      "source_file_path",
+      "explanation",
+      "edits",
+      "no_change_required",
+      "provided_contracts",
+      "required_contracts",
+      "required_tests",
+      "manual_review_required",
+      "review_assumptions",
+      "confidence"
+    ],
+    "additionalProperties": false
+  },
+  "instructions": "Generate edits for exactly one file in an atomic coordinated Java/Kotlin fix. Return JSON only. If this file needs no change because its code already fits the contracts the other files provide (for example a caller whose entry point is kept), return edits [] with no_change_required true and say why in explanation; never change a file only to have an edit to return. When test_classpath is present, this file is a test and may import only the repository's own packages, the listed always_available_prefixes, and the libraries in declared_dependencies: a test runner or helper the module does not declare does not compile, and adding it to the build file is outside this change. Write the test the declared libraries support. The reported target file always needs edits, and no_change_required must be false whenever edits is non-empty.For an existing file, copy every original_code verbatim from the supplied target source. For new_file=true, emit exactly one edit_kind=create with an empty original_code and the complete file in corrected_code. Do not edit another path. When the target file is a build file -- a Gradle script, a version catalog or versions.properties -- change only the declaration lines the plan names, copying each original_code line verbatim, and keep the file's own declaration style (catalog alias, constant or literal). Compatibility uncertainty must be recorded in review_assumptions and must not cause abstention for a review-only decision. Preserve every existing public or protected method signature unless the policy explicitly authorizes an API break. Never keep a function name that states a behaviour the patch removes (an algorithm, an encoding, a version). Take the first of these that applies: (1) switch every caller of the reported method to an existing correctly named declaration; (2) otherwise rename the declaration, or its whole overload family, when rename_safety.hard_blockers is empty, updating every one of rename_safety.references (each call, each import line, each ::name) in this batch; (3) otherwise switch every caller of the reported method to a correctly named declaration this batch adds beside it, and keep the weak-named one only if callers outside the patch remain. Never add a helper no production caller uses. rename_safety is a repository check this pipeline ran, not a maintainer approval; a maintainer's preference about a name is at most a note. Local variables and parameters need no rename_safety: rename one whose name embeds the value the patch removes. A function added beside an existing one keeps that function's visibility (internal, private), never a wider one. When replacing a deprecated API, keep every entry of deprecated_api_invariants (execution order, callback thread, cancellation, exception propagation) unless the plan names the deviation; never let a background task's exception disappear into an unread Future. detector, when present, says a runtime monitor reported the finding while the app ran: it observes each call, the object it is made on and the values passed, never the source text. A restructuring it would observe as the same calls on the same objects with the same values -- a helper inlined or extracted, an object's parts passed one by one instead of the object, statements split or merged, locals renamed or retyped -- cannot satisfy its rule; change the call, the object or the value the rule governs. Never replace the object or value the rule governs with a type of the app's own -- a new data class, record or class, a Pair, Triple, Map, list or array -- that carries the same parts from the same sources only so the governed API is no longer called: the app holds, trusts and does what it did, and the change has no effect. Using an object the platform already returns instead of rebuilding one (a key store entry through its own getters), or changing what the parts are or where they come from, is a change. Keep every existing comment and commented-out line the change does not make false, verbatim and where it was, also inside a block you rewrite: a commented-out alternative, a TODO the change does not resolve, a license line or an explanation of code the change leaves as it was is the maintainer's and stays. Only a comment that describes code this change removes or changes, or a TODO it resolves, may be removed or updated with that code. Resolve each joint finding (joint_findings, when present: violations reported in the same code that this change resolves too) with a change its checker observes at its own reported call (another call, object, value or order). A joint finding no such change resolves is left exactly as its code was: never restructure its code for it (a value moved into a local, statements split or merged, a helper extracted or inlined), which only adds lines the maintainer reads for nothing. verified_repository_imports are import lines a passing build of this repository contained: use exactly those for their symbols. previous_attempts_of_this_finding says how earlier runs of this finding ended; do not repeat what stopped them. maintainer_responses_to_this_rule_elsewhere are what other projects' maintainers did with a change for the same rule: shape this change so the objection they raised does not apply (keep a deliberate behaviour behind a setting or a debug-only condition, do not change a checksum persisted or compared across processes or releases -- one recomputed in-process on both sides may change); they say nothing about whether this finding is real. maintainer_responses_in_this_repository are what this repository's maintainers did with our changes for other rules: do not repeat what they objected to. Implement it with recommended_mechanisms; never build a queue, executor or cancellation scheme by hand on top of a mechanism listed under not_recommended. Keep the existing entry-point names so callers need no edit, unless the name states the behaviour the patch removes, and do not add a method that only delegates to a renamed one. Keep checked throws/catch contracts compilable across changed callers and callees. Kotlin helpers that are not an intended external API must be declared internal or private; never rely on Kotlin's implicit public visibility for a migration seam. A new declaration's callable scope is fixed by the brace nesting of its original_code anchor, not by how corrected_code is indented. If a new function or property will be called unqualified from another file or from a different class in this same edit batch (including a coordinated test file), the chosen anchor must already sit at file top-level -- outside every class/object/interface body. A helper written with no leading indentation does not become a top-level declaration merely because it looks like one; it inherits the nesting of whatever original_code it replaces. A sibling nested class that is not declared inner has no implicit access to another nested class's or the outer class's instance members. Do not retain a whole owner object merely to replace a retained crypto primitive unless lifecycle evidence and dispose tests require it. Dispose or wipe replaced sensitive wrappers before assignment. Prefer a package-private test seam over reflection. Use edit_kind=delete and corrected_code exactly empty for an intentional deletion such as an obsolete import. Never emit an empty corrected_code for another edit kind. Tamper tests must assert the concrete authentication-failure cause, and lifecycle-changing edits must test dispose behavior. Write a known expected value in the most readable form the test file or the project already uses for such values: a digest, key or ciphertext as the hex (or Base64) string its specification publishes, compared with the result encoded the same way through a helper the project or the test file already has, or a short local one; never as a long list of byte literals. Before adding tests to an existing test source, inspect the entire supplied file for calls to APIs that are absent from the supplied production sources. Never assume a historically stale test container compiles. Prefer another demonstrably compilable test source when the plan permits it; otherwise include only the minimal evidence-backed API migrations required for that edited test source to compile, and describe them explicitly in the edit reasons. When previous_validation_feedback marks verified or preexisting test debt and target_file is one of the diagnosed sources, repair each cited compiler error using only current APIs proven by supplied production declarations. Preserve test intent. Delete a diagnosed test file only if exact source proves it is wholly obsolete or duplicated and it contains no unique valid test behavior; otherwise migrate the failing lines. Do not perform unrelated cleanup. In production code, change only the values the reported violation and the plan name; keep every other argument of the reported call and write a new value where the old one was written, without a new constant unless the plan names one, unless parameter_policies requires a different value or a named constant: every entry there is checked on the draft, so meet it. For a runtime discriminator, remove MessageDigest rather than changing its algorithm; preserve every known application-ID to configuration mapping, keep unknown legacy mappings explicit as review assumptions, and add non-reflective tests for known variants and the fallback behavior. Never assert equality between two separately constructed values of a type that does not declare equals(Object): Java compares references, so such an assertion can only fail. Assert on the fields or on the same instance instead.  sibling_files_api_surface lists the declarations of the other files in this batch: their type headers, constructors and member signatures as they exist after the supplied sources. Call only what it shows, or what shared_plan or previous_file_contracts declare as added by another file in this batch, with the exact argument count each constructor and method declares. A created test file has no source of its own, so this outline is the only proof of the API it exercises; never assume a constructor, an overload or a nested-class accessor that is absent from it, and never assume a type is an inner class unless its declaration says so. If the API you need is genuinely not there, record that in review_assumptions instead of inventing a signature. Every file in shared_plan is generated separately. Do not claim that another planned file is excluded, omitted, or left as follow-up merely because this call may edit only target_file; use previous_file_contracts and required_contracts to coordinate it. When previous_validation_feedback.semantic_validation_retry is present, this exact target_file was already generated once for this fix and the assembled result failed the listed automated cross-file contract checks; treat every 'code' and its 'details' as a mandatory requirement this new draft must satisfy, not merely a suggestion.",
+  "input": "Generate all edits required for target_file by target_plan. Use previous_file_contracts to keep cross-file APIs consistent. Persisted file-format behavior is outside the authorized change.\n\n{\"decision\":\"MULTI_FILE_FIX_PROPOSED_FOR_REVIEW\",\"target_file\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"target_plan\":[{\"source_file_path\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"symbol\":\"createKeyPair\",\"reason\":\"Replace the ED25519 literal at the ED25519 generation-selection call site with the allowlisted EC literal, leaving the existing initialization argument and all other createKeyPair branches unchanged. This makes the value forwarded to the monitored KeyPairGenerator.getInstance(type) call EC rather than ED25519, while the generated KeyPairBean records the newly selected EC identity type and encoded key material.\",\"create_new_file\":false,\"edit_category\":\"governed algorithm-value replacement\",\"supporting_claim_ids\":[\"CLM-001\",\"CLM-002\",\"CLM-003\",\"CLM-004\",\"CLM-005\"]}],\"source\":\"/*\\n* Copyright (C) 2025 The Trigger Contributors\\n* SPDX-License-Identifier: GPL-3.0-or-later\\n*/\\n\\npackage app.trigger.ssh\\n\\nimport android.os.AsyncTask\\nimport app.trigger.Log\\nimport com.trilead.ssh2.crypto.keys.Ed25519Provider\\nimport java.lang.Exception\\nimport java.security.KeyPairGenerator\\nimport java.security.SecureRandom\\n\\ninternal class GenerateIdentityTask(var listener: OnTaskCompleted) : AsyncTask<Any?, Void?, String?>() {\\n    var keypair: KeyPairBean? = null\\n\\n    companion object {\\n        private const val TAG = \\\"GenerateIdentityTask\\\"\\n\\n        init {\\n            Log.d(TAG, \\\"Ed25519Provider.insertIfNeeded2\\\")\\n            // Since this class deals with Ed25519 keys, we need to make sure this is available.\\n            Ed25519Provider.insertIfNeeded()\\n        }\\n    }\\n\\n    interface OnTaskCompleted {\\n        fun onGenerateIdentityTaskCompleted(message: String?, keypair: KeyPairBean?)\\n    }\\n\\n    private fun convertAlgorithmName(algorithm: String): String {\\n        return if (\\\"EdDSA\\\" == algorithm) {\\n            KeyPairBean.KEY_TYPE_ED25519\\n        } else {\\n            algorithm\\n        }\\n    }\\n\\n    override fun doInBackground(vararg params: Any?): String? {\\n        if (params.size != 1) {\\n            Log.e(TAG, \\\"Unexpected number of params.\\\")\\n            return \\\"Internal Error\\\"\\n        }\\n        keypair = try {\\n            val type = params[0] as String\\n            if (type == \\\"ED25519\\\") {\\n                createKeyPair(KeyPairBean.KEY_TYPE_ED25519, 256)\\n            } else if (type == \\\"ECDSA-384\\\") {\\n                createKeyPair(KeyPairBean.KEY_TYPE_EC, 384)\\n            } else if (type == \\\"ECDSA-521\\\") {\\n                createKeyPair(KeyPairBean.KEY_TYPE_EC, 521)\\n            } else if (type == \\\"RSA-2048\\\") {\\n                createKeyPair(KeyPairBean.KEY_TYPE_RSA, 2048)\\n            } else if (type == \\\"RSA-4096\\\") {\\n                createKeyPair(KeyPairBean.KEY_TYPE_RSA, 4096)\\n            } else if (type == \\\"DSA-1024\\\") {\\n                createKeyPair(KeyPairBean.KEY_TYPE_DSA, 1024)\\n            } else {\\n                return \\\"Unknown key type: $type\\\"\\n            }\\n        } catch (e: Exception) {\\n            return e.message\\n        }\\n        return \\\"Done\\\"\\n    }\\n\\n    override fun onPostExecute(message: String?) {\\n        listener.onGenerateIdentityTaskCompleted(message, keypair)\\n    }\\n\\n    fun createKeyPair(type: String, bits: Int): KeyPairBean? {\\n        val random = SecureRandom()\\n\\n        // Work around JVM bug\\n        //random.nextInt();\\n        //random.setSeed(entropy); //TODO!\\n        try {\\n            val keyPairGen = KeyPairGenerator.getInstance(type)\\n            keyPairGen.initialize(bits, random)\\n            val pair = keyPairGen.generateKeyPair()\\n            val priv = pair.private\\n            val pub = pair.public\\n\\n            //Log.d(TAG, \\\"PrivateKey: \\\" + priv.getAlgorithm() + \\\" \\\" + priv.getFormat() + \\\" \\\" + priv.getEncoded().length);\\n            //Log.d(TAG, \\\"PublicKey: \\\" + pub.getAlgorithm() + \\\" \\\" + pub.getFormat() + \\\" \\\" + pub.getEncoded().length);\\n            val secret = \\\"\\\" // password for encrypted key\\n\\n            //Log.d(TAG, \\\"private: \\\" + PubkeyUtils.formatKey(priv));\\n            Log.d(TAG, \\\"public: ${PubkeyUtils.formatKey(pub)}\\\") // public: Key[algorithm=EdDSA, format=X.509, bytes=44]\\n            val privateKey = PubkeyUtils.getEncodedPrivate(priv, secret).clone()\\n            val publicKey = pub.encoded.clone()\\n            return KeyPairBean(type, privateKey, publicKey, false)\\n        } catch (e: Exception) {\\n            Log.e(TAG, e.toString())\\n        }\\n        return null\\n    }\\n}\",\"new_file\":false,\"rename_safety\":{\"symbol\":\"createKeyPair\",\"allowed\":true,\"declarations\":[{\"path\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"line\":72}],\"hard_blockers\":[],\"resolvable\":[\"unrelated_interface_in_the_declaring_file\"],\"references\":[{\"path\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"line\":48,\"kind\":\"call\"},{\"path\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"line\":50,\"kind\":\"call\"},{\"path\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"line\":52,\"kind\":\"call\"},{\"path\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"line\":54,\"kind\":\"call\"},{\"path\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"line\":56,\"kind\":\"call\"},{\"path\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"line\":58,\"kind\":\"call\"}],\"names_in_scope\":[\"CHARSET_NAME\",\"CIPHER_ALGORITHM\",\"DIGEST_ALGORITHM\",\"HEX_DIGITS\",\"ITERATIONS\",\"KEY_ALGORITHM\",\"KEY_TYPE_DSA\",\"KEY_TYPE_EC\",\"KEY_TYPE_ED25519\",\"KEY_TYPE_IMPORTED\",\"KEY_TYPE_RSA\",\"KeyPairBean\",\"KeyPairData\",\"PKCS8_END\",\"PKCS8_START\",\"Q\",\"R\",\"RNG_ALGORITHM\",\"SALT_SIZE\",\"SecretKeySpec\",\"SshRequestHandler\",\"TAG\",\"THREE\",\"a\",\"action\",\"addPointsA\",\"addr\",\"address\",\"alert\",\"algo\",\"algorithm\",\"bais\",\"bits\",\"buffer\",\"builder\",\"bytes\",\"bytesRead\",\"bytes_read\",\"cancelButton\",\"cipher\",\"ciphertext\",\"client\",\"clip\",\"clipboard\",\"command\",\"complete\",\"conditions\",\"connection\",\"connectionInfo\",\"connectionLost\",\"convertAlgorithmName\",\"convertToKeyPair\",\"convertToOpenSSHFormat\",\"createButton\",\"createKeyPair\",\"d\",\"data\",\"dataAdapter\",\"decodeKeyPair\",\"decodePrivate\",\"decodePublic\",\"decoded\",\"decrypt\",\"defParams\",\"deleteButton\",\"description\",\"deserializeKeyPair\",\"deserializeKeyPair_1_9_1\",\"deserializeKeyPair_3_2_3\",\"discard\",\"doInBackground\",\"doublePointA\",\"dsaPriv\",\"ecPriv\",\"ecPub\",\"encodeHex\",\"encoded\",\"encrypt\",\"encrypted\",\"exitConditions\",\"exportPEM\",\"exportPrivateKey\",\"exportPrivateKeyButton\",\"exportPrivateKeyLauncher\",\"exportPublicKey\",\"exportPublicKeyButton\",\"exportPublicKeyLauncher\",\"extractOpenSSHPublic\",\"fmt\",\"formatKey\",\"generator\",\"getAlgorithmForOid\",\"getBitStrength\",\"getEncodedPrivate\",\"getOidFromPkcs8Encoded\",\"getRSAPublicExponentFromPkcs8Encoded\",\"hex\",\"hostname\",\"i\",\"importPrivateKey\",\"importPrivateKeyButton\",\"importPrivateKeyLauncher\",\"inKey\",\"intent\",\"ios\",\"iv\",\"key\",\"keyBytes\",\"keyData\",\"keyFact\",\"keyGenInProgress\",\"keyPairGen\",\"keyType\",\"keyTypeSpinner\",\"keypair\",\"kf\",\"kp\",\"kp2\",\"line\",\"listener\",\"multiplyPointA\",\"newConditions\",\"nickname\",\"obj\",\"onCreate\",\"onGenerateIdentityTaskCompleted\",\"onPostExecute\",\"onRegisterIdentityTaskCompleted\",\"openSSHPrivateKey\",\"openSSHPublicKey\",\"os\",\"output\",\"p\",\"pair\",\"params\",\"parsePrivateKeyPEM\",\"password\",\"pbeSpec\",\"pinfo\",\"pk\",\"port\",\"priv\",\"privKey\",\"privKeySpec\",\"privateKey\",\"privateKeyPEM\",\"prvkey\",\"pub\",\"pubKey\",\"pubKeySpec\",\"pubkey\",\"publicExponent\",\"publicKey\",\"pw\",\"random\",\"read\",\"readPKCS8Key\",\"reader\",\"recoverKeyPair\",\"recoverPublicKey\",\"registerAddress\",\"registerButton\",\"reply\",\"res\",\"ret\",\"rsaPriv\",\"run\",\"salt\",\"salted\",\"saveButton\",\"sb\",\"secret\",\"self\",\"serializeKeyPair\",\"session\",\"setup\",\"shaDigest\",\"showErrorMessageDialog\",\"showMessage\",\"sshDoor\",\"stderr\",\"stdin\",\"stdout\",\"struct\",\"task\",\"testPassphrase\",\"toolbar\",\"tv\",\"type\",\"updateKeyInfo\",\"uri\",\"useClipboardCheckBox\",\"useFilesystemCheckBox\",\"username\",\"verifier\",\"w\",\"wCoords\",\"wrappedKey\",\"write\",\"writer\"],\"free_name_rule\":\"names_in_scope lists the functions, properties and fields already declared in the reported file and in its package's other files of the same module. A new name -- a rename target or a correctly named function added beside the old one -- must not be one of them; when the name you want is taken, add a suffix that says what it returns (sha256 taken -> sha256Hex) and check that one too.\",\"meaning\":\"a repository check this pipeline ran, not a maintainer approval: with no hard_blockers the declaration may be renamed, updating every reference in the same patch\"},\"deprecated_api_invariants\":[],\"recommended_mechanisms\":[],\"previous_attempts_of_this_finding\":[{\"run\":\"run\",\"ended_at\":\"validated\",\"failure_signatures\":[],\"details\":[]},{\"run\":\"run_v2\",\"ended_at\":\"validated\",\"failure_signatures\":[],\"details\":[]},{\"run\":\"run_v3\",\"ended_at\":\"generation\",\"failure_signatures\":[\"generation:semantic:reported_value_untouched\"],\"details\":[{\"signature\":\"generation:semantic:reported_value_untouched\",\"detail\":\"the reported call at GenerateIdentityTask.kt:79 is unchanged and still receives the reported value ED25519, so the finding is not fixed. Change the value or where it comes from, or decide that no safe fix exists and say why; an unrelated improvement to the same code is not a fix of this finding.\"}]},{\"run\":\"run_v6\",\"ended_at\":\"generation\",\"failure_signatures\":[\"generation:incomplete\"],\"details\":[{\"signature\":\"generation:incomplete\",\"detail\":\"patch_has_no_effect\"}]}],\"detector\":{\"tool\":\"rvsec\",\"kind\":\"runtime_monitor\"},\"sibling_files_api_surface\":{\"app/src/main/kotlin/app/trigger/ssh/SshKeyPairActivity.kt\":[\"class SshKeyPairActivity : AppCompatActivity(), RegisterIdentityTask.OnTaskCompleted, GenerateIdentityTask.OnTaskCompleted\",\"private fun showErrorMessageDialog(title: String, message: String?)\",\"public override fun onCreate(savedInstanceState: Bundle?)\",\"private fun showMessage(textId: Int)\",\"private fun showMessage(textString: String?)\",\"override fun onGenerateIdentityTaskCompleted(message: String?, keypair: KeyPairBean?)\",\"override fun onRegisterIdentityTaskCompleted(message: String?)\",\"private fun exportPublicKey(uri: Uri)\",\"private fun exportPrivateKey(uri: Uri)\",\"private fun importPrivateKey(uri: Uri)\",\"private fun updateKeyInfo(kp: KeyPairBean?)\"]},\"shared_plan\":{\"affected_symbols\":[\"createKeyPair\",\"onCreate\"],\"required_edits\":[{\"source_file_path\":\"app/src/main/kotlin/app/trigger/ssh/GenerateIdentityTask.kt\",\"symbol\":\"createKeyPair\",\"reason\":\"Replace the ED25519 literal at the ED25519 generation-selection call site with the allowlisted EC literal, leaving the existing initialization argument and all other createKeyPair branches unchanged. This makes the value forwarded to the monitored KeyPairGenerator.getInstance(type) call EC rather than ED25519, while the generated KeyPairBean records the newly selected EC identity type and encoded key material.\",\"create_new_file\":false,\"edit_category\":\"governed algorithm-value replacement\",\"supporting_claim_ids\":[\"CLM-001\",\"CLM-002\",\"CLM-003\",\"CLM-004\",\"CLM-005\"]},{\"source_file_path\":\"app/src/main/kotlin/app/trigger/ssh/SshKeyPairActivity.kt\",\"symbol\":\"onCreate\",\"reason\":\"Replace the ED25519 new-identity selection presented and submitted by the key-generation UI with the EC selection used by GenerateIdentityTask, so the UI does not advertise or request an ED25519 identity while the generation task creates an EC identity. Keep display, import, recovery, and use of already stored ED25519 identities unchanged.\",\"create_new_file\":false,\"edit_category\":\"key-generation UI selection migration\",\"supporting_claim_ids\":[\"CLM-002\",\"CLM-005\"]}],\"required_tests\":[],\"compatibility_policy_required\":true,\"scope_evidence\":[\"Claim IDs: CLM-001, CLM-002, CLM-003, CLM-004, CLM-005\"]},\"test_classpath\":{},\"case_migration_policy\":{},\"parameter_policies\":[],\"previous_validation_feedback\":{},\"previous_file_contracts\":[],\"digest_contract_assessment\":{\"security_relevance\":\"false\",\"contract_kind\":\"unknown\",\"expected_digest_source\":\"\",\"backend_repository_available\":false,\"backend_change_required\":false,\"client_only_change_safe\":false,\"rollout_strategy\":\"\",\"pull_request_note\":\"\"},\"review_only\":true}\n\nREQUIRED JSON SCHEMA:\n{\"type\":\"object\",\"properties\":{\"decision\":{\"type\":\"string\",\"enum\":[\"MULTI_FILE_FIX_PROPOSED_FOR_REVIEW\"]},\"source_file_path\":{\"type\":\"string\"},\"explanation\":{\"type\":\"string\"},\"edits\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"source_file_path\":{\"type\":\"string\",\"description\":\"The requested repository-relative path.\"},\"symbol\":{\"type\":\"string\"},\"edit_kind\":{\"type\":\"string\",\"enum\":[\"method\",\"declaration\",\"constant\",\"test\",\"create\",\"delete\"]},\"original_code\":{\"type\":\"string\",\"description\":\"Exact existing source block.\"},\"corrected_code\":{\"type\":\"string\",\"description\":\"Complete replacement source block; empty only for edit_kind=delete.\"},\"reason\":{\"type\":\"string\"}},\"required\":[\"source_file_path\",\"symbol\",\"edit_kind\",\"original_code\",\"corrected_code\",\"reason\"],\"additionalProperties\":false}},\"no_change_required\":{\"type\":\"boolean\"},\"provided_contracts\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"required_contracts\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"required_tests\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"manual_review_required\":{\"type\":\"boolean\"},\"review_assumptions\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"confidence\":{\"type\":\"string\",\"enum\":[\"high\",\"medium\",\"low\"]}},\"required\":[\"decision\",\"source_file_path\",\"explanation\",\"edits\",\"no_change_required\",\"provided_contracts\",\"required_contracts\",\"required_tests\",\"manual_review_required\",\"review_assumptions\",\"confidence\"],\"additionalProperties\":false}",
+  "context": {
+    "finding_id": "app.trigger.ssh.GenerateIdentityTask:::createKeyPair:::KeyPairGeneratorSpec:::UnsafeAlgorithm:::expecting one of RSA,EC,DSA,DiffieHellman,DH but found ED25519",
+    "stage": "code_generation.coordinated_file",
+    "prompt_version": "llm-pipeline-v2.1",
+    "schema_version": "2.1",
+    "policy_version": "2.0",
+    "context_builder_version": "2.16",
+    "semantic_resolver_version": "tree-sitter-semantic-v2",
+    "section_telemetry": {
+      "patch_plan": {
+        "characters": 1467,
+        "approx_tokens": 367,
+        "sha256": "7f266d8b83f7706c0fcbf74dec3639a891beea4d89dd2f6fe845e20bc2e41716"
+      },
+      "target_file": {
+        "characters": 59,
+        "approx_tokens": 15,
+        "sha256": "f596edfb5fec20c684a96a2df6213c3c0e031d6d58f911f6084fc5ea3c43d68d"
+      },
+      "previous_file_contracts": {
+        "characters": 2,
+        "approx_tokens": 1,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    }
+  },
+  "input_sha256": "246df0d86b9f8a6eaba1112f8570568b91df49c29a6aed2f79850daa84a21017"
+}

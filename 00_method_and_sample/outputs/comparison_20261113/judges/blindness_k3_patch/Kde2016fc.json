@@ -1,0 +1,32 @@
+{
+ "card_id": "Kde2016fc",
+ "card_sha256": "05db7a4da05ccb79",
+ "view": "patch",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 7,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3198,
+  "cache_read_input_tokens": 2756,
+  "output_tokens": 436
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0348632,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "6903357b4e7bb01d",
+ "finished_at": "2026-11-16T11:51:36-0300",
+ "output": {
+  "guess": "D",
+  "confidence": 0.27,
+  "reason": "The patch replaces the IV taken from the password hash with a random IV, and it was built and passed. It adds a versioned magic marker, a separate decryptMarked helper, and a try/catch that falls back to the old format. That much defensive backward-compatibility code looks like a review step pushed for it, which fits a multi-step pipeline with a review stage. The fairly verbose style seems more like Claude than Codex's usual minimal diffs. This is a weak guess: the Sonnet coding agent (S) could easily have written the same diff."
+ }
+}

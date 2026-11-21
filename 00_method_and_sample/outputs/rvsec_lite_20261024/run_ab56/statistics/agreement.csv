@@ -1,0 +1,13 @@
+dimension,value,verdict,count
+detector_label,application-manager,confirmed,1
+detector_label,application-manager,not_confirmed,0
+detector_label,application-manager,unknown,0
+detector_label,platform-default,confirmed,1
+detector_label,platform-default,not_confirmed,0
+detector_label,platform-default,unknown,0
+spec,SSLContextSpec,confirmed,1
+spec,SSLContextSpec,not_confirmed,0
+spec,SSLContextSpec,unknown,0
+spec,TrustManagerFactorySpec,confirmed,1
+spec,TrustManagerFactorySpec,not_confirmed,0
+spec,TrustManagerFactorySpec,unknown,0

@@ -1,0 +1,31 @@
+{
+ "card_id": "K912fb63d",
+ "card_sha256": "96acac7dc4ec121a",
+ "judge": "opus",
+ "cli": "claude",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 10,
+ "tokens": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3036,
+  "cache_read_input_tokens": 1152,
+  "output_tokens": 573
+ },
+ "turns": 2,
+ "tool_calls": 1,
+ "claude_reported_cost_usd": 0.0359864,
+ "access": {
+  "paths_outside_checkout": [],
+  "suspicious_paths": [],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "2e95f02b1f9d16ba",
+ "finished_at": "2026-11-16T11:45:25-0300",
+ "output": {
+  "guess": "C",
+  "confidence": 0.4,
+  "reason": "The text follows a fixed template: a sentence on how RVSec flagged the code, a dense evidence sentence, then the boilerplate \"I have not opened a pull request because I could not find a change that keeps the current behaviour intact\" and \"With your answer I can prepare a change\". That points to the Cognalys pipeline (C or D) rather than a free-form agent. The evidence line is terse and packed with code references (\"cache_\"+hex, getCacheFile (read) / writeFileCache (write)), which reads more like GPT-6.1 Terra than Sonnet. So C is my best guess, with low confidence."
+ }
+}

@@ -1,0 +1,188 @@
+{
+  "schema_version": 2,
+  "spec_id": "BroadcastAuthorizationSpec",
+  "name": "BroadcastAuthorizationSpec",
+  "applies_to_types": [
+    "android.content.BroadcastAuthorization"
+  ],
+  "source_title": "BroadcastAuthorization CrySL rule source — canonical requested location was attempted but no rule content was available",
+  "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/BroadcastAuthorization.crysl",
+  "source_verified": false,
+  "protocol": "receive(action ∈ {START_FTPSERVER, STOP_FTPSERVER}) → authorizeSender ∧ receiverExternallyReachable → (startService | stopService)",
+  "important_note": "This is a provisional detector-semantics description, not a verified CrySL protocol. The requested canonical BroadcastAuthorization.crysl location was attempted but did not yield usable rule content, and no primary rule definition was established. android.content.BroadcastAuthorization is therefore a convention-required symbolic model type, not an established Android SDK class.",
+  "events": [
+    {
+      "name": "receive_control_broadcast",
+      "api_patterns": [
+        "void onReceive(Context context, Intent intent)",
+        "intent.getAction()",
+        "FtpService.ACTION_START_FTPSERVER",
+        "FtpService.ACTION_STOP_FTPSERVER"
+      ],
+      "condition": "Observed when a BroadcastReceiver.onReceive implementation reads an Intent action and compares it with either FTP-control action. This observation does not satisfy authorization: that predicate requires evidence that the effective receiver registration or manifest declaration permits external delivery and that an applicable sender restriction does not exclude the asserted sender."
+    },
+    {
+      "name": "start_ftp_service",
+      "api_patterns": [
+        "Intent service = new Intent(context, FtpService.class)",
+        "service.putExtras(intent)",
+        "context.startService(service)",
+        "!FtpService.isRunning()"
+      ],
+      "condition": "Observed when the receiver constructs an explicit FtpService Intent and calls startService. The runtime start predicate requires delivery of an incoming broadcast whose action equals ACTION_START_FTPSERVER, FtpService.isRunning() evaluates false, execution reaches the call, and the operation is not blocked or fails."
+    },
+    {
+      "name": "stop_ftp_service",
+      "api_patterns": [
+        "Intent service = new Intent(context, FtpService.class)",
+        "service.putExtras(intent)",
+        "context.stopService(service)"
+      ],
+      "condition": "Observed when the receiver constructs an explicit FtpService Intent and calls stopService. The runtime stop predicate requires delivery of an incoming broadcast whose action equals ACTION_STOP_FTPSERVER and execution reaches the call without preventing failure."
+    },
+    {
+      "name": "require_sender_authorization",
+      "api_patterns": [
+        "registerReceiver(",
+        "Context.RECEIVER_NOT_EXPORTED",
+        "Context.RECEIVER_EXPORTED"
+      ],
+      "condition": "For dynamically registered receivers, observing a registerReceiver overload is not proof of authorization. The predicate requires either a non-exported registration appropriate to the required broadcasts, or a non-null sender permission whose effective grant semantics exclude the asserted attacker. For manifest receivers, equivalent evidence is outside callback source: the effective merged manifest receiver exported and permission attributes, plus any application-level inherited permission."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that android.content.BroadcastAuthorization is a real Android framework type; no Android SDK declaration for that class was established.",
+    "Do not infer the exact CrySL event language, constraints, predicates, or error message because BroadcastAuthorization.crysl was not retrieved.",
+    "Do not infer that an onReceive method is externally invocable solely because it compares a custom Intent action.",
+    "Do not infer broadcast delivery from a source-level match; delivery depends on the installed APK's effective manifest or dynamic-registration state, Android version, action matching, and platform policy.",
+    "Do not infer that startService or stopService actually executes merely because a matching branch appears in source.",
+    "Do not infer that the receiver has no protection without inspecting the effective merged manifest and any dynamically applied checks.",
+    "Do not infer signature-level authorization from the existence of a custom permission.",
+    "Do not equate a dangerous custom permission with a signature permission: signature permissions are limited to apps sharing the declaring app's signing certificate, whereas dangerous permissions have different grant semantics.",
+    "Do not infer exploitation, remote reachability, impact, or CVE applicability from this normalized advisory finding alone.",
+    "Do not infer that the v3.4.2 tagged fix used a signature-level permission: its tagged AndroidManifest.xml declares CONTROL_FTP_SERVER with protectionLevel=\"dangerous\"."
+  ],
+  "semantic_scope": "The apparent rule family concerns Android broadcast authorization at a receiver-to-privileged-action boundary. For the reported Amaze File Manager v3.4.1 example, the source-level observable is FtpReceiver.onReceive selecting two FtpService control actions and invoking Context.startService or Context.stopService. The security-relevant configuration predicate is primarily manifest-level rather than an API-call-ordering property.",
+  "detector_semantics": {
+    "claim": "The normalized finding asserts a potential externally controllable FTP-service start/stop path through com.amaze.filemanager.asynchronous.services.ftp.FtpReceiver.onReceive in source tag v3.4.1, paired with an assertion that sufficient sender authorization was absent.",
+    "predicates": [
+      "A receiver implementation consumes an incoming Intent action.",
+      "The action is one of the FTP server start or stop control actions.",
+      "The corresponding branch invokes Context.startService or Context.stopService for FtpService.",
+      "The receiver is externally reachable under the effective component configuration.",
+      "No applicable sender-side restriction, such as a required permission or a non-exported component boundary, prevents the claimed external sender."
+    ],
+    "limitations": [
+      "The canonical BroadcastAuthorization CrySL rule was not available, so the exact detector predicate set is unknown.",
+      "The finding message is an advisory-normalized record rather than a runtime trace.",
+      "Static source matching cannot establish installed-manifest merging, permission grants, broadcast delivery, branch feasibility, service-start success, or attacker identity.",
+      "The representative v3.4.1 source confirms the action checks and service calls, while its manifest is reported to confirm an exported receiver with no receiver permission at that tag; this does not itself prove a runtime exploit in a particular build or device configuration."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "Android manifest receivers can be exposed to broadcasts from other applications with android:exported=\"true\".",
+      "A receiver-level android:permission restricts senders to those holding that permission.",
+      "Dynamic registration can require a broadcaster permission through Context.registerReceiver overloads, or use RECEIVER_NOT_EXPORTED to block broadcasts from other apps.",
+      "The reported v3.4.1 FtpReceiver source compares the incoming action to FtpService.ACTION_START_FTPSERVER and ACTION_STOP_FTPSERVER, then starts or stops an explicit FtpService Intent."
+    ],
+    "preconditions": [
+      "A broadcast must match the receiver's registration or manifest intent filter and be delivered by Android.",
+      "The effective receiver declaration or registration must allow the sender.",
+      "For the start branch, the action must equal ACTION_START_FTPSERVER and FtpService.isRunning() must be false.",
+      "For the stop branch, the action must equal ACTION_STOP_FTPSERVER.",
+      "The service operation must remain permitted by the installed application's effective configuration and the device's Android-version restrictions."
+    ],
+    "unknowns": [
+      "Whether the intended BroadcastAuthorizationSpec models only manifest-declared receivers, dynamically registered receivers, or both.",
+      "Whether the intended rule accepts any permission, requires a signature-level permission, requires a protected system broadcast, or accepts a non-exported receiver as an alternative.",
+      "Whether the target application used product flavors, manifest merging, or build-time substitutions that alter the effective receiver configuration.",
+      "Whether Android-version-specific background-service restrictions affect the practical result of the startService call."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The representative record characterizes v3.4.1 as exposing an FTP-control receiver and service without the asserted authorization control, allowing external broadcast actions to select start or stop behavior.",
+    "runtime_claim": "The reported v3.4.1 tagged manifest declares FtpReceiver as exported and lists its two FTP-control actions without a receiver permission; its FtpReceiver.onReceive implementation maps matching actions to FtpService start or stop calls. The reported v3.4.2 tagged manifest adds CONTROL_FTP_SERVER to both receiver and service, but declares that custom permission as dangerous rather than signature. A historical pull-request description initially proposed signature level, and review discussion changed it to dangerous.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "Retrieve the actual BroadcastAuthorization.crysl rule or the detector implementation that loads BroadcastAuthorizationSpec.",
+      "Resolve the actual governed type declaration or model registration for android.content.BroadcastAuthorization, including whether it is symbolic or real.",
+      "Inspect the receiver source for action dispatch and service-control calls.",
+      "Inspect the exact source-tag manifest and all merged-manifest inputs for receiver/service exported and permission attributes.",
+      "Inspect custom permission declarations, including android:protectionLevel and any application-level inherited permission."
+    ],
+    "runtime": [
+      "Obtain the installed APK or app-bundle output and inspect its effective merged AndroidManifest.xml.",
+      "Verify that the receiver is enabled and exported in the installed package.",
+      "Verify whether an untrusted test application can send a matching broadcast that Android delivers to the receiver.",
+      "Verify the sender's permission state, the declared permission's effective protection level, and whether the system grants it.",
+      "Observe whether the selected service-start or service-stop operation succeeds on the relevant Android version and target-SDK configuration."
+    ],
+    "compatibility": [
+      "Record device Android API level, app targetSdkVersion, and installation source.",
+      "Account for Android 12+ explicit exported requirements for components with intent filters.",
+      "For dynamic receivers, account for Android receiver-export flags and Android-version behavior.",
+      "Account for Android background-execution and foreground-service restrictions that can affect service starts after broadcast delivery.",
+      "Use the exact Amaze File Manager version and source tag; the CVE record identifies versions before 3.4.2 as affected."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "The receiver appears in source but is disabled, removed, or non-exported in the effective merged manifest.",
+    "A receiver permission is inherited from the application element or supplied by a build flavor not represented in the inspected source file.",
+    "The action is protected by Android or is emitted only by a trusted platform component, with evidence not visible to a simple local matcher.",
+    "A dynamic receiver is registered with a required broadcaster permission or RECEIVER_NOT_EXPORTED, but the detector only sees its callback body.",
+    "The matched start or stop call is dead code, test-only code, unreachable under real intent values, or guarded by additional authorization logic not recognized by the detector.",
+    "The source tag, package, receiver class, action constant, or manifest differs from the installed artifact associated with the reported advisory.",
+    "The service call is blocked by platform execution restrictions, so a reachable broadcast does not produce the modeled start/stop effect.",
+    "A permission exists but its effective protection level or grant state does not match a simplistic rule assumption."
+  ],
+  "authoritative_sources": [
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/BroadcastAuthorization.crysl",
+    "https://raw.githubusercontent.com/TeamAmaze/AmazeFileManager/v3.4.1/app/src/main/java/com/amaze/filemanager/asynchronous/services/ftp/FtpReceiver.java",
+    "https://raw.githubusercontent.com/TeamAmaze/AmazeFileManager/v3.4.1/app/src/main/java/com/amaze/filemanager/asynchronous/services/ftp/FtpService.java",
+    "https://raw.githubusercontent.com/TeamAmaze/AmazeFileManager/v3.4.1/app/src/main/AndroidManifest.xml",
+    "https://raw.githubusercontent.com/TeamAmaze/AmazeFileManager/v3.4.2/app/src/main/AndroidManifest.xml",
+    "https://github.com/TeamAmaze/AmazeFileManager/pull/1815",
+    "https://developer.android.com/guide/topics/manifest/receiver-element",
+    "https://developer.android.com/develop/background-work/background-tasks/broadcasts",
+    "https://developer.android.com/guide/topics/manifest/permission-element",
+    "https://developer.android.com/training/permissions/restrict-interactions",
+    "https://nvd.nist.gov/vuln/detail/CVE-2020-35173"
+  ],
+  "unknowns": [
+    "What is the canonical source and exact contents of BroadcastAuthorizationSpec or BroadcastAuthorization.crysl?",
+    "Is android.content.BroadcastAuthorization an intended symbolic detector model, and if so, where is that model declared?",
+    "What exact authorization predicate does the detector require: non-exported receiver, signature permission, any required permission, caller package validation, protected action, or a combination?",
+    "Does the specification govern only broadcast receivers, or also externally reachable services started from receiver callbacks?",
+    "Why does the normalized finding describe a signature-level control permission when the v3.4.2 tagged manifest declares CONTROL_FTP_SERVER with protectionLevel=\"dangerous\"?",
+    "Which exact application artifact, manifest merge result, Android version, and target SDK were used when the representative finding was produced?",
+    "Whether the finding's asserted external-attacker model remains valid under the target device's permission-grant and background-execution behavior."
+  ],
+  "source_verification": {
+    "checked": true,
+    "reachable": false,
+    "source_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/BroadcastAuthorization.crysl",
+    "detail": "HTTP 404",
+    "note": "Accepted as unverifiable without further attempts: the proposed source was checked directly and could not be retrieved."
+  },
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.amaze.filemanager.asynchronous.services.ftp.FtpReceiver",
+        "method": "onReceive",
+        "message": "External finding (CVE-2020-35173): onReceive starts or stops FtpService in response to external broadcast actions. The selected version exposes the receiver and service without the signature-level control permission introduced by the fix. Source tag: v3.4.1. This is a normalized advisory record, not a runtime log."
+      }
+    ],
+    "expected_api_simple_name": "BroadcastAuthorization",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "unreachable_source",
+    "detail": "http_404",
+    "checked_url": "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/BroadcastAuthorization.crysl"
+  }
+}

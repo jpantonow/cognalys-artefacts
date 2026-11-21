@@ -1,0 +1,315 @@
+{
+ "unit": "co_911173ce3742",
+ "phase": "phase2",
+ "order": [
+  "Kbdf67502",
+  "Kf5e58607",
+  "Kfa86210c",
+  "K2825d3f1",
+  "K9b15644b",
+  "K5fd255a0",
+  "K94890ae8",
+  "K076b8778",
+  "Kd08fe683",
+  "K1cb3f4be",
+  "Kef48cc25",
+  "K83f238ae",
+  "Kd3f00051",
+  "Kd98f2fc5",
+  "Kdeed2dd4",
+  "K9326eb68",
+  "K6f369bb1",
+  "K6c2fd8ff",
+  "K0c718634",
+  "K52d38e26",
+  "K2d0865e4",
+  "K0598ea81",
+  "K2026b24e"
+ ],
+ "card_sha256": {
+  "K0598ea81": "5e7b3f754e1004c7",
+  "K076b8778": "06c3ddf342059f9a",
+  "K0c718634": "c8e1ca367812f06a",
+  "K1cb3f4be": "4e9dcac02e8bc905",
+  "K2026b24e": "224196d59d832e0b",
+  "K2825d3f1": "ed57381839deed86",
+  "K2d0865e4": "a8974806d4b0c198",
+  "K52d38e26": "44a0ea2a49844e32",
+  "K5fd255a0": "87fd4525be5367db",
+  "K6c2fd8ff": "6df60ac14b5ac5bf",
+  "K6f369bb1": "f5d814fcf5fce4bb",
+  "K83f238ae": "4aa435b8199227aa",
+  "K9326eb68": "a4d5adac9e1f8a97",
+  "K94890ae8": "0701e499098b7247",
+  "K9b15644b": "6cda8db1a4da273b",
+  "Kbdf67502": "69f40808d809d32b",
+  "Kd08fe683": "016ce2e5bdc5226d",
+  "Kd3f00051": "fc3b7510e8ccb58e",
+  "Kd98f2fc5": "72982d48461250c9",
+  "Kdeed2dd4": "4401b136043db17e",
+  "Kef48cc25": "f4dcd461a3d65344",
+  "Kf5e58607": "f72327f4e0de2d65",
+  "Kfa86210c": "2e826c1bc0eafacf"
+ },
+ "gabarito": {
+  "acceptable_classes": [
+   "PR",
+   "ISSUE",
+   "NO_ACTION"
+  ],
+  "reason": "Util.md5Hex (Util.java:1000) has two kinds of caller, and neither can move to SHA-256. (1) Util.getRestUrl (Util.java:397-404) uses it for Subsonic token authentication: it sends s=<random salt> and t=md5Hex(password + salt). The Subsonic/Madsonic/Airsonic REST API fixes this formula. The server recomputes MD5(password + salt) and compares the result, so a SHA-256 token would be rejected and every user on a token-capable server would be locked out. (2) FileUtil (lines 271, 274, 296, 323, 350) uses it to build cache file names for album art, playlist/podcast covers, avatars and misc images (md5Hex(path/username/url) + \".jpeg\"). That is a non-security name hash. Changing the algorithm would orphan every existing cached image on users' devices for no security gain. In neither case is MD5 doing work that collision or preimage resistance would protect: the token is protocol-mandated, and the file names are only identifiers. The real weaknesses of token auth (MD5 of the password, a cleartext password needed on the server) are properties of the Subsonic protocol, so this app cannot fix them on its own. The rule's suggested fix of swapping in SHA-256 for the token would break authentication.\n\nSecond judge: Util.md5Hex computes lowercase hexadecimal MD5 over UTF-8 input. Its security-sensitive caller, getRestUrl, sends t=MD5(password + salt) with s=salt for Subsonic token authentication. ServerInfo.canUseToken enables this for stock Subsonic REST versions >=1.14 unless blocked. Replacing MD5 with SHA-256 would change the authentication protocol and cause server rejection; the repository provides no alternative digest negotiation. Other callers in FileUtil use MD5 solely for deterministic image-cache filenames, not security checks. A delivery must not claim that a client-only SHA substitution of the token fixes it.\n\nDelivery policy (v3, the same for every unit): a pull request, an issue and no action are all acceptable deliveries; judge each on its quality, not on whether it should have been sent. A pull request that changes the code only so that it satisfies the specification, without changing behaviour, is acceptable when it is correct, keeps every must_not_break constraint and does not present itself as a vulnerability fix; do not mark it down as unnecessary churn or because the finding is a false positive. Do not guess whether the runtime checker would still report the patched code; judge the code.",
+  "must_change": [],
+  "must_not_break": [
+   "Subsonic REST token authentication: t must stay hex(MD5(password + salt)), sent with s=salt, or servers (Subsonic, Airsonic, Navidrome, Madsonic, etc.) will reject every request when ServerInfo.canUseToken is true",
+   "The cached token/salt pairs in Util.getRestUrl and the server's matching recomputation",
+   "Existing on-disk image cache file names (album art, avatars, playlist/podcast covers, misc URL images) built from md5Hex(...) + \".jpeg\" in FileUtil; changing the hash orphans the cached files and forces re-downloads",
+   "Compatibility with older servers that use the legacy p=enc: path and with token-capable servers, as chosen by ServerInfo",
+   "Preserve the server-compatible token calculation: 32 lowercase hexadecimal characters from MD5 of UTF-8(password + salt), paired with the corresponding s parameter. Substituting SHA-2 would break token authentication and authenticated requests.",
+   "Preserve server capability and blocked-token handling, including the existing enc:-prefixed UTF-8 hexadecimal password fallback for setups without token authentication. Disabling tokens merely to avoid MD5 would transmit the reversibly encoded password instead.",
+   "Preserve access to existing MD5-named .jpeg files for playlist and podcast artwork, album-directory artwork, avatars, and URL-based miscellaneous images, including offline artwork and the existing migration from hashed album artwork to the album directory. Changing filenames without compatible lookup or migration would orphan cached images."
+  ],
+  "source": "gabarito_v2.json",
+  "fixed_by_user": true,
+  "fixed_by": "reading v3, the author's review of 2026-11-16 (build_gabarito_v3.py)"
+ },
+ "cards_file_sha256": "2da9272737cb5cb2",
+ "judge": "sol",
+ "cli": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "status": "exit 0",
+ "seconds": 154,
+ "tokens": {
+  "input_tokens": 174117,
+  "cached_input_tokens": 138624,
+  "output_tokens": 6344,
+  "reasoning_output_tokens": 3596
+ },
+ "turns": 1,
+ "tool_calls": 10,
+ "claude_reported_cost_usd": null,
+ "access": {
+  "paths_outside_checkout": [
+   "/home/antonow/comparison_20261113/judges/checkout",
+   "/home/antonow/comparison_20261113/judges/sessions/sol/phase2/co_911173ce3742/home"
+  ],
+  "suspicious_paths": [
+   "/home/antonow/comparison_20261113/judges/sessions/sol/phase2/co_911173ce3742/home"
+  ],
+  "web_tool_calls": 0
+ },
+ "prompt_sha256": "8c57f204df9ffdc9",
+ "finished_at": "2026-11-16T17:17:19-0300",
+ "output": {
+  "cards": [
+   {
+    "card_id": "Kbdf67502",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains both protocol-mandated MD5 token authentication and the compatibility cost of changing image-cache filenames."
+   },
+   {
+    "card_id": "Kf5e58607",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately identifies offline password guessing and cached token reuse. Proposes optional API-key authentication while preserving existing server compatibility."
+   },
+   {
+    "card_id": "Kfa86210c",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Correctly explains the protocol constraint and credential exposure risks. The proposed optional authentication method preserves compatibility."
+   },
+   {
+    "card_id": "K2825d3f1",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Recognizes the external-token and persistent-filename constraints, but relies on an unstated authorization policy and missing-evidence claims instead of establishing the Subsonic token contract."
+   },
+   {
+    "card_id": "K9b15644b",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correct, code-specific explanation of protocol compatibility and non-security cache-key usage."
+   },
+   {
+    "card_id": "K5fd255a0",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The authentication and persistent-filename concerns are valid, but the justification includes an unstated policy and an unsupported claim that image paths are exported through share intents."
+   },
+   {
+    "card_id": "K94890ae8",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly preserves protocol-required tokens, the legacy fallback, and existing image-cache names."
+   },
+   {
+    "card_id": "K076b8778",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Identifies the affected token and filename representations, but grounds its refusal in an unstated policy without explaining why servers require MD5."
+   },
+   {
+    "card_id": "Kd08fe683",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "The compatibility concern is reasonable, but the response treats the established token contract as unknown and relies on an unsupported authorization restriction."
+   },
+   {
+    "card_id": "K1cb3f4be",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Specifically identifies the mandatory token calculation, capability gating, cache filenames, and existing artwork migration. These substantiate leaving the algorithm unchanged."
+   },
+   {
+    "card_id": "Kef48cc25",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 0,
+    "notes": "The compatibility analysis is correct, but the password-recovery assurance is false. Captured token and salt values allow offline password guessing; transmitting the salt does not prevent it."
+   },
+   {
+    "card_id": "K83f238ae",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly distinguishes protocol-required token hashing from non-security image naming and explains why substitution is inappropriate."
+   },
+   {
+    "card_id": "Kd3f00051",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 1,
+    "notes": "Recognizes both relevant uses, but substitutes an unstated policy prohibition for a specific explanation of the server protocol and cache compatibility."
+   },
+   {
+    "card_id": "Kd98f2fc5",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately explains why changing the shared digest would break authentication and invalidate existing cache paths."
+   },
+   {
+    "card_id": "Kdeed2dd4",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the mandatory authentication formula and the non-security role of the other callers."
+   },
+   {
+    "card_id": "K9326eb68",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Provides a specific, correct protocol-compatibility reason for leaving MD5 unchanged and identifies the image-filename callers."
+   },
+   {
+    "card_id": "K6f369bb1",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly ties the reported helper to the fixed Subsonic authentication contract and image filenames."
+   },
+   {
+    "card_id": "K6c2fd8ff",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": 2,
+    "r5": 2,
+    "notes": "Accurately describes offline guessing, token replay, and permitted HTTP connections. Requests optional stronger authentication while retaining existing compatibility."
+   },
+   {
+    "card_id": "K0c718634",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly identifies the protocol-mandated MD5 token and explains why a client-only substitution would break the contract."
+   },
+   {
+    "card_id": "K52d38e26",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Thoroughly substantiates the token capability checks, unchanged fallback, persistent image filenames, and offline artwork consequences."
+   },
+   {
+    "card_id": "K2d0865e4",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Correctly explains the server authentication constraint and why changing cache-name hashes provides no security fix."
+   },
+   {
+    "card_id": "K0598ea81",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Accurately identifies the lowercase hexadecimal MD5 protocol representation and the non-security image-name uses."
+   },
+   {
+    "card_id": "K2026b24e",
+    "r2": null,
+    "regression_scenario": "",
+    "fixes_what_is_reported": "no",
+    "r4": null,
+    "r5": 2,
+    "notes": "Gives a concrete, correct external-protocol reason for retaining MD5 and notes that existing image files depend on the same helper."
+   }
+  ],
+  "dropped_scores": []
+ }
+}

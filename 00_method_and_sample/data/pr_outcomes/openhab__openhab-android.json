@@ -1,0 +1,20 @@
+[
+  {
+    "pull_request": "https://github.com/openhab/openhab-android/pull/4039",
+    "state": "closed",
+    "finding_id": "1be68ac81401",
+    "spec": "SSLContextSpec",
+    "csv_class": "org.openhab.habdroid.core.connection.ConnectionFactory",
+    "method_name": "updateHttpClientForClientCert",
+    "title": "Fix updateHttpClientForClientCert",
+    "impact_class": "not_recorded",
+    "recorded_at": "2026-11-19T20:37:56.643513+00:00",
+    "maintainer_feedback": [
+      {
+        "author": "mueller-ma",
+        "kind": "comment",
+        "body": "Thanks for the contribution and for the detailed write-up!\r\n\r\nAs far as I can tell, this finding is a false positive for the OkHttp path. OkHttp already rejects TLS 1.1 and older by default, so filtering the protocols on the socket ourselves doesn't change anything.\r\n\r\nIn OkHttp 5.5.0 (the version we use):\r\n\r\n- OkHttpClient uses DEFAULT_CONNECTION_SPECS = listOf(ConnectionSpec.MODERN_TLS, ConnectionSpec.CLEARTEXT) (OkHttpClient.kt).\r\n- MODERN_TLS only allows TlsVersion.TLS_1_3 and TlsVersion.TLS_1_2. TLS 1.0 and 1.1 are only in COMPATIBLE_TLS, which you have to opt into explicitly (ConnectionSpec.kt).\r\n- Before every handshake, ConnectionSpec.apply() intersects sslSocket.enabledProtocols with those versions and sets the result on the socket. That's the same filtering this PR adds by hand.\r\n\r\nWe don't override connectionSpecs anywhere, so the default applies. The generic \"TLS\" argument to SSLContext.getInstance() is fine here: it picks the provider, and the protocol versions are then restricted per socket."
+      }
+    ]
+  }
+]

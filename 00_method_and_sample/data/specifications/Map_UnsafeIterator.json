@@ -1,0 +1,172 @@
+{
+  "schema_version": 2,
+  "spec_id": "Map_UnsafeIterator",
+  "name": "Map_UnsafeIterator",
+  "applies_to_types": [
+    "java.util.Map_UnsafeIterator",
+    "java.util.Map",
+    "java.util.Collection",
+    "java.util.Iterator"
+  ],
+  "source_title": "Map UnsafeIterator specification in JavaMOP using the ERE plugin (Figure 2.7)",
+  "source_url": "https://fsl.cs.illinois.edu/publications/jin-2012-thesis.pdf",
+  "source_verified": false,
+  "protocol": "getset(m,c) · (modifyMap(m) | modifyCol(c))* · getiter(c,i) · useiter(i)* · (modifyMap(m) | modifyCol(c))+ · useiter(i)",
+  "important_note": "This is a JavaMOP ERE bad-trace specification, not a CrySL rule for a loadable JDK class named Map_UnsafeIterator. The required qualified identity java.util.Map_UnsafeIterator is retained as the specification identity; the monitored runtime objects are a Map m, a keySet()/values() view c, and an Iterator i. The requested Crypto-API-Rules raw CrySL URL was fetched and returned HTTP 404; the full JavaMOP rule was instead verified in the primary FSL thesis.",
+  "events": [
+    {
+      "name": "getset",
+      "api_patterns": [
+        ".keySet()",
+        ".values()"
+      ],
+      "condition": "Observed call: a Map-subtype receiver invokes keySet() or values(). Predicate satisfied: the returned object c is bound as the collection view obtained from that same Map object m; only these two view factories establish the m-to-c relation."
+    },
+    {
+      "name": "getiter",
+      "api_patterns": [
+        ".iterator()"
+      ],
+      "condition": "Observed call: an Iterable-subtype receiver invokes iterator(). Predicate satisfied: the receiver is the previously bound collection view c and the returned Iterator object is bound as i."
+    },
+    {
+      "name": "modifyMap",
+      "api_patterns": [
+        ".clear()",
+        ".put(",
+        ",.putAll(",
+        ",.putIfAbsent(",
+        ",.remove("
+      ],
+      "condition": "Observed call: before a method whose name matches clear*, put*, or exactly remove on a Map-subtype receiver. Predicate satisfied: that receiver is the same bound Map object m. The event is emitted before invocation; success, mutation, and return value are not predicates."
+    },
+    {
+      "name": "modifyCol",
+      "api_patterns": [
+        ".clear()",
+        ".offer(",
+        ",.pop()",
+        ".push(",
+        ",.remove(",
+        ",.removeAll(",
+        ",.removeIf(",
+        ",.retainAll("
+      ],
+      "condition": "Observed call: before a method whose name matches clear, offer*, pop, push, remove*, or retain* on a Collection-subtype receiver. Predicate satisfied: that receiver is the same bound view c. The event is emitted before invocation; it does not require that the operation actually changes c."
+    },
+    {
+      "name": "useiter",
+      "api_patterns": [
+        ".hasNext()",
+        ".next()"
+      ],
+      "condition": "Observed call: before hasNext() or next() on an Iterator-subtype receiver. Predicate satisfied: that receiver is the same bound Iterator object i. A useiter event after at least one tracked modification completes the bad trace."
+    }
+  ],
+  "forbidden_inferences_without_evidence": [
+    "Do not infer that a tracked mutator call completed successfully or changed the Map or Collection; mutation events are observed before the call.",
+    "Do not infer that a Map.put-like call added or removed a mapping rather than replaced the value for an existing key.",
+    "Do not infer that the concrete iterator must throw ConcurrentModificationException; fail-fast detection is implementation-specific and best-effort.",
+    "Do not infer that the iterator had already returned an element: the formal trace allows modification immediately after iterator() and before the first hasNext() or next().",
+    "Do not infer a data race, cross-thread access, missing synchronization, exploitability, or a security vulnerability from this finding alone.",
+    "Do not infer coverage of entrySet(), Map.Entry.setValue(), Iterator.remove(), Iterator.forEachRemaining(), spliterators, streams, or map mutation methods whose names do not match the listed event patterns.",
+    "Do not infer that java.util.Map_UnsafeIterator is a documented or loadable Java platform type; it is the required specification identity."
+  ],
+  "semantic_scope": "The detector observes an identity-correlated event trace over m, c, and i: c must be produced by m.keySet() or m.values(), i must be produced by c.iterator(), and a tracked Map or view-Collection mutator must occur before a later i.hasNext() or i.next(). It reports the ERE bad trace, rather than proving actual structural modification or a Java runtime contract violation.",
+  "detector_semantics": {
+    "claim": "A Map-derived key-set or values view was associated with an Iterator, then a selected mutator was called on the Map or that view, and the same Iterator was subsequently used.",
+    "predicates": [
+      "Object identity connects Map m to view c and view c to Iterator i.",
+      "The view origin is limited to Map.keySet() and Map.values().",
+      "At least one selected modifyMap or modifyCol event occurs after getiter(c,i).",
+      "A selected iterator-use event occurs after that modification event."
+    ],
+    "limitations": [
+      "The rule is syntactic and name-pattern based for mutators.",
+      "It treats calls as modification events before their effects are known.",
+      "It excludes Map.entrySet() view acquisition.",
+      "It does not distinguish structural changes from value replacement, no-op removals, unsuccessful optional operations, or weakly consistent iteration.",
+      "It has no explicit thread, lock, happens-before, collection implementation, or exception-outcome predicate."
+    ]
+  },
+  "api_semantics": {
+    "documented_behavior": [
+      "The Java Map contract states that keySet() and values() return views backed by the Map.",
+      "The Map contract states that, if the Map is modified while an iteration over either view is in progress, other than through that iterator's own remove operation, iteration results are undefined.",
+      "The Map.put contract permits replacement of the value associated with an already-present key."
+    ],
+    "preconditions": [
+      "The documented keySet()/values() warning concerns an iteration of the particular Map-backed view.",
+      "The Iterator.remove exception is explicit in the keySet()/values() view contracts.",
+      "Concrete Map implementations can specify stronger, weaker, or different iterator behavior; for example, ConcurrentHashMap documents weakly consistent view iterators."
+    ],
+    "unknowns": [
+      "Whether a particular tracked call is structurally disruptive for the concrete Map implementation.",
+      "Whether an existing-key value replacement is permitted during the relevant iteration by the concrete implementation.",
+      "Whether the particular Iterator is fail-fast, weakly consistent, snapshot-based, immutable, or otherwise specialized.",
+      "Whether an observed mutator call returns normally, throws UnsupportedOperationException, or has no effect."
+    ]
+  },
+  "security_semantics": {
+    "detector_claim": "The detector claims a potentially unsafe iterator-use ordering according to the JavaMOP event pattern.",
+    "runtime_claim": "The Java Map API describes modification during keySet()/values() iteration as yielding undefined iteration results, with an exception for the iterator's own remove operation. ConcurrentModificationException, where provided by fail-fast iterators, is a best-effort bug-detection mechanism rather than a guarantee.",
+    "equivalent": false
+  },
+  "evidence_requirements": {
+    "source_level": [
+      "The complete five-event JavaMOP ERE and the exact reported message are present in Figure 2.7 of the FSL thesis.",
+      "The supplied canonical CrySL candidate URL was directly fetched and returned HTTP 404, so it cannot establish a CrySL rule source.",
+      "The required java.util.Map_UnsafeIterator identifier is a specification identity inferred from the historical JavaMOP property namespace, not evidence of a JDK runtime class."
+    ],
+    "runtime": [
+      "To establish an actual runtime contract breach, identify the concrete Map and Iterator implementation and verify its documented iteration semantics.",
+      "To establish an actual mutation, inspect the call result and post-state, including whether a key was added, removed, or merely had its mapped value replaced.",
+      "To establish an exception claim, obtain an execution trace showing the relevant Iterator operation and any thrown exception."
+    ],
+    "compatibility": [
+      "Check the Java platform version and concrete collection implementation.",
+      "Check whether the Map is concurrent, immutable, custom, wrapped, or otherwise supplies non-fail-fast iterator behavior.",
+      "Check whether instrumentation preserves the intended receiver and return-object identity bindings across Java or Kotlin compilation."
+    ]
+  },
+  "known_false_positive_shapes": [
+    "Calling map.put(existingKey, replacementValue) while traversing map.keySet() or map.values(), where the implementation permits replacement without invalidating the traversal.",
+    "Calling map.remove(absentKey) after iterator creation: the detector sees modifyMap before the call even if no mapping exists.",
+    "Calling view.remove(nonexistentValue), removeAll() with no matching elements, or retainAll() that leaves the view unchanged: the detector emits modifyCol before knowing that the operation is a no-op.",
+    "Calling a selected optional mutator that throws UnsupportedOperationException before changing the receiver.",
+    "Using ConcurrentHashMap keySet()/values() iterators, which are documented as weakly consistent rather than fail-fast.",
+    "Acquiring an iterator, invoking a tracked mutator before the first hasNext() or next(), and then using the iterator; this satisfies the formal ERE although no element need have been consumed before the mutation."
+  ],
+  "authoritative_sources": [
+    "https://fsl.cs.illinois.edu/publications/jin-2012-thesis.pdf",
+    "https://raw.githubusercontent.com/CROSSINGTUD/Crypto-API-Rules/refs/heads/master/JavaCryptographicArchitecture/src/Map_UnsafeIterator.crysl",
+    "https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Map.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/util/ConcurrentModificationException.html",
+    "https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html"
+  ],
+  "unknowns": [
+    "No canonical Map_UnsafeIterator.crysl file was available at the requested Crypto-API-Rules raw URL; that fetch returned HTTP 404.",
+    "A version-controlled canonical .mop source file for this exact property was not retrieved; the primary thesis reproduces the complete specification text.",
+    "The exact implementation and instrumentation semantics of the detector that emitted the representative FeedbackActivity$3.onClick finding were not provided, so equivalence to the historical JavaMOP pointcuts is not independently proven.",
+    "Whether the reported project uses a fail-fast, weakly consistent, snapshot, or custom iterator cannot be determined from the finding alone.",
+    "The exact historical package assigned to the property is not established by the reproduced JavaMOP source; java.util.Map_UnsafeIterator is included to satisfy the required naming convention and should not be treated as a runtime API class."
+  ],
+  "generation_evidence": {
+    "schema_version": 2,
+    "detector_examples": [
+      {
+        "class": "com.quaap.launchtime.FeedbackActivity$3",
+        "method": "onClick",
+        "message": "Map_UnsafeIterator The map was modified while an iteration over the set is in progress."
+      }
+    ],
+    "expected_api_simple_name": "Map_UnsafeIterator",
+    "deterministic_validation": "passed"
+  },
+  "shapes_grounded": false,
+  "source_audit": {
+    "state": "source_does_not_contain_rule",
+    "detail": "document does not mention the governed type",
+    "checked_url": "https://fsl.cs.illinois.edu/publications/jin-2012-thesis.pdf"
+  }
+}
